@@ -47,7 +47,7 @@
 
             <dependency>
                 <groupId>org.microemu</groupId>
-            <artifactId>microemu-javase-swt</artifactId>
+            <artifactId>microemu-javase-swing</artifactId>
 <!--        
             <artifactId>microemu-javase-swing</artifactId>
             <artifactId>microemu-javase-swt</artifactId>

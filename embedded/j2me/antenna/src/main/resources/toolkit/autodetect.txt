@@ -1,0 +1,32 @@
+#autodetect wireless toolkit
+#order is important!!!
+# mpowerplayer
+mpp;stubs/midp-1.0.jar;player.jar
+#sony ericsson
+sonyericwtk2;lib/semc_ext_jp8.jar;lib/cldcapi11.jar
+#LG mobile
+lg13;bin/LGDRMDB
+# nokia
+nokias40;bin/s40.jar
+#sprint
+sprint332;lib/sprint2_2.jar
+# motorola
+motodev2;stubs/moto3d.jar
+iden30;lib/i85s/com/mot/iden/math/Float.class
+iden40;lib/i285/com/mot/iden/math/Float.class
+iden730;lib/i730/com/mot/iden/math/Float.class
+#symbian s60
+nokian97;lib/eswt.jar;lib/iapinfo.jar;lib/nokiaui.jar
+s603rd;lib/eswt.jar
+#Symbian S60 3rd FP1
+s603rdFP1;lib/hmidps60v31.jar
+# sun Java ME SDK 3.0
+javame30;lib/jsr280_1.0.jar
+# SUN Wireless Toolkit
+wtk25;lib/cldcapi11.jar;lib/jsr226.jar
+wtk23;lib/cldcapi11.jar;lib/jsr179.jar
+wtk22;lib/cldcapi11.jar;lib/jsr082.jar
+wtk21;lib/cldcapi11.jar
+wtk20;lib/midpapi.zip;lib/mmapi.zip
+wtk10;lib/midpapi.zip
+

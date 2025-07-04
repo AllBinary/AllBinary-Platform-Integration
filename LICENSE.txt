@@ -1,0 +1,5 @@
+This repository is multi-licensed under open source licenses: Apache, LGPL/EPL, and MIT
+
+Each project in this repository has its license listed below:
+
+antenna license: You may use the preprocessor under LGPL or EPL. (see the included LICENSE-LGPL and LICENSE-EPL for more information).

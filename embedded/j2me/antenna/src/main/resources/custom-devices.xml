@@ -1,0 +1,36 @@
+<!--
+This is an example custom-devices.xml
+it shows how new devices can be added or extended.
+the Sony-Ericsson/K700 device exists in the devices.xml file, and is extended by 
+the new capability.
+the FooBar/Z666 device does not exist (surprise!) and it created with the capability.
+-->
+<devices>
+
+	<device>
+		<identifier>Generic/Java_176x202</identifier>
+		<features>hasPointerEvents, hasCommandKeyEvents</features>
+		<description>Generic 176x202 device.</description>
+		<capability name="JavaPlatform" value="MIDP/2.0"/>
+		<capability name="JavaConfiguration" value="CLDC/1.1"/>
+		<capability name="BitsPerPixel" value="18"/>
+		<capability name="ScreenSize" value="176x202"/>
+		<capability name="CanvasSize" value="176x202"/>
+		<capability name="FullCanvasSize" value="176x202"/>
+		<capability name="Emulator.Skin" value="Series60"/>
+	</device>
+	
+
+	<device>
+		<identifier>Generic/Java_240x320</identifier>
+		<features>hasPointerEvents, hasCommandKeyEvents</features>
+		<description>Generic 240x320 device.</description>
+		<capability name="JavaPlatform" value="MIDP/2.0"/>
+		<capability name="JavaConfiguration" value="CLDC/1.1"/>
+		<capability name="BitsPerPixel" value="18"/>
+		<capability name="ScreenSize" value="240x320"/>
+		<capability name="CanvasSize" value="240x320"/>
+		<capability name="FullCanvasSize" value="240x320"/>
+		<capability name="Emulator.Skin" value="Series60"/>
+	</device>
+</devices>

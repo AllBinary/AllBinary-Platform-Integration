@@ -1,9 +1,0 @@
-License: GNU Library or Lesser General Public License (LGPL)
-Description: MicroEmulator, Java 2 Micro Edition (J2ME) CLDC/MIDP Emulator
-Main-Class: org.microemu.app.Main
-Implementation-URL: http://www.microemu.org/
-Implementation-Version: 3.0.0-SNAPSHOT
-Implementation-Build: 3.0.0-SNAPSHOT
-SVN-Revision: ${scm.revision}
-Built-By: User
-Build-Date: 2025-07-04 05:41:02

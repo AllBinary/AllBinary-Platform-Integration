@@ -1,0 +1,146 @@
+/*
+ * AllBinary Open Source under General Public License (LGPL) version 2.1 or the Apache License (AL) Version 2.0
+ * Created By: Travis Berthelot
+ */
+package org.microemu.app;
+
+import javax.microedition.midlet.MIDlet;
+
+import org.allbinary.graphics.displayable.DisplayInfoSingleton;
+import org.allbinary.graphics.displayable.ScalableListener;
+import org.eclipse.swt.events.DragDetectEvent;
+import org.eclipse.swt.events.MouseEvent;
+
+/**
+ *
+ * @author User
+ */
+public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
+    
+    private final DisplayInfoSingleton displayInfo = DisplayInfoSingleton.getInstance();
+    
+    public void mouseDoubleClick(final MIDlet midlet, final MouseEvent mouseEvent) {
+        
+    }
+
+    public void mouseDown(final MIDlet midlet, final MouseEvent mouseEvent) {
+
+        final ScalableListener scalableListener = displayInfo.getScalableListener();
+        final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
+        final int y = (int) ((mouseEvent.y - displayInfo.getTop())  / scalableListener.getRatio(displayInfo.getRatio()));
+        
+        if(displayInfo.isPortrait()) {
+
+            //LogUtil.put(LogFactory.getInstance(new StringBuilder().append("Checking: portrait - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown"));
+            
+            if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
+                midlet.mousePressed(x, y, mouseEvent.button);
+            } else {
+                midlet.mousePressed(mouseEvent.x, mouseEvent.y, mouseEvent.button);
+            }
+            
+        } else {
+
+            //LogUtil.put(LogFactory.getInstance(new StringBuilder().append("Checking: landscape - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown"));
+            
+            if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
+                midlet.mousePressed(x, y, mouseEvent.button);
+            } else {
+                midlet.mousePressed(mouseEvent.x, mouseEvent.y, mouseEvent.button);
+            }
+
+        }
+
+    }
+
+    public void mouseUp(final MIDlet midlet, final MouseEvent mouseEvent) {
+        
+        if (displayInfo.isPortrait()) {
+
+            if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
+                final ScalableListener scalableListener = displayInfo.getScalableListener();
+                final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
+                final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
+
+                midlet.mouseReleased(x, y, mouseEvent.button);
+            } else {
+                midlet.mouseReleased(mouseEvent.x, mouseEvent.y, mouseEvent.button);
+            }
+
+        } else {
+
+            if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
+                final ScalableListener scalableListener = displayInfo.getScalableListener();
+                final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
+                final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
+
+                midlet.mouseReleased(x, y, mouseEvent.button);
+            } else {
+                midlet.mouseReleased(mouseEvent.x, mouseEvent.y, mouseEvent.button);
+            }
+
+        }
+        
+    }
+    
+    public void mouseMove(final MIDlet midlet, final MouseEvent mouseEvent) {
+
+        if (displayInfo.isPortrait()) {
+
+            if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
+                final ScalableListener scalableListener = displayInfo.getScalableListener();
+                final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
+                final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
+
+                midlet.mouseMoved(x, y, mouseEvent.button);
+            } else {
+                midlet.mouseMoved(mouseEvent.x, mouseEvent.y, mouseEvent.button);
+            }
+
+        } else {
+
+            if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
+                final ScalableListener scalableListener = displayInfo.getScalableListener();
+                final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
+                final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
+
+                midlet.mouseMoved(x, y, mouseEvent.button);
+            } else {
+                midlet.mouseMoved(mouseEvent.x, mouseEvent.y, mouseEvent.button);
+            }
+
+        }
+        
+    }
+
+    public void dragDetected(final MIDlet midlet, final DragDetectEvent mouseEvent) {
+
+        if (displayInfo.isPortrait()) {
+
+            if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
+                final ScalableListener scalableListener = displayInfo.getScalableListener();
+                final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
+                final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
+
+                midlet.mouseDragged(x, y, mouseEvent.button);
+            } else {
+                midlet.mouseDragged(mouseEvent.x, mouseEvent.y, mouseEvent.button);
+            }
+
+        } else {
+
+            if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
+                final ScalableListener scalableListener = displayInfo.getScalableListener();
+                final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
+                final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
+
+                midlet.mouseDragged(x, y, mouseEvent.button);
+            } else {
+                midlet.mouseDragged(mouseEvent.x, mouseEvent.y, mouseEvent.button);
+            }
+
+        }
+        
+    }    
+    
+}

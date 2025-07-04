@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: test.CLDC10APIDeclarationsTest
+-------------------------------------------------------------------------------
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in test.CLDC10APIDeclarationsTest

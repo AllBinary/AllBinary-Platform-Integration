@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="maven-antrun-" default="main">
+  <target name="main">
+    <copy file="G:\mnt\bc\mydev\working_thirdparty\embedded\j2me\microemulator\allbinary_3.0.0\trunk\microemulator\microemulator/assembly.manifest" todir="G:\mnt\bc\mydev\working_thirdparty\embedded\j2me\microemulator\allbinary_3.0.0\trunk\microemulator\microemulator\target" overwrite="true" />
+    <tstamp>
+      <format property="TODAY" pattern="yyyy-MM-dd hh:mm:ss" />
+    </tstamp>
+    <echo>pom.xml: timestamp ${TODAY}</echo>
+    <replace dir="G:\mnt\bc\mydev\working_thirdparty\embedded\j2me\microemulator\allbinary_3.0.0\trunk\microemulator\microemulator\target">
+      <include name="assembly.manifest" />
+      <replacefilter value="3.0.0-SNAPSHOT" token="#build#" />
+      <replacefilter value="3.0.0-SNAPSHOT" token="#version#" />
+      <replacefilter value="User" token="#user.name#" />
+      <replacefilter value="${TODAY}" token="#today#" />
+      <replacefilter value="${scm.revision}" token="#scm.revision#" />
+    </replace>
+  </target>
+</project>

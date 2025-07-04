@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: test.MIDP20APIDeclarationsTest
+-------------------------------------------------------------------------------
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in test.MIDP20APIDeclarationsTest

@@ -1,0 +1,21 @@
+/*
+ * AllBinary Open Source under General Public License (LGPL) version 2.1 or the Apache License (AL) Version 2.0
+ * Created By: Travis Berthelot
+ */
+package org.microemu.device.platform;
+
+import javax.microedition.lcdui.Graphics;
+
+import org.microemu.device.j2se.J2SEDisplayGraphics;
+import org.microemu.device.j2se.J2SEGraphicsSurface;
+
+/**
+ *
+ * @author User
+ */
+public class DisplayGraphicsFactory {
+    
+    public static Graphics getInstance(Object repaintObject) {
+        return new J2SEDisplayGraphics((J2SEGraphicsSurface) repaintObject);
+    }
+}

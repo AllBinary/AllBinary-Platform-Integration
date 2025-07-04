@@ -1,0 +1,6 @@
+javax\wireless\messaging\MessageConnection.class
+javax\wireless\messaging\MessageListener.class
+javax\wireless\messaging\TextMessage.class
+org\microemu\cldc\sms\Connection.class
+javax\wireless\messaging\BinaryMessage.class
+javax\wireless\messaging\Message.class

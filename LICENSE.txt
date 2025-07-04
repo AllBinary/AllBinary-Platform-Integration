@@ -1,5 +1,28 @@
-This repository is multi-licensed under open source licenses: Apache, LGPL/EPL, and MIT
+This repository is multi-licensed: 
 
-Each project in this repository has its license listed below:
+Most of the code is under open source licenses: Apache, LGPL/EPL, and MIT
+Some is under a commercial license: AllBinary Open License Version 1.0
 
-antenna license: You may use the preprocessor under LGPL or EPL. (see the included LICENSE-LGPL and LICENSE-EPL for more information).
+Each open source project in this repository has its license listed below:
+
+antenna license info: You may use the preprocessor under LGPL or EPL. (see the included LICENSE-LGPL and LICENSE-EPL for more information).
+
+microemulator license info: 
+
+MicroEmulator is free software.
+
+Most source files in the project are available to be
+redistributed and/or modified under the terms of either the GNU Lesser
+General Public License (LGPL) version 2.1 or the Apache License (AL)
+Version 2.0.  Some files are available under more
+liberal terms, but we believe that in all cases, each file may be used
+under either the LGPL or the MPL.
+
+See the following files in this directory for the precise terms and
+conditions of either license:
+
+	COPYING-LGPL-2.1
+	COPYING-AL-2.0
+
+Please see each file in the implementation for Copyright and licensing
+information.

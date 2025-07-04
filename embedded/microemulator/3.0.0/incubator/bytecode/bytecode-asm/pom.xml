@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0">
+    <!-- @version $Revision: 700 $ ($Author: vlads $) $Date: 2007-02-11 13:32:44 -0600 (Sun, 11 Feb 2007) $ -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.microemu</groupId>
+        <artifactId>bytecode</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>org.microemu</groupId>
+    <artifactId>bytecode-asm</artifactId>
+    <name>bytecode-asm</name>
+    <version>0.0.1</version>
+
+    <description>bytecode-asm</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+
+        <!--dependency>
+            <groupId>org.microemu</groupId>
+            <artifactId>bytecode-test-app</artifactId>
+            <version>0.0.1</version>
+        </dependency-->
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <!-- 
+                <version>2.5.1</version>
+                <version>2.3.2</version>
+                -->
+                <configuration> 
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+
+
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.4</source>
+                    <target>1.4</target>
+                </configuration>
+            </plugin>
+
+            <!-- jar-with-dependencies -->
+            <plugin>
+               <artifactId>maven-assembly-plugin</artifactId>
+               <executions>
+                   <execution>
+                       <phase>package</phase>
+                       <goals><goal>attached</goal></goals>
+                   </execution>
+               </executions>
+               <configuration>
+                   <descriptors>
+                       <descriptor>applet-assembly.xml</descriptor>
+                   </descriptors>
+               </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>

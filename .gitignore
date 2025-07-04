@@ -1,1 +1,9 @@
-**/target
+*.class
+*.iml
+.idea
+.project
+.classpath
+.settings/
+target/
+bin/
+gen/

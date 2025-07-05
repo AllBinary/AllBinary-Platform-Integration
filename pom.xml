@@ -46,6 +46,7 @@
         <module>./graphics/opengl/min3d/Min3dBaseJavaLibraryM</module>
         
         <module>./communication/XmlRpc/XmlRpcJavaLibraryM</module>
+        <module>./data/json/j2me-json</module>
         <module>./graphics/layer/TiledJSONJavaLibraryM</module>
         
     </modules>

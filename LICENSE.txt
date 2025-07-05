@@ -26,3 +26,9 @@ conditions of either license:
 
 Please see each file in the implementation for Copyright and licensing
 information.
+
+SWT uses EPL 2 license
+
+Java Graphics Society uses MIT license
+
+Min3d uses MIT license

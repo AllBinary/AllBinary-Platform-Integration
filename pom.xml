@@ -43,6 +43,7 @@
         
         <module>./embedded/j2me/microemulator/custom/MicroemulatorSkinJavaLibraryM</module>
 
+        <module>./graphics/opengl/min3d/Min3dBaseJavaLibraryM</module>
         
     </modules>
 

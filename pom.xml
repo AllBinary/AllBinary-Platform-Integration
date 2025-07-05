@@ -40,6 +40,8 @@
         <module>./embedded/j2me/microemulator/custom/MicroEmulatorCustomUIBaseJavaLibraryM</module>
         <module>./embedded/j2me/microemulator/custom/MicroEmulatorCustomUIJavaLibraryM</module>
         <module>./embedded/j2me/microemulator/custom/MicroEmulatorCustomUIPreJavaLibraryM</module>
+        
+        <module>./embedded/j2me/microemulator/custom/MicroemulatorSkinJavaLibraryM</module>
 
         
     </modules>

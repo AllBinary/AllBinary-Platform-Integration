@@ -45,6 +45,8 @@
 
         <module>./graphics/opengl/min3d/Min3dBaseJavaLibraryM</module>
         
+        <module>./graphics/layer/TiledJSONJavaLibraryM</module>
+        
     </modules>
 
     <dependencies>

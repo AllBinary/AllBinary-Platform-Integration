@@ -32,3 +32,5 @@ SWT uses EPL 2 license
 Java Graphics Society uses MIT license
 
 Min3d uses MIT license
+
+XmlRpc uses ASL and ASL 2

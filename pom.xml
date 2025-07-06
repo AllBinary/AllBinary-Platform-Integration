@@ -51,7 +51,6 @@
         <module>./graphics/layer/TiledJSONJavaLibraryM</module>
         
         <module>./embedded/j2me/microemulator/custom/MicroEmulatorCustomGameJavaLibraryM</module>
-        <module>./embedded/j2me/microemulator/custom/GDFormJavaLibraryM</module>
         
     </modules>
 

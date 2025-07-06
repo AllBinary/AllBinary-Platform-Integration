@@ -49,6 +49,8 @@
         <module>./data/json/j2me-json</module>
         <module>./graphics/layer/TiledJSONJavaLibraryM</module>
         
+        <module>./embedded/j2me/microemulator/custom/MicroEmulatorCustomGameJavaLibraryM</module>
+        
     </modules>
 
     <dependencies>

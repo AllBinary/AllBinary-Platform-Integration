@@ -2,15 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.allbinary.game.gd</groupId>
-        <artifactId>GDGameParent</artifactId>
-        <!-- Game Version Start -->
-        <version>1.0.0-SNAPSHOT</version>
-        <!-- Game Version End -->
-    </parent>
-
+    <groupId>org.allbinary.game.gd</groupId>
     <artifactId>GDFormJavaLibrary</artifactId>
+    <!-- Game Version Start -->
+    <version>1.0.0-SNAPSHOT</version>
+    <!-- Game Version End -->
+
     <packaging>jar</packaging>
 
     <name>GDFormJavaLibrary</name>
@@ -33,7 +30,7 @@
             <groupId>org.allbinary</groupId>
             <artifactId>AllBinaryOptionalBasePlatformJavaLibrary</artifactId>
             <!-- AllBinary Platform Version Start -->
-            <version>${allbinary.platform.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
             <!-- AllBinary Platform Version End -->
             <optional>true</optional>
         </dependency>
@@ -41,7 +38,7 @@
             <groupId>org.allbinary</groupId>
             <artifactId>J2MEForJ2MEJavaLibrary</artifactId>
             <!-- AllBinary Platform Version Start -->
-            <version>${allbinary.platform.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
             <!-- AllBinary Platform Version End -->
             <optional>true</optional>
         </dependency>
@@ -50,7 +47,7 @@
             <groupId>org.allbinary.game.multiplayer</groupId>
             <artifactId>AllBinaryGameClientBaseNullJavaLibrary</artifactId>
             <!-- AllBinary Platform Version Start -->
-            <version>${allbinary.platform.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
             <!-- AllBinary Platform Version End -->
             <optional>true</optional>
         </dependency>
@@ -59,7 +56,7 @@
             <groupId>org.allbinary</groupId>
             <artifactId>GameInputPCMotionJavaLibrary</artifactId>
             <!-- AllBinary Platform Version Start -->
-            <version>${allbinary.platform.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
             <!-- AllBinary Platform Version End -->
             <optional>true</optional>
         </dependency>
@@ -67,16 +64,7 @@
             <groupId>org.allbinary</groupId>
             <artifactId>GameInputNoPersistanceLibrary</artifactId>
             <!-- AllBinary Platform Version Start -->
-            <version>${allbinary.platform.version}</version>
-            <!-- AllBinary Platform Version End -->
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.allbinary</groupId>
-            <artifactId>GameInputNoPersistanceLibrary</artifactId>
-            <!-- AllBinary Platform Version Start -->
-            <version>${allbinary.platform.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
             <!-- AllBinary Platform Version End -->
             <optional>true</optional>
         </dependency>
@@ -85,7 +73,7 @@
             <groupId>org.allbinary</groupId>
             <artifactId>OpenGLNoneOtherJavaLibrary</artifactId>
             <!-- AllBinary Platform Version Start -->
-            <version>${allbinary.platform.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
             <!-- AllBinary Platform Version End -->
             <optional>true</optional>
         </dependency>
@@ -94,7 +82,7 @@
             <groupId>org.allbinary.game.gd</groupId>
             <artifactId>GDGameJavaLibrary</artifactId>
             <!-- AllBinary Platform Version Start -->
-            <version>${allbinary.platform.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
             <!-- AllBinary Platform Version End -->
         </dependency>
 

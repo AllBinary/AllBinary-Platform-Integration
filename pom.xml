@@ -47,6 +47,7 @@
         
         <module>./communication/XmlRpc/XmlRpcJavaLibraryM</module>
         <module>./data/json/j2me-json</module>
+        <module>./data/json/json-20230227</module>
         <module>./graphics/layer/TiledJSONJavaLibraryM</module>
         
         <module>./embedded/j2me/microemulator/custom/MicroEmulatorCustomGameJavaLibraryM</module>

@@ -25,7 +25,7 @@ public class PostLoadSwtPlatformImage extends PostLoadPlatformImage {
 
     @Override
     public void drawImage(final Image image, final int x, final int y, int anchor, final javax.microedition.lcdui.Graphics g2, final Object g) {
-        // logUtil.put(CommonStrings.getInstance().START, this, "drawImage");
+        // logUtil.put(commonStrings.START, this, "drawImage");
         
         int newx = x;
         int newy = y;

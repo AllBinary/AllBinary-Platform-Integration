@@ -50,13 +50,13 @@ public class DisplayThreadPool extends EmuThreadPool
     protected void startTask(Runnable task)
     {
         //System.out.println(new StringBuffer().append(this).append(START_TASK).append(task).append(System.currentTimeMillis()).toString());
-        //logUtil.put(new StringMaker().append(START_TASK).append(task).toString(), this, CommonStrings.getInstance().RUN);
+        //logUtil.put(new StringMaker().append(START_TASK).append(task).toString(), this, commonStrings.RUN);
     }
 
     protected void completedTask(Runnable task)
     {
         //System.out.println(new StringBuffer().append(this).append(COMPLETE_TASK).append(task).append(System.currentTimeMillis()).toString());
-        //logUtil.put(new StringMaker().append(COMPLETE_TASK).append(task).toString(), this, CommonStrings.getInstance().RUN);
+        //logUtil.put(new StringMaker().append(COMPLETE_TASK).append(task).toString(), this, commonStrings.RUN);
     }
 
 }

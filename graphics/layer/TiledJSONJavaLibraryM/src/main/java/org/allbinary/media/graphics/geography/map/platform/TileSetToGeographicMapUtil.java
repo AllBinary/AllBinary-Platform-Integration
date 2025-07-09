@@ -54,12 +54,12 @@ public class TileSetToGeographicMapUtil {
         ObjectGroupData objectGroupData;
         
         //stringMaker.delete(0, stringMaker.length());
-        //logUtil.put(stringMaker.append("tileCount: ").append(tileCount).toString(), this, CommonStrings.getInstance().PROCESS);
+        //logUtil.put(stringMaker.append("tileCount: ").append(tileCount).toString(), this, commonStrings.PROCESS);
 
         for(int index = 0; index < tileCount; index++) {
             
             //stringMaker.delete(0, stringMaker.length());
-            //logUtil.put(stringMaker.append("tile index: ").append(index).toString(), this, CommonStrings.getInstance().PROCESS);
+            //logUtil.put(stringMaker.append("tile index: ").append(index).toString(), this, commonStrings.PROCESS);
             
             tile = tileSet.getTile(index);
             objectGroupList = tile.getObjectgroup();
@@ -71,7 +71,7 @@ public class TileSetToGeographicMapUtil {
                     this.add(map, objectGroupData.getName(), objectGroupData.getId() + 1, stringMaker);
                 }
             } else {
-                //logUtil.put(OTHER, this, CommonStrings.getInstance().PROCESS);
+                //logUtil.put(OTHER, this, commonStrings.PROCESS);
                 this.add(map, OTHER, index + 1, stringMaker);
             }
 
@@ -83,7 +83,7 @@ public class TileSetToGeographicMapUtil {
     protected void add(final Hashtable map, final String name, final int id, final StringMaker stringMaker) {
         
         //stringMaker.delete(0, stringMaker.length());
-        //logUtil.put(stringMaker.append(name).append(CommonSeps.getInstance().EQUALS).append(id).toString(), this, CommonStrings.getInstance().PROCESS);
+        //logUtil.put(stringMaker.append(name).append(CommonSeps.getInstance().EQUALS).append(id).toString(), this, commonStrings.PROCESS);
 
         BasicArrayList idsWithTypeList = (BasicArrayList) map.get(name);
         if (idsWithTypeList == null) {

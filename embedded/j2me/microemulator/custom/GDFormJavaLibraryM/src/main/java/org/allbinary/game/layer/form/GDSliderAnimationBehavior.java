@@ -35,6 +35,8 @@ import org.allbinary.math.RectangleCollisionUtil;
  */
 public class GDSliderAnimationBehavior extends GDItemAnimationBehavior 
 implements GDGameLayerItemStateListener {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private final RectangleCollisionUtil rectangleCollisionUtil = RectangleCollisionUtil.getInstance();
     
@@ -87,12 +89,12 @@ implements GDGameLayerItemStateListener {
                 gameLayer.getX() + sliderAnimation.getThumbDx() + sliderAnimation.getThumbWidth(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
                 this.point = point;
                 this.deltaFromPointToStartOfThumb = this.point.getX() - (gameLayer.getX() + sliderAnimation.getThumbDx());
-                //LogUtil.put(LogFactory.getInstance("deltaFromPointToStartOfThumb: " + deltaFromPointToStartOfThumb, this, "onMotionGestureEvent"));
+                //logUtil.put("deltaFromPointToStartOfThumb: " + deltaFromPointToStartOfThumb, this, "onMotionGestureEvent");
                 draggingThumb = true;
             } else if (rectangleCollisionUtil.isInside(gameLayer.getX(), gameLayer.getY() - 2, 
                 gameLayer.getX2(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
                 final int value2 = point.getX() - gameLayer.getX() - (sliderAnimation.getThumbWidth() / 2);
-                //LogUtil.put(LogFactory.getInstance("moveThumbTo: " + value2, this, "onMotionGestureEvent"));
+                //logUtil.put("moveThumbTo: " + value2, this, "onMotionGestureEvent");
                 this.setValue2(value2);
             }
         } else if(motionGestureInput == touchMotionGestureFactory.RELEASED) {

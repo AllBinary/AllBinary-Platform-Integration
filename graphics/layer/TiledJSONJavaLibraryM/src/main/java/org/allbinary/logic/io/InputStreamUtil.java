@@ -20,6 +20,8 @@ import org.allbinary.logic.communication.log.LogUtil;
 
 public class InputStreamUtil
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private static final InputStreamUtil instance = new InputStreamUtil();
 
@@ -43,7 +45,7 @@ public class InputStreamUtil
         int len = 0;
         int max = buffer.length;
 
-        //LogUtil.put(LogFactory.getInstance("size: " + size, this, commonStrings.PROCESS));
+        //logUtil.put("size: " + size, this, commonStrings.PROCESS);
         
         if(size > 0) {
             max = size;
@@ -51,9 +53,9 @@ public class InputStreamUtil
 
         while ((len = inputStream.read(buffer, total, max - total)) > 0 || (size != 0 && inputStream.available() > 0))
         {
-            //LogUtil.put(LogFactory.getInstance("len: " + len, this, commonStrings.PROCESS));
+            //logUtil.put("len: " + len, this, commonStrings.PROCESS);
             total = total + len;
-            //LogUtil.put(LogFactory.getInstance("total: " + total, this, commonStrings.PROCESS));
+            //logUtil.put("total: " + total, this, commonStrings.PROCESS);
         }
        
         return total;

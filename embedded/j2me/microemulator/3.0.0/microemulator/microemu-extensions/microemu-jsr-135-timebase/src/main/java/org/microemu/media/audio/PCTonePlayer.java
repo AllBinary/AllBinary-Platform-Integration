@@ -35,6 +35,8 @@ import org.microemu.media.RunnableInterface;
 public class PCTonePlayer extends BasicPlayer
    implements RunnableInterface
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
    
    private PCToneControl pcToneControl;
    
@@ -148,11 +150,11 @@ public class PCTonePlayer extends BasicPlayer
             double power = noteDelta/12.0;
             double d_frequency = 440 * Math.pow(2.0, power);
             
-            //LogUtil.put(LogFactory.getInstance("Note: " + currentByte + " Power: " + power, this, "playBlock"));
+            //logUtil.put("Note: " + currentByte + " Power: " + power, this, "playBlock");
             
             toneInfo.setFrequency((int) d_frequency);
             
-            //LogUtil.put(LogFactory.getInstance(toneInfo.toString(), this, "playBlock"));
+            //logUtil.put(toneInfo.toString(), this, "playBlock");
             
             Manager.playTone(
                toneInfo.getFrequency(),
@@ -175,7 +177,7 @@ public class PCTonePlayer extends BasicPlayer
    {
       try
       {
-         //LogUtil.put(LogFactory.getInstance("Start", this, "run"));
+         //logUtil.put("Start", this, "run");
          
          this.sequenceIndex = 0;
          
@@ -191,13 +193,13 @@ public class PCTonePlayer extends BasicPlayer
             {
                int version = this.getNext();
                //do nothing I don't give a crap about no versioning
-               //LogUtil.put(LogFactory.getInstance("Version: " + version, this, "run"));
+               //logUtil.put("Version: " + version, this, "run");
             }
             else
                if(currentControlCommand == ToneControl.SET_VOLUME)
                {
                toneInfo.setVolume(this.getNext());
-               //LogUtil.put(LogFactory.getInstance("Volume: " + toneInfo.getVolume(), this, "run"));
+               //logUtil.put("Volume: " + toneInfo.getVolume(), this, "run");
                }
                else
                   if(currentControlCommand == ToneControl.TEMPO)
@@ -205,41 +207,41 @@ public class PCTonePlayer extends BasicPlayer
                //TWB - add conversion from tempo to length of time
                //Beats Per Minute is 4 times tempo
                byte tempo = this.getNext();
-               //LogUtil.put(LogFactory.getInstance("Tempo: " + tempo, this, "run"));
+               //logUtil.put("Tempo: " + tempo, this, "run");
                double resolutionDenominator = 64;
                double durationOfNote = 60 * 4 / (1/resolutionDenominator * tempo);
                toneInfo.setLengthOfTime((int) durationOfNote/16);
-               //LogUtil.put(LogFactory.getInstance("Length Of Time: " + toneInfo.getLengthOfTime(), this, "run"));
+               //logUtil.put("Length Of Time: " + toneInfo.getLengthOfTime(), this, "run");
                   }
                   else
                      if(currentControlCommand == ToneControl.SILENCE)
                      {
                toneInfo.setSleepDelay(this.getNext());
-               //LogUtil.put(LogFactory.getInstance("Silence: " + toneInfo.getSleepDelay(), this, "run"));
+               //logUtil.put("Silence: " + toneInfo.getSleepDelay(), this, "run");
                Thread.sleep(toneInfo.getSleepDelay());
                      }
                      else
                         if(currentControlCommand == ToneControl.PLAY_BLOCK ||
                currentControlCommand == ToneControl.BLOCK_START)
                         {
-               //LogUtil.put(LogFactory.getInstance("Start = -5/Play Block: " + currentControlCommand, this, "run"));
+               //logUtil.put("Start = -5/Play Block: " + currentControlCommand, this, "run");
                this.playBlock();
                         }
                         else
                         {
                //TWB - Should not happen - But Shit Happens
-//               LogUtil.put(LogFactory.getInstance(
+//               logUtil.put(
 //                  "Unknown Command: " + currentControlCommand +
-//                  " at index: " + this.sequenceIndex, this, "run"));
+//                  " at index: " + this.sequenceIndex, this, "run");
                         }
          }
          
          super.stop();
-         //LogUtil.put(LogFactory.getInstance("End", this, "run"));
+         //logUtil.put("End", this, "run");
       }
       catch (Exception e)
       {
-//         LogUtil.put(LogFactory.getInstance("Exception", this, "run", e));
+//         logUtil.put("Exception", this, "run", e);
       }
    }
 }

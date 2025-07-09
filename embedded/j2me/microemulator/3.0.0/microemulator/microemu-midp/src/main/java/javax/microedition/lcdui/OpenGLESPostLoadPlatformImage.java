@@ -10,6 +10,8 @@ package javax.microedition.lcdui;
  * @author User
  */
 public class OpenGLESPostLoadPlatformImage extends PlatformImage {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private static final OpenGLESPostLoadPlatformImage instance = new OpenGLESPostLoadPlatformImage();
 
@@ -47,7 +49,7 @@ public class OpenGLESPostLoadPlatformImage extends PlatformImage {
     
     @Override
     public void drawImage(final Image image, final int x, final int y, int anchor, final javax.microedition.lcdui.Graphics g2, final Object g) {
-        // LogUtil.put(LogFactory.getInstance(CommonStrings.getInstance().START, this, "drawImage"));
+        // logUtil.put(CommonStrings.getInstance().START, this, "drawImage");
         g2.drawImage(image, x, y, anchor);
     }
 

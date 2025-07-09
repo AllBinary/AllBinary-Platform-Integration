@@ -27,6 +27,8 @@ import org.allbinary.time.TimeDelayHelper;
  */
 public class TextFieldItem extends TextItem
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
     private final FontDebugFactory fontDebugFactory = FontDebugFactory.getInstance();
     private final int defaultSize = Font.getDefaultFont().getSize();
 
@@ -57,7 +59,7 @@ public class TextFieldItem extends TextItem
     {
         super(label, layout, altText, backgroundBasicColor, foregroundBasicColor);
 
-        LogUtil.put(LogFactory.getInstance(commonStrings.START + font.getSize(), this, commonStrings.CONSTRUCTOR));
+        logUtil.put(commonStrings.START + font.getSize(), this, commonStrings.CONSTRUCTOR);
         
         this.stringComponent = new StringComponent(null, font, backgroundBasicColor, foregroundBasicColor);
         
@@ -92,7 +94,7 @@ public class TextFieldItem extends TextItem
 
     public void setCaretVisible(boolean caretVisible)
     {
-        LogUtil.put(LogFactory.getInstance(commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible));
+        logUtil.put(commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible);
         this.caretVisible = caretVisible;
     }
 
@@ -115,7 +117,7 @@ public class TextFieldItem extends TextItem
     
     public void setFocus(boolean state)
     {
-        LogUtil.put(LogFactory.getInstance(commonStrings.START, this, "setFocus: " + state));
+        logUtil.put(commonStrings.START, this, "setFocus: " + state);
         
         this.caretVisible = state;
         

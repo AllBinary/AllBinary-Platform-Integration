@@ -28,6 +28,8 @@ import org.mapeditor.core.TiledMap;
 import org.mapeditor.io.GDJSONMapReader;
 
 public class TiledMapLoaderFromJSONFactory {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private static final TiledMapLoaderFromJSONFactory instance = new TiledMapLoaderFromJSONFactory();
 
@@ -45,7 +47,7 @@ public class TiledMapLoaderFromJSONFactory {
         TiledMap map = null;
         try {
             
-            //LogUtil.put(LogFactory.getInstance("Loading Tiled Map available: " + inputStream.available(), this, commonStrings.PROCESS));
+            //logUtil.put("Loading Tiled Map available: " + inputStream.available(), this, commonStrings.PROCESS);
             final byte[] byteArray = new byte[262144];
             
             final JSONObject tileMapJSONObject = this.getJSONAsString(tileMapInputStream, byteArray, size);
@@ -56,16 +58,16 @@ public class TiledMapLoaderFromJSONFactory {
                 tileSetJSONObjectArray[index] = this.getJSONAsString(tileSetInputStreamArray[index], byteArray, sizeArray2[index]);
             }
             
-            //LogUtil.put(LogFactory.getInstance("Loading Tiled Map JSON", this, commonStrings.PROCESS));
+            //logUtil.put("Loading Tiled Map JSON", this, commonStrings.PROCESS);
             
             map = mapReader.buildMap(tileMapJSONObject, tileSetJSONObjectArray, tileSetImageHeightArray);
             
-            //LogUtil.put(LogFactory.getInstance("Loading Tiled Map BuildMap", this, commonStrings.PROCESS));
+            //logUtil.put("Loading Tiled Map BuildMap", this, commonStrings.PROCESS);
             
             return map;
 
         } catch (Exception e) {
-            LogUtil.put(LogFactory.getInstance(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e));
+            logUtil.put(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e);
             return null;
         }
 
@@ -81,7 +83,7 @@ public class TiledMapLoaderFromJSONFactory {
         final int len = streamUtil.get(inputStream, byteArray, size);
         final String jsonAsString = new String(byteArray, 0, len);
 
-        //LogUtil.put(LogFactory.getInstance("Loading Tiled Map String: " + gameAsConfiguration.length(), this, commonStrings.PROCESS));
+        //logUtil.put("Loading Tiled Map String: " + gameAsConfiguration.length(), this, commonStrings.PROCESS);
         final JSONTokener jsonTokener = new JSONTokener(jsonAsString);
         return (JSONObject) jsonTokener.nextValue();
     }

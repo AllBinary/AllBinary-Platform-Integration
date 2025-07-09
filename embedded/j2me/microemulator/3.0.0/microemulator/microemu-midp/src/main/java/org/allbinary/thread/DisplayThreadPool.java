@@ -19,6 +19,8 @@ package org.allbinary.thread;
  */
 public class DisplayThreadPool extends EmuThreadPool
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     //Watch out for the Android/J2ME thread limit
     private static final EmuThreadPool THREAD_POOL = new DisplayThreadPool(1);
@@ -36,7 +38,7 @@ public class DisplayThreadPool extends EmuThreadPool
     public synchronized void runTask(Runnable task)
     {
         //System.out.println(new StringBuffer().append(this).append(START_LABEL).append(task).append(System.currentTimeMillis()).toString());
-        //LogUtil.put(LogFactory.getInstance(new StringMaker().append(CommonLabels.getInstance().START_LABEL).append(task).toString(), this, "runTask"));
+        //logUtil.put(new StringMaker().append(CommonLabels.getInstance().START_LABEL).append(task).toString(), this, "runTask");
 
         super.runTask(task);
     }
@@ -48,13 +50,13 @@ public class DisplayThreadPool extends EmuThreadPool
     protected void startTask(Runnable task)
     {
         //System.out.println(new StringBuffer().append(this).append(START_TASK).append(task).append(System.currentTimeMillis()).toString());
-        //LogUtil.put(LogFactory.getInstance(new StringMaker().append(START_TASK).append(task).toString(), this, CommonStrings.getInstance().RUN));
+        //logUtil.put(new StringMaker().append(START_TASK).append(task).toString(), this, CommonStrings.getInstance().RUN);
     }
 
     protected void completedTask(Runnable task)
     {
         //System.out.println(new StringBuffer().append(this).append(COMPLETE_TASK).append(task).append(System.currentTimeMillis()).toString());
-        //LogUtil.put(LogFactory.getInstance(new StringMaker().append(COMPLETE_TASK).append(task).toString(), this, CommonStrings.getInstance().RUN));
+        //logUtil.put(new StringMaker().append(COMPLETE_TASK).append(task).toString(), this, CommonStrings.getInstance().RUN);
     }
 
 }

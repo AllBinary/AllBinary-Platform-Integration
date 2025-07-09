@@ -26,6 +26,8 @@ import org.allbinary.logic.util.visitor.Visitor;
 
 public class TextFieldItemHelper
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
     protected final GameInputStrings gameInputStrings = GameInputStrings.getInstance();
     
     private final Canvas canvas;
@@ -55,7 +57,7 @@ public class TextFieldItemHelper
     {
         try {
             
-            //LogUtil.put(LogFactory.getInstance(commonStrings.START_LABEL + keyCode, this, gameInputStrings.KEY_PRESSED));
+            //logUtil.put(commonStrings.START_LABEL + keyCode, this, gameInputStrings.KEY_PRESSED);
             //PreLogUtil.put(commonStrings.START_LABEL + keyCode, this, gameInputStrings.KEY_PRESSED);
 
             final PlatformKeyFactory platformKeyFactory
@@ -73,7 +75,7 @@ public class TextFieldItemHelper
                 //( (InputToGameKeyMapping) 
                 //      PlatformInputMappingFactory.getInstance()).getInstance(keyCode);
 
-                //LogUtil.put(LogFactory.getInstance("GameKey: " + gameKey, this, gameInputStrings.KEY_PRESSED));
+                //logUtil.put("GameKey: " + gameKey, this, gameInputStrings.KEY_PRESSED);
                 if (gameKey == gameKeyFactory.LEFT || platformKeyFactory.isLeft(input)) {
                     PreLogUtil.put("Position Change", this, gameInputStrings.KEY_PRESSED);
                     this.caretPositionChanged(this.textFieldItem.getCaretPosition() - 1);
@@ -105,14 +107,14 @@ public class TextFieldItemHelper
             
         } catch(Exception e) {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            LogUtil.put(LogFactory.getInstance(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e));
+            logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
         }
         return true;
     }
     
     private void setCaretPosition(int position)
     {
-        //LogUtil.put(LogFactory.getInstance("Position: " + position, this, "setCaretPosition"));
+        //logUtil.put("Position: " + position, this, "setCaretPosition");
 
         textFieldItem.setCaretPosition(position);
 

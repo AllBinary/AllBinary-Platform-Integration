@@ -75,6 +75,8 @@ import org.microemu.device.impl.Shape;
 import org.microemu.device.impl.SoftButton;
 
 public class SwtDeviceDisplay extends DeviceDisplayImpl {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
     
     private final CommonStrings commonStrings = CommonStrings.getInstance();
     
@@ -170,12 +172,12 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
         {       
             if(lastRatio != ratio)
             {
-                LogUtil.put(LogFactory.getInstance(new StringMaker().append(RATIO_LABEL).append(ratio).toString(), this, SCALE_VIEW_METHOD_NAME));
+                logUtil.put(new StringMaker().append(RATIO_LABEL).append(ratio).toString(), this, SCALE_VIEW_METHOD_NAME);
                 //set the scale value here
                 SwtDeviceDisplay.this.ratio = ratio;
                 lastRatio = ratio;
             } else {
-                //LogUtil.put(LogFactory.getInstance(new StringMaker().append("Unchanged").append(RATIO_LABEL).append(ratio).toString(), this, SCALE_VIEW_METHOD_NAME));
+                //logUtil.put(new StringMaker().append("Unchanged").append(RATIO_LABEL).append(ratio).toString(), this, SCALE_VIEW_METHOD_NAME);
             }
         }
 

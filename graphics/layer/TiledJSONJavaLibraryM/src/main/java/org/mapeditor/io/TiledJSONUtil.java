@@ -21,6 +21,8 @@ import org.allbinary.logic.string.StringUtil;
  * @author User
  */
 public class TiledJSONUtil {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     
     private static final TiledJSONUtil instance = new TiledJSONUtil();
 
@@ -81,13 +83,13 @@ public class TiledJSONUtil {
         final int height = mapData.length;
 
         //final CommonStrings commonStrings = CommonStrings.getInstance();
-        //LogUtil.put(LogFactory.getInstance(stringBuilder.append(width).append(':').append(height).toString(), this, commonStrings.PROCESS));
+        //logUtil.put(stringBuilder.append(width).append(':').append(height).toString(), this, commonStrings.PROCESS);
         
         final byte[] byteArray = new byte[width * height * 4];
         final int size = new GDJSONMapDataWriter().write(width, height, mapData, byteArray, stringBuilder);
         final byte[] encodeData = org.apache.xmlrpc.Base64.encode(byteArray);
         //stringBuilder.delete(0, stringBuilder.length());
-        //LogUtil.put(LogFactory.getInstance(stringBuilder.append("size: ").append(size).toString(), this, commonStrings.PROCESS));
+        //logUtil.put(stringBuilder.append("size: ").append(size).toString(), this, commonStrings.PROCESS);
 
         final String dataAsString = new String(encodeData).replace(CommonSeps.getInstance().NEW_LINE, StringUtil.getInstance().EMPTY_STRING);
         stringBuilder.delete(0, stringBuilder.length());
@@ -95,7 +97,7 @@ public class TiledJSONUtil {
         this.append(width, height, this.DEFAULT_TILE_SET, tileWidth, tileHeight, dataAsString, stringBuilder);
         
         final String tiledAsString = stringBuilder.toString();
-        //LogUtil.put(LogFactory.getInstance(tiledAsString, this, commonStrings.PROCESS));
+        //logUtil.put(tiledAsString, this, commonStrings.PROCESS);
         return tiledAsString;
     }
     

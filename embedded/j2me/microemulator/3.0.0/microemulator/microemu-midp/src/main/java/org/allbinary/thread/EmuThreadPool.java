@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class EmuThreadPool
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     //protected final CommonStrings commonStrings = CommonStrings.getInstance();
 
     protected final String START_TASK = "Started Task: ";
@@ -57,7 +59,7 @@ public class EmuThreadPool
         if (task != null)
         {
 
-            //LogUtil.put(LogFactory.getInstance("Add: ").append(task, this, "runTask"));
+            //logUtil.put("Add: ").append(task, this, "runTask");
             //PreLogUtil.put("Add: ").append(task, this, "runTask");
 
             taskQueue.add(task);
@@ -174,7 +176,7 @@ public class EmuThreadPool
                 {
                     task = getTask();
                     //System.out.println(task + " with Thread: " + this.toString());
-                    //LogUtil.put(LogFactory.getInstance(task + " with Thread: " + this.toString(), this, commonStrings.RUN));
+                    //logUtil.put(task + " with Thread: " + this.toString(), this, commonStrings.RUN);
                     runningTask = true;
 
                     startTask(task);
@@ -183,7 +185,7 @@ public class EmuThreadPool
                 {
                     ex.printStackTrace();
                     System.out.println(INTERRUPT_EXCEPTION);
-                    //LogUtil.put(LogFactory.getInstance(INTERRUPT_EXCEPTION, this, commonStrings.RUN));
+                    //logUtil.put(INTERRUPT_EXCEPTION, this, commonStrings.RUN);
                     break;
                 }
 
@@ -208,7 +210,7 @@ public class EmuThreadPool
                     e.printStackTrace();
                     final String EXCEPTION_LABEL = "Exception: ";
                     System.out.println(new StringBuffer().append(EXCEPTION_LABEL).append(task).toString());
-                    //LogUtil.put(LogFactory.getInstance(new StringMaker().append(commonStrings.EXCEPTION_LABEL).append(task).toString(), this, commonStrings.RUN, e));
+                    //logUtil.put(new StringMaker().append(commonStrings.EXCEPTION_LABEL).append(task).toString(), this, commonStrings.RUN, e);
                 }
             }
 

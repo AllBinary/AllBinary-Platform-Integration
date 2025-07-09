@@ -47,6 +47,8 @@ import org.allbinary.util.BasicArrayList;
 
 public class GDForm extends GDFormInput
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
     public static int OUTOFITEM = Integer.MAX_VALUE;
 
     private final CommonStrings commonStrings = CommonStrings.getInstance();
@@ -73,16 +75,16 @@ public class GDForm extends GDFormInput
     }
 
     public void open() {
-        LogUtil.put(LogFactory.getInstance(commonStrings.START, this, "open"));
+        logUtil.put(commonStrings.START, this, "open");
     }
 
     public void close() throws Exception {
-        LogUtil.put(LogFactory.getInstance(commonStrings.START, this, commonStrings.CLOSE));
+        logUtil.put(commonStrings.START, this, commonStrings.CLOSE);
     }
 
     @Override
     public void onEvent(final int keyCode, final int deviceId, final boolean repeated) {
-        LogUtil.put(LogFactory.getInstance(Integer.toString(keyCode), this, "onEvent"));
+        logUtil.put(Integer.toString(keyCode), this, "onEvent");
         this.keyPressed(keyCode);
     }
     
@@ -102,11 +104,11 @@ public class GDForm extends GDFormInput
     }
     
     public void onPressGameKeyEvent(GameKeyEvent gameKeyEvent) {
-        LogUtil.put(LogFactory.getInstance(new StringMaker().append("KeyCode: ").append(gameKeyEvent.getKey()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY));
+        logUtil.put(new StringMaker().append("KeyCode: ").append(gameKeyEvent.getKey()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY);
         this.keyPressed(gameKeyEvent.getKey());
 
         BasicArrayList list = this.inputToGameKeyMapping.getReverseInstance(gameKeyEvent.getKey());
-        LogUtil.put(LogFactory.getInstance(new StringMaker().append("getReverseInstance list size: ").append(list.size()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY));
+        logUtil.put(new StringMaker().append("getReverseInstance list size: ").append(list.size()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY);
         
 //        for (int index = 0; index < list.size(); index++) {
 //            Input input = (Input) list.objectArray[index];
@@ -233,7 +235,7 @@ public class GDForm extends GDFormInput
 
         final GameKey gameKey = this.inputToGameKeyMapping.getInstance(keyCode);
 
-        LogUtil.put(LogFactory.getInstance(new StringMaker().append("GameKey: ").append(gameKey.toString()).append(" KeyCode: ").append(keyCode).toString(), this, gameInputStrings.KEY_PRESSED));
+        logUtil.put(new StringMaker().append("GameKey: ").append(gameKey.toString()).append(" KeyCode: ").append(keyCode).toString(), this, gameInputStrings.KEY_PRESSED);
 
         /*
          * if(focusItemIndex == this.size() - 1 && gameKey == gameKeyFactory.UP &&
@@ -257,13 +259,13 @@ public class GDForm extends GDFormInput
             if (name.length() >= 2) {
                 final int beforeFocusItemIndex = focusItemIndex;
                 if (gameKeyUtil.isDirectionKey(keyCode)) {
-                    //LogUtil.put(LogFactory.getInstance("d focusItemIndex: " + focusItemIndex + " KeyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED));
+                    //logUtil.put("d focusItemIndex: " + focusItemIndex + " KeyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED);
                     this.traverse(gameKey.getId(), 0, this.getHeight());
                 } else if (platformKeyFactory.isUp(input)) {
-                    //LogUtil.put(LogFactory.getInstance("up focusItemIndex: " + focusItemIndex + " KeyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED));
+                    //logUtil.put("up focusItemIndex: " + focusItemIndex + " KeyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED);
                     this.traverse(Canvas.UP, 0, this.getHeight());
                 } else if (platformKeyFactory.isDown(input)) {
-                    //LogUtil.put(LogFactory.getInstance("down focusItemIndex: " + focusItemIndex + " KeyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED));
+                    //logUtil.put("down focusItemIndex: " + focusItemIndex + " KeyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED);
                     this.traverse(Canvas.DOWN, 0, this.getHeight());
                 }
                 if(beforeFocusItemIndex != focusItemIndex) {
@@ -271,7 +273,7 @@ public class GDForm extends GDFormInput
                 }
             }
 
-            LogUtil.put(LogFactory.getInstance(new StringMaker().append("Traversal Value: ").append(traverse).toString(), this, gameInputStrings.KEY_PRESSED));
+            logUtil.put(new StringMaker().append("Traversal Value: ").append(traverse).toString(), this, gameInputStrings.KEY_PRESSED);
 
             /*
              * if(traverseValue == GDGameLayer.OUTOFITEM && focusItemIndex ==
@@ -281,11 +283,11 @@ public class GDForm extends GDFormInput
             if (!traverse) {
                 //gameKey == gameKeyFactory.FIRE || gameKey == gameKeyFactory.LEFT || gameKey == gameKeyFactory.RIGHT
                 if (platformKeyFactory.isEnter(input) || platformKeyFactory.isLeft(input) || platformKeyFactory.isRight(input)) {
-                    LogUtil.put(LogFactory.getInstance(new StringMaker().append("Select: GameKey: ").append(StringUtil.getInstance().toString(gameKey)).toString(), this, gameInputStrings.KEY_PRESSED));
+                    logUtil.put(new StringMaker().append("Select: GameKey: ").append(StringUtil.getInstance().toString(gameKey)).toString(), this, gameInputStrings.KEY_PRESSED);
                     ((GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior()).select(gameKey, keyCode);
                     fireItemStateListener();
                 } else {
-                    LogUtil.put(LogFactory.getInstance(new StringMaker().append("keyPressed: keyCode: ").append(keyCode).toString(), this, gameInputStrings.KEY_PRESSED));
+                    logUtil.put(new StringMaker().append("keyPressed: keyCode: ").append(keyCode).toString(), this, gameInputStrings.KEY_PRESSED);
                     // gameLayerAsItem.keyPressed(gameKey.getId().intValue());
                     ((GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior()).keyPressed(keyCode);
                 }
@@ -294,7 +296,7 @@ public class GDForm extends GDFormInput
     }
     
     public void keyReleased(int keyCode, int deviceId) {
-        // LogUtil.put(LogFactory.getInstance(commonStrings.START, this, gameInputStrings.KEY_RELEASED));
+        // logUtil.put(commonStrings.START, this, gameInputStrings.KEY_RELEASED);
     }
 
     public void showNotify() {
@@ -310,7 +312,7 @@ public class GDForm extends GDFormInput
                 if (animationBehaviorBase.isFocusable()) {
                     animationBehaviorBase.setFocus(true);
                     focusItemIndex = index;
-                    LogUtil.put(LogFactory.getInstance("first item that is focusable: " + focusItemIndex, this, "showNotify"));
+                    logUtil.put("first item that is focusable: " + focusItemIndex, this, "showNotify");
                     break;
                 }
             }
@@ -332,7 +334,7 @@ public class GDForm extends GDFormInput
 
     int traverse(int keyCode, int top, int bottom) {
 
-        //LogUtil.put(LogFactory.getInstance("traverse: keyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED));
+        //logUtil.put("traverse: keyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED);
         
         int height, testItemIndex, traverse, index;
         int topItemIndex, bottomItemIndex;
@@ -342,7 +344,7 @@ public class GDForm extends GDFormInput
         }
 
         if (keyCode == Canvas.UP) {
-            //LogUtil.put(LogFactory.getInstance("traverse: Canvas.UP", this, gameInputStrings.KEY_PRESSED));
+            //logUtil.put("traverse: Canvas.UP", this, gameInputStrings.KEY_PRESSED);
             topItemIndex = getTopVisibleIndex(top);
             if (focusItemIndex == -1) {
                 testItemIndex = topItemIndex;
@@ -352,7 +354,7 @@ public class GDForm extends GDFormInput
                 traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, false);
             } else {
                 testItemIndex = focusItemIndex;
-                LogUtil.put(LogFactory.getInstance("traverse up: " + testItemIndex, this, gameInputStrings.KEY_PRESSED));
+                logUtil.put("traverse up: " + testItemIndex, this, gameInputStrings.KEY_PRESSED);
                 height = getHeightToItem(testItemIndex);
                 final GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[testItemIndex];
                 final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
@@ -411,7 +413,7 @@ public class GDForm extends GDFormInput
         }
         if (keyCode == Canvas.DOWN) {
             bottomItemIndex = getBottomVisibleIndex(bottom);
-            //LogUtil.put(LogFactory.getInstance("traverse: Canvas.DOWN bottomItemIndex: " + bottomItemIndex, this, gameInputStrings.KEY_PRESSED));
+            //logUtil.put("traverse: Canvas.DOWN bottomItemIndex: " + bottomItemIndex, this, gameInputStrings.KEY_PRESSED);
             if (focusItemIndex == -1) {
                 testItemIndex = bottomItemIndex;
                 height = getHeightToItem(testItemIndex);
@@ -420,13 +422,13 @@ public class GDForm extends GDFormInput
                 traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, false);
             } else {
                 testItemIndex = focusItemIndex;
-                LogUtil.put(LogFactory.getInstance("traverse down: " + testItemIndex, this, gameInputStrings.KEY_PRESSED));
+                logUtil.put("traverse down: " + testItemIndex, this, gameInputStrings.KEY_PRESSED);
                 height = getHeightToItem(testItemIndex);
                 GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[testItemIndex];
                 final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
                 traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, true);
             }
-            //LogUtil.put(LogFactory.getInstance("traverse: Canvas.DOWN testItemIndex: " + testItemIndex, this, gameInputStrings.KEY_PRESSED));
+            //logUtil.put("traverse: Canvas.DOWN testItemIndex: " + testItemIndex, this, gameInputStrings.KEY_PRESSED);
             if (traverse == GDForm.OUTOFITEM) {
                 GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[testItemIndex];
                 final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
@@ -438,9 +440,9 @@ public class GDForm extends GDFormInput
                 }
                 return traverse;
             } else {
-                //LogUtil.put(LogFactory.getInstance("traverse: Canvas.DOWN else", this, gameInputStrings.KEY_PRESSED));
+                //logUtil.put("traverse: Canvas.DOWN else", this, gameInputStrings.KEY_PRESSED);
                 if (testItemIndex < this.size() - 1) {
-                    //LogUtil.put(LogFactory.getInstance("traverse: Canvas.DOWN if", this, gameInputStrings.KEY_PRESSED));
+                    //logUtil.put("traverse: Canvas.DOWN if", this, gameInputStrings.KEY_PRESSED);
                     for (index = testItemIndex + 1; index <= bottomItemIndex; index++) {
                         GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[index];
                         final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();

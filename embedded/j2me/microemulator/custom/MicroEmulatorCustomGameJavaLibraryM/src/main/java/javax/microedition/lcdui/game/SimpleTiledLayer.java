@@ -29,6 +29,8 @@ import org.allbinary.layer.Layer;
  */
 public class SimpleTiledLayer extends Layer
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     private final int totalRows, totalColumns;
     private final int tileHeight, tileWidth;
 
@@ -92,14 +94,14 @@ public class SimpleTiledLayer extends Layer
             if (diff > tileWidth)
             {
                 column0 = diff / tileWidth - 1;
-                // LogUtil.put(LogFactory.getInstance("column0: " + column0, this, "paint"));
+                // logUtil.put("column0: " + column0, this, "paint");
             }
 
             diff = width - ((clipX - x) + clipWidth);
             if (diff > tileWidth)
             {
                 maxColumn -= diff / tileWidth + 1;
-                //LogUtil.put(LogFactory.getInstance("maxColumn: " + maxColumn, this, "paint"));
+                //logUtil.put("maxColumn: " + maxColumn, this, "paint");
                 //System.out.println("maxColumn: " + maxColumn);
             }
         }
@@ -113,7 +115,7 @@ public class SimpleTiledLayer extends Layer
             {
                 row0 = diff / tileHeight - 1;
                 
-                // LogUtil.put(LogFactory.getInstance("row0: " + row0, this, "paint"));
+                // logUtil.put("row0: " + row0, this, "paint");
             }
 
             diff = height - ((clipY - y) + clipHeight);
@@ -121,7 +123,7 @@ public class SimpleTiledLayer extends Layer
             {
                 maxRow -= diff / tileHeight + 1;
                 //System.out.println("maxRow: " + maxRow);
-                //LogUtil.put(LogFactory.getInstance("maxRow: " + maxRow, this, "paint"));
+                //logUtil.put("maxRow: " + maxRow, this, "paint");
             }
         }
 

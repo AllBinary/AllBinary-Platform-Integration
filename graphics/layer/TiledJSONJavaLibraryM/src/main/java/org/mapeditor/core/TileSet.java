@@ -58,6 +58,7 @@ import org.allbinary.util.BasicArrayList;
  */
 public class TileSet extends TileSetData //implements Iterable<Tile>
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
 
     private long tilebmpFileLastModified;
     //private TileCutter tileCutter;
@@ -161,7 +162,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
         //final int size2 = this.tileSetImage.getHeight();
         final int size2 = this.tileSetImageHeight;
         
-        LogUtil.put(LogFactory.getInstance(new StringMaker().append("size: ").append(size).append(" size2: ").append(size2).toString(), this, "addTiles"));
+        logUtil.put(new StringMaker().append("size: ").append(size).append(" size2: ").append(size2).toString(), this, "addTiles");
         
         int row = 0;
         Tile tile;
@@ -291,7 +292,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
             tileHeight = t.getHeight();
         }
 
-        //LogUtil.put(LogFactory.getInstance(t.toString(), this, "addTile"));
+        //logUtil.put(t.toString(), this, "addTile");
         
         tiles.put(t.getId(), t);
         this.lastKey = t.getId();
@@ -366,14 +367,14 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      */
     public Tile getTile(int i) {
         try {
-            //LogUtil.put(LogFactory.getInstance("i: " + i, this, "getTile"));
+            //logUtil.put("i: " + i, this, "getTile");
             final Tile tile = tiles.get(i);
             if(tile == null) {
-                LogUtil.put(LogFactory.getInstance("was null for i: " + i, this, "getTile"));
+                logUtil.put("was null for i: " + i, this, "getTile");
             }
             return tile;
         } catch (IndexOutOfBoundsException e) {
-            LogUtil.put(LogFactory.getInstance(CommonStrings.getInstance().EXCEPTION, this, "getTile", e));
+            logUtil.put(CommonStrings.getInstance().EXCEPTION, this, "getTile", e);
         }
         return null;
     }

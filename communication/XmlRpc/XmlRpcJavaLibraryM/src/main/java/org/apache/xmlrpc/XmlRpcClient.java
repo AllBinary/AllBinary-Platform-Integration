@@ -85,6 +85,8 @@ import org.allbinary.logic.communication.log.LogUtil;
  */
 public class XmlRpcClient implements XmlRpcHandler
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
     protected URL url;
     private String auth;
 
@@ -543,7 +545,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 stringBuffer.append(" ReadTimeout: ");
                 stringBuffer.append(con.getReadTimeout());
 
-                LogUtil.put(LogFactory.getInstance(stringBuffer.toString(), this, "execute"));
+                logUtil.put(stringBuffer.toString(), this, "execute");
                 */
                 
                 con.setConnectTimeout(32000);
@@ -565,7 +567,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 //encrypt data for wire
                 if(XmlRpc.debug)
                 {
-                  LogUtil.put(LogFactory.getInstance("XmlRpcClient - execute - Sending: " + new String(request), this, "decSendXMLRPC"));  
+                  logUtil.put("XmlRpcClient - execute - Sending: " + new String(request), this, "decSendXMLRPC");  
                 }
                 
                 byte[] crypted = cryptInterface.encrypt(request);
@@ -573,7 +575,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 ////String cryptedData = PHPCRYPTHEADER + new String(crypted);
                 if(XmlRpc.debug)
                 {
-                    LogUtil.put(LogFactory.getInstance(new String(crypted), this, "encSendXMLRPC"));
+                    logUtil.put(new String(crypted), this, "encSendXMLRPC");
                     ////PreLogUtil.put(new String(crypted), this, "encSendXMLRPC");
                 }
 

@@ -34,6 +34,8 @@ import org.allbinary.math.RectangleCollisionUtil;
  */
 public class GDTextInputAnimationBehavior extends GDItemAnimationBehavior 
     implements GDGameLayerItemStateListener {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     //private final CommonStrings commonStrings = CommonStrings.getInstance();
     
@@ -63,7 +65,7 @@ public class GDTextInputAnimationBehavior extends GDItemAnimationBehavior
     //Show softkeyboard on TextInput::TextInputObject inclusion
     public void add(final GDGameLayer gameLayer) {
         
-        //LogUtil.put(LogFactory.getInstance("InputProcessor for: " + gameLayer, this, commonStrings.ADD));
+        //logUtil.put("InputProcessor for: " + gameLayer, this, commonStrings.ADD);
         this.gameLayer = gameLayer;
         GDFormInputProcessor.gdForm.append(gameLayer);
         GDFormInputProcessor.getInstance().append(GDFormInputProcessor.gdForm);

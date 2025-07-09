@@ -28,6 +28,8 @@ import org.allbinary.logic.communication.log.ForcedLogUtil;
 import org.allbinary.graphics.color.BasicColor;
 
 public class CustomCustomItem extends CustomItem {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     protected final CommonStrings commonStrings = CommonStrings.getInstance();
     
@@ -134,7 +136,7 @@ public class CustomCustomItem extends CustomItem {
 	
 	public int paint(Graphics graphics) {
 	    
-	    //LogUtil.put(LogFactory.getInstance(commonStrings.START, this, "paint"));
+	    //logUtil.put(commonStrings.START, this, "paint");
 	    
 		//super.paintContent(graphics);
 		this.paint(graphics, 0, 0);

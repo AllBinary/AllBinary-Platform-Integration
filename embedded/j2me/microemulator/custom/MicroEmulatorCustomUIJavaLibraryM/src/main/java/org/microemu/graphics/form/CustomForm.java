@@ -29,6 +29,8 @@ import org.allbinary.string.CommonLabels;
 
 public class CustomForm extends CustomScreen 
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
     
     private CustomItem[] items = new CustomItem[16];
 	private int numOfItems = 0;
@@ -197,10 +199,10 @@ public class CustomForm extends CustomScreen
         int endY = 0;
         for (int index = 0; index < this.numOfItems; index++)
         {
-            //LogUtil.put(LogFactory.getInstance("Painting: " + items[i].getLabel(), this, "paint"));
+            //logUtil.put("Painting: " + items[i].getLabel(), this, "paint");
             endY += this.getItemTotalHeight(index);
             
-            //LogUtil.put(LogFactory.getInstance(point.getY() + ">=" + beginY + " && " + point.getY() + "<" + endY, this, "getItemIndexAt"));
+            //logUtil.put(point.getY() + ">=" + beginY + " && " + point.getY() + "<" + endY, this, "getItemIndexAt");
             
             if(point.getY() >= beginY && point.getY() < endY )
             {
@@ -216,14 +218,14 @@ public class CustomForm extends CustomScreen
             
 	int paintContent(Graphics graphics) 
 	{
-	    //LogUtil.put(LogFactory.getInstance(commonStrings.START_LABEL + numOfItems, this, "paintContent"));
+	    //logUtil.put(commonStrings.START_LABEL + numOfItems, this, "paintContent");
 
 	    int contentHeight = 0;
 		int translateY = 0;
 
 		for (int index = 0; index < numOfItems; index++)
 		{
-			//LogUtil.put(LogFactory.getInstance("Painting: " + items[i].getLabel(), this, "paint"));
+			//logUtil.put("Painting: " + items[i].getLabel(), this, "paint");
 		    if(items[index].hasFocus())
 		    {
 	            graphics.setColor(LIGHT_GREY);
@@ -302,13 +304,13 @@ public class CustomForm extends CustomScreen
 
 		    if (gameKey == gameKeyFactory.UP || gameKey == gameKeyFactory.DOWN)
 		    {
-		        LogUtil.put(LogFactory.getInstance(gameKey.toString(), this, gameInputStrings.KEY_PRESSED));
+		        logUtil.put(gameKey.toString(), this, gameInputStrings.KEY_PRESSED);
 		        
                 this.traverse(gameKey.getId());
 		    }
 		    else
 		    {
-	            //LogUtil.put(LogFactory.getInstance(commonStrings.START, this, gameInputStrings.KEY_PRESSED));
+	            //logUtil.put(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
 
 	            if (getSelectedIndex() != -1) {
 	                /*
@@ -329,7 +331,7 @@ public class CustomForm extends CustomScreen
 		}
 		catch(Exception e)
 		{
-		    LogUtil.put(LogFactory.getInstance(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e));
+		    logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
 		}
 	}
 
@@ -378,7 +380,7 @@ public class CustomForm extends CustomScreen
 	
 	int traverse(int gameKeyCode, int top, int bottom) 
 	{
-	    //LogUtil.put(LogFactory.getInstance(commonStrings.START, this, "traverse"));
+	    //logUtil.put(commonStrings.START, this, "traverse");
 
 		int height, testItemIndex, traverse, i;
 		int topItemIndex, bottomItemIndex;
@@ -649,7 +651,7 @@ public class CustomForm extends CustomScreen
         stringBuffer.append(CommonLabels.getInstance().INDEX_LABEL);
         stringBuffer.append(selectedIndex);
         
-        LogUtil.put(LogFactory.getInstance(stringBuffer.toString(), this, SET_SELECTED_INDEX));
+        logUtil.put(stringBuffer.toString(), this, SET_SELECTED_INDEX);
         
         this.selectedIndex = selectedIndex;
     }

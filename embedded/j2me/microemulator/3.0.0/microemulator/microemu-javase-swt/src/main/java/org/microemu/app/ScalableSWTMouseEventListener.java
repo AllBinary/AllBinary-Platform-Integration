@@ -17,6 +17,8 @@ import org.eclipse.swt.events.MouseEvent;
  * @author User
  */
 public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     
     private final DisplayInfoSingleton displayInfo = DisplayInfoSingleton.getInstance();
     
@@ -32,7 +34,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
         
         if(displayInfo.isPortrait()) {
 
-            //LogUtil.put(LogFactory.getInstance(new StringBuilder().append("Checking: portrait - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown"));
+            //logUtil.put(new StringBuilder().append("Checking: portrait - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown");
             
             if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
                 midlet.mousePressed(x, y, mouseEvent.button);
@@ -42,7 +44,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
             
         } else {
 
-            //LogUtil.put(LogFactory.getInstance(new StringBuilder().append("Checking: landscape - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown"));
+            //logUtil.put(new StringBuilder().append("Checking: landscape - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown");
             
             if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
                 midlet.mousePressed(x, y, mouseEvent.button);

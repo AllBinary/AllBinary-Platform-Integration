@@ -22,10 +22,12 @@ import javax.microedition.lcdui.game.Sprite;
  * @author User
  */
 public class PostLoadJ2SEPlatformImage extends PostLoadPlatformImage {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     @Override
     public void drawImage(final Image image, final int x, final int y, int anchor, final javax.microedition.lcdui.Graphics g2, final Object g) {
-        // LogUtil.put(LogFactory.getInstance(CommonStrings.getInstance().START, this, "drawImage"));
+        // logUtil.put(CommonStrings.getInstance().START, this, "drawImage");
         
         int newx = x;
         int newy = y;

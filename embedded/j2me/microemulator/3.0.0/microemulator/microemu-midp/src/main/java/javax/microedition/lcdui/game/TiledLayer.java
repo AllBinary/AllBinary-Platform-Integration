@@ -40,6 +40,8 @@ import javax.microedition.lcdui.Image;
 // systems
 
 public class TiledLayer extends Layer {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     private final int rowTotal, columnTotal;
     // package access for collision detection
     Image img;
@@ -281,7 +283,7 @@ public class TiledLayer extends Layer {
                 
 //                if(this.lastColumn0 != column0) {
 //                    this.lastColumn0 = column0;
-//                    //LogUtil.put(LogFactory.getInstance("column0: " + column0, this, "paint"));
+//                    //logUtil.put("column0: " + column0, this, "paint");
 //                    System.out.println("column0: " + column0);
 //                }
 
@@ -295,7 +297,7 @@ public class TiledLayer extends Layer {
 //                if(this.lastMaxColumn != maxColumn) {
 //                    this.lastMaxColumn = maxColumn;
 //                    
-//                    //LogUtil.put(LogFactory.getInstance("maxColumn: " + maxColumn, this, "paint"));
+//                    //logUtil.put("maxColumn: " + maxColumn, this, "paint");
 //                    System.out.println("maxColumn: " + maxColumn);
 //                    
 //                    if(maxColumn == 2) {
@@ -319,7 +321,7 @@ public class TiledLayer extends Layer {
 
 //                if(lastRow0 != row0) {
 //                    lastRow0 = row0;
-//                    //LogUtil.put(LogFactory.getInstance("row0: " + row0, this, "paint"));
+//                    //logUtil.put("row0: " + row0, this, "paint");
 //                    System.out.println("row0: " + row0);
 //                }
 
@@ -332,7 +334,7 @@ public class TiledLayer extends Layer {
                 
 //                if(lastMaxRow != maxRow) {
 //                    lastMaxRow = maxRow;
-//                    //LogUtil.put(LogFactory.getInstance("maxRow: " + maxRow, this, "paint"));
+//                    //logUtil.put("maxRow: " + maxRow, this, "paint");
 //                    System.out.println("maxRow: " + maxRow);
 //                }
 

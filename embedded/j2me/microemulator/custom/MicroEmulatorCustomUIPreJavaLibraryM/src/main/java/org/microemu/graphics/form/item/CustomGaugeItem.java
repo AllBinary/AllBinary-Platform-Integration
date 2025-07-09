@@ -27,6 +27,8 @@ import org.allbinary.graphics.font.MyFont;
 
 public class CustomGaugeItem extends CustomItem
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     
     private int height = 30;
 
@@ -153,7 +155,7 @@ public class CustomGaugeItem extends CustomItem
         {
             //int width = (int) ((graphics.getClipWidth() - 8) * value / maxValue);
             int width = (int) ((this.displayInfoSingleton.getLastWidth() - 8) * value / maxValue);
-            //LogUtil.put(LogFactory.getInstance("Rect1: " + width + "," + 7, this, "paint"));
+            //logUtil.put("Rect1: " + width + "," + 7, this, "paint");
             graphics.fillRect(4, 4 + myFont.DEFAULT_CHAR_HEIGHT, width, 7);
         }
         else

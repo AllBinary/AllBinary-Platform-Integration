@@ -29,6 +29,8 @@ import org.allbinary.util.BasicArrayList;
  */
 public class GDFormInputProcessor
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private static final GDFormInputProcessor instance = new GDFormInputProcessor();
     
@@ -102,7 +104,7 @@ public class GDFormInputProcessor
             virtualKeyboardEventHandler.close();
         } catch(Exception e) {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            LogUtil.put(LogFactory.getInstance(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e));
+            logUtil.put(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e);
         }
         
         final int size = sceneFormInputListenerList.size();

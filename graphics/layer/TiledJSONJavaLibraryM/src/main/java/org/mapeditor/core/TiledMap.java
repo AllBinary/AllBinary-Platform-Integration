@@ -44,6 +44,8 @@ import org.allbinary.logic.communication.log.LogUtil;
  */
 public class TiledMap extends MapData //implements Iterable<MapLayer> 
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private String filename;
 
@@ -226,7 +228,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public void addTileset(final TileSet tileset) {
         
-        //LogUtil.put(LogFactory.getInstance(tileset.toString(), this, "addTileset"));
+        //logUtil.put(tileset.toString(), this, "addTileset");
         
         // Sanity check
         final int tilesetIndex = getTileSets().indexOf(tileset);

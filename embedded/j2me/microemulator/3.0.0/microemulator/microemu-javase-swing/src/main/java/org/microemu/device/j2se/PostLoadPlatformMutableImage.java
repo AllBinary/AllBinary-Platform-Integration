@@ -15,6 +15,8 @@ import javax.microedition.lcdui.Image;
  * @author User
  */
 public class PostLoadPlatformMutableImage extends PostLoadJ2SEPlatformImage {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private static final PostLoadPlatformMutableImage instance = new PostLoadPlatformMutableImage();
 
@@ -50,14 +52,14 @@ public class PostLoadPlatformMutableImage extends PostLoadJ2SEPlatformImage {
         @Override
 	public int getWidth(final Object graphicsSurface, final int width) {
             
-            //LogUtil.put(LogFactory.getInstance("((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth()" + ((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth(), this, "((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth()"));
+            //logUtil.put("((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth()" + ((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth(), this, "((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth()");
 		return ((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth();
 	}
 
         @Override
 	public int getHeight(final Object graphicsSurface, final int height) {
             
-            //LogUtil.put(LogFactory.getInstance("((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight()" + ((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight(), this, "((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight()"));
+            //logUtil.put("((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight()" + ((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight(), this, "((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight()");
 		return ((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight();
 	}
         

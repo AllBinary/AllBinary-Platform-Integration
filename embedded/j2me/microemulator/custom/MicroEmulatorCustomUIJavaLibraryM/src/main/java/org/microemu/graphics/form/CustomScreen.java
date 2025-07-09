@@ -14,6 +14,8 @@ import org.allbinary.graphics.color.BasicColor;
 
 public class CustomScreen extends CustomDisplayable
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     protected final CommonStrings commonStrings = CommonStrings.getInstance();
     protected final GameInputStrings gameInputStrings = GameInputStrings.getInstance();
     
@@ -40,7 +42,7 @@ public class CustomScreen extends CustomDisplayable
 	{
 		try
 		{
-		    LogUtil.put(LogFactory.getInstance(commonStrings.START, this, gameInputStrings.KEY_PRESSED));
+		    logUtil.put(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
 
 		//int key = AndroidNumberKeyToJ2MECanvasNumberKey.getKey(keyCode);
 		
@@ -55,7 +57,7 @@ public class CustomScreen extends CustomDisplayable
 	    }
 		catch(Exception e)
 		{
-		    LogUtil.put(LogFactory.getInstance(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e));
+		    logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
 		}
 	}
 	*/
@@ -74,7 +76,7 @@ public class CustomScreen extends CustomDisplayable
 
 	public void paint(Graphics g) 
 	{
-		//LogUtil.put(LogFactory.getInstance(commonStrings.START, this, "paint"));
+		//logUtil.put(commonStrings.START, this, "paint");
 		
 	    int contentHeight = 0;
         int translatedY = 0;

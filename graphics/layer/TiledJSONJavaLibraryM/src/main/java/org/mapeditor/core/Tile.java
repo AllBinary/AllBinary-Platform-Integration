@@ -42,6 +42,8 @@ import org.allbinary.logic.communication.log.LogUtil;
  * @version 1.4.2
  */
 public class Tile extends TileData {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private Image image;
     private String source;
@@ -94,7 +96,7 @@ public class Tile extends TileData {
         if (value >= 0) {
             this.id = value;
             //final CommonStrings commonStrings = CommonStrings.getInstance();
-            //LogUtil.put(LogFactory.getInstance(new StringMaker().append("tileId: ").append(this.id).toString(), this, commonStrings.PROCESS));
+            //logUtil.put(new StringMaker().append("tileId: ").append(this.id).toString(), this, commonStrings.PROCESS);
         }
     }
 

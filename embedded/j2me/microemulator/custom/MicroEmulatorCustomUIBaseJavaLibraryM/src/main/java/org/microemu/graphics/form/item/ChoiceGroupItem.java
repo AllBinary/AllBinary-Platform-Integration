@@ -48,6 +48,8 @@ import org.allbinary.graphics.color.BasicColor;
 
 public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
 {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
     int choiceType;
 
     private ChoiceItem items[] = new ChoiceItem[4];
@@ -555,8 +557,8 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             {
                 items[i].invertPaint(i == highlightedItemIndex && hasFocus());
                 items[i].paint(g);
-                // LogUtil.put(LogFactory.getInstance("Painting: " +
-                // items[i].getLabel(), this, "paint"));
+                // logUtil.put("Painting: " +
+                // items[i].getLabel(), this, "paint");
                 g.translate(0, items[i].getHeight());
                 translatedY += items[i].getHeight();
             }
@@ -876,13 +878,13 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
 
     public void setFocus(boolean state)
     {
-        // LogUtil.put(LogFactory.getInstance(commonStrings.START,
-        // this, "setFocus"));
+        // logUtil.put(commonStrings.START,
+        // this, "setFocus");
 
         if (state)
         {
             // TWB - Toggle selected choice hack
-            LogUtil.put(LogFactory.getInstance("Resetting Focus", this, "setFocus"));
+            logUtil.put("Resetting Focus", this, "setFocus");
 
             int index = 0;
             this.setSelectedIndex(index, !this.isSelected(index));

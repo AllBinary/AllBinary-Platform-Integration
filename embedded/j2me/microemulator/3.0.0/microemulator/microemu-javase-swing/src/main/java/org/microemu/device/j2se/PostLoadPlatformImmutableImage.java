@@ -12,6 +12,8 @@ import javax.microedition.lcdui.Image;
  * @author User
  */
 public class PostLoadPlatformImmutableImage extends PostLoadJ2SEPlatformImage {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     private static final PostLoadPlatformImmutableImage instance = new PostLoadPlatformImmutableImage();
 
@@ -24,13 +26,13 @@ public class PostLoadPlatformImmutableImage extends PostLoadJ2SEPlatformImage {
 
     @Override
     public int getWidth(final Image image, final int width) {
-        //LogUtil.put(LogFactory.getInstance("image.getWidth2()" + image.getWidth2(), this, "image.getWidth2()"));
+        //logUtil.put("image.getWidth2()" + image.getWidth2(), this, "image.getWidth2()");
         return image.getWidth2();
     }
     
     @Override
     public int getHeight(final Image image, final int height) {
-        //LogUtil.put(LogFactory.getInstance("image.getHeight2()" + image.getHeight2(), this, "image.getHeight2()"));
+        //logUtil.put("image.getHeight2()" + image.getHeight2(), this, "image.getHeight2()");
         return image.getHeight2();
     }
 

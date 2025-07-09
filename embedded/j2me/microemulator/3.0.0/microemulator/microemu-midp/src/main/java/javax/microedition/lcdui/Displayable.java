@@ -38,6 +38,8 @@ import org.allbinary.device.OpenGLESGraphicsCompositeFactory;
 
 public class Displayable
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     private final OpenGLESGraphics openGLESGraphics = OpenGLESGraphicsCompositeFactory.getInstance().get().getOpenGLESGraphicsInstance();
     
 	Device device;
@@ -252,7 +254,7 @@ public class Displayable
     {
         /*
          * if(this.getClass().getName().indexOf("Mini") == -1) {
-         * LogUtil.put(LogFactory.getInstance(CommonStrings.getInstance().START, this, "onDraw")); }
+         * logUtil.put(CommonStrings.getInstance().START, this, "onDraw"); }
          */
 
         //Faster than static access

@@ -22,6 +22,8 @@ import org.allbinary.logic.communication.log.LogUtil;
  * @author User
  */
 public class GDJSONMapDataWriter {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
     
     private final int LAST_BYTE = 0x000000FF;
     
@@ -34,7 +36,7 @@ public class GDJSONMapDataWriter {
             for (int x = 0; x < width; x++) {
                 
                 //stringBuilder.delete(0, stringBuilder.length());
-                //LogUtil.put(LogFactory.getInstance(stringBuilder.append(x).append(':').append(y).toString(), this, commonStrings.PROCESS));
+                //logUtil.put(stringBuilder.append(x).append(':').append(y).toString(), this, commonStrings.PROCESS);
                 
                 gid = mapData[y][x];
                 //gid |= tile.getFlagsAt(x, y);

@@ -20,10 +20,12 @@ import org.microemu.app.ui.swt.SwtGraphics;
  * @author User
  */
 public class PostLoadSwtPlatformImage extends PostLoadPlatformImage {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
 
     @Override
     public void drawImage(final Image image, final int x, final int y, int anchor, final javax.microedition.lcdui.Graphics g2, final Object g) {
-        // LogUtil.put(LogFactory.getInstance(CommonStrings.getInstance().START, this, "drawImage"));
+        // logUtil.put(CommonStrings.getInstance().START, this, "drawImage");
         
         int newx = x;
         int newy = y;

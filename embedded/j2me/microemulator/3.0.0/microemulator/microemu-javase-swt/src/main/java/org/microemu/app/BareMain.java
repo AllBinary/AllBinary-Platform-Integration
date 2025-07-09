@@ -83,6 +83,8 @@ import org.eclipse.swt.layout.FillLayout;
 public class BareMain extends Common 
     implements ScreenListenerInterface, ResizableListenerInterface
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
 	public static Shell shell;
         //public static GC gc;
 
@@ -633,7 +635,7 @@ public class BareMain extends Common
 //                    }
 //                    System.out.println("midletString: " + midletString);
                     final MIDlet midlet = app.initMIDlet(true);
-                    //LogUtil.put(LogFactory.getInstance(new StringMaker().append("midlet: ").append(midlet).toString(), midlet, "main2"));
+                    //logUtil.put(new StringMaker().append("midlet: ").append(midlet).toString(), midlet, "main2");
                     
                     final InputStream is = midlet.getClass().getResourceAsStream(iconPath);
                     final Image image = SwtDeviceComponent.createImage(is);
@@ -644,7 +646,7 @@ public class BareMain extends Common
 
                     final SwtMIDletHelper swtMIDletHelper = (SwtMIDletHelper) midlet.midletHelper;
                     ((MidletJOGLInterface) midlet).initView();
-                    //LogUtil.put(LogFactory.getInstance("initView", midlet, "main2"));
+                    //logUtil.put("initView", midlet, "main2");
                     devicePanel.addMouseListener(swtMIDletHelper);
                     devicePanel.addMouseMoveListener(swtMIDletHelper);
                     devicePanel.addDragDetectListener(swtMIDletHelper);
@@ -660,7 +662,7 @@ public class BareMain extends Common
                     //midlet.setAccessControlContext(AccessController.getContext());
                     midlet.midletHelper.addExitListener(app.menuExitListener);
                     
-                    //LogUtil.put(LogFactory.getInstance("Finished MIDlet initialization", midlet, "main2"));
+                    //logUtil.put("Finished MIDlet initialization", midlet, "main2");
                 }
                 
                 shell.setSize(shell.computeSize(width, height, true));
@@ -669,7 +671,7 @@ public class BareMain extends Common
                 if(maximized) shell.setMaximized(true);
                 shell.getListeners(SWT.Resize)[0].handleEvent(null);
                 
-                //LogUtil.put(LogFactory.getInstance("Begin SWT Event Loop", shell, "main2"));
+                //logUtil.put("Begin SWT Event Loop", shell, "main2");
                 
                 //TestWavPlaybackMain testWavPlaybackMain = new TestWavPlaybackMain();
                 //testWavPlaybackMain.create();

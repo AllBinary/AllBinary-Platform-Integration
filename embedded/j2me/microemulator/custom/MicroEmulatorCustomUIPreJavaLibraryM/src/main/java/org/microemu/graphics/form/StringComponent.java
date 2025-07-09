@@ -26,6 +26,8 @@ import org.allbinary.graphics.displayable.DisplayInfoSingleton;
 
 public class StringComponent
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     private final Font font;
 
     private final StringComponentProperties paintComponentProperties = new StringComponentProperties();
@@ -208,8 +210,8 @@ public class StringComponent
                 {
                     g.setColor(this.getBackgroundBasicColor().intValue());
                 }
-                // LogUtil.put(LogFactory.getInstance("text 1:" + text +
-                // " commonLabels.INDEX_LABEL + prevIndex, this, "paint"));
+                // logUtil.put("text 1:" + text +
+                // " commonLabels.INDEX_LABEL + prevIndex, this, "paint");
                 g.drawSubstring(this.paintComponentProperties.text, prevIndex, this.paintComponentProperties.breaks[i] - prevIndex, 0, y, 0);
                 prevIndex = this.paintComponentProperties.breaks[i];
                 y += this.font.getHeight();
@@ -234,8 +236,8 @@ public class StringComponent
                 {
                     g.setColor(this.getBackgroundBasicColor().intValue());
                 }
-                // LogUtil.put(LogFactory.getInstance("text 2:" + text +
-                // " commonLabels.INDEX_LABEL + prevIndex, this, "paint"));
+                // logUtil.put("text 2:" + text +
+                // " commonLabels.INDEX_LABEL + prevIndex, this, "paint");
                 // f.getHeight() +
                 g.drawSubstring(this.paintComponentProperties.text, prevIndex, this.paintComponentProperties.text.length() - prevIndex, 0, y, 0);
                 y += this.font.getHeight();

@@ -34,6 +34,8 @@ import org.allbinary.graphics.displayable.DisplayInfoSingleton;
 
 public class CustomItem
 {
+    //protected final LogUtil logUtil = LogUtil.getInstance();
+
     public static final int OUTOFITEM = Integer.MAX_VALUE;
 
     public static final int LAYOUT_DEFAULT = 0x0000;
@@ -241,7 +243,7 @@ public class CustomItem
     /*
     void paintContent(Graphics g)
     {
-        // LogUtil.put(LogFactory.getInstance(commonStrings.START, this, "paintContent"));
+        // logUtil.put(commonStrings.START, this, "paintContent");
         labelComponent.paint(g);
     }
     */

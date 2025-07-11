@@ -7,7 +7,7 @@ package opengles;
  */
 public class Semantic {
 
-    protected static final Semantic instance = new Semantic();
+    private static final Semantic instance = new Semantic();
 
     /**
      * @return the instance

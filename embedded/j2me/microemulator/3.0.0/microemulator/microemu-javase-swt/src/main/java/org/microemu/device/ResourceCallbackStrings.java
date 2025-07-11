@@ -11,7 +11,7 @@ package org.microemu.device;
  */
 public class ResourceCallbackStrings {
     
-    protected static final ResourceCallbackStrings instance = new ResourceCallbackStrings();
+    private static final ResourceCallbackStrings instance = new ResourceCallbackStrings();
     
     /**
      * @return the instance

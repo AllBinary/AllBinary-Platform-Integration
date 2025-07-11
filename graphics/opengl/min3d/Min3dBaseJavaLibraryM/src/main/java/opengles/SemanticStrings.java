@@ -19,7 +19,7 @@ package opengles;
  */
 public class SemanticStrings {
     
-    protected static final SemanticStrings instance = new SemanticStrings();
+    private static final SemanticStrings instance = new SemanticStrings();
 
     /**
      * @return the instance

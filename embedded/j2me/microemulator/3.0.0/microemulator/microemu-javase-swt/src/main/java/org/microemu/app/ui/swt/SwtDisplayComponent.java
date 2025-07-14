@@ -42,6 +42,8 @@ import org.microemu.device.swt.SwtDisplayGraphics;
 import org.microemu.device.swt.SwtMutableImage;
 
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
+import org.allbinary.logic.communication.log.PreLogUtil;
+import org.allbinary.string.CommonStrings;
 import org.eclipse.swt.graphics.ImageData;
 
 //TODO extends Canvas like in swing version
@@ -171,8 +173,8 @@ public class SwtDisplayComponent implements DisplayComponent
                                 //gc.drawRectangle(border, border, width - border, height - border);
                                 
                         } catch(Exception e) {
-                            e.printStackTrace();
-                            System.out.println(e.getMessage());
+                            final CommonStrings commonStrings = CommonStrings.getInstance();
+                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
 			} finally {
 				gc.dispose();
 			}

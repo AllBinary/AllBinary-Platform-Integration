@@ -25,6 +25,8 @@
 package org.microemu.device.swt;
 
 import java.net.URL;
+import org.allbinary.logic.communication.log.PreLogUtil;
+import org.allbinary.string.CommonStrings;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -84,9 +86,10 @@ public class SwtTrueTypeFont implements SwtFont {
 //			font = SwtDeviceComponent.getFont(name, size, swtStyle, antialiasing);
 			initialized = true;
 			try {
-				throw new RuntimeException("not implemented");
+				throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 			} catch (RuntimeException ex) {
-				ex.printStackTrace();
+                            final CommonStrings commonStrings = CommonStrings.getInstance();
+                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 				throw ex;
 			}
 		}
@@ -94,45 +97,50 @@ public class SwtTrueTypeFont implements SwtFont {
 
 	public int charWidth(char ch) {
 		try {
-			throw new RuntimeException("not implemented");
+			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
-			ex.printStackTrace();
+                    final CommonStrings commonStrings = CommonStrings.getInstance();
+                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}
 
 	public int charsWidth(char[] ch, int offset, int length) {
 		try {
-			throw new RuntimeException("not implemented");
+			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
-			ex.printStackTrace();
+                    final CommonStrings commonStrings = CommonStrings.getInstance();
+                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}
 
 	public int getBaselinePosition() {
 		try {
-			throw new RuntimeException("not implemented");
+			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
-			ex.printStackTrace();
+                    final CommonStrings commonStrings = CommonStrings.getInstance();
+                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}
 
 	public int getHeight() {
 		try {
-			throw new RuntimeException("not implemented");
+			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
-			ex.printStackTrace();
+                    final CommonStrings commonStrings = CommonStrings.getInstance();
+                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}
 
 	public int stringWidth(String str) {
 		try {
-			throw new RuntimeException("not implemented");
+			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
-			ex.printStackTrace();
+                    final CommonStrings commonStrings = CommonStrings.getInstance();
+                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}

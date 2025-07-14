@@ -32,8 +32,10 @@ import javax.microedition.lcdui.Display.DisplayAccessor;
 import org.allbinary.game.displayable.canvas.GameRunnable;
 import org.allbinary.game.displayable.canvas.NullWaitGameRunnable;
 import org.allbinary.image.opengles.SwtImageUtil;
+import org.allbinary.logic.communication.log.PreLogUtil;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
+import org.allbinary.string.CommonStrings;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -189,7 +191,8 @@ public class SwtDeviceComponent extends Canvas {
                             notifyListeners(SWT.Resize, new Event());
                         
                         } catch(Exception e) {
-                            e.printStackTrace();
+                            final CommonStrings commonStrings = CommonStrings.getInstance();
+                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                         
@@ -463,7 +466,8 @@ public class SwtDeviceComponent extends Canvas {
                             System.exit(0);
 
                         } catch(Exception e) {
-                            e.printStackTrace();
+                            final CommonStrings commonStrings = CommonStrings.getInstance();
+                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                 });
@@ -492,7 +496,8 @@ public class SwtDeviceComponent extends Canvas {
                             ma.pauseApp();
 
                         } catch(Exception e) {
-                            e.printStackTrace();
+                            final CommonStrings commonStrings = CommonStrings.getInstance();
+                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                 });
@@ -521,7 +526,8 @@ public class SwtDeviceComponent extends Canvas {
                             ma.startApp();
 
                         } catch(Exception e) {
-                            e.printStackTrace();
+                            final CommonStrings commonStrings = CommonStrings.getInstance();
+                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                 });
@@ -570,7 +576,8 @@ public class SwtDeviceComponent extends Canvas {
                             //deviceDisplay.repaint(0, 0, deviceDisplay.getFullWidth(), deviceDisplay.getFullHeight());
 
                         } catch(Exception e) {
-                            e.printStackTrace();
+                            final CommonStrings commonStrings = CommonStrings.getInstance();
+                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                 });
@@ -695,7 +702,8 @@ public class SwtDeviceComponent extends Canvas {
 						return button;
 					}
 				} catch (CloneNotSupportedException ex) {
-					ex.printStackTrace();
+                                    final CommonStrings commonStrings = CommonStrings.getInstance();
+                                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
 				}
 			}
 		}

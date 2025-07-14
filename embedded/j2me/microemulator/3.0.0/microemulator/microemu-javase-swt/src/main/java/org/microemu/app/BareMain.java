@@ -75,7 +75,9 @@ import org.allbinary.graphics.ResizableListenerInterface;
 import org.allbinary.graphics.ScreenListenerHandler;
 import org.allbinary.graphics.ScreenListenerInterface;
 import org.allbinary.graphics.threed.SWTJOGLProcessor;
+import org.allbinary.logic.communication.log.PreLogUtil;
 import org.allbinary.logic.java.exception.ExceptionUtil;
+import org.allbinary.string.CommonStrings;
 import org.eclipse.swt.graphics.DeviceData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
@@ -455,7 +457,8 @@ public class BareMain extends Common
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            final CommonStrings commonStrings = CommonStrings.getInstance();
+            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
             Logger.debug("", "Error Exiting Full-screen mode");
         }
     }
@@ -495,7 +498,8 @@ public class BareMain extends Common
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            final CommonStrings commonStrings = CommonStrings.getInstance();
+            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
             Logger.debug("", "Error Entering Full-screen mode");
             //this.graphicsDevice.setFullScreenWindow(null);
         }

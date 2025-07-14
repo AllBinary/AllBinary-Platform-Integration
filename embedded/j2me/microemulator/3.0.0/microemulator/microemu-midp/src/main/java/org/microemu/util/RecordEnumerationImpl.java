@@ -36,6 +36,8 @@ import javax.microedition.rms.RecordListener;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreNotOpenException;
+import org.allbinary.logic.communication.log.PreLogUtil;
+import org.allbinary.string.CommonStrings;
 
 
 public class RecordEnumerationImpl implements RecordEnumeration
@@ -201,7 +203,8 @@ public class RecordEnumerationImpl implements RecordEnumeration
 					recordId++;
 		        }
 			} catch (RecordStoreException e) {
-				e.printStackTrace();
+                            final CommonStrings commonStrings = CommonStrings.getInstance();
+                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
 			}
         }
 

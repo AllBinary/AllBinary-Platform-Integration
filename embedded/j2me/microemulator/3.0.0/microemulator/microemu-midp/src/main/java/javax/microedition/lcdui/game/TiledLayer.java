@@ -21,6 +21,8 @@ package javax.microedition.lcdui.game;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import org.allbinary.logic.communication.log.PreLogUtil;
+import org.allbinary.string.CommonStrings;
 
 /**
  *
@@ -372,8 +374,8 @@ public class TiledLayer extends Layer {
     	//}
         
         } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("Exception");
+            final CommonStrings commonStrings = CommonStrings.getInstance();
+            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
         }
 
     }

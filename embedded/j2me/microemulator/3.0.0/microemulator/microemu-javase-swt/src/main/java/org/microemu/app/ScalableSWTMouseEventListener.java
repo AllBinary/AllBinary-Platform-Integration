@@ -36,7 +36,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
 
             //logUtil.put(new StringBuilder().append("Checking: portrait - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown");
             
-            if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
+            if (displayInfo.getLastHeight() >= displayInfo.getScaleLargestTo()) {
                 midlet.mousePressed(x, y, mouseEvent.button);
             } else {
                 midlet.mousePressed(mouseEvent.x, mouseEvent.y, mouseEvent.button);
@@ -46,7 +46,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
 
             //logUtil.put(new StringBuilder().append("Checking: landscape - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown");
             
-            if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
+            if (displayInfo.getLastWidth() >= displayInfo.getScaleLargestTo()) {
                 midlet.mousePressed(x, y, mouseEvent.button);
             } else {
                 midlet.mousePressed(mouseEvent.x, mouseEvent.y, mouseEvent.button);
@@ -60,7 +60,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
         
         if (displayInfo.isPortrait()) {
 
-            if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
+            if (displayInfo.getLastHeight() >= displayInfo.getScaleLargestTo()) {
                 final ScalableListener scalableListener = displayInfo.getScalableListener();
                 final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
                 final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
@@ -72,7 +72,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
 
         } else {
 
-            if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
+            if (displayInfo.getLastWidth() >= displayInfo.getScaleLargestTo()) {
                 final ScalableListener scalableListener = displayInfo.getScalableListener();
                 final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
                 final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
@@ -90,7 +90,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
 
         if (displayInfo.isPortrait()) {
 
-            if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
+            if (displayInfo.getLastHeight() >= displayInfo.getScaleLargestTo()) {
                 final ScalableListener scalableListener = displayInfo.getScalableListener();
                 final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
                 final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
@@ -102,7 +102,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
 
         } else {
 
-            if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
+            if (displayInfo.getLastWidth() >= displayInfo.getScaleLargestTo()) {
                 final ScalableListener scalableListener = displayInfo.getScalableListener();
                 final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
                 final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
@@ -120,7 +120,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
 
         if (displayInfo.isPortrait()) {
 
-            if (displayInfo.getLastHeight() >= displayInfo.scaleLargestTo) {
+            if (displayInfo.getLastHeight() >= displayInfo.getScaleLargestTo()) {
                 final ScalableListener scalableListener = displayInfo.getScalableListener();
                 final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
                 final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));
@@ -132,7 +132,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
 
         } else {
 
-            if (displayInfo.getLastWidth() >= displayInfo.scaleLargestTo) {
+            if (displayInfo.getLastWidth() >= displayInfo.getScaleLargestTo()) {
                 final ScalableListener scalableListener = displayInfo.getScalableListener();
                 final int x = (int) ((mouseEvent.x - displayInfo.getLeft()) / scalableListener.getRatio(displayInfo.getRatio()));
                 final int y = (int) ((mouseEvent.y - displayInfo.getTop()) / scalableListener.getRatio(displayInfo.getRatio()));

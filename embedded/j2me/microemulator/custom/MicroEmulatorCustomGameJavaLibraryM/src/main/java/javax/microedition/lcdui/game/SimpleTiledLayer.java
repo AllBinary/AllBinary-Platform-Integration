@@ -76,9 +76,9 @@ public class SimpleTiledLayer extends Layer
         int maxColumn = totalColumns;
         int maxRow = totalRows;
 
-        int x0 = this.getX() - tileWidth;
+        int x0 = this.getXP() - tileWidth;
         int x = x0;
-        int y = this.getY() - tileHeight;
+        int y = this.getYP() - tileHeight;
 
         int clipWidth = graphics.getClipWidth();
         int clipHeight = graphics.getClipHeight();

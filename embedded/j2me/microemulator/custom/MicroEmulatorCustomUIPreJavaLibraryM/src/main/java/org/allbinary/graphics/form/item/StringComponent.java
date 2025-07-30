@@ -7,9 +7,12 @@
 package org.allbinary.graphics.form.item;
 
 import org.allbinary.graphics.color.BasicColor;
+import org.allbinary.graphics.color.BasicColorFactory;
 
 public class StringComponent extends org.microemu.graphics.form.StringComponent
 {
+    public static final StringComponent NULL_STRING_COMPONENT = new StringComponent(BasicColorFactory.getInstance().BLACK, BasicColorFactory.getInstance().WHITE);
+    
     public StringComponent(final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
     {
         super(backgroundBasicColor, foregroundBasicColor);

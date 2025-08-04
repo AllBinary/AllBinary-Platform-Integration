@@ -13,9 +13,9 @@ public class Number3d
 
     public Number3d()
     {
-        x = 0;
-        y = 0;
-        z = 0;
+        x = 0.0f;
+        y = 0.0f;
+        z = 0.0f;
     }
 
     public Number3d(float x, float y, float z)
@@ -34,9 +34,10 @@ public class Number3d
 
     public void normalize()
     {
-        float mod = (float) Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+        double sqrt = Math.sqrt((double) this.x * this.x + this.y * this.y + this.z * this.z);
+        float mod = (float) sqrt;
 
-        if (mod != 0 && mod != 1)
+        if (mod != 0.0f && mod != 1.0f)
         {
             mod = 1 / mod;
             this.x *= mod;
@@ -68,7 +69,8 @@ public class Number3d
 
     public float length()
     {
-        return (float) Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+        double sqrt = Math.sqrt((double) this.x * this.x + this.y * this.y + this.z * this.z);
+        return (float) sqrt;
     }
 
     public Number3d clone()
@@ -78,7 +80,7 @@ public class Number3d
 
     private final NoDecimalTrigTable noDecimalTrigTable = NoDecimalTrigTable.getInstance();
 
-    public void rotateX(short angle, Number3d initialNumber3d)
+    public void rotateX(int angle, Number3d initialNumber3d)
     {
         float cosRY = (float) noDecimalTrigTable.cos(angle) / 10000;
         float sinRY = (float) noDecimalTrigTable.sin(angle) / 10000;
@@ -87,7 +89,7 @@ public class Number3d
         this.z = (initialNumber3d.y * sinRY) + (initialNumber3d.z * cosRY);
     }
 
-    public void rotateY(short angle, Number3d initialNumber3d)
+    public void rotateY(int angle, Number3d initialNumber3d)
     {
         float cosRY = (float) noDecimalTrigTable.cos(angle) / 10000;
         float sinRY = (float) noDecimalTrigTable.sin(angle) / 10000;
@@ -96,7 +98,7 @@ public class Number3d
         this.z = (initialNumber3d.x * -sinRY) + (initialNumber3d.z * cosRY);
     }
 
-    public void rotateZ(short angle, Number3d initialNumber3d)
+    public void rotateZ(int angle, Number3d initialNumber3d)
     {
         float cosRY = (float) noDecimalTrigTable.cos(angle) / 10000;
         float sinRY = (float) noDecimalTrigTable.sin(angle) / 10000;
@@ -109,8 +111,8 @@ public class Number3d
     
 	public void rotateXSlow(float angle)
 	{
-		float cosRY = (float) Math.cos(angle);
-		float sinRY = (float) Math.sin(angle);
+		float cosRY = (float) Math.cos((double) angle);
+		float sinRY = (float) Math.sin((double) angle);
 
 		_temp.setAll(this.x, this.y, this.z); 
 
@@ -120,8 +122,8 @@ public class Number3d
 	
 	public void rotateYSlow(float angle)
 	{
-		float cosRY = (float) Math.cos(angle);
-		float sinRY = (float) Math.sin(angle);
+		float cosRY = (float) Math.cos((double) angle);
+		float sinRY = (float) Math.sin((double) angle);
 
 		_temp.setAll(this.x, this.y, this.z); 
 		
@@ -131,8 +133,8 @@ public class Number3d
 	
 	public void rotateZSlow(float angle)
 	{
-		float cosRY = (float) Math.cos(angle);
-		float sinRY = (float) Math.sin(angle);
+		float cosRY = (float) Math.cos((double) angle);
+		float sinRY = (float) Math.sin((double) angle);
 
 		_temp.setAll(this.x, this.y, this.z); 		
 

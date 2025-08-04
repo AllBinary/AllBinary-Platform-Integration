@@ -114,18 +114,18 @@ public class Semantic {
         public final int MAX = 2;
     }
     
-    public final Attr Attr = new Attr();
-    public final Buffer Buffer = new Buffer();
-    public final Frag Frag = new Frag();
-    public final Image Image = new Image();
-    public final Object Object = new Object();
-    public final Renderbuffer Renderbuffer = new Renderbuffer();
-    public final Sampler Sampler = new Sampler();
-    public final Storage Storage = new Storage();
-    public final Uniform Uniform = new Uniform();
-    public final Vert Vert = new Vert();
+    public final Attr AttrP = new Attr();
+    public final Buffer BufferP = new Buffer();
+    public final Frag FragP = new Frag();
+    public final Image ImageP = new Image();
+    public final Object ObjectP = new Object();
+    public final Renderbuffer RenderbufferP = new Renderbuffer();
+    public final Sampler SamplerP = new Sampler();
+    public final Storage StorageP = new Storage();
+    public final Uniform UniformP = new Uniform();
+    public final Vert VertP = new Vert();
     
-    public final GammaBuffer GammaBuffer = new GammaBuffer();
-    public final Texture Texture = new Texture();
+    public final GammaBuffer GammaBufferP = new GammaBuffer();
+    public final Texture TextureP = new Texture();
     
 }

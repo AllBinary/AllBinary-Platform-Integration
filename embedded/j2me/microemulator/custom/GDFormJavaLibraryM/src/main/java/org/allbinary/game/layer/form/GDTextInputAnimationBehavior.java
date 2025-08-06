@@ -82,7 +82,7 @@ public class GDTextInputAnimationBehavior extends GDItemAnimationBehavior
         //Show softkeyboard on TextInput::TextInputObject mouse press
         if(motionGestureInput == touchMotionGestureFactory.PRESSED) {
             
-            if (rectangleCollisionUtil.isInside(gameLayer.getX(), gameLayer.getY() - 2, 
+            if (rectangleCollisionUtil.isInside(gameLayer.getXP(), gameLayer.getYP() - 2, 
                 gameLayer.getX2(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
                 virtualKeyboardEventHandler.open();
             }

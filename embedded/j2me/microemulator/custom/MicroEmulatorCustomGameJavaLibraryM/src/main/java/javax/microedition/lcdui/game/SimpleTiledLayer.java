@@ -69,7 +69,7 @@ public class SimpleTiledLayer extends Layer
 
     private final int color = BasicColorFactory.getInstance().TRANSPARENT_BLACK.intValue();
     
-    public final void paint(Graphics graphics, short[][] tiles)
+    public final void paint(final Graphics graphics, final short[][] tiles)
     {
         int column0 = 0;
         int row0 = 0;
@@ -80,11 +80,11 @@ public class SimpleTiledLayer extends Layer
         int x = x0;
         int y = this.getYP() - tileHeight;
 
-        int clipWidth = graphics.getClipWidth();
-        int clipHeight = graphics.getClipHeight();
+        final int clipWidth = graphics.getClipWidth();
+        final int clipHeight = graphics.getClipHeight();
 
-        int width = this.getWidth();
-        int height = this.getHeight();
+        final int width = this.getWidth();
+        final int height = this.getHeight();
         
         if (width > clipWidth)
         {
@@ -133,6 +133,7 @@ public class SimpleTiledLayer extends Layer
         
         graphics.setColor(color);
         
+        int cell;
         for (int rowIndex = row0; rowIndex < maxRow; rowIndex++)
         {
             y += tileHeight;
@@ -141,7 +142,8 @@ public class SimpleTiledLayer extends Layer
             {
                 x += tileWidth;
 
-                if (tiles[rowIndex][columnIndex] == 0)
+                cell = (int) tiles[rowIndex][columnIndex];
+                if (cell == 0)
                 {
                     graphics.fillRect(x, y, tileWidth, tileHeight);
                 }

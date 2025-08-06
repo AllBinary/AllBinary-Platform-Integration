@@ -38,8 +38,6 @@ public class CustomItem
 {
     //protected final LogUtil logUtil = LogUtil.getInstance();
 
-    public static final int OUTOFITEM = Integer.MAX_VALUE;
-
     public static final int LAYOUT_DEFAULT = 0x0000;
 
     public static final int LAYOUT_LEFT = 0x0001;
@@ -59,10 +57,6 @@ public class CustomItem
     public static final int LAYOUT_VEXPAND = 0x2000;
 
     public static final int LAYOUT_2 = 0x4000;
-
-    public static final int PLAIN = 0;
-    public static final int HYPERLINK = 1;
-    public static final int BUTTON = 2;
 
     private final StringComponent labelStringComponent;
     private Displayable owner = NullCanvas.NULL_CANVAS;

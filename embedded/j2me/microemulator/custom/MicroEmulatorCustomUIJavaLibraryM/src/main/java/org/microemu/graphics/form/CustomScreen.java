@@ -62,18 +62,19 @@ public class CustomScreen extends CustomDisplayable
 	}
 	*/
 
-	
+	@Override
 	void hideNotify() 
 	{
 		super.hideNotify();
 	}
 
-	
+        @Override
 	public void keyRepeated(int keyCode) 
 	{
 		keyPressed(keyCode);
 	}
 
+        @Override
 	public void paint(Graphics g) 
 	{
 		//logUtil.put(commonStrings.START, this, "paint");

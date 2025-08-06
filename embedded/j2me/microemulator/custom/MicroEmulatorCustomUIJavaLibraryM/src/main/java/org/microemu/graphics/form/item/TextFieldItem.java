@@ -16,8 +16,8 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.FontDebugFactory;
 import org.allbinary.graphics.font.MyFont;
 import org.allbinary.input.event.VirtualKeyboardEventHandler;
-import org.allbinary.logic.communication.log.LogFactory;
 import org.allbinary.logic.communication.log.LogUtil;
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.logic.util.visitor.Visitor;
 import org.allbinary.time.TimeDelayHelper;
 
@@ -61,7 +61,7 @@ public class TextFieldItem extends TextItem
 
         logUtil.put(commonStrings.START + font.getSize(), this, commonStrings.CONSTRUCTOR);
         
-        this.stringComponent = new StringComponent(null, font, backgroundBasicColor, foregroundBasicColor);
+        this.stringComponent = new StringComponent(StringUtil.getInstance().EMPTY_STRING, font, backgroundBasicColor, foregroundBasicColor);
         
         this.maxSize = maxSize;
         
@@ -71,6 +71,7 @@ public class TextFieldItem extends TextItem
         
     }
 
+    @Override
     public boolean isFocusable()
     {
         return true;
@@ -110,11 +111,13 @@ public class TextFieldItem extends TextItem
         return positionY;
     }
 
+    @Override
     public int getHeight()
     {
         return super.getHeight() + stringComponent.getHeight() + 4;
     }
     
+    @Override
     public void setFocus(boolean state)
     {
         logUtil.put(commonStrings.START, this, "setFocus: " + state);
@@ -128,6 +131,7 @@ public class TextFieldItem extends TextItem
         super.setFocus(state);
     }
     
+    @Override
     public void paint(Graphics graphics, int x, int y)
     {
 
@@ -183,6 +187,7 @@ public class TextFieldItem extends TextItem
         fontDebugFactory.setFont(existingFont, graphics);
     }
 
+    @Override
     public void keyPressed(int keyCode)
     {
         //ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);

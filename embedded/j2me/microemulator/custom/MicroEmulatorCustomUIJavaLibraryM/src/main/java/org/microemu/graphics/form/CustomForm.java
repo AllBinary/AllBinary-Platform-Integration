@@ -7,13 +7,13 @@ package org.microemu.graphics.form;
 
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.NullCanvas;
 
 import org.allbinary.graphics.form.item.CustomItem;
 import org.allbinary.graphics.form.item.CustomItemStateListener;
 
 import org.allbinary.string.CommonSeps;
 import org.allbinary.logic.string.StringMaker;
-import org.allbinary.logic.communication.log.LogFactory;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.game.input.GameKey;
 import org.allbinary.game.input.GameKeyFactory;
@@ -24,17 +24,17 @@ import org.allbinary.game.input.PlatformKeyFactory;
 import org.allbinary.graphics.GPoint;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.color.BasicColorFactory;
+import org.allbinary.graphics.form.item.CustomItemState;
 import org.allbinary.layer.AllBinaryLayerManager;
 import org.allbinary.string.CommonLabels;
 
 public class CustomForm extends CustomScreen 
 {
     protected final LogUtil logUtil = LogUtil.getInstance();
-
     
     private CustomItem[] items = new CustomItem[16];
 	private int numOfItems = 0;
-	private CustomItemStateListener itemStateListener = null;
+	private CustomItemStateListener itemStateListener = CustomItemState.NULL_CUSTOM_ITEM_STATE;
 	private int selectedIndex;
 
 	public CustomForm(String title, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) 
@@ -105,7 +105,7 @@ public class CustomForm extends CustomScreen
 	{
 		verifyItemNum(itemNum);
 
-		items[itemNum].setOwner(null);
+		items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
 		System.arraycopy(items, itemNum + 1, items, itemNum, numOfItems - itemNum - 1);
 		numOfItems--;
 	}
@@ -114,7 +114,7 @@ public class CustomForm extends CustomScreen
 	public void deleteAll()
 	{
 		for (int i = 0; i < numOfItems; i++) {
-			items[i].setOwner(null);
+			items[i].setOwner(NullCanvas.NULL_SCREEN);
 		}
 		numOfItems = 0;
 	}
@@ -170,7 +170,7 @@ public class CustomForm extends CustomScreen
 		verifyItem(item);
 
 		// TODO add this to MIDP1
-		items[itemNum].setOwner(null);
+		items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
 		
 		items[itemNum] = item;
 		//items[itemNum].setOwner(this);
@@ -216,6 +216,7 @@ public class CustomForm extends CustomScreen
 
     private final int LIGHT_GREY = BasicColorFactory.getInstance().LIGHT_GREY.intValue();
             
+    @Override
 	int paintContent(Graphics graphics) 
 	{
 	    //logUtil.put(commonStrings.START_LABEL + numOfItems, this, "paintContent");
@@ -255,6 +256,7 @@ public class CustomForm extends CustomScreen
     }
 
 	
+        @Override
 	void hideNotify() 
 	{
 		super.hideNotify();
@@ -283,6 +285,7 @@ public class CustomForm extends CustomScreen
     
     protected final InputFactory inputFactory = InputFactory.getInstance();
     
+    @Override
 	public void keyPressed(int keyCode) 
 	{
 		try
@@ -378,6 +381,7 @@ public class CustomForm extends CustomScreen
 	    return total;
 	}
 	
+        @Override
 	int traverse(int gameKeyCode, int top, int bottom) 
 	{
 	    //logUtil.put(commonStrings.START, this, "traverse");

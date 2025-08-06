@@ -23,17 +23,7 @@ package org.microemu.graphics.form.item;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Image;
 
-public interface ChoiceItemInterface {
-
-  static final int EXCLUSIVE = 1;
-  static final int MULTIPLE = 2;  
-  static final int IMPLICIT = 3;
-  static final int POPUP = 4;
-
-  static final int TEXT_WRAP_ON = 1;
-  static final int TEXT_WRAP_OFF = 2;
-  static final int TEXT_WRAP_DEFAULT = 0;
-  
+public interface ChoiceItemInterface {  
 
   int append(String stringPart, Image imagePart);
     

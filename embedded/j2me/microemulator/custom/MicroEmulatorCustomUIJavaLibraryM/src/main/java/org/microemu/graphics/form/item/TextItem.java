@@ -34,6 +34,8 @@ implements org.allbinary.graphics.form.item.CustomItemInterface
         final boolean isHTML = features.isDefault(HTMLFeatureFactory.getInstance().HTML);
         final boolean isOpenGL = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL);
 
+        int offsetX;
+        int offsetWidth;
         if(isHTML || (AndroidUtil.isAndroid() && isOpenGL)) {
             offsetX = 0;
             offsetWidth = myFont.stringWidth(this.getLabel()) / 2;
@@ -41,55 +43,66 @@ implements org.allbinary.graphics.form.item.CustomItemInterface
             offsetX = 2;
             offsetWidth = 2;
         }
+        this.offsetX = offsetX;
+        this.offsetWidth = offsetWidth;
 
         this.width = myFont.stringWidth(this.getLabel()) + offsetWidth;
         
     }
 
+    @Override
     public void setOwner(Screen owner)
     {
         //this.owner = owner;
     }
 
+    @Override
     public int getMinimumWidth()
     {
         return this.width;
     }
 
+    @Override
     public int getMinimumHeight()
     {
         final MyFont myFont = MyFont.getInstance();
         return myFont.DEFAULT_CHAR_HEIGHT;
     }
 
+    @Override
     protected int getMinContentHeight()
     {
         final MyFont myFont = MyFont.getInstance();
         return myFont.DEFAULT_CHAR_HEIGHT;
     }
 
+    @Override
     protected int getMinContentWidth()
     {
         return this.width;
     }
 
+    @Override
     protected int getPrefContentHeight(int width)
     {
         final MyFont myFont = MyFont.getInstance();
         return myFont.DEFAULT_CHAR_HEIGHT;
     }
 
+    @Override
     protected int getPrefContentWidth(int height)
     {
         return this.width;
     }
 
+    @Override
     public void paint(Graphics graphics, int x, int y)
     {
         graphics.setColor(this.getLabelStringComponent().getForegroundBasicColor().intValue());
         graphics.drawString(this.getLabel(), x + offsetX, y, 0);
     }
 
+    @Override
     public void paintUnselected(Graphics graphics, int x, int y)
     {
         graphics.drawString(this.getLabel(), x + offsetX, y, 0);

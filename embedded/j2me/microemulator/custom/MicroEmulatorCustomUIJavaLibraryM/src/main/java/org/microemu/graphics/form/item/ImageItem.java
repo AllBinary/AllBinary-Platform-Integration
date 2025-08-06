@@ -22,6 +22,7 @@ package org.microemu.graphics.form.item;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.NullCanvas;
 
 import org.allbinary.graphics.form.item.CustomItem;
 
@@ -42,9 +43,13 @@ public class ImageItem extends CustomItem
 
 	public static final int LAYOUT_NEWLINE_AFTER = 0x200;
 
-	Image img;
+        public static final int PLAIN = 0;
+        public static final int HYPERLINK = 1;
+        public static final int BUTTON = 2;
+        
+	Image img = NullCanvas.NULL_IMAGE;
 
-	String altText;
+	String altTextP;
 
 	private int appearanceMode;
 
@@ -67,12 +72,12 @@ public class ImageItem extends CustomItem
 		}
 
 		setImage(img);
-		this.altText = altText;
+		this.altTextP = altText;
 		this.appearanceMode = appearanceMode;
 	}
 
 	public String getAltText() {
-		return altText;
+		return altTextP;
 	}
 
 	public int getAppearanceMode() {
@@ -83,12 +88,13 @@ public class ImageItem extends CustomItem
 		return img;
 	}
 
+        @Override
 	public int getLayout() {
 		return super.getLayout();
 	}
 
 	public void setAltText(String text) {
-		altText = text;
+		altTextP = text;
 	}
 	
 	public void setImage(Image img) {
@@ -100,10 +106,12 @@ public class ImageItem extends CustomItem
 		repaint();
 	}
 
+        @Override
 	public void setLayout(int layout) {
 		super.setLayout(layout);
 	}
 
+        @Override
 	public int getHeight() {
 		if (img == null) {
 			return super.getHeight();
@@ -134,6 +142,7 @@ public class ImageItem extends CustomItem
 	}
 	*/
 
+        @Override
 	public int traverse(int gameKeyCode, int top, int bottom, boolean action) {
 		Font f = Font.getDefaultFont();
 

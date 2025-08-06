@@ -19,7 +19,7 @@ public class CustomDisplayable extends Paintable
 {
     protected StringComponent title;
 
-    private final Vector commands = new Vector();
+    private final Vector<Object> commands = new Vector<Object>();
 
     CustomDisplayable(String title, 
             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
@@ -29,9 +29,12 @@ public class CustomDisplayable extends Paintable
 
     public void addCommand(Command cmd)
     {
-        for (int i = 0; i < commands.size(); i++)
+        Command command;
+        final int size = commands.size();
+        for (int i = 0; i < size; i++)
         {
-            if (cmd == (Command) commands.elementAt(i))
+            command = (Command) commands.elementAt(i);
+            if (cmd == command)
             {
                 return;
             }
@@ -40,8 +43,8 @@ public class CustomDisplayable extends Paintable
         boolean inserted = false;
         for (int i = 0; i < commands.size(); i++)
         {
-            if (cmd.getPriority() < ((Command) commands.elementAt(i))
-                    .getPriority())
+            command = (Command) commands.elementAt(i);
+            if (cmd.getPriority() < command.getPriority())
             {
                 commands.insertElementAt(cmd, i);
                 inserted = true;
@@ -88,7 +91,7 @@ public class CustomDisplayable extends Paintable
     {
     }
 
-    public Vector getCommands()
+    public Vector<Object> getCommands()
     {
         return commands;
     }
@@ -125,7 +128,8 @@ public class CustomDisplayable extends Paintable
     void pointerDragged(int x, int y)
     {
     }
-    
+
+    @Override    
     public void paint(Graphics graphics)
     {
         

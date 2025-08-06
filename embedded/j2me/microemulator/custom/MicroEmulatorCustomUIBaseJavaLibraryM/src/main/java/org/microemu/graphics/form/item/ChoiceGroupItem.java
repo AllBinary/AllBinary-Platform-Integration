@@ -31,6 +31,7 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.List;
+import javax.microedition.lcdui.NullCanvas;
 
 import org.allbinary.graphics.form.item.ChoiceItemInterface;
 import org.allbinary.graphics.form.item.CustomItem;
@@ -38,16 +39,27 @@ import org.allbinary.graphics.form.item.ImageStringItem;
 import org.allbinary.graphics.opengles.OpenGLCapabilities;
 import org.allbinary.graphics.opengles.OpenGLFeatureFactory;
 
-import org.allbinary.logic.communication.log.LogFactory;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.game.configuration.feature.Features;
 import org.allbinary.graphics.color.BasicColor;
+import org.allbinary.logic.string.StringUtil;
 
 //import org.allbinary.logic.communication.log.LogFactory;
 //import org.allbinary.logic.communication.log.LogUtil;
 
 public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
 {
+    public static final List NULL_LIST = new List(StringUtil.getInstance().EMPTY_STRING, 0);
+
+    static final int EXCLUSIVE = 1;
+    static final int MULTIPLE = 2;
+    static final int IMPLICIT = 3;
+    static final int POPUP = 4;
+
+    static final int TEXT_WRAP_ON = 1;
+    static final int TEXT_WRAP_OFF = 2;
+    static final int TEXT_WRAP_DEFAULT = 0;
+    
     protected final LogUtil logUtil = LogUtil.getInstance();
 
     int choiceType;
@@ -82,21 +94,25 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
 
         if (validateChoiceType)
         {
-            if (choiceType != ChoiceItemInterface.POPUP
-                    && choiceType != ChoiceItemInterface.MULTIPLE
-                    && choiceType != ChoiceItemInterface.EXCLUSIVE)
+            if (choiceType != ChoiceGroupItem.POPUP
+                    && choiceType != ChoiceGroupItem.MULTIPLE
+                    && choiceType != ChoiceGroupItem.EXCLUSIVE)
             {
                 throw new IllegalArgumentException("Illegal choice type");
             }
         }
         this.choiceType = choiceType;
-        if (choiceType == ChoiceItemInterface.POPUP)
+        List popupList;
+        if (choiceType == ChoiceGroupItem.POPUP)
         {
             // POPUP has a hidden List to implement it's
             // behaviour
-            popupList = new List(label, ChoiceItemInterface.IMPLICIT);
+            popupList = new List(label, ChoiceGroupItem.IMPLICIT);
             popupList.setCommandListener(new ImplicitListener());
+        } else {
+            popupList = ChoiceGroupItem.NULL_LIST;
         }
+        this.popupList = popupList;
     }
 
     // XXX imageElements is ignored.
@@ -110,7 +126,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         {
             if (imageElements == null)
             {
-                append(stringElements[i], null);
+                append(stringElements[i], NullCanvas.NULL_IMAGE);
             } else
             {
                 append(stringElements[i], imageElements[i]);
@@ -118,6 +134,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         }
     }
 
+    @Override
     public int append(String stringPart, Image imagePart)
     {
         insert(numOfItems, stringPart, imagePart);
@@ -125,6 +142,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         return (numOfItems - 1);
     }
 
+    @Override
     public void delete(int itemNum)
     {
         if (itemNum < 0 || itemNum >= numOfItems)
@@ -133,7 +151,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         }
 
         // Ensure that an item of an EXCLUSIVE list remains selected.
-        if ((ChoiceItemInterface.EXCLUSIVE == choiceType || ChoiceItemInterface.POPUP == choiceType)
+        if ((ChoiceGroupItem.EXCLUSIVE == choiceType || ChoiceGroupItem.POPUP == choiceType)
                 && items[itemNum].isSelected())
         {
             if (numOfItems > 1)
@@ -164,11 +182,13 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             highlightedItemIndex = numOfItems - 1;
         }
 
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP) {
             popupList.delete(itemNum);
+        }
         repaint();
     }
 
+    @Override
     public void deleteAll()
     {
         // clear the array to allow garbage collection
@@ -176,16 +196,18 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             items[i] = null;
         numOfItems = 0;
         highlightedItemIndex = -1;
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP)
             popupList.deleteAll();
         repaint();
     }
 
+    @Override
     public int getFitPolicy()
     {
         return fitPolicy;
     }
 
+    @Override
     public Font getFont(int itemNum)
     {
         if (itemNum < 0 || itemNum >= numOfItems)
@@ -218,6 +240,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
      * type EXCLUSIVE, exactly one element will be selected, unless there are
      * zero elements in the ChoiceGroup.
      */
+    @Override
     public int getSelectedFlags(boolean[] selectedArray_return)
     {
         if (selectedArray_return == null)
@@ -254,27 +277,30 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
      * no single value can in general represent the state of such a ChoiceGroup.
      * To get the complete state of a MULTIPLE Choice, see getSelectedFlags.
      */
+    @Override
     public int getSelectedIndex()
     {
         switch (choiceType)
         {
-        case ChoiceItemInterface.EXCLUSIVE:
-        case ChoiceItemInterface.POPUP:
+        case ChoiceGroupItem.EXCLUSIVE:
+        case ChoiceGroupItem.POPUP:
             // XXX It'd be nice if the selected item index was stored, so it
             // isn't
             // necessary to search for it.
             for (int i = 0; i < numOfItems; ++i)
             {
-                if (items[i].isSelected())
+                if (items[i].isSelected()) {
                     return i;
+                }
             }
             break;
-        case ChoiceItemInterface.IMPLICIT:
+        case ChoiceGroupItem.IMPLICIT:
             return highlightedItemIndex;
         }
         return -1;
     }
 
+    @Override
     public String getString(int elementNum)
     {
         if (elementNum < 0 || elementNum >= numOfItems)
@@ -285,6 +311,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         return items[elementNum].getText();
     }
 
+    @Override
     public void insert(int elementNum, String stringPart, Image imagePart)
     {
         if (elementNum < 0 || elementNum > numOfItems)
@@ -296,7 +323,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             throw new NullPointerException();
         }
 
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP)
         {
             popupList.insert(elementNum, stringPart, imagePart);
         }
@@ -310,7 +337,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
 
         System.arraycopy(items, elementNum, items, elementNum + 1, numOfItems - elementNum);
 
-        items[elementNum] = new ChoiceItem(null, imagePart, stringPart, this
+        items[elementNum] = new ChoiceItem(StringUtil.getInstance().EMPTY_STRING, imagePart, stringPart, this
                 .getLabelStringComponent().getBackgroundBasicColor(), this
                 .getLabelStringComponent().getForegroundBasicColor());
 
@@ -319,8 +346,8 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         if (numOfItems == 1)
         {
             highlightedItemIndex = 0;
-            if (ChoiceItemInterface.EXCLUSIVE == choiceType
-                    || ChoiceItemInterface.POPUP == choiceType)
+            if (ChoiceGroupItem.EXCLUSIVE == choiceType
+                    || ChoiceGroupItem.POPUP == choiceType)
             {
                 setSelectedIndex(0, true);
             }
@@ -329,6 +356,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         repaint();
     }
 
+    @Override
     public boolean isSelected(int elementNum)
     {
         if (elementNum < 0 || elementNum >= numOfItems)
@@ -339,6 +367,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         return items[elementNum].isSelected();
     }
 
+    @Override
     public void set(int elementNum, String stringPart, Image imagePart)
     {
         if (elementNum < 0 || elementNum >= numOfItems)
@@ -357,7 +386,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         items[elementNum].setText(stringPart);
         items[elementNum].setImage(imagePart);
 
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP)
         {
             popupList.set(elementNum, stringPart, imagePart);
         }
@@ -365,19 +394,21 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         repaint();
     }
 
+    @Override
     public void setFitPolicy(int policy)
     {
-        if (policy != ChoiceItemInterface.TEXT_WRAP_DEFAULT
-                && policy != ChoiceItemInterface.TEXT_WRAP_ON
-                && policy != ChoiceItemInterface.TEXT_WRAP_OFF)
+        if (policy != ChoiceGroupItem.TEXT_WRAP_DEFAULT
+                && policy != ChoiceGroupItem.TEXT_WRAP_ON
+                && policy != ChoiceGroupItem.TEXT_WRAP_OFF)
             throw new IllegalArgumentException("Bad Policy");
         fitPolicy = policy;
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP)
         {
             popupList.setFitPolicy(policy);
         }
     }
 
+    @Override
     public void setFont(int itemNum, Font font)
     {
         if (itemNum < 0 || itemNum >= numOfItems)
@@ -385,12 +416,13 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             throw new IndexOutOfBoundsException();
         }
         items[itemNum].setFont(font);
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP)
         {
             popupList.setFont(itemNum, font);
         }
     }
 
+    @Override
     public void setSelectedFlags(boolean[] selectedArray)
     {
         if (selectedArray == null)
@@ -402,10 +434,11 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             throw new NullPointerException();
         }
 
-        if (numOfItems == 0)
-            return;
+        if (numOfItems == 0) {
+            return;            
+        }
 
-        if (choiceType == ChoiceItemInterface.MULTIPLE)
+        if (choiceType == ChoiceGroupItem.MULTIPLE)
         {
             for (int i = 0; i < numOfItems; i++)
             {
@@ -428,7 +461,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
                 setSelectedIndex(0, true);
             }
 
-            if (choiceType == ChoiceItemInterface.POPUP)
+            if (choiceType == ChoiceGroupItem.POPUP)
             {
                 popupList.setSelectedFlags(selectedArray);
             }
@@ -436,6 +469,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
 
     }
 
+    @Override
     public void setSelectedIndex(int elementNum, boolean selected)
     {
         if (elementNum < 0 || elementNum >= numOfItems)
@@ -444,23 +478,23 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         }
 
         highlightedItemIndex = elementNum;
-        if ((choiceType == ChoiceItemInterface.EXCLUSIVE || choiceType == ChoiceItemInterface.POPUP)
+        if ((choiceType == ChoiceGroupItem.EXCLUSIVE || choiceType == ChoiceGroupItem.POPUP)
                 && selected)
         {
             for (int i = 0; i < numOfItems; i++)
             {
                 items[i].setSelectedState(elementNum == i);
             }
-            if (choiceType == ChoiceItemInterface.POPUP)
+            if (choiceType == ChoiceGroupItem.POPUP)
             {
                 popupList.setSelectedIndex(elementNum, true);
             }
             repaint();
-        } else if (choiceType == ChoiceItemInterface.MULTIPLE)
+        } else if (choiceType == ChoiceGroupItem.MULTIPLE)
         {
             items[elementNum].setSelectedState(selected);
             repaint();
-        } else if (choiceType == ChoiceItemInterface.IMPLICIT)
+        } else if (choiceType == ChoiceGroupItem.IMPLICIT)
         {
             if (selected)
             {
@@ -470,20 +504,23 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         }
     }
 
+    @Override
     public int size()
     {
         return numOfItems;
     }
 
+    @Override
     public boolean isFocusable()
     {
         return true;
     }
 
+    @Override
     public int getHeight()
     {
         int height = 0;
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP)
         {
             if (highlightedItemIndex != -1)
             {
@@ -536,6 +573,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         return items[itemIndex].getHeight();
     }
 
+    @Override
     public int paint(Graphics g)
     {
         // super.paintContent(g);
@@ -543,7 +581,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         g.translate(0, super.getHeight());
         int translatedY = 0;
 
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP)
         {
             int index = getSelectedIndex();
             if (index != -1)
@@ -570,6 +608,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         return getHeight();
     }
 
+    @Override
     public boolean select()
     {
         if (numOfItems == 0)
@@ -577,7 +616,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             return false;
         }
 
-        if (choiceType == ChoiceItemInterface.POPUP)
+        if (choiceType == ChoiceGroupItem.POPUP)
         {
             // getOwner().currentDisplay.setCurrent(popupList);
         } else
@@ -594,12 +633,13 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         return true;
     }
 
+    @Override
     public int traverse(int gameKeyCode, int top, int bottom, boolean action)
     {
         int OUTOFITEM = Integer.MAX_VALUE;
         //int OUTOFITEM = Item.OUTOFITEM;
 
-        if (this.choiceType == ChoiceItemInterface.POPUP)
+        if (this.choiceType == ChoiceGroupItem.POPUP)
         {
             // POPUP has a totally different behaviour
             if (gameKeyCode == Canvas.UP)
@@ -711,7 +751,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
     {
         private boolean selected;
         private Font font;
-        Image box;
+        Image box = NullCanvas.NULL_IMAGE;
 
         ChoiceItem(String label, Image image, String text, BasicColor backgroundBasicColor,
                 BasicColor foregroundBasicColor)
@@ -726,20 +766,28 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             return font;
         }
 
+        @Override
         public void setImage(Image img)
         {
             super.setImage(img);
 
             int width = 0;
-            if (box != null)
+            if (box != null) {
                 width += box.getWidth();
-            if (this.getImage() != null)
+            }
+
+            if (this.getImage() != null) {
                 width += img.getWidth();
-            if (width > 0)
+            }
+
+            if (width > 0) {
                 width += 2;
+            }
+
             this.getStringComponent().setWidthDecreaser(width);
         }
 
+        @Override
         public int getHeight()
         {
             int height = 0;
@@ -760,6 +808,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             return height;
         }
 
+        @Override
         public int paint(Graphics g)
         {
             // OpenGL ES Hack
@@ -839,8 +888,10 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
                 
             // only allow fonts of the same height
             // for now (to simplify the layout)
-            if (f.getHeight() == font.getHeight())
+            if (f.getHeight() == font.getHeight()) {
                 font = f;
+            }
+
         }
 
         void setSelectedState(boolean state)
@@ -848,17 +899,29 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             selected = state;
 
             final Image[] imageArray = ChoiceGroupImageFactory.getInstance().getImageArray();
-            if (choiceType != ChoiceItemInterface.IMPLICIT
-                    && choiceType != ChoiceItemInterface.POPUP)
+            if (choiceType != ChoiceGroupItem.IMPLICIT
+                    && choiceType != ChoiceGroupItem.POPUP)
             {
-                box = (ChoiceItemInterface.EXCLUSIVE == choiceType ? (state ? imageArray[3]
-                        : imageArray[2]) : (state ? imageArray[1] : imageArray[0]));
+                if(ChoiceGroupItem.EXCLUSIVE == choiceType) {
+                    if(state) {
+                        box = imageArray[3];
+                    } else {
+                        box = imageArray[2];
+                    }
+                } else {
+                    if(state) {
+                        box = imageArray[1];
+                    } else {
+                        box = imageArray[0];
+                    }
+                }
             }
         }
     }
 
     class ImplicitListener implements CommandListener
     {
+        @Override
         public void commandAction(Command c, Displayable d)
         {
             List list = (List) d;
@@ -876,6 +939,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
         }
     }
 
+    @Override
     public void setFocus(boolean state)
     {
         // logUtil.put(commonStrings.START,

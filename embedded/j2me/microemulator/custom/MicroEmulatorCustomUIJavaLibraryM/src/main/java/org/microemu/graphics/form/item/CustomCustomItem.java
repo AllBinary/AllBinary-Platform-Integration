@@ -86,6 +86,7 @@ public class CustomCustomItem extends CustomItem {
 
 	}
 
+        @Override
 	public void keyPressed(int keyCode) {
 	}
 	
@@ -94,7 +95,7 @@ public class CustomCustomItem extends CustomItem {
 
 	protected void keyRepeated(int keyCode) {
 	}
-	
+
 	public void paint(Graphics graphics, int x, int y)
 	{
 	    
@@ -133,7 +134,8 @@ public class CustomCustomItem extends CustomItem {
 
 	protected void traverseOut() {
 	}
-	
+
+        @Override
 	public int paint(Graphics graphics) {
 	    
 	    //logUtil.put(commonStrings.START, this, "paint");

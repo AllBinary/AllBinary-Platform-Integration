@@ -21,6 +21,7 @@ package org.microemu.graphics.form.item;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.NullCanvas;
 
 import org.allbinary.graphics.form.item.CustomItem;
 import org.microemu.graphics.form.StringComponent;
@@ -29,7 +30,7 @@ import org.allbinary.graphics.color.BasicColor;
 
 public class ImageStringItem extends CustomItem
 {
-    private Image img;
+    private Image img = NullCanvas.NULL_IMAGE;
     private final StringComponent stringComponent;
 
     public ImageStringItem(String label, Image img, String text, 
@@ -65,6 +66,7 @@ public class ImageStringItem extends CustomItem
         stringComponent.setText(text);
     }
 
+    @Override
     public int getHeight()
     {
         if (img != null && img.getHeight() > stringComponent.getHeight())
@@ -81,6 +83,7 @@ public class ImageStringItem extends CustomItem
         stringComponent.invertPaint(state);
     }
 
+    @Override
     public int paint(Graphics g)
     {
         if (stringComponent == null)

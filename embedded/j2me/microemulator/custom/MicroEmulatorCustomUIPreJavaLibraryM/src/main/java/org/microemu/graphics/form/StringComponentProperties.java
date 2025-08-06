@@ -6,6 +6,8 @@
 package org.microemu.graphics.form;
 
 import org.allbinary.graphics.color.BasicColor;
+import org.allbinary.graphics.color.BasicColorFactory;
+import org.allbinary.logic.string.StringUtil;
 
 /**
  *
@@ -18,7 +20,7 @@ public class StringComponentProperties {
     public boolean[] hasNotChanged = HAS_NOT_CHANGED_ARRAY;
     public int[] lastWidth = LAST_WIDTH_ARRAY;
     
-    public String text;
+    public String text = StringUtil.getInstance().EMPTY_STRING;
 
     public int breaks[] = new int[4];
 
@@ -30,8 +32,8 @@ public class StringComponentProperties {
 
     public int widthDecreaser;
 
-    public BasicColor backgroundBasicColor;
-    public BasicColor foregroundBasicColor;
+    public BasicColor backgroundBasicColor = BasicColorFactory.getInstance().BLACK;
+    public BasicColor foregroundBasicColor = BasicColorFactory.getInstance().WHITE;
     
     public void copy(final StringComponentProperties stringComponentProperties) {
         this.text = stringComponentProperties.text;

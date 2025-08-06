@@ -36,11 +36,11 @@ public class CustomGaugeItem extends CustomItem
     private float maxValue;
     
     //private final int currentOuterColor = 0xff000000;
-    private final int currentRed = 0xffff0000;
-    private final int currentGreen = 0xff00ff00;
-    private final int currentBlue = 0xff0000ff;
-    private final int START_INNER_COLOR = this.currentRed;
-    private int currentInnerColor = 0xffff0000;
+    private final long currentRed = 0xffff0000;
+    private final long currentGreen = 0xff00ff00;
+    private final long currentBlue = 0xff0000ff;
+    private final long START_INNER_COLOR = this.currentRed;
+    private long currentInnerColor = 0xffff0000;
 
     private final DisplayInfoSingleton displayInfoSingleton = 
             DisplayInfoSingleton.getInstance();
@@ -51,7 +51,7 @@ public class CustomGaugeItem extends CustomItem
         super(label, backgroundBasicColor, foregroundBasicColor);
 
         setMaxValue(maxValue);
-        setValue(initialValue);
+        setValue((float) initialValue);
     }
 
     public void setHeight(int height)
@@ -62,9 +62,9 @@ public class CustomGaugeItem extends CustomItem
     public void setValue(float value)
     {
 
-        if (value < 0)
+        if (value < 0.0f)
         {
-            value = 0;
+            value = 0.0f;
         }
 
         if (value > maxValue)
@@ -104,7 +104,7 @@ public class CustomGaugeItem extends CustomItem
     {
         if (maxValue > 0)
         {
-            this.maxValue = maxValue;
+            this.maxValue = (float) maxValue;
             setValue(getValue());
         }
         else
@@ -173,6 +173,6 @@ public class CustomGaugeItem extends CustomItem
 
     private int getCurrentInnerColor()
     {
-        return currentInnerColor;
+        return (int) currentInnerColor;
     }
 }

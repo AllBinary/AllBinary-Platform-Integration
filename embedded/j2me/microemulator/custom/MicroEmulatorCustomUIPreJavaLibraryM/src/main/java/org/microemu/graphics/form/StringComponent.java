@@ -23,25 +23,26 @@ import javax.microedition.lcdui.Graphics;
 
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
+import org.allbinary.logic.string.StringUtil;
 
 public class StringComponent
 {
     //protected final LogUtil logUtil = LogUtil.getInstance();
 
-    private final Font font;
-
     private final StringComponentProperties paintComponentProperties = new StringComponentProperties();
+    
+    private Font font;
     
     private StringComponentProperties stringComponentProperties = new StringComponentProperties();
     private StringComponentProperties updatingComponentProperties = new StringComponentProperties();
-    private StringComponentProperties tempComponentProperties = null;
+    private StringComponentProperties tempComponentProperties = updatingComponentProperties;
 
     // 0xFFe07718;
 
     public StringComponent(final BasicColor backgroundBasicColor,
             final BasicColor foregroundBasicColor)
     {
-        this(null, Font.getDefaultFont(), backgroundBasicColor, foregroundBasicColor);
+        this(StringUtil.getInstance().EMPTY_STRING, Font.getDefaultFont(), backgroundBasicColor, foregroundBasicColor);
     }
 
     public StringComponent(final String text, final BasicColor backgroundBasicColor,
@@ -50,8 +51,7 @@ public class StringComponent
         this(text, Font.getDefaultFont(), backgroundBasicColor, foregroundBasicColor);
     }    
     
-    public StringComponent(String text, final Font font, BasicColor backgroundBasicColor,
-            BasicColor foregroundBasicColor)
+    public StringComponent(String text, final Font font, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         this.font = font;
         
@@ -71,7 +71,7 @@ public class StringComponent
     public int getCharPositionX(int num)
     {
         //synchronize (this)
-        {
+        //{
             if (stringComponentProperties.numOfBreaks == -1)
             {
                 updateBreaks();
@@ -79,7 +79,8 @@ public class StringComponent
 
             int i, prevIndex = 0;
 
-            for (i = 0; i < stringComponentProperties.numOfBreaks; i++)
+            final int size = stringComponentProperties.numOfBreaks;
+            for (i = 0; i < size; i++)
             {
                 if (num < stringComponentProperties.breaks[i])
                 {
@@ -92,16 +93,16 @@ public class StringComponent
                 stringComponentProperties.lastWidth[num] = this.font.substringWidth(stringComponentProperties.text, prevIndex, num - prevIndex);
                 stringComponentProperties.hasNotChanged[num] = true;
             }
-            return stringComponentProperties.lastWidth[num];
 
-        }
+            return stringComponentProperties.lastWidth[num];
+        //}
     }
 
     public int getCharPositionY(int num)
     {
         int y = 0;
         //synchronize (this)
-        {
+        //{
             if (stringComponentProperties.numOfBreaks == -1)
             {
                 updateBreaks();
@@ -115,7 +116,7 @@ public class StringComponent
                 }
                 y += this.font.getHeight();
             }
-        }
+        //}
 
         return y;
     }
@@ -124,7 +125,7 @@ public class StringComponent
     {
         int height;
         //synchronize (this)
-        {
+        //{
             if (stringComponentProperties.numOfBreaks == -1)
             {
                 updateBreaks();
@@ -150,7 +151,7 @@ public class StringComponent
             {
                 height += this.font.getHeight();
             }
-        }
+        //}
 
         return height;
     }
@@ -163,13 +164,13 @@ public class StringComponent
     public void invertPaint(boolean state)
     {
         //synchronize (this)
-        {
+        //{
             this.tempComponentProperties = this.stringComponentProperties;
             this.updatingComponentProperties.copy(this.stringComponentProperties);
             this.updatingComponentProperties.invertPaint = state;
             this.stringComponentProperties = this.updatingComponentProperties;
             this.updatingComponentProperties = this.tempComponentProperties;            
-        }
+        //}
     }
 
     public int paint(Graphics g)
@@ -183,15 +184,17 @@ public class StringComponent
         
         int y;
         //synchronize (this)
-        {
+        //{
             if (this.paintComponentProperties.numOfBreaks == -1)
             {
                 updateBreaks();
             }
 
-            int i, prevIndex;
+            int prevIndex = 0;
+            y = 0;
 
-            for (i = prevIndex = y = 0; i < this.paintComponentProperties.numOfBreaks; i++)
+            final int size = this.paintComponentProperties.numOfBreaks;
+            for (int i = 0; i < size; i++)
             {
                 if (this.paintComponentProperties.invertPaint)
                 {
@@ -242,7 +245,7 @@ public class StringComponent
                 g.drawSubstring(this.paintComponentProperties.text, prevIndex, this.paintComponentProperties.text.length() - prevIndex, 0, y, 0);
                 y += this.font.getHeight();
             }
-        }
+        //}
 
         return y;
     }
@@ -250,13 +253,13 @@ public class StringComponent
     public void setText(String text)
     {
         //synchronize (this)
-        {
+        //{
             this.tempComponentProperties = this.stringComponentProperties;
             this.updatingComponentProperties.copy(this.stringComponentProperties);
             this.updatingComponentProperties.text = text;
             if(text == null) {
-                this.updatingComponentProperties.hasNotChanged = this.updatingComponentProperties.HAS_NOT_CHANGED_ARRAY;
-                this.updatingComponentProperties.lastWidth = this.updatingComponentProperties.LAST_WIDTH_ARRAY;
+                this.updatingComponentProperties.hasNotChanged = StringComponentProperties.HAS_NOT_CHANGED_ARRAY;
+                this.updatingComponentProperties.lastWidth = StringComponentProperties.LAST_WIDTH_ARRAY;
             } else {
                 final int size = text.length();
                 this.updatingComponentProperties.hasNotChanged = new boolean[size + 1];
@@ -266,40 +269,42 @@ public class StringComponent
             this.stringComponentProperties = this.updatingComponentProperties;
             this.updatingComponentProperties = this.tempComponentProperties;
         
-        }
+        //}
     }
 
     public void setWidthDecreaser(int widthDecreaser)
     {
         //synchronize (this)
-        {
+        //{
             this.tempComponentProperties = this.stringComponentProperties;
             this.updatingComponentProperties.copy(this.stringComponentProperties);
             this.updatingComponentProperties.widthDecreaser = widthDecreaser;
             this.updatingComponentProperties.numOfBreaks = -1;
             this.stringComponentProperties = this.updatingComponentProperties;
             this.updatingComponentProperties = this.tempComponentProperties;        
-        }
+        //}
     }
 
     private void insertBreak(int pos)
     {
         int i;
 
-        for (i = 0; i < this.stringComponentProperties.numOfBreaks; i++)
+        final int size = this.stringComponentProperties.numOfBreaks;
+        for (i = 0; i < size; i++)
         {
             if (pos < this.stringComponentProperties.breaks[i])
             {
                 break;
             }
         }
-        if (this.stringComponentProperties.numOfBreaks + 1 == this.stringComponentProperties.breaks.length)
+        int[] breaks = this.stringComponentProperties.breaks;
+        if (this.stringComponentProperties.numOfBreaks + 1 == breaks.length)
         {
-            int newbreaks[] = new int[this.stringComponentProperties.breaks.length + 4];
-            System.arraycopy(this.stringComponentProperties.breaks, 0, newbreaks, 0, this.stringComponentProperties.numOfBreaks);
+            int newbreaks[] = new int[breaks.length + 4];
+            System.arraycopy(breaks, 0, newbreaks, 0, this.stringComponentProperties.numOfBreaks);
             this.stringComponentProperties.breaks = newbreaks;
         }
-        System.arraycopy(this.stringComponentProperties.breaks, i, this.stringComponentProperties.breaks, i + 1, this.stringComponentProperties.numOfBreaks - i);
+        System.arraycopy(breaks, i, breaks, i + 1, this.stringComponentProperties.numOfBreaks - i);
         this.stringComponentProperties.breaks[i] = pos;
         this.stringComponentProperties.numOfBreaks++;
     }
@@ -318,7 +323,9 @@ public class StringComponent
         int canBreak = 0;
         this.stringComponentProperties.numOfBreaks = 0;
 
-        for (int i = 0; i < this.stringComponentProperties.text.length(); i++)
+        final int size = this.stringComponentProperties.text.length();
+        int i = 0;
+        while(i < size)
         {
             if (this.stringComponentProperties.text.charAt(i) == ' ')
             {
@@ -346,6 +353,7 @@ public class StringComponent
                 }
                 canBreak = 0;
             }
+            i++;
         }
     }
 

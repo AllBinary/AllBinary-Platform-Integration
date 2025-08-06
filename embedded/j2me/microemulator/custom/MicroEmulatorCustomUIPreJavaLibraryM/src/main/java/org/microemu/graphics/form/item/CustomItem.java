@@ -23,6 +23,7 @@ import java.util.Vector;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.NullCanvas;
 import javax.microedition.lcdui.Screen;
 
 import org.allbinary.graphics.form.item.StringComponent;
@@ -31,6 +32,7 @@ import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.communication.log.ForcedLogUtil;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
+import org.allbinary.graphics.displayable.command.MyCommandsFactory;
 
 public class CustomItem
 {
@@ -63,44 +65,47 @@ public class CustomItem
     public static final int BUTTON = 2;
 
     private final StringComponent labelStringComponent;
-    private Displayable owner = null;
+    private Displayable owner = NullCanvas.NULL_CANVAS;
     private boolean focus = false;
 
     // MIDP2
     private int layout;
-    private Vector commands;
-    private Command defaultCommand;
+    private Vector<Object> commands;
+    private Command defaultCommand = MyCommandsFactory.getInstance().NO_COMMAND;
     
-    private CustomItemCommandListener commandListener;
+    private CustomItemCommandListener commandListener = CustomItemCommand.NULL_CUSTOM_ITEM_COMMAND;
 
     private int prefWidth, prefHeight;
 
     protected CustomItem(final String label, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
     {
         labelStringComponent = new StringComponent(label, backgroundBasicColor, foregroundBasicColor);
-        commands = new Vector();
+        commands = new Vector<Object>();
     }
 
     public void addCommand(final Command cmd)
     {
-        if (cmd == null)
+        if (cmd == null) {
             throw new NullPointerException();
+        }
 
         if (!commands.contains(cmd))
         {
             // Now insert it in order
             boolean inserted = false;
 
+            Command command;
             for (int i = 0; i < commands.size(); i++)
             {
-                if (cmd.getPriority() < ((Command) commands.elementAt(i))
-                        .getPriority())
+                command = (Command) commands.elementAt(i);
+                if (cmd.getPriority() < command.getPriority())
                 {
                     commands.insertElementAt(cmd, i);
                     inserted = true;
                     break;
                 }
             }
+            
             if (!inserted)
             {
                 // Not inserted just place it at the end
@@ -122,10 +127,11 @@ public class CustomItem
 
     public int getMinimumHeight()
     {
-        if (getLabelStringComponent() != null)
+        if (getLabelStringComponent() != null) {
             return getLabelStringComponent().getHeight();
-        else
+        } else {
             return 0;
+        }
     }
 
     public int getMinimumWidth()
@@ -136,32 +142,37 @@ public class CustomItem
     public int getPreferredHeight()
     {
         int ret = prefHeight;
-        int min = getMinimumHeight();
-        int max = getMaximumHeight();
+        final int min = getMinimumHeight();
+        final int max = getMaximumHeight();
 
-        if (ret == -1)
+        if (ret == -1) {
             return min;
+        }
 
-        if (ret < min)
+        if (ret < min) {
             ret = min;
-        else if (ret > max)
+        } else if (ret > max) {
             ret = max;
+        }
         return ret;
     }
 
     public int getPreferredWidth()
     {
         int ret = prefWidth;
-        int min = getMinimumWidth();
-        int max = getMaximumWidth();
+        final int min = getMinimumWidth();
+        final int max = getMaximumWidth();
 
-        if (ret == -1)
+        if (ret == -1) {
             return max;
+        }
 
-        if (ret < min)
+        if (ret < min) {
             ret = min;
-        else if (ret > max)
+        } else if (ret > max) {
             ret = max;
+        }
+
         return ret;
     }
 
@@ -169,7 +180,7 @@ public class CustomItem
     {
         commands.removeElement(cmd);
         if (defaultCommand == cmd)
-            defaultCommand = null;
+            defaultCommand = MyCommandsFactory.getInstance().NO_COMMAND;
     }
 
     public void setDefaultCommand(Command cmd)
@@ -179,8 +190,9 @@ public class CustomItem
         {
             // we should repaint even if the command was added
             // because the command layout could become different
-            if (commands.contains(cmd))
-                addCommand(cmd);
+            if (commands.contains(cmd)) {
+                this.addCommand(cmd);
+            }
         }
     }
 
@@ -204,9 +216,10 @@ public class CustomItem
         // because the center is the or of the two
         // others (ie VCENTER == (LEFT | RIGHT))
         if ((((layout & LAYOUT_SHRINK) != 0) && ((layout & LAYOUT_EXPAND) != 0))
-                || (((layout & LAYOUT_VSHRINK) != 0) && (layout & LAYOUT_VEXPAND) != 0))
-            throw new IllegalArgumentException(
-                    "Bad combination of layout policies");
+                || (((layout & LAYOUT_VSHRINK) != 0) && (layout & LAYOUT_VEXPAND) != 0)) {
+            throw new IllegalArgumentException("Bad combination of layout policies");
+        }
+        
         this.layout = layout;
     }
 

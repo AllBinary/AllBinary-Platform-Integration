@@ -10,7 +10,6 @@
     <name>MicroEmulatorCustomUIPreJavaLibrary</name>
     <url>http://maven.apache.org</url>
 
-
     <distributionManagement>
         <snapshotRepository>
             <id>nexus-snapshots</id>

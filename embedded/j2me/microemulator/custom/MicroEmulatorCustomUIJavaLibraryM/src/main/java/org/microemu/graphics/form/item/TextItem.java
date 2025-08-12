@@ -36,9 +36,10 @@ implements org.allbinary.graphics.form.item.CustomItemInterface
 
         int offsetX;
         int offsetWidth;
+        final String labelSet = this.getLabel();
         if(isHTML || (AndroidUtil.isAndroid() && isOpenGL)) {
             offsetX = 0;
-            offsetWidth = myFont.stringWidth(this.getLabel()) / 2;
+            offsetWidth = myFont.stringWidth(labelSet) / 2;
         } else {
             offsetX = 2;
             offsetWidth = 2;
@@ -46,7 +47,7 @@ implements org.allbinary.graphics.form.item.CustomItemInterface
         this.offsetX = offsetX;
         this.offsetWidth = offsetWidth;
 
-        this.width = myFont.stringWidth(this.getLabel()) + offsetWidth;
+        this.width = myFont.stringWidth(labelSet) + offsetWidth;
         
     }
 

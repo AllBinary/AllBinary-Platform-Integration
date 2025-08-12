@@ -141,22 +141,24 @@ public class TextFieldItemHelper
     {
         //tf.setCaretVisible(false);
 
-        String start = this.textFieldItem.getString().substring(0, this.textFieldItem.getCaretPosition());
-        String end = this.textFieldItem.getString().substring(this.textFieldItem.getCaretPosition(), this.textFieldItem.getString().length());
+        final String textFieldValue = this.textFieldItem.getString();
+        final String start = textFieldValue.substring(0, this.textFieldItem.getCaretPosition());
+        final String end = textFieldValue.substring(this.textFieldItem.getCaretPosition(), textFieldValue.length());
 
         textFieldItem.setString(start + string + end);
-        //textFieldItem.setCaretPosition(textFieldItem.getString().length());
+        //textFieldItem.setCaretPosition(string2.length());
         textFieldItem.setCaretPosition(start.length() + string.length());
         this.canvas.repaint();
     }
 
     private void deleteBeforeText()
     {
-        int size = this.textFieldItem.getString().length();
+        final String textFieldValue = this.textFieldItem.getString();
+        final int size = textFieldValue.length();
         if (size > 0 && this.textFieldItem.getCaretPosition() > 0)
         {
-            String start = this.textFieldItem.getString().substring(0, this.textFieldItem.getCaretPosition() - 1);
-            String end = this.textFieldItem.getString().substring(this.textFieldItem.getCaretPosition(), size);
+            final String start = textFieldValue.substring(0, this.textFieldItem.getCaretPosition() - 1);
+            final String end = textFieldValue.substring(this.textFieldItem.getCaretPosition(), size);
 
             textFieldItem.setString(start + end);
             
@@ -168,11 +170,12 @@ public class TextFieldItemHelper
 
     private void deleteAtText()
     {
-        int size = this.textFieldItem.getString().length();
+        final String textFieldValue = this.textFieldItem.getString();
+        final int size = textFieldValue.length();
         if (size > 0 && this.textFieldItem.getCaretPosition() < size)
         {
-            String start = this.textFieldItem.getString().substring(0, this.textFieldItem.getCaretPosition());
-            String end = this.textFieldItem.getString().substring(this.textFieldItem.getCaretPosition() + 1, size);
+            final String start = textFieldValue.substring(0, this.textFieldItem.getCaretPosition());
+            final String end = textFieldValue.substring(this.textFieldItem.getCaretPosition() + 1, size);
 
             textFieldItem.setString(start + end);
 

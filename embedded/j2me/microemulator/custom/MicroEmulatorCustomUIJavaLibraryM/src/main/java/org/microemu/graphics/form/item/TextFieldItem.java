@@ -141,7 +141,8 @@ public class TextFieldItem extends TextItem
         
         int height = 0;
         
-        if(this.getLabel().length() > 0)
+        final String label = this.getLabel();
+        if(label.length() > 0)
         {
             height = stringComponent.getHeight() + 4;
         }
@@ -207,14 +208,15 @@ public class TextFieldItem extends TextItem
      */
     public void setCaretPosition(int position)
     {
-        if(position > this.stringComponent.getText().length())
+        final String text = this.stringComponent.getText();
+        if(position > text.length())
         {
             this.position = 0;
         }
         else
         if(position < 0)
         {
-            this.position = this.stringComponent.getText().length();
+            this.position = text.length();
         }
         else
         {

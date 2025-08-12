@@ -49,13 +49,14 @@ public class CustomImageItem
 
         this.max = image.getWidth() / MyFont.getInstance().charWidth();
 
-        if (max > this.getLabel().length()) {
-            maxLabelLength = this.getLabel().length();
+        final String labelSet = this.getLabel();
+        if (max > labelSet.length()) {
+            maxLabelLength = labelSet.length();
         } else {
             maxLabelLength = max;
         }
 
-        this.labelViewable = this.getLabel().substring(0, maxLabelLength);
+        this.labelViewable = labelSet.substring(0, maxLabelLength);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class MIDletClassLoaderConfig {
 
     public static final int DELEGATION_SYSTEM = 3;
 
-    private int delegationType;
+    public int delegationType;
 
     private boolean delegationSelected;
 

@@ -43,7 +43,7 @@ public class CustomImageItem
         this.basicColor = basicColor;
         this.yOffset = yOffset;
 
-        if (image == null) {
+        if (image == NullCanvas.NULL_IMAGE) {
             throw new Exception("Image: " + image);
         }
 

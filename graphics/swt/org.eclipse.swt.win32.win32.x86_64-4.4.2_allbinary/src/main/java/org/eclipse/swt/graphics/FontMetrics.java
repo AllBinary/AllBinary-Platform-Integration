@@ -85,7 +85,7 @@ public boolean equals (Object object) {
 /**
  * Returns the ascent of the font described by the receiver. A
  * font's <em>ascent</em> is the distance from the baseline to the 
- * top of actual characters, not including any of the leading area,
+ * top of characters, not including any of the leading area,
  * measured in pixels.
  *
  * @return the ascent of the font
@@ -107,7 +107,7 @@ public int getAverageCharWidth() {
 /**
  * Returns the descent of the font described by the receiver. A
  * font's <em>descent</em> is the distance from the baseline to the
- * bottom of actual characters, not including any of the leading area,
+ * bottom of characters, not including any of the leading area,
  * measured in pixels.
  *
  * @return the descent of the font

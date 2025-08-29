@@ -90,7 +90,7 @@ public class SwtFontManager implements FontManagerImpl {
 	    	} else if (meFont.getSize() == Font.SIZE_LARGE) {
 	    		size = SIZE_LARGE;
 	    	}
-                //Using the specified size breaks from the actual J2ME impl.
+                //Using the specified size breaks from the J2ME impl.
                 if(Common.allowJ2SEFontSizing) {
                     //System.out.println(new StringBuffer().append("Sizeable J2SESystemFont: ").append(name).append(" style: ").append(style).append(" size: ").append(meFont.getSize()).toString());
                     result = new SwtSystemFont(name, style, meFont.getSize(), antialiasing);

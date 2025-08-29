@@ -13,7 +13,7 @@
 package antenna.preprocessor.v3;
 
 /**
- * A small abstraction away from the actual logging method used to log messages
+ * A small abstraction away from the logging method used to log messages
  * for the preprocessor system.
  * 
  * @author Omry Yadan

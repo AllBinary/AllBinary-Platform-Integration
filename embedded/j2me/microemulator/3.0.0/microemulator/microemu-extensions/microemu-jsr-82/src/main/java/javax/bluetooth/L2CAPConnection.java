@@ -119,7 +119,7 @@ public interface L2CAPConnection extends Connection {
 	 *
 	 * @param inBuf byte array to store the received data
 	 *
-	 * @return the actual number of bytes read; 0 if a zero length packet is
+	 * @return the number of bytes read; 0 if a zero length packet is
 	 * received; 0 if <code>inBuf</code> length is zero
 	 *
 	 * @exception IOException if an I/O error occurs or the connection has been

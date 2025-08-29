@@ -446,7 +446,7 @@ LRESULT wmScrollWheel (boolean update, long /*int*/ wParam, long /*int*/ lParam)
 	/*
 	* When the native widget scrolls inside WM_MOUSEWHEEL, it
 	* may or may not send a WM_VSCROLL or WM_HSCROLL to do the
-	* actual scrolling.  This depends on the implementation of
+	* scrolling.  This depends on the implementation of
 	* each native widget.  In order to ensure that application
 	* code is notified when the scroll bar moves, compare the
 	* scroll bar position before and after the WM_MOUSEWHEEL.
@@ -493,7 +493,7 @@ LRESULT wmScroll (ScrollBar bar, boolean update, long /*int*/ hwnd, int msg, lon
 				/* 
 				* Note: On WinCE, the value in SB_THUMBPOSITION is relative to nMin.
 				* Same for SB_THUMBPOSITION 'except' for the very first thumb track
-				* message which has the actual value of nMin. This is a problem when
+				* message which has the value of nMin. This is a problem when
 				* nMin is not zero.
 				*/
 				info.nPos = info.nTrackPos;

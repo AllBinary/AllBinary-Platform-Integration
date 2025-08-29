@@ -727,7 +727,7 @@ public class Preprocessor
 	}
 
 	/**
-	 * A small abstraction away from the actual loggin method.
+	 * A small abstraction away from the loggin method.
 	 */
 	public static interface ILogger
 	{

@@ -25,7 +25,7 @@ import org.eclipse.swt.*;
  * </dt>
  * <dd>
  * If isDirect is <code>false</code>, this palette is an indexed
- * palette which maps pixel values to RGBs. The actual RGB values
+ * palette which maps pixel values to RGBs. The RGB values
  * may be retrieved by using the getRGBs() method.
  * </dd>
  * <dt>

@@ -433,7 +433,7 @@ ImageData(
 	 * When the image is being loaded from a PNG, we need to use the theoretical minimum
 	 * number of bytes per line to check whether there is enough data, because the actual
 	 * number of bytes per line is calculated based on the given depth, which may be larger
-	 * than the actual depth of the PNG.
+	 * than the depth of the PNG.
 	 */
 	int minBytesPerLine = type == SWT.IMAGE_PNG ? ((((width + 7) / 8) + 3) / 4) * 4 : bytesPerLine;
 	if (data != null && data.length < minBytesPerLine * height) {

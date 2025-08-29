@@ -39,7 +39,7 @@ import de.pleumann.antenna.misc.Conditional;
 import de.pleumann.antenna.misc.Strings;
 import de.pleumann.antenna.misc.Utility;
 
-// actual implementation of task depends on backend version.
+// implementation of task depends on backend version.
 public class WtkPreprocess extends MatchingTask {
 	
     private Conditional condition;

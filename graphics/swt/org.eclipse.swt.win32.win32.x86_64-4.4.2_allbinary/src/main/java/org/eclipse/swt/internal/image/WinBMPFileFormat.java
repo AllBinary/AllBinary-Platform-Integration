@@ -183,7 +183,7 @@ int compressRLE8Data(byte[] src, int srcOffset, int numBytes, byte[] dest, boole
 }
 void convertPixelsToBGR(ImageData image, byte[] dest) {
 	/*
-	 * For direct palette, uncompressed image, BMP encoders expect the
+	 * For direct palette, uncompressed image, BMP encoders expectt the
 	 * pixels to be in BGR format for 24 & 32 bit and RGB 1555 for 16 bit
 	 * On Linux and MacOS, the pixels are in RGB format. Also, in
 	 * MacOS, the alpha byte may be first. 

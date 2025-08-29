@@ -561,7 +561,7 @@ public int getItemCount () {
  * Returns an array of <code>ToolItem</code>s which are the items
  * in the receiver. 
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -1053,7 +1053,7 @@ void setRowCount (int count) {
 		* will wrap items with the style BTNS_CHECK, even when the fLarger
 		* flags is used to force the number of rows to be larger than the
 		* number of items.  The fix is to set the number of rows to be two
-		* larger than the actual number of rows in the tool bar.  When items
+		* larger than the number of rows in the tool bar.  When items
 		* are being added, as long as the number of rows is at least one
 		* item larger than the count, the tool bar is laid out properly.
 		* When items are being removed, setting the number of rows to be

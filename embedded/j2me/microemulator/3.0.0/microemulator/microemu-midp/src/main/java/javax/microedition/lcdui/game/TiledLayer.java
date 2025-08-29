@@ -36,7 +36,7 @@ import org.allbinary.string.CommonStrings;
 // and have inconsistent behaviour
 // second is the animated tiles, their indexes should be consecutive and 
 // two simultaneus createAnimatedTile methods could blow that up.
-// One would expect only one thread accessing this class at the same time
+// One would expectt only one thread accessing this class at the same time
 // but it becomes a little tricky when you consider that repaints access this
 // class and you have no control or knowledge of the repaint thread on most
 // systems

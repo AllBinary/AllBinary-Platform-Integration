@@ -51,7 +51,7 @@ public void dragStart(DragSourceEvent event);
  * <li>(in)widget
  * <li>(in)time
  * <li>(in)dataType - the type of data requested.
- * <li>(out)data    - the application inserts the actual data here (must match the dataType)
+ * <li>(out)data    - the application inserts the data here (must match the dataType)
  * <li>(out)doit    - set this to cancel the drag
  * </ul></p>
  *

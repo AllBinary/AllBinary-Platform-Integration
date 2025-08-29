@@ -3046,7 +3046,7 @@ public int getColumnCount () {
  * the current visual order of the items, and the contents
  * of the array represent the creation order of the items.
  * </p><p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -3082,7 +3082,7 @@ public int[] getColumnOrder () {
  * when the programmer uses the tree like a list, adding items but
  * never creating a column.
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -3262,7 +3262,7 @@ public int getItemHeight () {
  * receiver that are direct item children of the receiver.  These
  * are the roots of the tree.
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -3431,7 +3431,7 @@ int getSelection (long /*int*/ hItem, TVITEM tvItem, TreeItem [] selection, int 
  * selected in the receiver. The order of the items is unspecified.
  * An empty array indicates that no items are selected. 
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its selection, so modifying the array will
  * not affect the receiver. 
  * </p>

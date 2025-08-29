@@ -519,7 +519,7 @@ public final class GIFFileFormat extends FileFormat {
 				writePalette(data[frame].palette, depth);
 			}
 			
-			/* Step 9: Write the actual data for each frame. */
+			/* Step 9: Write the data for each frame. */
 			try {
 				outputStream.write(depth); // Minimum LZW Code size
 			} catch (IOException e) {

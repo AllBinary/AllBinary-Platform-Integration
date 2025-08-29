@@ -122,8 +122,8 @@ public class SocketConnectionTest extends BaseGCFTestCase {
 		}
 	}
 	
-	static public void assertNotEquals(String message, String expected, String actual) {
-		assertFalse(message + " [" + expected + " == "+ actual + "]", expected.equals(actual));
+	static public void assertNotEquals(String message, String expected, String actuall) {
+		assertFalse(message + " [" + expected + " == "+ actuall + "]", expected.equals(actuall));
 	}
 	
 	public void testServerSocketConnection() throws IOException, InterruptedException {

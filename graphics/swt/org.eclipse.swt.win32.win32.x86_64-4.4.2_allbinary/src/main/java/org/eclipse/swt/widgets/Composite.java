@@ -432,7 +432,7 @@ public int getBackgroundMode () {
  * control appears at the beginning of the array.  Subsequent controls
  * draw beneath this control and appear later in the array.
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of children, so modifying the array will
  * not affect the receiver. 
  * </p>

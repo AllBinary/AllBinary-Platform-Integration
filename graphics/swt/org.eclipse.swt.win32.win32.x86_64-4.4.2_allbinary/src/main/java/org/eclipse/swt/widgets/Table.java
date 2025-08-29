@@ -2364,7 +2364,7 @@ public int getColumnCount () {
  * the current visual order of the items, and the contents
  * of the array represent the creation order of the items.
  * </p><p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -2400,7 +2400,7 @@ public int[] getColumnOrder () {
  * when the programmer uses the table like a list, adding items but
  * never creating a column.
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -2644,7 +2644,7 @@ public int getItemHeight () {
  * Returns a (possibly empty) array of <code>TableItem</code>s which
  * are the items in the receiver. 
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -2699,7 +2699,7 @@ public boolean getLinesVisible () {
  * selected in the receiver. The order of the items is unspecified.
  * An empty array indicates that no items are selected.
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its selection, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -2763,7 +2763,7 @@ public int getSelectionIndex () {
  * selected in the receiver. The order of the indices is unspecified.
  * The array is empty if no items are selected.
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its selection, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -6351,7 +6351,7 @@ LRESULT WM_SETFONT (long /*int*/ wParam, long /*int*/ lParam) {
 	* the n-1th font be the default.  This makes the sort
 	* indicator always be the default size.
 	* 
-	* NOTE: The table window proc sets the actual font in
+	* NOTE: The table window proc sets the font in
 	* the header so that all that is necessary here is to
 	* set the default first.
 	*/

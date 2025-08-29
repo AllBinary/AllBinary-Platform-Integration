@@ -77,7 +77,7 @@ public class Item
     ItemCommandListener commandListener;
     
     // -1 means unlocked, otherwise it is the application requested preffered size
-    // for the actual one use the getPrefXXXX() method package access
+    // for the one use the getPrefXXXX() method package access
     int prefWidth;
     
     int prefHeight;

@@ -238,7 +238,7 @@ public static char[] getRenderInfo(GC gc, String text, int[] order, byte[] class
 		int length = offsets [i+1] - offsets [i];
 
 		// The number of glyphs expected is <= length (segment length);
-		// the actual number returned may be less in case of Arabic ligatures.
+		// the number returned may be less in case of Arabic ligatures.
 		result.nGlyphs = length;
 		TCHAR textBuffer2 = new TCHAR(lpCs[1], text.substring(offset, offset + length), false);
 		OS.GetCharacterPlacement(gc.handle, textBuffer2, textBuffer2.length(), 0, result, dwFlags);
@@ -348,7 +348,7 @@ public static void getOrderInfo(GC gc, String text, int[] order, byte[] classBuf
 		int offset = offsets [i];
 		int length = offsets [i+1] - offsets [i];
 		// The number of glyphs expected is <= length (segment length);
-		// the actual number returned may be less in case of Arabic ligatures.
+		// the number returned may be less in case of Arabic ligatures.
 		result.nGlyphs = length;
 		TCHAR textBuffer2 = new TCHAR(lpCs[1], text.substring(offset, offset + length), false);
 		OS.GetCharacterPlacement(gc.handle, textBuffer2, textBuffer2.length(), 0, result, dwFlags);

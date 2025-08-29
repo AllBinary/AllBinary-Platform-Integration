@@ -88,7 +88,7 @@ public interface Authenticator {
 
 	/**
 	 * Called when a client or server receives an authentication response
-	 * header. This method will provide the user name and expect the correct
+	 * header. This method will provide the user name and expectt the correct
 	 * password to be returned.
 	 * 
 	 * @param userName

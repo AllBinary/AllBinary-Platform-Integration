@@ -835,7 +835,7 @@ public int getItemCount () {
  * Returns a (possibly empty) array of <code>MenuItem</code>s which
  * are the items in the receiver. 
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>

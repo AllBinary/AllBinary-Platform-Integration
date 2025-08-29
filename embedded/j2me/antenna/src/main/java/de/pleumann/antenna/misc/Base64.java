@@ -179,7 +179,7 @@ public class Base64
     /**
      * Encodes up to the first three bytes of array <var>threeBytes</var>
      * and returns a four-byte array in Base64 notation.
-     * The actual number of significant bytes in your array is
+     * The number of significant bytes in your array is
      * given by <var>numSigBytes</var>.
      * The array <var>threeBytes</var> needs only be as big as
      * <var>numSigBytes</var>.
@@ -208,7 +208,7 @@ public class Base64
      * are large enough to accomodate <var>srcOffset</var> + 3 for
      * the <var>source</var> array or <var>destOffset</var> + 4 for
      * the <var>destination</var> array.
-     * The actual number of significant bytes in your array is
+     * The number of significant bytes in your array is
      * given by <var>numSigBytes</var>.
      *
      * @param source the array to convert
@@ -556,7 +556,7 @@ public class Base64
      * are large enough to accomodate <var>srcOffset</var> + 4 for
      * the <var>source</var> array or <var>destOffset</var> + 3 for
      * the <var>destination</var> array.
-     * This method returns the actual number of bytes that 
+     * This method returns the number of bytes that 
      * were converted from the Base64 encoding.
      * 
      *

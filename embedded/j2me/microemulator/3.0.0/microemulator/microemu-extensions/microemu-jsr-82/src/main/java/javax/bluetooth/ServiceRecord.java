@@ -69,7 +69,7 @@ import java.io.IOException;
  * </TABLE>
  * <p>
  * The following table lists the common string-valued attribute ID offsets used in a 
- * {@code ServiceRecord}. These offsets must be added to a base value to obtain the actual 
+ * {@code ServiceRecord}. These offsets must be added to a base value to obtain the 
  * service ID. (For more information, see the Service Discovery Protocol Specification 
  * located in the Bluetooth Core Specification at <a href=
  * "http://www.bluetooth.com/dev/specifications.asp">http://www.bluetooth.com/dev/specifications.asp

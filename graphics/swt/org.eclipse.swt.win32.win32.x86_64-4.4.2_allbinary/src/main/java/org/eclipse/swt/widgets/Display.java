@@ -1900,7 +1900,7 @@ public boolean getHighContrast () {
 
 /**
  * Returns the maximum allowed depth of icons on this display, in bits per pixel.
- * On some platforms, this may be different than the actual depth of the display.
+ * On some platforms, this may be different than the depth of the display.
  *
  * @return the maximum icon depth
  *

@@ -394,7 +394,7 @@ void init(int red, int green, int blue, int alpha) {
 	}
 	if (i == colorRefCount.length) {
 		/* No free entries, use the closest one */
-		/* Remake the handle from the actual rgbs */
+		/* Remake the handle from the rgbs */
 		handle = (entry[0] & 0xFF) | ((entry[1] & 0xFF) << 8) |
 				 ((entry[2] & 0xFF) << 16);
 	} else {

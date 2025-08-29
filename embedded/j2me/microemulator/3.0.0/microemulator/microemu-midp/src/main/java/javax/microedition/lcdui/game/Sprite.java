@@ -718,7 +718,7 @@ public class Sprite extends Layer {
 //        int oW = 0, oH = 0;
 //        
 //        while (another) {
-//            // first calculate the actual rectangle we must check 
+//            // first calculate the rectangle we must check 
 //            // for this sprite
 //            // this are for the reduced collision rectangle
 //            int cX, cY, cW, cH;

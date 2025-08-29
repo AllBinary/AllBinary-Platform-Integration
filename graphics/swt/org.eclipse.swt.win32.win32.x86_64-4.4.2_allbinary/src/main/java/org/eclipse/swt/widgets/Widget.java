@@ -2039,7 +2039,7 @@ LRESULT wmLButtonDblClk (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lP
 	*	WM_LBUTTONDBLCLK	- double click
 	*	WM_LBUTTONUP		- mouse up
 	*
-	* Applications that expect matching mouse down/up
+	* Applications that expectt matching mouse down/up
 	* pairs will not see the second mouse down.  The
 	* fix is to send a mouse down event.
 	*/
@@ -2199,7 +2199,7 @@ LRESULT wmMButtonDblClk (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lP
 	*	WM_MLBUTTONDBLCLK	- double click
 	*	WM_MBUTTONUP		- mouse up
 	*
-	* Applications that expect matching mouse down/up
+	* Applications that expectt matching mouse down/up
 	* pairs will not see the second mouse down.  The
 	* fix is to send a mouse down event.
 	*/
@@ -2459,7 +2459,7 @@ LRESULT wmRButtonDblClk (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lP
 	*	WM_RBUTTONDBLCLK	- double click
 	*	WM_LBUTTONUP		- mouse up
 	*
-	* Applications that expect matching mouse down/up
+	* Applications that expectt matching mouse down/up
 	* pairs will not see the second mouse down.  The
 	* fix is to send a mouse down event.
 	*/
@@ -2695,7 +2695,7 @@ LRESULT wmXButtonDblClk (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lP
 	*	WM_XLBUTTONDBLCLK	- double click
 	*	WM_XBUTTONUP		- mouse up
 	*
-	* Applications that expect matching mouse down/up
+	* Applications that expectt matching mouse down/up
 	* pairs will not see the second mouse down.  The
 	* fix is to send a mouse down event.
 	*/

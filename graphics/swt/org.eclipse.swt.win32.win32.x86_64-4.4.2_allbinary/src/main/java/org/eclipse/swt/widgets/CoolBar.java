@@ -477,7 +477,7 @@ public int getItemCount () {
  * the current visual order of the items, and the contents
  * of the array represent the creation order of the items.
  * </p><p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>
@@ -514,7 +514,7 @@ public int [] getItemOrder () {
  * Returns an array of <code>CoolItem</code>s in the order
  * in which they are currently being displayed.
  * <p>
- * Note: This is not the actual structure used by the receiver
+ * Note: This is not the structure used by the receiver
  * to maintain its list of items, so modifying the array will
  * not affect the receiver. 
  * </p>

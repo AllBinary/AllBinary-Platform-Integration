@@ -500,7 +500,7 @@ public class JPEGDecoder {
 					}
 
 					if (entropy.dc_needed[blkn]) {
-						/* Convert DC difference to actual value, update last_dc_val */
+						/* Convert DC difference to value, update last_dc_val */
 						int ci = cinfo.MCU_membership[blkn];
 						s += state.last_dc_val[ci];
 						state.last_dc_val[ci] = s;
@@ -1370,7 +1370,7 @@ public class JPEGDecoder {
 						s = ((r) < extend_test[s] ? (r) + extend_offset[s] : (r));
 					}
 
-						/* Convert DC difference to actual value, update last_dc_val */
+						/* Convert DC difference to value, update last_dc_val */
 					s += state.last_dc_val[ci];
 					state.last_dc_val[ci] = s;
 					/* Scale and output the coefficient (assumes jpeg_natural_order[0]=0) */
@@ -1573,8 +1573,8 @@ public class JPEGDecoder {
 		 * and similarly for height.	For decompression, IDCT scaling is included, so
 		 * downsampled_width = ceil(image_width * Hi/Hmax * DCT_scaled_size/DCTSIZE)
 		 */
-		int downsampled_width;	 /* actual width in samples */
-		int downsampled_height; /* actual height in samples */
+		int downsampled_width;	 /* width in samples */
+		int downsampled_height; /* height in samples */
 		/* This flag is used only for decompression.	In cases where some of the
 		 * components will be ignored (eg grayscale output from YCbCr image),
 		 * we can skip most computations for the unused components.
@@ -2080,7 +2080,7 @@ public class JPEGDecoder {
 		boolean enable_external_quant;/* enable future use of external colormap */
 		boolean enable_2pass_quant;	/* enable future use of 2-pass quantizer */
 
-		/* Description of actual output image that will be returned to application.
+		/* Description of output image that will be returned to application.
 		 * These fields are computed by jpeg_start_decompress().
 		 * You can also use jpeg_calc_output_dimensions() to determine these values
 		 * in advance of calling jpeg_start_decompress().
@@ -2387,7 +2387,7 @@ static void jpeg_calc_output_dimensions (jpeg_decompress_struct cinfo)
 
 //#ifdef IDCT_SCALING_SUPPORTED
 //
-//	/* Compute actual output image dimensions and DCT scaling choices. */
+//	/* Compute output image dimensions and DCT scaling choices. */
 //	if (cinfo.scale_num * 8 <= cinfo.scale_denom) {
 //		/* Provide 1/8 scaling */
 //		cinfo.output_width = (int)
@@ -2415,7 +2415,7 @@ static void jpeg_calc_output_dimensions (jpeg_decompress_struct cinfo)
 //		cinfo.output_height = cinfo.image_height;
 //		cinfo.min_DCT_scaled_size = DCTSIZE;
 //	}
-//	/* In selecting the actual DCT scaling for each component, we try to
+//	/* In selecting the DCT scaling for each component, we try to
 //	 * scale up the chroma components via IDCT scaling rather than upsampling.
 //	 * This saves time if the upsampler gets to use 1:1 scaling.
 //	 * Note this code assumes that the supported DCT scalings are powers of 2.
@@ -2548,7 +2548,7 @@ static void build_ycc_rgb_table (jpeg_decompress_struct cinfo) {
 	cconvert.Cb_g_tab = new int[MAXJSAMPLE+1];
 
 	for (i = 0, x = -CENTERJSAMPLE; i <= MAXJSAMPLE; i++, x++) {
-		/* i is the actual input pixel value, in the range 0..MAXJSAMPLE */
+		/* i is the input pixel value, in the range 0..MAXJSAMPLE */
 		/* The Cb or Cr value we are thinking of is x = i - CENTERJSAMPLE */
 		/* Cr=>R value is nearest int to 1.40200 * x */
 		cconvert.Cr_r_tab[i] = ((int)(1.40200f * (1<<SCALEBITS) + 0.5f) * x + ONE_HALF) >> SCALEBITS;
@@ -2696,7 +2696,7 @@ static void jinit_d_post_controller (jpeg_decompress_struct cinfo, boolean need_
 
 static void make_funny_pointers (jpeg_decompress_struct cinfo)
 /* Create the funny pointer lists discussed in the comments above.
- * The actual workspace is already allocated (in main.buffer),
+ * The workspace is already allocated (in main.buffer),
  * and the space for the pointer lists is allocated too.
  * This routine just fills in the curiously ordered lists.
  * This will be repeated at the beginning of each pass.
@@ -2728,7 +2728,7 @@ static void make_funny_pointers (jpeg_decompress_struct cinfo)
 		}
 		/* The wraparound pointers at top and bottom will be filled later
 		 * (see set_wraparound_pointers, below).	Initially we want the "above"
-		 * pointers to duplicate the first actual data line.	This only needs
+		 * pointers to duplicate the first data line.	This only needs
 		 * to happen in xbuffer[0].
 		 */
 		for (i = 0; i < rgroup; i++) {

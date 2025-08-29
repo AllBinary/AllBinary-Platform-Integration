@@ -578,7 +578,7 @@ void store() {
 		writeShortLSB(bytes, blockLength); // LEN
 		writeShortLSB(bytes, blockLength ^ 0xffff); // NLEN (one's complement of LEN)
 	
-		// write actual data
+		// write data
 		bytes.write(in, start, blockLength);
 		
 		length = length - blockLength;

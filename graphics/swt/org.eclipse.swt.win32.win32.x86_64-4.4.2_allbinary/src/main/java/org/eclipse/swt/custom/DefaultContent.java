@@ -21,7 +21,7 @@ class DefaultContent implements StyledTextContent {
 	private final static String LineDelimiter = System.getProperty("line.separator");
 
 	Vector textListeners = new Vector(); // stores text listeners for event sending
-	char[] textStore = new char[0];	// stores the actual text
+	char[] textStore = new char[0];	// stores the text
 	int gapStart = -1;	// the character position start of the gap
 	int gapEnd = -1;	// the character position after the end of the gap
 	int gapLine = -1;	// the line on which the gap exists, the gap will always be associated with one line
@@ -323,7 +323,7 @@ void insert(int position, String text) {
 }
 /**
  * Moves the gap and adjusts its size in anticipation of a text change.  
- * The gap is resized to actual size + the specified size and moved to the given 
+ * The gap is resized to size + the specified size and moved to the given 
  * position.
  * <p>
  *

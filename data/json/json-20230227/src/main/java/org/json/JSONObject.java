@@ -2189,7 +2189,7 @@ public class JSONObject {
     }
 
     /**
-     * Tests if the value should be tried as a decimal. It makes no test if there are actual digits.
+     * Tests if the value should be tried as a decimal. It makes no test if there are digits.
      *
      * @param val value to test
      * @return true if the string is "-0" or if it contains '.', 'e', or 'E', false otherwise.
@@ -2527,7 +2527,7 @@ public class JSONObject {
             }
             writer.write(o != null ? o.toString() : quote(value.toString()));
         } else if (value instanceof Number) {
-            // not all Numbers may match actual JSON Numbers. i.e. fractions or Imaginary
+            // not all Numbers may match JSON Numbers. i.e. fractions or Imaginary
             final String numberAsString = numberToString((Number) value);
             if(NUMBER_PATTERN.matcher(numberAsString).matches()) {
                 writer.write(numberAsString);

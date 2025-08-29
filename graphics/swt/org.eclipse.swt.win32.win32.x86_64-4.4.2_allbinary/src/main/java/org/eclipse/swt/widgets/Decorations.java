@@ -502,7 +502,7 @@ public Rectangle getClientArea () {
 	checkWidget ();
 	/* 
 	* Note: The CommandBar is part of the client area,
-	* not the trim.  Applications don't expect this so
+	* not the trim.  Applications don't expectt this so
 	* subtract the height of the CommandBar.
 	*/
 	if (OS.IsHPC) {

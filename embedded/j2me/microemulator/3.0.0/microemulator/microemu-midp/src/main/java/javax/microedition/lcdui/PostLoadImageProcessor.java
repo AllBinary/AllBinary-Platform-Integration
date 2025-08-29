@@ -11,6 +11,8 @@ package javax.microedition.lcdui;
  */
 public class PostLoadImageProcessor {
     
+    public static final PostLoadImageProcessor NULL_POST_LOAD_IMAGE_PROCESSOR = new PostLoadImageProcessor();
+    
     public void process(final Image image) {
         
     }

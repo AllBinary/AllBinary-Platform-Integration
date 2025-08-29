@@ -72,7 +72,7 @@ public class Image
         
         protected Image() {
             this.name = StringUtil.getInstance().NULL_STRING;
-            this.postLoadImageProcessor = null;
+            this.postLoadImageProcessor = PostLoadImageProcessor.NULL_POST_LOAD_IMAGE_PROCESSOR;
         }
         
         public Image(final String name, final PostLoadImageProcessor postLoadImageProcessor) {

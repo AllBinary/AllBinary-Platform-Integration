@@ -35,7 +35,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -49,6 +48,7 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.lcdui.game.Sprite;
+import org.allbinary.media.image.ImageUtil;
 
 import org.microemu.DisplayAccess;
 import org.microemu.MIDletAccess;
@@ -330,7 +330,8 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		}
 		if (filter != null) {
 			FilteredImageSource imageSource = new FilteredImageSource(img.getSource(), filter);
-			return new J2SEImmutableImage(Toolkit.getDefaultToolkit().createImage(imageSource));
+                        return new J2SEImmutableImage(ImageUtil.getInstance().convertToBufferedImage(Toolkit.getDefaultToolkit().createImage(imageSource)));
+			//return new J2SEImmutableImage(Toolkit.getDefaultToolkit().createImage(imageSource));
 		} else {
 			return new J2SEImmutableImage(img);
 		}

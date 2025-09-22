@@ -18,7 +18,7 @@ import org.allbinary.game.configuration.feature.HTMLFeatureFactory;
 import org.allbinary.input.event.VirtualKeyboardEventHandler;
 import org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler;
 import org.allbinary.input.motion.gesture.observer.MovedMotionGesturesHandler;
-import org.allbinary.logic.communication.log.LogFactory;
+
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.util.BasicArrayList;

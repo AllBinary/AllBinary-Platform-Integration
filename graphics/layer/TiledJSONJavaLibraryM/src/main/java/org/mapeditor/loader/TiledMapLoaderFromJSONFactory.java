@@ -17,7 +17,7 @@ import java.io.InputStream;
 
 import org.allbinary.logic.io.InputStreamUtil;
 import org.allbinary.string.CommonStrings;
-import org.allbinary.logic.communication.log.LogFactory;
+
 import org.allbinary.logic.communication.log.LogUtil;
 
 import org.json.me.JSONObject;

@@ -15,7 +15,7 @@ package org.allbinary.logic.io;
 
 import java.io.InputStream;
 import org.allbinary.string.CommonStrings;
-import org.allbinary.logic.communication.log.LogFactory;
+
 import org.allbinary.logic.communication.log.LogUtil;
 
 public class InputStreamUtil

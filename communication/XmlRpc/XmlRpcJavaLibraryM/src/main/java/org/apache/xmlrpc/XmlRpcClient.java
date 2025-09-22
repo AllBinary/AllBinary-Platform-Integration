@@ -69,7 +69,7 @@ import java.util.Vector;
 
 import org.allbinary.init.crypt.jcehelper.BasicCryptUtil;
 import org.allbinary.init.crypt.jcehelper.CryptInterface;
-import org.allbinary.logic.communication.log.LogFactory;
+
 import org.allbinary.logic.communication.log.LogUtil;
 
 //import abcs.logic.communication.log.LogUtil;

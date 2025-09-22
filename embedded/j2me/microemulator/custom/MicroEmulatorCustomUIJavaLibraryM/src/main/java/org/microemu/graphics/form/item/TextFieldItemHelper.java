@@ -18,7 +18,7 @@ import org.allbinary.game.input.Input;
 import org.allbinary.game.input.InputFactory;
 import org.allbinary.game.input.PlatformFormInputMappingFactory;
 import org.allbinary.game.input.PlatformKeyFactory;
-import org.allbinary.logic.communication.log.LogFactory;
+
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;

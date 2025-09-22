@@ -14,7 +14,7 @@
 package org.mapeditor.io;
 
 import org.allbinary.string.CommonStrings;
-import org.allbinary.logic.communication.log.LogFactory;
+
 import org.allbinary.logic.communication.log.LogUtil;
 
 /**

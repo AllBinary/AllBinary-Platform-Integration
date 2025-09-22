@@ -44,7 +44,7 @@ import org.allbinary.game.configuration.feature.Features;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.logic.string.StringUtil;
 
-//import org.allbinary.logic.communication.log.LogFactory;
+//
 //import org.allbinary.logic.communication.log.LogUtil;
 
 public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface

@@ -24,7 +24,7 @@ import org.allbinary.game.layout.GDObject;
 import org.allbinary.graphics.GPoint;
 import org.allbinary.input.motion.gesture.MotionGestureInput;
 import org.allbinary.input.motion.gesture.observer.MotionGestureEvent;
-import org.allbinary.logic.communication.log.LogFactory;
+
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.math.RectangleCollisionUtil;

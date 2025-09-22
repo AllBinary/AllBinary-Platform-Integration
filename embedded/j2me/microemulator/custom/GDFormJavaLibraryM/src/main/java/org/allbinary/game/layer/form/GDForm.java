@@ -37,7 +37,7 @@ import org.allbinary.game.input.mapping.InputToGameKeyMapping;
 import org.allbinary.game.layer.GDGameLayer;
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
 import org.allbinary.input.motion.gesture.observer.MotionGestureEvent;
-import org.allbinary.logic.communication.log.LogFactory;
+
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;

@@ -23,6 +23,7 @@
 package org.microemu.graphics.form.item;
 
 import javax.microedition.lcdui.Canvas;
+import javax.microedition.lcdui.Choice;
 import javax.microedition.lcdui.ChoiceGroupImageFactory;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
@@ -49,7 +50,7 @@ import org.allbinary.logic.string.StringUtil;
 
 public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
 {
-    public static final List NULL_LIST = new List(StringUtil.getInstance().EMPTY_STRING, 0);
+    public static final List NULL_LIST = new List(StringUtil.getInstance().EMPTY_STRING, Choice.IMPLICIT);
 
     static final int EXCLUSIVE = 1;
     static final int MULTIPLE = 2;

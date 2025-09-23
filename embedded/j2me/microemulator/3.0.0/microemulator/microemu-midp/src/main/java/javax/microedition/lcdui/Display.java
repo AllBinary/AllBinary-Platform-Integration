@@ -29,6 +29,8 @@
  *  @version $Id: Display.java 2496 2011-05-07 11:27:52Z barteo@gmail.com $
  */
 package javax.microedition.lcdui;
+import org.allbinary.thread.ARunnable;
+
 
 //import java.util.TimerTask;
 import javax.microedition.midlet.MIDlet;
@@ -205,7 +207,7 @@ public class Display {
 					return;
 				}
                                 /*
-				eventDispatcher.put(new Runnable() {
+				eventDispatcher.put(new ARunnable() {
                                     
 					public void run() {
                                 */
@@ -225,7 +227,7 @@ public class Display {
 				return;
 			}
                         /*
-			eventDispatcher.put(new Runnable() {
+			eventDispatcher.put(new ARunnable() {
 
 				public void run() {
                         */
@@ -335,7 +337,7 @@ public class Display {
 		public void pointerPressed(final int x, final int y) {
                     /*
 			if (current != null) {
-				eventDispatcher.put(eventDispatcher.new PointerEvent(new Runnable() {
+				eventDispatcher.put(eventDispatcher.new PointerEvent(new ARunnable() {
 					
 					public void run() {
 						current.pointerPressed(x, y);
@@ -350,7 +352,7 @@ public class Display {
 		public void pointerReleased(final int x, final int y) {
                     /*
 			if (current != null) {
-				eventDispatcher.put(eventDispatcher.new PointerEvent(new Runnable() {
+				eventDispatcher.put(eventDispatcher.new PointerEvent(new ARunnable() {
 					
 					public void run() {
 						current.pointerReleased(x, y);
@@ -365,7 +367,7 @@ public class Display {
 		public void pointerDragged(final int x, final int y) {
                     /*
 			if (current != null) {
-				eventDispatcher.put(eventDispatcher.new PointerEvent(new Runnable() {
+				eventDispatcher.put(eventDispatcher.new PointerEvent(new ARunnable() {
 					
 					public void run() {
 						current.pointerDragged(x, y);
@@ -439,7 +441,7 @@ public class Display {
 
 		public void clean() {
                             /*
-				eventDispatcher.put(new HideNotifyEvent(eventDispatcher, new Runnable() {
+				eventDispatcher.put(new HideNotifyEvent(eventDispatcher, new ARunnable() {
 			*/		
 					//private 
                                                 Displayable displayable = current;
@@ -596,11 +598,11 @@ public class Display {
 		}
 		if (nextDisplayable != null) {
                     /*
-			eventDispatcher.put(new ShowNotifyEvent(eventDispatcher, new Runnable() {
+			eventDispatcher.put(new ShowNotifyEvent(eventDispatcher, new ARunnable() {
 
 				public void run() {
 					if (current != null) {
-						eventDispatcher.put(new HideNotifyEvent(eventDispatcher, new Runnable() {
+						eventDispatcher.put(new HideNotifyEvent(eventDispatcher, new ARunnable() {
 							
 							private Displayable displayable = current;
 
@@ -717,7 +719,7 @@ public class Display {
 
             this.displayThreadPool.runTask(
                 //final Thread thread = new Thread(
-                new Runnable() {
+                new ARunnable() {
                     public void run() {
                         try {
                             for (int index = 0; index < 1; index++) {

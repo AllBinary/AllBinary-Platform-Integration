@@ -24,6 +24,8 @@
  *  @version $Id: IPhoneFormUI.java 2009 2009-04-08 17:12:38Z tisoft $
  */
 package org.microemu.iphone.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -225,7 +227,7 @@ public class IPhoneFormUI extends AbstractUI<Form> implements FormUI {
 	public void updateLayout() {
 		System.out.println("IPhoneFormUI.updateLayout()");
 		if (tableView != null)
-			ThreadDispatcher.dispatchOnMainThread(new Runnable() {
+			ThreadDispatcher.dispatchOnMainThread(new ARunnable() {
 				public void run() {
 					tableView.reloadData();
 				}

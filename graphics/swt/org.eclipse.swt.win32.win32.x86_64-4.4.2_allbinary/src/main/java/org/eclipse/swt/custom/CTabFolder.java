@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.accessibility.*;
@@ -1732,7 +1734,7 @@ void onMouse(Event event) {
 				hovering = true;
 				updateItems();
 				hoverTimerRunning = true;
-				event.display.timerExec(2000, new Runnable() {
+				event.display.timerExec(2000, new ARunnable() {
 					public void run() {
 						if (isDisposed()) return;
 						if (hovering) {
@@ -3734,7 +3736,7 @@ boolean updateTabHeight(boolean force){
 void updateFolder (int flags) {
 	updateFlags |= flags;
 	if (updateRun != null) return;
-	updateRun = new Runnable() {
+	updateRun = new ARunnable() {
 		public void run() {
 			updateRun = null;
 			if (isDisposed()) return;

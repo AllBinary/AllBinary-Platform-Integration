@@ -23,6 +23,8 @@
  */
 
 package org.microemu.app;
+import org.allbinary.thread.ARunnable;
+
 
 import java.awt.Component;
 import java.awt.Container;
@@ -445,7 +447,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
 		}
 		
 		public boolean platformRequest(final String URL) {
-			new Thread(new Runnable() {
+			new Thread(new ARunnable() {
 				public void run() {
 					Message.info("MIDlet requests that the device handle the following URL: " + URL);
 				}
@@ -1239,7 +1241,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
     {
         try {
             if (isFullScreen) {
-                //javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+                //javax.swing.SwingUtilities.invokeAndWait(new ARunnable() {
                   //  @Override
                     //public void run() {
                         this.startFullScreen();
@@ -1249,7 +1251,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
                 //Logger.debug("onFullScreen", "Entering Full-screen mode: " + this.getInfo());
                 Logger.debug("onFullScreen", "Entering Full-screen mode");
             } else {
-                //javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+                //javax.swing.SwingUtilities.invokeAndWait(new ARunnable() {
                   //  @Override
                     //public void run() {
                         this.exitFullScreen();
@@ -1417,7 +1419,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
     
     private void setup() {
             
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        javax.swing.SwingUtilities.invokeLater(new ARunnable() {
             @Override
             public void run() {
                 BareMain.this.setup1();

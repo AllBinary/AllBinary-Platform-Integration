@@ -23,6 +23,8 @@
  */
  
 package org.microemu.app.ui.swt;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Displayable;
 
@@ -56,7 +58,7 @@ public class SwtDisplayComponent implements DisplayComponent
 	private SwtMutableImage displayImage = null;
 	private DisplayRepaintListener displayRepaintListener;
 	
-	private Runnable redrawRunnable = new Runnable()
+	private Runnable redrawRunnable = new ARunnable()
 	{
 		public void run() 
 		{

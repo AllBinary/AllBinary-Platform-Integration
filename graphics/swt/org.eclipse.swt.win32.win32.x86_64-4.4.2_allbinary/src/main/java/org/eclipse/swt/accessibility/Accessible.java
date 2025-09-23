@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.accessibility;
+import org.allbinary.thread.ARunnable;
+
 
 import java.util.Locale;
 import java.util.Vector;
@@ -1498,7 +1500,7 @@ public class Accessible {
 	public void textCaretMoved (int index) {
 		checkWidget();
 		if (timer == null) {
-			timer = new Runnable() {
+			timer = new ARunnable() {
 				public void run() {
 					if (!isATRunning ()) return;
 					if (DEBUG) print(this + ".NotifyWinEvent EVENT_OBJECT_LOCATIONCHANGE hwnd=" + control.handle + " childID=" + eventChildID());

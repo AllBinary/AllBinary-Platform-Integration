@@ -25,6 +25,8 @@
  *  @version $Id: CanvasPanel.java 1605 2008-02-25 21:07:14Z barteo $
  */
 package org.microemu.midp.examples.simpledemo;
+import org.allbinary.thread.ARunnable;
+
 
 import java.util.Random;
 
@@ -61,7 +63,7 @@ public class CanvasPanel extends BaseExamplesCanvas implements HasRunnable {
 
 	private Random ballRandom = new Random();
 
-	private Runnable timerTask = new Runnable() {
+	private Runnable timerTask = new ARunnable() {
 
 		public void run() {
 			while (!cancel) {

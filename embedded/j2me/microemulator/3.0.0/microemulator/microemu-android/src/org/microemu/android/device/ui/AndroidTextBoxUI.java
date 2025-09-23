@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
@@ -55,7 +57,7 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	public AndroidTextBoxUI(final MicroEmulatorActivity activity, final TextBox textBox) {		
 		super(activity, textBox, true);		
 		
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				editView = new EditText(activity) {
 
@@ -122,7 +124,7 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	
 	@Override
 	public void hideNotify() {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editView.getWindowToken(), 0);
@@ -145,7 +147,7 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 			getStringTransfer = editView.getText().toString();
 		} else {
 			getStringTransfer = null;
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidTextBoxUI.this) {
 						getStringTransfer = editView.getText().toString();
@@ -169,7 +171,7 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	}
 
 	public void setString(final String text) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				editView.setText(text);
 				if (text != null) {
@@ -180,7 +182,7 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	}
 
 	public void insert(final String text, final int position) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				String newtext = getString();
 				if (position > 0) {
@@ -196,7 +198,7 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	}
 
 	public void delete(final int offset, final int length) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				String newtext = getString();
 				if (offset > 0) {

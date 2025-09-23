@@ -26,6 +26,8 @@
  */
 
 package org.microemu.app.util;
+import org.allbinary.thread.ARunnable;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -280,7 +282,7 @@ public class AppletProducer {
 					}
 					
 					public boolean platformRequest(final String URL) {
-						new Thread(new Runnable() {
+						new Thread(new ARunnable() {
 							public void run() {
 								Message.info("MIDlet requests that the device handle the following URL: " + URL);
 							}

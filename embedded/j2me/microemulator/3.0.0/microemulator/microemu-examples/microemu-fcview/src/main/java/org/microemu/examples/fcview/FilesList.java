@@ -25,6 +25,8 @@
  *  @version $Id: FilesList.java 1765 2008-07-04 21:06:11Z vlads $
  */
 package org.microemu.examples.fcview;
+import org.allbinary.thread.ARunnable;
+
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -156,14 +158,14 @@ public class FilesList extends List implements CommandListener {
 		if (d == this) {
 			if (c == List.SELECT_COMMAND) {
 				final String newDir = this.getString(this.getSelectedIndex());
-				new Thread(new Runnable() {
+				new Thread(new ARunnable() {
 					public void run() {
 						changeDir(newDir);
 					}
 				}).start();
 			} else if (c == infoCommand) {
 				final String newDir = this.getString(this.getSelectedIndex());
-				new Thread(new Runnable() {
+				new Thread(new ARunnable() {
 					public void run() {
 						showInfo(newDir);
 					}

@@ -23,6 +23,8 @@
  */
 
 package org.microemu.app;
+import org.allbinary.thread.ARunnable;
+
 
 //import java.io.File;
 import java.io.IOException;
@@ -198,8 +200,8 @@ public class BareMain extends Common
 
 	private final StatusBarListener statusBarListener = new StatusBarListener() {
 		public void statusBarChanged(final String text) {
-			//shell.getDisplay().asyncExec(new Runnable() {
-                        shell.getDisplay().syncExec(new Runnable() {
+			//shell.getDisplay().asyncExec(new ARunnable() {
+                        shell.getDisplay().syncExec(new ARunnable() {
 				public void run() {
 					//statusBar.setText(text);
                                         System.out.println("status: " + text);
@@ -210,7 +212,7 @@ public class BareMain extends Common
 
 	private final ResponseInterfaceListener responseInterfaceListener = new ResponseInterfaceListener() {
 		public void stateChanged(final boolean state) {
-//			shell.getDisplay().asyncExec(new Runnable() {
+//			shell.getDisplay().asyncExec(new ARunnable() {
 //				public void run() {
 //					menuOpenJADFile.setEnabled(state);
 //					menuOpenJADURL.setEnabled(state);
@@ -270,7 +272,7 @@ public class BareMain extends Common
 			}
 
 			public boolean platformRequest(final String URL) {
-				new Thread(new Runnable() {
+				new Thread(new ARunnable() {
 					public void run() {
 						Message.info("MIDlet requests that the device handle the following URL: " + URL);
 					}
@@ -396,7 +398,7 @@ public class BareMain extends Common
     {
         try {
             if (isFullScreen) {
-                //javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+                //javax.swing.SwingUtilities.invokeAndWait(new ARunnable() {
                   //  @Override
                     //public void run() {
                         this.startFullScreen();
@@ -406,7 +408,7 @@ public class BareMain extends Common
                 //Logger.debug("onFullScreen", "Entering Full-screen mode: " + this.getInfo());
                 Logger.debug("onFullScreen", "Entering Full-screen mode");
             } else {
-                //javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+                //javax.swing.SwingUtilities.invokeAndWait(new ARunnable() {
                   //  @Override
                     //public void run() {
                         this.exitFullScreen();

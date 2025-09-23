@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -202,8 +204,8 @@ public synchronized void start() {
 	showStripes = true;
 	
 	final Display display = getDisplay();
-	final Runnable [] timer = new Runnable [1];
-	timer [0] = new Runnable () {
+	final Runnable [] timer = new ARunnable [1];
+	timer [0] = new ARunnable () {
 		public void run () {
 			if (!active) return;
 			GC gc = new GC(AnimatedProgress.this);			

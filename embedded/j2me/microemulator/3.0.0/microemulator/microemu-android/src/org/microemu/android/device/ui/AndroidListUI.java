@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import java.util.ArrayList;
 
@@ -66,7 +68,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		this.selectCommand = List.SELECT_COMMAND;
 		this.selectedPosition = AdapterView.INVALID_POSITION;
 			
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				listAdapter = new AndroidListAdapter();
 				listView = new AndroidListView(activity);
@@ -90,7 +92,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			appendTransfer = listAdapter.append(stringPart, imagePart);
 		} else {
 			appendTransfer = Integer.MIN_VALUE;
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidListUI.this) {
 						appendTransfer = listAdapter.append(stringPart, imagePart);
@@ -139,7 +141,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			listAdapter.delete(elementNum);
 		} else {
 			deleteException = null;
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidListUI.this) {
 						try {
@@ -175,7 +177,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	}
 
 	public void deleteAll() {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				listAdapter.deleteAll();
 			}
@@ -184,7 +186,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 
 	public void setSelectedIndex(final int elementNum, boolean selected) {
 		if (selected) { // TODO if not???
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					listView.setSelection(elementNum);
 				}
@@ -193,7 +195,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	}
 	
 	public void insert(final int elementNum, final String stringPart, final Image imagePart) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				listAdapter.insert(elementNum, stringPart, imagePart);
 			}
@@ -201,7 +203,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	}
 
 	public void set(final int elementNum, final String stringPart, final Image imagePart) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				listAdapter.set(elementNum, stringPart, imagePart);
 			}
@@ -212,7 +214,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 
 	public int size() {
 		sizeTransfer = Integer.MIN_VALUE;
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 
 			public void run() {
 				synchronized (AndroidListUI.this) {
@@ -252,7 +254,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			vh.text = stringPart;
 			objects.add(vh);
 			
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					notifyDataSetChanged();
 				}
@@ -267,7 +269,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			vh.text = stringPart;
 			objects.add(elementNum, vh);
 			
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					notifyDataSetChanged();
 				}
@@ -332,7 +334,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		public void delete(int elementNum) {
 			objects.remove(elementNum);		
 			
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					notifyDataSetChanged();
 				}
@@ -342,7 +344,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		public void deleteAll() {
 			objects.clear();
 			
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					notifyDataSetChanged();
 				}

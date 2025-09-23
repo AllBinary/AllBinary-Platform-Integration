@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import java.util.Calendar;
 import java.util.Date;
@@ -70,7 +72,7 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 		
 		this.mode = -1;
 		
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				setOrientation(LinearLayout.VERTICAL);
 		//		setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
@@ -94,7 +96,7 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 	}
 
 	public void setInputMode(final int mode) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				if (AndroidDateFieldUI.this.mode != mode) {
 					AndroidDateFieldUI.this.mode = mode;
@@ -120,7 +122,7 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 	}
 
 	public void setDate(final Date date) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				GregorianCalendar cal = new GregorianCalendar();
 				cal.setTime(date);
@@ -139,7 +141,7 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 		final ValueObject result = new ValueObject();
 		result.value = null;
 		
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				GregorianCalendar cal = new GregorianCalendar();
 				if ((mode & DateField.DATE) != 0) {

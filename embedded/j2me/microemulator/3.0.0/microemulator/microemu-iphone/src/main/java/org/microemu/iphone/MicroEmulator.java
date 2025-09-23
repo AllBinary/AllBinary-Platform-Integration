@@ -25,6 +25,8 @@
  *  @version $Id: MicroEmulator.java 1980 2009-03-19 16:40:13Z tisoft $
  */
 package org.microemu.iphone;
+import org.allbinary.thread.ARunnable;
+
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -206,7 +208,7 @@ public class MicroEmulator extends UIApplication {
 		Launcher.setSuiteName("MicroEmulator for iPhone");
 		
 		// don't know why this is needed...
-		ThreadDispatcher.dispatchOnMainThread(new Runnable(){public void run() {
+		ThreadDispatcher.dispatchOnMainThread(new ARunnable(){public void run() {
 			common.initMIDlet(true);
 		}}, false);
 	}

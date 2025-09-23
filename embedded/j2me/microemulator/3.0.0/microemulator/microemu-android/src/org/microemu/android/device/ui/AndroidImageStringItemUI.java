@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Image;
@@ -120,7 +122,7 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 	}
 
 	public void setLabel(final String label) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				if (label == null) {
 					labelView.setVisibility(GONE);
@@ -133,7 +135,7 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 	}
 
 	public void setImage(final Image image) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				if (image == null) {
 					imageView.setVisibility(GONE);
@@ -151,7 +153,7 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 	}
 
 	public void setText(final String text) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				textView.setText(text);
 			}

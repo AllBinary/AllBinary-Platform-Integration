@@ -23,6 +23,8 @@
  */
 
 package org.microemu.app;
+import org.allbinary.thread.ARunnable;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -186,7 +188,7 @@ public class Swt2 extends Common {
 
 	private StatusBarListener statusBarListener = new StatusBarListener() {
 		public void statusBarChanged(final String text) {
-			shell.getDisplay().asyncExec(new Runnable() {
+			shell.getDisplay().asyncExec(new ARunnable() {
 				public void run() {
 					statusBar.setText(text);
 				}
@@ -196,7 +198,7 @@ public class Swt2 extends Common {
 
 	private ResponseInterfaceListener responseInterfaceListener = new ResponseInterfaceListener() {
 		public void stateChanged(final boolean state) {
-			shell.getDisplay().asyncExec(new Runnable() {
+			shell.getDisplay().asyncExec(new ARunnable() {
 				public void run() {
 					menuOpenJADFile.setEnabled(state);
 					menuOpenJADURL.setEnabled(state);
@@ -254,7 +256,7 @@ public class Swt2 extends Common {
 			}
 
 			public boolean platformRequest(final String URL) {
-				new Thread(new Runnable() {
+				new Thread(new ARunnable() {
 					public void run() {
 						Message.info("MIDlet requests that the device handle the following URL: " + URL);
 					}

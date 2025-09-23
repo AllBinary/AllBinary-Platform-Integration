@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 
 import org.eclipse.swt.*;
@@ -98,7 +100,7 @@ public TableTreeEditor (TableTree tableTree) {
 	this.tableTree = tableTree;
 
 	treeListener = new TreeListener () {
-		final Runnable runnable = new Runnable() {
+		final Runnable runnable = new ARunnable() {
 			public void run() {
 				if (editor == null || editor.isDisposed()) return;
 				if (TableTreeEditor.this.tableTree.isDisposed()) return;

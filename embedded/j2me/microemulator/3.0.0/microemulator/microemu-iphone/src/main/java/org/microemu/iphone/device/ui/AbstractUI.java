@@ -24,6 +24,8 @@
  *  @version $Id: AbstractUI.java 1942 2009-02-20 15:39:17Z tisoft $
  */
 package org.microemu.iphone.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import java.util.Vector;
 
@@ -67,7 +69,7 @@ public abstract class AbstractUI<T extends Displayable> extends NSObject impleme
 
 	public void addCommandUI(CommandUI cmd) {
 		commands.add(cmd);
-		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
+		ThreadDispatcher.dispatchOnMainThread(new ARunnable() {
 			public void run() {
 				updateToolbar();
 			}
@@ -89,7 +91,7 @@ public abstract class AbstractUI<T extends Displayable> extends NSObject impleme
 
 	public void removeCommandUI(CommandUI cmd) {
 		commands.remove(cmd);
-		ThreadDispatcher.dispatchOnMainThread(new Runnable() {
+		ThreadDispatcher.dispatchOnMainThread(new ARunnable() {
 			public void run() {
 				updateToolbar();
 			}

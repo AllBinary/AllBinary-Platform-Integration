@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 
 import org.eclipse.swt.*;
@@ -98,7 +100,7 @@ public TableEditor (Table table) {
 			layout ();
 		}
 	};
-	timer = new Runnable () {
+	timer = new ARunnable () {
 		public void run() {
 			layout ();
 		}

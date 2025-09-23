@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.ole.win32;
+import org.allbinary.thread.ARunnable;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.internal.ole.win32.*;
@@ -128,9 +130,9 @@ private static void initCheckFocus (final Display display) {
 	if (display.getData(CHECK_FOCUS) != null) return;
 	display.setData(CHECK_FOCUS, CHECK_FOCUS);
 	final int time = 50;
-	final Runnable[] timer = new Runnable[1];
+	final Runnable[] timer = new ARunnable[1];
 	final Control[] lastFocus = new Control[1];
-	timer[0] = new Runnable() {
+	timer[0] = new ARunnable() {
 		public void run() {
 			if (lastFocus[0] instanceof OleClientSite && !lastFocus[0].isDisposed()) {
 				// ignore popup menus and dialogs
@@ -179,7 +181,7 @@ private static void initMsgHook(Display display) {
 	}
 	display.setData(HHOOK, new LONG(hHook));
 	display.setData(HHOOKMSG, new MSG());
-	display.disposeExec(new Runnable() {
+	display.disposeExec(new ARunnable() {
 		public void run() {
 			if (hHook != 0) OS.UnhookWindowsHookEx(hHook);
 			if (callback != null) callback.dispose();

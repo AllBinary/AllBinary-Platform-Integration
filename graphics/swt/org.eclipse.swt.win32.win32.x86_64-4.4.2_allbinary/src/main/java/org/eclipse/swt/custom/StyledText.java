@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 
 import java.util.*;
@@ -1253,7 +1255,7 @@ public StyledText(Composite parent, int style) {
 	}
 	if (isBidiCaret()) {
 		createCaretBitmaps();
-		Runnable runnable = new Runnable() {
+		Runnable runnable = new ARunnable() {
 			public void run() {
 				int direction = BidiUtil.getKeyboardLanguage() == BidiUtil.KEYBOARD_BIDI ? SWT.RIGHT : SWT.LEFT;
 				if (direction == caretDirection) return;
@@ -2162,7 +2164,7 @@ void doAutoScroll(int direction, int distance) {
 	// Set a timer that will simulate the user pressing and holding
 	// down a cursor key (i.e., arrowUp, arrowDown).
 	if (direction == SWT.UP) {
-		timer = new Runnable() {
+		timer = new ARunnable() {
 			public void run() {
 				if (autoScrollDirection == SWT.UP) {
 					if (blockSelection) {
@@ -2183,7 +2185,7 @@ void doAutoScroll(int direction, int distance) {
 		autoScrollDirection = direction;
 		display.timerExec(V_SCROLL_RATE, timer);
 	} else if (direction == SWT.DOWN) {
-		timer = new Runnable() {
+		timer = new ARunnable() {
 			public void run() {
 				if (autoScrollDirection == SWT.DOWN) {
 					if (blockSelection) {
@@ -2205,7 +2207,7 @@ void doAutoScroll(int direction, int distance) {
 		autoScrollDirection = direction;
 		display.timerExec(V_SCROLL_RATE, timer);
 	} else if (direction == ST.COLUMN_NEXT) {
-		timer = new Runnable() {
+		timer = new ARunnable() {
 			public void run() {
 				if (autoScrollDirection == ST.COLUMN_NEXT) {
 					if (blockSelection) {
@@ -2228,7 +2230,7 @@ void doAutoScroll(int direction, int distance) {
 		autoScrollDirection = direction;
 		display.timerExec(H_SCROLL_RATE, timer);
 	} else if (direction == ST.COLUMN_PREVIOUS) {
-		timer = new Runnable() {
+		timer = new ARunnable() {
 			public void run() {
 				if (autoScrollDirection == ST.COLUMN_PREVIOUS) {
 					if (blockSelection) {

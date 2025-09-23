@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android;
+import org.allbinary.thread.ARunnable;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -201,7 +203,7 @@ public class MicroEmulator extends MicroEmulatorActivity {
     protected void onResume() {
         super.onResume();
         
-        new Thread(new Runnable() {
+        new Thread(new ARunnable() {
 
             public void run()
             {
@@ -218,7 +220,7 @@ public class MicroEmulator extends MicroEmulatorActivity {
                     if (contentView instanceof AndroidRepaintListener) {
                         ((AndroidRepaintListener) contentView).onResume();
                     }
-                    post(new Runnable() {
+                    post(new ARunnable() {
                         public void run() {
                             contentView.invalidate();
                         }

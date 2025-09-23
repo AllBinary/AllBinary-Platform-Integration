@@ -23,6 +23,8 @@
  */
 
 package org.microemu.cldc.datagram;
+import org.allbinary.thread.ARunnable;
+
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -120,7 +122,7 @@ public class EndToEndDatagramTest //extends TestCase
 		final UDPDatagramConnection serverConn = (UDPDatagramConnection) Connector.open(Connection.PROTOCOL + ":"
 				+ PORT, Connector.READ_WRITE);
 		final int[] counter = { 0 };
-		return new Thread(new Runnable() {
+		return new Thread(new ARunnable() {
 			public void run() {
 				try {
 					Datagram request = serverConn.newDatagram(BUFFER_SIZE);
@@ -169,7 +171,7 @@ public class EndToEndDatagramTest //extends TestCase
 		final UDPDatagramConnection clientConn = (UDPDatagramConnection) Connector.open(Connection.PROTOCOL + HOST
 				+ ":" + PORT, Connector.READ_WRITE);
 		final int[] counter = { 0 };
-		return new Thread(new Runnable() {
+		return new Thread(new ARunnable() {
 			public void run() {
 				try {
 					Datagram request = clientConn.newDatagram(BUFFER_SIZE);
@@ -216,7 +218,7 @@ public class EndToEndDatagramTest //extends TestCase
 		// create server connection
 		final DatagramSocket serverConn = new DatagramSocket(PORT);
 		final int[] counter = { 0 };
-		return new Thread(new Runnable() {
+		return new Thread(new ARunnable() {
 			public void run() {
 				try {
 					DatagramPacket request;
@@ -255,7 +257,7 @@ public class EndToEndDatagramTest //extends TestCase
 		final DatagramSocket clientConn = new DatagramSocket();
 		clientConn.connect(InetAddress.getByName(HOST), PORT);
 		final int[] counter = { 0 };
-		return new Thread(new Runnable() {
+		return new Thread(new ARunnable() {
 			public void run() {
 				try {
 					DatagramPacket request;

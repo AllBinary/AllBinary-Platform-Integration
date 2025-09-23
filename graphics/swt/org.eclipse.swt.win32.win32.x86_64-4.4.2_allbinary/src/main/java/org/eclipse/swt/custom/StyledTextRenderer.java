@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 
 import org.eclipse.swt.SWT;
@@ -232,7 +234,7 @@ void calculateClientArea () {
 }
 void calculateIdle () {
 	if (idleRunning) return;
-	Runnable runnable = new Runnable() {
+	Runnable runnable = new ARunnable() {
 		public void run() {
 			if (styledText == null) return;
 			int i;

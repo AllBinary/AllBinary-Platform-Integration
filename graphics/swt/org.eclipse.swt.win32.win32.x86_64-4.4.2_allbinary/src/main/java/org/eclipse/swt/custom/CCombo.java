@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 
 import org.eclipse.swt.*;
@@ -124,7 +126,7 @@ public CCombo (Composite parent, int style) {
 				return;
 			}
 			if (getShell () == event.widget) {
-				getDisplay().asyncExec(new Runnable() {
+				getDisplay().asyncExec(new ARunnable() {
 					public void run() {
 						if (isDisposed ()) return;
 						handleFocus (SWT.FocusOut);

@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 
 import org.eclipse.swt.*;
@@ -98,13 +100,13 @@ public TreeEditor (Tree tree) {
 			layout();
 		}
 	};
-	timer = new Runnable () {
+	timer = new ARunnable () {
 		public void run() {
 			layout ();
 		}
 	};
 	treeListener = new TreeListener () {
-		final Runnable runnable = new Runnable() {
+		final Runnable runnable = new ARunnable() {
 			public void run() {
 				if (editor == null || editor.isDisposed()) return;
 				if (TreeEditor.this.tree.isDisposed()) return;

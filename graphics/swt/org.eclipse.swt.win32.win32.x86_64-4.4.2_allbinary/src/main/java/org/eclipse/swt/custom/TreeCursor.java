@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+import org.allbinary.thread.ARunnable;
+
 
 
 import org.eclipse.swt.*;
@@ -884,7 +886,7 @@ void treeCollapse(Event event) {
 		parentItem = parentItem.getParentItem();
 	}
 	
-	getDisplay().asyncExec(new Runnable() {
+	getDisplay().asyncExec(new ARunnable() {
 		public void run() {
 			if (isDisposed()) return;
 			setRowColumn(row, column, true);
@@ -893,7 +895,7 @@ void treeCollapse(Event event) {
 }
 
 void treeExpand(Event event) {
-	getDisplay().asyncExec(new Runnable() {
+	getDisplay().asyncExec(new ARunnable() {
 		public void run() {
 			if (isDisposed()) return;
 			setRowColumn(row, column, true);

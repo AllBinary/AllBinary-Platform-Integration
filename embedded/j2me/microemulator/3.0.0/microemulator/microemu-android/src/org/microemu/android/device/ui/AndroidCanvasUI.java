@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Canvas;
 
@@ -67,7 +69,7 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
         super(activity, canvas, false);
        
         
-        activity.post(new Runnable() {
+        activity.post(new ARunnable() {
             public void run() {
                 view = new CanvasView(activity, AndroidCanvasUI.this);
             }
@@ -91,7 +93,7 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
     {
         super.showNotify();
         
-        activity.post(new Runnable() {
+        activity.post(new ARunnable() {
             public void run() {
 		        ((AndroidDeviceDisplay) activity.getEmulatorContext().getDeviceDisplay()).addDisplayRepaintListener((DisplayRepaintListener) view);
 		        ((Canvas) displayable).repaint();

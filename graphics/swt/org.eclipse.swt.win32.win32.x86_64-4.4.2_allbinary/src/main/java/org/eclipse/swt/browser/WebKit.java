@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.browser;
+import org.allbinary.thread.ARunnable;
+
 
 
 import java.io.*;
@@ -147,7 +149,7 @@ static {
 		JSObjectCallAsFunctionProc = new Callback (WebKit.class, "JSObjectCallAsFunctionProc", 6); //$NON-NLS-1$
 		if (JSObjectCallAsFunctionProc.getAddress () == 0) SWT.error (SWT.ERROR_NO_MORE_CALLBACKS);
 
-		NativeClearSessions = new Runnable () {
+		NativeClearSessions = new ARunnable () {
 			public void run () {
 				long /*int*/[] result = new long /*int*/[1];
 				int hr = WebKit_win32.WebKitCreateInstance (WebKit_win32.CLSID_WebCookieManager, 0, WebKit_win32.IID_IWebCookieManager, result);
@@ -177,7 +179,7 @@ static {
 			}
 		};
 
-		NativeGetCookie = new Runnable () {
+		NativeGetCookie = new ARunnable () {
 			public void run () {
 				long /*int*/[] result = new long /*int*/[1];
 				int hr = WebKit_win32.WebKitCreateInstance (WebKit_win32.CLSID_WebCookieManager, 0, WebKit_win32.IID_IWebCookieManager, result);
@@ -224,7 +226,7 @@ static {
 			}
 		};
 
-		NativeSetCookie = new Runnable () {
+		NativeSetCookie = new ARunnable () {
 			public void run () {
 				long /*int*/[] result = new long /*int*/[1];
 				int hr = WebKit_win32.WebKitCreateInstance (WebKit_win32.CLSID_WebCookieManager, 0, WebKit_win32.IID_IWebCookieManager, result);

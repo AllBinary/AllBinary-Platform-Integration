@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.awt;
+import org.allbinary.thread.ARunnable;
+
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -147,7 +149,7 @@ public static Frame new_Frame (final Composite parent) {
 	final long /*int*/ handle = parent.handle;
 	final Frame[] result = new Frame[1];
 	final Throwable[] exception = new Throwable[1];
-	Runnable runnable = new Runnable () {
+	Runnable runnable = new ARunnable () {
 		public void run () {
 			try {
 				/*
@@ -244,14 +246,14 @@ public static Frame new_Frame (final Composite parent) {
 		public void handleEvent (Event e) {
 			switch (e.type) {
 				case SWT.Deiconify:
-					EventQueue.invokeLater(new Runnable () {
+					EventQueue.invokeLater(new ARunnable () {
 						public void run () {
 							frame.dispatchEvent (new WindowEvent (frame, WindowEvent.WINDOW_DEICONIFIED));
 						}
 					});
 					break;
 				case SWT.Iconify:
-					EventQueue.invokeLater(new Runnable () {
+					EventQueue.invokeLater(new ARunnable () {
 						public void run () {
 							frame.dispatchEvent (new WindowEvent (frame, WindowEvent.WINDOW_ICONIFIED));
 						}
@@ -277,7 +279,7 @@ public static Frame new_Frame (final Composite parent) {
 					shell.removeListener (SWT.Deiconify, shellListener);
 					shell.removeListener (SWT.Iconify, shellListener);
 					parent.setVisible(false);
-					EventQueue.invokeLater(new Runnable () {
+					EventQueue.invokeLater(new ARunnable () {
 						public void run () {
 							try {
 								frame.dispose ();
@@ -287,7 +289,7 @@ public static Frame new_Frame (final Composite parent) {
 					break;
 				case SWT.FocusIn:
 				case SWT.Activate:
-					EventQueue.invokeLater(new Runnable () {
+					EventQueue.invokeLater(new ARunnable () {
 						public void run () {
 							if (Library.JAVA_VERSION < Library.JAVA_VERSION(1, 4, 0)) {
 								frame.dispatchEvent (new WindowEvent (frame, WindowEvent.WINDOW_ACTIVATED));
@@ -307,7 +309,7 @@ public static Frame new_Frame (final Composite parent) {
 					});
 					break;
 				case SWT.Deactivate:
-					EventQueue.invokeLater(new Runnable () {
+					EventQueue.invokeLater(new ARunnable () {
 						public void run () {
 							if (Library.JAVA_VERSION < Library.JAVA_VERSION(1, 4, 0)) {
 								frame.dispatchEvent (new WindowEvent (frame, WindowEvent.WINDOW_DEACTIVATED));
@@ -337,11 +339,11 @@ public static Frame new_Frame (final Composite parent) {
 	parent.addListener (SWT.Deactivate, listener);
 	parent.addListener (SWT.Dispose, listener);
 	
-	parent.getDisplay().asyncExec(new Runnable() {
+	parent.getDisplay().asyncExec(new ARunnable() {
 		public void run () {
 			if (parent.isDisposed()) return;
 			final Rectangle clientArea = parent.getClientArea();
-			EventQueue.invokeLater(new Runnable () {
+			EventQueue.invokeLater(new ARunnable () {
 				public void run () {
 					frame.setSize (clientArea.width, clientArea.height);
 					frame.validate ();
@@ -383,7 +385,7 @@ public static Shell new_Shell (final Display display, final Canvas parent) {
 	final Shell shell = Shell.win32_new (display, handle);
 	final ComponentListener listener = new ComponentAdapter () {
 		public void componentResized (ComponentEvent e) {
-			display.syncExec (new Runnable () {
+			display.syncExec (new ARunnable () {
 				public void run () {
 					if (shell.isDisposed()) return;
 					Dimension dim = parent.getSize ();

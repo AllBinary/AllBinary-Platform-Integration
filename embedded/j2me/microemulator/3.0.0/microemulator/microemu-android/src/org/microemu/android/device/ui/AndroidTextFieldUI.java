@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.ItemStateListener;
@@ -56,7 +58,7 @@ public class AndroidTextFieldUI extends LinearLayout implements TextFieldUI {
 		
 		this.activity = activity;
 		
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				setOrientation(LinearLayout.VERTICAL);
 				setFocusable(false);
@@ -113,7 +115,7 @@ public class AndroidTextFieldUI extends LinearLayout implements TextFieldUI {
 	}
 
 	public void setLabel(final String label) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				labelView.setText(label);
 			}
@@ -121,7 +123,7 @@ public class AndroidTextFieldUI extends LinearLayout implements TextFieldUI {
 	}
 
 	public void setConstraints(final int constraints) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
                 if ((constraints & TextField.CONSTRAINT_MASK) == TextField.URL) {
                     editView.setSingleLine(true);
@@ -145,7 +147,7 @@ public class AndroidTextFieldUI extends LinearLayout implements TextFieldUI {
 	}
 
 	public void setString(final String text) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				editView.setText(text);
 			}
@@ -159,7 +161,7 @@ public class AndroidTextFieldUI extends LinearLayout implements TextFieldUI {
 			getStringTransfer = editView.getText().toString();
 		} else {
 			getStringTransfer = null;
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidTextFieldUI.this) {
 						getStringTransfer = editView.getText().toString();

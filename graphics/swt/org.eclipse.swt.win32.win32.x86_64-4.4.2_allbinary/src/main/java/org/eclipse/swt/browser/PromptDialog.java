@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.browser;
+import org.allbinary.thread.ARunnable;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
@@ -161,7 +163,7 @@ class PromptDialog extends Dialog {
 				* Bug in Mozilla.  The certificate viewer dialog does not show its content when
 				* opened.  The workaround is to periodically wake up the UI thread.
 				*/
-				Runnable runnable = new Runnable() {
+				Runnable runnable = new ARunnable() {
 					public void run() {
 						browser.getDisplay().timerExec(1000, this);
 					}

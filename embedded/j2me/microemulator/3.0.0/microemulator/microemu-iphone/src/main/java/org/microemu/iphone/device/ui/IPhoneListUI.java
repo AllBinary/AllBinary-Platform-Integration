@@ -24,6 +24,8 @@
  *  @version $Id: IPhoneListUI.java 1942 2009-02-20 15:39:17Z tisoft $
  */
 package org.microemu.iphone.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import java.lang.reflect.Field;
 
@@ -105,7 +107,7 @@ public class IPhoneListUI extends AbstractUI<List> implements ListUI {
 		
 		protected void doReload() {
 			if(tableView!=null)
-				ThreadDispatcher.dispatchOnMainThread(new Runnable() {
+				ThreadDispatcher.dispatchOnMainThread(new ARunnable() {
 					public void run() {
 						tableView.reloadData();
 					}

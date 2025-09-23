@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
@@ -76,7 +78,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 
 		displayableUnboxed = alert;
 
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				alertDialog = new AlertDialog.Builder(activity).create();
 				if (alert.getTitle() != null) {
@@ -173,13 +175,13 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 		inShowingToast = isToastable;
 
 		if (isToastable) {
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					showNotifyAsToast();
 				}
 			});
 		} else {
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					fixLookAndFeel();
 					activity.setDialog(alertDialog);
@@ -194,7 +196,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 		if (inShowingToast) {
 			inShowingToast = false;
 		} else {
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					activity.setDialog(null);
 				}
@@ -237,7 +239,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 	//		
 
 	public void setString(final String str) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				alertDialog.setMessage(str);
 			}

@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Gauge;
@@ -50,7 +52,7 @@ public class AndroidGaugeUI extends LinearLayout implements GaugeUI {
 		
 		this.activity = activity;
 
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				setOrientation(LinearLayout.VERTICAL);
 		//		setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
@@ -92,7 +94,7 @@ public class AndroidGaugeUI extends LinearLayout implements GaugeUI {
 	}
 
 	public void setLabel(final String label) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				labelView.setText(label);
 			}
@@ -100,7 +102,7 @@ public class AndroidGaugeUI extends LinearLayout implements GaugeUI {
 	}
 
 	public void setValue(final int value) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				seekBar.setProgress(value);
 			}
@@ -114,7 +116,7 @@ public class AndroidGaugeUI extends LinearLayout implements GaugeUI {
 			getValueTransfer = seekBar.getProgress();
 		} else {
 			getValueTransfer = Integer.MIN_VALUE;
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidGaugeUI.this) {
 						getValueTransfer = seekBar.getProgress();
@@ -138,7 +140,7 @@ public class AndroidGaugeUI extends LinearLayout implements GaugeUI {
 	}
 
 	public void setMaxValue(final int maxValue) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				seekBar.setMax(maxValue);
 			}

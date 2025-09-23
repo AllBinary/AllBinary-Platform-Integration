@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.browser;
+import org.allbinary.thread.ARunnable;
+
 
 import java.net.*;
 import java.util.*;
@@ -146,14 +148,14 @@ class IE extends WebBrowser {
 	static final String PROPERTY_WHEELDELTA = "wheelDelta"; //$NON-NLS-1$
 
 	static {
-		NativeClearSessions = new Runnable() {
+		NativeClearSessions = new ARunnable() {
 			public void run() {
 				if (OS.IsPPC) return;
 				OS.InternetSetOption (0, OS.INTERNET_OPTION_END_BROWSER_SESSION, 0, 0);
 			}
 		};
 
-		NativeGetCookie = new Runnable () {
+		NativeGetCookie = new ARunnable () {
 			public void run () {
 				if (OS.IsPPC) return;
 				TCHAR url = new TCHAR (0, CookieUrl, true);
@@ -181,7 +183,7 @@ class IE extends WebBrowser {
 			}
 		};
 
-		NativeSetCookie = new Runnable () {
+		NativeSetCookie = new ARunnable () {
 			public void run () {
 				if (OS.IsPPC) return;
 				TCHAR url = new TCHAR (0, CookieUrl, true);
@@ -610,7 +612,7 @@ public void create(Composite parent, int style) {
 						if (html != null && url.equals(ABOUT_BLANK)) {
 							if (delaySetText) {
 								delaySetText = false;
-								browser.getDisplay().asyncExec(new Runnable() {
+								browser.getDisplay().asyncExec(new ARunnable() {
 									public void run() {
 										if (browser.isDisposed() || html == null) return;
 										setHTML(html);
@@ -824,7 +826,7 @@ public void create(Composite parent, int style) {
 										long /*int*/ pCancel = cancel.getByRef();
 										COM.MoveMemory(pCancel, new short[] {COM.VARIANT_TRUE}, 2);
 									}
-									browser.getDisplay().asyncExec(new Runnable() {
+									browser.getDisplay().asyncExec(new ARunnable() {
 										public void run() {
 											if (browser.isDisposed()) return;
 											/*
@@ -1009,7 +1011,7 @@ public void create(Composite parent, int style) {
 						* Browser has a text field with an active caret.  As a workaround fire
 						* the Close event and dispose the Browser in an async block. 
 						*/
-						browser.getDisplay().asyncExec(new Runnable() {
+						browser.getDisplay().asyncExec(new ARunnable() {
 							public void run() {
 								if (browser.isDisposed()) return;
 								WindowEvent newEvent = new WindowEvent(browser);

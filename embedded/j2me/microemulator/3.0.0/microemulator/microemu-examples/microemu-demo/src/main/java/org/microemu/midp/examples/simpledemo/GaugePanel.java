@@ -25,6 +25,8 @@
  *  @version $Id: GaugePanel.java 1605 2008-02-25 21:07:14Z barteo $
  */
 package org.microemu.midp.examples.simpledemo;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Gauge;
 
@@ -34,7 +36,7 @@ public class GaugePanel extends BaseExamplesForm implements HasRunnable {
 
 	private Gauge noninteractive = new Gauge("Noninteractive", false, 25, 0);
 
-	private Runnable timerTask = new Runnable() {
+	private Runnable timerTask = new ARunnable() {
 
 		public void run() {
 			while (!cancel) {

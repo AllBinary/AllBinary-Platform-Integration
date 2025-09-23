@@ -55,9 +55,9 @@ public class Displayable
     Ticker ticker;
     
     // TODO make private
-    int viewPortY;
+    public int viewPortY;
     // TODO make private
-    int viewPortHeight;
+    public int viewPortHeight;
     
     DisplayableUI ui;
     

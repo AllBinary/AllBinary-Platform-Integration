@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.browser;
+import org.allbinary.thread.ARunnable;
+
 
 import java.io.*;
 import java.lang.reflect.*;
@@ -330,7 +332,7 @@ class Mozilla extends WebBrowser {
 			}
 		};
 
-		MozillaClearSessions = new Runnable () {
+		MozillaClearSessions = new ARunnable () {
 			public void run () {
 				if (!Initialized) return;
 				long /*int*/[] result = new long /*int*/[1];
@@ -384,7 +386,7 @@ class Mozilla extends WebBrowser {
 			}
 		};
 
-		MozillaGetCookie = new Runnable() {
+		MozillaGetCookie = new ARunnable() {
 			public void run() {
 				if (!Initialized) return;
 
@@ -473,7 +475,7 @@ class Mozilla extends WebBrowser {
 			}
 		};
 
-		MozillaSetCookie = new Runnable() {
+		MozillaSetCookie = new ARunnable() {
 			public void run() {
 				if (!Initialized) return;
 
@@ -1020,7 +1022,7 @@ public void create (Composite parent, int style) {
 					* its size after the container has been made visible. 
 					*/
 					Display display = event.display;
-					display.asyncExec(new Runnable () {
+					display.asyncExec(new ARunnable () {
 						public void run() {
 							if (browser.isDisposed ()) return;
 							onResize ();
@@ -4036,7 +4038,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 			final ProgressEvent event2 = new ProgressEvent (browser);
 			event2.display = display;
 			event2.widget = browser;
-			Runnable runnable = new Runnable () {
+			Runnable runnable = new ARunnable () {
 				public void run () {
 					if (browser.isDisposed ()) return;
 					for (int i = 0; i < progressListeners.length; i++) {
@@ -4509,7 +4511,7 @@ int FocusNextElement () {
 	* with the Mozilla application TestGtkEmbed.  The workaround is to
 	* send the traversal notification after this callback returns.
 	*/
-	browser.getDisplay ().asyncExec (new Runnable () {
+	browser.getDisplay ().asyncExec (new ARunnable () {
 		public void run () {
 			if (browser.isDisposed ()) return;
 			browser.traverse (SWT.TRAVERSE_TAB_NEXT);
@@ -4525,7 +4527,7 @@ int FocusPrevElement () {
 	* with the Mozilla application TestGtkEmbed.  The workaround is to
 	* send the traversal notification after this callback returns.
 	*/
-	browser.getDisplay ().asyncExec (new Runnable () {
+	browser.getDisplay ().asyncExec (new ARunnable () {
 		public void run () {
 			if (browser.isDisposed ()) return;
 			browser.traverse (SWT.TRAVERSE_TAB_PREVIOUS);
@@ -5196,7 +5198,7 @@ int NotifyCertProblem (long /*int*/ socketInfo, long /*int*/ status, long /*int*
 	final String[] finalProblems = new String[problemCount];
 	System.arraycopy (problems, 0, finalProblems, 0, problemCount);
 	final String url = lastNavigateURL;
-	browser.getDisplay().asyncExec(new Runnable() {
+	browser.getDisplay().asyncExec(new ARunnable() {
 		public void run() {
 			if (browser.isDisposed ()) return;
 			if (url.equals (lastNavigateURL)) {

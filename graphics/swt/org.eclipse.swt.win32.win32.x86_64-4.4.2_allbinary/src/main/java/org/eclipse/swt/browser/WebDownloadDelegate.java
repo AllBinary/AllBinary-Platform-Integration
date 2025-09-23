@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.browser;
+import org.allbinary.thread.ARunnable;
+
 
 
 import java.io.*;
@@ -184,7 +186,7 @@ void openDownloadWindow (final IWebDownload download, String name) {
 
 	final Display display = browser.getDisplay ();
 	final int INTERVAL = 500;
-	display.timerExec (INTERVAL, new Runnable () {
+	display.timerExec (INTERVAL, new ARunnable () {
 		public void run () {
 			if (shell.isDisposed () || status == DOWNLOAD_FINISHED || status == DOWNLOAD_CANCELLED) {
 				shell.dispose ();

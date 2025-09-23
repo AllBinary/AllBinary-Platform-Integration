@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Command;
 
@@ -56,7 +58,7 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 		this.activity = activity;
 		this.customItemAccess = customItemAccess;
 
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				setOrientation(LinearLayout.VERTICAL);
 		//		setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
@@ -78,7 +80,7 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 	}
 
 	public void setLabel(final String label) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				if (labelView != null) {
 					labelView.setText(label);
@@ -88,7 +90,7 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 	}
 	
 	public void repaint() {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				view.invalidate();
 			}

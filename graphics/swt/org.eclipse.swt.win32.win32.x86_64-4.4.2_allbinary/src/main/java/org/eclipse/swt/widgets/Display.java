@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.widgets;
+import org.allbinary.thread.ARunnable;
+
 
 
 import java.util.ArrayList;
@@ -467,7 +469,7 @@ public class Display extends Device {
 	* be removed in the future.
 	*/
 	static {
-		DeviceFinder = new Runnable () {
+		DeviceFinder = new ARunnable () {
 			public void run () {
 				Device device = getCurrent ();
 				if (device == null) {
@@ -1229,14 +1231,14 @@ void destroyDisplay () {
  */
 public void disposeExec (Runnable runnable) {
 	checkDevice ();
-	if (disposeList == null) disposeList = new Runnable [4];
+	if (disposeList == null) disposeList = new ARunnable [4];
 	for (int i=0; i<disposeList.length; i++) {
 		if (disposeList [i] == null) {
 			disposeList [i] = runnable;
 			return;
 		}
 	}
-	Runnable [] newDisposeList = new Runnable [disposeList.length + 4];
+	Runnable [] newDisposeList = new ARunnable [disposeList.length + 4];
 	System.arraycopy (disposeList, 0, newDisposeList, 0, disposeList.length);
 	newDisposeList [disposeList.length] = runnable;
 	disposeList = newDisposeList;
@@ -4931,7 +4933,7 @@ public void syncExec (Runnable runnable) {
 public void timerExec (int milliseconds, Runnable runnable) {
 	checkDevice ();
 	if (runnable == null) error (SWT.ERROR_NULL_ARGUMENT);
-	if (timerList == null) timerList = new Runnable [4];
+	if (timerList == null) timerList = new ARunnable [4];
 	if (timerIds == null) timerIds = new long /*int*/ [4];
 	int index = 0;
 	while (index < timerList.length) {
@@ -4956,7 +4958,7 @@ public void timerExec (int milliseconds, Runnable runnable) {
 		}
 		timerId = nextTimerId++;
 		if (index == timerList.length) {
-			Runnable [] newTimerList = new Runnable [timerList.length + 4];
+			Runnable [] newTimerList = new ARunnable [timerList.length + 4];
 			System.arraycopy (timerList, 0, newTimerList, 0, timerList.length);
 			timerList = newTimerList;
 			long /*int*/ [] newTimerIds = new long /*int*/ [timerIds.length + 4];

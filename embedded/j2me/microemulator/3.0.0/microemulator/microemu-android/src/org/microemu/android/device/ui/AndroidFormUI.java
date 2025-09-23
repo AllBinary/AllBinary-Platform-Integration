@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.ItemStateListener;
@@ -49,7 +51,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 	public AndroidFormUI(final MicroEmulatorActivity activity, Form form) {
 		super(activity, form, true);
 		
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				scrollView = new ScrollView(activity);
 				((LinearLayout) AndroidFormUI.this.view).addView(scrollView);
@@ -74,7 +76,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 			appendTransfer = doAppend(item);
 		} else {
 			appendTransfer = Integer.MIN_VALUE;
-			activity.post(new Runnable() {
+			activity.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidFormUI.this) {
 						appendTransfer = doAppend(item);
@@ -112,7 +114,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 	}
 	 
 	public void delete(final int itemNum) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				listView.removeViewAt(itemNum);				
 			}
@@ -120,7 +122,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 	}
 	 
 	public void deleteAll() {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				listView.removeAllViews();				
 			}
@@ -128,7 +130,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 	}
 	 
 	public void insert(final int itemNum, final ItemUI item) {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				listView.addView((View) item, itemNum);
 			}

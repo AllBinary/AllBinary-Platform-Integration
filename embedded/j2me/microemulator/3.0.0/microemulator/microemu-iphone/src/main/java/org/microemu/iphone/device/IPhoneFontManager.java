@@ -24,6 +24,8 @@
  *  @version $Id: IPhoneFontManager.java 1957 2009-03-02 16:33:51Z tisoft $
  */
 package org.microemu.iphone.device;
+import org.allbinary.thread.ARunnable;
+
 
 import javax.microedition.lcdui.Font;
 
@@ -40,7 +42,7 @@ public class IPhoneFontManager implements FontManager {
 	private UIFont uifont;
 	
 	public IPhoneFontManager() {
-		ThreadDispatcher.dispatchOnMainThread(new Runnable(){public void run() {
+		ThreadDispatcher.dispatchOnMainThread(new ARunnable(){public void run() {
 			uifont=(UIFont)UIFont.$systemFontOfSize$(9.f);
 		}}, false);
 	}

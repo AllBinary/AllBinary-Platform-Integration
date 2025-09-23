@@ -25,6 +25,8 @@
  */
 
 package org.microemu.android.device.ui;
+import org.allbinary.thread.ARunnable;
+
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -118,7 +120,7 @@ public abstract class AndroidDisplayableUI implements DisplayableUI {
 	}
 
 	public void invalidate() {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				if (titleView != null) {
 					titleView.setText(displayable.getTitle());
@@ -128,7 +130,7 @@ public abstract class AndroidDisplayableUI implements DisplayableUI {
 	}
 
 	public void showNotify() {
-		activity.post(new Runnable() {
+		activity.post(new ARunnable() {
 			public void run() {
 				activity.setContentView(view);
 				view.requestFocus();

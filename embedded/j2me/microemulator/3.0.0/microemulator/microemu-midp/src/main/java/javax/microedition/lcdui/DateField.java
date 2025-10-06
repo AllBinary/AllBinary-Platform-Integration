@@ -23,6 +23,7 @@ package javax.microedition.lcdui;
 import java.util.TimeZone;
 import java.util.Calendar;
 import java.util.Date;
+import org.allbinary.string.CommonSeps;
 
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.ui.DateFieldUI;
@@ -304,7 +305,7 @@ class DateCanvas extends Canvas {
         if (month+1 < 10)
             monthStr = "0" + monthStr;
         String yearStr = Integer.toString(year);
-        String delimiterStr = "/";
+        String delimiterStr = CommonSeps.getInstance().FORWARD_SLASH;
         
         int y = (h - font.getHeight()) >>> 1;
 

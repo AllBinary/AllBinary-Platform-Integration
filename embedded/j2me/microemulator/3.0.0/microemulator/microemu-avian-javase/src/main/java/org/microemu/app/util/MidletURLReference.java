@@ -32,6 +32,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import nanoxml.XMLElement;
+import org.allbinary.string.CommonSeps;
 
 import org.microemu.log.Logger;
 
@@ -85,7 +86,7 @@ public class MidletURLReference implements XMLItem {
 				b.append(u.getHost());
 			}
 			Vector pathComponents = new Vector();
-			final String pathSeparator = "/";
+			final String pathSeparator = CommonSeps.getInstance().FORWARD_SLASH;
 			StringTokenizer st = new StringTokenizer(u.getPath(), pathSeparator);
 			while (st.hasMoreTokens()) {
 				pathComponents.add(st.nextToken());

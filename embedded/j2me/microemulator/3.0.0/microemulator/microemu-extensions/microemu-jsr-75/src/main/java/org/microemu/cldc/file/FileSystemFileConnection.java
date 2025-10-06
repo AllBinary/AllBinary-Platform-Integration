@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import javax.microedition.io.file.ConnectionClosedException;
 import javax.microedition.io.file.FileConnection;
+import org.allbinary.string.CommonSeps;
 
 public class FileSystemFileConnection implements FileConnection {
 
@@ -74,7 +75,7 @@ public class FileSystemFileConnection implements FileConnection {
 
 	private final static char DIR_SEP = '/';
 
-	private final static String DIR_SEP_STR = "/";
+	private final static String DIR_SEP_STR = CommonSeps.getInstance().FORWARD_SLASH;
 
 	/* The context to be used when acessing filesystem */
 	private AccessControlContext acc;

@@ -67,6 +67,8 @@ import java.util.EmptyStackException;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import org.allbinary.logic.string.StringUtil;
+import org.allbinary.string.CommonSeps;
 
 /**
  * A multithreaded, reusable XML-RPC client object. This version uses a homegrown
@@ -322,11 +324,11 @@ public class XmlRpcClientLite extends XmlRpcClient
                 port = 80;
             }
             uri = url.getFile();
-            if (uri == null || "".equals(uri))
+            if (uri == null || StringUtil.getInstance().EMPTY_STRING.equals(uri))
             {
-                uri = "/";
+                uri = CommonSeps.getInstance().FORWARD_SLASH;
             }
-            host = port == 80 ? hostname : hostname + ":" + port;
+            host = port == 80 ? hostname : hostname + CommonSeps.getInstance().COLON + port;
             initConnection();
         }
 

@@ -15,6 +15,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import org.allbinary.logic.java.exception.ExceptionUtil;
+import org.allbinary.string.CommonSeps;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
@@ -641,8 +642,8 @@ void showCertificate (Shell parent, long /*int*/ certificate) {
 	OS.CertNameToStr (OS.X509_ASN_ENCODING, info.Subject, OS.CERT_SIMPLE_NAME_STR, tchar, length);
 	String subject = tchar.toString (0, tchar.strlen ());
 
-	final String SEPARATOR_DATE = "/"; //$NON-NLS-1$
-	final String SEPARATOR_TIME = ":"; //$NON-NLS-1$
+	final String SEPARATOR_DATE = CommonSeps.getInstance().FORWARD_SLASH; //$NON-NLS-1$
+	final String SEPARATOR_TIME = CommonSeps.getInstance().COLON; //$NON-NLS-1$
 	SYSTEMTIME systemTime = new SYSTEMTIME ();
 	OS.FileTimeToSystemTime (info.NotBefore, systemTime);
 	String validFrom = systemTime.wDay + SEPARATOR_DATE + systemTime.wMonth + SEPARATOR_DATE + systemTime.wYear;

@@ -35,7 +35,7 @@ import org.microemu.device.MutableImage;
 
 public class SwtMutableImage extends MutableImage {
 
-    private static final String CLOSE = "SwtMutableImage:" + CommonStrings.getInstance().CLOSE;
+    //private static final String CLOSE = "SwtMutableImage:" + CommonStrings.getInstance().CLOSE;
 
     public org.eclipse.swt.graphics.Image image;
 
@@ -236,7 +236,7 @@ public class SwtMutableImage extends MutableImage {
 
     protected void finalize() throws Throwable {
         if (!this.image.isDisposed()) {
-            System.out.println(CLOSE);
+            //System.out.println(CLOSE);
             this.image.dispose();
         }
     }

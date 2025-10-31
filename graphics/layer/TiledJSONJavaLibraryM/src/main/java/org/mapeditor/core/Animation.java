@@ -48,6 +48,8 @@ import org.allbinary.util.BasicArrayList;
  */
 public class Animation {
 
+    public static final Animation NULL_ANIMATION = new Animation();
+    
     /**
      * 
      */

@@ -66,7 +66,7 @@ public class TileData {
      * 
      */
     
-    protected Animation animation;
+    protected Animation animation = Animation.NULL_ANIMATION;
     /**
      * The local tile ID within its tileset.
      * 

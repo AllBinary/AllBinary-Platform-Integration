@@ -70,7 +70,7 @@ import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.Window;
 
-public class MicroEmulator extends MicroEmulatorActivity {
+public class MicroEmulator extends MicroEmulatorActivity{
 	
 	public static final String LOG_TAG = "MicroEmulator";
 		
@@ -147,7 +147,7 @@ public class MicroEmulator extends MicroEmulatorActivity {
 			return;
 		}
 
-        common = new Common(emulatorContext);
+        common = new Common(emulatorContext, this);
         common.setRecordStoreManager(new AndroidRecordStoreManager(this));
         common.setDevice(new AndroidDevice(emulatorContext, this));        
         common.initParams(params, null, AndroidDevice.class);
@@ -161,7 +161,7 @@ public class MicroEmulator extends MicroEmulatorActivity {
         Map properties = new HashMap();
         properties.put("fsRoot", "/");
         properties.put("fsSingle", "sdcard");
-        common.registerImplementation("org.microemu.cldc.file.FileSystem", properties, false);
+        //common.registerImplementation("org.microemu.cldc.file.FileSystem", properties, false);
         MIDletSystemProperties.setPermission("javax.microedition.io.Connector.file.read", 1);
         MIDletSystemProperties.setPermission("javax.microedition.io.Connector.file.write", 1);
         System.setProperty("fileconn.dir.photos", "file:///sdcard/");

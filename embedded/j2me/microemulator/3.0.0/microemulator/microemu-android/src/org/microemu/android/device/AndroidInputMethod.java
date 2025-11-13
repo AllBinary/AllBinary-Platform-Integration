@@ -35,6 +35,7 @@ import org.microemu.device.DeviceFactory;
 import org.microemu.device.InputMethod;
 
 import android.view.KeyEvent;
+import javax.microedition.lcdui.Displayable;
 
 public class AndroidInputMethod extends InputMethod {
 
@@ -44,6 +45,11 @@ public class AndroidInputMethod extends InputMethod {
 	    buttonPressed(getKeyCode(keyEvent));		
 	}
 	
+        public boolean commonKeyPressed(int keyCode, int deviceId, Displayable displayable)
+        {
+            throw new RuntimeException();
+        }
+        
 	public void buttonPressed(int keyCode) {
 		if (DeviceFactory.getDevice().hasRepeatEvents() && inputMethodListener == null) {
 			if (repeatModeKeyCode == keyCode) {

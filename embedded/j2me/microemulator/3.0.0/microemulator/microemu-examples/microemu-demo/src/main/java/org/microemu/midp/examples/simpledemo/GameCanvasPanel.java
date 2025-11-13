@@ -166,7 +166,7 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
         }
     }
 
-    protected void keyPressed(int keyCode) {
+    public void keyPressed(int keyCode) {
         int actionCode = getGameAction(keyCode);
         if (keyCode == '1' /* nwCommand */) {
             moveX = -1;

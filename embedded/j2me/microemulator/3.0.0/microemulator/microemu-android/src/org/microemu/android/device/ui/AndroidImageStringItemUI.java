@@ -25,6 +25,7 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
 
 
@@ -35,7 +36,6 @@ import javax.microedition.lcdui.ImageItem;
 import javax.microedition.lcdui.StringItem;
 
 import org.microemu.MIDletBridge;
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.android.device.AndroidImmutableImage;
 import org.microemu.android.device.AndroidMutableImage;
 import org.microemu.device.ui.ImageStringItemUI;
@@ -45,10 +45,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ImageButton;
 import android.view.View;
+import org.microemu.android.MicroEmulatorActivity;
 
 public class AndroidImageStringItemUI extends LinearLayout implements ImageStringItemUI {
 
-	private MicroEmulatorActivity activity;
+	private Activity activity;
 	
 	private TextView labelView;
 	
@@ -58,7 +59,7 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 	
 	private Command defaultCommand;
 	
-	public AndroidImageStringItemUI(final MicroEmulatorActivity activity, final Item item) {
+	public AndroidImageStringItemUI(final Activity activity, final Item item) {
 		super(activity);
 		
 		this.activity = activity;
@@ -122,7 +123,8 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 	}
 
 	public void setLabel(final String label) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				if (label == null) {
 					labelView.setVisibility(GONE);
@@ -135,7 +137,8 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 	}
 
 	public void setImage(final Image image) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				if (image == null) {
 					imageView.setVisibility(GONE);
@@ -153,7 +156,8 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 	}
 
 	public void setText(final String text) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				textView.setText(text);
 			}

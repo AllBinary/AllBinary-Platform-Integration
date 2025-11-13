@@ -65,6 +65,7 @@
         <module>microemu-javase-swing</module>
         <module>microemu-javase-applet</module>
         <module>microemu-javase-swt</module>
+        <module>microemu-android</module>
         <module>microemu-extensions</module>
         <module>microemu-examples</module>
         <module>microemulator</module>

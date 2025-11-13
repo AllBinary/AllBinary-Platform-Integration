@@ -26,6 +26,7 @@
 
 package org.microemu.android.device;
 
+import android.app.Activity;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -45,7 +46,6 @@ import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 
 import org.microemu.CustomItemAccess;
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.android.device.ui.AndroidAlertUI;
 import org.microemu.android.device.ui.AndroidCanvasUI;
 import org.microemu.android.device.ui.AndroidChoiceGroupUI;
@@ -85,7 +85,7 @@ public class AndroidDevice implements Device {
 
 	private EmulatorContext emulatorContext;
 	
-	private MicroEmulatorActivity activity;
+	private Activity activity;
 	
 	private UIFactory ui = new UIFactory() {
 
@@ -152,7 +152,7 @@ public class AndroidDevice implements Device {
 	
 	private Vector softButtons = new Vector();
 	
-	public AndroidDevice(EmulatorContext emulatorContext, MicroEmulatorActivity activity) {
+	public AndroidDevice(EmulatorContext emulatorContext, Activity activity) {
 		this.emulatorContext = emulatorContext;
 		this.activity = activity;
 	}

@@ -229,7 +229,14 @@ public class MIDlet
     {
         this.resized = resized;
     }
-    
+
+    public void register()
+    {
+        //TWB - Registered in constructor 2.0.2-SPECIAL vs 3.0.0
+        //MIDletBridge.registerMIDletAccess(midletAccessor);
+        //destroyed = false;
+    }
+
     public void exit()
         throws Exception
     {

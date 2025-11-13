@@ -64,7 +64,7 @@ public class ErrorHandlingCanvas extends BaseTestsCanvas {
 		
 	}
 	
-	protected void keyPressed(int keyCode) {
+	public void keyPressed(int keyCode) {
 		switch (keyCode) {
 		case '0':
 			if (fullScreenMode) {

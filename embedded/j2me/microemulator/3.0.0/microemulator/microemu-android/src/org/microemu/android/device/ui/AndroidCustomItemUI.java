@@ -25,6 +25,7 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
 
 
@@ -33,7 +34,6 @@ import javax.microedition.lcdui.Command;
 import org.microemu.CustomItemAccess;
 import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.android.device.AndroidDisplayGraphics;
 import org.microemu.device.ui.CustomItemUI;
 
@@ -41,10 +41,11 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import org.microemu.android.MicroEmulatorActivity;
 
 public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 
-	private MicroEmulatorActivity activity;
+	private Activity activity;
 	
 	private CustomItemAccess customItemAccess;
 	
@@ -52,13 +53,14 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 	
 	public View view;
 	
-	public AndroidCustomItemUI(final MicroEmulatorActivity activity, final CustomItemAccess customItemAccess) {
+	public AndroidCustomItemUI(final Activity activity, final CustomItemAccess customItemAccess) {
 		super(activity);
 		
 		this.activity = activity;
 		this.customItemAccess = customItemAccess;
 
-		activity.post(new ARunnable() {
+                final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				setOrientation(LinearLayout.VERTICAL);
 		//		setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
@@ -80,7 +82,8 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 	}
 
 	public void setLabel(final String label) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				if (labelView != null) {
 					labelView.setText(label);
@@ -90,7 +93,8 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 	}
 	
 	public void repaint() {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				view.invalidate();
 			}

@@ -77,6 +77,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
+import org.allbinary.logic.NullUtil;
 import org.microemu.DisplayAccess;
 import org.microemu.DisplayComponent;
 import org.microemu.MIDletAccess;
@@ -916,7 +917,7 @@ public class Main extends JFrame {
 
 		selectDevicePanel = new SwingSelectDevicePanel(emulatorContext);
 
-		this.common = new Common(emulatorContext);
+		this.common = new Common(emulatorContext, NullUtil.getInstance().NULL_OBJECT);
 		this.common.setStatusBarListener(statusBarListener);
 		this.common.setResponseInterfaceListener(responseInterfaceListener);
 		//this.common.loadImplementationsFromConfig();

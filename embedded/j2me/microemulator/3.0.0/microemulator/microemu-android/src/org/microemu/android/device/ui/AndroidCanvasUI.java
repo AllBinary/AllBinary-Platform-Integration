@@ -25,6 +25,7 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
 
 
@@ -33,7 +34,6 @@ import javax.microedition.lcdui.Canvas;
 import org.microemu.DisplayAccess;
 import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.android.device.AndroidDeviceDisplay;
 import org.microemu.android.device.AndroidDisplayGraphics;
 import org.microemu.android.device.AndroidInputMethod;
@@ -56,6 +56,7 @@ import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+import org.microemu.android.MicroEmulatorActivity;
 
 import org.microemu.android.util.AndroidRepaintListener;
 
@@ -65,11 +66,12 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
     
     private static Bitmap gameCanvasBitmap = null;
     
-    public AndroidCanvasUI(final MicroEmulatorActivity activity, Canvas canvas) {
+    public AndroidCanvasUI(final Activity activity, Canvas canvas) {
         super(activity, canvas, false);
        
-        
-        activity.post(new ARunnable() {
+
+        final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;        
+        activity2.post(new ARunnable() {
             public void run() {
                 view = new CanvasView(activity, AndroidCanvasUI.this);
             }
@@ -83,7 +85,8 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
     @Override
     public void hideNotify()
     {
-        ((AndroidDeviceDisplay) activity.getEmulatorContext().getDeviceDisplay()).removeDisplayRepaintListener((DisplayRepaintListener) view);
+        final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+        ((AndroidDeviceDisplay) activity2.getEmulatorContext().getDeviceDisplay()).removeDisplayRepaintListener((DisplayRepaintListener) view);
         
         super.hideNotify();
     }
@@ -93,9 +96,10 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
     {
         super.showNotify();
         
-        activity.post(new ARunnable() {
+        final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+        activity2.post(new ARunnable() {
             public void run() {
-		        ((AndroidDeviceDisplay) activity.getEmulatorContext().getDeviceDisplay()).addDisplayRepaintListener((DisplayRepaintListener) view);
+		        ((AndroidDeviceDisplay) activity2.getEmulatorContext().getDeviceDisplay()).addDisplayRepaintListener((DisplayRepaintListener) view);
 		        ((Canvas) displayable).repaint();
             }
         });

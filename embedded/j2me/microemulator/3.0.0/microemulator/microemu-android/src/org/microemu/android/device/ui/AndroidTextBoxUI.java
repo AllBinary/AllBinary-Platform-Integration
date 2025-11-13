@@ -25,13 +25,13 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
 
 
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.device.InputMethod;
 import org.microemu.device.ui.TextBoxUI;
 
@@ -49,15 +49,17 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import org.microemu.android.MicroEmulatorActivity;
 
 public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI {
 	
 	private EditText editView;
 	
-	public AndroidTextBoxUI(final MicroEmulatorActivity activity, final TextBox textBox) {		
+	public AndroidTextBoxUI(final Activity activity, final TextBox textBox) {		
 		super(activity, textBox, true);		
 		
-		activity.post(new ARunnable() {
+                final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				editView = new EditText(activity) {
 
@@ -124,7 +126,8 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	
 	@Override
 	public void hideNotify() {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editView.getWindowToken(), 0);
@@ -143,11 +146,12 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	private String getStringTransfer;
 
 	public String getString() {
-		if (activity.isActivityThread()) {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		if (activity2.isActivityThread()) {
 			getStringTransfer = editView.getText().toString();
 		} else {
 			getStringTransfer = null;
-			activity.post(new ARunnable() {
+			activity2.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidTextBoxUI.this) {
 						getStringTransfer = editView.getText().toString();
@@ -171,7 +175,8 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	}
 
 	public void setString(final String text) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				editView.setText(text);
 				if (text != null) {
@@ -182,7 +187,8 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	}
 
 	public void insert(final String text, final int position) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				String newtext = getString();
 				if (position > 0) {
@@ -198,7 +204,8 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	}
 
 	public void delete(final int offset, final int length) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				String newtext = getString();
 				if (offset > 0) {

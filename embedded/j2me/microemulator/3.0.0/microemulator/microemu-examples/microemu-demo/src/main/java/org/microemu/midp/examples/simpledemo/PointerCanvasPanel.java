@@ -115,7 +115,7 @@ public class PointerCanvasPanel extends BaseExamplesCanvas {
 		repaint();
 	}
 	
-	protected void keyPressed(int keyCode) {
+	public void keyPressed(int keyCode) {
 		if (fullScreenMode) {
 			setFullScreenMode(false);
 			repaint();

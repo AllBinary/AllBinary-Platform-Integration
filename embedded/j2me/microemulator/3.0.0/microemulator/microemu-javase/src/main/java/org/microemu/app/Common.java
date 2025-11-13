@@ -135,7 +135,7 @@ public class Common implements MicroEmulator, CommonInterface {
 
     private boolean exitOnMIDletDestroy = false;
 
-    public Common(EmulatorContext context) {
+    public Common(EmulatorContext context, Object androidContext) {
         instance = this;
         this.emulatorContext = context;
 

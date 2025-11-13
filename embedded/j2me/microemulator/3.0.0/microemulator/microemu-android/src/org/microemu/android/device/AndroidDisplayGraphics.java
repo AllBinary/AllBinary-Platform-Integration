@@ -43,7 +43,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 
-public class AndroidDisplayGraphics extends javax.microedition.lcdui.Graphics {
+public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 	
     public Paint strokePaint = new Paint();
     

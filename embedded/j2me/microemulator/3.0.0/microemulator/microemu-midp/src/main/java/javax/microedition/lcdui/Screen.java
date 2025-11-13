@@ -45,7 +45,7 @@ public class Screen extends Displayable
             return -1;
         }
 	
-	void keyPressed(int keyCode) 
+	public void keyPressed(int keyCode) 
 	{
 		int gameKeyCode = Display.getGameAction(keyCode);
 

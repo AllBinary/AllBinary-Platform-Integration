@@ -67,11 +67,9 @@ import javax.microedition.midlet.MIDlet;
 //import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import org.microemu.DisplayAccess;
@@ -80,13 +78,10 @@ import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
 import org.microemu.app.capture.AnimatedGifEncoder;
 //import org.microemu.app.classloader.MIDletClassLoader;
-import org.microemu.app.ui.DisplayRepaintListener;
 import org.microemu.app.ui.Message;
 import org.microemu.app.ui.ResponseInterfaceListener;
 import org.microemu.app.ui.StatusBarListener;
 import org.microemu.app.ui.swing.DropTransferHandler;
-import org.microemu.app.ui.swing.ExtensionFileFilter;
-import org.microemu.app.ui.swing.MIDletUrlPanel;
 import org.microemu.app.ui.swing.RecordStoreManagerDialog;
 import org.microemu.app.ui.swing.ResizeDeviceDisplayDialog;
 import org.microemu.app.ui.swing.SwingAboutDialog;
@@ -96,9 +91,7 @@ import org.microemu.app.ui.swing.SwingDisplayComponent;
 import org.microemu.app.ui.swing.SwingErrorMessageDialogPanel;
 import org.microemu.app.ui.swing.SwingLogConsoleDialog;
 import org.microemu.app.ui.swing.SwingSelectDevicePanel;
-import org.microemu.app.util.AppletProducer;
 import org.microemu.app.util.DeviceEntry;
-import org.microemu.app.util.IOUtils;
 import org.microemu.device.Device;
 import org.microemu.device.DeviceDisplay;
 import org.microemu.device.DeviceFactory;
@@ -112,16 +105,15 @@ import org.microemu.device.impl.SoftButton;
 import org.microemu.device.j2se.J2SEDevice;
 import org.microemu.device.j2se.J2SEDeviceDisplay;
 import org.microemu.device.j2se.J2SEFontManager;
-import org.microemu.device.j2se.J2SEGraphicsSurface;
 import org.microemu.device.j2se.J2SEInputMethod;
 import org.microemu.log.Logger;
 import org.microemu.log.QueueAppender;
-import org.microemu.util.JadMidletEntry;
 
 import org.allbinary.graphics.ResizableListenerHandler;
 import org.allbinary.graphics.ResizableListenerInterface;
 import org.allbinary.graphics.ScreenListenerHandler;
 import org.allbinary.graphics.ScreenListenerInterface;
+import org.allbinary.logic.NullUtil;
 
 public class BareMain extends JFrame 
 implements ScreenListenerInterface, ResizableListenerInterface
@@ -1181,7 +1173,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
                 selectDevicePanel = new SwingSelectDevicePanel(emulatorContext);
 
-                this.common = new Common(emulatorContext);
+                this.common = new Common(emulatorContext, NullUtil.getInstance().NULL_OBJECT);
                 this.common.setStatusBarListener(statusBarListener);
                 this.common.setResponseInterfaceListener(responseInterfaceListener);
                 //this.common.loadImplementationsFromConfig();

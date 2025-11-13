@@ -29,9 +29,6 @@ import java.io.InputStream;
 import javax.microedition.io.ConnectionNotFoundException;
 
 import org.microemu.DisplayComponent;
-import org.microemu.device.DeviceDisplay;
-import org.microemu.device.FontManager;
-import org.microemu.device.InputMethod;
 
 public interface EmulatorContext {
 

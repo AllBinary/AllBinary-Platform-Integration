@@ -27,8 +27,16 @@
 package org.microemu.android.device;
 
 import android.graphics.Bitmap;
+import javax.microedition.lcdui.Image;
+import org.allbinary.android.NullAndroidCanvas;
 
-public class AndroidImmutableImage extends javax.microedition.lcdui.Image {
+public class AndroidImmutableImage extends javax.microedition.lcdui.Image implements AndroidImageInterface {
+
+    public static Image create(final Bitmap bitmap) {
+        return new AndroidImmutableImage(bitmap);
+    }
+
+    private android.graphics.Canvas canvas = NullAndroidCanvas.NULL_CANVAS;
 
 	private Bitmap bitmap;
 	
@@ -44,6 +52,10 @@ public class AndroidImmutableImage extends javax.microedition.lcdui.Image {
 		return bitmap;
 	}
 
+	public android.graphics.Canvas getCanvas() {
+		throw new RuntimeException();
+	}
+    
 	@Override
 	public int getWidth() {
 		return bitmap.getWidth();

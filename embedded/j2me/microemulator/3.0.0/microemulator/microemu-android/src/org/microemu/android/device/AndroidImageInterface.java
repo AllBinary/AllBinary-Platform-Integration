@@ -3,14 +3,18 @@
  * Copyright (c) 2025
  * Created By: Travis Berthelot
  */
-package javax.microedition.lcdui;
+package org.microemu.android.device;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 /**
  *
  * @author User
  */
-public class NullGraphics {
+public interface AndroidImageInterface {
     
-    public static final Graphics NULL_GRAPHICS = new Graphics();
+    Bitmap getBitmap();
+    Canvas getCanvas();
     
 }

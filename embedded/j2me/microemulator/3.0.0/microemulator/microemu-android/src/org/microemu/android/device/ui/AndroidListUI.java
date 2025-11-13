@@ -25,6 +25,7 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
 
 
@@ -35,7 +36,6 @@ import javax.microedition.lcdui.List;
 import javax.microedition.lcdui.Command;
 
 import org.microemu.MIDletBridge;
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.device.ui.ListUI;
 import org.microemu.android.device.AndroidImmutableImage;
 import org.microemu.android.device.AndroidMutableImage;
@@ -51,6 +51,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import org.microemu.android.MicroEmulatorActivity;
 
 public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 
@@ -62,13 +63,14 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 
 	private int selectedPosition;
 	
-	public AndroidListUI(final MicroEmulatorActivity activity, List list) {
+	public AndroidListUI(final Activity activity, List list) {
 		super(activity, list, true);
 		
 		this.selectCommand = List.SELECT_COMMAND;
 		this.selectedPosition = AdapterView.INVALID_POSITION;
-			
-		activity.post(new ARunnable() {
+
+                final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				listAdapter = new AndroidListAdapter();
 				listView = new AndroidListView(activity);
@@ -88,11 +90,12 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	private int appendTransfer;
 	
 	public int append(final String stringPart, final Image imagePart) {
-		if (activity.isActivityThread()) {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		if (activity2.isActivityThread()) {
 			appendTransfer = listAdapter.append(stringPart, imagePart);
 		} else {
 			appendTransfer = Integer.MIN_VALUE;
-			activity.post(new ARunnable() {
+			activity2.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidListUI.this) {
 						appendTransfer = listAdapter.append(stringPart, imagePart);
@@ -137,11 +140,12 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	private String deleteException;
 
 	public void delete(final int elementNum) {
-		if (activity.isActivityThread()) {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		if (activity2.isActivityThread()) {
 			listAdapter.delete(elementNum);
 		} else {
 			deleteException = null;
-			activity.post(new ARunnable() {
+			activity2.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidListUI.this) {
 						try {
@@ -177,7 +181,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	}
 
 	public void deleteAll() {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				listAdapter.deleteAll();
 			}
@@ -186,7 +191,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 
 	public void setSelectedIndex(final int elementNum, boolean selected) {
 		if (selected) { // TODO if not???
-			activity.post(new ARunnable() {
+                    final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+			activity2.post(new ARunnable() {
 				public void run() {
 					listView.setSelection(elementNum);
 				}
@@ -195,7 +201,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	}
 	
 	public void insert(final int elementNum, final String stringPart, final Image imagePart) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				listAdapter.insert(elementNum, stringPart, imagePart);
 			}
@@ -203,7 +210,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	}
 
 	public void set(final int elementNum, final String stringPart, final Image imagePart) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				listAdapter.set(elementNum, stringPart, imagePart);
 			}
@@ -214,7 +222,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 
 	public int size() {
 		sizeTransfer = Integer.MIN_VALUE;
-		activity.post(new ARunnable() {
+                final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 
 			public void run() {
 				synchronized (AndroidListUI.this) {
@@ -254,7 +263,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			vh.text = stringPart;
 			objects.add(vh);
 			
-			activity.post(new ARunnable() {
+                        final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+			activity2.post(new ARunnable() {
 				public void run() {
 					notifyDataSetChanged();
 				}
@@ -269,7 +279,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			vh.text = stringPart;
 			objects.add(elementNum, vh);
 			
-			activity.post(new ARunnable() {
+                        final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+			activity2.post(new ARunnable() {
 				public void run() {
 					notifyDataSetChanged();
 				}
@@ -334,7 +345,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		public void delete(int elementNum) {
 			objects.remove(elementNum);		
 			
-			activity.post(new ARunnable() {
+                        final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+			activity2.post(new ARunnable() {
 				public void run() {
 					notifyDataSetChanged();
 				}
@@ -344,7 +356,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		public void deleteAll() {
 			objects.clear();
 			
-			activity.post(new ARunnable() {
+                        final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+			activity2.post(new ARunnable() {
 				public void run() {
 					notifyDataSetChanged();
 				}

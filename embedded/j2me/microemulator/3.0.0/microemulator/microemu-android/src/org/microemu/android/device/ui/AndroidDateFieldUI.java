@@ -25,6 +25,7 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
 
 
@@ -36,7 +37,6 @@ import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.DateField;
 import javax.microedition.lcdui.ItemStateListener;
 
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.android.util.ValueObject;
 import org.microemu.device.ui.DateFieldUI;
 
@@ -45,10 +45,11 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import org.microemu.android.MicroEmulatorActivity;
 
 public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 
-	private MicroEmulatorActivity activity;
+	private Activity activity;
 	
 	private DateField dateField;
 	
@@ -64,7 +65,7 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 
 	private Command defaultCommand;
 	
-	public AndroidDateFieldUI(final MicroEmulatorActivity activity, final DateField dateField) {
+	public AndroidDateFieldUI(final Activity activity, final DateField dateField) {
 		super(activity);
 		
 		this.activity = activity;
@@ -72,7 +73,8 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 		
 		this.mode = -1;
 		
-		activity.post(new ARunnable() {
+                MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				setOrientation(LinearLayout.VERTICAL);
 		//		setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
@@ -96,7 +98,8 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 	}
 
 	public void setInputMode(final int mode) {
-		activity.post(new ARunnable() {
+            MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				if (AndroidDateFieldUI.this.mode != mode) {
 					AndroidDateFieldUI.this.mode = mode;
@@ -122,7 +125,8 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 	}
 
 	public void setDate(final Date date) {
-		activity.post(new ARunnable() {
+            MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				GregorianCalendar cal = new GregorianCalendar();
 				cal.setTime(date);
@@ -141,7 +145,8 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 		final ValueObject result = new ValueObject();
 		result.value = null;
 		
-		activity.post(new ARunnable() {
+                MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				GregorianCalendar cal = new GregorianCalendar();
 				if ((mode & DateField.DATE) != 0) {

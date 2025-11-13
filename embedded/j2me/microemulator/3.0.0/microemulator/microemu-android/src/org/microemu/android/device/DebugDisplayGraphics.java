@@ -190,12 +190,12 @@ public class DebugDisplayGraphics extends AndroidDisplayGraphics
         return super.getFont();
     }
 
-    @Override
-    public int getGrayScale()
-    {
-        Log.d("DebugDisplayGraphics", "getGrayScale");
-        return super.getGrayScale();
-    }
+//    @Override
+//    public int getGrayScale()
+//    {
+//        Log.d("DebugDisplayGraphics", "getGrayScale");
+//        return super.getGrayScale();
+//    }
 
     @Override
     public int getGreenComponent()

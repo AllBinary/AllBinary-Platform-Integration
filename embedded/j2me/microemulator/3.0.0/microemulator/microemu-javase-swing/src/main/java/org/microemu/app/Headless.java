@@ -27,6 +27,7 @@ import org.allbinary.thread.ARunnable;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import org.allbinary.logic.NullUtil;
 
 import org.microemu.DisplayComponent;
 import org.microemu.MIDletBridge;
@@ -90,7 +91,7 @@ public class Headless {
 	};
 
 	public Headless() {
-		emulator = new Common(context);
+		emulator = new Common(context, NullUtil.getInstance().NULL_OBJECT);
 	}
 
 	public static void main(String[] args) {

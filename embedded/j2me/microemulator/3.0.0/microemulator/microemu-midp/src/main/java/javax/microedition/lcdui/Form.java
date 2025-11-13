@@ -250,7 +250,7 @@ public class Form extends Screen
 			fireItemStateListener(items[focusItemIndex]);
     }
 	
-	void keyPressed(int keyCode) 
+	public void keyPressed(int keyCode) 
 	{
 		if (focusItemIndex != -1) {
 			if (Display.getGameAction(keyCode) == Canvas.FIRE) {
@@ -522,7 +522,7 @@ public class Form extends Screen
 		}
 	}
 
-	Vector getCommands() {
+	public Vector getCommands() {
 		Vector formCommands = super.getCommands();
 		if (focusItemIndex < 0)
 			return formCommands;

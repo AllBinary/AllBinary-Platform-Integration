@@ -114,7 +114,7 @@ public class Canvas extends Displayable
 	}
 
 
-	protected void keyPressed(int keyCode)
+	public void keyPressed(int keyCode)
 	{
 	}
 
@@ -124,7 +124,7 @@ public class Canvas extends Displayable
 	}
 
 
-	protected void keyReleased(int keyCode)
+	public void keyReleased(int keyCode)
 	{
 	}
 

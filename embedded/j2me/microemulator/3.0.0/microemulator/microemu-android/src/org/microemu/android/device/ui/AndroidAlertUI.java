@@ -25,15 +25,14 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
-
 
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Command;
 
 import org.microemu.MIDletBridge;
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.device.ui.AlertUI;
 import org.microemu.device.ui.CommandUI;
 
@@ -43,6 +42,7 @@ import android.widget.Toast;
 
 import java.util.Map;
 import java.util.HashMap;
+import org.microemu.android.MicroEmulatorActivity;
 
 /**
  * Represents an Alert dialog or a Toast, depending on the properties.
@@ -72,13 +72,14 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 	 * @see #isToastable()
 	 * @see #showNotifyAsToast()
 	 */
-	public AndroidAlertUI(final MicroEmulatorActivity activity,
+	public AndroidAlertUI(final Activity activity,
 			final Alert alert) {
 		super(activity, alert, false);
 
 		displayableUnboxed = alert;
 
-		activity.post(new ARunnable() {
+                final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				alertDialog = new AlertDialog.Builder(activity).create();
 				if (alert.getTitle() != null) {
@@ -86,7 +87,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 				}
 				onClickListener = new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						activity.setDialog(null);
+						activity2.setDialog(null);
 						MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(
 								buttons.get(which).getCommand(), displayable);
 					}
@@ -174,17 +175,18 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 		// needed for hideNotify
 		inShowingToast = isToastable;
 
+                final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		if (isToastable) {
-			activity.post(new ARunnable() {
+			activity2.post(new ARunnable() {
 				public void run() {
 					showNotifyAsToast();
 				}
 			});
 		} else {
-			activity.post(new ARunnable() {
+			activity2.post(new ARunnable() {
 				public void run() {
 					fixLookAndFeel();
-					activity.setDialog(alertDialog);
+					activity2.setDialog(alertDialog);
 				}
 			});
 		}
@@ -196,9 +198,10 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 		if (inShowingToast) {
 			inShowingToast = false;
 		} else {
-			activity.post(new ARunnable() {
+                    final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+			activity2.post(new ARunnable() {
 				public void run() {
-					activity.setDialog(null);
+					activity2.setDialog(null);
 				}
 			});
 		}
@@ -239,7 +242,8 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 	//		
 
 	public void setString(final String str) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				alertDialog.setMessage(str);
 			}

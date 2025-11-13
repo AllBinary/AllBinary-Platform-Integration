@@ -204,7 +204,7 @@ public class List extends Screen implements Choice {
         super.setTitle(s);
     }
 
-    void keyPressed(int keyCode) {
+    public void keyPressed(int keyCode) {
         if (Display.getGameAction(keyCode) == Canvas.FIRE && choiceGroup.select() && super.getCommandListener() != null
                 && choiceGroup.choiceType == Choice.IMPLICIT) {
         	MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(selCommand, this);

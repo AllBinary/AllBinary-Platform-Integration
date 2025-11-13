@@ -79,7 +79,11 @@ public class Image
             this.name = name;
             this.postLoadImageProcessor = postLoadImageProcessor;
         }
-                
+        
+        public Image(final Image image) {
+            throw new RuntimeException();
+        }
+        
 	public Graphics getGraphics()
 	{
 		throw new IllegalStateException("Image is Immutable or OpenGLESImage");

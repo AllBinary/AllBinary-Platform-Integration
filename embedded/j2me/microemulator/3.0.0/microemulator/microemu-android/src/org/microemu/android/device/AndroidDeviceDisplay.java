@@ -54,8 +54,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.os.PowerManager;
+import org.allbinary.android.activity.ViewCompositeInterface;
 
-public class AndroidDeviceDisplay implements DeviceDisplay {
+public class AndroidDeviceDisplay extends DeviceDisplay {
 	
 	private Activity activity;
     
@@ -75,6 +76,11 @@ public class AndroidDeviceDisplay implements DeviceDisplay {
 		setSize(width, height);
 	}
 	
+    public void setActivity(ViewCompositeInterface activity)
+    {
+        throw new RuntimeException();
+    }
+    
 	public void setSize(int width, int height) {
 		if (MicroEmulatorActivity.config.ORIG_DISPLAY_FIXED) {
 	        displayRectangleWidth = MicroEmulatorActivity.config.ORIG_DISPLAY_WIDTH;

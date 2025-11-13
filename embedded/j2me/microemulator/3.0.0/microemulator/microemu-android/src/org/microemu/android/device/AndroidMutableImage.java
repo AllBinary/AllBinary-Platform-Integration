@@ -32,7 +32,7 @@ import org.microemu.device.MutableImage;
 
 import android.graphics.Bitmap;
 
-public class AndroidMutableImage extends MutableImage {
+public class AndroidMutableImage extends MutableImage implements AndroidImageInterface {
 	
 	private Bitmap bitmap;
 	
@@ -70,6 +70,10 @@ public class AndroidMutableImage extends MutableImage {
 		return bitmap;
 	}
 
+	public android.graphics.Canvas getCanvas() {
+		throw new RuntimeException();
+	}
+        
 	@Override
 	public int getWidth() {
 		return bitmap.getWidth();

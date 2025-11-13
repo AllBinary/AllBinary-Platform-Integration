@@ -26,41 +26,30 @@
 
 package org.microemu.android;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.microedition.io.ConnectionNotFoundException;
 
 import org.microemu.DisplayAccess;
-import org.microemu.DisplayComponent;
 import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
 import org.microemu.android.device.AndroidDeviceDisplay;
-import org.microemu.android.device.AndroidFontManager;
-import org.microemu.android.device.AndroidInputMethod;
 import org.microemu.android.util.ActivityResultListener;
-import org.microemu.device.DeviceDisplay;
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.EmulatorContext;
-import org.microemu.device.FontManager;
-import org.microemu.device.InputMethod;
-import org.microemu.log.Logger;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import org.microemu.android.device.AndroidEmulatorContext;
 
 public abstract class MicroEmulatorActivity extends Activity {
 		
@@ -128,63 +117,7 @@ public abstract class MicroEmulatorActivity extends Activity {
         final int width = display.getWidth();
         final int height = display.getHeight() - statusBarHeight;
 
-        emulatorContext = new EmulatorContext() {
-
-            private InputMethod inputMethod = new AndroidInputMethod();
-
-            private DeviceDisplay deviceDisplay = new AndroidDeviceDisplay(MicroEmulatorActivity.this, this, width, height);
-            
-            private FontManager fontManager = new AndroidFontManager(getResources().getDisplayMetrics());
-
-            public DisplayComponent getDisplayComponent() {
-                // TODO consider removal of EmulatorContext.getDisplayComponent()
-                System.out.println("MicroEmulator.emulatorContext::getDisplayComponent()");
-                return null;
-            }
-
-            public InputMethod getDeviceInputMethod() {
-                return inputMethod;
-            }
-
-            public DeviceDisplay getDeviceDisplay() {
-                return deviceDisplay;
-            }
-
-            public FontManager getDeviceFontManager() {
-                return fontManager;
-            }
-
-            public InputStream getResourceAsStream(Class origClass, String name) {
-                try {
-                    if (name.startsWith("/")) {
-                        return MicroEmulatorActivity.this.getAssets().open(name.substring(1));
-                    } else {
-                        Package p = origClass.getPackage();
-                        if (p == null) {
-                            return MicroEmulatorActivity.this.getAssets().open(name);
-                        } else {
-                        	String folder = origClass.getPackage().getName().replace('.', '/');
-                            return MicroEmulatorActivity.this.getAssets().open(folder + "/" + name);
-                        }
-                    }
-                } catch (IOException e) {
-                    Logger.debug(e);
-                    return null;
-                }
-            }
-
-            public boolean platformRequest(String url) throws ConnectionNotFoundException 
-            {
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                } catch (ActivityNotFoundException e) {
-                    throw new ConnectionNotFoundException();
-                }
-
-                return true;
-            }
-                    
-        };
+        emulatorContext = new AndroidEmulatorContext();
 		
 		activityThread = Thread.currentThread();
 	}

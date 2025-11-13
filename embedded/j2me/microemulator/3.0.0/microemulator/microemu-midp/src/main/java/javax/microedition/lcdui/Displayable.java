@@ -160,13 +160,13 @@ public class Displayable
 	}
 	
 	
-	CommandListener getCommandListener()
+	public CommandListener getCommandListener()
 	{
 		return listener;
 	}
 
 
-	Vector getCommands()
+	public Vector getCommands()
 	{
 		// in Form this is overridden to allow for the inclusion of item contained commands 
 		Vector result = new Vector();
@@ -191,7 +191,7 @@ public class Displayable
 		hideNotify();
 	}
 
-	void keyPressed(int keyCode)
+	public void keyPressed(int keyCode)
 	{
 	}
 
@@ -199,7 +199,7 @@ public class Displayable
 	{
 	}
 
-	void keyReleased(int keyCode)
+	public void keyReleased(int keyCode)
 	{
 	}
 

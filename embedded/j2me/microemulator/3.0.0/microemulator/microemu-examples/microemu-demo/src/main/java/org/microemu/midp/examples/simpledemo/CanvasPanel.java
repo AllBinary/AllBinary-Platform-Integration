@@ -146,7 +146,7 @@ public class CanvasPanel extends BaseExamplesCanvas implements HasRunnable {
 		super.commandAction(c, d);
 	}
 
-	protected void keyPressed(int keyCode) {
+	public void keyPressed(int keyCode) {
 		if (keyCode == '1' /*nwCommand*/) {
 			moveX = -1;
 			moveY = -1;

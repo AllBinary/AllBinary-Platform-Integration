@@ -25,6 +25,7 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
 
 
@@ -34,7 +35,6 @@ import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.ItemStateListener;
 
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.device.ui.ChoiceGroupUI;
 
 import android.content.Context;
@@ -51,10 +51,11 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import org.microemu.android.MicroEmulatorActivity;
 
 public class AndroidChoiceGroupUI extends LinearLayout implements ChoiceGroupUI {
 
-	private MicroEmulatorActivity activity;
+	private Activity activity;
 	
 	private ChoiceGroup choiceGroup;
 	
@@ -66,7 +67,7 @@ public class AndroidChoiceGroupUI extends LinearLayout implements ChoiceGroupUI 
 	
 	private ViewGroup listView;
 	
-	public AndroidChoiceGroupUI(final MicroEmulatorActivity activity, final ChoiceGroup choiceGroup, final int choiceType) {
+	public AndroidChoiceGroupUI(final Activity activity, final ChoiceGroup choiceGroup, final int choiceType) {
 		super(activity);
 		
 		this.activity = activity;
@@ -75,7 +76,8 @@ public class AndroidChoiceGroupUI extends LinearLayout implements ChoiceGroupUI 
 		
 		this.listAdapter = new AndroidListAdapterEx(activity);
 
-		activity.post(new ARunnable() {
+                final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				setOrientation(LinearLayout.VERTICAL);
 //				setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
@@ -109,7 +111,8 @@ public class AndroidChoiceGroupUI extends LinearLayout implements ChoiceGroupUI 
 	}
 
 	public void setLabel(final String label) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				labelView.setText(label);
 			}
@@ -192,7 +195,8 @@ System.out.println("AndroidChoiceGroupUI.deleteAll() not synced");
 			}
 
 	public void setSelectedIndex(final int elementNum, final boolean selected) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				if (choiceType == Choice.POPUP) {
 					if (selected) {
@@ -225,7 +229,8 @@ System.out.println("Choice.IMPLICIT not implemented yet");
 	}
 
 	public void insert(final int elementNum, final String stringPart, final Image imagePart) {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				synchronized (AndroidChoiceGroupUI.this) {
 					View view = createView(stringPart, imagePart);
@@ -289,7 +294,8 @@ System.out.println("AndroidChoiceGroupUI.set(..) not synced");
 
 	public int size() {
 		sizeTransfer = Integer.MIN_VALUE;
-		activity.post(new ARunnable() {
+                final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				synchronized (AndroidChoiceGroupUI.this) {
 					sizeTransfer = listAdapter.getCount();

@@ -109,7 +109,7 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 		}
 	}
 	
-	protected void keyPressed(int keyCode) {
+	public void keyPressed(int keyCode) {
 		if (lastKeyCode == keyCode) {
 			sameKeyCount ++;
 			if ((fullScreenMode) && (sameKeyCount >= 3)) {

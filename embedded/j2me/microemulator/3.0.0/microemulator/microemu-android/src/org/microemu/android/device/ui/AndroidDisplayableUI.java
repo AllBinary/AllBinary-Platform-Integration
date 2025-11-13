@@ -25,6 +25,7 @@
  */
 
 package org.microemu.android.device.ui;
+import android.app.Activity;
 import org.allbinary.thread.ARunnable;
 
 
@@ -35,17 +36,17 @@ import java.util.Vector;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
 
-import org.microemu.android.MicroEmulatorActivity;
 import org.microemu.device.ui.CommandUI;
 import org.microemu.device.ui.DisplayableUI;
 
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import org.microemu.android.MicroEmulatorActivity;
 
 public abstract class AndroidDisplayableUI implements DisplayableUI {
 	
-	protected MicroEmulatorActivity activity;
+	protected Activity activity;
 	
 	protected Displayable displayable;
 	
@@ -71,7 +72,7 @@ public abstract class AndroidDisplayableUI implements DisplayableUI {
 	
 	private CommandListener commandListener = null;
 	
-	protected AndroidDisplayableUI(MicroEmulatorActivity activity, Displayable displayable, boolean initView) {
+	protected AndroidDisplayableUI(Activity activity, Displayable displayable, boolean initView) {
 		this.activity = activity;
 		this.displayable = displayable;
 		
@@ -120,7 +121,8 @@ public abstract class AndroidDisplayableUI implements DisplayableUI {
 	}
 
 	public void invalidate() {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				if (titleView != null) {
 					titleView.setText(displayable.getTitle());
@@ -130,7 +132,8 @@ public abstract class AndroidDisplayableUI implements DisplayableUI {
 	}
 
 	public void showNotify() {
-		activity.post(new ARunnable() {
+            final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+		activity2.post(new ARunnable() {
 			public void run() {
 				activity.setContentView(view);
 				view.requestFocus();

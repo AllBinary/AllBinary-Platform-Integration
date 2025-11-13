@@ -34,6 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.allbinary.logic.NullUtil;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -269,7 +270,7 @@ public class Swt extends Common {
 				// TODO Auto-generated method stub
 				return null;
 			}
-		});
+		}, NullUtil.getInstance().NULL_OBJECT);
 
 		initInterface(shell);
 

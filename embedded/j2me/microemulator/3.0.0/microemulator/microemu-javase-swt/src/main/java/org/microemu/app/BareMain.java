@@ -77,6 +77,7 @@ import org.allbinary.graphics.ResizableListenerInterface;
 import org.allbinary.graphics.ScreenListenerHandler;
 import org.allbinary.graphics.ScreenListenerInterface;
 import org.allbinary.graphics.threed.SWTJOGLProcessor;
+import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.communication.log.PreLogUtil;
 import org.allbinary.logic.java.exception.ExceptionUtil;
 import org.allbinary.string.CommonStrings;
@@ -286,7 +287,7 @@ public class BareMain extends Common
 				// TODO Auto-generated method stub
 				return null;
 			}
-		});
+		}, NullUtil.getInstance().NULL_OBJECT);
 
 		initInterface(shell);
 

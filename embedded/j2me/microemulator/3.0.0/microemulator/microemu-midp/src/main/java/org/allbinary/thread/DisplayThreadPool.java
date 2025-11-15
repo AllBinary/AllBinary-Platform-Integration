@@ -35,9 +35,10 @@ public class DisplayThreadPool extends EmuThreadPool
         super(total);
     }
 
+    @Override
     public synchronized void runTask(Runnable task)
     {
-        //System.out.println(new StringBuffer().append(this).append(START_LABEL).append(task).append(System.currentTimeMillis()).toString());
+        //System.out.println(new StringMaker().append(this).append(START_LABEL).append(task).append(System.currentTimeMillis()).toString());
         //logUtil.put(new StringMaker().append(CommonLabels.getInstance().START_LABEL).append(task).toString(), this, "runTask");
 
         super.runTask(task);
@@ -47,15 +48,17 @@ public class DisplayThreadPool extends EmuThreadPool
     //private final String START_TASK = "Started Task: ";
     //private final String COMPLETE_TASK = "Completed Task: ";
 
+    @Override
     protected void startTask(Runnable task)
     {
-        //System.out.println(new StringBuffer().append(this).append(START_TASK).append(task).append(System.currentTimeMillis()).toString());
+        //System.out.println(new StringMaker().append(this).append(START_TASK).append(task).append(System.currentTimeMillis()).toString());
         //logUtil.put(new StringMaker().append(START_TASK).append(task).toString(), this, commonStrings.RUN);
     }
 
+    @Override
     protected void completedTask(Runnable task)
     {
-        //System.out.println(new StringBuffer().append(this).append(COMPLETE_TASK).append(task).append(System.currentTimeMillis()).toString());
+        //System.out.println(new StringMaker().append(this).append(COMPLETE_TASK).append(task).append(System.currentTimeMillis()).toString());
         //logUtil.put(new StringMaker().append(COMPLETE_TASK).append(task).toString(), this, commonStrings.RUN);
     }
 

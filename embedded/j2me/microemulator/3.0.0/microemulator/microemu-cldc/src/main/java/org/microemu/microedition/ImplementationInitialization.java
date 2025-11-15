@@ -26,7 +26,7 @@
  */
 package org.microemu.microedition;
 
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @author vlads
@@ -55,7 +55,7 @@ public interface ImplementationInitialization {
 	 * @param parameters
 	 *            Map of configuration options and emulatorID property.
 	 */
-	public void registerImplementation(Map parameters);
+	public void registerImplementation(HashMap parameters);
 
 	/**
 	 * Called when MIDlet started

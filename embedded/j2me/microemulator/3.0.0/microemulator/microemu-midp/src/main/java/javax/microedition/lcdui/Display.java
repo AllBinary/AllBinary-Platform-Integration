@@ -34,6 +34,7 @@ import org.allbinary.thread.ARunnable;
 
 //import java.util.TimerTask;
 import javax.microedition.midlet.MIDlet;
+import org.allbinary.logic.string.StringMaker;
 import org.allbinary.thread.DisplayThreadPool;
 import org.allbinary.thread.EmuThreadPool;
 import org.allbinary.view.EmulatorViewInterface;
@@ -196,6 +197,7 @@ public class Display {
 			display = d;
 		}
 
+                @Override
 		public void commandAction(final Command c, final Displayable d) {
 
 			if (c.isRegularCommand()) {
@@ -221,6 +223,7 @@ public class Display {
 			}
 		}
 
+                @Override
 		public void commandAction(final Command c, final Item item) {
 			final ItemCommandListener listener = item.getItemCommandListener();
 			if (listener == null) {
@@ -238,6 +241,7 @@ public class Display {
                         */
 		}
 		
+                @Override
 		public Display getDisplay() {
 			return display;
 		}
@@ -275,6 +279,7 @@ public class Display {
 		// only between show and hide notify...
 		// check later
 		// Andres Navarro
+                @Override
 		public void keyPressed(int keyCode) {
 			// Andres Navarro
                     
@@ -297,6 +302,7 @@ public class Display {
                         * */
 		}
 
+                @Override
 		public void keyRepeated(int keyCode) {
                     
 //TWB - optimized
@@ -313,6 +319,7 @@ public class Display {
 			//eventDispatcher.put(new KeyEvent(KeyEvent.KEY_REPEATED, keyCode));
 		}
 
+                @Override
 		public void keyReleased(int keyCode) {
 			// Andres Navarro
 //TWB - optimized
@@ -334,6 +341,7 @@ public class Display {
                         */
 		}
 
+                @Override
 		public void pointerPressed(final int x, final int y) {
                     /*
 			if (current != null) {
@@ -349,6 +357,7 @@ public class Display {
                     */
 		}
 
+                @Override
 		public void pointerReleased(final int x, final int y) {
                     /*
 			if (current != null) {
@@ -379,6 +388,7 @@ public class Display {
                     */
 		}
 
+                @Override
 		public void paint(Graphics g) {
 			// TODO consider removal of DisplayAccess::paint(..)
 				try {
@@ -389,18 +399,22 @@ public class Display {
 				g.translate(-g.getTranslateX(), -g.getTranslateY());
 		}
 
+                @Override
 		public Displayable getCurrent() {
 			return display.getCurrent();
 		}
 
+                @Override
 		public DisplayableUI getDisplayableUI(Displayable displayable) {
 			return displayable.ui;
 		}
 
+                @Override
         public ItemUI getItemUI(Item item) {
         	return item.ui;
         }
 
+        @Override
 		public boolean isFullScreenMode() {
 			Displayable current = getCurrent();
 
@@ -411,6 +425,7 @@ public class Display {
 //			}
 		}
 
+                @Override
 		public void hideNotify() {
             Displayable current = getCurrent();
             if (current != null) {
@@ -418,10 +433,12 @@ public class Display {
             }
 		}
 
+                @Override
         public void setCurrent(Displayable d) {
 			getDisplay().setCurrent(d);
 		}
 
+        @Override
 		public void sizeChanged() {
                             /*
 	    		if (current instanceof GameCanvas) {
@@ -432,6 +449,7 @@ public class Display {
 				current.sizeChanged(Display.this);
 		}
 
+                @Override
 		public void repaint() {
 			Displayable d = this.display.getCurrent();
 			if (d != null) {
@@ -439,6 +457,7 @@ public class Display {
 			}
 		}
 
+                @Override
 		public void clean() {
                             /*
 				eventDispatcher.put(new HideNotifyEvent(eventDispatcher, new ARunnable() {
@@ -580,10 +599,13 @@ public class Display {
 
 	private EmulatorViewInterface allBinaryMidletView = new EmulatorViewInterface() {
 
+            @Override
             public void setMidlet(final MIDlet midlet) {}
     
+            @Override
             public void onEmulatorInitComplete(final Object midletActivity) {}
 
+            @Override
             public void onSetDisplayable(Displayable displayable) {}
 
         };
@@ -685,7 +707,7 @@ public class Display {
                     this.current = nextDisplayable;
                     
                     this.allBinaryMidletView.onSetDisplayable(nextDisplayable);
-                    //System.out.println(new StringBuffer().append(current).append(" setCurrent ").append(System.currentTimeMillis()).toString());
+                    //System.out.println(new StringMaker().append(current).append(" setCurrent ").append(System.currentTimeMillis()).toString());
 
 //                    if (this.current instanceof Canvas &&
 //                        this.current.getTitle() == null)
@@ -715,17 +737,18 @@ public class Display {
         //This keeps the Displayable from showing the prior Displayable.
         private void hackForSWT(final Displayable nextDisplayable) {
 
-            System.out.println(new StringBuffer().append(current).append("hackForSWT").toString());
+            System.out.println(new StringMaker().append(current.toString()).append("hackForSWT").toString());
 
             this.displayThreadPool.runTask(
                 //final Thread thread = new Thread(
                 new ARunnable() {
+                    @Override
                     public void run() {
                         try {
                             for (int index = 0; index < 1; index++) {
                                 Thread.sleep(100);
                                 if (nextDisplayable != null) {
-                                    //System.out.println(new StringBuffer().append(current).append(" setCurrent - repaint").toString());
+                                    //System.out.println(new StringMaker().append(current).append(" setCurrent - repaint").toString());
                                     nextDisplayable.repaint();
                                 }
                             }
@@ -804,7 +827,7 @@ public class Display {
 
 		if (current == d) {
                     
-                    //System.out.println(new StringBuffer().append(current).append("TWB:repaint").toString());
+                    //System.out.println(new StringMaker().append(current).append("TWB:repaint").toString());
                     DeviceFactory.getDevice().getDeviceDisplay().repaint(x, y, width, height);
 
 //                    repaintRunnable.x = x;

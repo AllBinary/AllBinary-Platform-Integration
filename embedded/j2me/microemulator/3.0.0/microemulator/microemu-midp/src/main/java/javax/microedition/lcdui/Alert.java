@@ -43,9 +43,10 @@ public class Alert extends Screen
 	Gauge indicator;
 
 	// this is for alertListener
-	static Displayable nextDisplayable;
+	static Displayable nextDisplayable = NullCanvas.NULL_CANVAS;
 	static CommandListener defaultListener = new CommandListener()
 	{
+            @Override
 		public void commandAction(Command cmd, Displayable d)
 		{
 			// XXX if nextDisplayable == null
@@ -79,6 +80,7 @@ public class Alert extends Screen
 	}
 
 
+        @Override
 	public void addCommand(Command cmd)
 	{
 		if (cmd == Alert.DISMISS_COMMAND) {
@@ -89,6 +91,7 @@ public class Alert extends Screen
 		}
 	}
 
+        @Override
 	public void removeCommand(Command cmd) {
 		if (cmd == Alert.DISMISS_COMMAND) {
 			return;
@@ -131,6 +134,7 @@ public class Alert extends Screen
 	}
 
 
+        @Override
 	public void setCommandListener(CommandListener l)
 	{
 		if (l == null)
@@ -225,19 +229,20 @@ public class Alert extends Screen
 	}
 
 
+        @Override
 	int paintContent(Graphics g)
 	{
 		return alertContent.paint(g);
 	}
 
-
+        @Override
 	void showNotify()
 	{
 		super.showNotify();
 		viewPortY = 0;
 	}
 
-
+        @Override
 	int traverse(int gameKeyCode, int top, int bottom)
 	{
 		Font f = Font.getDefaultFont();

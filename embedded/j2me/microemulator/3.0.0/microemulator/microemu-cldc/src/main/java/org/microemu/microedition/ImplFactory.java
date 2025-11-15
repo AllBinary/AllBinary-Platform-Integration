@@ -28,11 +28,11 @@ package org.microemu.microedition;
 
 import java.security.AccessControlContext;
 import java.security.AccessController;
-import java.security.PrivilegedExceptionAction;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.microemu.microedition.io.ConnectorDelegate;
+import org.microemu.microedition.io.ConnectorImpl;
+import org.microemu.microedition.io.PrivilegedExceptionActionImpl;
 
 /**
  * This class allows to unbind implemenation with CLDC or MIDP declarations.
@@ -48,9 +48,9 @@ public class ImplFactory {
 
 	private static final String IMPLEMENTATION_NAME_SUFIX = "Impl";
 
-	private Map implementations = new HashMap();
+	private HashMap implementations = new HashMap();
 
-	private Map implementationsGCF = new HashMap();
+	private HashMap implementationsGCF = new HashMap();
 
 	/* The context to be used when loading classes and resources */
 	private AccessControlContext acc;
@@ -59,16 +59,18 @@ public class ImplFactory {
 	 * Allow default initialization. In Secure environment instance() should be
 	 * called initialy from secure contex.
 	 */
-	private static class SingletonHolder {
-		private static ImplFactory instance = new ImplFactory();
-	}
+//	private static class SingletonHolder {
+//		private static ImplFactory instance = new ImplFactory();
+//	}
+        private static ImplFactory instance = new ImplFactory();
 
 	private ImplFactory() {
 		acc = AccessController.getContext();
 	}
 
 	public static ImplFactory instance() {
-		return SingletonHolder.instance;
+		//return SingletonHolder.instance;
+                return instance;
 	}
 
 	public static void register(Class delegate, Class implementationClass) {
@@ -92,23 +94,24 @@ public class ImplFactory {
 	 * @param scheme
 	 */
 	public static void registerGCF(String scheme, Object implementation) {
-		if (!ConnectorDelegate.class.isAssignableFrom(implementation.getClass())) {
-			throw new IllegalArgumentException();
-		}
+//		if (!ConnectorDelegate.class.isAssignableFrom(implementation.getClass())) {
+//			throw new IllegalArgumentException();
+//		}
 		if (scheme == null) {
 			scheme = DEFAULT;
 		}
 		Object impl = instance().implementationsGCF.get(scheme);
 		if (impl instanceof ImplementationUnloadable) {
-			((ImplementationUnloadable) impl).unregisterImplementation();
+                    final ImplementationUnloadable implementationUnloadable = ((ImplementationUnloadable) impl);
+                    implementationUnloadable.unregisterImplementation();
 		}
 		instance().implementationsGCF.put(scheme, implementation);
 	}
 
 	public static void unregistedGCF(String scheme, Object implementation) {
-		if (!ConnectorDelegate.class.isAssignableFrom(implementation.getClass())) {
-			throw new IllegalArgumentException();
-		}
+//		if (!ConnectorDelegate.class.isAssignableFrom(implementation.getClass())) {
+//			throw new IllegalArgumentException();
+//		}
 		if (scheme == null) {
 			scheme = DEFAULT;
 		}
@@ -125,15 +128,19 @@ public class ImplFactory {
 				name = name.substring(0, name.length() - INTERFACE_NAME_SUFIX.length());
 			}
 			final String implClassName = name + IMPLEMENTATION_NAME_SUFIX;
-			return AccessController.doPrivileged(new PrivilegedExceptionAction() {
+			return AccessController.doPrivileged(new PrivilegedExceptionActionImpl() {
+                                @Override
 				public Object run() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-					Class implClass = ImplFactory.class.getClassLoader().loadClass(implClassName);
-					try {
-						implClass.getConstructor(null);
-					} catch (NoSuchMethodException e) {
-						throw new InstantiationException("No default constructor in class " + implClassName);
-					}
-					return implClass.newInstance();
+//					Class implClass = ImplFactory.class.getClassLoader().loadClass(implClassName);
+//					return implClass.newInstance();
+                                        return new ConnectorImpl();
+//					Class implClass = ImplFactory.class.getClassLoader().loadClass(implClassName);
+//					try {
+//						implClass.getConstructor(null);
+//					} catch (NoSuchMethodException e) {
+//						throw new InstantiationException("No default constructor in class " + implClassName);
+//					}
+//					return implClass.newInstance();
 				}
 			}, acc);
 		} catch (Throwable e) {
@@ -141,17 +148,18 @@ public class ImplFactory {
 		}
 	}
 
-	private Object implementationNewInstance(final Class implClass) {
-		try {
-			return AccessController.doPrivileged(new PrivilegedExceptionAction() {
-				public Object run() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-					return implClass.newInstance();
-				}
-			}, acc);
-		} catch (Throwable e) {
-			throw new RuntimeException("Unable create " + implClass.getName() + " implementation", e);
-		}
-	}
+//	private Object implementationNewInstance(final Class implClass) {
+//		try {
+//			return AccessController.doPrivileged(new PrivilegedExceptionActionImpl() {
+//                                @Override
+//				public Object run() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+//					return implClass.newInstance();
+//				}
+//			}, acc);
+//		} catch (Throwable e) {
+//			throw new RuntimeException("Unable create " + implClass.getName() + " implementation", e);
+//		}
+//	}
 
 	/**
 	 * 
@@ -189,23 +197,26 @@ public class ImplFactory {
 	// }
 
 	public static Implementation getImplementation(Class origClass, Class delegateInterface) {
-		// if called from implementation constructor return null to avoid
-		// recurive calls!
-		// TODO can be done using thread stack analyse or ThreadLocal
-		Object impl = instance().implementations.get(delegateInterface);
-		// debugClassLoader(Implementation.class);
-		// debugClassLoader(origClass);
-		// debugClassLoader(delegateInterface);
-		// debugClassLoader(o);
-
-		if (impl != null) {
-			if (impl instanceof Class) {
-				return (Implementation) instance().implementationNewInstance((Class) impl);
-			} else {
-				return (Implementation) impl;
-			}
-		}
-		return (Implementation) instance().getDefaultImplementation(delegateInterface);
+//		// if called from implementation constructor return null to avoid
+//		// recurive calls!
+//		// TODO can be done using thread stack analyse or ThreadLocal
+//		Object implCanBeNull = instance().implementations.get(delegateInterface);
+//		// debugClassLoader(Implementation.class);
+//		// debugClassLoader(origClass);
+//		// debugClassLoader(delegateInterface);
+//		// debugClassLoader(o);
+//
+//		if (implCanBeNull != null) {
+////			if (impl instanceof Class) {
+//                                final Class clazz = (Class) implCanBeNull;
+//				return (Implementation) instance().implementationNewInstance(clazz);
+////			} else {
+////				return (Implementation) impl;
+////			}
+//		}
+                throw new RuntimeException();
+//		return (Implementation) instance().getDefaultImplementation(delegateInterface);
+                
 	}
 
 	// private static void debugClassLoader(Object obj) {

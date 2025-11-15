@@ -53,17 +53,20 @@ public class MIDlet
             destroyed = false;
         }
 
+        @Override
         public void startApp() throws MIDletStateChangeException
         {
             MIDletBridge.setCurrentMIDlet(midlet);
             midlet.startApp();
         }
 
+        @Override
         public void pauseApp()
         {
             midlet.pauseApp();
         }
 
+        @Override
         public void destroyApp(boolean unconditional) throws MIDletStateChangeException
         {
             if (!midlet.destroyed)
@@ -180,7 +183,7 @@ public class MIDlet
 
         if(c.getWidth() != lastWidth || c.getHeight() != lastHeight)
         {
-            StringBuffer stringBuffer = new StringBuffer();
+            StringMaker stringBuffer = new StringMaker();
             stringBuffer.append("componentResized: ");
             stringBuffer.append("width: ");
             stringBuffer.append(this.lastWidth);

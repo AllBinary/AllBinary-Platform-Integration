@@ -57,10 +57,12 @@ public class GameCanvas extends Canvas {
     
     private class KeyAccess implements GameCanvasKeyAccess {
         
+        @Override
         public boolean suppressedKeyEvents(GameCanvas canvas) {
             return canvas.suppressKeyEvents;
         }
         
+        @Override
         public void recordKeyPressed(GameCanvas canvas, int gameCode) {
             int bit = 1 << gameCode;
             synchronized(canvas) {
@@ -69,6 +71,7 @@ public class GameCanvas extends Canvas {
             }
         }
         
+        @Override
         public void recordKeyReleased(GameCanvas canvas, int gameCode) {
             int bit = 1 << gameCode;
             synchronized(canvas) {
@@ -90,6 +93,7 @@ public class GameCanvas extends Canvas {
         return DeviceFactory.getDevice().getDeviceDisplay().getGraphics(this);
     }
     
+    @Override
     public void paint(Graphics g) {
     }
     

@@ -29,6 +29,7 @@
 package javax.microedition.lcdui;
 
 import org.allbinary.graphics.ItemColorFactory;
+import org.allbinary.logic.string.StringMaker;
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.InputMethod;
 import org.microemu.device.InputMethodEvent;
@@ -63,6 +64,7 @@ public class TextField extends Item
 
 	private InputMethodListener inputMethodListener = new InputMethodListener() 
 	{
+            @Override
 		public void caretPositionChanged(InputMethodEvent event) 
 		{
 			setCaretPosition(event.getCaret());
@@ -70,6 +72,7 @@ public class TextField extends Item
 			repaint();
 		}
 
+                @Override
 		public void inputMethodTextChanged(InputMethodEvent event) 
 		{
 			setCaretVisible(false);
@@ -81,16 +84,19 @@ public class TextField extends Item
             }
 		}
 
+                @Override
 		public int getCaretPosition()
 		{
 			return TextField.this.getCaretPosition();
 		}
 
+                @Override
 		public String getText()
 		{
 			return TextField.this.getString();
 		}
 
+                @Override
 		public int getConstraints()
         {
             return TextField.this.getConstraints();
@@ -161,7 +167,7 @@ public class TextField extends Item
             if ((constraints & PASSWORD) == 0) {
                 stringComponent.setText(text);
             } else {
-                StringBuffer sb = new StringBuffer();
+                StringMaker sb = new StringMaker();
                 for (int i = 0; i < text.length(); i++) {
                     sb.append('*');
                 }
@@ -319,18 +325,21 @@ public class TextField extends Item
 	}
 
 	//TWB - made public
+        @Override
 	public boolean isFocusable() 
 	{
 		return true;
 	}
 
 	//TWB - made public
+        @Override
 	public int getHeight() 
 	{
 		return super.getHeight() + stringComponent.getHeight() + 8;
 	}
 
 	//TWB - made public
+        @Override
 	public int paint(Graphics g) 
 	{
 		super.paintContent(g);
@@ -356,7 +365,7 @@ public class TextField extends Item
 		return getHeight();
 	}
 
-	
+	@Override
 	void paintContent(Graphics g) 
 	{
 		stringComponent.paint(g);
@@ -380,6 +389,7 @@ public class TextField extends Item
 	}
 
 	//TWB - made public
+        @Override
 	public int traverse(int gameKeyCode, int top, int bottom, boolean action) 
 	{
 		if (gameKeyCode == Canvas.UP) {
@@ -401,6 +411,7 @@ public class TextField extends Item
 	}
 
 	//TWB - made public
+        @Override
 	public void setFocus(boolean hasFocus) 
 	{
 		super.setFocus(hasFocus);

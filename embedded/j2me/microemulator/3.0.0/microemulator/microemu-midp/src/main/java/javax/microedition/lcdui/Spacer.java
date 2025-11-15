@@ -40,18 +40,22 @@ public class Spacer extends Item {
 		this.customItem = new SpacerCustomItem();
 		super.setUI(DeviceFactory.getDevice().getUIFactory().createCustomItemUI(new CustomItemAccess() {
 
+                    @Override
 			public CustomItem getCustomItem() {
 				return customItem;
 			}
 
+                        @Override
 			public int getPrefContentWidth(int height) {
 				return customItem.getPrefContentWidth(height);
 			}
 			
+                        @Override
 			public int getPrefContentHeight(int width) {
 				return customItem.getPrefContentHeight(width);
 			}
 
+                        @Override
 			public void paint(Graphics g, int w, int h) {
 				customItem.paint(g, w, h);
 			}
@@ -60,14 +64,17 @@ public class Spacer extends Item {
 		setMinimumSize(minWidth, minHeight);
 	}
 
+        @Override
 	public void setLabel(String label) {
 		throw new IllegalStateException("Spacer items can't have labels");
 	}
 
+        @Override
 	public void addCommand(Command cmd) {
 		throw new IllegalStateException("Spacer items can't have commands");
 	}
 	
+        @Override
 	public void setDefaultCommand(Command cmd) {
 		throw new IllegalStateException("Spacer items can't have commands");
 	}
@@ -83,6 +90,7 @@ public class Spacer extends Item {
 	
 	// Item methods
         //TWB - made public
+        @Override
 	public int paint(Graphics g) {
 		return 0;
 	}
@@ -93,22 +101,27 @@ public class Spacer extends Item {
 			super(null);
 		}
 
+                @Override
 		protected int getMinContentWidth() {
 			return minWidth;
 		}
 
+                @Override
 		protected int getMinContentHeight() {
 			return minHeight;
 		}
 
+                @Override
 		protected int getPrefContentWidth(int height) {
 			return minWidth;
 		}
 
+                @Override
 		protected int getPrefContentHeight(int width) {
 			return minHeight;
 		}
 
+                @Override
 		protected void paint(Graphics g, int w, int h) {
 		}
 		

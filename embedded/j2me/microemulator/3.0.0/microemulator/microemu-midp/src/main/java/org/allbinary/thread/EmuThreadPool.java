@@ -14,6 +14,7 @@
 package org.allbinary.thread;
 
 import java.util.ArrayList;
+import org.allbinary.logic.string.StringMaker;
 
 public class EmuThreadPool
 {
@@ -156,7 +157,7 @@ public class EmuThreadPool
         public DisplayPooledThread()
         {
             //super(ThreadPool.this, 
-            super(new StringBuffer().append(EmuThreadPool.this.toString()).append(ROOT_NAME).append(threadID++).toString());
+            super(new StringMaker().append(EmuThreadPool.this.toString()).append(ROOT_NAME).append(threadID++).toString());
             //this.setDaemon(true);
         }
 
@@ -209,7 +210,7 @@ public class EmuThreadPool
                 {
                     e.printStackTrace();
                     final String EXCEPTION_LABEL = "Exception: ";
-                    System.out.println(new StringBuffer().append(EXCEPTION_LABEL).append(task).toString());
+                    System.out.println(new StringMaker().append(EXCEPTION_LABEL).append(task.toString()).toString());
                     //logUtil.put(new StringMaker().append(commonStrings.EXCEPTION_LABEL).append(task).toString(), this, commonStrings.RUN, e);
                 }
             }

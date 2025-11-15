@@ -38,18 +38,22 @@ public class CustomItem extends Item {
 		super(label);
 		super.setUI(DeviceFactory.getDevice().getUIFactory().createCustomItemUI(new CustomItemAccess() {
 
+                    @Override
 			public CustomItem getCustomItem() {
 				return CustomItem.this;
 			}
 
+                        @Override
 			public int getPrefContentWidth(int height) {
 				return CustomItem.this.getPrefContentWidth(height);
 			}
 			
+                        @Override
 			public int getPrefContentHeight(int width) {
 				return CustomItem.this.getPrefContentHeight(width);
 			}
 
+                        @Override
 			public void paint(Graphics g, int w, int h) {
 				CustomItem.this.paint(g, w, h);
 			}
@@ -93,6 +97,7 @@ public class CustomItem extends Item {
 
         //TWB - made public
         //protected
+        @Override
 	public void keyPressed(int keyCode) {
 		// the default implementation of this method
 		// does nothing
@@ -127,6 +132,7 @@ public class CustomItem extends Item {
 		// does nothing
 	}
 	
+        @Override
 	protected final void repaint() {
 		if (ui == null) {
 			// ui is not initialized yet
@@ -175,6 +181,7 @@ public class CustomItem extends Item {
 	int width = 0, height = 0;
 
         //TWB - made public
+        @Override
 	public int paint(Graphics g) {
 		// Get preferred width and
 		width = getPrefContentWidth(-1);
@@ -191,11 +198,13 @@ public class CustomItem extends Item {
 
 	// If this method is not implemented, the height of the component is not counted
         //TWB - made public
+        @Override
 	public int getHeight() {
 		return super.getHeight() + height;
 	}
 
         //TWB - made public
+        @Override
 	public int traverse(int gameKeyCode, int top, int bottom, boolean action) {
 		int[] inout = new int[4];
         inout[0] = 0;
@@ -239,11 +248,13 @@ public class CustomItem extends Item {
 	}
 
         //TWB - made public
+        @Override
 	public boolean isFocusable() {
 		return true;
 	}
 
         //TWB - made public
+        @Override
 	public boolean select() {
 		// send a FIRE keycode here, otherwise there does not appear
 		// to be a way for a CustomItem to use that key

@@ -37,26 +37,31 @@ public class TextBox extends Screen {
 
 	InputMethodListener inputMethodListener = new InputMethodListener() {
 
+                @Override
 		public void caretPositionChanged(InputMethodEvent event) {
 			setCaretPosition(event.getCaret());
 			tf.setCaretVisible(true);
 			repaint();
 		}
 
+                @Override
 		public void inputMethodTextChanged(InputMethodEvent event) {
 			tf.setCaretVisible(false);
 			tf.setString(event.getText(), event.getCaret());
 			repaint();
 		}
 
+                @Override
 		public int getCaretPosition() {
 			return TextBox.this.getCaretPosition();
 		}
 
+                @Override
 		public String getText() {
 			return TextBox.this.getString();
 		}
 
+                @Override
 		public int getConstraints() {
 			return TextBox.this.getConstraints();
 		}
@@ -144,10 +149,12 @@ public class TextBox extends Screen {
 		}
 	}
 
+        @Override
 	public void setTicker(Ticker ticker) {
 		// TODO implement
 	}
 
+        @Override
 	public void setTitle(String s) {
 		super.setTitle(s);
 	}
@@ -160,11 +167,13 @@ public class TextBox extends Screen {
 		}
 	}
 
+        @Override
 	void hideNotify() {
 		DeviceFactory.getDevice().getInputMethod().removeInputMethodListener(inputMethodListener);
 		super.hideNotify();
 	}
 
+        @Override
 	int paintContent(Graphics g) {
 		if (ui != null && ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextBoxUI")) {
 			return 0;
@@ -191,6 +200,7 @@ public class TextBox extends Screen {
 		}
 	}
 
+        @Override
 	void showNotify() {
 		super.showNotify();
 		InputMethod inputMethod = DeviceFactory.getDevice().getInputMethod();
@@ -200,6 +210,7 @@ public class TextBox extends Screen {
 		tf.setCaretVisible(true);
 	}
 
+        @Override
 	int traverse(int gameKeyCode, int top, int bottom) {
 		int traverse = tf.traverse(gameKeyCode, top, bottom, true);
 		if (traverse == Item.OUTOFITEM) {

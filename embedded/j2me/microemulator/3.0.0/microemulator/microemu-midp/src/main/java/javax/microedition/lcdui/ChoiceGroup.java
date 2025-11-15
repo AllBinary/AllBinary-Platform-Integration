@@ -87,13 +87,14 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
 	
+        @Override
 	public int append(String stringPart, Image imagePart) {
 		insert(size(), stringPart, imagePart);
 	
 		return (size() - 1);
 	}
 
-
+        @Override
 	public void delete(int itemNum) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).delete(itemNum);
@@ -136,6 +137,7 @@ public class ChoiceGroup extends Item implements Choice
 		}
 	}
   
+        @Override
 	public void deleteAll() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).deleteAll();
@@ -152,10 +154,12 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
 
+        @Override
   public int getFitPolicy() {
 	  return fitPolicy;
   }
   
+  @Override
   public Font getFont(int itemNum) {
 		if (itemNum < 0 || itemNum >= numOfItems) {
 			throw new IndexOutOfBoundsException();
@@ -163,7 +167,7 @@ public class ChoiceGroup extends Item implements Choice
 		return items[itemNum].getFont();
   }
   
-  
+  @Override
   public Image getImage(int elementNum)
   {
 		if (elementNum < 0 || elementNum >= numOfItems) {
@@ -186,6 +190,7 @@ public class ChoiceGroup extends Item implements Choice
 	 * type EXCLUSIVE, exactly one element will be selected, unless there are
 	 * zero elements in the ChoiceGroup.
 	 */
+  @Override
 	public int getSelectedFlags(boolean[] selectedArray) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).getSelectedFlags(selectedArray);
@@ -221,6 +226,7 @@ public class ChoiceGroup extends Item implements Choice
 	 * no single value can in general represent the state of such a ChoiceGroup.
 	 * To get the complete state of a MULTIPLE Choice, see getSelectedFlags.
 	 */
+        @Override
 	public int getSelectedIndex() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).getSelectedIndex();
@@ -244,6 +250,7 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
 
+        @Override
   public String getString(int elementNum)
   {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
@@ -263,6 +270,7 @@ public class ChoiceGroup extends Item implements Choice
   }
 
 
+  @Override
   	public void insert(int elementNum, String stringPart, Image imagePart) {
 		if (ui.getClass().getName().equals( "org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).insert(elementNum, stringPart, imagePart);
@@ -301,7 +309,7 @@ public class ChoiceGroup extends Item implements Choice
 		}
 	}
 
-
+        @Override
   	public boolean isSelected(int elementNum) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).isSelected(elementNum);
@@ -314,7 +322,7 @@ public class ChoiceGroup extends Item implements Choice
 		}
 	}
 
-
+        @Override
   	public void set(int elementNum, String stringPart, Image imagePart) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).set(elementNum, stringPart, imagePart);
@@ -340,6 +348,7 @@ public class ChoiceGroup extends Item implements Choice
 		}
 	}
 
+        @Override
   public void setFitPolicy(int policy) {
 	  if (policy != Choice.TEXT_WRAP_DEFAULT &&
 			  	policy != Choice.TEXT_WRAP_ON &&
@@ -351,6 +360,7 @@ public class ChoiceGroup extends Item implements Choice
 		}
   }
   
+  @Override
   public void setFont(int itemNum, Font font) {
 		if (itemNum < 0 || itemNum >= numOfItems) {
 			throw new IndexOutOfBoundsException();
@@ -365,6 +375,7 @@ public class ChoiceGroup extends Item implements Choice
   }
 
 
+        @Override
  	public void setSelectedFlags(boolean[] selectedArray) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).setSelectedFlags(selectedArray);
@@ -404,6 +415,7 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
 
+        @Override
   	public void setSelectedIndex(int elementNum, boolean selected) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).setSelectedIndex(elementNum, selected);
@@ -434,7 +446,7 @@ public class ChoiceGroup extends Item implements Choice
 		}
 	}
 
-
+        @Override
 	public int size() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).size();
@@ -445,6 +457,7 @@ public class ChoiceGroup extends Item implements Choice
 
 
         //TWB - made public
+        @Override
 	public boolean isFocusable()
 	{
 		return true;
@@ -452,6 +465,7 @@ public class ChoiceGroup extends Item implements Choice
 
 
         //TWB - made public
+        @Override
 	public int getHeight()
 	{
 		int height = 0;
@@ -505,6 +519,7 @@ public class ChoiceGroup extends Item implements Choice
 	
 
         //TWB - made public
+        @Override
   public int paint(Graphics g)
   {
 		super.paintContent(g);
@@ -535,6 +550,7 @@ public class ChoiceGroup extends Item implements Choice
 
 
   //TWB - made public
+  @Override
   public boolean select()
   {
     if (numOfItems == 0) {
@@ -558,6 +574,7 @@ public class ChoiceGroup extends Item implements Choice
 
   
   //TWB - made public
+  @Override
   public int traverse(int gameKeyCode, int top, int bottom, boolean action)
   {
 	  
@@ -633,6 +650,7 @@ public class ChoiceGroup extends Item implements Choice
 		return 0;
   }
 
+  @Override
   void repaint() {
 	  // the popup list should be repainted
 	  // in the case it is being shown
@@ -659,6 +677,7 @@ public class ChoiceGroup extends Item implements Choice
     	return font;
     }
     
+    @Override
     	public void setImage(Image img)
 	{
                 this.img = img;
@@ -671,6 +690,7 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
         //TWB - made public
+        @Override
 	public int getHeight()
 	{
                 int height =  0;
@@ -685,6 +705,7 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
         //TWB - made public
+        @Override
   public int paint(Graphics g)
   {
 		if (stringComponent == null) {
@@ -748,6 +769,7 @@ public class ChoiceGroup extends Item implements Choice
   }
 
   class ImplicitListener implements CommandListener {
+      @Override
 		public void commandAction(Command c, Displayable d) {
 			List list = (List) d;
 			setSelectedIndex(list.getSelectedIndex(), true);

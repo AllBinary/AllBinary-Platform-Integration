@@ -87,6 +87,7 @@ public class List extends Screen implements Choice {
         this.initialPressedItem = -1;
     }
 
+    @Override
     public int append(String stringPart, Image imagePart) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			return ((ListUI) ui).append(stringPart, imagePart);
@@ -95,6 +96,7 @@ public class List extends Screen implements Choice {
 		}
     }
 
+    @Override
     public void delete(int elementNum) {
       if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
         ((ListUI) ui).delete(elementNum);
@@ -103,6 +105,7 @@ public class List extends Screen implements Choice {
       }
     }
 
+    @Override
     public void deleteAll() {
       if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
         ((ListUI) ui).deleteAll();
@@ -111,22 +114,27 @@ public class List extends Screen implements Choice {
       }
     }
 
+    @Override
     public int getFitPolicy() {
         return choiceGroup.getFitPolicy();
     }
 
+    @Override
     public Font getFont(int elementNum) {
         return choiceGroup.getFont(elementNum);
     }
 
+    @Override
     public Image getImage(int elementNum) {
         return choiceGroup.getImage(elementNum);
     }
 
+    @Override
     public int getSelectedFlags(boolean[] selectedArray_return) {
         return choiceGroup.getSelectedFlags(selectedArray_return);
     }
 
+    @Override
     public int getSelectedIndex() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			return ((ListUI) ui).getSelectedIndex();
@@ -135,6 +143,7 @@ public class List extends Screen implements Choice {
 		}
     }
 
+    @Override
     public String getString(int elementNum) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			return ((ListUI) ui).getString(elementNum);
@@ -143,6 +152,7 @@ public class List extends Screen implements Choice {
 		}
     }
 
+    @Override
     public void insert(int elementNum, String stringPart, Image imagePart) {
     	if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
     		((ListUI) ui).insert(elementNum, stringPart, imagePart);
@@ -151,15 +161,18 @@ public class List extends Screen implements Choice {
     	}    
     }
 
+    @Override
     public boolean isSelected(int elementNum) {
         return choiceGroup.isSelected(elementNum);
     }
 
+    @Override
     public void removeCommand(Command cmd) {
         // TODO implement
         super.removeCommand(cmd);
     }
 
+    @Override
     public void set(int elementNum, String stringPart, Image imagePart) {
     	if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
     		((ListUI) ui).set(elementNum, stringPart, imagePart);
@@ -168,10 +181,12 @@ public class List extends Screen implements Choice {
     	}
     }
 
+    @Override
     public void setFitPolicy(int policy) {
         choiceGroup.setFitPolicy(policy);
     }
 
+    @Override
     public void setFont(int elementNum, Font font) {
         choiceGroup.setFont(elementNum, font);
     }
@@ -182,10 +197,12 @@ public class List extends Screen implements Choice {
         ((ListUI) ui).setSelectCommand(command);
     }
 
+    @Override
     public void setSelectedFlags(boolean[] selectedArray) {
         choiceGroup.setSelectedFlags(selectedArray);
     }
 
+    @Override
     public void setSelectedIndex(int elementNum, boolean selected) {
       if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
         ((ListUI) ui).setSelectedIndex(elementNum, selected);
@@ -194,16 +211,19 @@ public class List extends Screen implements Choice {
       }
     }
 
+    @Override
     public void setTicker(Ticker ticker) {
         super.setTicker(ticker);
         // TODO size of changed probably
     }
 
+    @Override
     public void setTitle(String s) {
         // TODO implement
         super.setTitle(s);
     }
 
+    @Override
     public void keyPressed(int keyCode) {
         if (Display.getGameAction(keyCode) == Canvas.FIRE && choiceGroup.select() && super.getCommandListener() != null
                 && choiceGroup.choiceType == Choice.IMPLICIT) {
@@ -213,6 +233,7 @@ public class List extends Screen implements Choice {
         }
     }
 
+    @Override
     void pointerPressed(int x, int y) {
         Ticker ticker = getTicker();
         if (ticker != null) {
@@ -235,6 +256,7 @@ public class List extends Screen implements Choice {
         }
     }
 
+    @Override
     void pointerReleased(int x, int y) {
         Ticker ticker = getTicker();
         if (ticker != null) {
@@ -255,10 +277,12 @@ public class List extends Screen implements Choice {
         }
     }
 
+    @Override
     int paintContent(Graphics g) {
         return choiceGroup.paint(g);
     }
 
+    @Override
     public int size() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			return ((ListUI) ui).size();
@@ -267,6 +291,7 @@ public class List extends Screen implements Choice {
 		}
     }
 
+    @Override
     void showNotify() {
         super.showNotify();
 
@@ -286,6 +311,7 @@ public class List extends Screen implements Choice {
 		}
     }
 
+    @Override
     int traverse(int gameKeyCode, int top, int bottom) {
         int traverse = choiceGroup.traverse(gameKeyCode, top, bottom, true);
         if (traverse == Item.OUTOFITEM) {

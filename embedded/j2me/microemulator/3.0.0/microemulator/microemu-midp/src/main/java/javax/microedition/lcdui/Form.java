@@ -149,12 +149,13 @@ public class Form extends Screen
 	}
 	
 	
+        @Override
 	public int getHeight()
 	{
 		return super.getHeight();
 	}
 	
-	
+	@Override
 	public int getWidth()
 	{
 		return super.getWidth();
@@ -222,6 +223,7 @@ public class Form extends Screen
 	}
 
 	
+        @Override
 	int paintContent(Graphics g) 
 	{
 		int contentHeight = 0;
@@ -250,6 +252,7 @@ public class Form extends Screen
 			fireItemStateListener(items[focusItemIndex]);
     }
 	
+        @Override
 	public void keyPressed(int keyCode) 
 	{
 		if (focusItemIndex != -1) {
@@ -266,6 +269,7 @@ public class Form extends Screen
 		super.keyPressed(keyCode);
 	}
 
+        @Override
 	void showNotify() 
 	{
 		super.showNotify();
@@ -281,6 +285,7 @@ public class Form extends Screen
 		}
 	}
 	
+        @Override
 	void hideNotify()
 	{
 		super.hideNotify();
@@ -290,6 +295,7 @@ public class Form extends Screen
 		}
 	}
 
+        @Override
 	int traverse(int gameKeyCode, int top, int bottom) 
 	{
 		int height, testItemIndex, traverse, i;
@@ -522,6 +528,7 @@ public class Form extends Screen
 		}
 	}
 
+        @Override
 	public Vector getCommands() {
 		Vector formCommands = super.getCommands();
 		if (focusItemIndex < 0)

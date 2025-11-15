@@ -44,30 +44,45 @@ import javax.microedition.io.OutputConnection;
  */
 public abstract class ConnectorAdapter implements ConnectorDelegate {
 
+        @Override
 	public abstract Connection open(String name, int mode, boolean timeouts) throws IOException;
 
+        @Override
 	public Connection open(String name) throws IOException {
 		return open(name, Connector.READ_WRITE, false);
 	}
 
+        @Override
 	public Connection open(String name, int mode) throws IOException {
 		return open(name, mode, false);
 	}
 
+        @Override
 	public DataInputStream openDataInputStream(String name) throws IOException {
-		return ((InputConnection) open(name)).openDataInputStream();
+            final InputConnection inputConnection = ((InputConnection) open(name));
+            final DataInputStream dataInputStream = inputConnection.openDataInputStream();
+		return dataInputStream;
 	}
 
+        @Override
 	public DataOutputStream openDataOutputStream(String name) throws IOException {
-		return ((OutputConnection) open(name)).openDataOutputStream();
+            final OutputConnection outputConnection = ((OutputConnection) open(name));
+            final DataOutputStream dataOutputStream = outputConnection.openDataOutputStream();
+		return dataOutputStream;
 	}
 
+        @Override
 	public InputStream openInputStream(String name) throws IOException {
-		return ((InputConnection) open(name)).openInputStream();
+            final InputConnection inputConnection = ((InputConnection) open(name));
+            final InputStream inputStream = inputConnection.openInputStream();
+		return inputStream;
 	}
 
+        @Override
 	public OutputStream openOutputStream(String name) throws IOException {
-		return ((OutputConnection) open(name)).openOutputStream();
+            final OutputConnection outputConnection = ((OutputConnection) open(name));
+            final OutputStream outputStream = outputConnection.openOutputStream();
+		return outputStream;
 	}
 
 }

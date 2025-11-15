@@ -49,6 +49,7 @@ public class DateField extends Item
   CommandListener dateTimeListener = new CommandListener()
   {
     
+      @Override
     public void commandAction(Command c, Displayable d)
     {
       if (c == backCommand) {
@@ -152,12 +153,14 @@ public class DateField extends Item
 	}
 
 //TWB - made public
+        @Override
 	public boolean isFocusable()
 	{
 		return true;
 	}
 
     //TWB - made public
+        @Override
 	public int getHeight() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidDateFieldUI")) {
 			return super.getHeight();
@@ -180,6 +183,7 @@ public class DateField extends Item
   }
 
   //TWB - made public
+  @Override
 	public void setFocus(boolean state) {
 		super.setFocus(state);
 
@@ -190,6 +194,7 @@ public class DateField extends Item
 	}
 
   //TWB - made public
+        @Override
   public boolean select()
   {
     dateTime.select();
@@ -221,6 +226,7 @@ public class DateField extends Item
   }
   
   //TWB - made public
+  @Override
   public int traverse(int gameKeyCode, int top, int bottom, boolean action)
 	{
 		return dateTime.traverse(gameKeyCode, top, bottom, action);
@@ -288,6 +294,7 @@ class DateCanvas extends Canvas {
 		repaint();
 	}
 
+        @Override
 	public void paint(Graphics g) {
         int w = this.getWidth();
         int h = this.getHeight();
@@ -373,6 +380,7 @@ class DateCanvas extends Canvas {
         g.drawString(yearStr, yOff, y, Graphics.LEFT | Graphics.TOP);
 	}
 
+        @Override
 	public synchronized void keyPressed(int keycode) {
         int k = getGameAction(keycode);
         
@@ -507,6 +515,7 @@ class TimeCanvas extends Canvas {
 		repaint();
 	}
 
+        @Override
     public void paint(Graphics g) {
         int w = this.getWidth();
         int h = this.getHeight();
@@ -574,6 +583,7 @@ class TimeCanvas extends Canvas {
         g.drawString(minutesStr, mOff, y, Graphics.LEFT | Graphics.TOP);
     }
 
+    @Override
     public synchronized void keyPressed(int keycode) {
         int k = getGameAction(keycode);
         

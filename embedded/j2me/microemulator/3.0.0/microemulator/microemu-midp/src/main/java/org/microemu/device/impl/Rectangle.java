@@ -26,6 +26,8 @@
 
 package org.microemu.device.impl;
 
+import org.allbinary.logic.string.StringMaker;
+
 public class Rectangle extends Shape {
 	
 	private boolean initialized;
@@ -89,12 +91,13 @@ public class Rectangle extends Shape {
 		}
 	}
 
+        @Override
 	public Rectangle getBounds() {
 		return this;
 	}
 	
 	public String toString() {
-	    StringBuffer buf = new StringBuffer();
+	    StringMaker buf = new StringMaker();
 	    buf.append(x).append(",").append(y).append(" ").append(this.width).append("x").append(this.height);
 	    return buf.toString();
 	}

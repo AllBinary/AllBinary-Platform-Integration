@@ -26,7 +26,7 @@
  */
 package org.microemu.cldc.file;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import org.microemu.microedition.ImplementationInitialization;
 
@@ -40,7 +40,7 @@ public class InMemory implements ImplementationInitialization {
 	 * 
 	 * @see org.microemu.microedition.ImplementationInitialization#registerImplementation()
 	 */
-	public void registerImplementation(Map parameters) {
+	public void registerImplementation(HashMap parameters) {
 	}
 
 	/*

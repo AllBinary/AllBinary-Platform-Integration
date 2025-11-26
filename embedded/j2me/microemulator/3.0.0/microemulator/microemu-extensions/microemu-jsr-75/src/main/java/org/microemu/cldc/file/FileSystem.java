@@ -26,7 +26,7 @@
  */
 package org.microemu.cldc.file;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import org.microemu.app.util.MIDletSystemProperties;
 import org.microemu.microedition.ImplFactory;
@@ -69,7 +69,7 @@ public class FileSystem implements ImplementationInitialization {
 	 * 
 	 * @see org.microemu.microedition.ImplementationInitialization#registerImplementation()
 	 */
-	public void registerImplementation(Map parameters) {
+	public void registerImplementation(HashMap parameters) {
 		String fsRoot = (String) parameters.get(fsRootConfigProperty);
 		String fsSingle = (String) parameters.get(fsSingleConfigProperty);
 		this.impl = new FileSystemConnectorImpl(fsRoot);

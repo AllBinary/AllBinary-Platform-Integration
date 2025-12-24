@@ -45,6 +45,7 @@ import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 import javax.microedition.rms.RecordStoreNotOpenException;
+import org.allbinary.string.CommonSeps;
 
 import org.microemu.MicroEmulator;
 import org.microemu.RecordStoreManager;
@@ -69,14 +70,15 @@ public class FileRecordStoreManager implements RecordStoreManager {
 	//private AccessControlContext acc;
 
 	static {
-		replaceChars.add(":");
+            final CommonSeps commonSeps = CommonSeps.getInstance();
+		replaceChars.add(commonSeps.COLON);
 		replaceChars.add("*");
-		replaceChars.add("?");
-		replaceChars.add("=");
+		replaceChars.add(commonSeps.QUESTION);
+		replaceChars.add(commonSeps.EQUALS);
 		replaceChars.add("|");
-		replaceChars.add("/");
-		replaceChars.add("\\");
-		replaceChars.add("\"");
+		replaceChars.add(commonSeps.FORWARD_SLASH);
+		replaceChars.add(commonSeps.BACK_SLASH);
+		replaceChars.add(commonSeps.QUOTE);
 	}
 
 	private FilenameFilter filter = new FilenameFilter() {

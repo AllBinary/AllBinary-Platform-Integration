@@ -33,6 +33,7 @@
 package org.mapeditor.io;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 //import java.io.IOException;
 //import java.io.File;
 import java.io.InputStream;
@@ -46,6 +47,7 @@ import org.allbinary.logic.string.StringUtil;
 
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.math.PositionStrings;
+import org.allbinary.string.CommonSeps;
 //import java.util.zip.GZIPInputStream;
 //import java.util.zip.InflaterInputStream;
 import org.json.me.JSONArray;
@@ -849,7 +851,9 @@ public class GDJSONMapReader {
         }
 
         public String toString() {
-            return key + "=" + value;
+            final String key = (this.key == null) ? StringUtil.getInstance().NULL_STRING : this.key.toString();
+            final String value = (this.value == null) ? StringUtil.getInstance().NULL_STRING : this.value.toString();
+            return new StringMaker().append(key).append(CommonSeps.getInstance().EQUALS).append(value).toString();
         }
     }
 

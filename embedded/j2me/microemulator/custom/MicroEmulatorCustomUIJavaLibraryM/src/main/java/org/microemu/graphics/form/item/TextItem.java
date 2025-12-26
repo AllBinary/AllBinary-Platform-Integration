@@ -9,8 +9,8 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Screen;
 
 import org.allbinary.AndroidUtil;
+import org.allbinary.J2MEUtil;
 import org.allbinary.game.configuration.feature.Features;
-import org.allbinary.game.configuration.feature.HTMLFeatureFactory;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.MyFont;
 import org.allbinary.graphics.opengles.OpenGLFeatureFactory;
@@ -31,13 +31,12 @@ implements org.allbinary.graphics.form.item.CustomItemInterface
 
         final MyFont myFont = MyFont.getInstance();        
         final Features features = Features.getInstance();
-        final boolean isHTML = features.isDefault(HTMLFeatureFactory.getInstance().HTML);
         final boolean isOpenGL = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL);
 
         int offsetX;
         int offsetWidth;
         final String labelSet = this.getLabel();
-        if(isHTML || (AndroidUtil.isAndroid() && isOpenGL)) {
+        if(J2MEUtil.isHTML() || (AndroidUtil.isAndroid() && isOpenGL)) {
             offsetX = 0;
             offsetWidth = myFont.stringWidth(labelSet) / 2;
         } else {

@@ -13,12 +13,10 @@
  */
 package org.allbinary.game.layer.form;
 
-import org.allbinary.game.configuration.feature.Features;
-import org.allbinary.game.configuration.feature.HTMLFeatureFactory;
+import org.allbinary.J2MEUtil;
 import org.allbinary.input.event.VirtualKeyboardEventHandler;
 import org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler;
 import org.allbinary.input.motion.gesture.observer.MovedMotionGesturesHandler;
-
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.util.BasicArrayList;
@@ -55,10 +53,8 @@ public class GDFormInputProcessor
     private final PlatformFormInputProcessor platformFormInputProcessor;
     
     public GDFormInputProcessor() {
-        final Features features = Features.getInstance();
-        final boolean isHTML = features.isDefault(HTMLFeatureFactory.getInstance().HTML);
         
-        if(isHTML) {
+        if(J2MEUtil.isHTML()) {
             this.platformFormInputProcessor = new RawFormInputProcessor();
         } else {
             this.platformFormInputProcessor = new DownFormInputProcessor();

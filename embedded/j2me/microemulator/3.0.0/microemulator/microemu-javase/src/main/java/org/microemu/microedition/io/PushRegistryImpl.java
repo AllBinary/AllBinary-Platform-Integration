@@ -29,6 +29,7 @@ package org.microemu.microedition.io;
 import java.io.IOException;
 
 import javax.microedition.io.ConnectionNotFoundException;
+import org.allbinary.logic.string.StringUtil;
 
 import org.microemu.microedition.Implementation;
 
@@ -53,7 +54,7 @@ public class PushRegistryImpl implements PushRegistryDelegate, Implementation {
 
 	public String[] listConnections(boolean available) {
 		// TODO Auto-generated method stub
-		return new String[0];
+		return StringUtil.getInstance().getArrayInstance();
 	}
 
 	public long registerAlarm(String midlet, long time) throws ClassNotFoundException, ConnectionNotFoundException {

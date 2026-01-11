@@ -49,10 +49,17 @@ public class SwtMutableImage extends MutableImage {
         super(name, postLoadImageProcessor);
     }
     
+//    public SwtMutableImage(final String name, final int width, final int height) {
+//
+//        super(name, PostLoadImageProcessor.NULL_POST_LOAD_IMAGE_PROCESSOR);
+//        
+//        this.init(SwtDeviceComponent.createImage(width, height));
+//    }
+    
     //private Transform transform = new Transform(null);
     public SwtMutableImage(final int width, final int height) {
         //System.out.println("SwtMutableImage:SwtMutableImage: " + this);
-
+        
         this.init(SwtDeviceComponent.createImage(width, height));
         
 //        final Image canvas = SwtDeviceComponent.createImage(width, height);
@@ -85,6 +92,12 @@ public class SwtMutableImage extends MutableImage {
 
     }
 
+//    public SwtMutableImage(final String name, final org.eclipse.swt.graphics.Image image) {
+//        super(name, PostLoadImageProcessor.NULL_POST_LOAD_IMAGE_PROCESSOR);
+//        
+//        this.init(image);
+//    }
+    
     public SwtMutableImage(final org.eclipse.swt.graphics.Image image) {
         //System.out.println("SwtMutableImage:SwtMutableImage2: " + this);
 

@@ -411,7 +411,8 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 
 	public Image createImage(javax.microedition.lcdui.Image source) {
 		if (source.isMutable()) {
-			return new SwtImmutableImage((SwtMutableImage) source);
+			//return new SwtImmutableImage((SwtMutableImage) source);
+                        return (SwtMutableImage) source;
 		} else {
 			return source;
 		}
@@ -437,6 +438,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
         public Image createImageLater(final String name, final int width, final int height)
         {
             return new SwtImmutableImage(name, width, height);
+            //return new SwtMutableImage(name, width, height);
         }        
         
 	public void setNumAlphaLevels(int i) {
@@ -531,6 +533,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
         private final String URL = "URL";
 	public Image createSystemImage(URL url) throws IOException {
 		return new SwtImmutableImage( URL, SwtDeviceComponent.createImage(url.openStream()));
+                //return new SwtMutableImage( URL, SwtDeviceComponent.createImage(url.openStream()));
 	}
 
 	private Image getImage(String str) throws IOException {
@@ -565,6 +568,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 		}
 
 		return new SwtImmutableImage(this.resourceCallbackStrings.INPUT_STREAM, SwtDeviceComponent.createImage(is, filter));
+                //return new SwtMutableImage(this.resourceCallbackStrings.INPUT_STREAM, SwtDeviceComponent.createImage(is, filter));
 	}
 
 	public Button createButton(int skinVersion, String name, Shape shape, int keyCode, String keyboardKeys,
@@ -620,6 +624,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 //		}
 
 		return new SwtImmutableImage(RGB, SwtDeviceComponent.createImage(imageData));
+                //return new SwtMutableImage(RGB, SwtDeviceComponent.createImage(imageData));
 	}
 
 	public Image createImage(Image image, int x, int y, int width, int height, int transform) {

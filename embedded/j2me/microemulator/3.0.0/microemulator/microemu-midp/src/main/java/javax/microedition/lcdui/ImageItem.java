@@ -37,7 +37,7 @@ public class ImageItem extends Item {
 
 	public static final int LAYOUT_NEWLINE_AFTER = 0x200;
 
-	Image img;
+	Image img = NullCanvas.NULL_IMAGE;
 
 	String altText;
 

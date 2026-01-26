@@ -31,6 +31,7 @@ import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.List;
+import javax.microedition.lcdui.NullCanvas;
 
 import org.microemu.MIDletBridge;
 import org.microemu.device.DeviceFactory;
@@ -158,7 +159,7 @@ public class CommandManager
 	    }
 		for (int i = 0; i < commandsTable.size(); i++) {
 			menuCommands = commandsTable;
-			menuList.append(((Command) commandsTable.elementAt(i)).getLabel(), null);
+			menuList.append(((Command) commandsTable.elementAt(i)).getLabel(), NullCanvas.NULL_IMAGE);
 		}
 	}
 	

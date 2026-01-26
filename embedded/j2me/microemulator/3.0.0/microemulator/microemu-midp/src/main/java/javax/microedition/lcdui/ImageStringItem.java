@@ -28,7 +28,7 @@ package javax.microedition.lcdui;
 class ImageStringItem extends Item
 {
 
-	Image img;
+	Image img = NullCanvas.NULL_IMAGE;
   StringComponent stringComponent;
 
 

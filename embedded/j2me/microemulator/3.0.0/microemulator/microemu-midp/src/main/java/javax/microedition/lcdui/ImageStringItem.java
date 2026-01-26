@@ -49,7 +49,7 @@ class ImageStringItem extends Item
 	public void setImage(Image img)
 	{
     this.img = img;
-		if (this.img != null) {
+		if (this.img != NullCanvas.NULL_IMAGE) {
 			stringComponent.setWidthDecreaser(img.getWidth() + 2);
 		}
 	}
@@ -70,7 +70,7 @@ class ImageStringItem extends Item
         //TWB - made public
 	public int getHeight()
 	{
-		if (img != null && img.getHeight() > stringComponent.getHeight()) {
+		if (img != NullCanvas.NULL_IMAGE && img.getHeight() > stringComponent.getHeight()) {
 			return img.getHeight();
 		} else {
 			return stringComponent.getHeight();
@@ -91,14 +91,14 @@ class ImageStringItem extends Item
 			return 0;
 		}
 
-		if (img != null) {
+		if (img != NullCanvas.NULL_IMAGE) {
 			g.drawImage(img, 0, 0, Graphics.LEFT | Graphics.TOP);
 			g.translate(img.getWidth() + 2, 0);
 		}
 
 		int y = stringComponent.paint(g);
 
-		if (img != null) {
+		if (img != NullCanvas.NULL_IMAGE) {
 			g.translate(-img.getWidth() - 2, 0);
 		}
 

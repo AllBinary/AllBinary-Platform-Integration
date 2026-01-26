@@ -155,7 +155,7 @@ public class Alert extends Screen
 			alertContent = new ImageStringItem(null, img, null);
 		}
 
-		if (img != null && img.isMutable()) {
+		if (img != NullCanvas.NULL_IMAGE && img.isMutable()) {
 	      img = Image.createImage(img);
 	    }
 	    alertContent.setImage(img);

@@ -86,7 +86,7 @@ public class ImageItem extends Item {
 	}
 
 	public void setImage(Image img) {
-		if (img != null && img.isMutable()) {
+		if (img != NullCanvas.NULL_IMAGE && img.isMutable()) {
 			img = Image.createImage(img);
 		}
 		this.img = img;

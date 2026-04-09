@@ -1,5 +1,7 @@
 package org.apache.xmlrpc;
 
+import org.allbinary.string.CommonSeps;
+
 /*
  * $Header: /home/cvs/xml-rpc/src/java/org/apache/xmlrpc/Base64.java,v 1.4.2.3 2003/02/04 03:47:42 rhoegg Exp $
  * $Revision: 1.4.2.3 $
@@ -78,7 +80,7 @@ package org.apache.xmlrpc;
 public final class  Base64
 {
     static final int CHUNK_SIZE = 76;
-    static final byte[] CHUNK_SEPARATOR = "\n".getBytes();
+    static final byte[] CHUNK_SEPARATOR = CommonSeps.getInstance().NEW_LINE.getBytes();
 
     static private final int  BASELENGTH         = 255;
     static private final int  LOOKUPLENGTH       = 64;

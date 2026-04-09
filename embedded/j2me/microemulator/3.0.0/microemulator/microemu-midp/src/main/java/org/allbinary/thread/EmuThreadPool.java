@@ -157,7 +157,7 @@ public class EmuThreadPool
         public DisplayPooledThread()
         {
             //super(ThreadPool.this, 
-            super(new StringMaker().append(EmuThreadPool.this.toString()).append(ROOT_NAME).append(threadID++).toString());
+            super(new StringMaker().append(EmuThreadPool.this.toString()).append(ROOT_NAME).appendint(threadID++).toString());
             //this.setDaemon(true);
         }
 

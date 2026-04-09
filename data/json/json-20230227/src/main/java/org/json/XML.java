@@ -9,6 +9,7 @@ import java.io.StringReader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Iterator;
+import org.allbinary.string.CommonSeps;
 
 
 /**
@@ -796,7 +797,7 @@ public class XML {
                 sb.append(tagName);
                 sb.append('>');
                 if(indentFactor > 0){
-                    sb.append("\n");
+                    sb.append(CommonSeps.getInstance().NEW_LINE);
                     indent += indentFactor;
                 }
             }
@@ -855,7 +856,7 @@ public class XML {
                     sb.append(key);
                     sb.append("/>");
                     if(indentFactor > 0){
-                        sb.append("\n");
+                        sb.append(CommonSeps.getInstance().NEW_LINE);
                     }
 
                     // Emit a new tag <k>
@@ -872,7 +873,7 @@ public class XML {
                 sb.append(tagName);
                 sb.append('>');
                 if(indentFactor > 0){
-                    sb.append("\n");
+                    sb.append(CommonSeps.getInstance().NEW_LINE);
                 }
             }
             return sb.toString();
@@ -901,12 +902,12 @@ public class XML {
         string = (object == null) ? "null" : escape(object.toString());
 
         if(tagName == null){
-            return indent(indent) + "\"" + string + "\"" + ((indentFactor > 0) ? "\n" : "");
+            return indent(indent) + "\"" + string + "\"" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : "");
         } else if(string.length() == 0){
-            return indent(indent) + "<" + tagName + "/>" + ((indentFactor > 0) ? "\n" : "");
+            return indent(indent) + "<" + tagName + "/>" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : "");
         } else {
             return indent(indent) + "<" + tagName
-                    + ">" + string + "</" + tagName + ">" + ((indentFactor > 0) ? "\n" : "");
+                    + ">" + string + "</" + tagName + ">" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : "");
         }
     }
 

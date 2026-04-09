@@ -3,6 +3,7 @@ package org.json;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import org.allbinary.string.CommonSeps;
 
 /*
 Public Domain.
@@ -203,7 +204,7 @@ public class JSONWriter {
                     this.writer.append(',');
                 }
                 this.writer.append(JSONObject.quote(string));
-                this.writer.append(':');
+                this.writer.append(CommonSeps.getInstance().COLON);
                 this.comma = false;
                 this.mode = 'o';
                 return this;

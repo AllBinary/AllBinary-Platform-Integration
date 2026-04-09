@@ -42,7 +42,7 @@ public class MIDletOutputStreamRedirectorTest //extends TestCase
 		verify(capture.getLastEvent(), b4call, message);
 
 		b4call = new Throwable().getStackTrace()[0];
-		Injected.out.print(message + "\n");
+		Injected.out.print(message + CommonSeps.getInstance().NEW_LINE);
 
 		verify(capture.getLastEvent(), b4call, message);
 	}
@@ -71,7 +71,7 @@ public class MIDletOutputStreamRedirectorTest //extends TestCase
 				verify(capture.getLastEvent(), b4call, message);
 
 				b4call = new Throwable().getStackTrace()[0];
-				Injected.out.print(message + "\n");
+				Injected.out.print(message + CommonSeps.getInstance().NEW_LINE);
 
 				verify(capture.getLastEvent(), b4call, message);
 
@@ -211,7 +211,7 @@ public class MIDletOutputStreamRedirectorTest //extends TestCase
 				verify(capture.getLastEvent(), b4call, message);
 
 				b4call = new Throwable().getStackTrace()[0];
-				StaticLogger.log(message + "\n");
+				StaticLogger.log(message + CommonSeps.getInstance().NEW_LINE);
 
 				verify(capture.getLastEvent(), b4call, message);
 

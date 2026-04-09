@@ -30,6 +30,8 @@ package javax.microedition.lcdui;
 
 import org.allbinary.graphics.ItemColorFactory;
 import org.allbinary.logic.string.StringMaker;
+import org.allbinary.string.CommonPhoneStrings;
+import org.allbinary.string.CommonSeps;
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.InputMethod;
 import org.microemu.device.InputMethodEvent;
@@ -167,9 +169,10 @@ public class TextField extends Item
             if ((constraints & PASSWORD) == 0) {
                 stringComponent.setText(text);
             } else {
-                StringMaker sb = new StringMaker();
+                final StringMaker sb = new StringMaker();
+                final CommonPhoneStrings commonPhoneStrings = CommonPhoneStrings.getInstance();
                 for (int i = 0; i < text.length(); i++) {
-                    sb.append('*');
+                    sb.append(commonPhoneStrings.STAR);
                 }
                 stringComponent.setText(sb.toString());
             }

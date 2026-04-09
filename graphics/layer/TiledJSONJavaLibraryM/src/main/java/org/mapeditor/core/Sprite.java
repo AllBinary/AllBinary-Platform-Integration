@@ -35,6 +35,7 @@ import javax.microedition.lcdui.Image;
 import org.allbinary.graphics.PointFactory;
 import org.allbinary.graphics.Rectangle;
 import org.allbinary.logic.string.StringUtil;
+import org.allbinary.string.CommonSeps;
 import org.allbinary.util.BasicArrayList;
 
 /**
@@ -532,9 +533,9 @@ public class Sprite {
     @Override
     public String toString() {
         return "Frame: (" + frameSize.getWidth() + "x" + frameSize.getHeight() + ")\n"
-                + "Border: " + borderWidth + "\n"
-                + "FPL: " + fpl + "\n"
-                + "Total Frames: " + getTotalFrames() + "\n"
+                + "Border: " + borderWidth + CommonSeps.getInstance().NEW_LINE
+                + "FPL: " + fpl + CommonSeps.getInstance().NEW_LINE
+                + "Total Frames: " + getTotalFrames() + CommonSeps.getInstance().NEW_LINE
                 + "Total keys: " + totalKeys;
     }
 }

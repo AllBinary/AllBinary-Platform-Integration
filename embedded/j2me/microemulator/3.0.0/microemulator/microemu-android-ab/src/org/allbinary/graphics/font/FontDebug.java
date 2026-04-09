@@ -40,18 +40,18 @@ public class FontDebug extends FontDebugBase {
     public void debugMetrics(final Font currentFont, final float convertedTextSize, final Object displayMetrics2, final StringMaker stringBuffer) {
 
         final DisplayMetrics displayMetrics = (DisplayMetrics) displayMetrics2;
-        final String message = stringBuffer.append("Font size: ").append(currentFont.getSize())
-                .append(" scaledDensity: ").append(displayMetrics.scaledDensity)
-                .append(" xpdi: ").append(displayMetrics.xdpi)
-                .append(" ypdi: ").append(displayMetrics.ydpi)
-                .append(" textSize Before: ").append(convertedTextSize).toString();
+        final String message = stringBuffer.append("Font size: ").appendint(currentFont.getSize())
+                .append(" scaledDensity: ").appendfloat(displayMetrics.scaledDensity)
+                .append(" xpdi: ").appendfloat(displayMetrics.xdpi)
+                .append(" ypdi: ").appendfloat(displayMetrics.ydpi)
+                .append(" textSize Before: ").appendfloat(convertedTextSize).toString();
         logUtil.put(message, this, SET_FONT);
     }
 
     @Override
     public void debugDpi(final int densityDpi, final StringMaker stringBuffer) {
         final String message = stringBuffer.append("densityDpi: ")
-                .append(densityDpi)
+                .appendint(densityDpi)
                 .toString();
         logUtil.put(message, this, SET_FONT);
     }
@@ -59,9 +59,9 @@ public class FontDebug extends FontDebugBase {
     @Override
     public void debugDimension(final Font currentFont, final float convertedTextSize, final int longestDimensionTotalPixels, final StringMaker stringBuffer) {
         stringBuffer.delete(0, stringBuffer.length());
-        final String message = stringBuffer.append("Font size: ").append(currentFont.getSize())
-                .append(" converted: ").append(convertedTextSize)
-                .append(" longwaysPixels width/height: ").append(longestDimensionTotalPixels).toString();
+        final String message = stringBuffer.append("Font size: ").appendint(currentFont.getSize())
+                .append(" converted: ").appendfloat(convertedTextSize)
+                .append(" longwaysPixels width/height: ").appendint(longestDimensionTotalPixels).toString();
         logUtil.put(message, this, SET_FONT);
     }
 

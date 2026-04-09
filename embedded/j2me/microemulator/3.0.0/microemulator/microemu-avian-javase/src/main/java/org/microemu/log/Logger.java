@@ -26,20 +26,14 @@
  */
 package org.microemu.log;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 import org.allbinary.logic.java.exception.ExceptionUtil;
 
-import org.microemu.app.util.IOUtils;
+import org.allbinary.string.CommonSeps;
 
 /**
  * 
@@ -133,7 +127,7 @@ public class Logger {
 	}
 
 	private static void write(int level, String message, Throwable throwable) {
-		while ((message != null) && message.endsWith("\n")) {
+		while ((message != null) && message.endsWith(CommonSeps.getInstance().NEW_LINE)) {
 			message = message.substring(0, message.length() - 1);
 		}
                 System.out.println(message);
@@ -342,13 +336,13 @@ public class Logger {
 //				Thread thread = (Thread) entry.getKey();
 //				out.append("Thread= " + thread.getName() + " " + (thread.isDaemon() ? "daemon" : "") + " prio="
 //						+ thread.getPriority() + "id=" + thread.getId() + " " + thread.getState());
-//				out.append("\n");
+//				out.append(CommonSeps.getInstance().NEW_LINE);
 //
 //				StackTraceElement[] ste = (StackTraceElement[]) entry.getValue();
 //				for (int i = 0; i < ste.length; i++) {
 //					out.append("\t");
 //					out.append(ste[i].toString());
-//					out.append("\n");
+//					out.append(CommonSeps.getInstance().NEW_LINE);
 //				}
 //				out.append("---------------------------------\n");
 //			}
@@ -369,13 +363,13 @@ public class Logger {
 //				Thread thread = (Thread) entry.getKey();
 //				out.write("Thread= " + thread.getName() + " " + (thread.isDaemon() ? "daemon" : "") + " prio="
 //						+ thread.getPriority() + "id=" + thread.getId() + " " + thread.getState());
-//				out.write("\n");
+//				out.write(CommonSeps.getInstance().NEW_LINE);
 //
 //				StackTraceElement[] ste = (StackTraceElement[]) entry.getValue();
 //				for (int i = 0; i < ste.length; i++) {
 //					out.write("\t");
 //					out.write(ste[i].toString());
-//					out.write("\n");
+//					out.write(CommonSeps.getInstance().NEW_LINE);
 //				}
 //				out.write("---------------------------------\n");
 //			}

@@ -98,7 +98,7 @@ public class Rectangle extends Shape {
 	
 	public String toString() {
 	    StringMaker buf = new StringMaker();
-	    buf.append(x).append(",").append(y).append(" ").append(this.width).append("x").append(this.height);
+	    buf.appendint(x).append(",").appendint(y).append(" ").appendint(this.width).append("x").appendint(this.height);
 	    return buf.toString();
 	}
 

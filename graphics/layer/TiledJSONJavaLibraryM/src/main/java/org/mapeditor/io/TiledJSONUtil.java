@@ -83,7 +83,7 @@ public class TiledJSONUtil {
         final int height = mapData.length;
 
         //final CommonStrings commonStrings = CommonStrings.getInstance();
-        //logUtil.put(stringBuilder.append(width).append(':').append(height).toString(), this, commonStrings.PROCESS);
+        //logUtil.put(stringBuilder.append(width).append(commonSeps.COLON).append(height).toString(), this, commonStrings.PROCESS);
         
         final byte[] byteArray = new byte[width * height * 4];
         final int size = new GDJSONMapDataWriter().write(width, height, mapData, byteArray, stringBuilder);

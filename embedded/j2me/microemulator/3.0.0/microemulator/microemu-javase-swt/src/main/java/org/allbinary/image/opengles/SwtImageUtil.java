@@ -54,27 +54,27 @@ public class SwtImageUtil {
         final PaletteData paletteData = imageData.palette;
         
         stringMaker.append("PaletteData - depth: ");
-        stringMaker.append(imageData.depth);
+        stringMaker.appendint(imageData.depth);
         stringMaker.append(" transparentPixel: ");
-        stringMaker.append(imageData.transparentPixel);
+        stringMaker.appendint(imageData.transparentPixel);
         stringMaker.append(" redMask: ");
         stringMaker.append(Integer.toHexString(paletteData.redMask));
         stringMaker.append(" redShift: ");
-        stringMaker.append(paletteData.redShift);
+        stringMaker.appendint(paletteData.redShift);
         stringMaker.append(" greenMask: ");
         stringMaker.append(Integer.toHexString(paletteData.greenMask));
         stringMaker.append(" greenShift: ");
-        stringMaker.append(paletteData.greenShift);
+        stringMaker.appendint(paletteData.greenShift);
         stringMaker.append(" blueMask: ");
         stringMaker.append(Integer.toHexString(paletteData.blueMask));
         stringMaker.append(" blueShift: ");
-        stringMaker.append(paletteData.blueShift);
+        stringMaker.appendint(paletteData.blueShift);
         stringMaker.append(" isDirect: ");
-        stringMaker.append(paletteData.isDirect);
+        stringMaker.appendboolean(paletteData.isDirect);
         final RGB[] rgbArray = paletteData.colors;
         if(rgbArray != null) {
             stringMaker.append(" colors size: ");
-            stringMaker.append(rgbArray.length);
+            stringMaker.appendint(rgbArray.length);
         }
                 
         return stringMaker.toString();

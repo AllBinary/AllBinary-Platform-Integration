@@ -648,12 +648,13 @@ public class CustomForm extends CustomScreen
 	
     public void setSelectedIndex(int selectedIndex)
     {
+        final CommonLabels commonLabels = CommonLabels.getInstance();
         final StringMaker stringBuffer = new StringMaker();
         
-        stringBuffer.append(CommonLabels.getInstance().START_LABEL);
+        stringBuffer.append(commonLabels.START_LABEL);
         stringBuffer.append(CommonSeps.getInstance().SPACE);
-        stringBuffer.append(CommonLabels.getInstance().INDEX_LABEL);
-        stringBuffer.append(selectedIndex);
+        stringBuffer.append(commonLabels.INDEX_LABEL);
+        stringBuffer.appendint(selectedIndex);
         
         logUtil.put(stringBuffer.toString(), this, SET_SELECTED_INDEX);
         

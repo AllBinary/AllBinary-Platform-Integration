@@ -45,6 +45,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import org.allbinary.string.CommonSeps;
 
 import org.microemu.app.Config;
 import org.microemu.app.ui.swing.logconsole.LogTextArea;
@@ -238,7 +239,7 @@ public class SwingLogConsoleDialog extends JFrame implements LoggerAppender {
 			stream.flush();
 			bug.append(out.toString());
 		}
-		bug.append("\n");
+		bug.append(CommonSeps.getInstance().NEW_LINE);
 		log(bug.toString());
 	}
 

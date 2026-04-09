@@ -41,6 +41,7 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.List;
+import org.allbinary.string.CommonSeps;
 
 /**
  * @author vlads
@@ -135,10 +136,11 @@ public class FilesList extends List implements CommandListener {
 		try {
 			FileConnection f = (FileConnection) Connector.open("file://localhost" + p);
 
-			StringBuffer message = new StringBuffer();
+			final StringBuffer message = new StringBuffer();
+                        final CommonSeps commonSeps = CommonSeps.getInstance();
 
-			message.append("totalSize:").append(f.totalSize()).append('\n');
-			message.append("availableSize:").append(f.availableSize()).append('\n');
+			message.append("totalSize:").append(f.totalSize()).append(commonSeps.NEW_LINE);
+			message.append("availableSize:").append(f.availableSize()).append(commonSeps.NEW_LINE);
 
 			Alert alert = new Alert("Info", message.toString(), null, AlertType.INFO);
 			alert.setTimeout(Alert.FOREVER);

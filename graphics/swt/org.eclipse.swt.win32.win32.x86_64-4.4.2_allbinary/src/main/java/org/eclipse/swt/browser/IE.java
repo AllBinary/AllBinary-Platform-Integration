@@ -15,6 +15,7 @@ import org.allbinary.thread.ARunnable;
 import java.net.*;
 import java.util.*;
 import org.allbinary.logic.java.exception.ExceptionUtil;
+import org.allbinary.string.CommonSeps;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -1315,7 +1316,8 @@ boolean navigate(String url, String postData, String headers[], boolean silent) 
 		rgdispidNamedArgs[index++] = rgdispid[2];
 	}
 	if (headers != null) {
-		StringBuffer buffer = new StringBuffer();
+		final StringBuffer buffer = new StringBuffer();
+                final CommonSeps commonSeps = CommonSeps.getInstance();
 		for (int i = 0; i < headers.length; i++) {
 			String current = headers[i];
 			if (current != null) {
@@ -1325,7 +1327,7 @@ boolean navigate(String url, String postData, String headers[], boolean silent) 
 					String value = current.substring(sep + 1).trim();
 					if (key.length() > 0 && value.length() > 0) {
 						buffer.append(key);
-						buffer.append(':');
+						buffer.append(commonSeps.COLON);
 						buffer.append(value);
 						buffer.append("\r\n");
 					}

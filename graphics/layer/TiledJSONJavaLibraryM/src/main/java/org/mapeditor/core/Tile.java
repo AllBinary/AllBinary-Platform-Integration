@@ -190,6 +190,6 @@ public class Tile extends TileData {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return new StringMaker().append("Tile ").append(id).append(" (").append(getWidth()).append("x").append(getHeight()).append(")").toString();
+        return new StringMaker().append("Tile ").append(id.toString()).append(" (").appendint(getWidth()).append("x").appendint(getHeight()).append(")").toString();
     }
 }

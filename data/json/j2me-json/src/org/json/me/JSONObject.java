@@ -29,6 +29,7 @@ import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+import org.allbinary.string.CommonSeps;
 
 /**
  * A JSONObject is an unordered collection of name/value pairs. Its
@@ -1060,8 +1061,9 @@ public class JSONObject {
      */
     public String toString() {
         try {
-            Enumeration keys = keys();
-            StringBuffer sb = new StringBuffer("{");
+            final CommonSeps commonSeps = CommonSeps.getInstance();
+            final Enumeration keys = keys();
+            final StringBuffer sb = new StringBuffer("{");
 
             while (keys.hasMoreElements()) {
                 if (sb.length() > 1) {
@@ -1069,7 +1071,7 @@ public class JSONObject {
                 }
                 Object o = keys.nextElement();
                 sb.append(quote(o.toString()));
-                sb.append(':');
+                sb.append(commonSeps.COLON);
                 sb.append(valueToString(this.myHashMap.get(o)));
             }
             sb.append('}');

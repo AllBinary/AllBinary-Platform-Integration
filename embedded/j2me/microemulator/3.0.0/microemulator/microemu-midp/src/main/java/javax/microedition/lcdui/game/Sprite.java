@@ -107,7 +107,7 @@ public class Sprite extends Layer {
         rows = img.getHeight() / frameHeight;
         
         final int l = cols*rows;
-        if(l == 0) throw new IndexOutOfBoundsException(new StringMaker().append("Length: ").append(l).toString());
+        if(l == 0) throw new IndexOutOfBoundsException(new StringMaker().append("Length: ").appendint(l).toString());
         
         collX = collY = 0;
         collWidth = frameWidth;
@@ -302,7 +302,7 @@ public class Sprite extends Layer {
     public void setFrame(int frame) {
         int l = (sequence == null) ? rows*cols : sequence.length; 
         if (frame < 0 || frame >= l) {
-            throw new IndexOutOfBoundsException(new StringMaker().append("Length: ").append(l).append(" Frame: ").append(frame).toString());
+            throw new IndexOutOfBoundsException(new StringMaker().append("Length: ").appendint(l).append(" Frame: ").appendint(frame).toString());
         }
         this.frame = frame;
     }

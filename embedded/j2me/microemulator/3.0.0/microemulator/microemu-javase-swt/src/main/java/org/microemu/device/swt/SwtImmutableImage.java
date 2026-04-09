@@ -170,7 +170,7 @@ public class SwtImmutableImage extends javax.microedition.lcdui.Image {
 //        if (width > 130 && height > 130) {
 //            final StringMaker stringMaker = new StringMaker();
 //            for (int i = 0; i < size; i++) {
-//                stringMaker.append(Integer.toHexString(argb[i])).append(' ');
+//                stringMaker.append(Integer.toHexString(argb[i])).append(CommonSeps.getInstance().SPACE);
 //            }
 //            System.out.println(stringMaker.toString());
 //        }

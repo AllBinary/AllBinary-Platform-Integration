@@ -162,7 +162,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
         //final int size2 = this.tileSetImage.getHeight();
         final int size2 = this.tileSetImageHeight;
         
-        logUtil.put(new StringMaker().append("size: ").append(size).append(" size2: ").append(size2).toString(), this, "addTiles");
+        logUtil.put(new StringMaker().append("size: ").appendint(size).append(" size2: ").appendint(size2).toString(), this, "addTiles");
         
         int row = 0;
         Tile tile;
@@ -425,7 +425,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return new StringMaker().append(getName()).append(" [").append(size()).append("]").toString();
+        return new StringMaker().append(getName()).append(" [").appendint(size()).append("]").toString();
     }
 
     // TILE IMAGE CODE

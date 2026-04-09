@@ -36,7 +36,7 @@ public class GDJSONMapDataWriter {
             for (int x = 0; x < width; x++) {
                 
                 //stringBuilder.delete(0, stringBuilder.length());
-                //logUtil.put(stringBuilder.append(x).append(':').append(y).toString(), this, commonStrings.PROCESS);
+                //logUtil.put(stringBuilder.append(x).append(commonSeps.COLON).append(y).toString(), this, commonStrings.PROCESS);
                 
                 gid = mapData[y][x];
                 //gid |= tile.getFlagsAt(x, y);

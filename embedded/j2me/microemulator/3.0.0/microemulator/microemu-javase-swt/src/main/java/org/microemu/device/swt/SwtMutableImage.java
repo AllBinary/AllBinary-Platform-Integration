@@ -204,7 +204,7 @@ public class SwtMutableImage extends MutableImage {
 
 //        final StringBuilder stringMaker = new StringBuilder();
 //        for (int i = 0; i < 10; i++) {
-//            stringMaker.append(Integer.toHexString(argb[i])).append(' ');
+//            stringMaker.append(Integer.toHexString(argb[i])).append(CommonSeps.getInstance().SPACE);
 //        }
 //        System.out.println(stringMaker.toString());
         

@@ -34,7 +34,7 @@ public class TiledBehavior_1_9 extends TiledBehavior {
     public int getTileId0(final int tileId, final int nextInt, final StringMaker stringBuilder) {
         
         if (nextInt != 0) {
-            stringBuilder.append(this.mapReaderData.NEXT_INT_0).append(nextInt);
+            stringBuilder.append(this.mapReaderData.NEXT_INT_0).appendint(nextInt);
         }
         
         return nextInt | tileId;
@@ -44,7 +44,7 @@ public class TiledBehavior_1_9 extends TiledBehavior {
     public int getTileId1(final int tileId, final int nextInt, final StringMaker stringBuilder) {
 
         if (nextInt != 0) {
-            stringBuilder.append(this.mapReaderData.NEXT_INT_1).append(nextInt);
+            stringBuilder.append(this.mapReaderData.NEXT_INT_1).appendint(nextInt);
         }
 
         return tileId;
@@ -54,7 +54,7 @@ public class TiledBehavior_1_9 extends TiledBehavior {
     public int getTileId2(final int tileId, final int nextInt, final StringMaker stringBuilder) {
 
         if (nextInt != 0) {
-            stringBuilder.append(this.mapReaderData.NEXT_INT_2).append(nextInt);
+            stringBuilder.append(this.mapReaderData.NEXT_INT_2).appendint(nextInt);
         }
 
         return tileId;
@@ -64,7 +64,7 @@ public class TiledBehavior_1_9 extends TiledBehavior {
     public int getTileId3(final int tileId, final int nextInt, final StringMaker stringBuilder) {
 
         if (nextInt != 0) {
-            stringBuilder.append(this.mapReaderData.NEXT_INT_3).append(nextInt);
+            stringBuilder.append(this.mapReaderData.NEXT_INT_3).appendint(nextInt);
         }
 
         return tileId;

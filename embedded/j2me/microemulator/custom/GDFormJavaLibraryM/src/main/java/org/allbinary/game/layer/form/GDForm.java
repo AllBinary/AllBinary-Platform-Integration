@@ -104,11 +104,11 @@ public class GDForm extends GDFormInput
     }
     
     public void onPressGameKeyEvent(GameKeyEvent gameKeyEvent) {
-        logUtil.put(new StringMaker().append("KeyCode: ").append(gameKeyEvent.getKey()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY);
+        logUtil.put(new StringMaker().append("KeyCode: ").appendint(gameKeyEvent.getKey()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY);
         this.keyPressed(gameKeyEvent.getKey());
 
         BasicArrayList list = this.inputToGameKeyMapping.getReverseInstance(gameKeyEvent.getKey());
-        logUtil.put(new StringMaker().append("getReverseInstance list size: ").append(list.size()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY);
+        logUtil.put(new StringMaker().append("getReverseInstance list size: ").appendint(list.size()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY);
         
 //        for (int index = 0; index < list.size(); index++) {
 //            Input input = (Input) list.objectArray[index];
@@ -235,7 +235,7 @@ public class GDForm extends GDFormInput
 
         final GameKey gameKey = this.inputToGameKeyMapping.getInstance(keyCode);
 
-        logUtil.put(new StringMaker().append("GameKey: ").append(gameKey.toString()).append(" KeyCode: ").append(keyCode).toString(), this, gameInputStrings.KEY_PRESSED);
+        logUtil.put(new StringMaker().append("GameKey: ").append(gameKey.toString()).append(" KeyCode: ").appendint(keyCode).toString(), this, gameInputStrings.KEY_PRESSED);
 
         /*
          * if(focusItemIndex == this.size() - 1 && gameKey == gameKeyFactory.UP &&
@@ -273,7 +273,7 @@ public class GDForm extends GDFormInput
                 }
             }
 
-            logUtil.put(new StringMaker().append("Traversal Value: ").append(traverse).toString(), this, gameInputStrings.KEY_PRESSED);
+            logUtil.put(new StringMaker().append("Traversal Value: ").appendboolean(traverse).toString(), this, gameInputStrings.KEY_PRESSED);
 
             /*
              * if(traverseValue == GDGameLayer.OUTOFITEM && focusItemIndex ==
@@ -287,7 +287,7 @@ public class GDForm extends GDFormInput
                     ((GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior()).select(gameKey, keyCode);
                     fireItemStateListener();
                 } else {
-                    logUtil.put(new StringMaker().append("keyPressed: keyCode: ").append(keyCode).toString(), this, gameInputStrings.KEY_PRESSED);
+                    logUtil.put(new StringMaker().append("keyPressed: keyCode: ").appendint(keyCode).toString(), this, gameInputStrings.KEY_PRESSED);
                     // gameLayerAsItem.keyPressed(gameKey.getId().intValue());
                     ((GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior()).keyPressed(keyCode);
                 }

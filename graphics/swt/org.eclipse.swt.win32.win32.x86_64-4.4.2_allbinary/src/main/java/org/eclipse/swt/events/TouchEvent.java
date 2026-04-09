@@ -11,6 +11,8 @@
 package org.eclipse.swt.events;
 
 
+import org.allbinary.logic.string.StringMaker;
+import org.allbinary.string.CommonSeps;
 import org.eclipse.swt.widgets.*;
 
 /**
@@ -77,18 +79,17 @@ public TouchEvent(Event e) {
  */
 @Override
 public String toString() {
-	String string = super.toString();
-	string = string.substring (0, string.length() - 1); // remove trailing '}'
-	string += " stateMask=0x" + Integer.toHexString(stateMask)
-			+ " x=" + x
-			+ " y=" + y;
+	final String string2 = super.toString();
+        final StringMaker stringBuilder = new StringMaker();
+	final String string = string2.substring (0, string2.length() - 1); // remove trailing '}'
+	stringBuilder.append(string).append(" stateMask=0x").append(Integer.toHexString(stateMask)).append(" x=").appendint(x).append(" y=").appendint(y).toString();
 	if (touches != null) {
 		for (int i = 0; i < touches.length; i++) {
-			string += "\n     " + touches[i].toString();
+			stringBuilder.append("\n     ").append(touches[i].toString());
 		}
-		string += "\n";
+		stringBuilder.append(CommonSeps.getInstance().NEW_LINE);
 	}
-	string += "}";
+	stringBuilder.append(CommonSeps.getInstance().BRACE_CLOSE);
 	return string;
 }
 }

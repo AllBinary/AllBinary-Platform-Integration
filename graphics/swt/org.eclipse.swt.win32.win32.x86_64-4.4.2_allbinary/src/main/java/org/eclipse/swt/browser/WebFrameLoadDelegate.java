@@ -561,13 +561,13 @@ boolean showCertificateDialog (long /*int*/ webView, final String failingUrlStri
 		/* show the url instead */
 		host = failingUrlString;
 	}
-	StringBuffer message = new StringBuffer ("\n"); //$NON-NLS-1$
+	StringBuffer message = new StringBuffer (CommonSeps.getInstance().NEW_LINE); //$NON-NLS-1$
 	message.append (Compatibility.getMessage ("SWT_InvalidCert_Message", new String[] {host})); //$NON-NLS-1$
 	message.append ("\n\n"); //$NON-NLS-1$
 	message.append (Compatibility.getMessage (description));
-	message.append ("\n"); //$NON-NLS-1$
+	message.append (CommonSeps.getInstance().NEW_LINE); //$NON-NLS-1$
 	message.append (Compatibility.getMessage ("SWT_InvalidCert_Connect")); //$NON-NLS-1$
-	message.append ("\n"); //$NON-NLS-1$
+	message.append (CommonSeps.getInstance().NEW_LINE); //$NON-NLS-1$
 	label.setText(message.toString ());
 
 	GridData data = new GridData ();

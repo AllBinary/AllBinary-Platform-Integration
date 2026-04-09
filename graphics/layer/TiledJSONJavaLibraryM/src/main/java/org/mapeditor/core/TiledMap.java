@@ -368,8 +368,8 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     @Override
     public String toString() {
-        return new StringMaker().append("Map[").append(width).append("x").append(height)
-                .append("x").append(getLayerCount()).append("][").append(tileWidth).append("x")
-                .append(tileHeight).append("]").toString();
+        return new StringMaker().append("Map[").appendint(width).append("x").appendint(height)
+                .append("x").appendint(getLayerCount()).append("][").appendint(tileWidth).append("x")
+                .appendint(tileHeight).append("]").toString();
     }
 }

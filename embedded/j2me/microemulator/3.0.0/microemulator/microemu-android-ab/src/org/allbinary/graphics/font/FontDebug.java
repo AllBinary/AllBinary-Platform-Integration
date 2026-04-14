@@ -45,7 +45,7 @@ public class FontDebug extends FontDebugBase {
                 .append(" xpdi: ").appendfloat(displayMetrics.xdpi)
                 .append(" ypdi: ").appendfloat(displayMetrics.ydpi)
                 .append(" textSize Before: ").appendfloat(convertedTextSize).toString();
-        logUtil.put(message, this, SET_FONT);
+        this.logUtil.putF(message, this, SET_FONT);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class FontDebug extends FontDebugBase {
         final String message = stringBuffer.append("densityDpi: ")
                 .appendint(densityDpi)
                 .toString();
-        logUtil.put(message, this, SET_FONT);
+        this.logUtil.putF(message, this, SET_FONT);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class FontDebug extends FontDebugBase {
         final String message = stringBuffer.append("Font size: ").appendint(currentFont.getSize())
                 .append(" converted: ").appendfloat(convertedTextSize)
                 .append(" longwaysPixels width/height: ").appendint(longestDimensionTotalPixels).toString();
-        logUtil.put(message, this, SET_FONT);
+        this.logUtil.putF(message, this, SET_FONT);
     }
 
 }

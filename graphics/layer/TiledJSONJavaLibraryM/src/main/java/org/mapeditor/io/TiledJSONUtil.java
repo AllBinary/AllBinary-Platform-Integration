@@ -83,13 +83,13 @@ public class TiledJSONUtil {
         final int height = mapData.length;
 
         //final CommonStrings commonStrings = CommonStrings.getInstance();
-        //logUtil.put(stringBuilder.append(width).append(commonSeps.COLON).append(height).toString(), this, commonStrings.PROCESS);
+        //logUtil.putF(stringBuilder.append(width).append(commonSeps.COLON).append(height).toString(), this, commonStrings.PROCESS);
         
         final byte[] byteArray = new byte[width * height * 4];
         final int size = new GDJSONMapDataWriter().write(width, height, mapData, byteArray, stringBuilder);
         final byte[] encodeData = org.apache.xmlrpc.Base64.encode(byteArray);
         //stringBuilder.delete(0, stringBuilder.length());
-        //logUtil.put(stringBuilder.append("size: ").append(size).toString(), this, commonStrings.PROCESS);
+        //logUtil.putF(stringBuilder.append("size: ").append(size).toString(), this, commonStrings.PROCESS);
 
         final String dataAsString = new String(encodeData).replace(CommonSeps.getInstance().NEW_LINE, StringUtil.getInstance().EMPTY_STRING);
         stringBuilder.delete(0, stringBuilder.length());

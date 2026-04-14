@@ -172,12 +172,12 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
         {       
             if(lastRatio != ratio)
             {
-                logUtil.put(new StringMaker().append(RATIO_LABEL).appendfloat(ratio).toString(), this, SCALE_VIEW_METHOD_NAME);
+                logUtil.putF(new StringMaker().append(RATIO_LABEL).appendfloat(ratio).toString(), this, SCALE_VIEW_METHOD_NAME);
                 //set the scale value here
                 SwtDeviceDisplay.this.ratio = ratio;
                 lastRatio = ratio;
             } else {
-                //logUtil.put(new StringMaker().append("Unchanged").append(RATIO_LABEL).append(ratio).toString(), this, SCALE_VIEW_METHOD_NAME);
+                //logUtil.putF(new StringMaker().append("Unchanged").append(RATIO_LABEL).append(ratio).toString(), this, SCALE_VIEW_METHOD_NAME);
             }
         }
 

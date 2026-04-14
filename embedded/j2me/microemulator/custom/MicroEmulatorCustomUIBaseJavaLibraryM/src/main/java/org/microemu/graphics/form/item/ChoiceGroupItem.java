@@ -596,8 +596,7 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
             {
                 items[i].invertPaint(i == highlightedItemIndex && hasFocus());
                 items[i].paint(g);
-                // logUtil.put("Painting: " +
-                // items[i].getLabel(), this, "paint");
+                // logUtil.putF("Painting: " + items[i].getLabel(), this, "paint");
                 g.translate(0, items[i].getHeight());
                 translatedY += items[i].getHeight();
             }
@@ -943,13 +942,12 @@ public class ChoiceGroupItem extends CustomItem implements ChoiceItemInterface
     @Override
     public void setFocus(boolean state)
     {
-        // logUtil.put(commonStrings.START,
-        // this, "setFocus");
+        // logUtil.putF(commonStrings.START, this, "setFocus");
 
         if (state)
         {
             // TWB - Toggle selected choice hack
-            logUtil.put("Resetting Focus", this, "setFocus");
+            logUtil.putF("Resetting Focus", this, "setFocus");
 
             int index = 0;
             this.setSelectedIndex(index, !this.isSelected(index));

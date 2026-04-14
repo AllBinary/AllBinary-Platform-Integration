@@ -461,7 +461,7 @@ public class BareMain extends Common
         catch (Exception e)
         {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
             Logger.debug("", "Error Exiting Full-screen mode");
         }
     }
@@ -502,7 +502,7 @@ public class BareMain extends Common
         catch (Exception e)
         {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
             Logger.debug("", "Error Entering Full-screen mode");
             //this.graphicsDevice.setFullScreenWindow(null);
         }
@@ -642,7 +642,7 @@ public class BareMain extends Common
 //                    }
 //                    System.out.println("midletString: " + midletString);
                     final MIDlet midlet = app.initMIDlet(true);
-                    //logUtil.put(new StringMaker().append("midlet: ").append(midlet).toString(), midlet, "main2");
+                    //logUtil.putF(new StringMaker().append("midlet: ").append(midlet).toString(), midlet, "main2");
                     
                     final InputStream is = midlet.getClass().getResourceAsStream(iconPath);
                     final Image image = SwtDeviceComponent.createImage(is);
@@ -653,7 +653,7 @@ public class BareMain extends Common
 
                     final SwtMIDletHelper swtMIDletHelper = (SwtMIDletHelper) midlet.midletHelper;
                     ((MidletJOGLInterface) midlet).initView();
-                    //logUtil.put("initView", midlet, "main2");
+                    //logUtil.putF("initView", midlet, "main2");
                     devicePanel.addMouseListener(swtMIDletHelper);
                     devicePanel.addMouseMoveListener(swtMIDletHelper);
                     devicePanel.addDragDetectListener(swtMIDletHelper);
@@ -678,7 +678,7 @@ public class BareMain extends Common
                 if(maximized) shell.setMaximized(true);
                 shell.getListeners(SWT.Resize)[0].handleEvent(null);
                 
-                //logUtil.put("Begin SWT Event Loop", shell, "main2");
+                //logUtil.putF("Begin SWT Event Loop", shell, "main2");
                 
                 //TestWavPlaybackMain testWavPlaybackMain = new TestWavPlaybackMain();
                 //testWavPlaybackMain.create();

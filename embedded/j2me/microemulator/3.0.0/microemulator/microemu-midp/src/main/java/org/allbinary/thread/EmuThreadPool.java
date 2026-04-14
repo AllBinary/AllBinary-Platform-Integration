@@ -60,7 +60,7 @@ public class EmuThreadPool
         if (task != null)
         {
 
-            //logUtil.put("Add: ").append(task, this, "runTask");
+            //logUtil.putF("Add: ").append(task, this, "runTask");
             //PreLogUtil.put("Add: ").append(task, this, "runTask");
 
             taskQueue.add(task);
@@ -177,7 +177,7 @@ public class EmuThreadPool
                 {
                     task = getTask();
                     //System.out.println(task + " with Thread: " + this.toString());
-                    //logUtil.put(task + " with Thread: " + this.toString(), this, commonStrings.RUN);
+                    //logUtil.putF(task + " with Thread: " + this.toString(), this, commonStrings.RUN);
                     runningTask = true;
 
                     startTask(task);
@@ -186,7 +186,7 @@ public class EmuThreadPool
                 {
                     ex.printStackTrace();
                     System.out.println(INTERRUPT_EXCEPTION);
-                    //logUtil.put(INTERRUPT_EXCEPTION, this, commonStrings.RUN);
+                    //logUtil.putF(INTERRUPT_EXCEPTION, this, commonStrings.RUN);
                     break;
                 }
 

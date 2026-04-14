@@ -285,7 +285,7 @@ public class TiledLayer extends Layer {
                 
 //                if(this.lastColumn0 != column0) {
 //                    this.lastColumn0 = column0;
-//                    //logUtil.put("column0: " + column0, this, "paint");
+//                    //logUtil.putF("column0: " + column0, this, "paint");
 //                    System.out.println("column0: " + column0);
 //                }
 
@@ -299,7 +299,7 @@ public class TiledLayer extends Layer {
 //                if(this.lastMaxColumn != maxColumn) {
 //                    this.lastMaxColumn = maxColumn;
 //                    
-//                    //logUtil.put("maxColumn: " + maxColumn, this, "paint");
+//                    //logUtil.putF("maxColumn: " + maxColumn, this, "paint");
 //                    System.out.println("maxColumn: " + maxColumn);
 //                    
 //                    if(maxColumn == 2) {
@@ -323,7 +323,7 @@ public class TiledLayer extends Layer {
 
 //                if(lastRow0 != row0) {
 //                    lastRow0 = row0;
-//                    //logUtil.put("row0: " + row0, this, "paint");
+//                    //logUtil.putF("row0: " + row0, this, "paint");
 //                    System.out.println("row0: " + row0);
 //                }
 
@@ -336,7 +336,7 @@ public class TiledLayer extends Layer {
                 
 //                if(lastMaxRow != maxRow) {
 //                    lastMaxRow = maxRow;
-//                    //logUtil.put("maxRow: " + maxRow, this, "paint");
+//                    //logUtil.putF("maxRow: " + maxRow, this, "paint");
 //                    System.out.println("maxRow: " + maxRow);
 //                }
 
@@ -375,7 +375,7 @@ public class TiledLayer extends Layer {
         
         } catch(Exception e) {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
         }
 
     }

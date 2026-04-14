@@ -94,14 +94,14 @@ public class SimpleTiledLayer extends Layer
             if (diff > tileWidth)
             {
                 column0 = diff / tileWidth - 1;
-                // logUtil.put("column0: " + column0, this, "paint");
+                // logUtil.putF("column0: " + column0, this, "paint");
             }
 
             diff = width - ((clipX - x) + clipWidth);
             if (diff > tileWidth)
             {
                 maxColumn -= diff / tileWidth + 1;
-                //logUtil.put("maxColumn: " + maxColumn, this, "paint");
+                //logUtil.putF("maxColumn: " + maxColumn, this, "paint");
                 //System.out.println("maxColumn: " + maxColumn);
             }
         }
@@ -115,7 +115,7 @@ public class SimpleTiledLayer extends Layer
             {
                 row0 = diff / tileHeight - 1;
                 
-                // logUtil.put("row0: " + row0, this, "paint");
+                // logUtil.putF("row0: " + row0, this, "paint");
             }
 
             diff = height - ((clipY - y) + clipHeight);
@@ -123,7 +123,7 @@ public class SimpleTiledLayer extends Layer
             {
                 maxRow -= diff / tileHeight + 1;
                 //System.out.println("maxRow: " + maxRow);
-                //logUtil.put("maxRow: " + maxRow, this, "paint");
+                //logUtil.putF("maxRow: " + maxRow, this, "paint");
             }
         }
 

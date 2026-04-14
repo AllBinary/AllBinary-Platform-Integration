@@ -34,7 +34,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
         
         if(displayInfo.isPortrait()) {
 
-            //logUtil.put(new StringBuilder().append("Checking: portrait - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown");
+            //logUtil.putF(new StringBuilder().append("Checking: portrait - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown");
             
             if (displayInfo.getLastHeight() >= displayInfo.getScaleLargestTo()) {
                 midlet.mousePressed(x, y, mouseEvent.button);
@@ -44,7 +44,7 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
             
         } else {
 
-            //logUtil.put(new StringBuilder().append("Checking: landscape - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown");
+            //logUtil.putF(new StringBuilder().append("Checking: landscape - ratio: ").append(displayInfo.getRatio()).append(" x: ").append(mouseEvent.x).append(" y: ").append(mouseEvent.y).append(" xs: ").append(x).append(" ys: ").append(y).toString(), this, "mouseDown");
             
             if (displayInfo.getLastWidth() >= displayInfo.getScaleLargestTo()) {
                 midlet.mousePressed(x, y, mouseEvent.button);

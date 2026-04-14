@@ -199,10 +199,10 @@ public class CustomForm extends CustomScreen
         int endY = 0;
         for (int index = 0; index < this.numOfItems; index++)
         {
-            //logUtil.put("Painting: " + items[i].getLabel(), this, "paint");
+            //logUtil.putF("Painting: " + items[i].getLabel(), this, "paint");
             endY += this.getItemTotalHeight(index);
             
-            //logUtil.put(point.getY() + ">=" + beginY + " && " + point.getY() + "<" + endY, this, "getItemIndexAt");
+            //logUtil.putF(point.getY() + ">=" + beginY + " && " + point.getY() + "<" + endY, this, "getItemIndexAt");
             
             if(point.getY() >= beginY && point.getY() < endY )
             {
@@ -219,14 +219,14 @@ public class CustomForm extends CustomScreen
     @Override
 	int paintContent(Graphics graphics) 
 	{
-	    //logUtil.put(commonStrings.START_LABEL + numOfItems, this, "paintContent");
+	    //logUtil.putF(commonStrings.START_LABEL + numOfItems, this, "paintContent");
 
 	    int contentHeight = 0;
 		int translateY = 0;
 
 		for (int index = 0; index < numOfItems; index++)
 		{
-			//logUtil.put("Painting: " + items[i].getLabel(), this, "paint");
+			//logUtil.putF("Painting: " + items[i].getLabel(), this, "paint");
 		    if(items[index].hasFocus())
 		    {
 	            graphics.setColor(LIGHT_GREY);
@@ -307,13 +307,13 @@ public class CustomForm extends CustomScreen
 
 		    if (gameKey == gameKeyFactory.UP || gameKey == gameKeyFactory.DOWN)
 		    {
-		        logUtil.put(gameKey.toString(), this, gameInputStrings.KEY_PRESSED);
+		        logUtil.putF(gameKey.toString(), this, gameInputStrings.KEY_PRESSED);
 		        
                 this.traverse(gameKey.getId());
 		    }
 		    else
 		    {
-	            //logUtil.put(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
+	            //logUtil.putF(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
 
 	            if (getSelectedIndex() != -1) {
 	                /*
@@ -656,7 +656,7 @@ public class CustomForm extends CustomScreen
         stringBuffer.append(commonLabels.INDEX_LABEL);
         stringBuffer.appendint(selectedIndex);
         
-        logUtil.put(stringBuffer.toString(), this, SET_SELECTED_INDEX);
+        logUtil.putF(stringBuffer.toString(), this, SET_SELECTED_INDEX);
         
         this.selectedIndex = selectedIndex;
     }

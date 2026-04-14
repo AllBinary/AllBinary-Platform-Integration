@@ -250,7 +250,7 @@ public class CustomItem
     /*
     void paintContent(Graphics g)
     {
-        // logUtil.put(commonStrings.START, this, "paintContent");
+        // logUtil.putF(commonStrings.START, this, "paintContent");
         labelComponent.paint(g);
     }
     */

@@ -75,7 +75,7 @@ public class TextFieldItemHelper
                 //( (InputToGameKeyMapping) 
                 //      PlatformInputMappingFactory.getInstance()).getInstance(keyCode);
 
-                //logUtil.put("GameKey: " + gameKey, this, gameInputStrings.KEY_PRESSED);
+                //logUtil.putF("GameKey: " + gameKey, this, gameInputStrings.KEY_PRESSED);
                 if (gameKey == gameKeyFactory.LEFT || platformKeyFactory.isLeft(input)) {
                     PreLogUtil.put("Position Change", this, gameInputStrings.KEY_PRESSED);
                     this.caretPositionChanged(this.textFieldItem.getCaretPosition() - 1);
@@ -114,7 +114,7 @@ public class TextFieldItemHelper
     
     private void setCaretPosition(int position)
     {
-        //logUtil.put("Position: " + position, this, "setCaretPosition");
+        //logUtil.putF("Position: " + position, this, "setCaretPosition");
 
         textFieldItem.setCaretPosition(position);
 

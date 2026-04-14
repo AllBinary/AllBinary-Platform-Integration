@@ -254,7 +254,7 @@ public class Displayable
     {
         /*
          * if(this.getClass().getName().indexOf("Mini") == -1) {
-         * logUtil.put(commonStrings.START, this, "onDraw"); }
+         * logUtil.putF(commonStrings.START, this, "onDraw"); }
          */
 
         //Faster than static access

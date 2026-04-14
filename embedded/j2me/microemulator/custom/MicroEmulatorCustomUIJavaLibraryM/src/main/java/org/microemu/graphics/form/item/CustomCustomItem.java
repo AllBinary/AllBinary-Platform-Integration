@@ -138,7 +138,7 @@ public class CustomCustomItem extends CustomItem {
         @Override
 	public int paint(Graphics graphics) {
 	    
-	    //logUtil.put(commonStrings.START, this, "paint");
+	    //logUtil.putF(commonStrings.START, this, "paint");
 	    
 		//super.paintContent(graphics);
 		this.paint(graphics, 0, 0);

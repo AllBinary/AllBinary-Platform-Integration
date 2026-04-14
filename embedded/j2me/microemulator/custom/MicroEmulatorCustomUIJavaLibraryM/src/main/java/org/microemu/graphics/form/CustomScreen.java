@@ -42,7 +42,7 @@ public class CustomScreen extends CustomDisplayable
 	{
 		try
 		{
-		    logUtil.put(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
+		    logUtil.putF(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
 
 		//int key = AndroidNumberKeyToJ2MECanvasNumberKey.getKey(keyCode);
 		
@@ -77,7 +77,7 @@ public class CustomScreen extends CustomDisplayable
         @Override
 	public void paint(Graphics g) 
 	{
-		//logUtil.put(commonStrings.START, this, "paint");
+		//logUtil.putF(commonStrings.START, this, "paint");
 		
 	    int contentHeight = 0;
         int translatedY = 0;

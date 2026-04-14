@@ -89,7 +89,7 @@ public class SwtTrueTypeFont implements SwtFont {
 				throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 			} catch (RuntimeException ex) {
                             final CommonStrings commonStrings = CommonStrings.getInstance();
-                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
+                            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 				throw ex;
 			}
 		}
@@ -100,7 +100,7 @@ public class SwtTrueTypeFont implements SwtFont {
 			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
                     final CommonStrings commonStrings = CommonStrings.getInstance();
-                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
+                    PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}
@@ -110,7 +110,7 @@ public class SwtTrueTypeFont implements SwtFont {
 			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
                     final CommonStrings commonStrings = CommonStrings.getInstance();
-                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
+                    PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}
@@ -120,7 +120,7 @@ public class SwtTrueTypeFont implements SwtFont {
 			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
                     final CommonStrings commonStrings = CommonStrings.getInstance();
-                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
+                    PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}
@@ -130,7 +130,7 @@ public class SwtTrueTypeFont implements SwtFont {
 			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
                     final CommonStrings commonStrings = CommonStrings.getInstance();
-                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
+                    PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}
@@ -140,7 +140,7 @@ public class SwtTrueTypeFont implements SwtFont {
 			throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 		} catch (RuntimeException ex) {
                     final CommonStrings commonStrings = CommonStrings.getInstance();
-                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
+                    PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, ex);
 			throw ex;
 		}
 	}

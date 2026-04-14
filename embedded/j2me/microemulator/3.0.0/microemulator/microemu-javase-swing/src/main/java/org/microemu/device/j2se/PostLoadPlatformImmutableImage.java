@@ -26,13 +26,13 @@ public class PostLoadPlatformImmutableImage extends PostLoadJ2SEPlatformImage {
 
     @Override
     public int getWidth(final Image image, final int width) {
-        //logUtil.put("image.getWidth2()" + image.getWidth2(), this, "image.getWidth2()");
+        //logUtil.putF("image.getWidth2()" + image.getWidth2(), this, "image.getWidth2()");
         return image.getWidth2();
     }
     
     @Override
     public int getHeight(final Image image, final int height) {
-        //logUtil.put("image.getHeight2()" + image.getHeight2(), this, "image.getHeight2()");
+        //logUtil.putF("image.getHeight2()" + image.getHeight2(), this, "image.getHeight2()");
         return image.getHeight2();
     }
 

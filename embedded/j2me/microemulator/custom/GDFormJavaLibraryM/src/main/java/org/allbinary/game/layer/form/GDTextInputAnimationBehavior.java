@@ -65,7 +65,7 @@ public class GDTextInputAnimationBehavior extends GDItemAnimationBehavior
     //Show softkeyboard on TextInput::TextInputObject inclusion
     public void add(final GDGameLayer gameLayer) {
         
-        //logUtil.put("InputProcessor for: " + gameLayer, this, commonStrings.ADD);
+        //logUtil.putF("InputProcessor for: " + gameLayer, this, commonStrings.ADD);
         this.gameLayer = gameLayer;
         GDFormInputProcessor.gdForm.append(gameLayer);
         GDFormInputProcessor.getInstance().append(GDFormInputProcessor.gdForm);

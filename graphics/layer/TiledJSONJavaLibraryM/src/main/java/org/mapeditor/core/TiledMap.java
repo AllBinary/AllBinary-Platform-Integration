@@ -228,7 +228,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public void addTileset(final TileSet tileset) {
         
-        //logUtil.put(tileset.toString(), this, "addTileset");
+        //logUtil.putF(tileset.toString(), this, "addTileset");
         
         // Sanity check
         final int tilesetIndex = getTileSets().indexOf(tileset);

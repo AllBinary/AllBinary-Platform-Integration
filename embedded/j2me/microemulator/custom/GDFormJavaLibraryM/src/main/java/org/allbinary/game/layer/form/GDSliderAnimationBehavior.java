@@ -89,12 +89,12 @@ implements GDGameLayerItemStateListener {
                 gameLayer.getXP() + sliderAnimation.getThumbDx() + sliderAnimation.getThumbWidth(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
                 this.point = point;
                 this.deltaFromPointToStartOfThumb = this.point.getX() - (gameLayer.getXP() + sliderAnimation.getThumbDx());
-                //logUtil.put("deltaFromPointToStartOfThumb: " + deltaFromPointToStartOfThumb, this, "onMotionGestureEvent");
+                //logUtil.putF("deltaFromPointToStartOfThumb: " + deltaFromPointToStartOfThumb, this, "onMotionGestureEvent");
                 draggingThumb = true;
             } else if (rectangleCollisionUtil.isInside(gameLayer.getXP(), gameLayer.getYP() - 2, 
                 gameLayer.getX2(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
                 final int value2 = point.getX() - gameLayer.getXP() - (sliderAnimation.getThumbWidth() / 2);
-                //logUtil.put("moveThumbTo: " + value2, this, "onMotionGestureEvent");
+                //logUtil.putF("moveThumbTo: " + value2, this, "onMotionGestureEvent");
                 this.setValue2(value2);
             }
         } else if(motionGestureInput == touchMotionGestureFactory.RELEASED) {

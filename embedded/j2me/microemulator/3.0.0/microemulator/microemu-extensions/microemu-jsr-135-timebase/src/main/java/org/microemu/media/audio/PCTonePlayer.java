@@ -150,7 +150,7 @@ public class PCTonePlayer extends BasicPlayer
             double power = noteDelta/12.0;
             double d_frequency = 440 * Math.pow(2.0, power);
             
-            //logUtil.put("Note: " + currentByte + " Power: " + power, this, "playBlock");
+            //logUtil.putF("Note: " + currentByte + " Power: " + power, this, "playBlock");
             
             toneInfo.setFrequency((int) d_frequency);
             
@@ -177,7 +177,7 @@ public class PCTonePlayer extends BasicPlayer
    {
       try
       {
-         //logUtil.put("Start", this, "run");
+         //logUtil.putF("Start", this, "run");
          
          this.sequenceIndex = 0;
          
@@ -193,13 +193,13 @@ public class PCTonePlayer extends BasicPlayer
             {
                int version = this.getNext();
                //do nothing I don't give a crap about no versioning
-               //logUtil.put("Version: " + version, this, "run");
+               //logUtil.putF("Version: " + version, this, "run");
             }
             else
                if(currentControlCommand == ToneControl.SET_VOLUME)
                {
                toneInfo.setVolume(this.getNext());
-               //logUtil.put("Volume: " + toneInfo.getVolume(), this, "run");
+               //logUtil.putF("Volume: " + toneInfo.getVolume(), this, "run");
                }
                else
                   if(currentControlCommand == ToneControl.TEMPO)
@@ -207,24 +207,24 @@ public class PCTonePlayer extends BasicPlayer
                //TWB - add conversion from tempo to length of time
                //Beats Per Minute is 4 times tempo
                byte tempo = this.getNext();
-               //logUtil.put("Tempo: " + tempo, this, "run");
+               //logUtil.putF("Tempo: " + tempo, this, "run");
                double resolutionDenominator = 64;
                double durationOfNote = 60 * 4 / (1/resolutionDenominator * tempo);
                toneInfo.setLengthOfTime((int) durationOfNote/16);
-               //logUtil.put("Length Of Time: " + toneInfo.getLengthOfTime(), this, "run");
+               //logUtil.putF("Length Of Time: " + toneInfo.getLengthOfTime(), this, "run");
                   }
                   else
                      if(currentControlCommand == ToneControl.SILENCE)
                      {
                toneInfo.setSleepDelay(this.getNext());
-               //logUtil.put("Silence: " + toneInfo.getSleepDelay(), this, "run");
+               //logUtil.putF("Silence: " + toneInfo.getSleepDelay(), this, "run");
                Thread.sleep(toneInfo.getSleepDelay());
                      }
                      else
                         if(currentControlCommand == ToneControl.PLAY_BLOCK ||
                currentControlCommand == ToneControl.BLOCK_START)
                         {
-               //logUtil.put("Start = -5/Play Block: " + currentControlCommand, this, "run");
+               //logUtil.putF("Start = -5/Play Block: " + currentControlCommand, this, "run");
                this.playBlock();
                         }
                         else
@@ -237,7 +237,7 @@ public class PCTonePlayer extends BasicPlayer
          }
          
          super.stop();
-         //logUtil.put("End", this, "run");
+         //logUtil.putF("End", this, "run");
       }
       catch (Exception e)
       {

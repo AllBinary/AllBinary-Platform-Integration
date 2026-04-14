@@ -62,7 +62,7 @@ public class TiledMapLoaderFromJSONFactory {
             
             map = mapReader.buildMap(tileMapJSONObject, tileSetJSONObjectArray, tileSetImageHeightArray);
             
-            //logUtil.put("Loading Tiled Map BuildMap", this, commonStrings.PROCESS);
+            //logUtil.putF("Loading Tiled Map BuildMap", this, commonStrings.PROCESS);
             
             return map;
 
@@ -83,7 +83,7 @@ public class TiledMapLoaderFromJSONFactory {
         final int len = streamUtil.get(inputStream, byteArray, size);
         final String jsonAsString = new String(byteArray, 0, len);
 
-        //logUtil.put("Loading Tiled Map String: " + gameAsConfiguration.length(), this, commonStrings.PROCESS);
+        //logUtil.putF("Loading Tiled Map String: " + gameAsConfiguration.length(), this, commonStrings.PROCESS);
         final JSONTokener jsonTokener = new JSONTokener(jsonAsString);
         return (JSONObject) jsonTokener.nextValue();
     }

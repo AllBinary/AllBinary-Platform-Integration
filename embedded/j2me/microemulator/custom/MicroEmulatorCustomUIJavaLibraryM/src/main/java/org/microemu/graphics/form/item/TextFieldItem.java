@@ -59,7 +59,7 @@ public class TextFieldItem extends TextItem
     {
         super(label, layout, altText, backgroundBasicColor, foregroundBasicColor);
 
-        logUtil.put(commonStrings.START + font.getSize(), this, commonStrings.CONSTRUCTOR);
+        logUtil.putF(commonStrings.START + font.getSize(), this, commonStrings.CONSTRUCTOR);
         
         this.stringComponent = new StringComponent(StringUtil.getInstance().EMPTY_STRING, font, backgroundBasicColor, foregroundBasicColor);
         
@@ -95,7 +95,7 @@ public class TextFieldItem extends TextItem
 
     public void setCaretVisible(boolean caretVisible)
     {
-        logUtil.put(commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible);
+        logUtil.putF(commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible);
         this.caretVisible = caretVisible;
     }
 
@@ -120,7 +120,7 @@ public class TextFieldItem extends TextItem
     @Override
     public void setFocus(boolean state)
     {
-        logUtil.put(commonStrings.START, this, "setFocus: " + state);
+        logUtil.putF(commonStrings.START, this, "setFocus: " + state);
         
         this.caretVisible = state;
         

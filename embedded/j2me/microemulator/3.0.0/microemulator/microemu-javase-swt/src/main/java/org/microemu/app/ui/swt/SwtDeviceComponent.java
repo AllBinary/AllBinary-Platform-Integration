@@ -192,7 +192,7 @@ public class SwtDeviceComponent extends Canvas {
                         
                         } catch(Exception e) {
                             final CommonStrings commonStrings = CommonStrings.getInstance();
-                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+                            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                         
@@ -467,7 +467,7 @@ public class SwtDeviceComponent extends Canvas {
 
                         } catch(Exception e) {
                             final CommonStrings commonStrings = CommonStrings.getInstance();
-                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+                            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                 });
@@ -497,7 +497,7 @@ public class SwtDeviceComponent extends Canvas {
 
                         } catch(Exception e) {
                             final CommonStrings commonStrings = CommonStrings.getInstance();
-                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+                            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                 });
@@ -527,7 +527,7 @@ public class SwtDeviceComponent extends Canvas {
 
                         } catch(Exception e) {
                             final CommonStrings commonStrings = CommonStrings.getInstance();
-                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+                            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                 });
@@ -577,7 +577,7 @@ public class SwtDeviceComponent extends Canvas {
 
                         } catch(Exception e) {
                             final CommonStrings commonStrings = CommonStrings.getInstance();
-                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+                            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
                         }
                     }
                 });
@@ -703,7 +703,7 @@ public class SwtDeviceComponent extends Canvas {
 					}
 				} catch (CloneNotSupportedException ex) {
                                     final CommonStrings commonStrings = CommonStrings.getInstance();
-                                    PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+                                    PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
 				}
 			}
 		}

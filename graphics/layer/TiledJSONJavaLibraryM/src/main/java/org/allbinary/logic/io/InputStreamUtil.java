@@ -45,7 +45,7 @@ public class InputStreamUtil
         int len = 0;
         int max = buffer.length;
 
-        //logUtil.put("size: " + size, this, commonStrings.PROCESS);
+        //logUtil.putF("size: " + size, this, commonStrings.PROCESS);
         
         if(size > 0) {
             max = size;

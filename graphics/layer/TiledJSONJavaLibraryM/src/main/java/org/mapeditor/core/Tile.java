@@ -96,7 +96,7 @@ public class Tile extends TileData {
         if (value >= 0) {
             this.id = value;
             //final CommonStrings commonStrings = CommonStrings.getInstance();
-            //logUtil.put(new StringMaker().append("tileId: ").append(this.id).toString(), this, commonStrings.PROCESS);
+            //logUtil.putF(new StringMaker().append("tileId: ").append(this.id).toString(), this, commonStrings.PROCESS);
         }
     }
 

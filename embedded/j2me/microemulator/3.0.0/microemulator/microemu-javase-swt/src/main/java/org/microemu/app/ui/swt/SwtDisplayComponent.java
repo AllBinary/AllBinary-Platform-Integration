@@ -176,7 +176,7 @@ public class SwtDisplayComponent implements DisplayComponent
                                 
                         } catch(Exception e) {
                             final CommonStrings commonStrings = CommonStrings.getInstance();
-                            PreLogUtil.put(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
+                            PreLogUtil.putOE(commonStrings.EXCEPTION, this, commonStrings.EXCEPTION, e);
 			} finally {
 				gc.dispose();
 			}

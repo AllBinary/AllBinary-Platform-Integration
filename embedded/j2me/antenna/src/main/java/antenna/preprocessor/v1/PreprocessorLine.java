@@ -154,29 +154,29 @@ class PreprocessorLine {
             p++;
         }
 
-        space = s.substring(0, p);
+        this.space = s.substring(0, p);
         s = s.substring(p);
 
         if (s.startsWith("//#")) {
-            type = parseCommand(s);
+            this.type = parseCommand(s);
         }
         else {
-            type = TYPE_VISIBLE;
-            text = s;
+            this.type = TYPE_VISIBLE;
+            this.text = s;
         }
     }
 
     public String toString() {
-        return types[type] + "[" + source + "]";
+        return types[this.type] + "[" + this.source + "]";
     }
 
     private int parseCommand(String s) throws PreprocessorException {
         if (s.startsWith("//# ") || s.startsWith("//#\t")) {
-            text = s.substring(4);
+            this.text = s.substring(4);
             return TYPE_HIDDEN;
         }
         else if (s.equals("//#")) {
-            text = "";
+            this.text = "";
             return TYPE_HIDDEN;
         }
         else {
@@ -189,11 +189,11 @@ class PreprocessorLine {
             if (((q != -1) && (q < p)) || (p == -1)) p = q;
 
             if (p != -1) {
-                text = s.substring(0, p);
-                args = s.substring(p + 1).trim();
+                this.text = s.substring(0, p);
+                this.args = s.substring(p + 1).trim();
             }
             else {
-                text = s;
+                this.text = s;
             }
 
             if ("//#define".equals(text)) {
@@ -233,14 +233,14 @@ class PreprocessorLine {
                 return TYPE_ENDINCLUDE;
             }
             else {
-                throw new PreprocessorException("Unknown directive \"" + text + "\"");
+                throw new PreprocessorException("Unknown directive \"" + this.text + "\"");
             }
         }
     }
 
     public String getArgs() {
-        if (args == null) {
-            throw new RuntimeException(text + " needs an argument");
+        if (this.args == null) {
+            throw new RuntimeException(this.text + " needs an argument");
         }
 
         return args;

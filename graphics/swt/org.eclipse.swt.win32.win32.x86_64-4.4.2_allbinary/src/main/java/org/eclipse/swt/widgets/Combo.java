@@ -338,7 +338,7 @@ public void addVerifyListener (VerifyListener listener) {
 }
 
 void applyEditSegments () {
-	if (--clearSegmentsCount != 0) return;
+	if (--this.clearSegmentsCount != 0) return;
 	if (!hooks (SWT.Segments) && !filters (SWT.Segments)) return;
 	long /*int*/ hwndText = OS.GetDlgItem (handle, CBID_EDIT);
 	int length = OS.GetWindowTextLength (hwndText);
@@ -350,11 +350,11 @@ void applyEditSegments () {
 	/* Get segments text */
 	Event event = new Event ();
 	event.text = string;
-	event.segments = segments;
+	event.segments = this.segments;
 	sendEvent (SWT.Segments, event);
-	segments = event.segments;
-	if (segments == null) return;
-	int nSegments = segments.length;
+	this.segments = event.segments;
+	if (this.segments == null) return;
+	int nSegments = this.segments.length;
 	if (nSegments == 0) return;
 	length = string == null ? 0 : string.length ();
 
@@ -372,7 +372,7 @@ void applyEditSegments () {
 	int charCount = 0, segmentCount = 0;
 	char defaultSeparator = getOrientation () == SWT.RIGHT_TO_LEFT ? RTL_MARK : LTR_MARK;
 	while (charCount < length) {
-		if (segmentCount < nSegments && charCount - segmentCount == segments [segmentCount]) {
+		if (segmentCount < nSegments && charCount - segmentCount == this.segments [segmentCount]) {
 			char separator = segmentsChars != null && segmentsChars.length > segmentCount ? segmentsChars [segmentCount] : defaultSeparator;
 			newChars [charCount++] = separator;
 			segmentCount++;
@@ -419,9 +419,9 @@ void applyEditSegments () {
 void applyListSegments () {
 	int count = (int)/*64*/OS.SendMessage (handle, OS.CB_GETCOUNT, 0, 0);
 	if (count == OS.CB_ERR) return;
-	boolean add = items.length != count;
-	if (add) items = new String [count];
-	int index = items.length;
+	boolean add = this.items.length != count;
+	if (add) this.items = new String [count];
+	int index = this.items.length;
 	int selection = OS.CB_ERR;
 	int cp = getCodePage ();
 	String string;
@@ -436,9 +436,9 @@ void applyListSegments () {
 			if (length == OS.CB_ERR) error (SWT.ERROR);
 			buffer = new TCHAR (cp, length + 1);
 			if (OS.SendMessage (handle, OS.CB_GETLBTEXT, index, buffer) == OS.CB_ERR) return;
-			items [index] = string = buffer.toString (0, length);
+			this.items [index] = string = buffer.toString (0, length);
 	 	} else { 
-	 		string = items [index];
+	 		string = this.items [index];
 	 	}
 		if (OS.SendMessage (handle, OS.CB_DELETESTRING, index, 0) == OS.CB_ERR) return;
 		if (buffer == null) buffer = new TCHAR (cp, string, true);
@@ -498,7 +498,7 @@ long /*int*/ CBTProc (long /*int*/ nCode, long /*int*/ wParam, long /*int*/ lPar
 			OS.SetWindowLong (wParam, OS.GWL_STYLE, bits & ~OS.ES_NOHIDESEL);
 		}
 	}
-	return OS.CallNextHookEx (cbtHook, (int)/*64*/nCode, wParam, lParam);
+	return OS.CallNextHookEx (this.cbtHook, (int)/*64*/nCode, wParam, lParam);
 }
 
 boolean checkHandle (long /*int*/ hwnd) {
@@ -539,8 +539,8 @@ static int checkStyle (int style) {
 
 void clearSegments (boolean applyText) {
 	if (clearSegmentsCount++ != 0) return;
-	if (segments == null) return;
-	int nSegments = segments.length;
+	if (this.segments == null) return;
+	int nSegments = this.segments.length;
 	if (nSegments == 0) return;
 	long /*int*/ hwndText = OS.GetDlgItem (handle, CBID_EDIT);
 	int/*64*/ limit = (int/*64*/)OS.SendMessage (hwndText, OS.EM_GETLIMITTEXT, 0, 0) & 0x7fffffff;
@@ -568,7 +568,7 @@ void clearSegments (boolean applyText) {
 	start [0] = untranslateOffset (start [0]);
 	end [0] = untranslateOffset (end[0]);
 
-	segments = null;
+	this.segments = null;
 	/*
 	 * SetWindowText empties the undo buffer and disables undo in the context
 	 * menu. Sending OS.EM_REPLACESEL message instead.
@@ -722,10 +722,10 @@ void createHandle () {
 		Callback cbtCallback = new Callback (this, "CBTProc", 3); //$NON-NLS-1$
 		long /*int*/ cbtProc = cbtCallback.getAddress ();
 		if (cbtProc == 0) error (SWT.ERROR_NO_MORE_CALLBACKS);
-		cbtHook = OS.SetWindowsHookEx (OS.WH_CBT, cbtProc, 0, threadId);
+		this.cbtHook = OS.SetWindowsHookEx (OS.WH_CBT, cbtProc, 0, threadId);
 		super.createHandle ();
-		if (cbtHook != 0) OS.UnhookWindowsHookEx (cbtHook);
-		cbtHook = 0;
+		if (this.cbtHook != 0) OS.UnhookWindowsHookEx (this.cbtHook);
+		this.cbtHook = 0;
 		cbtCallback.dispose ();
 	}
 	state &= ~(CANVAS | THEME_BACKGROUND);
@@ -801,10 +801,10 @@ int defaultBackground () {
 }
 
 TCHAR deprocessText (TCHAR text, int start, int end, boolean terminate) {
-	if (text == null || segments == null) return text;
+	if (text == null || this.segments == null) return text;
 	int length = text.length();
 	if (length == 0) return text;
-	int nSegments = segments.length;
+	int nSegments = this.segments.length;
 	if (nSegments == 0) return text;
 	char [] chars;
 	if (start < 0) start = 0;
@@ -816,12 +816,12 @@ TCHAR deprocessText (TCHAR text, int start, int end, boolean terminate) {
 		length = OS.MultiByteToWideChar (getCodePage (), OS.MB_PRECOMPOSED, text.bytes, length, chars, length);
 	}
 	if (end == -1) end = length;
-	if (end > segments [0] && start <= segments [nSegments - 1]) {
+	if (end > this.segments [0] && start <= this.segments [nSegments - 1]) {
 		int nLeadSegments = 0;
-		while (start - nLeadSegments > segments [nLeadSegments]) nLeadSegments++;
+		while (start - nLeadSegments > this.segments [nLeadSegments]) nLeadSegments++;
 		int segmentCount = nLeadSegments;
 		for (int i = start; i < end; i++) {
-			if (segmentCount < nSegments && i - segmentCount == segments [segmentCount]) {
+			if (segmentCount < nSegments && i - segmentCount == this.segments [segmentCount]) {
 				++segmentCount;
 			} else {
 				chars [i - segmentCount + nLeadSegments] = chars [i];
@@ -1123,7 +1123,7 @@ public String [] getItems () {
 	checkWidget ();
 	String [] result;
 	if (hooks (SWT.Segments) || filters (SWT.Segments)) {
-		result = new String [items.length];
+		result = new String [this.items.length];
 		System.arraycopy (items, 0, result, 0, items.length);
 	} else {
 		int count = getItemCount ();
@@ -1315,7 +1315,7 @@ public String getText () {
 	if (length == 0) return "";
 	TCHAR buffer = new TCHAR (getCodePage (), length + 1);
 	OS.GetWindowText (handle, buffer, length + 1);
-	if (segments != null) {
+	if (this.segments != null) {
 		buffer = deprocessText (buffer, 0, -1, false);
 		return buffer.toString ();
 	}
@@ -1365,7 +1365,7 @@ public int getTextLimit () {
 	long /*int*/ hwndText = OS.GetDlgItem (handle, CBID_EDIT);
 	if (hwndText == 0) return LIMIT;
 	int/*64*/ limit = (int)/*64*/OS.SendMessage (hwndText, OS.EM_GETLIMITTEXT, 0, 0) & 0x7FFFFFFF;
-	if (segments != null && limit < LIMIT) limit = Math.max (1, limit - segments.length);
+	if (this.segments != null && limit < LIMIT) limit = Math.max (1, limit - this.segments.length);
 	return limit;
 }
 
@@ -2292,8 +2292,8 @@ public void setText (String string) {
 public void setTextLimit (int limit) {
 	checkWidget ();
 	if (limit == 0) error (SWT.ERROR_CANNOT_BE_ZERO);
-	if (segments != null && limit > 0) {
-		OS.SendMessage (handle, OS.CB_LIMITTEXT, limit + Math.min (segments.length, LIMIT - limit), 0);
+	if (this.segments != null && limit > 0) {
+		OS.SendMessage (handle, OS.CB_LIMITTEXT, limit + Math.min (this.segments.length, LIMIT - limit), 0);
 	} else {
 		OS.SendMessage (handle, OS.CB_LIMITTEXT, limit, 0);
 	}
@@ -2345,8 +2345,8 @@ void subclass () {
 }
 
 int translateOffset (int offset) {
-	if (segments == null) return offset;
-	for (int i = 0, nSegments = segments.length; i < nSegments && offset - i >= segments[i]; i++) {
+	if (this.segments == null) return offset;
+	for (int i = 0, nSegments = this.segments.length; i < nSegments && offset - i >= this.segments[i]; i++) {
 		offset++;
 	}	
 	return offset;
@@ -2403,8 +2403,8 @@ void unsubclass () {
 }
 
 int untranslateOffset (int offset) {
-	if (segments == null) return offset;
-	for (int i = 0, nSegments = segments.length; i < nSegments && offset > segments[i]; i++) {
+	if (this.segments == null) return offset;
+	for (int i = 0, nSegments = this.segments.length; i < nSegments && offset > this.segments[i]; i++) {
 		offset--;
 	}
 	return offset;
@@ -2671,9 +2671,9 @@ long /*int*/ windowProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long /
 			if (hooks (SWT.Segments) || filters (SWT.Segments)) {
 				code = super.windowProc (hwnd, msg, wParam, lParam);
 				if (!(code == OS.CB_ERR || code == OS.CB_ERRSPACE)) {
-					segments = null;
-					Event event = getSegments (items [index]);
-					if (event != null) segments = event.segments;
+					this.segments = null;
+					Event event = getSegments (this.items [index]);
+					if (event != null) this.segments = event.segments;
 					return code;
 				}
 			}
@@ -2698,9 +2698,9 @@ long /*int*/ windowProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long /
 					OS.HeapFree (hHeap, 0, pszText);
 				}
 				if (msg == OS.CB_ADDSTRING || msg == OS.CB_INSERTSTRING) {
-					int index = msg == OS.CB_ADDSTRING ? items.length : (int)/*64*/ wParam;
-					String [] newItems = new String [items.length + 1];
-					System.arraycopy (items, 0, newItems, 0, index);
+					int index = msg == OS.CB_ADDSTRING ? this.items.length : (int)/*64*/ wParam;
+					String [] newItems = new String [this.items.length + 1];
+					System.arraycopy (this.items, 0, newItems, 0, index);
 					newItems [index] = string;
 					System.arraycopy (items, index, newItems, index + 1, items.length - index);
 					items = newItems;
@@ -3165,7 +3165,7 @@ LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 		case OS.VK_UP:
 		case OS.VK_RIGHT:
 		case OS.VK_DOWN:
-			if (segments != null) {
+			if (this.segments != null) {
 				long /*int*/ code = 0;
 				int [] start = new int [1], end = new int [1], newStart = new int [1], newEnd = new int [1];
 				OS.SendMessage (handle, OS.CB_GETEDITSEL, start, end);

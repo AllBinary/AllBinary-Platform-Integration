@@ -186,8 +186,8 @@ long /*int*/ getSiteWindow () {
 		return getHandle ();
 	}
 
-	Composite child = new Composite (browser, SWT.NONE);
-	childWindows.addElement (child);
+	Composite child = new Composite (this.browser, SWT.NONE);
+	this.childWindows.addElement (child);
 	return child.handle;
 }
 
@@ -262,10 +262,10 @@ void init () {
 
 void onDispose (long /*int*/ embedHandle) {
 	if (SubclassProc == null) return;
-	long /*int*/ hwndChild = OS.GetWindow (browser.handle, OS.GW_CHILD);
+	long /*int*/ hwndChild = OS.GetWindow (this.browser.handle, OS.GW_CHILD);
 	OS.SetWindowLongPtr (hwndChild, OS.GWL_WNDPROC, MozillaProc);
-	childWindows = null;
-	browser = null;
+	this.childWindows = null;
+	this.browser = null;
 }
 
 void removeWindowSubclass () {

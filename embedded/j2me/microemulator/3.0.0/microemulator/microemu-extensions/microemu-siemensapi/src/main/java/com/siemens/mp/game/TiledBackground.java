@@ -88,16 +88,16 @@ public class TiledBackground extends GraphicObject{
     
     public void setPositionInMap(int x, int y) {
         posx=x;
-        posy=y;
+        this.posy=y;
     }
     
     protected void paint(Graphics g) {
-        for (int y=posy/8;y<heightInTiles;y++) {
-            for(int x=posx/8;x<widthInTiles;x++) {
-                if (-posx+x*8>DeviceFactory.getDevice().getDeviceDisplay().getWidth()) break;
-                g.drawImage(pixels[map[y*widthInTiles+x]], -posx+x*8,-posy+y*8,0);
+        for (int y=this.posy/8;y<this.heightInTiles;y++) {
+            for(int x=this.posx/8;x<this.widthInTiles;x++) {
+                if (-this.posx+x*8>DeviceFactory.getDevice().getDeviceDisplay().getWidth()) break;
+                g.drawImage(pixels[map[y*this.widthInTiles+x]], -this.posx+x*8,-this.posy+y*8,0);
             }
-            if (-posy+y*8>DeviceFactory.getDevice().getDeviceDisplay().getHeight()) break;
+            if (-this.posy+y*8>DeviceFactory.getDevice().getDeviceDisplay().getHeight()) break;
         }
     }
 }

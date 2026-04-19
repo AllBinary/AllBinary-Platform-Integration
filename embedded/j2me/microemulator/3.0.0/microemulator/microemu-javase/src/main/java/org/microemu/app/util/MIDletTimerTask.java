@@ -39,20 +39,20 @@ public abstract class MIDletTimerTask extends TimerTask {
 	boolean oneTimeTaskExcecuted = false;
 	
 	public boolean cancel() {
-		if (timer == null) {
+		if (this.timer == null) {
 			return false;
 		}
 		
-		synchronized (timer.tasks) {
+		synchronized (this.timer.tasks) {
 			// task was never scheduled
-			if (time == -1) {
+			if (this.time == -1) {
 				return false;
 			}		
 			// task was scheduled for one-time execution and has already run
-			if (oneTimeTaskExcecuted) {
+			if (this.oneTimeTaskExcecuted) {
 				return false;
 			}
-			timer.tasks.remove(this);
+			this.timer.tasks.remove(this);
 		}
 
 		return true;

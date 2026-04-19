@@ -325,7 +325,7 @@ public void createFunction (BrowserFunction function) {
 	Enumeration keys = functions.keys ();
 	while (keys.hasMoreElements ()) {
 		Object key = keys.nextElement ();
-		BrowserFunction current = (BrowserFunction)functions.get (key);
+		BrowserFunction current = (BrowserFunction)this.functions.get (key);
 		if (current.name.equals (function.name)) {
 			deregisterFunction (current);
 			break;
@@ -435,8 +435,8 @@ public Object evaluate (String script) throws SWTException {
 	execute (getDeleteFunctionString (functionName));
 	deregisterFunction (function);
 
-	Object result = evaluateResult;
-	evaluateResult = null;
+	Object result = this.evaluateResult;
+	this.evaluateResult = null;
 	if (result instanceof SWTException) throw (SWTException)result;
 	return result;
 }
@@ -476,161 +476,161 @@ void registerFunction (BrowserFunction function) {
 }
 
 public void removeAuthenticationListener (AuthenticationListener listener) {
-	if (authenticationListeners.length == 0) return;
+	if (this.authenticationListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < authenticationListeners.length; i++) {
-		if (listener == authenticationListeners[i]) {
+	for (int i = 0; i < this.authenticationListeners.length; i++) {
+		if (listener == this.authenticationListeners[i]) {
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (authenticationListeners.length == 1) {
-		authenticationListeners = new AuthenticationListener[0];
+	if (this.authenticationListeners.length == 1) {
+		this.authenticationListeners = new AuthenticationListener[0];
 		return;
 	}
-	AuthenticationListener[] newAuthenticationListeners = new AuthenticationListener[authenticationListeners.length - 1];
-	System.arraycopy (authenticationListeners, 0, newAuthenticationListeners, 0, index);
+	AuthenticationListener[] newAuthenticationListeners = new AuthenticationListener[this.authenticationListeners.length - 1];
+	System.arraycopy (this.authenticationListeners, 0, newAuthenticationListeners, 0, index);
 	System.arraycopy (authenticationListeners, index + 1, newAuthenticationListeners, index, authenticationListeners.length - index - 1);
 	authenticationListeners = newAuthenticationListeners;
 }
 
 public void removeCloseWindowListener (CloseWindowListener listener) {
-	if (closeWindowListeners.length == 0) return;
+	if (this.closeWindowListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < closeWindowListeners.length; i++) {
-		if (listener == closeWindowListeners[i]){
+	for (int i = 0; i < this.closeWindowListeners.length; i++) {
+		if (listener == this.closeWindowListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (closeWindowListeners.length == 1) {
-		closeWindowListeners = new CloseWindowListener[0];
+	if (this.closeWindowListeners.length == 1) {
+		this.closeWindowListeners = new CloseWindowListener[0];
 		return;
 	}
-	CloseWindowListener[] newCloseWindowListeners = new CloseWindowListener[closeWindowListeners.length - 1];
-	System.arraycopy (closeWindowListeners, 0, newCloseWindowListeners, 0, index);
+	CloseWindowListener[] newCloseWindowListeners = new CloseWindowListener[this.closeWindowListeners.length - 1];
+	System.arraycopy (this.closeWindowListeners, 0, newCloseWindowListeners, 0, index);
 	System.arraycopy (closeWindowListeners, index + 1, newCloseWindowListeners, index, closeWindowListeners.length - index - 1);
 	closeWindowListeners = newCloseWindowListeners;
 }
 
 public void removeLocationListener (LocationListener listener) {
-	if (locationListeners.length == 0) return;
+	if (this.locationListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < locationListeners.length; i++) {
-		if (listener == locationListeners[i]){
+	for (int i = 0; i < this.locationListeners.length; i++) {
+		if (listener == this.locationListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (locationListeners.length == 1) {
-		locationListeners = new LocationListener[0];
+	if (this.locationListeners.length == 1) {
+		this.locationListeners = new LocationListener[0];
 		return;
 	}
-	LocationListener[] newLocationListeners = new LocationListener[locationListeners.length - 1];
-	System.arraycopy (locationListeners, 0, newLocationListeners, 0, index);
+	LocationListener[] newLocationListeners = new LocationListener[this.locationListeners.length - 1];
+	System.arraycopy (this.locationListeners, 0, newLocationListeners, 0, index);
 	System.arraycopy (locationListeners, index + 1, newLocationListeners, index, locationListeners.length - index - 1);
 	locationListeners = newLocationListeners;
 }
 
 public void removeOpenWindowListener (OpenWindowListener listener) {
-	if (openWindowListeners.length == 0) return;
+	if (this.openWindowListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < openWindowListeners.length; i++) {
-		if (listener == openWindowListeners[i]){
+	for (int i = 0; i < this.openWindowListeners.length; i++) {
+		if (listener == this.openWindowListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (openWindowListeners.length == 1) {
-		openWindowListeners = new OpenWindowListener[0];
+	if (this.openWindowListeners.length == 1) {
+		this.openWindowListeners = new OpenWindowListener[0];
 		return;
 	}
-	OpenWindowListener[] newOpenWindowListeners = new OpenWindowListener[openWindowListeners.length - 1];
-	System.arraycopy (openWindowListeners, 0, newOpenWindowListeners, 0, index);
+	OpenWindowListener[] newOpenWindowListeners = new OpenWindowListener[this.openWindowListeners.length - 1];
+	System.arraycopy (this.openWindowListeners, 0, newOpenWindowListeners, 0, index);
 	System.arraycopy (openWindowListeners, index + 1, newOpenWindowListeners, index, openWindowListeners.length - index - 1);
 	openWindowListeners = newOpenWindowListeners;
 }
 
 public void removeProgressListener (ProgressListener listener) {
-	if (progressListeners.length == 0) return;
+	if (this.progressListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < progressListeners.length; i++) {
-		if (listener == progressListeners[i]){
+	for (int i = 0; i < this.progressListeners.length; i++) {
+		if (listener == this.progressListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (progressListeners.length == 1) {
-		progressListeners = new ProgressListener[0];
+	if (this.progressListeners.length == 1) {
+		this.progressListeners = new ProgressListener[0];
 		return;
 	}
-	ProgressListener[] newProgressListeners = new ProgressListener[progressListeners.length - 1];
-	System.arraycopy (progressListeners, 0, newProgressListeners, 0, index);
+	ProgressListener[] newProgressListeners = new ProgressListener[this.progressListeners.length - 1];
+	System.arraycopy (this.progressListeners, 0, newProgressListeners, 0, index);
 	System.arraycopy (progressListeners, index + 1, newProgressListeners, index, progressListeners.length - index - 1);
 	progressListeners = newProgressListeners;
 }
 
 public void removeStatusTextListener (StatusTextListener listener) {
-	if (statusTextListeners.length == 0) return;
+	if (this.statusTextListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < statusTextListeners.length; i++) {
-		if (listener == statusTextListeners[i]){
+	for (int i = 0; i < this.statusTextListeners.length; i++) {
+		if (listener == this.statusTextListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (statusTextListeners.length == 1) {
-		statusTextListeners = new StatusTextListener[0];
+	if (this.statusTextListeners.length == 1) {
+		this.statusTextListeners = new StatusTextListener[0];
 		return;
 	}
-	StatusTextListener[] newStatusTextListeners = new StatusTextListener[statusTextListeners.length - 1];
-	System.arraycopy (statusTextListeners, 0, newStatusTextListeners, 0, index);
+	StatusTextListener[] newStatusTextListeners = new StatusTextListener[this.statusTextListeners.length - 1];
+	System.arraycopy (this.statusTextListeners, 0, newStatusTextListeners, 0, index);
 	System.arraycopy (statusTextListeners, index + 1, newStatusTextListeners, index, statusTextListeners.length - index - 1);
 	statusTextListeners = newStatusTextListeners;
 }
 
 public void removeTitleListener (TitleListener listener) {
-	if (titleListeners.length == 0) return;
+	if (this.titleListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < titleListeners.length; i++) {
-		if (listener == titleListeners[i]){
+	for (int i = 0; i < this.titleListeners.length; i++) {
+		if (listener == this.titleListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (titleListeners.length == 1) {
-		titleListeners = new TitleListener[0];
+	if (this.titleListeners.length == 1) {
+		this.titleListeners = new TitleListener[0];
 		return;
 	}
-	TitleListener[] newTitleListeners = new TitleListener[titleListeners.length - 1];
-	System.arraycopy (titleListeners, 0, newTitleListeners, 0, index);
+	TitleListener[] newTitleListeners = new TitleListener[this.titleListeners.length - 1];
+	System.arraycopy (this.titleListeners, 0, newTitleListeners, 0, index);
 	System.arraycopy (titleListeners, index + 1, newTitleListeners, index, titleListeners.length - index - 1);
 	titleListeners = newTitleListeners;
 }
 
 public void removeVisibilityWindowListener (VisibilityWindowListener listener) {
-	if (visibilityWindowListeners.length == 0) return;
+	if (this.visibilityWindowListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < visibilityWindowListeners.length; i++) {
-		if (listener == visibilityWindowListeners[i]){
+	for (int i = 0; i < this.visibilityWindowListeners.length; i++) {
+		if (listener == this.visibilityWindowListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (visibilityWindowListeners.length == 1) {
-		visibilityWindowListeners = new VisibilityWindowListener[0];
+	if (this.visibilityWindowListeners.length == 1) {
+		this.visibilityWindowListeners = new VisibilityWindowListener[0];
 		return;
 	}
-	VisibilityWindowListener[] newVisibilityWindowListeners = new VisibilityWindowListener[visibilityWindowListeners.length - 1];
-	System.arraycopy (visibilityWindowListeners, 0, newVisibilityWindowListeners, 0, index);
+	VisibilityWindowListener[] newVisibilityWindowListeners = new VisibilityWindowListener[this.visibilityWindowListeners.length - 1];
+	System.arraycopy (this.visibilityWindowListeners, 0, newVisibilityWindowListeners, 0, index);
 	System.arraycopy (visibilityWindowListeners, index + 1, newVisibilityWindowListeners, index, visibilityWindowListeners.length - index - 1);
 	visibilityWindowListeners = newVisibilityWindowListeners;
 }
@@ -695,11 +695,11 @@ boolean sendKeyEvent (Event event) {
 	if (traversal != SWT.TRAVERSE_NONE) {
 		boolean oldEventDoit = event.doit;
 		event.doit = traverseDoit;
-		doit = !browser.traverse (traversal, event);
+		doit = !this.browser.traverse (traversal, event);
 		event.doit = oldEventDoit;
 	}
 	if (doit) {
-		browser.notifyListeners (event.type, event);
+		this.browser.notifyListeners (event.type, event);
 		doit = event.doit;
 	}
 	return doit;

@@ -27,12 +27,12 @@ public class Group extends BaseProps
 				String tagName = e.getTagName();
 				if ("name".equals(tagName))
 				{
-					m_name = Util.getText(e);
+					this.m_name = Util.getText(e);
 				}
 				else
 				if ("parent".equals(tagName))
 				{
-					m_parent = Util.getText(e);
+					this.m_parent = Util.getText(e);
 				}
 			}
 		}		
@@ -51,9 +51,9 @@ public class Group extends BaseProps
 	public Properties constructCapabilities(Hashtable groups, Hashtable capTable)
 	{
 		Properties base = new Properties();
-		if (m_parent != null)
+		if (this.m_parent != null)
 		{
-			Group parentGroup = (Group) groups.get(m_parent.toLowerCase());
+			Group parentGroup = (Group) groups.get(this.m_parent.toLowerCase());
 			if (parentGroup != null)
 			{
 				base = parentGroup.constructCapabilities(groups, capTable);
@@ -67,9 +67,9 @@ public class Group extends BaseProps
 	public Set constructFeatureSet(Hashtable groups)
 	{
 		Set base = new TreeSet();
-		if (m_parent != null)
+		if (this.m_parent != null)
 		{
-			Group parentGroup = (Group) groups.get(m_parent);
+			Group parentGroup = (Group) groups.get(this.m_parent);
 			if (parentGroup != null)
 			{
 				base = parentGroup.constructFeatureSet(groups);

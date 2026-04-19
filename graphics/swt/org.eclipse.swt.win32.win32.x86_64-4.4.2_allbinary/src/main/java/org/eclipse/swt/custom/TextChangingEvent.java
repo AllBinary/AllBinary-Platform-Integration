@@ -60,12 +60,12 @@ public TextChangingEvent(StyledTextContent source) {
 }
 TextChangingEvent(StyledTextContent source, StyledTextEvent e) {
 	super(source);
-	start = e.start;
-	replaceCharCount = e.replaceCharCount;
-	newCharCount = e.newCharCount;
-	replaceLineCount = e.replaceLineCount;
-	newLineCount = e.newLineCount;
-	newText = e.text;
+	this.start = e.start;
+	this.replaceCharCount = e.replaceCharCount;
+	this.newCharCount = e.newCharCount;
+	this.replaceLineCount = e.replaceLineCount;
+	this.newLineCount = e.newLineCount;
+	this.newText = e.text;
 }
 
 }

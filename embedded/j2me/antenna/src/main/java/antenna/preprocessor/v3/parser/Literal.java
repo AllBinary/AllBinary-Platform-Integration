@@ -111,7 +111,7 @@ public class Literal {
             } else {
                 try {
                     Double.parseDouble(value);
-                    m_type = NUMBER;
+                    this.m_type = NUMBER;
                 } catch (NumberFormatException e) {
                 }
             }
@@ -122,7 +122,7 @@ public class Literal {
         case APPLexer.TRUE:
         case BOOLEAN: {
 
-            m_type = BOOLEAN;
+            this.m_type = BOOLEAN;
             if (!value.toLowerCase().equals(BOOLEAN_FALSE)
                     && !value.toLowerCase().equals(BOOLEAN_TRUE))
                 throw new IllegalArgumentException("Invalid boolean value : "
@@ -138,7 +138,7 @@ public class Literal {
         case APPLexer.FATAL:
         case DEBUG_LEVEL: {
 
-            m_type = DEBUG_LEVEL;
+            this.m_type = DEBUG_LEVEL;
             break;
         }
 
@@ -146,7 +146,7 @@ public class Literal {
             throw new IllegalArgumentException("Unsupported type : " + type);
         }
 
-        m_value = value;
+        this.m_value = value;
     }
 
     /*
@@ -155,7 +155,7 @@ public class Literal {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        switch (m_type) {
+        switch (this.m_type) {
         case STRING:
             return "\"" + this.m_value + "\"";
         case NUMBER:
@@ -176,7 +176,7 @@ public class Literal {
     public boolean equals(Object obj) {
         if (obj instanceof Literal) {
             Literal other = (Literal) obj;
-            return other.m_type == m_type && other.m_value.equals(m_value);
+            return other.m_type == this.m_type && other.m_value.equals(this.m_value);
         }
         return false;
     }
@@ -187,7 +187,7 @@ public class Literal {
      * @return if the literal value is <code>false</code>
      */
     public boolean isFalse() {
-        return m_type == BOOLEAN && m_value.equals(BOOLEAN_FALSE);
+        return m_type == BOOLEAN && this.m_value.equals(BOOLEAN_FALSE);
     }
 
     /**
@@ -196,7 +196,7 @@ public class Literal {
      * @return if the literal value is <code>true</code>
      */
     public boolean isTrue() {
-        return m_type == BOOLEAN && m_value.equals(BOOLEAN_TRUE);
+        return m_type == BOOLEAN && this.m_value.equals(BOOLEAN_TRUE);
     }
 
     /**

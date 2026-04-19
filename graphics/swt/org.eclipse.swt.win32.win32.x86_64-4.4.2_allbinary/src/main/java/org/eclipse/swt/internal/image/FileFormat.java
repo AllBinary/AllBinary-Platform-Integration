@@ -126,7 +126,7 @@ public void unloadIntoStream(ImageLoader loader, LEDataOutputStream stream) {
 	try {
 		this.outputStream = stream;
 		unloadIntoByteStream(loader);
-		outputStream.flush();
+		this.outputStream.flush();
 	} catch (Exception e) {
 		try {outputStream.flush();} catch (Exception f) {}
 		SWT.error(SWT.ERROR_IO, e);

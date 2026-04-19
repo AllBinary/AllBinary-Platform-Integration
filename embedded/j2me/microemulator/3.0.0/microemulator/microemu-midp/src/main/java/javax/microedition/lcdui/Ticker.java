@@ -50,9 +50,9 @@ public class Ticker
     if (str == null) {
       throw new NullPointerException();
     }
-    instance = this;
+    this.instance = this;
     
-    text = str;
+    this.text = str;
   }
 
 
@@ -67,7 +67,7 @@ public class Ticker
     if (str == null) {
       throw new NullPointerException();
     }
-    text = str;
+    this.text = str;
   }
   
 
@@ -81,13 +81,13 @@ public class Ticker
   {
 		Font f = Font.getDefaultFont();
     
-    synchronized (instance) {
-      int stringWidth = f.stringWidth(text) + PAINT_GAP;
-      g.drawString(text, textPos, 0, Graphics.LEFT | Graphics.TOP);
+    synchronized (this.instance) {
+      int stringWidth = f.stringWidth(this.text) + PAINT_GAP;
+      g.drawString(this.text, textPos, 0, Graphics.LEFT | Graphics.TOP);
       int xPos = textPos + stringWidth;
       DisplayAccess da = MIDletBridge.getMIDletAccess().getDisplayAccess();
       while (xPos < da.getCurrent().getWidth()) {
-        g.drawString(text, xPos, 0, Graphics.LEFT | Graphics.TOP);
+        g.drawString(this.text, xPos, 0, Graphics.LEFT | Graphics.TOP);
         xPos += stringWidth;
       }
       if (textPos + stringWidth < 0) {

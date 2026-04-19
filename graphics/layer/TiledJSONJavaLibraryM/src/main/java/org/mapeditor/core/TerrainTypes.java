@@ -56,8 +56,8 @@ public class TerrainTypes {
      */
     
     public BasicArrayList getTerrain() {
-        if (terrain == null) {
-            terrain = new BasicArrayList();
+        if (this.terrain == null) {
+            this.terrain = new BasicArrayList();
         }
         return this.terrain;
     }

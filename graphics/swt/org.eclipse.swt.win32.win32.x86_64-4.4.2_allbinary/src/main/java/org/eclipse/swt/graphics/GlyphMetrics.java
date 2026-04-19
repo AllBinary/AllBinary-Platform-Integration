@@ -85,7 +85,7 @@ public boolean equals (Object object) {
 	if (object == this) return true;
 	if (!(object instanceof GlyphMetrics)) return false;
 	GlyphMetrics metrics = (GlyphMetrics)object;
-	return metrics.ascent == ascent && metrics.descent == descent && metrics.width == width;
+	return metrics.ascent == this.ascent && metrics.descent == this.descent && metrics.width == this.width;
 }
 
 /**
@@ -100,7 +100,7 @@ public boolean equals (Object object) {
  */
 @Override
 public int hashCode () {
-	return ascent ^ descent ^ width;
+	return ascent ^ this.descent ^ this.width;
 }
 
 /**
@@ -111,7 +111,7 @@ public int hashCode () {
  */
 @Override
 public String toString () {
-	return "GlyphMetrics {" + ascent + ", " + descent + ", " + width + "}"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	return "GlyphMetrics {" + this.ascent + ", " + this.descent + ", " + this.width + "}"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 }
 
 }

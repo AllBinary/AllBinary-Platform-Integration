@@ -51,8 +51,8 @@ public class JadProperties extends Manifest {
 	public void clear() {
 		super.clear();
 
-		midletEntries = null;
-		correctedJarURL = null;
+		this.midletEntries = null;
+		this.correctedJarURL = null;
 	}
 
 	public String getSuiteName() {
@@ -76,7 +76,7 @@ public class JadProperties extends Manifest {
 	}
 
 	public String getJarURL() {
-		if (correctedJarURL != null) {
+		if (this.correctedJarURL != null) {
 			return correctedJarURL;
 		} else {
 			return getProperty("MIDlet-Jar-URL");
@@ -95,8 +95,8 @@ public class JadProperties extends Manifest {
 		String name, icon, className;
 		int pos;
 
-		if (midletEntries == null) {
-			midletEntries = new Vector();
+		if (this.midletEntries == null) {
+			this.midletEntries = new Vector();
 
 			Attributes attributes = super.getMainAttributes();
 			for (Iterator it = attributes.keySet().iterator(); it.hasNext();) {
@@ -109,7 +109,7 @@ public class JadProperties extends Manifest {
 						name = test.substring(0, pos).trim();
 						icon = test.substring(pos + 1, test.indexOf(',', pos + 1)).trim();
 						className = test.substring(test.indexOf(',', pos + 1) + 1).trim();
-						midletEntries.addElement(new JadMidletEntry(name, icon, className));
+						this.midletEntries.addElement(new JadMidletEntry(name, icon, className));
 					} catch (NumberFormatException ex) {
 					}
 				}

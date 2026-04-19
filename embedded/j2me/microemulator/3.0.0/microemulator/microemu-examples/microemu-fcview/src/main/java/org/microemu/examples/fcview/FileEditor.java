@@ -67,7 +67,7 @@ public class FileEditor extends TextBox  implements CommandListener {
 	private void load() {
 		DataInputStream is = null; 
 		try {
-			is = file.openDataInputStream();
+			is = this.file.openDataInputStream();
 			this.setString(is.readUTF());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class FileEditor extends TextBox  implements CommandListener {
 	private void save() {
 		DataOutputStream os = null; 
 		try {
-			os = file.openDataOutputStream();
+			os = this.file.openDataOutputStream();
 			os.writeUTF(this.getString());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -104,7 +104,7 @@ public class FileEditor extends TextBox  implements CommandListener {
 	public void commandAction(Command c, Displayable d) {
 		if (c == backCommand) {
 			try {
-				file.close();
+				this.file.close();
 			} catch (IOException ignore) {
 			}
 			FCViewMIDlet.setCurrentDisplayable(back);

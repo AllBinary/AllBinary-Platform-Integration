@@ -84,7 +84,7 @@ public class Item
   
     Item(String label) {
 		labelComponent = new StringComponent(label);
-		commands = new Vector();
+		this.commands = new Vector();
 		setPreferredSize(-1, -1);
 	}
 	
@@ -96,20 +96,20 @@ public class Item
 	    if (cmd == null)
 	        throw new NullPointerException();
 	
-	    if (!commands.contains(cmd)) {
+	    if (!this.commands.contains(cmd)) {
 	        // Now insert it in order
 	        boolean inserted = false;
 	          
-	        for (int i = 0; i < commands.size(); i++) {
-	            if (cmd.getPriority() < ((Command)commands.elementAt(i)).getPriority()) {
-	                commands.insertElementAt(cmd, i);
+	        for (int i = 0; i < this.commands.size(); i++) {
+	            if (cmd.getPriority() < ((Command)this.commands.elementAt(i)).getPriority()) {
+	                this.commands.insertElementAt(cmd, i);
 	                inserted = true;
 	                break;
 	            }
 	        }
 	        if (!inserted) {
 	          // Not inserted just place it at the end
-	              commands.addElement(cmd);
+	              this.commands.addElement(cmd);
 	        }
 	    	repaintOwner();
         }
@@ -126,7 +126,7 @@ public class Item
 	}
 	
 	public int getMinimumHeight() {
-		if (labelComponent != null)
+		if (this.labelComponent != null)
 			return labelComponent.getHeight();
 		else 
 			return 0;
@@ -178,8 +178,8 @@ public class Item
 
 	public void removeCommand(Command cmd) {
         commands.removeElement(cmd);
-        if (defaultCommand == cmd)
-        	defaultCommand = null;
+        if (this.defaultCommand == cmd)
+        	this.defaultCommand = null;
         repaintOwner();
     }
 	
@@ -191,7 +191,7 @@ public class Item
         if (cmd != null) {
             // we should repaint even if the command was added
             // because the command layout could become different
-            if (commands.contains(cmd))
+            if (this.commands.contains(cmd))
             	addCommand(cmd);
             else 
             	repaintOwner();
@@ -206,9 +206,9 @@ public class Item
     
     public void setLabel(String label)	
 	{
-    	ui.setLabel(label);
+    	this.ui.setLabel(label);
     	
-		labelComponent.setText(label);
+		this.labelComponent.setText(label);
 		repaint();
 	}
 
@@ -278,14 +278,14 @@ public class Item
 	
 	void paintContent(Graphics g)
 	{
-		labelComponent.paint(g);
+		this.labelComponent.paint(g);
 	}
 	
 	
 	void repaint()
 	{
-		if (owner != null) {
-			owner.repaint();
+		if (this.owner != null) {
+			this.owner.repaint();
 		}
 	}
 	
@@ -325,8 +325,8 @@ public class Item
 		// call the default command (if there is one)
 		// however subclasses may override this behaviour
 		// (ie popup choices uses select to bring the popup)
-		if (defaultCommand != null && commandListener != null) {
-			commandListener.commandAction(defaultCommand, this);
+		if (this.defaultCommand != null && this.commandListener != null) {
+			this.commandListener.commandAction(this.defaultCommand, this);
 			return true;
 		} else {
 			return false;
@@ -341,7 +341,7 @@ public class Item
 
 //TWB - made public
 	public int getMaximumHeight() {
-		if (owner != null) {
+		if (this.owner != null) {
 			return owner.getHeight() * 10;
 		} else {
 			return DeviceFactory.getDevice().getDeviceDisplay().getHeight() * 10;
@@ -350,7 +350,7 @@ public class Item
 
 	//TWB - made public
 	public int getMaximumWidth() {
-		if (owner != null) {
+		if (this.owner != null) {
 			return owner.getWidth() - 3;
 		} else {
 			return DeviceFactory.getDevice().getDeviceDisplay().getWidth() - 3;

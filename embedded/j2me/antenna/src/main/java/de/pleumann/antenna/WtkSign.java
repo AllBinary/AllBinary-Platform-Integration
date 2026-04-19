@@ -67,12 +67,12 @@ public class WtkSign extends Task
 
 	public WtkSign()
 	{
-		m_keyStore = new File(System.getProperty("user.home") + File.separator
+		this.m_keyStore = new File(System.getProperty("user.home") + File.separator
 				+ ".keystore");
-		m_certNum = 1;
-		m_certPass = "";
-		m_storePass = "";
-		m_jadEncoding = "UTF-8";
+		this.m_certNum = 1;
+		this.m_certPass = "";
+		this.m_storePass = "";
+		this.m_jadEncoding = "UTF-8";
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class WtkSign extends Task
 	 */
 	public void setCertAlias(String certAlias)
 	{
-		m_certAlias = certAlias;
+		this.m_certAlias = certAlias;
 	}
 
 	/**
@@ -88,29 +88,29 @@ public class WtkSign extends Task
 	 */
 	public void execute() throws BuildException
 	{
-		if(m_jarFile == null)
+		if(this.m_jarFile == null)
 		{
 			throw new BuildException("jarfile is not set");
 		}
 
-		if(m_jadFile == null)
+		if(this.m_jadFile == null)
 		{
 			throw new BuildException("jadfile is not set");
 		}
 
-		if(m_certAlias == null)
+		if(this.m_certAlias == null)
 		{
 			throw new BuildException("certalias is not set");
 		}
 
-		if(!(m_jarFile.exists()))
+		if(!(this.m_jarFile.exists()))
 		{
-			throw new BuildException("jarfile " + m_jarFile + " does not exist");
+			throw new BuildException("jarfile " + this.m_jarFile + " does not exist");
 		}
 
-		if(!(m_jadFile.exists()))
+		if(!(this.m_jadFile.exists()))
 		{
-			throw new BuildException("jadfile " + m_jadFile + " does not exist");
+			throw new BuildException("jadfile " + this.m_jadFile + " does not exist");
 		}
 
 		FileInputStream ksin = null; // keystore input stream
@@ -118,15 +118,15 @@ public class WtkSign extends Task
 		try
 		{
 			JadFile jadfile = new JadFile();
-			jadfile.load(m_jadFile.getAbsolutePath(), m_jadEncoding);
-			KeyStore keystore = KeyStore.getInstance(m_storeType);
-            ksin = new FileInputStream(m_keyStore);
+			jadfile.load(this.m_jadFile.getAbsolutePath(), m_jadEncoding);
+			KeyStore keystore = KeyStore.getInstance(this.m_storeType);
+            ksin = new FileInputStream(this.m_keyStore);
 			keystore.load(ksin, m_storePass.toCharArray());
 			// add certificates chain.
-			Certificate[] certificates = keystore.getCertificateChain(m_certAlias);
+			Certificate[] certificates = keystore.getCertificateChain(this.m_certAlias);
 			if(certificates == null)
 			{
-				throw new BuildException("Certificate chain " + m_certAlias + " not found in key store");
+				throw new BuildException("Certificate chain " + this.m_certAlias + " not found in key store");
 			}
 			else
 			{
@@ -140,15 +140,15 @@ public class WtkSign extends Task
 			}
 			
 			// sign the jar
-			jin = new FileInputStream(m_jarFile);
+			jin = new FileInputStream(this.m_jarFile);
 			
-			log("Signing jar " + m_jarFile);
-			log("Key store : " + m_keyStore);
-			log("Cert alias : " + m_certAlias);
+			log("Signing jar " + this.m_jarFile);
+			log("Key store : " + this.m_keyStore);
+			log("Cert alias : " + this.m_certAlias);
 			
 			Signature signature = Signature.getInstance("SHA1withRSA");
 			
-			PrivateKey key = (PrivateKey) keystore.getKey(m_certAlias, m_certPass.toCharArray());
+			PrivateKey key = (PrivateKey) keystore.getKey(this.m_certAlias, m_certPass.toCharArray());
 			signature.initSign(key);
 			int len;
 			int t = 0;
@@ -162,7 +162,7 @@ public class WtkSign extends Task
 			byte[] sign = signature.sign();
 			String sigStr = Base64.encodeBytes(sign, Base64.DONT_BREAK_LINES);
 			jadfile.setValue("MIDlet-Jar-RSA-SHA1", sigStr);
-			jadfile.save(m_jadFile.getAbsolutePath(), m_jadEncoding);
+			jadfile.save(this.m_jadFile.getAbsolutePath(), m_jadEncoding);
 		}
 		catch (IOException e)
 		{
@@ -248,7 +248,7 @@ public class WtkSign extends Task
 	 */
 	public void setJarFile(File jarFile)
 	{
-		m_jarFile = jarFile;
+		this.m_jarFile = jarFile;
 	}
 
 	/**
@@ -264,7 +264,7 @@ public class WtkSign extends Task
 	 */
 	public void setKeyStore(File keyStore)
 	{
-		m_keyStore = keyStore;
+		this.m_keyStore = keyStore;
 	}
 
 	/**
@@ -287,7 +287,7 @@ public class WtkSign extends Task
       */
      public void setStoreType(String storeType)
      {
-        m_storeType = storeType;
+        this.m_storeType = storeType;
      }
 
 }

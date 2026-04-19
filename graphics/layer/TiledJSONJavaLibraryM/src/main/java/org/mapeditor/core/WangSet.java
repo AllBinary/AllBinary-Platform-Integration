@@ -78,8 +78,8 @@ public class WangSet {
      */
     
     public BasicArrayList getWangcornercolor() {
-        if (wangcornercolor == null) {
-            wangcornercolor = new BasicArrayList();
+        if (this.wangcornercolor == null) {
+            this.wangcornercolor = new BasicArrayList();
         }
         return this.wangcornercolor;
     }
@@ -89,8 +89,8 @@ public class WangSet {
      */
     
     public BasicArrayList getWangedgecolor() {
-        if (wangedgecolor == null) {
-            wangedgecolor = new BasicArrayList();
+        if (this.wangedgecolor == null) {
+            this.wangedgecolor = new BasicArrayList();
         }
         return this.wangedgecolor;
     }
@@ -100,8 +100,8 @@ public class WangSet {
      */
     
     public BasicArrayList getWangtile() {
-        if (wangtile == null) {
-            wangtile = new BasicArrayList();
+        if (this.wangtile == null) {
+            this.wangtile = new BasicArrayList();
         }
         return this.wangtile;
     }

@@ -45,7 +45,7 @@ public class SecurityInfoImpl implements SecurityInfo {
 	}
 
 	public String getProtocolName() {
-		if (protocolName.startsWith("TLS")) {
+		if (this.protocolName.startsWith("TLS")) {
 			return "TLS";
 		} else if (protocolName.startsWith("SSL")) {
 			return "SSL";
@@ -61,7 +61,7 @@ public class SecurityInfoImpl implements SecurityInfo {
 	}
 
 	public String getProtocolVersion() {
-		if (protocolName.startsWith("TLS")) {
+		if (this.protocolName.startsWith("TLS")) {
 			return "3.1";
 		} else if (getProtocolName().equals("SSL")) {
 			return "3.0";

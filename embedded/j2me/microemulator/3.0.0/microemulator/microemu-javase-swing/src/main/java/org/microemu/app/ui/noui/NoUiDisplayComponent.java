@@ -47,7 +47,7 @@ public class NoUiDisplayComponent implements DisplayComponent {
 	}
 
 	public void removeDisplayRepaintListener(DisplayRepaintListener l) {
-		if (displayRepaintListener == l) {
+		if (this.displayRepaintListener == l) {
 			this.displayRepaintListener = null;
 		}
 	}
@@ -70,28 +70,28 @@ public class NoUiDisplayComponent implements DisplayComponent {
 		Device device = DeviceFactory.getDevice();
 
 		if (device != null) {
-			if (graphicsSurface == null) {
-				graphicsSurface = new J2SEGraphicsSurface(
+			if (this.graphicsSurface == null) {
+				this.graphicsSurface = new J2SEGraphicsSurface(
 						device.getDeviceDisplay().getFullWidth(), device.getDeviceDisplay().getFullHeight(), false, 0x000000);
 			}
 					
 			J2SEDeviceDisplay deviceDisplay = (J2SEDeviceDisplay) device.getDeviceDisplay();
-			synchronized (graphicsSurface) {
-				deviceDisplay.paintDisplayable(graphicsSurface, x, y, width, height);
+			synchronized (this.graphicsSurface) {
+				deviceDisplay.paintDisplayable(this.graphicsSurface, x, y, width, height);
 				if (!deviceDisplay.isFullScreenMode()) {
-					deviceDisplay.paintControls(graphicsSurface.getGraphics());
+					deviceDisplay.paintControls(this.graphicsSurface.getGraphics());
 				}
 			}
 
-			fireDisplayRepaint(graphicsSurface);
+			fireDisplayRepaint(this.graphicsSurface);
 		}	
 	}
 
 
 	private void fireDisplayRepaint(J2SEGraphicsSurface graphicsSurface)
 	{
-		if (displayRepaintListener != null) {
-			displayRepaintListener.repaintInvoked(graphicsSurface);
+		if (this.displayRepaintListener != null) {
+			this.displayRepaintListener.repaintInvoked(graphicsSurface);
 		}
 	}
 

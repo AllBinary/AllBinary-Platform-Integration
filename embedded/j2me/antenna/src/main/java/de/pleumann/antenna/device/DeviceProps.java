@@ -27,7 +27,7 @@ public class DeviceProps extends BaseProps
 	public DeviceProps(Element dev)
 	{
 		super(dev);
-		m_groups = new TreeSet();
+		this.m_groups = new TreeSet();
 		
 		NodeList props = dev.getChildNodes();
 		for (int i = 0; i < props.getLength(); i++)
@@ -39,7 +39,7 @@ public class DeviceProps extends BaseProps
 				String tagName = e.getTagName();
 				if (IDENTIFIER.equals(tagName))
 				{
-					m_identifier = Util.getText(e);
+					this.m_identifier = Util.getText(e);
 				}
 				else
 				if (GROUPS.equals(tagName))
@@ -79,9 +79,9 @@ public class DeviceProps extends BaseProps
 			props.setProperty(c, "'"+v+"'");
 		}
 		
-		props.put(GROUPS, convertSetToString(m_groups));
+		props.put(GROUPS, convertSetToString(this.m_groups));
 		props.put(FEATURES, convertSetToString(m_features));
-		props.put(m_identifier, "");
+		props.put(this.m_identifier, "");
 	}
 	
 	private String convertSetToString(Set set)
@@ -105,22 +105,22 @@ public class DeviceProps extends BaseProps
 	private void calculateIMEIKey()
 	{
 		String name = null;
-		if (m_identifier.toLowerCase().indexOf("sony-ericsson") != -1)
+		if (this.m_identifier.toLowerCase().indexOf("sony-ericsson") != -1)
 		{
 			name = "com.sonyericsson.imei";
 		}
 		else
-		if (m_identifier.toLowerCase().indexOf("motorola") != -1)
+		if (this.m_identifier.toLowerCase().indexOf("motorola") != -1)
 		{
 			name = "IMEI";
 		}
 		else
-		if (m_identifier.toLowerCase().indexOf("siemens") != -1)
+		if (this.m_identifier.toLowerCase().indexOf("siemens") != -1)
 		{
 			name = "com.siemens.IMEI";
 		}
 		else
-		if (m_identifier.toLowerCase().indexOf("nokia") != -1)
+		if (this.m_identifier.toLowerCase().indexOf("nokia") != -1)
 		{
 			if (inGroup("series40"))
 			{
@@ -220,7 +220,7 @@ public class DeviceProps extends BaseProps
 
 	public void setGroupsData(Hashtable groups, Hashtable capTable)
 	{
-		for (Iterator ii = m_groups.iterator(); ii.hasNext();)
+		for (Iterator ii = this.m_groups.iterator(); ii.hasNext();)
 		{
 			String groupName = (String) ii.next();
 			Group group = (Group) groups.get(groupName.toLowerCase());

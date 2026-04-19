@@ -66,9 +66,9 @@ public class AndroidDisplayGraphicsBase
         
         //this.fontPaint = new Paint();
 
-        strokeAndFillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        this.strokeAndFillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        paint.setStyle(Paint.Style.FILL);
+        this.paint.setStyle(Paint.Style.FILL);
 
         this.strokePaint.setStyle(Paint.Style.STROKE);
         this.strokePaint.setStrokeWidth(2.0f);
@@ -96,9 +96,9 @@ public class AndroidDisplayGraphicsBase
 
         this.setCanvas(a_g);
 
-        strokeAndFillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        this.strokeAndFillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        paint.setStyle(Paint.Style.FILL);
+        this.paint.setStyle(Paint.Style.FILL);
 
         this.strokePaint.setStyle(Paint.Style.STROKE);
         this.strokePaint.setStrokeWidth(2.0f);
@@ -173,7 +173,7 @@ public class AndroidDisplayGraphicsBase
     @Override
     public void setColor(final int RGB)
     {
-        colorP = RGB;
+        this.colorP = RGB;
 
         /*
          * TWB - Performance Improvement Color awtColor = (Color)
@@ -182,10 +182,10 @@ public class AndroidDisplayGraphicsBase
          * awtColor); } this.paint.setColor(awtColor.getRGB());
          * this.strokePaint.setColor(awtColor.getRGB());
          */
-        this.paint.setColor(colorP);
+        this.paint.setColor(this.colorP);
         //this.fontPaint.setColor(color);
-        this.strokePaint.setColor(colorP);
-        this.strokeAndFillPaint.setColor(colorP);
+        this.strokePaint.setColor(this.colorP);
+        this.strokeAndFillPaint.setColor(this.colorP);
     }
 
     @Override
@@ -221,7 +221,7 @@ public class AndroidDisplayGraphicsBase
         }
         catch(Exception e)
         {
-            logUtil.put(commonStrings.EXCEPTION, this, this.fontDebugFactory.NO_DEBUG.SET_FONT, e);
+            this.logUtil.put(this.commonStrings.EXCEPTION, this, this.fontDebugFactory.NO_DEBUG.SET_FONT, e);
         }
     }
 

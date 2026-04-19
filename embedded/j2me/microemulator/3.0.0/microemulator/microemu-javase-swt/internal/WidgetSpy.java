@@ -57,14 +57,14 @@ public class WidgetSpy {
 	}
 
 	public void widgetCreated(Widget widget) {
-		if (widgetTracker != null) {
-			widgetTracker.widgetCreated(widget);
+		if (this.widgetTracker != null) {
+			this.widgetTracker.widgetCreated(widget);
 		}
 	}
 
 	public void widgetDisposed(Widget widget) {
-		if (widgetTracker != null) {
-			widgetTracker.widgetDisposed(widget);
+		if (this.widgetTracker != null) {
+			this.widgetTracker.widgetDisposed(widget);
 		}
 	}
 
@@ -129,7 +129,7 @@ public class WidgetSpy {
 
 		public void setTrackedTypes(List<Class<? extends Widget>> types) {
 			trackedTypes.clear();
-			trackedTypes.addAll(types);
+			this.trackedTypes.addAll(types);
 		}
 
 		private boolean isTracked(Widget widget) {
@@ -139,10 +139,10 @@ public class WidgetSpy {
 			}
 			if (widget != null) {
 				Class<? extends Widget> widgetType = widget.getClass();
-				if (trackedTypes.contains(widgetType)) {
+				if (this.trackedTypes.contains(widgetType)) {
 					return true;
 				}
-				for (Class<? extends Widget> filteredType : trackedTypes) {
+				for (Class<? extends Widget> filteredType : this.trackedTypes) {
 					if (filteredType.isAssignableFrom(widgetType)) {
 						return true;
 					}

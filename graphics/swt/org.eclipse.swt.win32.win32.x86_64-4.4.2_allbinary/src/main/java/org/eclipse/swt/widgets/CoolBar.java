@@ -146,7 +146,7 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 	int newHeight = hHint == SWT.DEFAULT ? 0x3FFF : hHint + (border * 2);
 	int count = (int)/*64*/OS.SendMessage (handle, OS.RB_GETBANDCOUNT, 0, 0);
 	if (count != 0) {
-		ignoreResize = true;
+		this.ignoreResize = true;
 		boolean redraw = false;
 		if (OS.IsWindowVisible (handle)) {
 			if (OS.COMCTL32_MAJOR >= 6) {
@@ -191,7 +191,7 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 				OS.SendMessage (handle, OS.WM_SETREDRAW, 1, 0);
 			}
 		}
-		ignoreResize = false;
+		this.ignoreResize = false;
 	}
 	if (width == 0) width = DEFAULT_COOLBAR_WIDTH;
 	if (height == 0) height = DEFAULT_COOLBAR_HEIGHT;
@@ -231,9 +231,9 @@ void createItem (CoolItem item, int index) {
 	int count = (int)/*64*/OS.SendMessage (handle, OS.RB_GETBANDCOUNT, 0, 0);
 	if (!(0 <= index && index <= count)) error (SWT.ERROR_INVALID_RANGE);
 	int id = 0;
-	while (id < items.length && items [id] != null) id++;
-	if (id == items.length) {
-		CoolItem [] newItems = new CoolItem [items.length + 4];
+	while (id < this.items.length && this.items [id] != null) id++;
+	if (id == this.items.length) {
+		CoolItem [] newItems = new CoolItem [this.items.length + 4];
 		System.arraycopy (items, 0, newItems, 0, items.length);
 		items = newItems;
 	}
@@ -287,18 +287,18 @@ void createItem (CoolItem item, int index) {
 	
 	OS.HeapFree (hHeap, 0, lpText);
 	items [item.id = id] = item;
-	int length = originalItems.length;
+	int length = this.originalItems.length;
 	CoolItem [] newOriginals = new CoolItem [length + 1];
-	System.arraycopy (originalItems, 0, newOriginals, 0, index);
-	System.arraycopy (originalItems, index, newOriginals, index + 1, length - index);
+	System.arraycopy (this.originalItems, 0, newOriginals, 0, index);
+	System.arraycopy (this.originalItems, index, newOriginals, index + 1, length - index);
 	newOriginals [index] = item;
-	originalItems = newOriginals;
+	this.originalItems = newOriginals;
 }
 
 void createWidget () {
 	super.createWidget ();
-	items = new CoolItem [4];
-	originalItems = new CoolItem [0];
+	this.items = new CoolItem [4];
+	this.originalItems = new CoolItem [0];
 }
 
 void destroyItem (CoolItem item) {
@@ -339,32 +339,32 @@ void destroyItem (CoolItem item) {
 	if (item.getWrap ()) {
 		if (index + 1 < count) {
 			nextItem = getItem (index + 1);
-			ignoreResize = !nextItem.getWrap ();
+			this.ignoreResize = !nextItem.getWrap ();
 		}
 	}
 	if (OS.SendMessage (handle, OS.RB_DELETEBAND, index, 0) == 0) {
 		error (SWT.ERROR_ITEM_NOT_REMOVED);
 	}
-	items [item.id] = null;
+	this.items [item.id] = null;
 	item.id = -1;
-	if (ignoreResize) {
+	if (this.ignoreResize) {
 		nextItem.setWrap (true);
-		ignoreResize = false;
+		this.ignoreResize = false;
 	}
 	
 	/* Restore the visible state of the control */
 	if (wasVisible) control.setVisible (true);
 	
 	index = 0;
-	while (index < originalItems.length) {
-		if (originalItems [index] == item) break;
+	while (index < this.originalItems.length) {
+		if (this.originalItems [index] == item) break;
 		index++;
 	}
-	int length = originalItems.length - 1;
+	int length = this.originalItems.length - 1;
 	CoolItem [] newOriginals = new CoolItem [length];
-	System.arraycopy (originalItems, 0, newOriginals, 0, index);
-	System.arraycopy (originalItems, index + 1, newOriginals, index, length - index);
-	originalItems = newOriginals;
+	System.arraycopy (this.originalItems, 0, newOriginals, 0, index);
+	System.arraycopy (this.originalItems, index + 1, newOriginals, index, length - index);
+	this.originalItems = newOriginals;
 }
 
 void drawThemeBackground (long /*int*/ hDC, long /*int*/ hwnd, RECT rect) {
@@ -498,13 +498,13 @@ public int [] getItemOrder () {
 	rbBand.fMask = OS.RBBIM_ID;
 	for (int i=0; i<count; i++) {
 		OS.SendMessage (handle, OS.RB_GETBANDINFO, i, rbBand);
-		CoolItem item = items [rbBand.wID];
+		CoolItem item = this.items [rbBand.wID];
 		int index = 0;
-		while (index<originalItems.length) {
-			if (originalItems [index] == item) break;
+		while (index<this.originalItems.length) {
+			if (this.originalItems [index] == item) break;
 			index++;
 		}
-		if (index == originalItems.length) error (SWT.ERROR_CANNOT_GET_ITEM);
+		if (index == this.originalItems.length) error (SWT.ERROR_CANNOT_GET_ITEM);
 		indices [i] = index;
 	}
 	return indices;
@@ -535,7 +535,7 @@ public CoolItem [] getItems () {
 	rbBand.fMask = OS.RBBIM_ID;
 	for (int i=0; i<count; i++) {
 		OS.SendMessage (handle, OS.RB_GETBANDINFO, i, rbBand);
-		result [i] = items [rbBand.wID];
+		result [i] = this.items [rbBand.wID];
 	}
 	return result;
 }
@@ -704,22 +704,22 @@ void resizeToMaximumWidth (int index) {
 }	
 
 void releaseChildren (boolean destroy) {
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			CoolItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			CoolItem item = this.items [i];
 			if (item != null && !item.isDisposed ()) {
 				item.release (false);
 			}
 		}
-		items = null;
+		this.items = null;
 	}
 	super.releaseChildren (destroy);
 }
 
 void removeControl (Control control) {
 	super.removeControl (control);
-	for (int i=0; i<items.length; i++) {
-		CoolItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		CoolItem item = this.items [i];
 		if (item != null && item.control == control) {
 			item.setControl (null);
 		}
@@ -727,9 +727,9 @@ void removeControl (Control control) {
 }
 
 void reskinChildren (int flags) {
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			CoolItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			CoolItem item = this.items [i];
 			if (item != null) item.reskin (flags);
 		}
 	}
@@ -849,7 +849,7 @@ void setItemOrder (int [] itemOrder) {
 	REBARBANDINFO rbBand = new REBARBANDINFO ();
 	rbBand.cbSize = REBARBANDINFO.sizeof;
 	for (int i=0; i<itemOrder.length; i++) {
-		int id = originalItems [itemOrder [i]].id;
+		int id = this.originalItems [itemOrder [i]].id;
 		int index = (int)/*64*/OS.SendMessage (handle, OS.RB_IDTOINDEX, id, 0);
 		if (index != i) {
 			int lastItemSrcRow = getLastIndexOfRow (index);
@@ -900,7 +900,7 @@ void setItemSizes (Point [] sizes) {
 	rbBand.fMask = OS.RBBIM_ID;
 	for (int i=0; i<count; i++) {
 		OS.SendMessage (handle, OS.RB_GETBANDINFO, i, rbBand);
-		items [rbBand.wID].setSize (sizes [i].x, sizes [i].y);
+		this.items [rbBand.wID].setSize (sizes [i].x, sizes [i].y);
 	}
 }
 
@@ -1098,7 +1098,7 @@ LRESULT WM_SETREDRAW (long /*int*/ wParam, long /*int*/ lParam) {
 }
 
 LRESULT WM_SIZE (long /*int*/ wParam, long /*int*/ lParam) {
-	if (ignoreResize) {
+	if (this.ignoreResize) {
 		long /*int*/ code = callWindowProc (handle, OS.WM_SIZE, wParam, lParam);
 		if (code == 0) return LRESULT.ZERO;
 		return new LRESULT (code);
@@ -1136,7 +1136,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 			NMREBARCHILDSIZE lprbcs  = new NMREBARCHILDSIZE ();
 			OS.MoveMemory (lprbcs, lParam, NMREBARCHILDSIZE.sizeof);
 			if (lprbcs.uBand != -1) {
-				CoolItem item = items [lprbcs.wID];
+				CoolItem item = this.items [lprbcs.wID];
 				Control control = item.control;
 				if (control != null) {
 					int width = lprbcs.rcChild_right - lprbcs.rcChild_left;
@@ -1147,7 +1147,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 			break;
 		}
 		case OS.RBN_HEIGHTCHANGE: {
-			if (!ignoreResize) {
+			if (!this.ignoreResize) {
 				Point size = getSize ();
 				int border = getBorderWidth ();
 				int barHeight = (int)/*64*/OS.SendMessage (handle, OS.RB_GETBARHEIGHT, 0, 0);
@@ -1162,7 +1162,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 		case OS.RBN_CHEVRONPUSHED: {
 			NMREBARCHEVRON lpnm = new NMREBARCHEVRON ();
 			OS.MoveMemory (lpnm, lParam, NMREBARCHEVRON.sizeof);
-			CoolItem item = items [lpnm.wID];
+			CoolItem item = this.items [lpnm.wID];
 			if (item != null) {
 				Event event = new Event();
 				event.detail = SWT.ARROW;

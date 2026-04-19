@@ -62,23 +62,23 @@ class StringComponent {
     private int[] lastWidth = LAST_WIDTH_ARRAY;
 	public int getCharPositionX(int num) {
 		synchronized (this) {
-			if (numOfBreaks == -1) {
+			if (this.numOfBreaks == -1) {
 				updateBreaks();
 			}
 	
 			int i, prevIndex = 0;
 			Font f = Font.getDefaultFont();
 	
-			for (i = 0; i < numOfBreaks; i++) {
+			for (i = 0; i < this.numOfBreaks; i++) {
 				if (num < breaks[i]) {
 					break;
 				}
 				prevIndex = breaks[i];
 			}
 			
-                        if(!hasNotChanged[num]) {
-                            lastWidth[num] = f.substringWidth(text, prevIndex, num - prevIndex);
-                            hasNotChanged[num] = true;
+                        if(!this.hasNotChanged[num]) {
+                            this.lastWidth[num] = f.substringWidth(this.text, prevIndex, num - prevIndex);
+                            this.hasNotChanged[num] = true;
                         }
 			return lastWidth[num];
                 }
@@ -87,13 +87,13 @@ class StringComponent {
 	public int getCharPositionY(int num) {
 		int y = 0;
 		synchronized (this) {
-			if (numOfBreaks == -1) {
+			if (this.numOfBreaks == -1) {
 				updateBreaks();
 			}
 	
 			Font f = Font.getDefaultFont();
 	
-			for (int i = 0; i < numOfBreaks; i++) {
+			for (int i = 0; i < this.numOfBreaks; i++) {
 				if (num < breaks[i]) {
 					break;
 				}
@@ -107,23 +107,23 @@ class StringComponent {
 	public int getHeight() {
 		int height;
 		synchronized (this) {
-			if (numOfBreaks == -1) {
+			if (this.numOfBreaks == -1) {
 				updateBreaks();
 			}
 
 			Font f = Font.getDefaultFont();
 
-			if (text == null) {
+			if (this.text == null) {
 				return 0;
 			}
 
-			if (numOfBreaks == 0) {
+			if (this.numOfBreaks == 0) {
 				return f.getHeight();
 			}
 
-			height = numOfBreaks * f.getHeight();
+			height = this.numOfBreaks * f.getHeight();
 
-			if (breaks[numOfBreaks - 1] == text.length() - 1
+			if (breaks[this.numOfBreaks - 1] == this.text.length() - 1
 					&& text.charAt(text.length() - 1) == '\n') {
 			} else {
 				height += f.getHeight();
@@ -139,18 +139,18 @@ class StringComponent {
 
 	public void invertPaint(boolean state) {
 		synchronized (this) {
-			invertPaint = state;
+			this.invertPaint = state;
 		}
 	}
 
 	public int paint(Graphics g) {
-		if (text == null) {
+		if (this.text == null) {
 			return 0;
 		}
 
 		int y;
 		synchronized (this) {
-			if (numOfBreaks == -1) {
+			if (this.numOfBreaks == -1) {
 				updateBreaks();
 			}
 	
@@ -159,33 +159,33 @@ class StringComponent {
 	
 			ItemColorFactory itemColorFactory = ItemColorFactory.getInstance();
 			
-			for (i = prevIndex = y = 0; i < numOfBreaks; i++) {
-				if (invertPaint) {
+			for (i = prevIndex = y = 0; i < this.numOfBreaks; i++) {
+				if (this.invertPaint) {
 				    g.setColor(itemColorFactory.PAINT);
 				} else {
 				    g.setColor(itemColorFactory.INVERT_PAINT);
 				}
 				g.fillRect(0, y, width, f.getHeight());
-				if (invertPaint) {
+				if (this.invertPaint) {
 				    g.setColor(itemColorFactory.INVERT_PAINT);
 				} else {
 				    g.setColor(itemColorFactory.PAINT);
 				}
-				g.drawSubstring(text, prevIndex, breaks[i] - prevIndex, 0, y, 0);
+				g.drawSubstring(this.text, prevIndex, breaks[i] - prevIndex, 0, y, 0);
 				prevIndex = breaks[i];
 				y += f.getHeight();
 			}
 			// By adding the OR clasuse (text length comparison) we make sure
 			// that even if the current value of a ChoiceGroup is empty, there will
 			// be some visual clue that the ChoiceGroup is there
-			if (prevIndex != text.length() || text.length() == 0) {
-				if (invertPaint) {
+			if (prevIndex != this.text.length() || this.text.length() == 0) {
+				if (this.invertPaint) {
 				    g.setColor(itemColorFactory.PAINT);
 				} else {
 				    g.setColor(itemColorFactory.INVERT_PAINT);
 				}
 				g.fillRect(0, y, width, f.getHeight());
-				if (invertPaint) {
+				if (this.invertPaint) {
 				    g.setColor(itemColorFactory.INVERT_PAINT);
 				} else {
 				    g.setColor(itemColorFactory.PAINT);
@@ -218,19 +218,19 @@ class StringComponent {
 	public void setWidthDecreaser(int widthDecreaser) {
 		synchronized (this) {
 			this.widthDecreaser = widthDecreaser;
-			numOfBreaks = -1;
+			this.numOfBreaks = -1;
 		}
 	}
 
 	private void insertBreak(int pos) {
 		int i;
 
-		for (i = 0; i < numOfBreaks; i++) {
+		for (i = 0; i < this.numOfBreaks; i++) {
 			if (pos < breaks[i]) {
 				break;
 			}
 		}
-		if (numOfBreaks + 1 == breaks.length) {
+		if (this.numOfBreaks + 1 == breaks.length) {
 			int newbreaks[] = new int[breaks.length + 4];
 			System.arraycopy(breaks, 0, newbreaks, 0, numOfBreaks);
 			breaks = newbreaks;
@@ -241,30 +241,30 @@ class StringComponent {
 	}
 
 	private void updateBreaks() {
-		if (text == null) {
+		if (this.text == null) {
 			return;
 		}
 
 		// TODO use Displayable width
-		width = DeviceFactory.getDevice().getDeviceDisplay().getWidth()
-				- widthDecreaser;
+		this.width = DeviceFactory.getDevice().getDeviceDisplay().getWidth()
+				- this.widthDecreaser;
 
 		int prevIndex = 0;
 		int canBreak = 0;
-		numOfBreaks = 0;
+		this.numOfBreaks = 0;
 		Font f = Font.getDefaultFont();
 
-		for (int i = 0; i < text.length(); i++) {
-			if (text.charAt(i) == ' ') {
+		for (int i = 0; i < this.text.length(); i++) {
+			if (this.text.charAt(i) == ' ') {
 				canBreak = i + 1;
 			}
-			if (text.charAt(i) == '\n') {
+			if (this.text.charAt(i) == '\n') {
 				insertBreak(i);
 				canBreak = 0;
 				prevIndex = i + 1;
 				continue;
 			}
-			if (f.substringWidth(text, prevIndex, i - prevIndex + 1) > width) {
+			if (f.substringWidth(this.text, prevIndex, i - prevIndex + 1) > this.width) {
 				if (canBreak != 0) {
 					insertBreak(canBreak);
 					i = canBreak;

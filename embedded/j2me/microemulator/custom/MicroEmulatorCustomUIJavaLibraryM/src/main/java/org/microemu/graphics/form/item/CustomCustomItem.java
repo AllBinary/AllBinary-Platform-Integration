@@ -57,25 +57,25 @@ public class CustomCustomItem extends CustomItem {
 	
 	protected int getMinContentHeight()
         {
-	    ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);
+	    ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
             return 0;
         }
 	
 	protected int getMinContentWidth()
         {
-            ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);
+            ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
             return 0;
         }
 
 	protected int getPrefContentHeight(int width)
         {
-            ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);
+            ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
             return 0;
         }
 
 	protected int getPrefContentWidth(int height)
         {
-            ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);
+            ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
             return 0;
         }
 
@@ -104,7 +104,7 @@ public class CustomCustomItem extends CustomItem {
 	/*
 	protected void paint(Graphics graphics, int w, int h)
         {
-	    ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);
+	    ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
         }
     */
 

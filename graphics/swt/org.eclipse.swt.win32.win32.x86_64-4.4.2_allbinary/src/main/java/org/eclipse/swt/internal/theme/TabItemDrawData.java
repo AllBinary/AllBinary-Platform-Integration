@@ -58,7 +58,7 @@ void draw(Theme theme, GC gc, Rectangle bounds) {
 		int state = this.state[DrawData.WIDGET_WHOLE];
 		long /*int*/ hTheme = OS.OpenThemeData(0, getClassId());
 		int x = bounds.x, y = bounds.y, width = bounds.width, height = bounds.height;
-		if ((position & SWT.LEFT) != 0) {
+		if ((this.position & SWT.LEFT) != 0) {
 			x += TABITEM_INSET;
 			width -= TABITEM_INSET;
 		}

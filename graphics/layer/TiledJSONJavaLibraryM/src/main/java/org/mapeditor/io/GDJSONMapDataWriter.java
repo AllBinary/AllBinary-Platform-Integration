@@ -46,7 +46,7 @@ public class GDJSONMapDataWriter {
                 //outputStream.write(gid >> Byte.SIZE * 2 & LAST_BYTE);
                 //outputStream.write(gid >> Byte.SIZE * 3 & LAST_BYTE);
                 index = (((y * width) + x) * 4);
-                byteArray[index] = (byte) (gid & LAST_BYTE);
+                byteArray[index] = (byte) (gid & this.LAST_BYTE);
                 //byteArray[index++] = (byte) (gid & LAST_BYTE);
                 //byteArray[index++] = (byte) (gid >> Byte.SIZE & LAST_BYTE);
                 //byteArray[index++] = (byte) (gid >> Byte.SIZE * 2 & LAST_BYTE);
@@ -64,7 +64,7 @@ public class GDJSONMapDataWriter {
         for(int index = 0; index < size; index += 4) {
             gid = mapData[index];
             //gid |= tile.getFlagsAt(x, y);
-            byteArray[index] = (byte) (gid & LAST_BYTE);
+            byteArray[index] = (byte) (gid & this.LAST_BYTE);
         }
 
         return size;

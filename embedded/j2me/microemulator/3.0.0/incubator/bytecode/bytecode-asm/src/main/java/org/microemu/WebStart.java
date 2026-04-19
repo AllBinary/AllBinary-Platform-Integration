@@ -80,7 +80,7 @@ public class WebStart extends JFrame {
 		menuOpenJARURL.addActionListener(new MenuOpenJARURLListener());
 		menuFile.add(menuOpenJARURL);
 		
-		getContentPane().add(tx = new JTextArea(), "Center");
+		getContentPane().add(this.tx = new JTextArea(), "Center");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -166,8 +166,8 @@ public class WebStart extends JFrame {
 
 	private void println(String text) {
 		System.out.println(text);
-		tx.append(text);
-		tx.append("\n");
+		this.tx.append(text);
+		this.tx.append("\n");
 	}
 	
 	public void runApp(URL path) {

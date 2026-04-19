@@ -68,9 +68,9 @@ public class ChangeCallsClassVisitor extends ClassAdapter {
 			final String[] interfaces) {
 		if ((0xFF & version) >= 49) {
 			String v = (String) javaVersion.get(new Integer(version));
-			Logger.warn(new StringBuffer().append(LOADING).append(name).append(VERSION).append(version).append(((v == null) ? EMPTY : (SPACE + v))).toString());
+			Logger.warn(new StringBuffer().append(this.LOADING).append(name).append(this.VERSION).append(version).append(((v == null) ? this.EMPTY : (this.SPACE + v))).toString());
 		}
-		if (config.isEnhanceThreadCreation()) {
+		if (this.config.isEnhanceThreadCreation()) {
 			if (superName.equals("java/lang/Thread")) {
 				superName = ChangeCallsMethodVisitor.codeName(MIDletThread.class);
 //			} else if (superName.equals("java/util/Timer")) {

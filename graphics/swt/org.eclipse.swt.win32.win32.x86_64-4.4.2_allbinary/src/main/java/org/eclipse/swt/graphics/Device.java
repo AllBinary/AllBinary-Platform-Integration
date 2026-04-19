@@ -129,13 +129,13 @@ public Device() {
 public Device(DeviceData data) {
 	synchronized (Device.class) {
 		if (data != null) {
-			debug = data.debug;
-			tracking = data.tracking;
+			this.debug = data.debug;
+			this.tracking = data.tracking;
 		}
-		if (tracking) {
-			errors = new Error [128];
-			objects = new Object [128];
-			trackingLock = new Object ();
+		if (this.tracking) {
+			this.errors = new Error [128];
+			this.objects = new Object [128];
+			this.trackingLock = new Object ();
 		}
 		create (data);
 		init ();
@@ -143,22 +143,22 @@ public Device(DeviceData data) {
 }
 
 void addFont (String font) {
-	if (loadedFonts == null) loadedFonts = new String [4];
-	int length = loadedFonts.length;
+	if (this.loadedFonts == null) this.loadedFonts = new String [4];
+	int length = this.loadedFonts.length;
 	for (int i=0; i<length; i++) {
-		if (font.equals(loadedFonts [i])) return;
+		if (font.equals(this.loadedFonts [i])) return;
 	}
 	int index = 0;
 	while (index < length) {
-		if (loadedFonts [index] == null) break;
+		if (this.loadedFonts [index] == null) break;
 		index++;
 	}
 	if (index == length) {
 		String [] temp = new String [length + 4];
-		System.arraycopy (loadedFonts, 0, temp, 0, length);
-		loadedFonts = temp;
+		System.arraycopy (this.loadedFonts, 0, temp, 0, length);
+		this.loadedFonts = temp;
 	}
-	loadedFonts [index] = font;
+	this.loadedFonts [index] = font;
 }
 
 /**
@@ -181,11 +181,11 @@ void addFont (String font) {
  * </ul>
  */
 protected void checkDevice () {
-	if (disposed) SWT.error(SWT.ERROR_DEVICE_DISPOSED);
+	if (this.disposed) SWT.error(SWT.ERROR_DEVICE_DISPOSED);
 }
 
 void checkGDIP() {
-	if (gdipToken != null) return;
+	if (this.gdipToken != null) return;
     int oldErrorMode = 0;
     if (!OS.IsWinCE) oldErrorMode = OS.SetErrorMode (OS.SEM_FAILCRITICALERRORS);
 	try {
@@ -194,18 +194,18 @@ void checkGDIP() {
 		input.GdiplusVersion = 1;
 		if (Gdip.GdiplusStartup (token, input, 0) == 0) {
 			this.gdipToken = token;
-			if (loadedFonts != null) {
-				fontCollection = Gdip.PrivateFontCollection_new();
-				if (fontCollection == 0) SWT.error(SWT.ERROR_NO_HANDLES);
-				for (int i = 0; i < loadedFonts.length; i++) {
-					String path = loadedFonts[i];
+			if (this.loadedFonts != null) {
+				this.fontCollection = Gdip.PrivateFontCollection_new();
+				if (this.fontCollection == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+				for (int i = 0; i < this.loadedFonts.length; i++) {
+					String path = this.loadedFonts[i];
 					if (path == null) break;
 					int length = path.length();
 					char [] buffer = new char [length + 1];
 					path.getChars(0, length, buffer, 0);
-					Gdip.PrivateFontCollection_AddFontFile(fontCollection, buffer);
+					Gdip.PrivateFontCollection_AddFontFile(this.fontCollection, buffer);
 				}
-				loadedFonts = null;
+				this.loadedFonts = null;
 			}
 		}
 	} catch (Throwable t) {
@@ -297,24 +297,24 @@ public void dispose () {
 		checkDevice ();
 		release ();
 		destroy ();
-		disposed = true;
-		if (tracking) {
-			synchronized (trackingLock) {
+		this.disposed = true;
+		if (this.tracking) {
+			synchronized (this.trackingLock) {
 				printErrors ();
-				objects = null;
-				errors = null;
-				trackingLock = null;
+				this.objects = null;
+				this.errors = null;
+				this.trackingLock = null;
 			}
 		}
 	}
 }
 
 void dispose_Object (Object object) {
-	synchronized (trackingLock) {
-		for (int i=0; i<objects.length; i++) {
-			if (objects [i] == object) {
-				objects [i] = null;
-				errors [i] = null;
+	synchronized (this.trackingLock) {
+		for (int i=0; i<this.objects.length; i++) {
+			if (this.objects [i] == object) {
+				this.objects [i] = null;
+				this.errors [i] = null;
 				return;
 			}
 		}
@@ -326,18 +326,18 @@ long /*int*/ EnumFontFamProc (long /*int*/ lpelfe, long /*int*/ lpntme, long /*i
 	boolean scalable = lParam == 1;
 	if (isScalable == scalable) {
 		/* Add the log font to the list of log fonts */
-		if (nFonts == logFonts.length) {
-			LOGFONT [] newLogFonts = new LOGFONT [logFonts.length + 128];
-			System.arraycopy (logFonts, 0, newLogFonts, 0, nFonts);
-			logFonts = newLogFonts;
+		if (this.nFonts == this.logFonts.length) {
+			LOGFONT [] newLogFonts = new LOGFONT [this.logFonts.length + 128];
+			System.arraycopy (this.logFonts, 0, newLogFonts, 0, nFonts);
+			this.logFonts = newLogFonts;
 			int[] newPixels = new int[newLogFonts.length];
-			System.arraycopy (pixels, 0, newPixels, 0, nFonts);
-			pixels = newPixels;
+			System.arraycopy (this.pixels, 0, newPixels, 0, nFonts);
+			this.pixels = newPixels;
 		}
-		LOGFONT logFont = logFonts [nFonts];
+		LOGFONT logFont = this.logFonts [nFonts];
 		if (logFont == null) logFont = OS.IsUnicode ? (LOGFONT)new LOGFONTW () : new LOGFONTA ();
 		OS.MoveMemory (logFont, lpelfe, LOGFONT.sizeof);
-		logFonts [nFonts] = logFont;
+		this.logFonts [nFonts] = logFont;
 		if (logFont.lfHeight > 0) {
 			/*
 			 * Feature in Windows. If the lfHeight of the LOGFONT structure
@@ -347,10 +347,10 @@ long /*int*/ EnumFontFamProc (long /*int*/ lpelfe, long /*int*/ lpntme, long /*i
 			 * we must subtract the internal leading, which requires a TEXTMETRIC,
 			 * which in turn requires font creation.
 			 */
-			OS.MoveMemory(metrics, lpntme, TEXTMETRIC.sizeof);
-			pixels[nFonts] = logFont.lfHeight - metrics.tmInternalLeading;
+			OS.MoveMemory(this.metrics, lpntme, TEXTMETRIC.sizeof);
+			this.pixels[nFonts] = logFont.lfHeight - this.metrics.tmInternalLeading;
 		} else {
-			pixels[nFonts] = -logFont.lfHeight;
+			this.pixels[nFonts] = -logFont.lfHeight;
 		}
 		nFonts++;
 	}
@@ -391,21 +391,21 @@ public Rectangle getBounds () {
 public DeviceData getDeviceData () {
 	checkDevice();
 	DeviceData data = new DeviceData ();
-	data.debug = debug;
-	data.tracking = tracking;
-	if (tracking) {
-		synchronized (trackingLock) {
-			int count = 0, length = objects.length;
+	data.debug = this.debug;
+	data.tracking = this.tracking;
+	if (this.tracking) {
+		synchronized (this.trackingLock) {
+			int count = 0, length = this.objects.length;
 			for (int i=0; i<length; i++) {
-				if (objects [i] != null) count++;
+				if (this.objects [i] != null) count++;
 			}
 			int index = 0;
 			data.objects = new Object [count];
 			data.errors = new Error [count];
 			for (int i=0; i<length; i++) {
-				if (objects [i] != null) {
-					data.objects [index] = objects [i];
-					data.errors [index] = errors [i];
+				if (this.objects [i] != null) {
+					data.objects [index] = this.objects [i];
+					data.errors [index] = this.errors [i];
 					index++;
 				}
 			}
@@ -496,13 +496,13 @@ public FontData [] getFontList (String faceName, boolean scalable) {
 	if (lpEnumFontFamProc == 0) SWT.error (SWT.ERROR_NO_MORE_CALLBACKS);
 	
 	/* Initialize the instance variables */
-	metrics = OS.IsUnicode ? (TEXTMETRIC)new TEXTMETRICW() : new TEXTMETRICA();
-	pixels = new int[nFonts];
-	logFonts = new LOGFONT [nFonts];
-	for (int i=0; i<logFonts.length; i++) {
-		logFonts [i] = OS.IsUnicode ? (LOGFONT) new LOGFONTW () : new LOGFONTA ();
+	this.metrics = OS.IsUnicode ? (TEXTMETRIC)new TEXTMETRICW() : new TEXTMETRICA();
+	this.pixels = new int[this.nFonts];
+	this.logFonts = new LOGFONT [this.nFonts];
+	for (int i=0; i<this.logFonts.length; i++) {
+		this.logFonts [i] = OS.IsUnicode ? (LOGFONT) new LOGFONTW () : new LOGFONTA ();
 	}
-	nFonts = 0;
+	this.nFonts = 0;
 
 	/* Enumerate */
 	int offset = 0;
@@ -516,9 +516,9 @@ public FontData [] getFontList (String faceName, boolean scalable) {
 		 * of how many styles are available. If the user wants bitmapped fonts, enumerate on
 		 * each face name now.
 		 */
-		offset = nFonts;
+		offset = this.nFonts;
 		for (int i=0; i<offset; i++) {
-			LOGFONT lf = logFonts [i];
+			LOGFONT lf = this.logFonts [i];
 			/**
 			 * Bug in Windows 98. When EnumFontFamiliesEx is called with a specified face name, it
 			 * should enumerate for each available style of that font. Instead, it only enumerates
@@ -545,9 +545,9 @@ public FontData [] getFontList (String faceName, boolean scalable) {
 
 	/* Create the fontData from the logfonts */
 	int count = 0;
-	FontData [] result = new FontData [nFonts - offset];
-	for (int i=offset; i<nFonts; i++) {
-		FontData fd = FontData.win32_new (logFonts [i], pixels [i] * 72f / logPixelsY);
+	FontData [] result = new FontData [this.nFonts - offset];
+	for (int i=offset; i<this.nFonts; i++) {
+		FontData fd = FontData.win32_new (this.logFonts [i], pixels [i] * 72f / logPixelsY);
 		int j;
 		for (j = 0; j < count; j++) {
 			if (fd.equals (result [j])) break;
@@ -562,9 +562,9 @@ public FontData [] getFontList (String faceName, boolean scalable) {
 	
 	/* Clean up */
 	callback.dispose ();
-	logFonts = null;
+	this.logFonts = null;
 	pixels = null;
-	metrics = null;
+	this.metrics = null;
 	return result;
 }
 
@@ -684,19 +684,19 @@ public boolean getWarnings () {
  * @see #create
  */
 protected void init () {
-	if (debug) {
+	if (this.debug) {
 		if (!OS.IsWinCE) OS.GdiSetBatchLimit(1);
 	}
 
 	/* Initialize the system font slot */
-	systemFont = getSystemFont();
+	this.systemFont = getSystemFont();
 
 	/* Initialize scripts list */
 	if (!OS.IsWinCE) {
 		long /*int*/ [] ppSp = new long /*int*/ [1];
 		int [] piNumScripts = new int [1];
 		OS.ScriptGetProperties (ppSp, piNumScripts);
-		scripts = new long /*int*/ [piNumScripts [0]];
+		this.scripts = new long /*int*/ [piNumScripts [0]];
 		OS.MoveMemory (scripts, ppSp [0], scripts.length * OS.PTR_SIZEOF);
 	}
 	
@@ -730,7 +730,7 @@ protected void init () {
 	}
 
 	/* Create the palette and reference counter */
-	colorRefCount = new int [numEntries];
+	this.colorRefCount = new int [numEntries];
 
 	/* 4 bytes header + 4 bytes per entry * numEntries entries */
 	byte [] logPalette = new byte [4 + 4 * numEntries];
@@ -761,7 +761,7 @@ protected void init () {
 		this.colorRefCount [numEntries - 1 - i] = 1;
 	}
 	internal_dispose_GC (hDC, null);
-	hPalette = OS.CreatePalette (logPalette);
+	this.hPalette = OS.CreatePalette (logPalette);
 }
 /**	 
  * Invokes platform specific functionality to allocate a new GC handle.
@@ -836,15 +836,15 @@ public boolean loadFont (String path) {
 		TCHAR lpszFilename = new TCHAR (0, path, true);
 		boolean loaded = OS.AddFontResourceEx (lpszFilename, OS.FR_PRIVATE, 0) != 0;
 		if (loaded) {
-			if (gdipToken != null) {
-				if (fontCollection == 0) {
-					fontCollection = Gdip.PrivateFontCollection_new();
-					if (fontCollection == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+			if (this.gdipToken != null) {
+				if (this.fontCollection == 0) {
+					this.fontCollection = Gdip.PrivateFontCollection_new();
+					if (this.fontCollection == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 				}
 				int length = path.length();
 				char [] buffer = new char [length + 1];
 				path.getChars(0, length, buffer, 0);
-				Gdip.PrivateFontCollection_AddFontFile(fontCollection, buffer);
+				Gdip.PrivateFontCollection_AddFontFile(this.fontCollection, buffer);
 			} else {
 				addFont(path);
 			}
@@ -855,19 +855,19 @@ public boolean loadFont (String path) {
 }
 
 void new_Object (Object object) {
-	synchronized (trackingLock) {
-		for (int i=0; i<objects.length; i++) {
-			if (objects [i] == null) {
-				objects [i] = object;
-				errors [i] = new Error ();
+	synchronized (this.trackingLock) {
+		for (int i=0; i<this.objects.length; i++) {
+			if (this.objects [i] == null) {
+				this.objects [i] = object;
+				this.errors [i] = new Error ();
 				return;
 			}
 		}
-		Object [] newObjects = new Object [objects.length + 128];
+		Object [] newObjects = new Object [this.objects.length + 128];
 		System.arraycopy (objects, 0, newObjects, 0, objects.length);
 		newObjects [objects.length] = object;
 		objects = newObjects;
-		Error [] newErrors = new Error [errors.length + 128];
+		Error [] newErrors = new Error [this.errors.length + 128];
 		System.arraycopy (errors, 0, newErrors, 0, errors.length);
 		newErrors [errors.length] = new Error ();
 		errors = newErrors;
@@ -876,14 +876,14 @@ void new_Object (Object object) {
 
 void printErrors () {
 	if (!DEBUG) return;
-	if (tracking) {
-		synchronized (trackingLock) {
-			if (objects == null || errors == null) return;
+	if (this.tracking) {
+		synchronized (this.trackingLock) {
+			if (this.objects == null || this.errors == null) return;
 			int objectCount = 0;
 			int colors = 0, cursors = 0, fonts = 0, gcs = 0, images = 0;
 			int paths = 0, patterns = 0, regions = 0, textLayouts = 0, transforms = 0;
-			for (int i=0; i<objects.length; i++) {
-				Object object = objects [i];
+			for (int i=0; i<this.objects.length; i++) {
+				Object object = this.objects [i];
 				if (object != null) {
 					objectCount++;
 					if (object instanceof Color) colors++;
@@ -914,8 +914,8 @@ void printErrors () {
 					string = string.substring (0, string.length () - 2);
 					System.err.println (string);
 				}
-				for (int i=0; i<errors.length; i++) {
-					if (errors [i] != null) errors [i].printStackTrace (System.err);
+				for (int i=0; i<this.errors.length; i++) {
+					if (this.errors [i] != null) this.errors [i].printStackTrace (System.err);
 				}
 			}
 		}
@@ -946,20 +946,20 @@ void printErrors () {
  * @see #destroy
  */
 protected void release () {
-	if (gdipToken != null) {
-		if (fontCollection != 0) {
-			Gdip.PrivateFontCollection_delete(fontCollection);
+	if (this.gdipToken != null) {
+		if (this.fontCollection != 0) {
+			Gdip.PrivateFontCollection_delete(this.fontCollection);
 		}
-		fontCollection = 0;
-		Gdip.GdiplusShutdown (gdipToken[0]);
+		this.fontCollection = 0;
+		Gdip.GdiplusShutdown (this.gdipToken[0]);
 	}
-	gdipToken = null;
-	scripts = null;
-	if (hPalette != 0) OS.DeleteObject (hPalette);
-	hPalette = 0;
-	colorRefCount = null;
-	logFonts = null;
-	nFonts = 0;
+	this.gdipToken = null;
+	this.scripts = null;
+	if (this.hPalette != 0) OS.DeleteObject (this.hPalette);
+	this.hPalette = 0;
+	this.colorRefCount = null;
+	this.logFonts = null;
+	this.nFonts = 0;
 }
 
 /**

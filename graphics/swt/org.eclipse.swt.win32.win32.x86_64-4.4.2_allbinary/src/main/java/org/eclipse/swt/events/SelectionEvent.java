@@ -128,15 +128,15 @@ public SelectionEvent(Event e) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " item=" + item
-		+ " detail=" + detail
-		+ " x=" + x
-		+ " y=" + y
-		+ " width=" + width
-		+ " height=" + height
-		+ " stateMask=0x" + Integer.toHexString(stateMask)
-		+ " text=" + text
-		+ " doit=" + doit
+		+ " item=" + this.item
+		+ " detail=" + this.detail
+		+ " x=" + this.x
+		+ " y=" + this.y
+		+ " width=" + this.width
+		+ " height=" + this.height
+		+ " stateMask=0x" + Integer.toHexString(this.stateMask)
+		+ " text=" + this.text
+		+ " doit=" + this.doit
 		+ "}";
 }
 }

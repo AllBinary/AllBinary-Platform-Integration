@@ -44,12 +44,12 @@ ImageData[] loadFromByteStream() {
 	try {
 		readSignature();
 		PngChunkReader chunkReader = new PngChunkReader(inputStream);
-		headerChunk = chunkReader.getIhdrChunk();
-		int width = headerChunk.getWidth(), height = headerChunk.getHeight();
+		this.headerChunk = chunkReader.getIhdrChunk();
+		int width = this.headerChunk.getWidth(), height = this.headerChunk.getHeight();
 		if (width <= 0 || height <= 0) SWT.error(SWT.ERROR_INVALID_IMAGE);
 		int imageSize = getAlignedBytesPerRow() * height;
-		data = new byte[imageSize];		
-		imageData = ImageData.internal_new(
+		this.data = new byte[imageSize];		
+		this.imageData = ImageData.internal_new(
 			width,
 			height,
 			headerChunk.getSwtBitsPerPixel(),
@@ -67,8 +67,8 @@ ImageData[] loadFromByteStream() {
 			0,
 			0);		
 			
-		if (headerChunk.usesDirectColor()) {
-			imageData.palette = headerChunk.getPaletteData();
+		if (this.headerChunk.usesDirectColor()) {
+			this.imageData.palette = this.headerChunk.getPaletteData();
 		}
 		
 		// Read and process chunks until the IEND chunk is encountered.
@@ -76,7 +76,7 @@ ImageData[] loadFromByteStream() {
 			readNextChunk(chunkReader);
 		}
 						
-		return new ImageData[] {imageData};
+		return new ImageData[] {this.imageData};
 	} catch (IOException e) {
 		SWT.error(SWT.ERROR_INVALID_IMAGE);
 		return null;
@@ -92,23 +92,23 @@ void readNextChunk(PngChunkReader chunkReader) throws IOException {
 		case PngChunk.CHUNK_IEND:
 			break;
 		case PngChunk.CHUNK_PLTE:
-			if (!headerChunk.usesDirectColor()) {
-				paletteChunk = (PngPlteChunk) chunk;
-				imageData.palette = paletteChunk.getPaletteData();						
+			if (!this.headerChunk.usesDirectColor()) {
+				this.paletteChunk = (PngPlteChunk) chunk;
+				this.imageData.palette = this.paletteChunk.getPaletteData();						
 			}			
 			break;
 		case PngChunk.CHUNK_tRNS:
 			PngTrnsChunk trnsChunk = (PngTrnsChunk) chunk;
-			if (trnsChunk.getTransparencyType(headerChunk) == 
+			if (trnsChunk.getTransparencyType(this.headerChunk) == 
 				PngTrnsChunk.TRANSPARENCY_TYPE_PIXEL) 
 			{
-				imageData.transparentPixel = 
-					trnsChunk.getSwtTransparentPixel(headerChunk);
+				this.imageData.transparentPixel = 
+					trnsChunk.getSwtTransparentPixel(this.headerChunk);
 			} else {
-				alphaPalette = trnsChunk.getAlphaValues(headerChunk, paletteChunk);
+				this.alphaPalette = trnsChunk.getAlphaValues(this.headerChunk, paletteChunk);
 				int transparentCount = 0, transparentPixel = -1;
-				for (int i = 0; i < alphaPalette.length; i++) {
-					if ((alphaPalette[i] & 0xFF) != 255) {
+				for (int i = 0; i < this.alphaPalette.length; i++) {
+					if ((this.alphaPalette[i] & 0xFF) != 255) {
 						transparentCount++;
 						transparentPixel = i;
 					}
@@ -117,7 +117,7 @@ void readNextChunk(PngChunkReader chunkReader) throws IOException {
 					this.alphaPalette = null;
 				} else if (transparentCount == 1 && alphaPalette[transparentPixel] == 0) {
 					this.alphaPalette = null;
-					imageData.transparentPixel = transparentPixel;
+					this.imageData.transparentPixel = transparentPixel;
 				}
 			}
 			break;
@@ -171,7 +171,7 @@ boolean isFileFormat(LEDataInputStream stream) {
  * 16-bit depths, convert the data to an 8-bit depth.
  */
 byte[] validateBitDepth(byte[] data) {
-	if (headerChunk.getBitDepth() > 8) {
+	if (this.headerChunk.getBitDepth() > 8) {
 		byte[] result = new byte[data.length / 2];
 		compress16BitDepthTo8BitDepth(data, 0, result, 0, result.length);
 		return result;
@@ -188,7 +188,7 @@ byte[] validateBitDepth(byte[] data) {
  * data has already been restricted to 8 or less.
  */
 void setPixelData(byte[] data, ImageData imageData) {
-	switch (headerChunk.getColorType()) {
+	switch (this.headerChunk.getColorType()) {
 		case PngIhdrChunk.COLOR_TYPE_GRAYSCALE_WITH_ALPHA:
 		{
 			int width = imageData.width;
@@ -199,7 +199,7 @@ void setPixelData(byte[] data, ImageData imageData) {
 			* to an 8-bit depth image.
 			*/
 			int srcBytesPerLine = getAlignedBytesPerRow();
-			if (headerChunk.getBitDepth() > 8) srcBytesPerLine /= 2;
+			if (this.headerChunk.getBitDepth() > 8) srcBytesPerLine /= 2;
 
 			byte[] rgbData = new byte[destBytesPerLine * height];
 			byte[] alphaData = new byte[width * height];
@@ -233,7 +233,7 @@ void setPixelData(byte[] data, ImageData imageData) {
 			* If the image uses 16-bit depth, it is converted
 			* to an 8-bit depth image.
 			*/
-			if (headerChunk.getBitDepth() > 8) srcBytesPerLine /= 2;
+			if (this.headerChunk.getBitDepth() > 8) srcBytesPerLine /= 2;
 
 			byte[] rgbData = new byte[destBytesPerLine * height];
 			byte[] alphaData = new byte[width * height];
@@ -257,7 +257,7 @@ void setPixelData(byte[] data, ImageData imageData) {
 		}		
 		case PngIhdrChunk.COLOR_TYPE_PALETTE:
 			imageData.data = data;
-			if (alphaPalette != null) {
+			if (this.alphaPalette != null) {
 				int size = imageData.width * imageData.height;
 				byte[] alphaData = new byte[size];
 				byte[] pixelData = new byte[size];
@@ -277,7 +277,7 @@ void setPixelData(byte[] data, ImageData imageData) {
 			* If the image uses 16-bit depth, it is converted
 			* to an 8-bit depth image.
 			*/
-			if (headerChunk.getBitDepth() > 8) srcBytesPerLine /= 2;
+			if (this.headerChunk.getBitDepth() > 8) srcBytesPerLine /= 2;
 			if (destBytesPerLine != srcBytesPerLine) {
 				for (int y = 0; y < height; y++) {
 					System.arraycopy(data, y * srcBytesPerLine, imageData.data, y * destBytesPerLine, srcBytesPerLine);
@@ -313,7 +313,7 @@ void readPixelData(PngIdatChunk chunk, PngChunkReader chunkReader) throws IOExce
 	} else {
 		stream = new PngDecodingDataStream(stream);
 	}
-	int interlaceMethod = headerChunk.getInterlaceMethod();
+	int interlaceMethod = this.headerChunk.getInterlaceMethod();
 	if (interlaceMethod == PngIhdrChunk.INTERLACE_METHOD_NONE) {
 		readNonInterlacedImage(stream);
 	} else {
@@ -331,7 +331,7 @@ void readPixelData(PngIdatChunk chunk, PngChunkReader chunkReader) throws IOExce
  * Answer the number of bytes in a word-aligned row of pixel data.
  */
 int getAlignedBytesPerRow() {
-	return ((getBytesPerRow(headerChunk.getWidth()) + 3) / 4) * 4;
+	return ((getBytesPerRow(this.headerChunk.getWidth()) + 3) / 4) * 4;
 }
 /**
  * Answer the number of bytes in each row of the image
@@ -340,7 +340,7 @@ int getAlignedBytesPerRow() {
  * end of each row. The value of these bits is undefined.
  */
 int getBytesPerRow() {
-	return getBytesPerRow(headerChunk.getWidth());
+	return getBytesPerRow(this.headerChunk.getWidth());
 }
 /**
  * Answer the number of bytes needed to represent a pixel.
@@ -378,9 +378,9 @@ void readInterlaceFrame(
 	int startColumn,
 	int frameCount) throws IOException 
 {
-	int width = headerChunk.getWidth();
+	int width = this.headerChunk.getWidth();
 	int alignedBytesPerRow = getAlignedBytesPerRow();
-	int height = headerChunk.getHeight();
+	int height = this.headerChunk.getHeight();
 	if (startRow >= height || startColumn >= width) return;
 	
 	int pixelsPerRow = (width - startColumn + columnInterval - 1) / columnInterval;
@@ -396,17 +396,17 @@ void readInterlaceFrame(
 			read += inputStream.read(currentRow, read, bytesPerRow - read);
 		}
 		filterRow(currentRow, lastRow, filterType);
-		if (headerChunk.getBitDepth() >= 8) {
+		if (this.headerChunk.getBitDepth() >= 8) {
 			int bytesPerPixel = getBytesPerPixel();
 			int dataOffset = (row * alignedBytesPerRow) + (startColumn * bytesPerPixel);
 			for (int rowOffset = 0; rowOffset < currentRow.length; rowOffset += bytesPerPixel) {
 				for (int byteOffset = 0; byteOffset < bytesPerPixel; byteOffset++) {
-					data[dataOffset + byteOffset] = currentRow[rowOffset + byteOffset];
+					this.data[dataOffset + byteOffset] = currentRow[rowOffset + byteOffset];
 				}
 				dataOffset += (columnInterval * bytesPerPixel);
 			}
 		} else {
-			int bitsPerPixel = headerChunk.getBitDepth();
+			int bitsPerPixel = this.headerChunk.getBitDepth();
 			int pixelsPerByte = 8 / bitsPerPixel;
 			int column = startColumn;
 			int rowBase = row * alignedBytesPerRow;
@@ -422,7 +422,7 @@ void readInterlaceFrame(
 						int dataOffset = rowBase + (column * bitsPerPixel / 8);							
 						int value = (currentRow[byteOffset] >> bitOffset) & valueMask;
 						int dataShift = maxShift - (bitsPerPixel * (column % pixelsPerByte));
-						data[dataOffset] |= value << dataShift;
+						this.data[dataOffset] |= value << dataShift;
 					}
 					column += columnInterval;
 				}
@@ -431,7 +431,7 @@ void readInterlaceFrame(
 		currentRow = (currentRow == row1) ? row2 : row1;
 		lastRow = (lastRow == row1) ? row2 : row1;
 	}
-	setImageDataValues(data, imageData);
+	setImageDataValues(this.data, imageData);
 	fireInterlacedFrameEvent(frameCount);
 }
 /**
@@ -455,7 +455,7 @@ void readInterlacedImage(InputStream inputStream) throws IOException {
  */
 void fireInterlacedFrameEvent(int frameCount) {
 	if (loader.hasListeners()) {
-		ImageData image = (ImageData) imageData.clone();
+		ImageData image = (ImageData) this.imageData.clone();
 		boolean finalFrame = frameCount == 6;
 		loader.notifyListeners(new ImageLoaderEvent(loader, image, frameCount, finalFrame));
 	}
@@ -473,7 +473,7 @@ void readNonInterlacedImage(InputStream inputStream) throws IOException {
 	byte[] row2 = new byte[bytesPerRow];
 	byte[] currentRow = row1;	
 	byte[] lastRow = row2;
-	int height = headerChunk.getHeight();
+	int height = this.headerChunk.getHeight();
 	for (int row = 0; row < height; row++) {
 		byte filterType = (byte)inputStream.read();
 		int read = 0;

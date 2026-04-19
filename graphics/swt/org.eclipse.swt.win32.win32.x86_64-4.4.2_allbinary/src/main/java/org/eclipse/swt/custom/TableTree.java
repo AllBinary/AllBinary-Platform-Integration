@@ -96,7 +96,7 @@ public class TableTree extends Composite {
  */
 public TableTree(Composite parent, int style) {
 	super(parent, checkStyle (style));
-	table = new Table(this, style);
+	this.table = new Table(this, style);
 	Listener tableListener = new Listener() {
 		public void handleEvent(Event e) {
 			switch (e.type) {
@@ -112,7 +112,7 @@ public TableTree(Composite parent, int style) {
 		                           SWT.DefaultSelection, 
 		                           SWT.KeyDown};
 	for (int i = 0; i < tableEvents.length; i++) {
-		table.addListener(tableEvents[i], tableListener);
+		this.table.addListener(tableEvents[i], tableListener);
 	}
 	
 	listener = new Listener() {
@@ -133,9 +133,9 @@ public TableTree(Composite parent, int style) {
 }
 
 int addItem(TableTreeItem item, int index) {
-	if (index < 0 || index > items.length) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-	TableTreeItem[] newItems = new TableTreeItem[items.length + 1];
-	System.arraycopy(items, 0, newItems, 0, index);
+	if (index < 0 || index > this.items.length) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	TableTreeItem[] newItems = new TableTreeItem[this.items.length + 1];
+	System.arraycopy(this.items, 0, newItems, 0, index);
 	newItems[index] = item;
 	System.arraycopy(items, index, newItems, index + 1, items.length - index); 
 	items = newItems;
@@ -237,7 +237,7 @@ public Rectangle computeTrim (int x, int y, int width, int height) {
  */
 public void deselectAll () {
 	checkWidget();
-	table.deselectAll();
+	this.table.deselectAll();
 }
 
 /* Expand upward from the specified leaf item. */
@@ -329,7 +329,7 @@ public TableTreeItem [] getItems () {
  */
 public TableTreeItem [] getSelection () {
 	checkWidget();
-	TableItem[] selection = table.getSelection();
+	TableItem[] selection = this.table.getSelection();
 	TableTreeItem [] result = new TableTreeItem[selection.length];
 	for (int i = 0; i < selection.length; i++){
 		result[i] = (TableTreeItem) selection[i].getData(ITEMID);
@@ -440,8 +440,8 @@ Image getMinusImage() {
  */
 public int indexOf (TableTreeItem item) {
 	//checkWidget();
-	for (int i = 0; i < items.length; i++) {
-		if (item == items[i]) return i;
+	for (int i = 0; i < this.items.length; i++) {
+		if (item == this.items[i]) return i;
 	}
 	return -1;
 }
@@ -456,11 +456,11 @@ void onDispose(Event e) {
 	 * Since the whole table tree is being disposed, this is not necessary.  For speed
 	 * the inDispose flag is used to skip over this part of the item dispose.
 	 */
-	inDispose = true;
-	for (int i = 0; i < items.length; i++) {
-		items[i].dispose();
+	this.inDispose = true;
+	for (int i = 0; i < this.items.length; i++) {
+		this.items[i].dispose();
 	}
-	inDispose = false;
+	this.inDispose = false;
 	if (plusImage != null) plusImage.dispose();
 	if (minusImage != null) minusImage.dispose();
 	if (sizeImage != null) sizeImage.dispose();
@@ -469,7 +469,7 @@ void onDispose(Event e) {
 
 void onResize(Event e) {
 	Point size = getSize();
-	table.setBounds(0, 0, size.x, size.y);
+	this.table.setBounds(0, 0, size.x, size.y);
 }
 
 void onSelection(Event e) {
@@ -503,7 +503,7 @@ void onSelection(Event e) {
  */
 public TableTreeItem getItem (int index) {
 	checkWidget();
-	int count = items.length;
+	int count = this.items.length;
 	if (!(0 <= index && index < count)) SWT.error (SWT.ERROR_INVALID_RANGE);
 	return items [index];
 }
@@ -526,15 +526,15 @@ public TableTreeItem getItem (int index) {
  */
 public TableTreeItem getItem(Point point) {
 	checkWidget();
-	TableItem item = table.getItem(point);
+	TableItem item = this.table.getItem(point);
 	if (item == null) return null;
 	return getItem(item);
 	
 }
 TableTreeItem getItem(TableItem tableItem) {
 	if (tableItem == null) return null;
-	for (int i = 0; i < items.length; i++) {
-	    	TableTreeItem item = items[i].getItem(tableItem);
+	for (int i = 0; i < this.items.length; i++) {
+	    	TableTreeItem item = this.items[i].getItem(tableItem);
 	    	if (item != null) return item;
 	}
 	return null;
@@ -554,7 +554,7 @@ void onKeyDown (Event e) {
 			if (item.getItemCount() == 0) return;
 			if (item.getExpanded()) {
 				TableTreeItem newSelection = item.getItems()[0];
-				table.setSelection(new TableItem[]{newSelection.tableItem});
+				this.table.setSelection(new TableItem[]{newSelection.tableItem});
 				showItem(newSelection);
 				type = SWT.Selection;
 			} else {
@@ -570,7 +570,7 @@ void onKeyDown (Event e) {
 				if (parent != null) {
 					int index = parent.indexOf(item);
 					if (index != 0) return;
-					table.setSelection(new TableItem[]{parent.tableItem});
+					this.table.setSelection(new TableItem[]{parent.tableItem});
 					type = SWT.Selection;
 				}
 			}
@@ -630,19 +630,19 @@ void onMouseDown(Event event) {
 public void removeAll () {
 	checkWidget();
 	setRedraw(false);
-	for (int i = items.length - 1; i >= 0; i--) {
-		items[i].dispose();
+	for (int i = this.items.length - 1; i >= 0; i--) {
+		this.items[i].dispose();
 	}
-	items = EMPTY_ITEMS;
+	this.items = EMPTY_ITEMS;
 	setRedraw(true);
 }
 
 void removeItem(TableTreeItem item) {
 	int index = 0;
-	while (index < items.length && items[index] != item) index++;
-	if (index == items.length) return;
-	TableTreeItem[] newItems = new TableTreeItem[items.length - 1];
-	System.arraycopy(items, 0, newItems, 0, index);
+	while (index < this.items.length && this.items[index] != item) index++;
+	if (index == this.items.length) return;
+	TableTreeItem[] newItems = new TableTreeItem[this.items.length - 1];
+	System.arraycopy(this.items, 0, newItems, 0, index);
 	System.arraycopy(items, index + 1, newItems, index, items.length - index - 1);
 	items = newItems;
 }
@@ -707,12 +707,12 @@ public void removeTreeListener (TreeListener listener) {
  */
 public void selectAll () {
 	checkWidget();
-	table.selectAll();
+	this.table.selectAll();
 }
 @Override
 public void setBackground (Color color) {
 	super.setBackground(color);
-	table.setBackground(color);
+	this.table.setBackground(color);
 	if (sizeImage != null) {
 		GC gc = new GC (sizeImage);
 		gc.setBackground(getBackground());
@@ -724,22 +724,22 @@ public void setBackground (Color color) {
 @Override
 public void setEnabled (boolean enabled) {
 	super.setEnabled(enabled);
-	table.setEnabled(enabled);
+	this.table.setEnabled(enabled);
 }
 @Override
 public void setFont (Font font) {
 	super.setFont(font);
-	table.setFont(font);
+	this.table.setFont(font);
 }
 @Override
 public void setForeground (Color color) {
 	super.setForeground(color);
-	table.setForeground(color);
+	this.table.setForeground(color);
 }
 @Override
 public void setMenu (Menu menu) {
 	super.setMenu(menu);
-	table.setMenu(menu);
+	this.table.setMenu(menu);
 }
 
 /**
@@ -767,7 +767,7 @@ public void setSelection (TableTreeItem[] items) {
 	checkWidget ();
 	if (items == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	int length = items.length;
-	if (length == 0 || ((table.getStyle() & SWT.SINGLE) != 0 && length > 1)) {
+	if (length == 0 || ((this.table.getStyle() & SWT.SINGLE) != 0 && length > 1)) {
 		deselectAll();
 		return;
 	}
@@ -777,12 +777,12 @@ public void setSelection (TableTreeItem[] items) {
 		if (!items[i].getVisible()) expandItem (items[i]);
 		tableItems[i] = items[i].tableItem;
 	}
-	table.setSelection(tableItems);
+	this.table.setSelection(tableItems);
 }
 @Override
 public void setToolTipText (String string) {
 	super.setToolTipText(string);
-	table.setToolTipText(string);
+	this.table.setToolTipText(string);
 }
 
 /**
@@ -808,7 +808,7 @@ public void showItem (TableTreeItem item) {
 	if (item == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	if (!item.getVisible()) expandItem (item);
 	TableItem tableItem = item.tableItem;
-	table.showItem(tableItem);
+	this.table.showItem(tableItem);
 }
 
 /**
@@ -827,6 +827,6 @@ public void showItem (TableTreeItem item) {
  */
 public void showSelection () {
 	checkWidget();
-	table.showSelection();
+	this.table.showSelection();
 }
 }

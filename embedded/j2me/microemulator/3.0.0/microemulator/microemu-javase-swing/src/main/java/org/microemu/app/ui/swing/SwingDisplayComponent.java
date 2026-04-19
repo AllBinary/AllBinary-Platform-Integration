@@ -260,7 +260,7 @@ public class SwingDisplayComponent extends JComponent implements DisplayComponen
 
 	public void init() {
 		synchronized (this) {
-			graphicsSurface = null;
+			this.graphicsSurface = null;
 			this.initialPressedSoftButton = null;
 		}
 	}
@@ -270,7 +270,7 @@ public class SwingDisplayComponent extends JComponent implements DisplayComponen
 	}
 
 	public void removeDisplayRepaintListener(DisplayRepaintListener l) {
-		if (displayRepaintListener == l) {
+		if (this.displayRepaintListener == l) {
 			this.displayRepaintListener = null;
 		}
 	}
@@ -285,9 +285,9 @@ public class SwingDisplayComponent extends JComponent implements DisplayComponen
 	}
 
 	protected void paintComponent(Graphics g) {
-		if (graphicsSurface != null) {
-			synchronized (graphicsSurface) {
-				g.drawImage(graphicsSurface.getImage(), 0, 0, null);
+		if (this.graphicsSurface != null) {
+			synchronized (this.graphicsSurface) {
+				g.drawImage(this.graphicsSurface.getImage(), 0, 0, null);
 			}
 		}
 	}
@@ -311,20 +311,20 @@ public class SwingDisplayComponent extends JComponent implements DisplayComponen
 			J2SEDeviceDisplay deviceDisplay = (J2SEDeviceDisplay) device.getDeviceDisplay();
 
 			synchronized (this) {
-				if (graphicsSurface == null) {
-					graphicsSurface = new J2SEGraphicsSurface(
+				if (this.graphicsSurface == null) {
+					this.graphicsSurface = new J2SEGraphicsSurface(
 							device.getDeviceDisplay().getFullWidth(), device.getDeviceDisplay().getFullHeight(), false, 0x000000);
 				}
 
-				synchronized (graphicsSurface) {
-					deviceDisplay.paintDisplayable(graphicsSurface, x, y, width, height);
+				synchronized (this.graphicsSurface) {
+					deviceDisplay.paintDisplayable(this.graphicsSurface, x, y, width, height);
 					if (!deviceDisplay.isFullScreenMode()) {
-						deviceDisplay.paintControls(graphicsSurface.getGraphics());
+						deviceDisplay.paintControls(this.graphicsSurface.getGraphics());
 					}
 				}
 			}
 
-                    J2SEGraphicsSurface aGraphicsSurface = graphicsSurface;
+                    J2SEGraphicsSurface aGraphicsSurface = this.graphicsSurface;
                     if (aGraphicsSurface != null) {
                         if (deviceDisplay.isFullScreenMode()) {
                             fireDisplayRepaint(
@@ -341,8 +341,8 @@ public class SwingDisplayComponent extends JComponent implements DisplayComponen
 	}
 
 	public void fireDisplayRepaint(J2SEGraphicsSurface graphicsSurface, int x, int y, int width, int height) {
-		if (displayRepaintListener != null) {
-			displayRepaintListener.repaintInvoked(graphicsSurface);
+		if (this.displayRepaintListener != null) {
+			this.displayRepaintListener.repaintInvoked(graphicsSurface);
 		}
 		
 		repaint(x, y, width, height);

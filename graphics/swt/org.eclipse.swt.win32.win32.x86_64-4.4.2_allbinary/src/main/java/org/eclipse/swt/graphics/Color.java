@@ -241,7 +241,7 @@ public boolean equals (Object object) {
 	if (object == this) return true;
 	if (!(object instanceof Color)) return false;
 	Color color = (Color) object;
-	return device == color.device && (handle & 0xFFFFFF) == (color.handle & 0xFFFFFF) && (alpha == color.alpha);
+	return device == color.device && (this.handle & 0xFFFFFF) == (color.handle & 0xFFFFFF) && (this.alpha == color.alpha);
 }
 
 /**
@@ -269,7 +269,7 @@ public int getAlpha () {
  */
 public int getBlue () {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	return (handle & 0xFF0000) >> 16;
+	return (this.handle & 0xFF0000) >> 16;
 }
 
 /**
@@ -283,7 +283,7 @@ public int getBlue () {
  */
 public int getGreen () {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	return (handle & 0xFF00) >> 8 ;
+	return (this.handle & 0xFF00) >> 8 ;
 }
 
 /**
@@ -311,7 +311,7 @@ public int getRed () {
  */
 public RGB getRGB () {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	return new RGB(handle & 0xFF, (handle & 0xFF00) >> 8, (handle & 0xFF0000) >> 16);
+	return new RGB(this.handle & 0xFF, (this.handle & 0xFF00) >> 8, (this.handle & 0xFF0000) >> 16);
 }
 
 /**
@@ -326,7 +326,7 @@ public RGB getRGB () {
  */
 public RGBA getRGBA () {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	return new RGBA(handle & 0xFF, (handle & 0xFF00) >> 8, (handle & 0xFF0000) >> 16, alpha);
+	return new RGBA(this.handle & 0xFF, (this.handle & 0xFF00) >> 8, (this.handle & 0xFF0000) >> 16, alpha);
 }
 
 /**
@@ -340,7 +340,7 @@ public RGBA getRGBA () {
  * @see #equals
  */
 public int hashCode () {
-	return handle ^ alpha;
+	return handle ^ this.alpha;
 }
 
 /**
@@ -363,7 +363,7 @@ void init(int red, int green, int blue, int alpha) {
 	if (red > 255 || red < 0 || green > 255 || green < 0 || blue > 255 || blue < 0 || alpha > 255 || alpha < 0) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	handle = (red & 0xFF) | ((green & 0xFF) << 8) | ((blue & 0xFF) << 16);
+	this.handle = (red & 0xFF) | ((green & 0xFF) << 8) | ((blue & 0xFF) << 16);
 	this.alpha = alpha;
 	
 	/* If this is not a palette-based device, return */

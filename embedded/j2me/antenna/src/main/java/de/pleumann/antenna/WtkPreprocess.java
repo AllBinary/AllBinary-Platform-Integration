@@ -86,10 +86,10 @@ public class WtkPreprocess extends MatchingTask {
 	
     public void init() {
         super.init();
-        utility = Utility.getInstance(getProject(), this);
+        this.utility = Utility.getInstance(getProject(), this);
 
-        condition = new Conditional(getProject());
-        sourceDir = getProject().resolveFile(".");
+        this.condition = new Conditional(getProject());
+        this.sourceDir = getProject().resolveFile(".");
         createInclude().setName("**/*.java");
     }
 
@@ -103,51 +103,51 @@ public class WtkPreprocess extends MatchingTask {
 
     public void setSymbols(String symbols) 
     {
-    	m_symbols = symbols;
+    	this.m_symbols = symbols;
     }
     
 	public void setVerbose(boolean verbose) {
         if (verbose) {
-            mode = mode | IPreprocessor.MODE_VERBOSE;
+            this.mode = this.mode | IPreprocessor.MODE_VERBOSE;
         }
         else {
-            mode = mode & ~IPreprocessor.MODE_VERBOSE;
+            this.mode = this.mode & ~IPreprocessor.MODE_VERBOSE;
         }
     }
 
     public void setBackup(boolean backup) {
         if (backup) {
-            mode = mode | IPreprocessor.MODE_BACKUP;
+            this.mode = this.mode | IPreprocessor.MODE_BACKUP;
         }
         else {
-            mode = mode & ~IPreprocessor.MODE_BACKUP;
+            this.mode = this.mode & ~IPreprocessor.MODE_BACKUP;
         }
     }
 
     public void setIndent(boolean indent) {
         if (indent) {
-            mode = mode | IPreprocessor.MODE_INDENT;
+            this.mode = this.mode | IPreprocessor.MODE_INDENT;
         }
         else {
-            mode = mode & ~IPreprocessor.MODE_INDENT;
+            this.mode = this.mode & ~IPreprocessor.MODE_INDENT;
         }
     }
 
     public void setTest(boolean test) {
         if (test) {
-            mode = mode | IPreprocessor.MODE_TEST;
+            this.mode = this.mode | IPreprocessor.MODE_TEST;
         }
         else {
-            mode = mode & ~IPreprocessor.MODE_TEST;
+            this.mode = this.mode & ~IPreprocessor.MODE_TEST;
         }
     }
 
     public void setFilter(boolean filter) {
         if (filter) {
-            mode = mode | IPreprocessor.MODE_FILTER;
+            this.mode = this.mode | IPreprocessor.MODE_FILTER;
         }
         else {
-            mode = mode & ~IPreprocessor.MODE_FILTER;
+            this.mode = this.mode & ~IPreprocessor.MODE_FILTER;
         }
     }
 
@@ -174,55 +174,55 @@ public class WtkPreprocess extends MatchingTask {
     public void execute() throws BuildException {
         if (!isActive()) return;
 
-        if (targetDir == null) {
+        if (this.targetDir == null) {
             throw new BuildException("Need a target directory");
         }
-        StringTokenizer tok = new StringTokenizer(sourceDir.toString(), "" + File.pathSeparatorChar);
+        StringTokenizer tok = new StringTokenizer(this.sourceDir.toString(), "" + File.pathSeparatorChar);
         while(tok.hasMoreElements()){
         	String dir = tok.nextToken();
     		try {
     			IPreprocessor pp;
-    			if ("1".equals(m_backendVersion))
+    			if ("1".equals(this.m_backendVersion))
     			{
-					pp = new antenna.preprocessor.v1.Preprocessor(utility, encoding);
-					pp.addSymbols(m_symbols);
-					if (m_printSymbols)
+					pp = new antenna.preprocessor.v1.Preprocessor(this.utility, encoding);
+					pp.addSymbols(this.m_symbols);
+					if (this.m_printSymbols)
 						pp.printSymbols();
     			}
     			else
-   				if ("2".equals(m_backendVersion))
+   				if ("2".equals(this.m_backendVersion))
     			{
-    				pp = new antenna.preprocessor.v2.PreprocessorBridge(utility);
+    				pp = new antenna.preprocessor.v2.PreprocessorBridge(this.utility);
     			}
    				else
-   				if ("3".equals(m_backendVersion))
+   				if ("3".equals(this.m_backendVersion))
     			{
-    				pp = new antenna.preprocessor.v3.PreprocessorBridge(utility);
+    				pp = new antenna.preprocessor.v3.PreprocessorBridge(this.utility);
     			}
     			else
     			{
-    				throw new BuildException("Unsupported backend version " + m_backendVersion);
+    				throw new BuildException("Unsupported backend version " + this.m_backendVersion);
     			}
     			
     			
     			// for any backend except version 1:
-    			if (!m_backendVersion.equals("1"))
+    			if (!this.m_backendVersion.equals("1"))
     			{
     				try
     				{
-    					pp.setDebugLevel(m_debugLevel);
+    					pp.setDebugLevel(this.m_debugLevel);
     				}
     				catch (Exception e)
     				{
     					log(e.getMessage(),Project.MSG_WARN);
     				}
     				String deviceDefines = getDeviceDefines();
-    				String symbols = addSymbols(m_symbols, deviceDefines);
+    				String symbols = addSymbols(this.m_symbols, deviceDefines);
     				pp.addSymbols(symbols);
     				
-    				for(int i=0;i<m_symbolsFile.size();i++)
+    				for(int i=0;i<this.m_symbolsFile.size();i++)
     				{
-    					Symbols_File f = (Symbols_File) m_symbolsFile.get(i);
+    					Symbols_File f = (Symbols_File) this.m_symbolsFile.get(i);
     					if (f.name != null)
     					{
     						File file = new File(f.name);
@@ -273,18 +273,18 @@ public class WtkPreprocess extends MatchingTask {
     					}
     				}
     				
-    				if (m_printSymbols)
+    				if (this.m_printSymbols)
     					pp.printSymbols();
     				
-    				if (m_saveSymbols != null)
+    				if (this.m_saveSymbols != null)
     				{
     					try
     					{
-    						pp.outputDefinesToFile(new File(m_saveSymbols), encoding);
+    						pp.outputDefinesToFile(new File(this.m_saveSymbols), encoding);
     					}
     					catch (IOException e)
     					{
-    						log("Error saving defines to file " + m_saveSymbols,Project.MSG_WARN);
+    						log("Error saving defines to file " + this.m_saveSymbols,Project.MSG_WARN);
     					}
     				}
     				
@@ -333,7 +333,7 @@ public class WtkPreprocess extends MatchingTask {
 				// we are putting the output in a different directory
 				// or we are changing the file extension
 				// then we have to write a new file
-				if (modified || !sourceDir.equals(targetDir) || (newext != null))
+				if (modified || !sourceDir.equals(this.targetDir) || (newext != null))
 				{
 					try
 					{
@@ -364,7 +364,7 @@ public class WtkPreprocess extends MatchingTask {
 
 							File file = new File(targetFile + "~");
 							file.delete();
-							if (!new File(targetFile).renameTo(file) && (targetDir == null))
+							if (!new File(targetFile).renameTo(file) && (this.targetDir == null))
 							{
 								throw new java.io.IOException();
 							}
@@ -447,16 +447,16 @@ public class WtkPreprocess extends MatchingTask {
 	
 	public void setDevice(String device)
 	{
-		m_device = device;
+		this.m_device = device;
 	}
 	
 	private String getDeviceDefines()
 	{
-		DeviceProps deviceProps = Devices.getDevice(m_device);
+		DeviceProps deviceProps = Devices.getDevice(this.m_device);
 		String deviceDefines = "";
 		if (deviceProps == null)
 		{
-			getProject().log("Warning: unknown device \"" + m_device + "\"");
+			getProject().log("Warning: unknown device \"" + this.m_device + "\"");
 		}
 		else
 		{
@@ -468,7 +468,7 @@ public class WtkPreprocess extends MatchingTask {
 	private String addSymbols(String current, String deviceDefines)
 	{
 		String s = "";
-		s = append(m_symbols, s);
+		s = append(this.m_symbols, s);
 		s = append(s, deviceDefines);
 		return s;
 	}
@@ -483,7 +483,7 @@ public class WtkPreprocess extends MatchingTask {
 
 	public void setVersion(String backendVersion)
 	{
-		m_backendVersion = backendVersion;
+		this.m_backendVersion = backendVersion;
 	}
 
 	/**
@@ -491,7 +491,7 @@ public class WtkPreprocess extends MatchingTask {
 	 */
 	public void setPrintSymbols(boolean printSymbols)
 	{
-		m_printSymbols = printSymbols;
+		this.m_printSymbols = printSymbols;
 	}
 	
     public static class Symbols_File
@@ -514,18 +514,18 @@ public class WtkPreprocess extends MatchingTask {
 	public Symbols_File createSymbols_File() 
 	{
 		Symbols_File a = new Symbols_File();
-		m_symbolsFile.addElement(a);
+		this.m_symbolsFile.addElement(a);
 		return a;
 	}
 	
 	public void setSaveSymbols(String file)
 	{
-		m_saveSymbols = file;
+		this.m_saveSymbols = file;
 	}
 	
 	public void setDebugLevel(String debug)
 	{
-		m_debugLevel = debug;
+		this.m_debugLevel = debug;
 	}
 	
 	public void setDeviceDBPath(String path) throws BuildException

@@ -125,7 +125,7 @@ public void addSelectionListener (SelectionListener listener) {
 }
 
 void destroyWidget () {
-	if (parent != null) parent.destroyToolTip (this);
+	if (this.parent != null) this.parent.destroyToolTip (this);
 	releaseHandle ();
 }
 
@@ -213,7 +213,7 @@ public String getText () {
 public boolean getVisible () {
 	checkWidget();
 	if (OS.IsWinCE) return false;
-	if (item != null) return visible;
+	if (this.item != null) return visible;
 	long /*int*/ hwndToolTip = hwndToolTip ();
 	if (OS.SendMessage (hwndToolTip, OS.TTM_GETCURRENTTOOL, 0, 0) != 0) {
 		TOOLINFO lpti = new TOOLINFO ();
@@ -243,7 +243,7 @@ int getWidth () {
 }
 
 long /*int*/ hwndToolTip () {
-	return (style & SWT.BALLOON) != 0 ? parent.balloonTipHandle () : parent.toolTipHandle ();
+	return (style & SWT.BALLOON) != 0 ? this.parent.balloonTipHandle () : this.parent.toolTipHandle ();
 }
 
 /**
@@ -262,21 +262,21 @@ long /*int*/ hwndToolTip () {
  */
 public boolean isVisible () {
 	checkWidget ();
-	if (item != null) return getVisible () && item.getVisible ();
+	if (this.item != null) return getVisible () && this.item.getVisible ();
 	return getVisible ();
 }
 
 void releaseHandle () {
 	super.releaseHandle ();
-	parent = null;
-	item = null;
+	this.parent = null;
+	this.item = null;
 	id = -1;
 }
 
 void releaseWidget () {
 	super.releaseWidget ();
-	if (item == null) {
-		if (autoHide) {
+	if (this.item == null) {
+		if (this.autoHide) {
 			long /*int*/ hwndToolTip = hwndToolTip ();
 			if (OS.SendMessage (hwndToolTip, OS.TTM_GETCURRENTTOOL, 0, 0) != 0) {
 				TOOLINFO lpti = new TOOLINFO ();
@@ -293,11 +293,11 @@ void releaseWidget () {
 			}
 		}
 	}
-	if (item != null && item.toolTip == this) {
-		item.toolTip = null;
+	if (this.item != null && this.item.toolTip == this) {
+		this.item.toolTip = null;
 	}
 	this.item = null;
-	text = message = null;
+	this.text = message = null;
 }
 
 /**
@@ -434,7 +434,7 @@ public void setMessage (String string) {
 public void setText (String string) {
 	checkWidget ();
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
-	text = string;
+	this.text = string;
 	//TODO - update when visible
 }
 
@@ -458,15 +458,15 @@ public void setVisible (boolean visible) {
 	checkWidget ();
 	if (OS.IsWinCE) return;
 	if (visible == getVisible ()) return;
-	if (item == null) {
-		long /*int*/ hwnd = parent.handle;
+	if (this.item == null) {
+		long /*int*/ hwnd = this.parent.handle;
 		TOOLINFO lpti = new TOOLINFO ();
 		lpti.cbSize = TOOLINFO.sizeof;
 		lpti.uId = id;
 		lpti.hwnd = hwnd;
 		long /*int*/ hwndToolTip = hwndToolTip ();
-		Shell shell = parent.getShell ();
-		if (text.length () != 0) {
+		Shell shell = this.parent.getShell ();
+		if (this.text.length () != 0) {
 			int icon = OS.TTI_NONE;
 			if ((style & SWT.ICON_INFORMATION) != 0) icon = OS.TTI_INFO;
 			if ((style & SWT.ICON_WARNING) != 0) icon = OS.TTI_WARNING;
@@ -520,7 +520,7 @@ public void setVisible (boolean visible) {
 		}
 		return;
 	}
-	if (item != null && OS.SHELL32_MAJOR >= 5) {
+	if (this.item != null && OS.SHELL32_MAJOR >= 5) {
 		if (visible) {
 			NOTIFYICONDATA iconData = OS.IsUnicode ? (NOTIFYICONDATA) new NOTIFYICONDATAW () : new NOTIFYICONDATAA ();
 			TCHAR buffer1 = new TCHAR (0, text, true);
@@ -540,9 +540,9 @@ public void setVisible (boolean visible) {
 				int length2 = Math.min (szInfo.length - 1, buffer2.length ());
 				System.arraycopy (buffer2.bytes, 0, szInfo, 0, length2);
 			}
-			Display display = item.getDisplay ();
+			Display display = this.item.getDisplay ();
 			iconData.cbSize = NOTIFYICONDATA.sizeof;
-			iconData.uID = item.id;
+			iconData.uID = this.item.id;
 			iconData.hWnd = display.hwndMessage;
 			iconData.uFlags = OS.NIF_INFO;
 			if ((style & SWT.ICON_INFORMATION) != 0) iconData.dwInfoFlags = OS.NIIF_INFO;

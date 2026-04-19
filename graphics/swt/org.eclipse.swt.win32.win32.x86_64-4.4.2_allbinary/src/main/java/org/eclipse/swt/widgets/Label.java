@@ -145,12 +145,12 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 	boolean drawText = true;
 	boolean drawImage = (bits & OS.SS_OWNERDRAW) == OS.SS_OWNERDRAW;
 	if (drawImage) {
-		if (image != null) {
-			Rectangle rect = image.getBounds();
+		if (this.image != null) {
+			Rectangle rect = this.image.getBounds();
 			width += rect.width;
 			height += rect.height;
 			if (IMAGE_AND_TEXT) {
-				if (text.length () != 0) width += MARGIN;
+				if (this.text.length () != 0) width += MARGIN;
 			} else {
 				drawText = false;
 			}
@@ -287,8 +287,8 @@ boolean mnemonicMatch (char key) {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	text = null;
-	image = null;
+	this.text = null;
+	this.image = null;
 }
 
 /**
@@ -392,9 +392,9 @@ public void setText (String string) {
 	* has not changed.  The fix is to check for this case and do
 	* nothing.
 	*/
-	if (string.equals (text)) return;
-	text = string;
-	if (image == null || !IMAGE_AND_TEXT) {
+	if (string.equals (this.text)) return;
+	this.text = string;
+	if (this.image == null || !IMAGE_AND_TEXT) {
 		int oldBits = OS.GetWindowLong (handle, OS.GWL_STYLE), newBits = oldBits;
 		newBits &= ~OS.SS_OWNERDRAW;
 		if ((style & SWT.LEFT) != 0) {
@@ -553,7 +553,7 @@ LRESULT WM_PAINT (long /*int*/ wParam, long /*int*/ lParam) {
 	if ((state & DISPOSE_SENT) != 0) return LRESULT.ZERO;
 
 	if (OS.IsWinCE) {
-		boolean drawImage = image != null;
+		boolean drawImage = this.image != null;
 		boolean drawSeparator = (style & SWT.SEPARATOR) != 0 && (style & SWT.SHADOW_NONE) == 0;
 		if (drawImage || drawSeparator) {
 			LRESULT result = null;
@@ -582,7 +582,7 @@ LRESULT WM_PAINT (long /*int*/ wParam, long /*int*/ lParam) {
 					result = LRESULT.ONE;
 				}
 				if (drawImage) {
-					Rectangle imageBounds = image.getBounds ();
+					Rectangle imageBounds = this.image.getBounds ();
 					int x = 0;
 					if ((style & SWT.CENTER) != 0) {
 						x = Math.max (0, (clientRect.right - imageBounds.width) / 2);
@@ -591,7 +591,7 @@ LRESULT WM_PAINT (long /*int*/ wParam, long /*int*/ lParam) {
 							x = Math.max (0, (clientRect.right - imageBounds.width));
 						}
 					}
-					gc.drawImage (image, x, Math.max (0, (clientRect.bottom - imageBounds.height) / 2));
+					gc.drawImage (this.image, x, Math.max (0, (clientRect.bottom - imageBounds.height) / 2));
 					result = LRESULT.ONE;
 				}
 				int width = ps.right - ps.left;
@@ -637,12 +637,12 @@ LRESULT wmDrawChild (long /*int*/ wParam, long /*int*/ lParam) {
 		int width = struct.right - struct.left;
 		int height = struct.bottom - struct.top;
 		if (width != 0 && height != 0) {
-			boolean drawImage = image != null;
-			boolean drawText = IMAGE_AND_TEXT && text.length () != 0;
+			boolean drawImage = this.image != null;
+			boolean drawText = IMAGE_AND_TEXT && this.text.length () != 0;
 			int margin = drawText && drawImage ? MARGIN : 0;
 			int imageWidth = 0, imageHeight = 0;
 			if (drawImage) {
-				Rectangle rect = image.getBounds ();
+				Rectangle rect = this.image.getBounds ();
 				imageWidth = rect.width;
 				imageHeight = rect.height;
 			}

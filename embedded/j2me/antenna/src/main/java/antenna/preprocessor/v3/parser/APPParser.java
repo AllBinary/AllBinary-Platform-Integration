@@ -133,15 +133,15 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:156:8: ( '//' '#' )
             // src/antenna/preprocessor/v3/parser/APP.g:156:10: '//' '#'
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             string_literal1=(Token)input.LT(1);
             match(input,60,FOLLOW_60_in_prefix661); if (failed) return retval;
             char_literal2=(Token)input.LT(1);
             match(input,61,FOLLOW_61_in_prefix664); if (failed) return retval;
             if ( backtracking==0 ) {
-            char_literal2_tree = (Object)adaptor.create(char_literal2);
-            adaptor.addChild(root_0, char_literal2_tree);
+            char_literal2_tree = (Object)this.adaptor.create(char_literal2);
+            this.adaptor.addChild(root_0, char_literal2_tree);
             }
 
             }
@@ -149,8 +149,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -184,7 +184,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:158:11: ( TRUE | FALSE )
             // src/antenna/preprocessor/v3/parser/APP.g:
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             set3=(Token)input.LT(1);
             if ( (input.LA(1)>=TRUE && input.LA(1)<=FALSE) ) {
@@ -279,13 +279,13 @@ public class APPParser extends Parser {
                 case 1 :
                     // src/antenna/preprocessor/v3/parser/APP.g:159:8: SYMBOL
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     SYMBOL4=(Token)input.LT(1);
                     match(input,SYMBOL,FOLLOW_SYMBOL_in_ident682); if (failed) return retval;
                     if ( backtracking==0 ) {
-                    SYMBOL4_tree = (Object)adaptor.create(SYMBOL4);
-                    adaptor.addChild(root_0, SYMBOL4_tree);
+                    SYMBOL4_tree = (Object)this.adaptor.create(SYMBOL4);
+                    this.adaptor.addChild(root_0, SYMBOL4_tree);
                     }
 
                     }
@@ -293,13 +293,13 @@ public class APPParser extends Parser {
                 case 2 :
                     // src/antenna/preprocessor/v3/parser/APP.g:159:17: STRING
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     STRING5=(Token)input.LT(1);
                     match(input,STRING,FOLLOW_STRING_in_ident686); if (failed) return retval;
                     if ( backtracking==0 ) {
-                    STRING5_tree = (Object)adaptor.create(STRING5);
-                    adaptor.addChild(root_0, STRING5_tree);
+                    STRING5_tree = (Object)this.adaptor.create(STRING5);
+                    this.adaptor.addChild(root_0, STRING5_tree);
                     }
 
                     }
@@ -307,13 +307,13 @@ public class APPParser extends Parser {
                 case 3 :
                     // src/antenna/preprocessor/v3/parser/APP.g:159:26: NUMBER
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     NUMBER6=(Token)input.LT(1);
                     match(input,NUMBER,FOLLOW_NUMBER_in_ident690); if (failed) return retval;
                     if ( backtracking==0 ) {
-                    NUMBER6_tree = (Object)adaptor.create(NUMBER6);
-                    adaptor.addChild(root_0, NUMBER6_tree);
+                    NUMBER6_tree = (Object)this.adaptor.create(NUMBER6);
+                    this.adaptor.addChild(root_0, NUMBER6_tree);
                     }
 
                     }
@@ -321,13 +321,13 @@ public class APPParser extends Parser {
                 case 4 :
                     // src/antenna/preprocessor/v3/parser/APP.g:159:35: r_boolean
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     pushFollow(FOLLOW_r_boolean_in_ident694);
                     r_boolean7=r_boolean();
                     _fsp--;
                     if (failed) return retval;
-                    if ( backtracking==0 ) adaptor.addChild(root_0, r_boolean7.getTree());
+                    if ( backtracking==0 ) this.adaptor.addChild(root_0, r_boolean7.getTree());
 
                     }
                     break;
@@ -336,8 +336,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -395,20 +395,20 @@ public class APPParser extends Parser {
                 case 1 :
                     // src/antenna/preprocessor/v3/parser/APP.g:161:7: ident
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     pushFollow(FOLLOW_ident_in_bool702);
                     ident8=ident();
                     _fsp--;
                     if (failed) return retval;
-                    if ( backtracking==0 ) adaptor.addChild(root_0, ident8.getTree());
+                    if ( backtracking==0 ) this.adaptor.addChild(root_0, ident8.getTree());
 
                     }
                     break;
                 case 2 :
                     // src/antenna/preprocessor/v3/parser/APP.g:162:9: LPAR expression RPAR
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     LPAR9=(Token)input.LT(1);
                     match(input,LPAR,FOLLOW_LPAR_in_bool712); if (failed) return retval;
@@ -416,7 +416,7 @@ public class APPParser extends Parser {
                     expression10=expression();
                     _fsp--;
                     if (failed) return retval;
-                    if ( backtracking==0 ) adaptor.addChild(root_0, expression10.getTree());
+                    if ( backtracking==0 ) this.adaptor.addChild(root_0, expression10.getTree());
                     RPAR11=(Token)input.LT(1);
                     match(input,RPAR,FOLLOW_RPAR_in_bool717); if (failed) return retval;
 
@@ -427,8 +427,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -464,7 +464,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:165:10: ( ( NOT )* bool )
             // src/antenna/preprocessor/v3/parser/APP.g:165:12: ( NOT )* bool
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             // src/antenna/preprocessor/v3/parser/APP.g:165:12: ( NOT )*
             loop3:
@@ -484,8 +484,8 @@ public class APPParser extends Parser {
             	    NOT12=(Token)input.LT(1);
             	    match(input,NOT,FOLLOW_NOT_in_not_bool740); if (failed) return retval;
             	    if ( backtracking==0 ) {
-            	    NOT12_tree = (Object)adaptor.create(NOT12);
-            	    root_0 = (Object)adaptor.becomeRoot(NOT12_tree, root_0);
+            	    NOT12_tree = (Object)this.adaptor.create(NOT12);
+            	    root_0 = (Object)this.adaptor.becomeRoot(NOT12_tree, root_0);
             	    }
 
             	    }
@@ -500,15 +500,15 @@ public class APPParser extends Parser {
             bool13=bool();
             _fsp--;
             if (failed) return retval;
-            if ( backtracking==0 ) adaptor.addChild(root_0, bool13.getTree());
+            if ( backtracking==0 ) this.adaptor.addChild(root_0, bool13.getTree());
 
             }
 
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -558,13 +558,13 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:167:9: ( not_bool ( ( AT | EQ | NEQ | LT | GT | LTE | GTE ) not_bool )? )
             // src/antenna/preprocessor/v3/parser/APP.g:168:5: not_bool ( ( AT | EQ | NEQ | LT | GT | LTE | GTE ) not_bool )?
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             pushFollow(FOLLOW_not_bool_in_eq_bool757);
             not_bool14=not_bool();
             _fsp--;
             if (failed) return retval;
-            if ( backtracking==0 ) adaptor.addChild(root_0, not_bool14.getTree());
+            if ( backtracking==0 ) this.adaptor.addChild(root_0, not_bool14.getTree());
             // src/antenna/preprocessor/v3/parser/APP.g:168:14: ( ( AT | EQ | NEQ | LT | GT | LTE | GTE ) not_bool )?
             int alt5=2;
             int LA5_0 = input.LA(1);
@@ -629,8 +629,8 @@ public class APPParser extends Parser {
                             AT15=(Token)input.LT(1);
                             match(input,AT,FOLLOW_AT_in_eq_bool762); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            AT15_tree = (Object)adaptor.create(AT15);
-                            root_0 = (Object)adaptor.becomeRoot(AT15_tree, root_0);
+                            AT15_tree = (Object)this.adaptor.create(AT15);
+                            root_0 = (Object)this.adaptor.becomeRoot(AT15_tree, root_0);
                             }
 
                             }
@@ -641,8 +641,8 @@ public class APPParser extends Parser {
                             EQ16=(Token)input.LT(1);
                             match(input,EQ,FOLLOW_EQ_in_eq_bool767); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            EQ16_tree = (Object)adaptor.create(EQ16);
-                            root_0 = (Object)adaptor.becomeRoot(EQ16_tree, root_0);
+                            EQ16_tree = (Object)this.adaptor.create(EQ16);
+                            root_0 = (Object)this.adaptor.becomeRoot(EQ16_tree, root_0);
                             }
 
                             }
@@ -653,8 +653,8 @@ public class APPParser extends Parser {
                             NEQ17=(Token)input.LT(1);
                             match(input,NEQ,FOLLOW_NEQ_in_eq_bool772); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            NEQ17_tree = (Object)adaptor.create(NEQ17);
-                            root_0 = (Object)adaptor.becomeRoot(NEQ17_tree, root_0);
+                            NEQ17_tree = (Object)this.adaptor.create(NEQ17);
+                            root_0 = (Object)this.adaptor.becomeRoot(NEQ17_tree, root_0);
                             }
 
                             }
@@ -665,8 +665,8 @@ public class APPParser extends Parser {
                             LT18=(Token)input.LT(1);
                             match(input,LT,FOLLOW_LT_in_eq_bool777); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            LT18_tree = (Object)adaptor.create(LT18);
-                            root_0 = (Object)adaptor.becomeRoot(LT18_tree, root_0);
+                            LT18_tree = (Object)this.adaptor.create(LT18);
+                            root_0 = (Object)this.adaptor.becomeRoot(LT18_tree, root_0);
                             }
 
                             }
@@ -677,8 +677,8 @@ public class APPParser extends Parser {
                             GT19=(Token)input.LT(1);
                             match(input,GT,FOLLOW_GT_in_eq_bool782); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            GT19_tree = (Object)adaptor.create(GT19);
-                            root_0 = (Object)adaptor.becomeRoot(GT19_tree, root_0);
+                            GT19_tree = (Object)this.adaptor.create(GT19);
+                            root_0 = (Object)this.adaptor.becomeRoot(GT19_tree, root_0);
                             }
 
                             }
@@ -689,8 +689,8 @@ public class APPParser extends Parser {
                             LTE20=(Token)input.LT(1);
                             match(input,LTE,FOLLOW_LTE_in_eq_bool787); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            LTE20_tree = (Object)adaptor.create(LTE20);
-                            root_0 = (Object)adaptor.becomeRoot(LTE20_tree, root_0);
+                            LTE20_tree = (Object)this.adaptor.create(LTE20);
+                            root_0 = (Object)this.adaptor.becomeRoot(LTE20_tree, root_0);
                             }
 
                             }
@@ -701,8 +701,8 @@ public class APPParser extends Parser {
                             GTE21=(Token)input.LT(1);
                             match(input,GTE,FOLLOW_GTE_in_eq_bool792); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            GTE21_tree = (Object)adaptor.create(GTE21);
-                            root_0 = (Object)adaptor.becomeRoot(GTE21_tree, root_0);
+                            GTE21_tree = (Object)this.adaptor.create(GTE21);
+                            root_0 = (Object)this.adaptor.becomeRoot(GTE21_tree, root_0);
                             }
 
                             }
@@ -714,7 +714,7 @@ public class APPParser extends Parser {
                     not_bool22=not_bool();
                     _fsp--;
                     if (failed) return retval;
-                    if ( backtracking==0 ) adaptor.addChild(root_0, not_bool22.getTree());
+                    if ( backtracking==0 ) this.adaptor.addChild(root_0, not_bool22.getTree());
 
                     }
                     break;
@@ -727,8 +727,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -766,13 +766,13 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:170:10: ( eq_bool ( AND eq_bool )* )
             // src/antenna/preprocessor/v3/parser/APP.g:170:12: eq_bool ( AND eq_bool )*
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             pushFollow(FOLLOW_eq_bool_in_and_bool807);
             eq_bool23=eq_bool();
             _fsp--;
             if (failed) return retval;
-            if ( backtracking==0 ) adaptor.addChild(root_0, eq_bool23.getTree());
+            if ( backtracking==0 ) this.adaptor.addChild(root_0, eq_bool23.getTree());
             // src/antenna/preprocessor/v3/parser/APP.g:170:20: ( AND eq_bool )*
             loop6:
             do {
@@ -791,14 +791,14 @@ public class APPParser extends Parser {
             	    AND24=(Token)input.LT(1);
             	    match(input,AND,FOLLOW_AND_in_and_bool810); if (failed) return retval;
             	    if ( backtracking==0 ) {
-            	    AND24_tree = (Object)adaptor.create(AND24);
-            	    root_0 = (Object)adaptor.becomeRoot(AND24_tree, root_0);
+            	    AND24_tree = (Object)this.adaptor.create(AND24);
+            	    root_0 = (Object)this.adaptor.becomeRoot(AND24_tree, root_0);
             	    }
             	    pushFollow(FOLLOW_eq_bool_in_and_bool813);
             	    eq_bool25=eq_bool();
             	    _fsp--;
             	    if (failed) return retval;
-            	    if ( backtracking==0 ) adaptor.addChild(root_0, eq_bool25.getTree());
+            	    if ( backtracking==0 ) this.adaptor.addChild(root_0, eq_bool25.getTree());
 
             	    }
             	    break;
@@ -814,8 +814,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -853,13 +853,13 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:172:10: ( and_bool ( XOR and_bool )* )
             // src/antenna/preprocessor/v3/parser/APP.g:172:12: and_bool ( XOR and_bool )*
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             pushFollow(FOLLOW_and_bool_in_xor_bool823);
             and_bool26=and_bool();
             _fsp--;
             if (failed) return retval;
-            if ( backtracking==0 ) adaptor.addChild(root_0, and_bool26.getTree());
+            if ( backtracking==0 ) this.adaptor.addChild(root_0, and_bool26.getTree());
             // src/antenna/preprocessor/v3/parser/APP.g:172:21: ( XOR and_bool )*
             loop7:
             do {
@@ -878,14 +878,14 @@ public class APPParser extends Parser {
             	    XOR27=(Token)input.LT(1);
             	    match(input,XOR,FOLLOW_XOR_in_xor_bool826); if (failed) return retval;
             	    if ( backtracking==0 ) {
-            	    XOR27_tree = (Object)adaptor.create(XOR27);
-            	    root_0 = (Object)adaptor.becomeRoot(XOR27_tree, root_0);
+            	    XOR27_tree = (Object)this.adaptor.create(XOR27);
+            	    root_0 = (Object)this.adaptor.becomeRoot(XOR27_tree, root_0);
             	    }
             	    pushFollow(FOLLOW_and_bool_in_xor_bool829);
             	    and_bool28=and_bool();
             	    _fsp--;
             	    if (failed) return retval;
-            	    if ( backtracking==0 ) adaptor.addChild(root_0, and_bool28.getTree());
+            	    if ( backtracking==0 ) this.adaptor.addChild(root_0, and_bool28.getTree());
 
             	    }
             	    break;
@@ -901,8 +901,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -940,13 +940,13 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:174:12: ( xor_bool ( OR xor_bool )* )
             // src/antenna/preprocessor/v3/parser/APP.g:174:14: xor_bool ( OR xor_bool )*
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             pushFollow(FOLLOW_xor_bool_in_expression839);
             xor_bool29=xor_bool();
             _fsp--;
             if (failed) return retval;
-            if ( backtracking==0 ) adaptor.addChild(root_0, xor_bool29.getTree());
+            if ( backtracking==0 ) this.adaptor.addChild(root_0, xor_bool29.getTree());
             // src/antenna/preprocessor/v3/parser/APP.g:174:23: ( OR xor_bool )*
             loop8:
             do {
@@ -965,14 +965,14 @@ public class APPParser extends Parser {
             	    OR30=(Token)input.LT(1);
             	    match(input,OR,FOLLOW_OR_in_expression842); if (failed) return retval;
             	    if ( backtracking==0 ) {
-            	    OR30_tree = (Object)adaptor.create(OR30);
-            	    root_0 = (Object)adaptor.becomeRoot(OR30_tree, root_0);
+            	    OR30_tree = (Object)this.adaptor.create(OR30);
+            	    root_0 = (Object)this.adaptor.becomeRoot(OR30_tree, root_0);
             	    }
             	    pushFollow(FOLLOW_xor_bool_in_expression845);
             	    xor_bool31=xor_bool();
             	    _fsp--;
             	    if (failed) return retval;
-            	    if ( backtracking==0 ) adaptor.addChild(root_0, xor_bool31.getTree());
+            	    if ( backtracking==0 ) this.adaptor.addChild(root_0, xor_bool31.getTree());
 
             	    }
             	    break;
@@ -988,8 +988,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -1023,7 +1023,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:176:10: ( (~ EOL )+ )
             // src/antenna/preprocessor/v3/parser/APP.g:176:12: (~ EOL )+
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             // src/antenna/preprocessor/v3/parser/APP.g:176:12: (~ EOL )+
             int cnt9=0;
@@ -1109,7 +1109,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:178:13: ( DEBUG | INFO | WARN | ERROR | FATAL )
             // src/antenna/preprocessor/v3/parser/APP.g:
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             set33=(Token)input.LT(1);
             if ( (input.LA(1)>=DEBUG && input.LA(1)<=FATAL) ) {
@@ -1199,7 +1199,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:180:6: ( ( ( ( prefix )=> prefix ( ( DEFINE define | UNDEFINE SYMBOL | ( IF | ELIF | CONDITION ) expression ) | ( IFDEF | IFNDEF | ELIFDEF | ELIFNDEF ) SYMBOL | ( ENDIF | ELSE | ENDINCLUDE ) | ( INCLUDE (~ EOL )+ ) | ( EXPAND (~ EOL )+ ) | ( ( DEBUG | MDEBUG ) ( debug_level )? ) | ENDDEBUG ) ) ( EOL | EOF ) ) )
             // src/antenna/preprocessor/v3/parser/APP.g:181:1: ( ( ( prefix )=> prefix ( ( DEFINE define | UNDEFINE SYMBOL | ( IF | ELIF | CONDITION ) expression ) | ( IFDEF | IFNDEF | ELIFDEF | ELIFNDEF ) SYMBOL | ( ENDIF | ELSE | ENDINCLUDE ) | ( INCLUDE (~ EOL )+ ) | ( EXPAND (~ EOL )+ ) | ( ( DEBUG | MDEBUG ) ( debug_level )? ) | ENDDEBUG ) ) ( EOL | EOF ) )
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             // src/antenna/preprocessor/v3/parser/APP.g:181:1: ( ( ( prefix )=> prefix ( ( DEFINE define | UNDEFINE SYMBOL | ( IF | ELIF | CONDITION ) expression ) | ( IFDEF | IFNDEF | ELIFDEF | ELIFNDEF ) SYMBOL | ( ENDIF | ELSE | ENDINCLUDE ) | ( INCLUDE (~ EOL )+ ) | ( EXPAND (~ EOL )+ ) | ( ( DEBUG | MDEBUG ) ( debug_level )? ) | ENDDEBUG ) ) ( EOL | EOF ) )
             // src/antenna/preprocessor/v3/parser/APP.g:182:5: ( ( prefix )=> prefix ( ( DEFINE define | UNDEFINE SYMBOL | ( IF | ELIF | CONDITION ) expression ) | ( IFDEF | IFNDEF | ELIFDEF | ELIFNDEF ) SYMBOL | ( ENDIF | ELSE | ENDINCLUDE ) | ( INCLUDE (~ EOL )+ ) | ( EXPAND (~ EOL )+ ) | ( ( DEBUG | MDEBUG ) ( debug_level )? ) | ENDDEBUG ) ) ( EOL | EOF )
@@ -1211,7 +1211,7 @@ public class APPParser extends Parser {
             prefix34=prefix();
             _fsp--;
             if (failed) return retval;
-            if ( backtracking==0 ) adaptor.addChild(root_0, prefix34.getTree());
+            if ( backtracking==0 ) this.adaptor.addChild(root_0, prefix34.getTree());
             // src/antenna/preprocessor/v3/parser/APP.g:184:13: ( ( DEFINE define | UNDEFINE SYMBOL | ( IF | ELIF | CONDITION ) expression ) | ( IFDEF | IFNDEF | ELIFDEF | ELIFNDEF ) SYMBOL | ( ENDIF | ELSE | ENDINCLUDE ) | ( INCLUDE (~ EOL )+ ) | ( EXPAND (~ EOL )+ ) | ( ( DEBUG | MDEBUG ) ( debug_level )? ) | ENDDEBUG )
             int alt14=7;
             switch ( input.LA(1) ) {
@@ -1307,14 +1307,14 @@ public class APPParser extends Parser {
                             DEFINE35=(Token)input.LT(1);
                             match(input,DEFINE,FOLLOW_DEFINE_in_line964); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            DEFINE35_tree = (Object)adaptor.create(DEFINE35);
-                            adaptor.addChild(root_0, DEFINE35_tree);
+                            DEFINE35_tree = (Object)this.adaptor.create(DEFINE35);
+                            this.adaptor.addChild(root_0, DEFINE35_tree);
                             }
                             pushFollow(FOLLOW_define_in_line966);
                             define36=define();
                             _fsp--;
                             if (failed) return retval;
-                            if ( backtracking==0 ) adaptor.addChild(root_0, define36.getTree());
+                            if ( backtracking==0 ) this.adaptor.addChild(root_0, define36.getTree());
 
                             }
                             break;
@@ -1324,14 +1324,14 @@ public class APPParser extends Parser {
                             UNDEFINE37=(Token)input.LT(1);
                             match(input,UNDEFINE,FOLLOW_UNDEFINE_in_line986); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            UNDEFINE37_tree = (Object)adaptor.create(UNDEFINE37);
-                            adaptor.addChild(root_0, UNDEFINE37_tree);
+                            UNDEFINE37_tree = (Object)this.adaptor.create(UNDEFINE37);
+                            this.adaptor.addChild(root_0, UNDEFINE37_tree);
                             }
                             SYMBOL38=(Token)input.LT(1);
                             match(input,SYMBOL,FOLLOW_SYMBOL_in_line988); if (failed) return retval;
                             if ( backtracking==0 ) {
-                            SYMBOL38_tree = (Object)adaptor.create(SYMBOL38);
-                            adaptor.addChild(root_0, SYMBOL38_tree);
+                            SYMBOL38_tree = (Object)this.adaptor.create(SYMBOL38);
+                            this.adaptor.addChild(root_0, SYMBOL38_tree);
                             }
 
                             }
@@ -1653,7 +1653,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:202:9: ( EOL )
             // src/antenna/preprocessor/v3/parser/APP.g:202:11: EOL
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             EOL52=(Token)input.LT(1);
             match(input,EOL,FOLLOW_EOL_in_endof1280); if (failed) return retval;
@@ -1663,8 +1663,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -1698,7 +1698,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:203:16: ( UNSET | ADD_IF_NEW )
             // src/antenna/preprocessor/v3/parser/APP.g:
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             set53=(Token)input.LT(1);
             if ( (input.LA(1)>=UNSET && input.LA(1)<=ADD_IF_NEW) ) {
@@ -1774,26 +1774,26 @@ public class APPParser extends Parser {
                 case 1 :
                     // src/antenna/preprocessor/v3/parser/APP.g:204:15: ident
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     pushFollow(FOLLOW_ident_in_define_value1298);
                     ident54=ident();
                     _fsp--;
                     if (failed) return retval;
-                    if ( backtracking==0 ) adaptor.addChild(root_0, ident54.getTree());
+                    if ( backtracking==0 ) this.adaptor.addChild(root_0, ident54.getTree());
 
                     }
                     break;
                 case 2 :
                     // src/antenna/preprocessor/v3/parser/APP.g:204:23: debug_level
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     pushFollow(FOLLOW_debug_level_in_define_value1302);
                     debug_level55=debug_level();
                     _fsp--;
                     if (failed) return retval;
-                    if ( backtracking==0 ) adaptor.addChild(root_0, debug_level55.getTree());
+                    if ( backtracking==0 ) this.adaptor.addChild(root_0, debug_level55.getTree());
 
                     }
                     break;
@@ -1802,8 +1802,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -1845,7 +1845,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:205:8: ( ( define_command AT )? SYMBOL ( EQ define_value )? )
             // src/antenna/preprocessor/v3/parser/APP.g:205:10: ( define_command AT )? SYMBOL ( EQ define_value )?
             {
-            root_0 = (Object)adaptor.nil();
+            root_0 = (Object)this.adaptor.nil();
 
             // src/antenna/preprocessor/v3/parser/APP.g:205:10: ( define_command AT )?
             int alt16=2;
@@ -1862,12 +1862,12 @@ public class APPParser extends Parser {
                     define_command56=define_command();
                     _fsp--;
                     if (failed) return retval;
-                    if ( backtracking==0 ) adaptor.addChild(root_0, define_command56.getTree());
+                    if ( backtracking==0 ) this.adaptor.addChild(root_0, define_command56.getTree());
                     AT57=(Token)input.LT(1);
                     match(input,AT,FOLLOW_AT_in_define1312); if (failed) return retval;
                     if ( backtracking==0 ) {
-                    AT57_tree = (Object)adaptor.create(AT57);
-                    adaptor.addChild(root_0, AT57_tree);
+                    AT57_tree = (Object)this.adaptor.create(AT57);
+                    this.adaptor.addChild(root_0, AT57_tree);
                     }
 
                     }
@@ -1878,8 +1878,8 @@ public class APPParser extends Parser {
             SYMBOL58=(Token)input.LT(1);
             match(input,SYMBOL,FOLLOW_SYMBOL_in_define1316); if (failed) return retval;
             if ( backtracking==0 ) {
-            SYMBOL58_tree = (Object)adaptor.create(SYMBOL58);
-            root_0 = (Object)adaptor.becomeRoot(SYMBOL58_tree, root_0);
+            SYMBOL58_tree = (Object)this.adaptor.create(SYMBOL58);
+            root_0 = (Object)this.adaptor.becomeRoot(SYMBOL58_tree, root_0);
             }
             // src/antenna/preprocessor/v3/parser/APP.g:205:39: ( EQ define_value )?
             int alt17=2;
@@ -1898,7 +1898,7 @@ public class APPParser extends Parser {
                     define_value60=define_value();
                     _fsp--;
                     if (failed) return retval;
-                    if ( backtracking==0 ) adaptor.addChild(root_0, define_value60.getTree());
+                    if ( backtracking==0 ) this.adaptor.addChild(root_0, define_value60.getTree());
 
                     }
                     break;
@@ -1911,8 +1911,8 @@ public class APPParser extends Parser {
             retval.stop = input.LT(-1);
 
             if ( backtracking==0 ) {
-                retval.tree = (Object)adaptor.rulePostProcessing(root_0);
-                adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+                retval.tree = (Object)this.adaptor.rulePostProcessing(root_0);
+                this.adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
             }
         }
         
@@ -1972,7 +1972,7 @@ public class APPParser extends Parser {
                 case 1 :
                     // src/antenna/preprocessor/v3/parser/APP.g:206:11: ( EOL | EOF )
                     {
-                    root_0 = (Object)adaptor.nil();
+                    root_0 = (Object)this.adaptor.nil();
 
                     set61=(Token)input.LT(1);
                     if ( input.LA(1)==EOF||input.LA(1)==EOL ) {

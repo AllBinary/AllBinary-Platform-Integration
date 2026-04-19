@@ -58,7 +58,7 @@ public class MIDletContext {
 	}
 	
 	public MIDlet getMIDlet() {
-		if (midletAccess == null) {
+		if (this.midletAccess == null) {
 			return null;
 		}
 		return midletAccess.midlet;

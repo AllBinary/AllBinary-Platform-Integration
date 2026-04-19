@@ -136,8 +136,8 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 		}
 
 		public void run() {
-			if (inputMethod != null) {
-				inputMethod.buttonPressed(button, '\0', -1);
+			if (this.inputMethod != null) {
+				this.inputMethod.buttonPressed(this.button, '\0', -1);
 			}
 		}
 
@@ -292,10 +292,10 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 	public void init() {
 		dc.init();
 
-		remove(dc);
+		remove(this.dc);
 
 		Rectangle r = ((J2SEDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getDisplayRectangle();
-		add(dc, new XYConstraints(r.x, r.y, -1, -1));
+		add(this.dc, new XYConstraints(r.x, r.y, -1, -1));
 
 		revalidate();
 	}
@@ -400,9 +400,9 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 
                 if(keyCode1 == KeyEvent.VK_ENTER && (ev.getModifiers() & KeyEvent.ALT_MASK) != 0 && 
                         //TWB - This timer should be replaced with an event
-                        currentTime - lastTime > 1200)
+                        currentTime - this.lastTime > 1200)
                 {
-                    lastTime = currentTime;
+                    this.lastTime = currentTime;
                     
                     final Command TOGGLE_FULLSCREEN  = new Command("Toggle FullScreen", Command.SCREEN, 1);
                     //GameCommandsFactory gameCommandsFactory
@@ -457,7 +457,7 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 		}
 		J2SEButton button = inputMethod.getButton(ev);
 		if (button != null) {
-			pressedButton = button;
+			this.pressedButton = button;
 			// numeric keypad functions as hot keys for buttons only
 			if ((keyCode1 >= KeyEvent.VK_NUMPAD0) && (keyCode1 <= KeyEvent.VK_NUMPAD9)) {
 				keyChar = '\0';
@@ -519,10 +519,10 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 		// Logger.debug0x("keyReleased [" + keyChar + "]", keyChar);
 		inputMethod.buttonReleased(inputMethod.getButton(ev), keyChar, keyCode1);
 
-		prevOverButton = pressedButton;
-		pressedButton = null;
-		if (prevOverButton != null) {
-			org.microemu.device.impl.Shape shape = prevOverButton.getShape();
+		this.prevOverButton = this.pressedButton;
+		this.pressedButton = null;
+		if (this.prevOverButton != null) {
+			org.microemu.device.impl.Shape shape = this.prevOverButton.getShape();
 			if (shape != null) {
 				repaint(shape.getBounds());
 			}
@@ -540,15 +540,15 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
         */
 
 	protected void paintComponent(Graphics g) {
-		if (offg == null || offi.getWidth(null) != getSize().width || offi.getHeight(null) != getSize().height) {
-			offi = (java.awt.Image) new J2SEMutableImage(getSize().width, getSize().height, false, 0x000000).getImage();
-			offg = offi.getGraphics();
+		if (this.offg == null || this.offi.getWidth(null) != getSize().width || this.offi.getHeight(null) != getSize().height) {
+			this.offi = (java.awt.Image) new J2SEMutableImage(getSize().width, getSize().height, false, 0x000000).getImage();
+			this.offg = this.offi.getGraphics();
 		}
 
 		Dimension size = getSize();
-		offg.setColor(UIManager.getColor("text"));
+		this.offg.setColor(UIManager.getColor("text"));
 		try {
-			offg.fillRect(0, 0, size.width, size.height);
+			this.offg.fillRect(0, 0, size.width, size.height);
 		} catch (NullPointerException ex) {
 			// Fix for NPE in sun.java2d.pipe.SpanShapeRenderer.renderRect(..) on Mac platform
 		}
@@ -561,29 +561,29 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 			return;
 		}
 
-		offg.drawImage((java.awt.Image) device.getNormalImage().getImage(), 0, 0, this);
+		this.offg.drawImage((java.awt.Image) device.getNormalImage().getImage(), 0, 0, this);
 
-		if (prevOverButton != null) {
-			org.microemu.device.impl.Shape shape = prevOverButton.getShape();
+		if (this.prevOverButton != null) {
+			org.microemu.device.impl.Shape shape = this.prevOverButton.getShape();
 			if (shape != null) {
-				drawImageInShape(offg, (java.awt.Image) device.getNormalImage().getImage(), shape);
+				drawImageInShape(this.offg, (java.awt.Image) device.getNormalImage().getImage(), shape);
 			}
-			prevOverButton = null;
+			this.prevOverButton = null;
 		}
-		if (overButton != null) {
-			org.microemu.device.impl.Shape shape = overButton.getShape();
+		if (this.overButton != null) {
+			org.microemu.device.impl.Shape shape = this.overButton.getShape();
 			if (shape != null) {
-				drawImageInShape(offg, (java.awt.Image) device.getOverImage().getImage(), shape);
+				drawImageInShape(this.offg, (java.awt.Image) device.getOverImage().getImage(), shape);
 			}
 		}
-		if (pressedButton != null) {
-			org.microemu.device.impl.Shape shape = pressedButton.getShape();
+		if (this.pressedButton != null) {
+			org.microemu.device.impl.Shape shape = this.pressedButton.getShape();
 			if (shape != null) {
-				drawImageInShape(offg, (java.awt.Image) device.getPressedImage().getImage(), shape);
+				drawImageInShape(this.offg, (java.awt.Image) device.getPressedImage().getImage(), shape);
 			}
 		}
 
-		g.drawImage(offi, 0, 0, null);
+		g.drawImage(this.offi, 0, 0, null);
 	}
 
 	private void drawImageInShape(Graphics g, Image image, org.microemu.device.impl.Shape shape) {

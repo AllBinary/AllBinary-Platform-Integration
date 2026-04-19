@@ -32,8 +32,8 @@ boolean done () {
 }
 
 void run () {
-	if (runnable != null) runnable.run ();
-	runnable = null;
+	if (this.runnable != null) this.runnable.run ();
+	this.runnable = null;
 }
 
 }

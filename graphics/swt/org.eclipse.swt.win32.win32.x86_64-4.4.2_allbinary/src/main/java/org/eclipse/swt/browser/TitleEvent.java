@@ -49,7 +49,7 @@ public TitleEvent(Widget widget) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " title=" + title
+		+ " title=" + this.title
 		+ "}";
 }
 }

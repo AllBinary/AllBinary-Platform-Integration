@@ -61,7 +61,7 @@ public class GaugePanel extends BaseExamplesForm implements HasRunnable {
 	public GaugePanel() {
 		super("Gauge");
 		append(new Gauge("Interactive", true, 25, 0));
-		append(noninteractive);
+		append(this.noninteractive);
 	}
 
 	public void startRunnable() {

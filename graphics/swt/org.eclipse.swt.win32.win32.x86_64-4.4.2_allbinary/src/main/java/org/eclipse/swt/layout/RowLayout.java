@@ -201,10 +201,10 @@ public RowLayout (int type) {
 @Override
 protected Point computeSize (Composite composite, int wHint, int hHint, boolean flushCache) {
 	Point extent;
-	if (type == SWT.HORIZONTAL) {
-		extent = layoutHorizontal (composite, false, (wHint != SWT.DEFAULT) && wrap, wHint, flushCache);
+	if (this.type == SWT.HORIZONTAL) {
+		extent = layoutHorizontal (composite, false, (wHint != SWT.DEFAULT) && this.wrap, wHint, flushCache);
 	} else {
-		extent = layoutVertical (composite, false, (hHint != SWT.DEFAULT) && wrap, hHint, flushCache);
+		extent = layoutVertical (composite, false, (hHint != SWT.DEFAULT) && this.wrap, hHint, flushCache);
 	}
 	if (wHint != SWT.DEFAULT) extent.x = wHint;
 	if (hHint != SWT.DEFAULT) extent.y = hHint;
@@ -236,7 +236,7 @@ String getName () {
 @Override
 protected void layout (Composite composite, boolean flushCache) {
 	Rectangle clientArea = composite.getClientArea ();
-	if (type == SWT.HORIZONTAL) {
+	if (this.type == SWT.HORIZONTAL) {
 		layoutHorizontal (composite, true, wrap, clientArea.width, flushCache);
 	} else {
 		layoutVertical (composite, true, wrap, clientArea.height, flushCache);
@@ -254,10 +254,10 @@ Point layoutHorizontal (Composite composite, boolean move, boolean wrap, int wid
 		} 
 	}
 	if (count == 0) {
-		return new Point (marginLeft + marginWidth * 2 + marginRight, marginTop + marginHeight * 2 + marginBottom);
+		return new Point (this.marginLeft + this.marginWidth * 2 + this.marginRight, marginTop + this.marginHeight * 2 + this.marginBottom);
 	}
 	int childWidth = 0, childHeight = 0, maxHeight = 0;
-	if (!pack) {
+	if (!this.pack) {
 		for (int i=0; i<count; i++) {
 			Control child = children [i];
 			Point size = computeSize (child, flushCache);
@@ -275,67 +275,67 @@ Point layoutHorizontal (Composite composite, boolean move, boolean wrap, int wid
 	int [] wraps = null;
 	boolean wrapped = false;
 	Rectangle [] bounds = null;
-	if (move && (justify || fill || center)) {
+	if (move && (this.justify || this.fill || this.center)) {
 		bounds = new Rectangle [count];
 		wraps = new int [count];
 	}
-	int maxX = 0, x = this.marginLeft + marginWidth, y = this.marginTop + marginHeight;
+	int maxX = 0, x = this.marginLeft + this.marginWidth, y = this.marginTop + this.marginHeight;
 	for (int i=0; i<count; i++) {
 		Control child = children [i];
-		if (pack) {
+		if (this.pack) {
 			Point size = computeSize (child, flushCache);
 			childWidth = size.x;
 			childHeight = size.y;
 		}
 		if (wrap && (i != 0) && (x + childWidth > width)) {
 			wrapped = true;
-			if (move && (justify || fill || center)) wraps [i - 1] = maxHeight;
-			x = marginLeft + marginWidth;
-			y += spacing + maxHeight;
-			if (pack) maxHeight = 0;
+			if (move && (this.justify || this.fill || this.center)) wraps [i - 1] = maxHeight;
+			x = this.marginLeft + this.marginWidth;
+			y += this.spacing + maxHeight;
+			if (this.pack) maxHeight = 0;
 		}
-		if (pack || fill || center) {
+		if (this.pack || this.fill || this.center) {
 			maxHeight = Math.max (maxHeight, childHeight);
 		}
 		if (move) {
 			int childX = x + clientX, childY = y + clientY;
-			if (justify || fill || center) {
+			if (this.justify || this.fill || this.center) {
 				bounds [i] = new Rectangle (childX, childY, childWidth, childHeight);
 			} else {
 				child.setBounds (childX, childY, childWidth, childHeight);
 			}
 		}
-		x += spacing + childWidth;
+		x += this.spacing + childWidth;
 		maxX = Math.max (maxX, x);
 	}
-	maxX = Math.max (clientX + marginLeft + marginWidth, maxX - spacing);
-	if (!wrapped) maxX += marginRight + marginWidth;
-	if (move && (justify || fill || center)) {
+	maxX = Math.max (clientX + this.marginLeft + this.marginWidth, maxX - this.spacing);
+	if (!wrapped) maxX += this.marginRight + this.marginWidth;
+	if (move && (this.justify || this.fill || this.center)) {
 		int space = 0, margin = 0;
 		if (!wrapped) {
 			space = Math.max (0, (width - maxX) / (count + 1));
 			margin = Math.max (0, ((width - maxX) % (count + 1)) / 2);
 		} else {
-			if (fill || justify || center) {
+			if (this.fill || this.justify || this.center) {
 				int last = 0;
 				if (count > 0) wraps [count - 1] = maxHeight;
 				for (int i=0; i<count; i++) {
 					if (wraps [i] != 0) {
 						int wrapCount = i - last + 1;
-						if (justify) {
+						if (this.justify) {
 							int wrapX = 0;
 							for (int j=last; j<=i; j++) {
-								wrapX += bounds [j].width + spacing;
+								wrapX += bounds [j].width + this.spacing;
 							}
 							space = Math.max (0, (width - wrapX) / (wrapCount + 1));
 							margin = Math.max (0, ((width - wrapX) % (wrapCount + 1)) / 2);
 						}
 						for (int j=last; j<=i; j++) {
-							if (justify) bounds [j].x += (space * (j - last + 1)) + margin;
-							if (fill) {
+							if (this.justify) bounds [j].x += (space * (j - last + 1)) + margin;
+							if (this.fill) {
 								bounds [j].height = wraps [i];
 							} else {
-								if (center) {
+								if (this.center) {
 									bounds [j].y += Math.max (0, (wraps [i] - bounds [j].height) / 2);
 								}
 							}
@@ -347,11 +347,11 @@ Point layoutHorizontal (Composite composite, boolean move, boolean wrap, int wid
 		}
 		for (int i=0; i<count; i++) {
 			if (!wrapped) {
-				if (justify) bounds [i].x += (space * (i + 1)) + margin;
-				if (fill) {
+				if (this.justify) bounds [i].x += (space * (i + 1)) + margin;
+				if (this.fill) {
 					bounds [i].height = maxHeight;
 				} else {
-					if (center) {
+					if (this.center) {
 						bounds [i].y += Math.max (0, (maxHeight - bounds [i].height) / 2);
 					}
 				}
@@ -359,7 +359,7 @@ Point layoutHorizontal (Composite composite, boolean move, boolean wrap, int wid
 			children [i].setBounds (bounds [i]);
 		}
 	}
-	return new Point (maxX, y + maxHeight + marginBottom + marginHeight);
+	return new Point (maxX, y + maxHeight + this.marginBottom + this.marginHeight);
 }
 
 Point layoutVertical (Composite composite, boolean move, boolean wrap, int height, boolean flushCache) {
@@ -373,10 +373,10 @@ Point layoutVertical (Composite composite, boolean move, boolean wrap, int heigh
 		} 
 	}
 	if (count == 0) {
-		return new Point (marginLeft + marginWidth * 2 + marginRight, marginTop + marginHeight * 2 + marginBottom);
+		return new Point (this.marginLeft + this.marginWidth * 2 + this.marginRight, marginTop + this.marginHeight * 2 + this.marginBottom);
 	}
 	int childWidth = 0, childHeight = 0, maxWidth = 0;
-	if (!pack) {
+	if (!this.pack) {
 		for (int i=0; i<count; i++) {
 			Control child = children [i];
 			Point size = computeSize (child, flushCache);
@@ -394,67 +394,67 @@ Point layoutVertical (Composite composite, boolean move, boolean wrap, int heigh
 	int [] wraps = null;
 	boolean wrapped = false;
 	Rectangle [] bounds = null;
-	if (move && (justify || fill || center)) {
+	if (move && (this.justify || this.fill || this.center)) {
 		bounds = new Rectangle [count];
 		wraps = new int [count];
 	}
-	int maxY = 0, x = this.marginLeft + marginWidth, y = this.marginTop + marginHeight;
+	int maxY = 0, x = this.marginLeft + this.marginWidth, y = this.marginTop + this.marginHeight;
 	for (int i=0; i<count; i++) {
 		Control child = children [i];
-		if (pack) {
+		if (this.pack) {
 			Point size = computeSize (child, flushCache);
 			childWidth = size.x;
 			childHeight = size.y;
 		}
 		if (wrap && (i != 0) && (y + childHeight > height)) {
 			wrapped = true;
-			if (move && (justify || fill || center)) wraps [i - 1] = maxWidth;
-			x += spacing + maxWidth;
-			y = marginTop + marginHeight;
-			if (pack) maxWidth = 0;
+			if (move && (this.justify || this.fill || this.center)) wraps [i - 1] = maxWidth;
+			x += this.spacing + maxWidth;
+			y = marginTop + this.marginHeight;
+			if (this.pack) maxWidth = 0;
 		}
-		if (pack || fill || center) {
+		if (this.pack || this.fill || this.center) {
 			maxWidth = Math.max (maxWidth, childWidth);
 		}
 		if (move) {
 			int childX = x + clientX, childY = y + clientY;
-			if (justify || fill || center) {
+			if (this.justify || this.fill || this.center) {
 				bounds [i] = new Rectangle (childX, childY, childWidth, childHeight);
 			} else {
 				child.setBounds (childX, childY, childWidth, childHeight);
 			}
 		}
-		y += spacing + childHeight;
+		y += this.spacing + childHeight;
 		maxY = Math.max (maxY, y);
 	}
-	maxY = Math.max (clientY + marginTop + marginHeight, maxY - spacing);
-	if (!wrapped) maxY += marginBottom + marginHeight;
-	if (move && (justify || fill || center)) {
+	maxY = Math.max (clientY + marginTop + this.marginHeight, maxY - this.spacing);
+	if (!wrapped) maxY += this.marginBottom + this.marginHeight;
+	if (move && (this.justify || this.fill || this.center)) {
 		int space = 0, margin = 0;
 		if (!wrapped) {
 			space = Math.max (0, (height - maxY) / (count + 1));
 			margin = Math.max (0, ((height - maxY) % (count + 1)) / 2);
 		} else {
-			if (fill || justify || center) {
+			if (this.fill || this.justify || this.center) {
 				int last = 0;
 				if (count > 0) wraps [count - 1] = maxWidth;
 				for (int i=0; i<count; i++) {
 					if (wraps [i] != 0) {
 						int wrapCount = i - last + 1;
-						if (justify) {
+						if (this.justify) {
 							int wrapY = 0;
 							for (int j=last; j<=i; j++) {
-								wrapY += bounds [j].height + spacing;
+								wrapY += bounds [j].height + this.spacing;
 							}
 							space = Math.max (0, (height - wrapY) / (wrapCount + 1));
 							margin = Math.max (0, ((height - wrapY) % (wrapCount + 1)) / 2);
 						}
 						for (int j=last; j<=i; j++) {
-							if (justify) bounds [j].y += (space * (j - last + 1)) + margin;
-							if (fill) {
+							if (this.justify) bounds [j].y += (space * (j - last + 1)) + margin;
+							if (this.fill) {
 								bounds [j].width = wraps [i];
 							} else {
-								if (center) {
+								if (this.center) {
 									bounds [j].x += Math.max (0, (wraps [i] - bounds [j].width) / 2);
 								}
 							}
@@ -466,11 +466,11 @@ Point layoutVertical (Composite composite, boolean move, boolean wrap, int heigh
 		}
 		for (int i=0; i<count; i++) {
 			if (!wrapped) {
-				if (justify) bounds [i].y += (space * (i + 1)) + margin;
-				if (fill) {
+				if (this.justify) bounds [i].y += (space * (i + 1)) + margin;
+				if (this.fill) {
 					bounds [i].width = maxWidth;
 				} else {
-					if (center) {
+					if (this.center) {
 						bounds [i].x += Math.max (0, (maxWidth - bounds [i].width) / 2);
 					}
 				}
@@ -479,7 +479,7 @@ Point layoutVertical (Composite composite, boolean move, boolean wrap, int heigh
 			children [i].setBounds (bounds [i]);
 		}
 	}
-	return new Point (x + maxWidth + marginRight + marginWidth, maxY);
+	return new Point (x + maxWidth + this.marginRight + this.marginWidth, maxY);
 }
 
 /**
@@ -491,18 +491,18 @@ Point layoutVertical (Composite composite, boolean move, boolean wrap, int heigh
 @Override
 public String toString () {
  	String string = getName ()+" {";
- 	string += "type="+((type != SWT.HORIZONTAL) ? "SWT.VERTICAL" : "SWT.HORIZONTAL")+" ";
- 	if (marginWidth != 0) string += "marginWidth="+marginWidth+" ";
- 	if (marginHeight != 0) string += "marginHeight="+marginHeight+" ";
- 	if (marginLeft != 0) string += "marginLeft="+marginLeft+" ";
- 	if (marginTop != 0) string += "marginTop="+marginTop+" ";
- 	if (marginRight != 0) string += "marginRight="+marginRight+" ";
- 	if (marginBottom != 0) string += "marginBottom="+marginBottom+" ";
- 	if (spacing != 0) string += "spacing="+spacing+" ";
- 	string += "wrap="+wrap+" ";
-	string += "pack="+pack+" ";
-	string += "fill="+fill+" ";
-	string += "justify="+justify+" ";
+ 	string += "type="+((this.type != SWT.HORIZONTAL) ? "SWT.VERTICAL" : "SWT.HORIZONTAL")+" ";
+ 	if (this.marginWidth != 0) string += "marginWidth="+this.marginWidth+" ";
+ 	if (this.marginHeight != 0) string += "marginHeight="+this.marginHeight+" ";
+ 	if (this.marginLeft != 0) string += "marginLeft="+this.marginLeft+" ";
+ 	if (this.marginTop != 0) string += "marginTop="+this.marginTop+" ";
+ 	if (this.marginRight != 0) string += "marginRight="+this.marginRight+" ";
+ 	if (this.marginBottom != 0) string += "marginBottom="+this.marginBottom+" ";
+ 	if (this.spacing != 0) string += "spacing="+this.spacing+" ";
+ 	string += "wrap="+this.wrap+" ";
+	string += "pack="+this.pack+" ";
+	string += "fill="+this.fill+" ";
+	string += "justify="+this.justify+" ";
 	string = string.trim();
 	string += "}";
  	return string;

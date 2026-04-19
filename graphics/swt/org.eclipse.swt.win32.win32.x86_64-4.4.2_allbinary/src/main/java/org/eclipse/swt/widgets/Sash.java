@@ -316,8 +316,8 @@ LRESULT WM_LBUTTONUP (long /*int*/ wParam, long /*int*/ lParam) {
 	if (result == LRESULT.ZERO) return result;
 
 	/* Compute the banding rectangle */
-	if (!dragging) return result;
-	dragging = false;
+	if (!this.dragging) return result;
+	this.dragging = false;
 	RECT rect = new RECT ();
 	OS.GetWindowRect (handle, rect);
 	int width = rect.right - rect.left;
@@ -344,7 +344,7 @@ LRESULT WM_LBUTTONUP (long /*int*/ wParam, long /*int*/ lParam) {
 LRESULT WM_MOUSEMOVE (long /*int*/ wParam, long /*int*/ lParam) {
 	LRESULT result = super.WM_MOUSEMOVE (wParam, lParam);
 	if (result != null) return result;
-	if (!dragging || (wParam & OS.MK_LBUTTON) == 0) return result;
+	if (!this.dragging || (wParam & OS.MK_LBUTTON) == 0) return result;
 
 	/* Compute the banding rectangle */
 	POINT pt = new POINT ();

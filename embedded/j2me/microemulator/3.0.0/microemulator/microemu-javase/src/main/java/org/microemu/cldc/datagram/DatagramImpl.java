@@ -101,7 +101,7 @@ public class DatagramImpl implements Datagram {
 		if (size <= 0) {
 			throw new IllegalArgumentException("Invalid size: " + size);
 		}
-		packet = new DatagramPacket(new byte[size], size);
+		this.packet = new DatagramPacket(new byte[size], size);
 		initialiseInOut();
 	}
 
@@ -123,12 +123,12 @@ public class DatagramImpl implements Datagram {
 	 */
 	private void initialiseInOut() {
 		os = new BufferOutputStream();
-		dos = new DataOutputStream(os);
-		dis = new DataInputStream(new ByteArrayInputStream(packet.getData()));
+		this.dos = new DataOutputStream(this.os);
+		this.dis = new DataInputStream(new ByteArrayInputStream(this.packet.getData()));
 	}
 
 	public String getAddress() {
-		return Connection.PROTOCOL + packet.getAddress().getCanonicalHostName() + ":" + packet.getPort();
+		return Connection.PROTOCOL + this.packet.getAddress().getCanonicalHostName() + ":" + this.packet.getPort();
 	}
 
 	public byte[] getData() {
@@ -145,8 +145,8 @@ public class DatagramImpl implements Datagram {
 
 	public void reset() {
 		try {
-			os.reset();
-			dis.reset();
+			this.os.reset();
+			this.dis.reset();
 		} catch (IOException e) {
 			// just print it
 			e.printStackTrace();
@@ -167,13 +167,13 @@ public class DatagramImpl implements Datagram {
 		}
 		String host = noProtocolAddress.substring(0, index);
 		String port = noProtocolAddress.substring(index + 1);
-		packet.setAddress(InetAddress.getByName(host));
-		packet.setPort(Integer.parseInt(port));
+		this.packet.setAddress(InetAddress.getByName(host));
+		this.packet.setPort(Integer.parseInt(port));
 	}
 
 	public void setAddress(Datagram reference) {
 		packet.setAddress(((DatagramImpl) reference).getDatagramPacket().getAddress());
-		packet.setPort(((DatagramImpl) reference).getDatagramPacket().getPort());
+		this.packet.setPort(((DatagramImpl) reference).getDatagramPacket().getPort());
 	}
 
 	public void setData(byte[] buffer, int offset, int len) {

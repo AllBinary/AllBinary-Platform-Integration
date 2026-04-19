@@ -82,10 +82,10 @@ public AccessibleEditableTextEvent(Object source) {
 @Override
 public String toString () {
 	return "AccessibleEditableTextEvent {" //$NON-NLS-1$
-		+ "start=" + start   //$NON-NLS-1$
-		+ " end=" + end   //$NON-NLS-1$
-		+ " string=" + string   //$NON-NLS-1$
-		+ " result=" + result   //$NON-NLS-1$
+		+ "start=" + this.start   //$NON-NLS-1$
+		+ " end=" + this.end   //$NON-NLS-1$
+		+ " string=" + this.string   //$NON-NLS-1$
+		+ " result=" + this.result   //$NON-NLS-1$
 		+ "}";  //$NON-NLS-1$
 }
 }

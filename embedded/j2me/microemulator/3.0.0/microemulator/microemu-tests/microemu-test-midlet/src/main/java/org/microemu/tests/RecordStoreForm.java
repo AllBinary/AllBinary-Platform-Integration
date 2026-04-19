@@ -81,21 +81,21 @@ public class RecordStoreForm extends BaseTestsForm {
 				System.out.println("getRecord " + recordId);
 				byte[] data = recordStore.getRecord(recordId);
 				message = recordId + " loaded";
-				stringItem.setText(new String(data));
+				this.stringItem.setText(new String(data));
 				
-				if (savedRecordId != recordId) {
-					messageItem.setText("recordId " + recordId + " is different " + savedRecordId);
+				if (this.savedRecordId != recordId) {
+					this.messageItem.setText("recordId " + recordId + " is different " + this.savedRecordId);
 				}
 				
 			} else {
 				message = "recordStore empty";
-				stringItem.setText("");
+				this.stringItem.setText("");
 			}
-			messageItem.setText(message);
+			this.messageItem.setText(message);
 		} catch (Throwable e) {
 			System.out.println("error accessing RecordStore");
 			e.printStackTrace();
-			messageItem.setText(e.toString());
+			this.messageItem.setText(e.toString());
 		} finally {
 			closeQuietly(recordStore);
 		}
@@ -106,7 +106,7 @@ public class RecordStoreForm extends BaseTestsForm {
 		try {
 			recordStore = RecordStore.openRecordStore(recordStoreName, true);
 			StringBuffer buf = new StringBuffer();
-			buf.append("[").append(textFiled.getString()).append("]");
+			buf.append("[").append(this.textFiled.getString()).append("]");
 			byte[] data = buf.toString().getBytes();
 			int recordId;
 			String message;
@@ -119,12 +119,12 @@ public class RecordStoreForm extends BaseTestsForm {
 				recordId = recordStore.addRecord(data, 0, data.length);
 				message = recordId + " created";
 			}
-			savedRecordId = recordId; 
-			messageItem.setText(message);
+			this.savedRecordId = recordId; 
+			this.messageItem.setText(message);
 		} catch (Throwable e) {
 			System.out.println("error accessing RecordStore");
 			e.printStackTrace();
-			messageItem.setText(e.toString());
+			this.messageItem.setText(e.toString());
 		} finally {
 			closeQuietly(recordStore);
 		}
@@ -133,11 +133,11 @@ public class RecordStoreForm extends BaseTestsForm {
 	private void delete() {
 		try {
 			RecordStore.deleteRecordStore(recordStoreName);
-			messageItem.setText("removed " + recordStoreName);
+			this.messageItem.setText("removed " + recordStoreName);
 		} catch (Throwable e) {
 			System.out.println("error accessing RecordStore");
 			e.printStackTrace();
-			messageItem.setText(e.toString());
+			this.messageItem.setText(e.toString());
 		} 	
 	}
 	
@@ -162,7 +162,7 @@ public class RecordStoreForm extends BaseTestsForm {
 	private void list() {
 		try {
 			String[] items = RecordStore.listRecordStores();
-			messageItem.setText("listed " + items.length);
+			this.messageItem.setText("listed " + items.length);
 			List list = new RecordStoreList();
 			for (int i = 0; i < items.length; i++) {
 				list.append(items[i], null);				
@@ -171,7 +171,7 @@ public class RecordStoreForm extends BaseTestsForm {
 		} catch (Throwable e) {
 			System.out.println("error accessing RecordStore");
 			e.printStackTrace();
-			messageItem.setText(e.toString());
+			this.messageItem.setText(e.toString());
 		} 
 	}
 	

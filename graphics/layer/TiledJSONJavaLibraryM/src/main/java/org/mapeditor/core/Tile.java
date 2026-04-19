@@ -133,7 +133,7 @@ public class Tile extends TileData {
      * @return a int.
      */
     public int getWidth() {
-        if (image != null) {
+        if (this.image != null) {
             return image.getWidth();
         }
         return 0;
@@ -145,7 +145,7 @@ public class Tile extends TileData {
      * @return a int.
      */
     public int getHeight() {
-        if (image != null) {
+        if (this.image != null) {
             return image.getHeight();
         }
         return 0;

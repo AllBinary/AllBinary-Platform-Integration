@@ -92,9 +92,9 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	public int append(final String stringPart, final Image imagePart) {
             final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		if (activity2.isActivityThread()) {
-			appendTransfer = listAdapter.append(stringPart, imagePart);
+			this.appendTransfer = this.listAdapter.append(stringPart, imagePart);
 		} else {
-			appendTransfer = Integer.MIN_VALUE;
+			this.appendTransfer = Integer.MIN_VALUE;
 			activity2.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidListUI.this) {
@@ -105,7 +105,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			});
 
 			synchronized (AndroidListUI.this) {
-				if (appendTransfer == Integer.MIN_VALUE) {
+				if (this.appendTransfer == Integer.MIN_VALUE) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -121,7 +121,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	public int getSelectedIndex() {
 		int index = this.selectedPosition;
 		if (index == AdapterView.INVALID_POSITION) {
-			index = listView.getSelectedItemPosition();
+			index = this.listView.getSelectedItemPosition();
 			if (index == AdapterView.INVALID_POSITION) {
 				index = -1;
 			}
@@ -142,9 +142,9 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	public void delete(final int elementNum) {
             final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		if (activity2.isActivityThread()) {
-			listAdapter.delete(elementNum);
+			this.listAdapter.delete(elementNum);
 		} else {
-			deleteException = null;
+			this.deleteException = null;
 			activity2.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidListUI.this) {
@@ -165,7 +165,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			});
 
 			synchronized (AndroidListUI.this) {
-				if (deleteException == null) {
+				if (this.deleteException == null) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -174,8 +174,8 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 				}
 			}
 
-			if (deleteException.length() > 0) {
-				throw new IndexOutOfBoundsException(deleteException);
+			if (this.deleteException.length() > 0) {
+				throw new IndexOutOfBoundsException(this.deleteException);
 			}
 		}
 	}
@@ -235,7 +235,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		});
 		
 		synchronized (AndroidListUI.this) {
-			if (sizeTransfer == Integer.MIN_VALUE) {
+			if (this.sizeTransfer == Integer.MIN_VALUE) {
 				try {
 					wait();
 				} catch (InterruptedException e) {

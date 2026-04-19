@@ -143,13 +143,13 @@ Rectangle computeBounds () {
 	Rectangle clientArea = parent.getClientArea();
 	Rectangle editorRect = new Rectangle(clientArea.x, clientArea.y, minimumWidth, minimumHeight);
 	
-	if (grabHorizontal)
+	if (this.grabHorizontal)
 		editorRect.width = Math.max(clientArea.width, minimumWidth);
 	
-	if (grabVertical)
+	if (this.grabVertical)
 		editorRect.height = Math.max(clientArea.height, minimumHeight);
 
-	switch (horizontalAlignment) {
+	switch (this.horizontalAlignment) {
 		case SWT.RIGHT:
 			editorRect.x += clientArea.width - editorRect.width;
 			break;
@@ -161,7 +161,7 @@ Rectangle computeBounds () {
 			editorRect.x += (clientArea.width - editorRect.width)/2;
 	}
 	
-	switch (verticalAlignment) {
+	switch (this.verticalAlignment) {
 		case SWT.BOTTOM:
 			editorRect.y += clientArea.height - editorRect.height;
 			break;
@@ -182,19 +182,19 @@ Rectangle computeBounds () {
  * composite and the editor Control are <b>not</b> disposed.
  */
 public void dispose () {
-	if (parent != null && !parent.isDisposed()) {
+	if (this.parent != null && !this.parent.isDisposed()) {
 		for (int i=0; i<EVENTS.length; i++) {
-			parent.removeListener (EVENTS [i], controlListener);
+			this.parent.removeListener (EVENTS [i], controlListener);
 		}
-		ScrollBar hBar = parent.getHorizontalBar ();
+		ScrollBar hBar = this.parent.getHorizontalBar ();
 		if (hBar != null) hBar.removeListener (SWT.Selection, scrollbarListener);
-		ScrollBar vBar = parent.getVerticalBar ();
+		ScrollBar vBar = this.parent.getVerticalBar ();
 		if (vBar != null) vBar.removeListener (SWT.Selection, scrollbarListener);
 	}
 	
-	parent = null;
-	editor = null;
-	hadFocus = false;
+	this.parent = null;
+	this.editor = null;
+	this.hadFocus = false;
 	controlListener = null;
 	scrollbarListener = null;
 }
@@ -214,20 +214,20 @@ public Control getEditor () {
  * @since 2.1
  */
 public void layout () {
-	if (editor == null || editor.isDisposed()) return;
-	if (editor.getVisible ()) {
-		hadFocus = editor.isFocusControl();
+	if (this.editor == null || this.editor.isDisposed()) return;
+	if (this.editor.getVisible ()) {
+		this.hadFocus = this.editor.isFocusControl();
 	} // this doesn't work because
 	  // resizing the column takes the focus away
 	  // before we get here
-	editor.setBounds (computeBounds ());
-	if (hadFocus) {
-		if (editor == null || editor.isDisposed()) return;
-		editor.setFocus ();
+	this.editor.setBounds (computeBounds ());
+	if (this.hadFocus) {
+		if (this.editor == null || this.editor.isDisposed()) return;
+		this.editor.setFocus ();
 	}
 }
 void scroll (Event e) {
-	if (editor == null || editor.isDisposed()) return;
+	if (this.editor == null || this.editor.isDisposed()) return;
 	layout();
 }
 /**

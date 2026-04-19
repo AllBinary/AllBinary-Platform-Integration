@@ -51,36 +51,36 @@ public class WtkBuild extends Javac {
 
 	public void setNonative(boolean b) {
 		if (b) {
-			flags = flags | Utility.PREVERIFY_NONATIVE;
+			this.flags = this.flags | Utility.PREVERIFY_NONATIVE;
 		}
 		else  {
-			flags = flags & ~Utility.PREVERIFY_NONATIVE;
+			this.flags = this.flags & ~Utility.PREVERIFY_NONATIVE;
 		}
 	}
 	
 	public void setNofloat(boolean b) {
 		if (b) {
-			flags = flags | Utility.PREVERIFY_NOFLOAT;
+			this.flags = this.flags | Utility.PREVERIFY_NOFLOAT;
 		}
 		else  {
-			flags = flags & ~Utility.PREVERIFY_NOFLOAT;
+			this.flags = this.flags & ~Utility.PREVERIFY_NOFLOAT;
 		}
 	}
 	
 	public void setNofinalize(boolean b) {
 		if (b) {
-			flags = flags | Utility.PREVERIFY_NOFINALIZE;
+			this.flags = this.flags | Utility.PREVERIFY_NOFINALIZE;
 		}
 		else  {
-			flags = flags & ~Utility.PREVERIFY_NOFINALIZE;
+			this.flags = this.flags & ~Utility.PREVERIFY_NOFINALIZE;
 		}
 	}
 	
 	public void init() throws BuildException {
 		super.init();
 
-		utility = Utility.getInstance(getProject(), this);
-		condition = new Conditional(getProject());
+		this.utility = Utility.getInstance(getProject(), this);
+		this.condition = new Conditional(getProject());
 
 		setTarget("1.1");
 		setSource("1.2");
@@ -103,11 +103,11 @@ public class WtkBuild extends Javac {
 		if (!isActive())
 			return;
 
-		File tmpDir = utility.getTempDir();
+		File tmpDir = this.utility.getTempDir();
 
 		try {
-            if (utility.getToolkitType() == Utility.TOOLKIT_MPOWER) {
-                String bcp = utility.getMidpApi();
+            if (this.utility.getToolkitType() == Utility.TOOLKIT_MPOWER) {
+                String bcp = this.utility.getMidpApi();
                 if (getClasspath() == null) {
                     setClasspath(new Path(getProject(), bcp));
                 }
@@ -116,14 +116,14 @@ public class WtkBuild extends Javac {
                 }
             }
             else if (getBootclasspath() == null) {
-				String bcp = utility.getMidpApi();
+				String bcp = this.utility.getMidpApi();
                 setBootclasspath(new Path(getProject(), bcp));
 			}
 
 			File origDest = getDestdir();
 			File tempDest = new File(tmpDir + "/tmpclasses");
 
-			if (preverify) {
+			if (this.preverify) {
 				setDestdir(tempDest);
 				tempDest.mkdir();
 			}
@@ -135,14 +135,14 @@ public class WtkBuild extends Javac {
 				setDestdir(origDest);
 			}
 
-			if (preverify) {
+			if (this.preverify) {
 				String cp = getBootclasspath() + File.pathSeparator + getClasspath() + File.pathSeparator;
 
-				utility.preverify(tempDest, origDest, cp, cldc, flags);
+				this.utility.preverify(tempDest, origDest, cp, cldc, flags);
 			}
 		}
 		finally {
-			utility.delete(tmpDir);
+			this.utility.delete(tmpDir);
 		}
 	}
 

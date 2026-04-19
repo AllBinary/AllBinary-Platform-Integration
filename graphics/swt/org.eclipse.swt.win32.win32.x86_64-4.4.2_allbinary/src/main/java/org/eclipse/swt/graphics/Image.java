@@ -231,7 +231,7 @@ public Image(Device device, Image srcImage, int flag) {
 	this.type = srcImage.type;
 	switch (flag) {
 		case SWT.IMAGE_COPY: {
-			switch (type) {
+			switch (this.type) {
 				case SWT.BITMAP:
 					/* Get the HDC for the device */
 					long /*int*/ hDC = device.internal_new_GC(null);
@@ -242,7 +242,7 @@ public Image(Device device, Image srcImage, int flag) {
 					long /*int*/ hOldSrc = OS.SelectObject(hdcSource, srcImage.handle);
 					BITMAP bm = new BITMAP();
 					OS.GetObject(srcImage.handle, BITMAP.sizeof, bm);
-					handle = OS.CreateCompatibleBitmap(hdcSource, rect.width, bm.bmBits != 0 ? -rect.height : rect.height);
+					this.handle = OS.CreateCompatibleBitmap(hdcSource, rect.width, bm.bmBits != 0 ? -rect.height : rect.height);
 //                                        handleTotal++;
 //                                        System.out.println(HANDLE + handleTotal);
 //                                        if (handleTotal > MANY_HANDLES) {
@@ -252,7 +252,7 @@ public Image(Device device, Image srcImage, int flag) {
 //                                            }
 //                                        }
 
-					if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+					if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 					long /*int*/ hOldDest = OS.SelectObject(hdcDest, handle);
 					OS.BitBlt(hdcDest, 0, 0, rect.width, rect.height, hdcSource, 0, 0, OS.SRCCOPY);
 					OS.SelectObject(hdcSource, hOldSrc);
@@ -263,10 +263,10 @@ public Image(Device device, Image srcImage, int flag) {
 					/* Release the HDC for the device */
 					device.internal_dispose_GC(hDC, null);
 
-					transparentPixel = srcImage.transparentPixel;
-					alpha = srcImage.alpha;
+					this.transparentPixel = srcImage.transparentPixel;
+					this.alpha = srcImage.alpha;
 					if (srcImage.alphaData != null) {
-						alphaData = new byte[srcImage.alphaData.length];
+						this.alphaData = new byte[srcImage.alphaData.length];
 						System.arraycopy(srcImage.alphaData, 0, alphaData, 0, alphaData.length);
 					}
 					break;
@@ -682,7 +682,7 @@ void initNative(String filename) {
 							status = Gdip.Graphics_DrawImage(graphics, bitmap, rect, 0, 0, width, height, Gdip.UnitPixel, 0, 0, 0);
 							if (status != 0) {
 								error = SWT.ERROR_INVALID_IMAGE;
-								OS.DeleteObject(handle);
+								OS.DeleteObject(this.handle);
 								this.handle = 0;
 //                                                                handleTotal--;
 //                                                                System.out.println(HANDLE_TOTAL + handleTotal);
@@ -898,11 +898,11 @@ long /*int*/ createDIBFromDDB(long /*int*/ hDC, long /*int*/ hBitmap, int width,
 }
 
 long /*int*/ [] createGdipImage() {
-	switch (type) {
+	switch (this.type) {
 		case SWT.BITMAP: {
-			if (alpha != -1 || alphaData != null || transparentPixel != -1) {
+			if (this.alpha != -1 || this.alphaData != null || this.transparentPixel != -1) {
 				BITMAP bm = new BITMAP();
-				OS.GetObject(handle, BITMAP.sizeof, bm);
+				OS.GetObject(this.handle, BITMAP.sizeof, bm);
 				int imgWidth = bm.bmWidth;
 				int imgHeight = bm.bmHeight;
 				long /*int*/ hDC = device.internal_new_GC(null);
@@ -917,7 +917,7 @@ long /*int*/ [] createGdipImage() {
 				int sizeInBytes = dibBM.bmWidthBytes * dibBM.bmHeight;	
 			 	OS.BitBlt(memHdc, 0, 0, imgWidth, imgHeight, srcHdc, 0, 0, OS.SRCCOPY);
 			 	byte red = 0, green = 0, blue = 0;
-			 	if (transparentPixel != -1) {
+			 	if (this.transparentPixel != -1) {
 					if (bm.bmBitsPixel <= 8)  {
 						byte[] color = new byte[4];
 						OS.GetDIBColorTable(srcHdc, transparentPixel, 1, color);
@@ -961,17 +961,17 @@ long /*int*/ [] createGdipImage() {
 				OS.MoveMemory(srcData, dibBM.bmBits, sizeInBytes);
 				OS.DeleteObject(memDib);
 				device.internal_dispose_GC(hDC, null);
-				if (alpha != -1) {
+				if (this.alpha != -1) {
 					for (int y = 0, dp = 0; y < imgHeight; ++y) {
 						for (int x = 0; x < imgWidth; ++x) {
-							srcData[dp + 3] = (byte)alpha;
+							srcData[dp + 3] = (byte)this.alpha;
 							dp += 4;
 						}
 					}
 				} else if (alphaData != null) {
 					for (int y = 0, dp = 0, ap = 0; y < imgHeight; ++y) {
 						for (int x = 0; x < imgWidth; ++x) {
-							srcData[dp + 3] = alphaData[ap++];
+							srcData[dp + 3] = this.alphaData[ap++];
 							dp += 4;
 						}
 					}
@@ -1071,18 +1071,18 @@ long /*int*/ [] createGdipImage() {
 }
 
 void destroy () {
-	if (memGC != null) memGC.dispose();
-	if (type == SWT.ICON) {
-		if (OS.IsWinCE) data = null;
-		OS.DestroyIcon (handle);
+	if (this.memGC != null) this.memGC.dispose();
+	if (this.type == SWT.ICON) {
+		if (OS.IsWinCE) this.data = null;
+		OS.DestroyIcon (this.handle);
 	} else {
-		OS.DeleteObject (handle);
+		OS.DeleteObject (this.handle);
 	}
-	handle = 0;
+	this.handle = 0;
 //        handleTotal--;
 //        System.out.println(DESTROY_HANDLE_TOTAL + handleTotal);
 
-	memGC = null;
+	this.memGC = null;
 }
 
 /**
@@ -1099,7 +1099,7 @@ public boolean equals (Object object) {
 	if (object == this) return true;
 	if (!(object instanceof Image)) return false;
 	Image image = (Image) object;
-	return device == image.device && handle == image.handle;
+	return device == image.device && this.handle == image.handle;
 }
 
 /**
@@ -1122,14 +1122,14 @@ public boolean equals (Object object) {
  */
 public Color getBackground() {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	if (transparentPixel == -1) return null;
+	if (this.transparentPixel == -1) return null;
 
 	/* Get the HDC for the device */
 	long /*int*/ hDC = device.internal_new_GC(null);
 	
 	/* Compute the background color */
 	BITMAP bm = new BITMAP();		
-	OS.GetObject(handle, BITMAP.sizeof, bm);
+	OS.GetObject(this.handle, BITMAP.sizeof, bm);
 	long /*int*/ hdcMem = OS.CreateCompatibleDC(hDC);
 	long /*int*/ hOldObject = OS.SelectObject(hdcMem, handle);
 	int red = 0, green = 0, blue = 0;
@@ -1139,7 +1139,7 @@ public Color getBackground() {
 			OS.MoveMemory(pBits, bm.bmBits, 1);
 			byte oldValue = pBits[0];			
 			int mask = (0xFF << (8 - bm.bmBitsPixel)) & 0x00FF;
-			pBits[0] = (byte)((transparentPixel << (8 - bm.bmBitsPixel)) | (pBits[0] & ~mask));
+			pBits[0] = (byte)((this.transparentPixel << (8 - bm.bmBitsPixel)) | (pBits[0] & ~mask));
 			OS.MoveMemory(bm.bmBits, pBits, 1);
 			int color = OS.GetPixel(hdcMem, 0, 0);
        		pBits[0] = oldValue;
@@ -1197,20 +1197,20 @@ public Color getBackground() {
  */
 public Rectangle getBounds() {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	if (width != -1 && height != -1) {
+	if (this.width != -1 && this.height != -1) {
 		return new Rectangle(0, 0, width, height);
 	}
-	switch (type) {
+	switch (this.type) {
 		case SWT.BITMAP:
 			BITMAP bm = new BITMAP();
-			OS.GetObject(handle, BITMAP.sizeof, bm);
+			OS.GetObject(this.handle, BITMAP.sizeof, bm);
 			return new Rectangle(0, 0, width = bm.bmWidth, height = bm.bmHeight);
 		case SWT.ICON:
 			if (OS.IsWinCE) {
-				return new Rectangle(0, 0, width = data.width, height = data.height);
+				return new Rectangle(0, 0, width = this.data.width, height = this.data.height);
 			} else {
 				ICONINFO info = new ICONINFO();
-				OS.GetIconInfo(handle, info);
+				OS.GetIconInfo(this.handle, info);
 				long /*int*/ hBitmap = info.hbmColor;
 				if (hBitmap == 0) hBitmap = info.hbmMask;
 				bm = new BITMAP();
@@ -1244,12 +1244,12 @@ public ImageData getImageData() {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	BITMAP bm;
 	int depth, width, height;
-	switch (type) {
+	switch (this.type) {
 		case SWT.ICON: {
 			if (OS.IsWinCE) return data;
 			ICONINFO info = new ICONINFO();	
 			if (OS.IsWinCE) SWT.error(SWT.ERROR_NOT_IMPLEMENTED);
-			OS.GetIconInfo(handle, info);
+			OS.GetIconInfo(this.handle, info);
 			/* Get the basic BITMAP information */
 			long /*int*/ hBitmap = info.hbmColor;
 			if (hBitmap == 0) hBitmap = info.hbmMask;
@@ -1386,7 +1386,7 @@ public ImageData getImageData() {
 		case SWT.BITMAP: {
 			/* Get the basic BITMAP information */
 			bm = new BITMAP();
-			OS.GetObject(handle, BITMAP.sizeof, bm);
+			OS.GetObject(this.handle, BITMAP.sizeof, bm);
 			depth = bm.bmPlanes * bm.bmBitsPixel;
 			width = bm.bmWidth;
 			height = bm.bmHeight;
@@ -1404,19 +1404,19 @@ public ImageData getImageData() {
 			if (OS.IsWinCE) {
 				if (!isDib) {
 					boolean mustRestore = false;
-					if (memGC != null && !memGC.isDisposed()) {
-						memGC.flush ();
+					if (this.memGC != null && !this.memGC.isDisposed()) {
+						this.memGC.flush ();
 						mustRestore = true;
-						GCData data = memGC.data;
+						GCData data = this.memGC.data;
 						if (data.hNullBitmap != 0) {
-							OS.SelectObject(memGC.handle, data.hNullBitmap);
+							OS.SelectObject(this.memGC.handle, data.hNullBitmap);
 							data.hNullBitmap = 0;
 						}
 					}
 					handle = createDIBFromDDB(hDC, this.handle, width, height);
 					if (mustRestore) {
-						long /*int*/ hOldBitmap = OS.SelectObject(memGC.handle, this.handle);
-						memGC.data.hNullBitmap = hOldBitmap;
+						long /*int*/ hOldBitmap = OS.SelectObject(this.memGC.handle, this.handle);
+						this.memGC.data.hNullBitmap = hOldBitmap;
 					}
 					isDib = true;
 				}
@@ -1560,9 +1560,9 @@ public ImageData getImageData() {
 			/* Construct and return the ImageData */
 			ImageData imageData = new ImageData(width, height, depth, palette, 4, data);
 			imageData.transparentPixel = this.transparentPixel;
-			imageData.alpha = alpha;
-			if (alpha == -1 && alphaData != null) {
-				imageData.alphaData = new byte[alphaData.length];
+			imageData.alpha = this.alpha;
+			if (this.alpha == -1 && this.alphaData != null) {
+				imageData.alphaData = new byte[this.alphaData.length];
 				System.arraycopy(alphaData, 0, imageData.alphaData, 0, alphaData.length);
 			}
 			return imageData;
@@ -1584,16 +1584,16 @@ public ImageData getImageData() {
  * @see #equals
  */
 public int hashCode () {
-	return (int)/*64*/handle;
+	return (int)/*64*/this.handle;
 }
 
 void init(int width, int height) {
 	if (width <= 0 || height <= 0) {
 		SWT.error (SWT.ERROR_INVALID_ARGUMENT);
 	}
-	type = SWT.BITMAP;
+	this.type = SWT.BITMAP;
 	long /*int*/ hDC = device.internal_new_GC(null);
-	handle = OS.CreateCompatibleBitmap(hDC, width, height);
+	this.handle = OS.CreateCompatibleBitmap(hDC, width, height);
 //        handleTotal++;
 //        System.out.println(INIT_HANDLE + handleTotal);
 //        if (handleTotal > MANY_HANDLES) {
@@ -1607,14 +1607,14 @@ void init(int width, int height) {
 	* for large images.  The fix is to create a DIB section
 	* in that case.
 	*/
-	if (handle == 0) {
+	if (this.handle == 0) {
 		int bits = OS.GetDeviceCaps(hDC, OS.BITSPIXEL);
 		int planes = OS.GetDeviceCaps(hDC, OS.PLANES);
 		int depth = bits * planes;
 		if (depth < 16) depth = 16;
-		handle = createDIB(width, height, depth);
+		this.handle = createDIB(width, height, depth);
 	}
-	if (handle != 0) {
+	if (this.handle != 0) {
 		long /*int*/ memDC = OS.CreateCompatibleDC(hDC);
 		long /*int*/ hOldBitmap = OS.SelectObject(memDC, handle);
 		OS.PatBlt(memDC, 0, 0, width, height, OS.PATCOPY);
@@ -2003,16 +2003,16 @@ void init(ImageData i) {
  * @noreference This method is not intended to be referenced by clients.
  */
 public long /*int*/ internal_new_GC (GCData data) {
-	if (handle == 0) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
+	if (this.handle == 0) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	/*
 	* Create a new GC that can draw into the image.
 	* Only supported for bitmaps.
 	*/
-	if (type != SWT.BITMAP) {
+	if (this.type != SWT.BITMAP) {
                 System.out.println("Type not Bitmap");
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-        if (memGC != null) {
+        if (this.memGC != null) {
                 System.out.println("memGC is not null");
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
@@ -2113,7 +2113,7 @@ public void setBackground(Color color) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	if (color == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (color.isDisposed()) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-	if (transparentPixel == -1) return;
+	if (this.transparentPixel == -1) return;
 	transparentColor = -1;
 
 	/* Get the HDC for the device */
@@ -2121,14 +2121,14 @@ public void setBackground(Color color) {
 	
 	/* Change the background color in the image */
 	BITMAP bm = new BITMAP();		
-	OS.GetObject(handle, BITMAP.sizeof, bm);
+	OS.GetObject(this.handle, BITMAP.sizeof, bm);
 	long /*int*/ hdcMem = OS.CreateCompatibleDC(hDC);
 	OS.SelectObject(hdcMem, handle);
 	int maxColors = 1 << bm.bmBitsPixel;
 	byte[] colors = new byte[maxColors * 4];
 	if (OS.IsWinCE) SWT.error(SWT.ERROR_NOT_IMPLEMENTED);
 	int numColors = OS.GetDIBColorTable(hdcMem, 0, maxColors, colors);
-	int offset = transparentPixel * 4;
+	int offset = this.transparentPixel * 4;
 	colors[offset] = (byte)color.getBlue();
 	colors[offset + 1] = (byte)color.getGreen();
 	colors[offset + 2] = (byte)color.getRed();
@@ -2148,7 +2148,7 @@ public void setBackground(Color color) {
  */
 public String toString () {
 	if (isDisposed()) return "Image {*DISPOSED*}";
-	return "Image {" + handle + "}";
+	return "Image {" + this.handle + "}";
 }
 
 /**	 

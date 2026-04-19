@@ -74,7 +74,7 @@ public AnimatedProgress(Composite parent, int style) {
 	if ((style & SWT.VERTICAL) != 0) {
 		this.orientation = SWT.VERTICAL;
 	}
-	showBorder = (style & SWT.BORDER) != 0;
+	this.showBorder = (style & SWT.BORDER) != 0;
 	
 	addControlListener(new ControlAdapter() {
 		@Override
@@ -108,15 +108,15 @@ private static int checkStyle (int style) {
  */
 public synchronized void clear(){
 	checkWidget();
-	if (active) stop();
-	showStripes = false;
+	if (this.active) stop();
+	this.showStripes = false;
 	redraw();
 }
 @Override
 public Point computeSize(int wHint, int hHint, boolean changed) {
 	checkWidget();
 	Point size = null;
-	if (orientation == SWT.HORIZONTAL) {
+	if (this.orientation == SWT.HORIZONTAL) {
 		size = new Point(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	} else {
 		size = new Point(DEFAULT_HEIGHT, DEFAULT_WIDTH);
@@ -141,7 +141,7 @@ void paint(PaintEvent event) {
 			
 	Rectangle rect= getClientArea();
 	gc.fillRectangle(rect);
-	if (showBorder) {
+	if (this.showBorder) {
 		drawBevelRect(gc, rect.x, rect.y, rect.width-1, rect.height-1,
 			disp.getSystemColor(SWT.COLOR_WIDGET_NORMAL_SHADOW),
 			disp.getSystemColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
@@ -151,7 +151,7 @@ void paint(PaintEvent event) {
 }	
 void paintStripes(GC gc) {
 	
-	if (!showStripes) return;
+	if (!this.showStripes) return;
 	
 	Rectangle rect= getClientArea();
 	// Subtracted border painted by paint.
@@ -164,8 +164,8 @@ void paintStripes(GC gc) {
 	gc.fillRectangle(rect);
 	gc.setForeground(this.getBackground());
 	int step = 12;
-	int foregroundValue = value == 0 ? step - 2 : value - 2;
-	if (orientation == SWT.HORIZONTAL) {
+	int foregroundValue = this.value == 0 ? step - 2 : this.value - 2;
+	if (this.orientation == SWT.HORIZONTAL) {
 		int y = rect.y - 1;
 		int w = rect.width;
 		int h = rect.height + 2;
@@ -184,8 +184,8 @@ void paintStripes(GC gc) {
 		}
 	}
 	
-	if (active) {
-		value = (value + 2) % step;
+	if (this.active) {
+		this.value = (this.value + 2) % step;
 	}
 }
 /**
@@ -198,10 +198,10 @@ void paintStripes(GC gc) {
 */
 public synchronized void start() {
 	checkWidget();
-	if (active) return;
+	if (this.active) return;
 
-	active = true;
-	showStripes = true;
+	this.active = true;
+	this.showStripes = true;
 	
 	final Display display = getDisplay();
 	final Runnable [] timer = new ARunnable [1];

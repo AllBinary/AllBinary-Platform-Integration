@@ -75,8 +75,8 @@ public Region () {
  */
 public Region (Device device) {
 	super(device);
-	handle = OS.CreateRectRgn (0, 0, 0, 0);
-	if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+	this.handle = OS.CreateRectRgn (0, 0, 0, 0);
+	if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 	init();
 }
 
@@ -199,7 +199,7 @@ public void add (Region region) {
  */
 public boolean contains (int x, int y) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	return OS.PtInRegion (handle, x, y);
+	return OS.PtInRegion (this.handle, x, y);
 }
 
 /**
@@ -225,7 +225,7 @@ public boolean contains (Point pt) {
 
 void destroy () {
 	OS.DeleteObject(handle);
-	handle = 0;
+	this.handle = 0;
 }
 
 /**
@@ -261,7 +261,7 @@ public boolean equals (Object object) {
 public Rectangle getBounds() {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	RECT rect = new RECT();
-	OS.GetRgnBox(handle, rect);
+	OS.GetRgnBox(this.handle, rect);
 	return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 }
 
@@ -276,7 +276,7 @@ public Rectangle getBounds() {
  * @see #equals
  */
 public int hashCode () {
-	return (int)/*64*/handle;
+	return (int)/*64*/this.handle;
 }
 
 /**
@@ -372,7 +372,7 @@ public boolean intersects (int x, int y, int width, int height) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	RECT r = new RECT ();
 	OS.SetRect (r, x, y, x + width, y + height);
-	return OS.RectInRegion (handle, r);
+	return OS.RectInRegion (this.handle, r);
 }
 
 /**
@@ -426,7 +426,7 @@ public boolean isDisposed() {
 public boolean isEmpty () {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	RECT rect = new RECT ();
-	int result = OS.GetRgnBox (handle, rect);
+	int result = OS.GetRgnBox (this.handle, rect);
 	if (result == OS.NULLREGION) return true;
 	return ((rect.right - rect.left) <= 0) || ((rect.bottom - rect.top) <= 0);
 }
@@ -542,7 +542,7 @@ public void subtract (Region region) {
  */
 public void translate (int x, int y) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	OS.OffsetRgn (handle, x, y);
+	OS.OffsetRgn (this.handle, x, y);
 }
 
 /**
@@ -574,7 +574,7 @@ public void translate (Point pt) {
  */
 public String toString () {
 	if (isDisposed()) return "Region {*DISPOSED*}";
-	return "Region {" + handle + "}";
+	return "Region {" + this.handle + "}";
 }
 
 /**	 

@@ -255,6 +255,6 @@ public final class PrinterData extends DeviceData {
 	 */
 	@Override
 	public String toString() {
-		return "PrinterData {" + "driver = " + driver + ", name = " + name + "}";  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "PrinterData {" + "driver = " + this.driver + ", name = " + name + "}";  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

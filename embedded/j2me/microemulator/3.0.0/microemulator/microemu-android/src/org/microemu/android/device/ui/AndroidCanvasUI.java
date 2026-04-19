@@ -108,7 +108,7 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
 	public AndroidDisplayGraphics getGraphics() {
 		gameCanvasGraphics = new AndroidDisplayGraphics();
         if (gameCanvasBitmap != null) {
-        	gameCanvasGraphics.reset(new android.graphics.Canvas(gameCanvasBitmap));
+        	this.gameCanvasGraphics.reset(new android.graphics.Canvas(gameCanvasBitmap));
         }
 		
 		return gameCanvasGraphics;

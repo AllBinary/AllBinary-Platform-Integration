@@ -51,7 +51,7 @@ public class ExtensionFileFilter extends FileFilter
         return true;
 	    }
       String ext = getExtension(file);
-      if(ext != null && extensions.get(ext) != null) {
+      if(ext != null && this.extensions.get(ext) != null) {
         return true;
       }
     }
@@ -62,7 +62,7 @@ public class ExtensionFileFilter extends FileFilter
   
   public void addExtension(String extension)
   {
-    extensions.put(extension.toLowerCase(), this);
+    this.extensions.put(extension.toLowerCase(), this);
   }
 
   

@@ -86,10 +86,10 @@ public class DropTargetEffect extends DropTargetAdapter {
 	 * @return the item at the given x-y coordinate, or null if the coordinate is not in a selectable item
 	 */
 	public Widget getItem(int x, int y) {
-		if (control instanceof Table) {
+		if (this.control instanceof Table) {
 			return getItem((Table) control, x, y);
 		}
-		if (control instanceof Tree) {
+		if (this.control instanceof Tree) {
 			return getItem((Tree) control, x, y);
 		}			
 		return null;

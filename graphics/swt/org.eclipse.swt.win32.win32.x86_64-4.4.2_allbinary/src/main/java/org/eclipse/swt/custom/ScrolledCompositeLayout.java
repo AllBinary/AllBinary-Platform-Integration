@@ -49,7 +49,7 @@ protected boolean flushCache(Control control) {
 
 @Override
 protected void layout(Composite composite, boolean flushCache) {
-	if (inLayout) return;
+	if (this.inLayout) return;
 	ScrolledComposite sc = (ScrolledComposite)composite;
 	if (sc.content == null) return;
 	ScrollBar hBar = sc.getHorizontalBar();
@@ -64,7 +64,7 @@ protected void layout(Composite composite, boolean flushCache) {
 			return;
 		}
 	}
-	inLayout = true;
+	this.inLayout = true;
 	Rectangle contentRect = sc.content.getBounds();
 	if (!sc.alwaysShowScroll) {
 		boolean hVisible = sc.needHScroll(contentRect, false);
@@ -116,6 +116,6 @@ protected void layout(Composite composite, boolean flushCache) {
 	gc.dispose ();
 	
 	sc.content.setBounds (contentRect);
-	inLayout = false;
+	this.inLayout = false;
 }
 }

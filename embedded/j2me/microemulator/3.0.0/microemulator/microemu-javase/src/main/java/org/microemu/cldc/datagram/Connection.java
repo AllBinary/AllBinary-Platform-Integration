@@ -113,7 +113,7 @@ public class Connection implements DatagramConnection, UDPDatagramConnection, Co
 			/*
 			 * client mode we can get the localhost from the socket here
 			 */
-			address = socket.getLocalAddress();
+			address = this.socket.getLocalAddress();
 		}
 		return address.getHostAddress();
 	}
@@ -130,31 +130,31 @@ public class Connection implements DatagramConnection, UDPDatagramConnection, Co
 			throw new IOException("Invalid Protocol " + name);
 		}
 		// TODO currently we ignore the mode
-		address = name.substring(PROTOCOL.length());
+		this.address = name.substring(PROTOCOL.length());
 		int port = -1;
-		int index = address.indexOf(':');
+		int index = this.address.indexOf(':');
 		if (index == -1) {
 			throw new IllegalArgumentException("Port missing");
 		}
-		String portToParse = address.substring(index + 1);
+		String portToParse = this.address.substring(index + 1);
 		if (portToParse.length() > 0) {
 			port = Integer.parseInt(portToParse);
 		}
 		if (index == 0) {
 			// server mode
 			if (port == -1) {
-				socket = new DatagramSocket();
+				this.socket = new DatagramSocket();
 			} else {
-				socket = new DatagramSocket(port);
+				this.socket = new DatagramSocket(port);
 			}
 		} else {
 			// client mode
 			if (port == -1) {
 				throw new IllegalArgumentException("Port missing");
 			}
-			String host = address.substring(0, index);
-			socket = new DatagramSocket();
-			socket.connect(InetAddress.getByName(host), port);
+			String host = this.address.substring(0, index);
+			this.socket = new DatagramSocket();
+			this.socket.connect(InetAddress.getByName(host), port);
 		}
 		return this;
 	}

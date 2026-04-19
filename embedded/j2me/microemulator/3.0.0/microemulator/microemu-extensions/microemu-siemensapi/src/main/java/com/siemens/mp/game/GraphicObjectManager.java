@@ -85,8 +85,8 @@ public class GraphicObjectManager  extends com.siemens.mp.misc.NativeMem{
         Graphics g=image.getGraphics();
         g.translate(x, y);
 
-        for (int i=0;i<v.size();i++) {
-            GraphicObject go=(GraphicObject)v.elementAt(i);
+        for (int i=0;i<this.v.size();i++) {
+            GraphicObject go=(GraphicObject)this.v.elementAt(i);
             go.paint(g);
         }
         g.translate(-x, -y);

@@ -204,21 +204,21 @@ public RGB open () {
 	if (lpfnHook == 0) error(SWT.ERROR_NO_MORE_CALLBACKS);
 	
 	/* Allocate the Custom Colors and initialize to white */
-	display = parent.display;
-	if (display.lpCustColors == 0) {
+	this.display = parent.display;
+	if (this.display.lpCustColors == 0) {
 		long /*int*/ hHeap = OS.GetProcessHeap ();
-		display.lpCustColors = OS.HeapAlloc (hHeap, OS.HEAP_ZERO_MEMORY, CUSTOM_COLOR_COUNT * 4);
+		this.display.lpCustColors = OS.HeapAlloc (hHeap, OS.HEAP_ZERO_MEMORY, CUSTOM_COLOR_COUNT * 4);
 		for (int i=0; i < CUSTOM_COLOR_COUNT; i++) {
-			colors[i] = 0x00FFFFFF;
+			this.colors[i] = 0x00FFFFFF;
 		}
-		OS.MoveMemory (display.lpCustColors, colors, CUSTOM_COLOR_COUNT * 4);
+		OS.MoveMemory (this.display.lpCustColors, colors, CUSTOM_COLOR_COUNT * 4);
 	}
 	
 	/* Set the Custom Colors (if any) into the dialog */
-	if (rgbs != null) {
-		int length = rgbs.length > CUSTOM_COLOR_COUNT ? CUSTOM_COLOR_COUNT : rgbs.length;
+	if (this.rgbs != null) {
+		int length = this.rgbs.length > CUSTOM_COLOR_COUNT ? CUSTOM_COLOR_COUNT : this.rgbs.length;
 		for (int i=0; i<length; i++) {
-			RGB rgb = rgbs [i];
+			RGB rgb = this.rgbs [i];
 			int red = rgb.red & 0xFF;
 			int green = (rgb.green << 8) & 0xFF00;
 			int blue = (rgb.blue << 16) & 0xFF0000;
@@ -227,7 +227,7 @@ public RGB open () {
 		for (int i=length; i < CUSTOM_COLOR_COUNT; i++) {
 			colors[i] = 0x00FFFFFF;
 		}
-		OS.MoveMemory (display.lpCustColors, colors, CUSTOM_COLOR_COUNT * 4);
+		OS.MoveMemory (this.display.lpCustColors, colors, CUSTOM_COLOR_COUNT * 4);
 	}
 	
 	/* Open the dialog */	
@@ -237,7 +237,7 @@ public RGB open () {
 	//if (display.fullOpen) lpcc.Flags |= OS.CC_FULLOPEN;
 	lpcc.lpfnHook = lpfnHook;
 	lpcc.hwndOwner = hwndOwner;
-	lpcc.lpCustColors = display.lpCustColors;
+	lpcc.lpCustColors = this.display.lpCustColors;
 	if (rgb != null) {
 		lpcc.Flags |= OS.CC_RGBINIT;
 		int red = rgb.red & 0xFF;
@@ -249,8 +249,8 @@ public RGB open () {
 	/* Make the parent shell be temporary modal */
 	Dialog oldModal = null;
 	if ((style & (SWT.APPLICATION_MODAL | SWT.SYSTEM_MODAL)) != 0) {
-		oldModal = display.getModalDialog ();
-		display.setModalDialog (this);
+		oldModal = this.display.getModalDialog ();
+		this.display.setModalDialog (this);
 	}
 	
 	/* Open the dialog */
@@ -258,7 +258,7 @@ public RGB open () {
 	
 	/* Clear the temporary dialog modal parent */
 	if ((style & (SWT.APPLICATION_MODAL | SWT.SYSTEM_MODAL)) != 0) {
-		display.setModalDialog (oldModal);
+		this.display.setModalDialog (oldModal);
 	}
 	
 	/* Get the Custom Colors (if the user defined any) from the dialog */
@@ -271,13 +271,13 @@ public RGB open () {
 		}
 	}
 	if (customColor) {
-		rgbs = new RGB [CUSTOM_COLOR_COUNT];
+		this.rgbs = new RGB [CUSTOM_COLOR_COUNT];
 		for (int i=0; i<colors.length; i++) {
 			int color = colors[i];
 			int red = color & 0xFF;
 			int green = (color >> 8) & 0xFF;
 			int blue = (color >> 16) & 0xFF;
-			rgbs[i] = new RGB (red, green, blue);
+			this.rgbs[i] = new RGB (red, green, blue);
 		}
 	}
 

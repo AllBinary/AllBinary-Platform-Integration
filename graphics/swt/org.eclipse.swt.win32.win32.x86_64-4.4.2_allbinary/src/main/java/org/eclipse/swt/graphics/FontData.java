@@ -84,8 +84,8 @@ public FontData() {
 	// We set the charset field so that
 	// wildcard searching will work properly
 	// out of the box
-	data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
-	height = 12;
+	this.data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
+	this.height = 12;
 }
 
 /**
@@ -157,8 +157,8 @@ public FontData(String string) {
 
 	start = end + 1;
 	end = string.indexOf('|', start);
-	data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
-	data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
+	this.data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
+	this.data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
 	setName(name);
 	setHeight(height);
 	setStyle(style);
@@ -242,7 +242,7 @@ public FontData(String string) {
 			byte[] lfFaceName = ((LOGFONTA)newData).lfFaceName;
 			System.arraycopy(buffer.bytes, 0, lfFaceName, 0, length);
 		}
-		data = newData;
+		this.data = newData;
 	}
 }
 
@@ -262,26 +262,26 @@ public FontData(String string) {
  */
 public FontData(String name, int height, int style) {
 	if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
+	this.data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
 	setName(name);
 	setHeight(height);
 	setStyle(style);
 	// We set the charset field so that
 	// wildcard searching will work properly
 	// out of the box
-	data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
+	this.data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
 }
 
 /*public*/ FontData(String name, float height, int style) {
 	if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
+	this.data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
 	setName(name);
-	setHeight(height);
+	setHeight(this.height);
 	setStyle(style);
 	// We set the charset field so that
 	// wildcard searching will work properly
 	// out of the box
-	data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
+	this.data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
 }
 
 /**
@@ -306,7 +306,7 @@ public boolean equals (Object object) {
 		* we check the height field which is always set.
 		*/ 
 //		data.lfHeight == lf.lfHeight &&
-		height == fd.height &&
+		this.height == fd.height &&
 		data.lfWidth == lf.lfWidth &&
 		data.lfEscapement == lf.lfEscapement &&
 		data.lfOrientation == lf.lfOrientation &&
@@ -347,7 +347,7 @@ long /*int*/ EnumLocalesProc(long /*int*/ lpLocaleString) {
 	int cp = Integer.parseInt(buffer.toString(0, size - 1));
 	int [] lpCs = new int[8];
 	OS.TranslateCharsetInfo(cp, lpCs, OS.TCI_SRCCODEPAGE);
-	data.lfCharSet = (byte)lpCs[0];
+	this.data.lfCharSet = (byte)lpCs[0];
 
 	return 0;
 }
@@ -360,7 +360,7 @@ long /*int*/ EnumLocalesProc(long /*int*/ lpLocaleString) {
  * @see #setHeight(int)
  */
 public int getHeight() {
-	return (int)(0.5f + height);
+	return (int)(0.5f + this.height);
 }
 
 /*public*/ float getHeightF() {
@@ -421,10 +421,10 @@ public String getLocale () {
 public String getName() {
 	char[] chars;
 	if (OS.IsUnicode) {
-		chars = ((LOGFONTW)data).lfFaceName;
+		chars = ((LOGFONTW)this.data).lfFaceName;
 	} else {
 		chars = new char[OS.LF_FACESIZE];
-		byte[] bytes = ((LOGFONTA)data).lfFaceName;
+		byte[] bytes = ((LOGFONTA)this.data).lfFaceName;
 		OS.MultiByteToWideChar (OS.CP_ACP, OS.MB_PRECOMPOSED, bytes, bytes.length, chars, chars.length);
 	}
 	int index = 0;
@@ -446,8 +446,8 @@ public String getName() {
  */
 public int getStyle() {
 	int style = SWT.NORMAL;
-	if (data.lfWeight == 700) style |= SWT.BOLD;
-	if (data.lfItalic != 0) style |= SWT.ITALIC;
+	if (this.data.lfWeight == 700) style |= SWT.BOLD;
+	if (this.data.lfItalic != 0) style |= SWT.ITALIC;
 	return style;
 }
 
@@ -485,11 +485,11 @@ public int hashCode () {
 public void setHeight(int height) {
 	if (height < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	this.height = height;
-	data.lfWidth = 0;
+	this.data.lfWidth = 0;
 }
 
 /*public*/ void setHeight(float height) {
-	if (height < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (this.height < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	this.height = height;
 }
 
@@ -529,7 +529,7 @@ public void setLocale(String locale) {
 		if (length > secondSep + 1) variant = locale.substring(secondSep + 1);
 	}
 	if (lang == null) {
-		data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
+		this.data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
 	} else {
 		Callback callback = new Callback (this, "EnumLocalesProc", 1); //$NON-NLS-1$
 		long /*int*/ lpEnumLocalesProc = callback.getAddress ();	
@@ -571,11 +571,11 @@ public void setName(String name) {
 	TCHAR buffer = new TCHAR(0, name, true);
 	int length = Math.min(OS.LF_FACESIZE - 1, buffer.length());
 	if (OS.IsUnicode) {
-		char[] lfFaceName = ((LOGFONTW)data).lfFaceName;
+		char[] lfFaceName = ((LOGFONTW)this.data).lfFaceName;
 		for (int i = 0; i < lfFaceName.length; i++) lfFaceName[i] = 0;
 		System.arraycopy(buffer.chars, 0, lfFaceName, 0, length);
 	} else {
-		byte[] lfFaceName = ((LOGFONTA)data).lfFaceName;
+		byte[] lfFaceName = ((LOGFONTA)this.data).lfFaceName;
 		for (int i = 0; i < lfFaceName.length; i++) lfFaceName[i] = 0;
 		System.arraycopy(buffer.bytes, 0, lfFaceName, 0, length);
 	}
@@ -593,14 +593,14 @@ public void setName(String name) {
  */
 public void setStyle(int style) {
 	if ((style & SWT.BOLD) == SWT.BOLD) {
-		data.lfWeight = 700;
+		this.data.lfWeight = 700;
 	} else {
-		data.lfWeight = 0;
+		this.data.lfWeight = 0;
 	}
 	if ((style & SWT.ITALIC) == SWT.ITALIC) {
-		data.lfItalic = 1;
+		this.data.lfItalic = 1;
 	} else {
-		data.lfItalic = 0;
+		this.data.lfItalic = 0;
 	}
 }
 

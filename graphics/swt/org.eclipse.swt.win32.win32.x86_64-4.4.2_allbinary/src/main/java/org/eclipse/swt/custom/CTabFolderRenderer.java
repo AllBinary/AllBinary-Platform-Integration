@@ -192,21 +192,21 @@ public class CTabFolderRenderer {
 	void antialias (int[] shape, Color innerColor, Color outerColor, GC gc){
 		// Don't perform anti-aliasing on Mac and WPF because the platform
 		// already does it.  The simple style also does not require anti-aliasing.
-		if (parent.simple) return;
+		if (this.parent.simple) return;
 		String platform = SWT.getPlatform();
 		if ("cocoa".equals(platform)) return; //$NON-NLS-1$
 		if ("carbon".equals(platform)) return; //$NON-NLS-1$
 		if ("wpf".equals(platform)) return; //$NON-NLS-1$
 		// Don't perform anti-aliasing on low resolution displays
-		if (parent.getDisplay().getDepth() < 15) return;
+		if (this.parent.getDisplay().getDepth() < 15) return;
 		if (outerColor != null) {
 			int index = 0;
 			boolean left = true;
-			int oldY = parent.onBottom ? 0 : parent.getSize().y;
+			int oldY = this.parent.onBottom ? 0 : this.parent.getSize().y;
 			int[] outer = new int[shape.length];
 			for (int i = 0; i < shape.length/2; i++) {
 				if (left && (index + 3 < shape.length)) {
-					left = parent.onBottom ? oldY <= shape[index+3] : oldY >= shape[index+3];
+					left = this.parent.onBottom ? oldY <= shape[index+3] : oldY >= shape[index+3];
 					oldY = shape[index+1];
 				}
 				outer[index] = shape[index++] + (left ? -1 : +1);
@@ -219,10 +219,10 @@ public class CTabFolderRenderer {
 			int[] inner = new int[shape.length];
 			int index = 0;
 			boolean left = true;
-			int oldY = parent.onBottom ? 0 : parent.getSize().y;
+			int oldY = this.parent.onBottom ? 0 : this.parent.getSize().y;
 			for (int i = 0; i < shape.length/2; i++) {
 				if (left && (index + 3 < shape.length)) {
-					left = parent.onBottom ? oldY <= shape[index+3] : oldY >= shape[index+3];
+					left = this.parent.onBottom ? oldY <= shape[index+3] : oldY >= shape[index+3];
 					oldY = shape[index+1];
 				}
 				inner[index] = shape[index++] + (left ? +1 : -1);
@@ -277,10 +277,10 @@ public class CTabFolderRenderer {
 		int width = 0, height = 0; 
 		switch (part) {
 			case PART_HEADER:
-				if (parent.fixedTabHeight != SWT.DEFAULT) {
-					height = parent.fixedTabHeight == 0 ? 0 : parent.fixedTabHeight + 1; // +1 for line drawn across top of tab
+				if (this.parent.fixedTabHeight != SWT.DEFAULT) {
+					height = this.parent.fixedTabHeight == 0 ? 0 : this.parent.fixedTabHeight + 1; // +1 for line drawn across top of tab
 				} else {
-					CTabItem[] items = parent.items;
+					CTabItem[] items = this.parent.items;
 					if (items.length == 0) {
 						height = gc.textExtent("Default", FLAGS).y + ITEM_TOP_MARGIN + ITEM_BOTTOM_MARGIN; //$NON-NLS-1$
 					} else {
@@ -301,21 +301,21 @@ public class CTabFolderRenderer {
 				height = BUTTON_SIZE;
 				break;
 			default:
-				if (0 <= part && part < parent.getItemCount()) {
+				if (0 <= part && part < this.parent.getItemCount()) {
 					updateCurves();
-					CTabItem item = parent.items[part]; 
+					CTabItem item = this.parent.items[part]; 
 					if (item.isDisposed()) return new Point(0,0);
 					Image image = item.getImage();
 					if (image != null && !image.isDisposed()) {
 						Rectangle bounds = image.getBounds();
-						if ((state & SWT.SELECTED) != 0 || parent.showUnselectedImage) {
+						if ((state & SWT.SELECTED) != 0 || this.parent.showUnselectedImage) {
 							width += bounds.width;
 						}
 						height =  bounds.height;
 					}
 					String text = null;
 					if ((state & MINIMUM_SIZE) != 0) {
-						int minChars = parent.minChars;
+						int minChars = this.parent.minChars;
 						text = minChars == 0 ? null : item.getText();
 						if (text != null && text.length() > minChars) {
 							if (useEllipses()) {
@@ -345,8 +345,8 @@ public class CTabFolderRenderer {
 							gc.setFont(gcFont);
 						}
 					}
-					if (parent.showClose || item.showClose) {
-						if ((state & SWT.SELECTED) != 0 || parent.showUnselectedClose) {
+					if (this.parent.showClose || item.showClose) {
+						if ((state & SWT.SELECTED) != 0 || this.parent.showUnselectedClose) {
 							if (width > 0) width += INTERNAL_SPACING;
 							width += computeSize(PART_CLOSE_BUTTON, SWT.NONE, gc, SWT.DEFAULT, SWT.DEFAULT).x;
 						}
@@ -389,26 +389,26 @@ public class CTabFolderRenderer {
 	protected Rectangle computeTrim (int part, int state, int x, int y, int width, int height) {
 		int borderLeft = parent.borderVisible ? 1 : 0;
 		int borderRight = borderLeft;
-		int borderTop = parent.onBottom ? borderLeft : 0;
-		int borderBottom = parent.onBottom ? 0 : borderLeft;
-		int tabHeight = parent.tabHeight;
+		int borderTop = this.parent.onBottom ? borderLeft : 0;
+		int borderBottom = this.parent.onBottom ? 0 : borderLeft;
+		int tabHeight = this.parent.tabHeight;
 		switch (part) {
 			case PART_BODY:
-				int style = parent.getStyle();
+				int style = this.parent.getStyle();
 				int highlight_header = (style & SWT.FLAT) != 0 ? 1 : 3;
 				int highlight_margin = (style & SWT.FLAT) != 0 ? 0 : 2;
-				if (parent.fixedTabHeight == 0 && (style & SWT.FLAT) != 0 && (style & SWT.BORDER) == 0) {
+				if (this.parent.fixedTabHeight == 0 && (style & SWT.FLAT) != 0 && (style & SWT.BORDER) == 0) {
 					highlight_header = 0;	
 				}
-				int marginWidth = parent.marginWidth;
-				int marginHeight = parent.marginHeight;
+				int marginWidth = this.parent.marginWidth;
+				int marginHeight = this.parent.marginHeight;
 				x = x - marginWidth - highlight_margin - borderLeft;
 				width = width + borderLeft + borderRight + 2*marginWidth + 2*highlight_margin;
-				if (parent.minimized) {
-					y = parent.onBottom ? y - borderTop : y - highlight_header - tabHeight - borderTop;
+				if (this.parent.minimized) {
+					y = this.parent.onBottom ? y - borderTop : y - highlight_header - tabHeight - borderTop;
 					height = borderTop + borderBottom + tabHeight + highlight_header;
 				} else {
-					y = parent.onBottom ? y - marginHeight - highlight_margin - borderTop : y - marginHeight - highlight_header - tabHeight - borderTop;
+					y = this.parent.onBottom ? y - marginHeight - highlight_margin - borderTop : y - marginHeight - highlight_header - tabHeight - borderTop;
 					height = height + borderTop + borderBottom + 2*marginHeight + tabHeight + highlight_header + highlight_margin;
 				}
 				break;
@@ -427,16 +427,16 @@ public class CTabFolderRenderer {
 			case PART_BORDER:
 				x = x - borderLeft;
 				width = width + borderLeft + borderRight; 
-				if (!parent.simple) width += 2; // TOP_RIGHT_CORNER needs more space
+				if (!this.parent.simple) width += 2; // TOP_RIGHT_CORNER needs more space
 				y = y - borderTop;
 				height = height + borderTop + borderBottom;
 				break;
 			default:
-				if (0 <= part && part < parent.getItemCount()) {
+				if (0 <= part && part < this.parent.getItemCount()) {
 					updateCurves();
 					x = x - ITEM_LEFT_MARGIN;
 					width = width + ITEM_LEFT_MARGIN + ITEM_RIGHT_MARGIN;
-					if (!parent.simple && !parent.single && (state & SWT.SELECTED) != 0) {
+					if (!this.parent.simple && !this.parent.single && (state & SWT.SELECTED) != 0) {
 						width += this.curveWidth - this.curveIndent;
 					}
 					y = y - ITEM_TOP_MARGIN;
@@ -449,16 +449,16 @@ public class CTabFolderRenderer {
 	
 	void createAntialiasColors() {
 	    disposeAntialiasColors();
-	    lastBorderColor = parent.getDisplay().getSystemColor(BORDER1_COLOR);
-	    RGB lineRGB = lastBorderColor.getRGB();
+	    this.lastBorderColor = this.parent.getDisplay().getSystemColor(BORDER1_COLOR);
+	    RGB lineRGB = this.lastBorderColor.getRGB();
 	    /* compute the selected color */
-	    RGB innerRGB = parent.selectionBackground.getRGB();
-	    if (parent.selectionBgImage != null || 
+	    RGB innerRGB = this.parent.selectionBackground.getRGB();
+	    if (this.parent.selectionBgImage != null || 
 		    (parent.selectionGradientColors != null && parent.selectionGradientColors.length > 1)) {
 		    innerRGB = null;
 	    }
-	    RGB outerRGB = parent.getBackground().getRGB();		
-	    if (parent.gradientColors != null && parent.gradientColors.length > 1) {
+	    RGB outerRGB = this.parent.getBackground().getRGB();		
+	    if (this.parent.gradientColors != null && this.parent.gradientColors.length > 1) {
 		    outerRGB = null;
 	    }
 	    if (outerRGB != null) {
@@ -467,7 +467,7 @@ public class CTabFolderRenderer {
 			int red = from.red + 2*(to.red - from.red)/3;
 			int green = from.green + 2*(to.green - from.green)/3;
 			int blue = from.blue + 2*(to.blue - from.blue)/3;
-			selectedOuterColor = new Color(parent.getDisplay(), red, green, blue);
+			this.selectedOuterColor = new Color(this.parent.getDisplay(), red, green, blue);
 	    }
 	    if (innerRGB != null) {
 			RGB from = lineRGB;
@@ -475,17 +475,17 @@ public class CTabFolderRenderer {
 			int red = from.red + 2*(to.red - from.red)/3;
 			int green = from.green + 2*(to.green - from.green)/3;
 			int blue = from.blue + 2*(to.blue - from.blue)/3;
-			selectedInnerColor = new Color(parent.getDisplay(), red, green, blue);
+			this.selectedInnerColor = new Color(this.parent.getDisplay(), red, green, blue);
 	    }
 	    /* compute the tabArea color */
-	    outerRGB = parent.getParent().getBackground().getRGB();
+	    outerRGB = this.parent.getParent().getBackground().getRGB();
 	    if (outerRGB != null) {
 			RGB from = lineRGB;
 			RGB to = outerRGB;
 			int red = from.red + 2*(to.red - from.red)/3;
 			int green = from.green + 2*(to.green - from.green)/3;
 			int blue = from.blue + 2*(to.blue - from.blue)/3;
-			tabAreaColor = new Color(parent.getDisplay(), red, green, blue);
+			this.tabAreaColor = new Color(this.parent.getDisplay(), red, green, blue);
 	    }
 	}
 
@@ -503,12 +503,12 @@ public class CTabFolderRenderer {
 			return;
 
 		//alloc colours for entire height to ensure it matches wherever we stop drawing
-		int fadeGradientSize = parent.tabHeight;
+		int fadeGradientSize = this.parent.tabHeight;
 
 		RGB from = start.getRGB();
-		RGB to = parent.selectionBackground.getRGB();
+		RGB to = this.parent.selectionBackground.getRGB();
 
-		selectionHighlightGradientColorsCache = new Color[fadeGradientSize];
+		this.selectionHighlightGradientColorsCache = new Color[fadeGradientSize];
 		int denom = fadeGradientSize - 1;
 
 		for (int i = 0; i < fadeGradientSize; i++) {
@@ -517,7 +517,7 @@ public class CTabFolderRenderer {
 			int red = (to.red * propTo + from.red * propFrom) / denom;
 			int green = (to.green * propTo  + from.green * propFrom) / denom;
 			int blue = (to.blue * propTo  + from.blue * propFrom) / denom;
-			selectionHighlightGradientColorsCache[i] = new Color(parent.getDisplay(), red, green, blue);
+			this.selectionHighlightGradientColorsCache[i] = new Color(this.parent.getDisplay(), red, green, blue);
 		}
 	}
 	
@@ -531,26 +531,26 @@ public class CTabFolderRenderer {
 	protected void dispose() {
 		disposeAntialiasColors();
 		disposeSelectionHighlightGradientColors();
-		if (fillColor != null) {
-		    fillColor.dispose();
-		    fillColor = null;
+		if (this.fillColor != null) {
+		    this.fillColor.dispose();
+		    this.fillColor = null;
 		}
 	}
 	
 	void disposeAntialiasColors() {
-	    if (tabAreaColor != null) tabAreaColor.dispose();
-	    if (selectedInnerColor != null) selectedInnerColor.dispose();
-	    if (selectedOuterColor != null) selectedOuterColor.dispose();
-	    tabAreaColor = selectedInnerColor = selectedOuterColor = null;
+	    if (this.tabAreaColor != null) this.tabAreaColor.dispose();
+	    if (this.selectedInnerColor != null) this.selectedInnerColor.dispose();
+	    if (this.selectedOuterColor != null) this.selectedOuterColor.dispose();
+	    this.tabAreaColor = this.selectedInnerColor = this.selectedOuterColor = null;
 	}
 
 	void disposeSelectionHighlightGradientColors() {
-		if(selectionHighlightGradientColorsCache == null)
+		if(this.selectionHighlightGradientColorsCache == null)
 			return;
-		for (int i = 0; i < selectionHighlightGradientColorsCache.length; i++) {
-			selectionHighlightGradientColorsCache[i].dispose();
+		for (int i = 0; i < this.selectionHighlightGradientColorsCache.length; i++) {
+			this.selectionHighlightGradientColorsCache[i].dispose();
 		}
-		selectionHighlightGradientColorsCache = null;
+		this.selectionHighlightGradientColorsCache = null;
 	}
 	
 	/**
@@ -606,7 +606,7 @@ public class CTabFolderRenderer {
 				drawChevron(gc, bounds, state);
 				break;
 			default:
-				if (0 <= part && part < parent.getItemCount()) {
+				if (0 <= part && part < this.parent.getItemCount()) {
 					if (bounds.width == 0 || bounds.height == 0) return;
 					if ((state & SWT.SELECTED) != 0 ) {
 						drawSelected(part, gc, bounds, state);
@@ -620,34 +620,34 @@ public class CTabFolderRenderer {
 	
 	void drawBackground(GC gc, Rectangle bounds, int state) {
 		boolean selected = (state & SWT.SELECTED) != 0;
-		Color defaultBackground = selected ? parent.selectionBackground : parent.getBackground();
-		Image image = selected ? parent.selectionBgImage : null;
-		Color[] colors = selected ? parent.selectionGradientColors : parent.gradientColors;
-		int[] percents = selected ? parent.selectionGradientPercents : parent.gradientPercents;
-		boolean vertical = selected ? parent.selectionGradientVertical : parent.gradientVertical; 
+		Color defaultBackground = selected ? this.parent.selectionBackground : this.parent.getBackground();
+		Image image = selected ? this.parent.selectionBgImage : null;
+		Color[] colors = selected ? this.parent.selectionGradientColors : this.parent.gradientColors;
+		int[] percents = selected ? this.parent.selectionGradientPercents : this.parent.gradientPercents;
+		boolean vertical = selected ? this.parent.selectionGradientVertical : this.parent.gradientVertical; 
 		
 		drawBackground(gc, null, bounds.x, bounds.y, bounds.width, bounds.height, defaultBackground, image, colors, percents, vertical);
 	}
 	
 	void drawBackground(GC gc, int[] shape, boolean selected) {
 		Color defaultBackground = selected ? parent.selectionBackground : parent.getBackground();
-		Image image = selected ? parent.selectionBgImage : null;
-		Color[] colors = selected ? parent.selectionGradientColors : parent.gradientColors;
-		int[] percents = selected ? parent.selectionGradientPercents : parent.gradientPercents;
-		boolean vertical = selected ? parent.selectionGradientVertical : parent.gradientVertical; 
-		Point size = parent.getSize();
+		Image image = selected ? this.parent.selectionBgImage : null;
+		Color[] colors = selected ? this.parent.selectionGradientColors : this.parent.gradientColors;
+		int[] percents = selected ? this.parent.selectionGradientPercents : this.parent.gradientPercents;
+		boolean vertical = selected ? this.parent.selectionGradientVertical : this.parent.gradientVertical; 
+		Point size = this.parent.getSize();
 		int width = size.x;
-		int height = parent.tabHeight + ((parent.getStyle() & SWT.FLAT) != 0 ? 1 : 3);
+		int height = this.parent.tabHeight + ((this.parent.getStyle() & SWT.FLAT) != 0 ? 1 : 3);
 		int x = 0;
 
-		int borderLeft = parent.borderVisible ? 1 : 0;
-		int borderTop = parent.onBottom ? borderLeft : 0;
-		int borderBottom = parent.onBottom ? 0 : borderLeft;
+		int borderLeft = this.parent.borderVisible ? 1 : 0;
+		int borderTop = this.parent.onBottom ? borderLeft : 0;
+		int borderBottom = this.parent.onBottom ? 0 : borderLeft;
 		
 		if (borderLeft > 0) {
 			x += 1; width -= 2;
 		}
-		int y = parent.onBottom ? size.y - borderBottom - height : borderTop;
+		int y = this.parent.onBottom ? size.y - borderBottom - height : borderTop;
 		drawBackground(gc, shape, x, y, width, height, defaultBackground, image, colors, percents, vertical);
 	}
 	
@@ -675,7 +675,7 @@ public class CTabFolderRenderer {
 				gc.fillRectangle(x, y, width, height);
 			} else {
 				if (vertical) {
-					if (parent.onBottom) {
+					if (this.parent.onBottom) {
 						int pos = 0;
 						if (percents[percents.length - 1] < 100) {
 							pos = (100 - percents[percents.length - 1]) * height / 100;
@@ -715,7 +715,7 @@ public class CTabFolderRenderer {
 					}
 				} else { //horizontal gradient
 					y = 0;
-					height = parent.getSize().y;
+					height = this.parent.getSize().y;
 					Color lastColor = colors[0];
 					if (lastColor == null) lastColor = defaultBackground;
 					int pos = 0;
@@ -736,7 +736,7 @@ public class CTabFolderRenderer {
 			}
 		} else {
 			// draw a solid background using default background in shape
-			if ((parent.getStyle() & SWT.NO_BACKGROUND) != 0 || !defaultBackground.equals(parent.getBackground())) {
+			if ((this.parent.getStyle() & SWT.NO_BACKGROUND) != 0 || !defaultBackground.equals(this.parent.getBackground())) {
 				gc.setBackground(defaultBackground);
 				gc.fillRectangle(x, y, width, height);
 			}
@@ -762,26 +762,26 @@ public class CTabFolderRenderer {
 
 	void drawBody(GC gc, Rectangle bounds, int state) {
 		Point size = new Point(bounds.width, bounds.height);
-		int selectedIndex = parent.selectedIndex;
-		int tabHeight = parent.tabHeight;
+		int selectedIndex = this.parent.selectedIndex;
+		int tabHeight = this.parent.tabHeight;
 		
-		int borderLeft = parent.borderVisible ? 1 : 0;
+		int borderLeft = this.parent.borderVisible ? 1 : 0;
 		int borderRight = borderLeft;
-		int borderTop = parent.onBottom ? borderLeft : 0;
-		int borderBottom = parent.onBottom ? 0 : borderLeft;
+		int borderTop = this.parent.onBottom ? borderLeft : 0;
+		int borderBottom = this.parent.onBottom ? 0 : borderLeft;
 		
-		int style = parent.getStyle();
+		int style = this.parent.getStyle();
 		int highlight_header = (style & SWT.FLAT) != 0 ? 1 : 3;
 		int highlight_margin = (style & SWT.FLAT) != 0 ? 0 : 2;
 		
 		// fill in body
-		if (!parent.minimized){
+		if (!this.parent.minimized){
 			int width = size.x  - borderLeft - borderRight - 2*highlight_margin;
 			int height = size.y - borderTop - borderBottom - tabHeight - highlight_header - highlight_margin;
 			// Draw highlight margin
 			if (highlight_margin > 0) {
 				int[] shape = null;
-				if (parent.onBottom) {
+				if (this.parent.onBottom) {
 					int x1 = borderLeft;
 					int y1 = borderTop;
 					int x2 = size.x - borderRight;
@@ -799,22 +799,22 @@ public class CTabFolderRenderer {
 									   x2,y1, x2,y2, x1,y2};
 				}
 				// If horizontal gradient, show gradient across the whole area
-				if (selectedIndex != -1 && parent.selectionGradientColors != null && parent.selectionGradientColors.length > 1 && !parent.selectionGradientVertical) {
+				if (selectedIndex != -1 && this.parent.selectionGradientColors != null && this.parent.selectionGradientColors.length > 1 && !this.parent.selectionGradientVertical) {
 					drawBackground(gc, shape, true);
 				} else if (selectedIndex == -1 && parent.gradientColors != null && parent.gradientColors.length > 1 && !parent.gradientVertical) {
 					drawBackground(gc, shape, false);
 				} else {
-					gc.setBackground(selectedIndex == -1 ? parent.getBackground() : parent.selectionBackground);
+					gc.setBackground(selectedIndex == -1 ? this.parent.getBackground() : this.parent.selectionBackground);
 					gc.fillPolygon(shape);
 				}
 			}
 			//Draw client area
-			if ((parent.getStyle() & SWT.NO_BACKGROUND) != 0) {
-				gc.setBackground(parent.getBackground());
-				int marginWidth = parent.marginWidth;
-				int marginHeight = parent.marginHeight;
+			if ((this.parent.getStyle() & SWT.NO_BACKGROUND) != 0) {
+				gc.setBackground(this.parent.getBackground());
+				int marginWidth = this.parent.marginWidth;
+				int marginHeight = this.parent.marginHeight;
 				int xClient = borderLeft + marginWidth + highlight_margin, yClient;
-				if (parent.onBottom) {
+				if (this.parent.onBottom) {
 					yClient = borderTop + highlight_margin + marginHeight;
 				} else {
 					yClient = borderTop + tabHeight + highlight_header + marginHeight; 
@@ -822,10 +822,10 @@ public class CTabFolderRenderer {
 				gc.fillRectangle(xClient - marginWidth, yClient - marginHeight, width, height);
 			}
 		} else {
-			if ((parent.getStyle() & SWT.NO_BACKGROUND) != 0) {
+			if ((this.parent.getStyle() & SWT.NO_BACKGROUND) != 0) {
 				int height = borderTop + tabHeight + highlight_header + borderBottom;
 				if (size.y > height) {
-					gc.setBackground(parent.getParent().getBackground());
+					gc.setBackground(this.parent.getParent().getBackground());
 					gc.fillRectangle(0, height, size.x, size.y - height);
 				}
 			}
@@ -833,14 +833,14 @@ public class CTabFolderRenderer {
 		
 		//draw 1 pixel border around outside
 		if (borderLeft > 0) {
-			gc.setForeground(parent.getDisplay().getSystemColor(BORDER1_COLOR));
+			gc.setForeground(this.parent.getDisplay().getSystemColor(BORDER1_COLOR));
 			int x1 = borderLeft - 1;
 			int x2 = size.x - borderRight;
-			int y1 = parent.onBottom ? borderTop - 1 : borderTop + tabHeight;
-			int y2 = parent.onBottom ? size.y - tabHeight - borderBottom - 1 : size.y - borderBottom;
+			int y1 = this.parent.onBottom ? borderTop - 1 : borderTop + tabHeight;
+			int y2 = this.parent.onBottom ? size.y - tabHeight - borderBottom - 1 : size.y - borderBottom;
 			gc.drawLine(x1, y1, x1, y2); // left
 			gc.drawLine(x2, y1, x2, y2); // right
-			if (parent.onBottom) {
+			if (this.parent.onBottom) {
 				gc.drawLine(x1, y1, x2, y1); // top
 			} else {
 				gc.drawLine(x1, y2, x2, y2); // bottom
@@ -850,12 +850,12 @@ public class CTabFolderRenderer {
 	
 	void drawClose(GC gc, Rectangle closeRect, int closeImageState) {
 		if (closeRect.width == 0 || closeRect.height == 0) return;
-		Display display = parent.getDisplay();
+		Display display = this.parent.getDisplay();
 	
 		// draw X 9x9
 		int x = closeRect.x + Math.max(1, (closeRect.width-9)/2);
 		int y = closeRect.y + Math.max(1, (closeRect.height-9)/2);
-		y += parent.onBottom ? -1 : 1;
+		y += this.parent.onBottom ? -1 : 1;
 		
 		Color closeBorder = display.getSystemColor(BUTTON_BORDER);
 		switch (closeImageState & (SWT.HOT | SWT.SELECTED | SWT.BACKGROUND)) {
@@ -902,12 +902,12 @@ public class CTabFolderRenderer {
 
 	void drawChevron(GC gc, Rectangle chevronRect, int chevronImageState) {
 		if (chevronRect.width == 0 || chevronRect.height == 0) return;
-		int selectedIndex = parent.selectedIndex;
+		int selectedIndex = this.parent.selectedIndex;
 		// draw chevron (10x7)
-		Display display = parent.getDisplay();
+		Display display = this.parent.getDisplay();
 		Point dpi = display.getDPI();
 		int fontHeight = 72 * 10 / dpi.y;
-		FontData fd = parent.getFont().getFontData()[0];
+		FontData fd = this.parent.getFont().getFontData()[0];
 		fd.setHeight(fontHeight);
 		Font f = new Font(display, fd);
 		int fHeight = f.getFontData()[0].getHeight() * dpi.y / 72;
@@ -915,12 +915,12 @@ public class CTabFolderRenderer {
 		int x = chevronRect.x + 2;
 		int y = chevronRect.y + indent;
 		int count;
-		int itemCount = parent.getItemCount();
-		if (parent.single) {
+		int itemCount = this.parent.getItemCount();
+		if (this.parent.single) {
 			count = selectedIndex == -1 ? itemCount : itemCount - 1;
 		} else {
 			int showCount = 0;
-			while (showCount < parent.priority.length && parent.items[parent.priority[showCount]].showing) {
+			while (showCount < this.parent.priority.length && this.parent.items[this.parent.priority[showCount]].showing) {
 				showCount++;
 			}
 			count = itemCount - showCount;
@@ -928,7 +928,7 @@ public class CTabFolderRenderer {
 		String chevronString = count > 99 ? "99+" : String.valueOf(count); //$NON-NLS-1$
 		switch (chevronImageState & (SWT.HOT | SWT.SELECTED)) {
 			case SWT.NONE: {
-				Color chevronBorder = parent.single ? parent.getSelectionForeground() : parent.getForeground();
+				Color chevronBorder = this.parent.single ? this.parent.getSelectionForeground() : this.parent.getForeground();
 				gc.setForeground(chevronBorder);
 				gc.setFont(f);
 				gc.drawLine(x,y,     x+2,y+2);
@@ -987,13 +987,13 @@ public class CTabFolderRenderer {
 	 */
 	void drawHighlight(GC gc, Rectangle bounds, int state, int rightEdge) {
 		//only draw for curvy tabs and only draw for top tabs
-		if(parent.simple || parent.onBottom)
+		if(this.parent.simple || this.parent.onBottom)
 			return;
 		
-		if(selectionHighlightGradientBegin == null)
+		if(this.selectionHighlightGradientBegin == null)
 			return;
 
-		Color[] gradients = selectionHighlightGradientColorsCache;
+		Color[] gradients = this.selectionHighlightGradientColorsCache;
 		if(gradients == null)
 			return;
 		int gradientsSize = gradients.length;
@@ -1014,7 +1014,7 @@ public class CTabFolderRenderer {
 		
 		int[] leftHighlightCurve = TOP_LEFT_CORNER_HILITE;
 
-		int d = parent.tabHeight - topCurveHighlightEnd.length /2;
+		int d = this.parent.tabHeight - this.topCurveHighlightEnd.length /2;
 
 		int lastX = 0;
 		int lastY = 0;
@@ -1036,10 +1036,10 @@ public class CTabFolderRenderer {
 			gc.drawPoint(lastX, 1 + lastY++);
 		}
 		
-		int rightEdgeOffset = rightEdge - curveIndent;
+		int rightEdgeOffset = rightEdge - this.curveIndent;
 		
 		//draw right swoop highlight up to diagonal portion
-		for (int i = 0; i < topCurveHighlightStart.length /2; i++) {
+		for (int i = 0; i < this.topCurveHighlightStart.length /2; i++) {
 			int rawX = this.topCurveHighlightStart[i * 2];
 			int rawY = this.topCurveHighlightStart[i * 2 + 1];
 			lastX = rawX + rightEdgeOffset;
@@ -1059,7 +1059,7 @@ public class CTabFolderRenderer {
 		}
 
 		//draw right swoop highlight from diagonal portion to end
-		for (int i = 0; i < topCurveHighlightEnd.length /2; i++) {
+		for (int i = 0; i < this.topCurveHighlightEnd.length /2; i++) {
 			int rawX = this.topCurveHighlightEnd[i * 2]; //d is already encoded in this value
 			int rawY = this.topCurveHighlightEnd[i * 2 + 1]; //d already encoded
 			lastX = rawX + rightEdgeOffset;
@@ -1083,8 +1083,8 @@ public class CTabFolderRenderer {
 		int height = bounds.height;
 		
 		int[] shape = null;
-		if (parent.onBottom) {
-			int[] left = parent.simple
+		if (this.parent.onBottom) {
+			int[] left = this.parent.simple
 				? SIMPLE_UNSELECTED_INNER_CORNER
 				: BOTTOM_LEFT_CORNER;
 			
@@ -1097,7 +1097,7 @@ public class CTabFolderRenderer {
 				shape[index++] = y + height + left[2 * i + 1] - 1;
 			}
 		} else {
-			int[] left = parent.simple
+			int[] left = this.parent.simple
 				? SIMPLE_UNSELECTED_INNER_CORNER
 				: TOP_LEFT_CORNER;
 
@@ -1117,7 +1117,7 @@ public class CTabFolderRenderer {
 
 	void drawMaximize(GC gc, Rectangle maxRect, int maxImageState) {
 		if (maxRect.width == 0 || maxRect.height == 0) return;
-		Display display = parent.getDisplay();
+		Display display = this.parent.getDisplay();
 		// 5x4 or 7x9
 		int x = maxRect.x + (maxRect.width - 10)/2;
 		int y = maxRect.y + 3;
@@ -1127,7 +1127,7 @@ public class CTabFolderRenderer {
 		
 		switch (maxImageState & (SWT.HOT | SWT.SELECTED)) {
 			case SWT.NONE: {
-				if (!parent.getMaximized()) {
+				if (!this.parent.getMaximized()) {
 					gc.fillRectangle(x, y, 9, 9);
 					gc.drawRectangle(x, y, 9, 9);
 					gc.drawLine(x+1, y+2, x+8, y+2);				
@@ -1144,7 +1144,7 @@ public class CTabFolderRenderer {
 			case SWT.HOT: {
 				gc.fillRoundRectangle(maxRect.x, maxRect.y, maxRect.width, maxRect.height, 6, 6);
 				gc.drawRoundRectangle(maxRect.x, maxRect.y, maxRect.width - 1, maxRect.height - 1, 6, 6);
-				if (!parent.getMaximized()) {
+				if (!this.parent.getMaximized()) {
 					gc.fillRectangle(x, y, 9, 9);
 					gc.drawRectangle(x, y, 9, 9);
 					gc.drawLine(x+1, y+2, x+8, y+2);
@@ -1161,7 +1161,7 @@ public class CTabFolderRenderer {
 			case SWT.SELECTED: {
 				gc.fillRoundRectangle(maxRect.x, maxRect.y, maxRect.width, maxRect.height, 6, 6);
 				gc.drawRoundRectangle(maxRect.x, maxRect.y, maxRect.width - 1, maxRect.height - 1, 6, 6);
-				if (!parent.getMaximized()) {
+				if (!this.parent.getMaximized()) {
 					gc.fillRectangle(x+1, y+1, 9, 9);
 					gc.drawRectangle(x+1, y+1, 9, 9);
 					gc.drawLine(x+2, y+3, x+9, y+3);
@@ -1179,7 +1179,7 @@ public class CTabFolderRenderer {
 	}
 	void drawMinimize(GC gc, Rectangle minRect, int minImageState) {
 		if (minRect.width == 0 || minRect.height == 0) return;
-		Display display = parent.getDisplay();
+		Display display = this.parent.getDisplay();
 		// 5x4 or 9x3
 		int x = minRect.x + (minRect.width - 10)/2;
 		int y = minRect.y + 3;
@@ -1189,7 +1189,7 @@ public class CTabFolderRenderer {
 		
 		switch (minImageState & (SWT.HOT | SWT.SELECTED)) {
 			case SWT.NONE: {
-				if (!parent.getMinimized()) {
+				if (!this.parent.getMinimized()) {
 					gc.fillRectangle(x, y, 9, 3);
 					gc.drawRectangle(x, y, 9, 3);
 				} else {
@@ -1205,7 +1205,7 @@ public class CTabFolderRenderer {
 			case SWT.HOT: {
 				gc.fillRoundRectangle(minRect.x, minRect.y, minRect.width, minRect.height, 6, 6);
 				gc.drawRoundRectangle(minRect.x, minRect.y, minRect.width - 1, minRect.height - 1, 6, 6);
-				if (!parent.getMinimized()) {
+				if (!this.parent.getMinimized()) {
 					gc.fillRectangle(x, y, 9, 3);
 					gc.drawRectangle(x, y, 9, 3);
 				} else {
@@ -1221,7 +1221,7 @@ public class CTabFolderRenderer {
 			case SWT.SELECTED: {
 				gc.fillRoundRectangle(minRect.x, minRect.y, minRect.width, minRect.height, 6, 6);
 				gc.drawRoundRectangle(minRect.x, minRect.y, minRect.width - 1, minRect.height - 1, 6, 6);
-				if (!parent.getMinimized()) {
+				if (!this.parent.getMinimized()) {
 					gc.fillRectangle(x+1, y+1, 9, 3);
 					gc.drawRectangle(x+1, y+1, 9, 3);
 				} else {
@@ -1251,8 +1251,8 @@ public class CTabFolderRenderer {
 		int[] shape = null;
 		int startX = x + width - 1;
 	
-		if (parent.onBottom) {
-			int[] right = parent.simple
+		if (this.parent.onBottom) {
+			int[] right = this.parent.simple
 				? SIMPLE_UNSELECTED_INNER_CORNER
 				: BOTTOM_RIGHT_CORNER;
 			
@@ -1266,7 +1266,7 @@ public class CTabFolderRenderer {
 			shape[index++] = startX;
 			shape[index++] = y - 1;
 		} else {
-			int[] right = parent.simple
+			int[] right = this.parent.simple
 				? SIMPLE_UNSELECTED_INNER_CORNER
 				: TOP_RIGHT_CORNER;
 			
@@ -1293,13 +1293,13 @@ public class CTabFolderRenderer {
 		int y = bounds.y;
 		int height = bounds.height;
 		int width = bounds.width;
-		if (!parent.simple && !parent.single) width -= (curveWidth - curveIndent);
-		int borderLeft = parent.borderVisible ? 1 : 0;
+		if (!this.parent.simple && !this.parent.single) width -= (this.curveWidth - this.curveIndent);
+		int borderLeft = this.parent.borderVisible ? 1 : 0;
 		int borderRight = borderLeft;
-		int borderTop = parent.onBottom ? borderLeft : 0;
-		int borderBottom = parent.onBottom ? 0 : borderLeft;
+		int borderTop = this.parent.onBottom ? borderLeft : 0;
+		int borderBottom = this.parent.onBottom ? 0 : borderLeft;
 		
-		Point size = parent.getSize();
+		Point size = this.parent.getSize();
 	
 		int rightEdge = Math.min (x + width, parent.getRightItemEdge(gc));
 		//	 Draw selection border across all tabs
@@ -1336,7 +1336,7 @@ public class CTabFolderRenderer {
 				shape = null;
 				if (parent.onBottom) {
 					int[] left = parent.simple ? SIMPLE_BOTTOM_LEFT_CORNER : BOTTOM_LEFT_CORNER;
-					int[] right = parent.simple ? SIMPLE_BOTTOM_RIGHT_CORNER : curve;
+					int[] right = parent.simple ? SIMPLE_BOTTOM_RIGHT_CORNER : this.curve;
 					if (borderLeft == 0 && itemIndex == parent.firstIndex) {
 						left = new int[]{x, y+height};
 					}
@@ -1360,7 +1360,7 @@ public class CTabFolderRenderer {
 					shape[index++] = y - 1;
 				} else {
 					int[] left = parent.simple ? SIMPLE_TOP_LEFT_CORNER : TOP_LEFT_CORNER;
-					int[] right = parent.simple ? SIMPLE_TOP_RIGHT_CORNER : curve;
+					int[] right = parent.simple ? SIMPLE_TOP_RIGHT_CORNER : this.curve;
 					if (borderLeft == 0 && itemIndex == parent.firstIndex) {
 						left = new int[]{x, y};
 					}
@@ -1404,7 +1404,7 @@ public class CTabFolderRenderer {
 						yy = parent.onBottom ? y -1 : y + 1;
 						ww = width;
 						hh = height;
-						if (!parent.single && !parent.simple) ww += curveWidth - curveIndent;
+						if (!parent.single && !parent.simple) ww += this.curveWidth - this.curveIndent;
 						drawBackground(gc, shape, xx, yy, ww, hh, defaultBackground, image, colors, percents, vertical);
 					}
 				}
@@ -1424,7 +1424,7 @@ public class CTabFolderRenderer {
 					if (shape[2*i + 1] == y + height + 1) shape[2*i + 1] -= 1;
 				}
 				Color borderColor = parent.getDisplay().getSystemColor(BORDER1_COLOR);
-				if (! borderColor.equals(lastBorderColor)) createAntialiasColors();
+				if (! borderColor.equals(this.lastBorderColor)) createAntialiasColors();
 				antialias(shape, selectedInnerColor, selectedOuterColor, gc);
 				gc.setForeground(borderColor);
 				gc.drawPolyline(shape);
@@ -1492,34 +1492,34 @@ public class CTabFolderRenderer {
 	void drawTabArea(GC gc, Rectangle bounds, int state) {
 		Point size = parent.getSize();
 		int[] shape = null;
-		Color borderColor = parent.getDisplay().getSystemColor(BORDER1_COLOR);
-		int tabHeight = parent.tabHeight;
-		int style = parent.getStyle();
+		Color borderColor = this.parent.getDisplay().getSystemColor(BORDER1_COLOR);
+		int tabHeight = this.parent.tabHeight;
+		int style = this.parent.getStyle();
 		
-		int borderLeft = parent.borderVisible ? 1 : 0;
+		int borderLeft = this.parent.borderVisible ? 1 : 0;
 		int borderRight = borderLeft;
-		int borderTop = parent.onBottom ? borderLeft : 0;
-		int borderBottom = parent.onBottom ? 0 : borderLeft;
+		int borderTop = this.parent.onBottom ? borderLeft : 0;
+		int borderBottom = this.parent.onBottom ? 0 : borderLeft;
 		
-		int selectedIndex = parent.selectedIndex;
+		int selectedIndex = this.parent.selectedIndex;
 		int highlight_header = (style & SWT.FLAT) != 0 ? 1 : 3;
 		if (tabHeight == 0) {
 			if ((style & SWT.FLAT) != 0 && (style & SWT.BORDER) == 0) return;
 			int x1 = borderLeft - 1;
 			int x2 = size.x - borderRight;
-			int y1 = parent.onBottom ? size.y - borderBottom - highlight_header - 1 : borderTop + highlight_header;
-			int y2 = parent.onBottom ? size.y - borderBottom : borderTop;
-			if (borderLeft > 0 && parent.onBottom) y2 -= 1;
+			int y1 = this.parent.onBottom ? size.y - borderBottom - highlight_header - 1 : borderTop + highlight_header;
+			int y2 = this.parent.onBottom ? size.y - borderBottom : borderTop;
+			if (borderLeft > 0 && this.parent.onBottom) y2 -= 1;
 			
 			shape = new int[] {x1, y1, x1,y2, x2,y2, x2,y1};
 	
 			// If horizontal gradient, show gradient across the whole area
-			if (selectedIndex != -1 && parent.selectionGradientColors != null && parent.selectionGradientColors.length > 1 && !parent.selectionGradientVertical) {
+			if (selectedIndex != -1 && this.parent.selectionGradientColors != null && this.parent.selectionGradientColors.length > 1 && !this.parent.selectionGradientVertical) {
 				drawBackground(gc, shape, true);
 			} else if (selectedIndex == -1 && parent.gradientColors != null && parent.gradientColors.length > 1 && !parent.gradientVertical) {
 				drawBackground(gc, shape, false);
 			} else {
-				gc.setBackground(selectedIndex == -1 ? parent.getBackground() : parent.selectionBackground);
+				gc.setBackground(selectedIndex == -1 ? this.parent.getBackground() : this.parent.selectionBackground);
 				gc.fillPolygon(shape);
 			}
 			
@@ -1532,12 +1532,12 @@ public class CTabFolderRenderer {
 		}
 		
 		int x = Math.max(0, borderLeft - 1);
-		int y = parent.onBottom ? size.y - borderBottom - tabHeight : borderTop;
+		int y = this.parent.onBottom ? size.y - borderBottom - tabHeight : borderTop;
 		int width = size.x - borderLeft - borderRight + 1;
 		int height = tabHeight - 1;
-		boolean simple = parent.simple;
+		boolean simple = this.parent.simple;
 		// Draw Tab Header
-		if (parent.onBottom) {
+		if (this.parent.onBottom) {
 			int[] left, right;
 			if ((style & SWT.BORDER) != 0) {
 				left = simple ? SIMPLE_BOTTOM_LEFT_CORNER : BOTTOM_LEFT_CORNER;
@@ -1587,14 +1587,14 @@ public class CTabFolderRenderer {
 			shape[index++] = y+height+highlight_header + 1;
 		}
 		// Fill in background
-		boolean single = parent.single;
+		boolean single = this.parent.single;
 		boolean bkSelected = single && selectedIndex != -1;
 		drawBackground(gc, shape, bkSelected);
 		// Fill in parent background for non-rectangular shape
 		Region r = new Region();
 		r.add(new Rectangle(x, y, width + 1, height + 1));
 		r.subtract(shape);
-		gc.setBackground(parent.getParent().getBackground());
+		gc.setBackground(this.parent.getParent().getBackground());
 		fillRegion(gc, r);
 		r.dispose();
 		
@@ -1602,7 +1602,7 @@ public class CTabFolderRenderer {
 		if (selectedIndex == -1) {
 			// if no selected tab - draw line across bottom of all tabs
 			int x1 = borderLeft;
-			int y1 = (parent.onBottom) ? size.y - borderBottom - tabHeight - 1 : borderTop + tabHeight;
+			int y1 = (this.parent.onBottom) ? size.y - borderBottom - tabHeight - 1 : borderTop + tabHeight;
 			int x2 = size.x - borderRight;
 			gc.setForeground(borderColor);
 			gc.drawLine(x1, y1, x2, y1);
@@ -1610,7 +1610,7 @@ public class CTabFolderRenderer {
 	
 		// Draw border line
 		if (borderLeft > 0) {
-	    	if (! borderColor.equals(lastBorderColor)) createAntialiasColors();
+	    	if (! borderColor.equals(this.lastBorderColor)) createAntialiasColors();
 	    	antialias(shape, null, tabAreaColor, gc);
 			gc.setForeground(borderColor);
 			gc.drawPolyline(shape);
@@ -1631,10 +1631,10 @@ public class CTabFolderRenderer {
 		if (!clipping.intersects(bounds)) return;
 		
 		if ((state & SWT.BACKGROUND) != 0) {
-			if (index > 0 && index < parent.selectedIndex)
+			if (index > 0 && index < this.parent.selectedIndex)
 				drawLeftUnselectedBorder(gc, bounds, state);
 			// If it is the last one then draw a line
-			if (index > parent.selectedIndex)
+			if (index > this.parent.selectedIndex)
 				drawRightUnselectedBorder(gc, bounds, state);
 		}
 		
@@ -1643,18 +1643,18 @@ public class CTabFolderRenderer {
 			Rectangle trim = computeTrim(index, SWT.NONE, 0, 0, 0, 0);
 			int xDraw = x - trim.x;
 			Image image = item.getImage();
-			if (image != null && !image.isDisposed() && parent.showUnselectedImage) {
+			if (image != null && !image.isDisposed() && this.parent.showUnselectedImage) {
 				Rectangle imageBounds = image.getBounds();
 				// only draw image if it won't overlap with close button
 				int maxImageWidth = x + width - xDraw - (trim.width + trim.x);
-				if (parent.showUnselectedClose && (parent.showClose || item.showClose)) {
+				if (this.parent.showUnselectedClose && (this.parent.showClose || item.showClose)) {
 					maxImageWidth -= item.closeRect.width + INTERNAL_SPACING;
 				}
 				if (imageBounds.width < maxImageWidth) {		
 					int imageX = xDraw;
 					int imageHeight = imageBounds.height;
 					int imageY = y + (height - imageHeight) / 2;
-					imageY += parent.onBottom ? -1 : 1;
+					imageY += this.parent.onBottom ? -1 : 1;
 					int imageWidth = imageBounds.width * imageHeight / imageBounds.height;
 					gc.drawImage(image, 
 						         imageBounds.x, imageBounds.y, imageBounds.width, imageBounds.height,
@@ -1664,25 +1664,25 @@ public class CTabFolderRenderer {
 			}
 			// draw Text
 			int textWidth = x + width - xDraw - (trim.width + trim.x);
-			if (parent.showUnselectedClose && (parent.showClose || item.showClose)) {
+			if (this.parent.showUnselectedClose && (this.parent.showClose || item.showClose)) {
 				textWidth -= item.closeRect.width + INTERNAL_SPACING;
 			}
 			if (textWidth > 0) {
 				Font gcFont = gc.getFont();
-				gc.setFont(item.font == null ? parent.getFont() : item.font);
+				gc.setFont(item.font == null ? this.parent.getFont() : item.font);
 				if (item.shortenedText == null || item.shortenedTextWidth != textWidth) {
 					item.shortenedText = shortenText(gc, item.getText(), textWidth);
 					item.shortenedTextWidth = textWidth;
 				}	
 				Point extent = gc.textExtent(item.shortenedText, FLAGS);
 				int textY = y + (height - extent.y) / 2;
-				textY += parent.onBottom ? -1 : 1;
-				gc.setForeground(parent.getForeground());
+				textY += this.parent.onBottom ? -1 : 1;
+				gc.setForeground(this.parent.getForeground());
 				gc.drawText(item.shortenedText, xDraw, textY, FLAGS);
 				gc.setFont(gcFont);
 			}
 			// draw close
-			if (parent.showUnselectedClose && (parent.showClose || item.showClose)) drawClose(gc, item.closeRect, item.closeImageState);
+			if (this.parent.showUnselectedClose && (this.parent.showClose || item.showClose)) drawClose(gc, item.closeRect, item.closeImageState);
 		}
 	}
 
@@ -1698,8 +1698,8 @@ public class CTabFolderRenderer {
 	}
 		
 	Color getFillColor() {
-		if (fillColor == null) {
-			fillColor = new Color(parent.getDisplay(), CLOSE_FILL);
+		if (this.fillColor == null) {
+			this.fillColor = new Color(this.parent.getDisplay(), CLOSE_FILL);
 		}
 		return fillColor;
 	}
@@ -1710,25 +1710,25 @@ public class CTabFolderRenderer {
 	 */
 	boolean isSelectionHighlightColorsCacheHit(Color start) {
 
-		if(selectionHighlightGradientColorsCache == null)
+		if(this.selectionHighlightGradientColorsCache == null)
 			return false;
 		
 		//this case should never happen but check to be safe before accessing array indexes
-		if(selectionHighlightGradientColorsCache.length < 2)
+		if(this.selectionHighlightGradientColorsCache.length < 2)
 			return false;
 
-		Color highlightBegin = selectionHighlightGradientColorsCache[0];
-		Color highlightEnd = selectionHighlightGradientColorsCache[selectionHighlightGradientColorsCache.length - 1];
+		Color highlightBegin = this.selectionHighlightGradientColorsCache[0];
+		Color highlightEnd = this.selectionHighlightGradientColorsCache[this.selectionHighlightGradientColorsCache.length - 1];
 
 		if(! highlightBegin.equals(start))
 			return false;	
 		
 		//Compare number of colours we have vs. we'd compute
-		if(selectionHighlightGradientColorsCache.length != parent.tabHeight)
+		if(this.selectionHighlightGradientColorsCache.length != this.parent.tabHeight)
 			return false;
 		
 		//Compare existing highlight end to what it would be (selectionBackground)
-		if(! highlightEnd.equals(parent.selectionBackground))
+		if(! highlightEnd.equals(this.parent.selectionBackground))
 			return false;
 		
 		return true;
@@ -1744,15 +1744,15 @@ public class CTabFolderRenderer {
 			return;
 	
 		//don't bother on low colour
-		if (parent.getDisplay().getDepth() < 15)
+		if (this.parent.getDisplay().getDepth() < 15)
 			return;
 		
 		//don't bother if we don't have a background gradient
-		if(parent.selectionGradientColors.length < 2) 
+		if(this.parent.selectionGradientColors.length < 2) 
 			return;
 	
 		//OK we know its a valid gradient now
-		selectionHighlightGradientBegin = start;
+		this.selectionHighlightGradientBegin = start;
 	
 		if(! isSelectionHighlightColorsCacheHit(start))
 			createSelectionHighlightGradientColors(start);  //if no cache hit then compute new ones
@@ -1768,7 +1768,7 @@ public class CTabFolderRenderer {
 		if (gc.textExtent(text, FLAGS).x <= width) return text;
 		int ellipseWidth = gc.textExtent(ellipses, FLAGS).x;
 		int length = text.length();
-		TextLayout layout = new TextLayout(parent.getDisplay());
+		TextLayout layout = new TextLayout(this.parent.getDisplay());
 		layout.setText(text);
 		int end = layout.getPreviousOffset(length, SWT.MOVEMENT_CLUSTER);
 		while (end > 0) {
@@ -1786,22 +1786,22 @@ public class CTabFolderRenderer {
 	void updateCurves () {
 		//Temp fix for Bug 384743
 		if (this.getClass().getName().equals("org.eclipse.e4.ui.workbench.renderers.swt.CTabRendering")) return;
-		int tabHeight = parent.tabHeight;
-		if (tabHeight == lastTabHeight) return;
-		if (parent.onBottom) {
+		int tabHeight = this.parent.tabHeight;
+		if (tabHeight == this.lastTabHeight) return;
+		if (this.parent.onBottom) {
 			int d = tabHeight - 12;
 			this.curve = new int[]{0,13+d, 0,12+d, 2,12+d, 3,11+d, 5,11+d, 6,10+d, 7,10+d, 9,8+d, 10,8+d,
 					          11,7+d, 11+d,7,
 							  12+d,6, 13+d,6, 15+d,4, 16+d,4, 17+d,3, 19+d,3, 20+d,2, 22+d,2, 23+d,1}; 
 			this.curveWidth = 26+d;
-			this.curveIndent = curveWidth/3;	
+			this.curveIndent = this.curveWidth/3;	
 		} else {
 			int d = tabHeight - 12;
 			this.curve = new int[]{0,0, 0,1, 2,1, 3,2, 5,2, 6,3, 7,3, 9,5, 10,5,
 					          11,6, 11+d,6+d,
 					          12+d,7+d, 13+d,7+d, 15+d,9+d, 16+d,9+d, 17+d,10+d, 19+d,10+d, 20+d,11+d, 22+d,11+d, 23+d,12+d};
 			this.curveWidth = 26+d;
-			this.curveIndent = curveWidth/3;
+			this.curveIndent = this.curveWidth/3;
 			
 			//this could be static but since values depend on curve, better to keep in one place
 			this.topCurveHighlightStart = new int[] { 

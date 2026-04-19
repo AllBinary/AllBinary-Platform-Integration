@@ -82,9 +82,9 @@ public class SashForm extends Composite {
 public SashForm(Composite parent, int style) {
 	super(parent, checkStyle(style));
 	super.setLayout(new SashFormLayout());
-	sashStyle = ((style & SWT.VERTICAL) != 0) ? SWT.HORIZONTAL : SWT.VERTICAL;
-	if ((style & SWT.BORDER) != 0) sashStyle |= SWT.BORDER;
-	if ((style & SWT.SMOOTH) != 0) sashStyle |= SWT.SMOOTH;
+	this.sashStyle = ((style & SWT.VERTICAL) != 0) ? SWT.HORIZONTAL : SWT.VERTICAL;
+	if ((style & SWT.BORDER) != 0) this.sashStyle |= SWT.BORDER;
+	if ((style & SWT.SMOOTH) != 0) this.sashStyle |= SWT.SMOOTH;
 	sashListener = new Listener() {
 		public void handleEvent(Event e) {
 			onDragSash(e);
@@ -97,8 +97,8 @@ static int checkStyle (int style) {
 }
 Sash createSash() {
 	Sash sash = new Sash(this, sashStyle);
-	sash.setBackground(background);
-	sash.setForeground(foreground);
+	sash.setBackground(this.background);
+	sash.setForeground(this.foreground);
 	sash.setToolTipText(getToolTipText());
 	sash.addListener(SWT.Selection, sashListener);
 	return sash;
@@ -117,7 +117,7 @@ Sash createSash() {
 @Override
 public int getOrientation() {
 	//checkWidget();
-	return (sashStyle & SWT.VERTICAL) != 0 ? SWT.HORIZONTAL : SWT.VERTICAL;
+	return (this.sashStyle & SWT.VERTICAL) != 0 ? SWT.HORIZONTAL : SWT.VERTICAL;
 }
 /**
  * Returns the width of the sashes when the controls in the SashForm are 
@@ -140,7 +140,7 @@ public int getSashWidth() {
 public int getStyle() {
 	int style = super.getStyle();
 	style |= getOrientation() == SWT.VERTICAL ? SWT.VERTICAL : SWT.HORIZONTAL;
-	if ((sashStyle & SWT.SMOOTH) != 0) style |= SWT.SMOOTH;
+	if ((this.sashStyle & SWT.SMOOTH) != 0) style |= SWT.SMOOTH;
 	return style;
 }
 /**
@@ -199,16 +199,16 @@ Control[] getControls(boolean onlyVisible) {
 void onDragSash(Event event) {
 	Sash sash = (Sash)event.widget;
 	int sashIndex = -1;
-	for (int i= 0; i < sashes.length; i++) {
-		if (sashes[i] == sash) {
+	for (int i= 0; i < this.sashes.length; i++) {
+		if (this.sashes[i] == sash) {
 			sashIndex = i;
 			break;
 		}
 	}
 	if (sashIndex == -1) return;
 
-	Control c1 = controls[sashIndex];
-	Control c2 = controls[sashIndex + 1];
+	Control c1 = this.controls[sashIndex];
+	Control c2 = this.controls[sashIndex + 1];
 	Rectangle b1 = c1.getBounds();
 	Rectangle b2 = c2.getBounds();
 	
@@ -319,28 +319,28 @@ public void setOrientation(int orientation) {
 	if (orientation != SWT.HORIZONTAL && orientation != SWT.VERTICAL) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	sashStyle &= ~(SWT.HORIZONTAL | SWT.VERTICAL);
-	sashStyle |= orientation == SWT.VERTICAL ? SWT.HORIZONTAL : SWT.VERTICAL;
-	for (int i = 0; i < sashes.length; i++) {
-		sashes[i].dispose();
-		sashes[i] = createSash();
+	this.sashStyle &= ~(SWT.HORIZONTAL | SWT.VERTICAL);
+	this.sashStyle |= orientation == SWT.VERTICAL ? SWT.HORIZONTAL : SWT.VERTICAL;
+	for (int i = 0; i < this.sashes.length; i++) {
+		this.sashes[i].dispose();
+		this.sashes[i] = createSash();
 	}
 	layout(false);
 }
 @Override
 public void setBackground (Color color) {
 	super.setBackground(color);
-	background = color;
-	for (int i = 0; i < sashes.length; i++) {
-		sashes[i].setBackground(background);
+	this.background = color;
+	for (int i = 0; i < this.sashes.length; i++) {
+		this.sashes[i].setBackground(this.background);
 	}
 }
 @Override
 public void setForeground (Color color) {
 	super.setForeground(color);
-	foreground = color;
-	for (int i = 0; i < sashes.length; i++) {
-		sashes[i].setForeground(foreground);
+	this.foreground = color;
+	for (int i = 0; i < this.sashes.length; i++) {
+		this.sashes[i].setForeground(this.foreground);
 	}
 }
 /**
@@ -380,20 +380,20 @@ public void setLayout (Layout layout) {
 public void setMaximizedControl(Control control){
 	checkWidget();
 	if (control == null) {
-		if (maxControl != null) {
+		if (this.maxControl != null) {
 			this.maxControl = null;
 			layout(false);
-			for (int i= 0; i < sashes.length; i++){
-				sashes[i].setVisible(true);
+			for (int i= 0; i < this.sashes.length; i++){
+				this.sashes[i].setVisible(true);
 			}
 		}
 		return;
 	}
 	
-	for (int i= 0; i < sashes.length; i++){
-		sashes[i].setVisible(false);
+	for (int i= 0; i < this.sashes.length; i++){
+		this.sashes[i].setVisible(false);
 	}
-	maxControl = control;
+	this.maxControl = control;
 	layout(false);
 }
 
@@ -412,15 +412,15 @@ public void setMaximizedControl(Control control){
  */
 public void setSashWidth(int width) {
 	checkWidget();
-	if (SASH_WIDTH == width) return;
-	SASH_WIDTH = width;
+	if (this.SASH_WIDTH == width) return;
+	this.SASH_WIDTH = width;
 	layout(false);
 }
 @Override
 public void setToolTipText(String string) {
 	super.setToolTipText(string);
-	for (int i = 0; i < sashes.length; i++) {
-		sashes[i].setToolTipText(string);
+	for (int i = 0; i < this.sashes.length; i++) {
+		this.sashes[i].setToolTipText(string);
 	}
 }
 /**

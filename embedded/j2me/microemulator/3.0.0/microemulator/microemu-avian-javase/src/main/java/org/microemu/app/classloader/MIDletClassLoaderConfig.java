@@ -51,7 +51,7 @@ public class MIDletClassLoaderConfig {
 
     public MIDletClassLoaderConfig() {
         this.delegationSelected = false;
-        delegationType = DELEGATION_STRICT;
+        this.delegationType = DELEGATION_STRICT;
     }
 
     public void setDelegationType(String delegationType) throws ConfigurationException {
@@ -62,18 +62,18 @@ public class MIDletClassLoaderConfig {
         } else if ("delegating".equalsIgnoreCase(delegationType)) {
             this.delegationType = DELEGATION_DELEGATING;
         } else if ("system".equalsIgnoreCase(delegationType)) {
-            if ((appclasses.size() != 0) || (appclasspath.size() != 0)) {
+            if ((this.appclasses.size() != 0) || (this.appclasspath.size() != 0)) {
                 throw new ConfigurationException("Can't extend system CLASSPATH");
             }
             this.delegationType = DELEGATION_SYSTEM;
         } else {
             throw new ConfigurationException("Unknown delegationType [" + delegationType + "]");
         }
-        delegationSelected = true;
+        this.delegationSelected = true;
     }
 
     public int getDelegationType(boolean forJad) {
-        if ((!delegationSelected) && (!forJad)) {
+        if ((!this.delegationSelected) && (!forJad)) {
             return DELEGATION_RELAXED;    
         } else {
             return delegationType;
@@ -88,14 +88,14 @@ public class MIDletClassLoaderConfig {
         if (this.delegationType == DELEGATION_SYSTEM) {
             throw new ConfigurationException("Can't extend system CLASSPATH");
         }
-        appclasspath.add(path);
+        this.appclasspath.add(path);
     }
 
     public void addAppClass(String className) throws ConfigurationException {
         if (this.delegationType == DELEGATION_SYSTEM) {
             throw new ConfigurationException("Can't extend system CLASSPATH");
         }
-        appclasses.add(className);
+        this.appclasses.add(className);
     }
 
 }

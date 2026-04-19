@@ -30,7 +30,7 @@ public class LayerManager {
     
     public LayerManager() {
         setViewWindow(0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE);
-        layers=new Vector();
+        this.layers=new Vector();
     }
     
     public void append(Layer l) {
@@ -42,7 +42,7 @@ public class LayerManager {
     }
     
     public Layer getLayerAt(int index) {
-        return (Layer)layers.elementAt(index);
+        return (Layer)this.layers.elementAt(index);
     }
     
     public int getSize() {
@@ -68,8 +68,8 @@ public class LayerManager {
         g.setClip(viewX, viewY, viewWidth, viewHeight);
         // draw last to first
         
-        for (int i = layers.size(); --i >= 0; ) {
-            Layer comp = (Layer)layers.elementAt(i);
+        for (int i = this.layers.size(); --i >= 0; ) {
+            Layer comp = (Layer)this.layers.elementAt(i);
             if (comp.visible
             &&comp.x+comp.width>=viewX
             &&comp.x<=viewX+clipW

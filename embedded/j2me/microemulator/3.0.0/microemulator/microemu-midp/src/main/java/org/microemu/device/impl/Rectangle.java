@@ -62,23 +62,23 @@ public class Rectangle extends Shape {
 	}
 	
 	public void add(int newx, int newy) {
-		if (initialized) {
-			if (newx < x) {
-				width += x - newx;
-				x = newx;			
+		if (this.initialized) {
+			if (newx < this.x) {
+				this.width += this.x - newx;
+				this.x = newx;			
 			} else if (newx > x + width) {
 				width = newx - x;
 			}
-			if (newy < y) {
-				height += y - newy;
-				y = newy;
+			if (newy < this.y) {
+				this.height += this.y - newy;
+				this.y = newy;
 			} else if (newy > y + height) {
 				height = newy - y;
 			}
 		} else {
-			x = newx;
-			y = newy;
-			initialized = true;
+			this.x = newx;
+			this.y = newy;
+			this.initialized = true;
 		}
 	}
 
@@ -98,7 +98,7 @@ public class Rectangle extends Shape {
 	
 	public String toString() {
 	    StringMaker buf = new StringMaker();
-	    buf.appendint(x).append(",").appendint(y).append(" ").appendint(this.width).append("x").appendint(this.height);
+	    buf.appendint(this.x).append(",").appendint(this.y).append(" ").appendint(this.width).append("x").appendint(this.height);
 	    return buf.toString();
 	}
 

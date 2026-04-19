@@ -52,8 +52,8 @@ public ProgressEvent(Widget widget) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " current=" + current
-		+ " total=" + total
+		+ " current=" + this.current
+		+ " total=" + this.total
 		+ "}";
 }
 }

@@ -49,27 +49,27 @@ public ImageList (int style, int width, int height) {
 		}
 	}
 	if ((style & SWT.RIGHT_TO_LEFT) != 0) flags |= OS.ILC_MIRROR;
-	handle = OS.ImageList_Create (width, height, flags, 16, 16);
-	images = new Image [4];
+	this.handle = OS.ImageList_Create (width, height, flags, 16, 16);
+	this.images = new Image [4];
 }
 
 public int add (Image image) {
 	int count = OS.ImageList_GetImageCount (handle);
 	int index = 0;
 	while (index < count) {
-		if (images [index] != null) {
-			if (images [index].isDisposed ()) images [index] = null;
+		if (this.images [index] != null) {
+			if (this.images [index].isDisposed ()) this.images [index] = null;
 		}
-		if (images [index] == null) break;
+		if (this.images [index] == null) break;
 		index++;
 	}
 	if (count == 0) {
 		Rectangle rect = image.getBounds ();
-		OS.ImageList_SetIconSize (handle, rect.width, rect.height);
+		OS.ImageList_SetIconSize (this.handle, rect.width, rect.height);
 	}
 	set (index, image, count);
-	if (index == images.length) {
-		Image [] newImages = new Image [images.length + 4];
+	if (index == this.images.length) {
+		Image [] newImages = new Image [this.images.length + 4];
 		System.arraycopy (images, 0, newImages, 0, images.length);
 		images = newImages;
 	}
@@ -339,9 +339,9 @@ long /*int*/ createMask (long /*int*/ hBitmap, int destWidth, int destHeight, in
 }
 
 public void dispose () {
-	if (handle != 0) OS.ImageList_Destroy (handle);
-	handle = 0;
-	images = null;
+	if (this.handle != 0) OS.ImageList_Destroy (this.handle);
+	this.handle = 0;
+	this.images = null;
 }
 
 public Image get (int index) {
@@ -358,16 +358,16 @@ public long /*int*/ getHandle () {
 
 public Point getImageSize() {
 	int [] cx = new int [1], cy = new int [1];
-	OS.ImageList_GetIconSize (handle, cx, cy);
+	OS.ImageList_GetIconSize (this.handle, cx, cy);
 	return new Point (cx [0], cy [0]);
 }
 
 public int indexOf (Image image) {
 	int count = OS.ImageList_GetImageCount (handle);
 	for (int i=0; i<count; i++) {
-		if (images [i] != null) {
-			if (images [i].isDisposed ()) images [i] = null;
-			if (images [i] != null && images [i].equals (image)) return i;
+		if (this.images [i] != null) {
+			if (this.images [i].isDisposed ()) this.images [i] = null;
+			if (this.images [i] != null && this.images [i].equals (image)) return i;
 		}
 	}
 	return -1;
@@ -377,13 +377,13 @@ public void put (int index, Image image) {
 	int count = OS.ImageList_GetImageCount (handle);
 	if (!(0 <= index && index < count)) return;
 	if (image != null) set(index, image, count);
-	images [index] = image;
+	this.images [index] = image;
 }
 
 public void remove (int index) {
 	int count = OS.ImageList_GetImageCount (handle);
 	if (!(0 <= index && index < count)) return;
-	OS.ImageList_Remove (handle, index);
+	OS.ImageList_Remove (this.handle, index);
 	System.arraycopy (images, index + 1, images, index, --count - index);
 	images [index] = null;
 }
@@ -395,7 +395,7 @@ public int removeRef() {
 void set (int index, Image image, int count) {
 	long /*int*/ hImage = image.handle;
 	int [] cx = new int [1], cy = new int [1];
-	OS.ImageList_GetIconSize (handle, cx, cy);
+	OS.ImageList_GetIconSize (this.handle, cx, cy);
 	switch (image.type) {
 		case SWT.BITMAP: {
 			/*
@@ -446,10 +446,10 @@ void set (int index, Image image, int count) {
 					break;
 			}
 			if (index == count) {
-				OS.ImageList_Add (handle, hBitmap, hMask);
+				OS.ImageList_Add (this.handle, hBitmap, hMask);
 			} else {
 				/* Note that the mask must always be replaced even for TRANSPARENCY_NONE */
-				OS.ImageList_Replace (handle, index, hBitmap, hMask);
+				OS.ImageList_Replace (this.handle, index, hBitmap, hMask);
 			}
 			if (hMask != 0) OS.DeleteObject (hMask);
 			if (hBitmap != hImage) OS.DeleteObject (hBitmap);
@@ -457,10 +457,10 @@ void set (int index, Image image, int count) {
 		}
 		case SWT.ICON: {
 			if (OS.IsWinCE) {	
-				OS.ImageList_ReplaceIcon (handle, index == count ? -1 : index, hImage);
+				OS.ImageList_ReplaceIcon (this.handle, index == count ? -1 : index, hImage);
 			} else {
 				long /*int*/ hIcon = copyIcon (hImage, cx [0], cy [0]);
-				OS.ImageList_ReplaceIcon (handle, index == count ? -1 : index, hIcon);
+				OS.ImageList_ReplaceIcon (this.handle, index == count ? -1 : index, hIcon);
 				OS.DestroyIcon (hIcon);
 			}
 			break;
@@ -470,11 +470,11 @@ void set (int index, Image image, int count) {
 
 public int size () {
 	int result = 0;
-	int count = OS.ImageList_GetImageCount (handle);
+	int count = OS.ImageList_GetImageCount (this.handle);
 	for (int i=0; i<count; i++) {
-		if (images [i] != null) {
-			if (images [i].isDisposed ()) images [i] = null;
-			if (images [i] != null) result++;
+		if (this.images [i] != null) {
+			if (this.images [i].isDisposed ()) this.images [i] = null;
+			if (this.images [i] != null) result++;
 		}
 	}
 	return result;

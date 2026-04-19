@@ -355,13 +355,13 @@ private void createCOMInterfaces() {
 }
 private void disposeCOMInterfaces () {
 	
-	if (iUnknown != null)
-		iUnknown.dispose();
-	iUnknown = null;
+	if (this.iUnknown != null)
+		this.iUnknown.dispose();
+	this.iUnknown = null;
 	
-	if (iOleInPlaceFrame != null)
-		iOleInPlaceFrame.dispose();
-	iOleInPlaceFrame = null;
+	if (this.iOleInPlaceFrame != null)
+		this.iOleInPlaceFrame.dispose();
+	this.iOleInPlaceFrame = null;
 }
 private int GetBorder(long /*int*/ lprectBorder) {
 	/*
@@ -555,19 +555,19 @@ private int InsertMenus(long /*int*/ hmenuShared, long /*int*/ lpMenuWidths) {
 	return COM.S_OK;
 }
 void onActivate(Event e) {
-	if (objIOleInPlaceActiveObject != null) {
-		objIOleInPlaceActiveObject.OnFrameWindowActivate(true);
+	if (this.objIOleInPlaceActiveObject != null) {
+		this.objIOleInPlaceActiveObject.OnFrameWindowActivate(true);
 	}
 }
 void onDeactivate(Event e) {
-	if (objIOleInPlaceActiveObject != null) {
-		objIOleInPlaceActiveObject.OnFrameWindowActivate(false);
+	if (this.objIOleInPlaceActiveObject != null) {
+		this.objIOleInPlaceActiveObject.OnFrameWindowActivate(false);
 	}
 }
 private void onDispose(Event e) {
 
 	releaseObjectInterfaces();
-	currentdoc = null;
+	this.currentdoc = null;
 
 	this.Release();
 	removeListener(SWT.Activate, listener);
@@ -577,10 +577,10 @@ private void onDispose(Event e) {
 	removeListener(SWT.Move, listener);
 }
 private void onResize(Event e) {
-	if (objIOleInPlaceActiveObject != null) {
+	if (this.objIOleInPlaceActiveObject != null) {
 		RECT lpRect = new RECT();
 		OS.GetClientRect(handle, lpRect);
-		objIOleInPlaceActiveObject.ResizeBorder(lpRect, iOleInPlaceFrame.getAddress(), true);
+		this.objIOleInPlaceActiveObject.ResizeBorder(lpRect, iOleInPlaceFrame.getAddress(), true);
 	}
 }
 private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
@@ -590,7 +590,7 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 	GUID guid = new GUID();
 	COM.MoveMemory(guid, riid, GUID.sizeof);
 	if (COM.IsEqualGUID(guid, COM.IIDIUnknown) || COM.IsEqualGUID(guid, COM.IIDIOleInPlaceFrame) ) {
-		COM.MoveMemory(ppvObject, new long /*int*/ [] {iOleInPlaceFrame.getAddress()}, OS.PTR_SIZEOF);
+		COM.MoveMemory(ppvObject, new long /*int*/ [] {this.iOleInPlaceFrame.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
@@ -605,7 +605,7 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
  */
 int Release() {
 	refCount--;
-	if (refCount == 0){
+	if (this.refCount == 0){
 		disposeCOMInterfaces();
 		if (COM.FreeUnusedLibraries) {
 			COM.CoFreeUnusedLibraries();
@@ -614,10 +614,10 @@ int Release() {
 	return refCount;
 }
 private void releaseObjectInterfaces() {
-	if (objIOleInPlaceActiveObject != null) {
-		objIOleInPlaceActiveObject.Release();
+	if (this.objIOleInPlaceActiveObject != null) {
+		this.objIOleInPlaceActiveObject.Release();
 	}
-	objIOleInPlaceActiveObject = null;
+	this.objIOleInPlaceActiveObject = null;
 }
 private int RemoveMenus(long /*int*/ hmenuShared) {
 
@@ -671,13 +671,13 @@ private int RequestBorderSpace(long /*int*/ pborderwidths) {
 	return COM.S_OK;
 }
 int SetActiveObject(long /*int*/ pActiveObject, long /*int*/ pszObjName) {
-	if (objIOleInPlaceActiveObject != null) {
-		objIOleInPlaceActiveObject.Release();
-		objIOleInPlaceActiveObject = null;
+	if (this.objIOleInPlaceActiveObject != null) {
+		this.objIOleInPlaceActiveObject.Release();
+		this.objIOleInPlaceActiveObject = null;
 	}
 	if (pActiveObject != 0) {
-		objIOleInPlaceActiveObject = new IOleInPlaceActiveObject(pActiveObject);
-		objIOleInPlaceActiveObject.AddRef();
+		this.objIOleInPlaceActiveObject = new IOleInPlaceActiveObject(pActiveObject);
+		this.objIOleInPlaceActiveObject.AddRef();
 	}
 
 	return COM.S_OK;
@@ -689,12 +689,12 @@ private int SetBorderSpace(long /*int*/ pborderwidths) {
 	//   valid BORDERWIDTHS structure containing nothing but zeros in the pborderwidths parameter, or, 
 	// Use no toolbars but allow the in-place container to leave its toolbars up by 
 	//   passing NULL as the pborderwidths parameter.
-	if (objIOleInPlaceActiveObject == null) return COM.S_OK;
+	if (this.objIOleInPlaceActiveObject == null) return COM.S_OK;
 	RECT borderwidth = new RECT();
-	if (pborderwidths == 0 || currentdoc == null ) return COM.S_OK;
+	if (pborderwidths == 0 || this.currentdoc == null ) return COM.S_OK;
 		
 	COM.MoveMemory(borderwidth, pborderwidths, RECT.sizeof);
-	currentdoc.setBorderSpace(borderwidth);
+	this.currentdoc.setBorderSpace(borderwidth);
 
 	return COM.S_OK;
 }
@@ -724,10 +724,10 @@ OleClientSite getCurrentDocument() {
 void setCurrentDocument(OleClientSite doc) {
 	this.currentdoc = doc;
 
-	if (currentdoc != null && objIOleInPlaceActiveObject != null) {
+	if (this.currentdoc != null && this.objIOleInPlaceActiveObject != null) {
 		RECT lpRect = new RECT();
 		OS.GetClientRect(handle, lpRect);
-		objIOleInPlaceActiveObject.ResizeBorder(lpRect, iOleInPlaceFrame.getAddress(), true);
+		this.objIOleInPlaceActiveObject.ResizeBorder(lpRect, iOleInPlaceFrame.getAddress(), true);
 	}
 }
 /**
@@ -752,8 +752,8 @@ public void setFileMenus(MenuItem[] fileMenus){
 }
 private int SetMenu(long /*int*/ hmenuShared, long /*int*/ holemenu, long /*int*/ hwndActiveObject) {
 	long /*int*/ inPlaceActiveObject = 0;
-	if (objIOleInPlaceActiveObject != null)
-		inPlaceActiveObject = objIOleInPlaceActiveObject.getAddress();		
+	if (this.objIOleInPlaceActiveObject != null)
+		inPlaceActiveObject = this.objIOleInPlaceActiveObject.getAddress();		
 	
 	Menu menubar = getShell().getMenuBar();
 	if (menubar == null || menubar.isDisposed()){
@@ -794,8 +794,8 @@ public void setWindowMenus(MenuItem[] windowMenus){
 	this.windowMenuItems = windowMenus;
 }
 private boolean translateOleAccelerator(MSG msg) {
-	if (objIOleInPlaceActiveObject == null) return false;
-	int result = objIOleInPlaceActiveObject.TranslateAccelerator(msg);
+	if (this.objIOleInPlaceActiveObject == null) return false;
+	int result = this.objIOleInPlaceActiveObject.TranslateAccelerator(msg);
 	return (result != COM.S_FALSE && result != COM.E_NOTIMPL);
 }
 private int TranslateAccelerator(long /*int*/ lpmsg, int wID){

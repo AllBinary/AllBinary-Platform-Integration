@@ -26,8 +26,8 @@ public class PostLoadSwtImmutableImageProcessor extends PostLoadImageProcessor {
     public void process(final Image image) {
         
         final int width = originalImmutableImage.getWidth();
-        final int height = originalImmutableImage.getHeight();
-        final ImageData imageData = originalImmutableImage.image.getImageData().scaledTo(width, height);
+        final int height = this.originalImmutableImage.getHeight();
+        final ImageData imageData = this.originalImmutableImage.image.getImageData().scaledTo(width, height);
         ((SwtImmutableImage) image).init(SwtDeviceComponent.createImage(imageData));
         
     }

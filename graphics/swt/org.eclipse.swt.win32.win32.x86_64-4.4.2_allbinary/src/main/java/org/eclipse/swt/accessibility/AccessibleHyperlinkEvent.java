@@ -53,9 +53,9 @@ public AccessibleHyperlinkEvent(Object source) {
 @Override
 public String toString () {
 	return "AccessibleHyperlinkEvent {" //$NON-NLS-1$
-		+ "accessible=" + accessible   //$NON-NLS-1$
+		+ "accessible=" + this.accessible   //$NON-NLS-1$
 		+ " string=" + this.result   //$NON-NLS-1$
-		+ " index=" + index   //$NON-NLS-1$
+		+ " index=" + this.index   //$NON-NLS-1$
 		+ "}";  //$NON-NLS-1$
 }
 }

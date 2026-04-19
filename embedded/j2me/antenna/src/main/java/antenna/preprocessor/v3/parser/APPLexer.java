@@ -96,7 +96,7 @@ public class APPLexer extends Lexer {
      */
     public void reportError(RecognitionException e) {
         super.reportError(e);
-        exceptions.add(e);
+        this.exceptions.add(e);
     }
 
     public APPLexer() {;} 

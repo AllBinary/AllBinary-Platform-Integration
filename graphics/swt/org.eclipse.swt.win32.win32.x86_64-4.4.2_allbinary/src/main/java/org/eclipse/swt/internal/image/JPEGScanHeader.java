@@ -48,13 +48,13 @@ public int getStartOfSpectralSelection() {
 /* Used when decoding. */
 void initializeComponentParameters() {
 	int compCount = getNumberOfImageComponents();
-	componentParameters = new int[0][];
+	this.componentParameters = new int[0][];
 	for (int i = 0; i < compCount; i++) {
 		int ofs = 5 + i * 2;
 		int cid = reference[ofs] & 0xFF;
 		int dc = (reference[ofs + 1] & 0xFF) >> 4;
 		int ac = reference[ofs + 1] & 0xF;
-		if (componentParameters.length <= cid) {
+		if (this.componentParameters.length <= cid) {
 			int[][] newParams = new int[cid + 1][];
 			System.arraycopy(componentParameters, 0, newParams, 0, componentParameters.length);
 			componentParameters = newParams;
@@ -66,7 +66,7 @@ void initializeComponentParameters() {
 /* Used when encoding. */
 public void initializeContents() {
 	int compCount = getNumberOfImageComponents();
-	int[][] compSpecParams = componentParameters;
+	int[][] compSpecParams = this.componentParameters;
 	if (compCount == 0 || compCount != compSpecParams.length) {
 		SWT.error(SWT.ERROR_INVALID_IMAGE);
 	}

@@ -22,12 +22,12 @@ class FillData {
 Point computeSize (Control control, int wHint, int hHint, boolean flushCache) {
 	if (flushCache) flushCache();
 	if (wHint == SWT.DEFAULT && hHint == SWT.DEFAULT) {
-		if (defaultWidth == -1 || defaultHeight == -1) {
+		if (this.defaultWidth == -1 || defaultHeight == -1) {
 			Point size = control.computeSize (wHint, hHint, flushCache);
-			defaultWidth = size.x;
+			this.defaultWidth = size.x;
 			defaultHeight = size.y;
 		}
-		return new Point(defaultWidth, defaultHeight);
+		return new Point(this.defaultWidth, defaultHeight);
 	}
 	if (currentWidth == -1 || currentHeight == -1 || wHint != currentWhint || hHint != currentHhint) {
 		Point size = control.computeSize (wHint, hHint, flushCache);

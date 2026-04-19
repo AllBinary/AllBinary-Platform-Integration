@@ -28,6 +28,6 @@ public class LONG {
 
 	@Override
 	public int hashCode () {
-		return (int)/*64*/(value ^ (value >>> 32));
+		return (int)/*64*/(this.value ^ (this.value >>> 32));
 	}
 }

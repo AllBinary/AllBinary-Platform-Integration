@@ -42,7 +42,7 @@ public class FieldNodeExt implements Comparable<FieldNodeExt> {
 			return t;
 		}
 
-		t = test.fieldNode.desc.compareTo(fieldNode.desc);
+		t = test.fieldNode.desc.compareTo(this.fieldNode.desc);
 		if (t != 0) {
 			return t;
 		}

@@ -37,8 +37,8 @@ final class LEDataInputStream extends InputStream {
 	public LEDataInputStream(InputStream input, int bufferSize) {
 		this.in = input;
 		if (bufferSize > 0) {
-			buf = new byte[bufferSize];
-			pos = bufferSize;
+			this.buf = new byte[bufferSize];
+			this.pos = bufferSize;
 		} 
 		else throw new IllegalArgumentException();
 	}
@@ -46,9 +46,9 @@ final class LEDataInputStream extends InputStream {
 	@Override
 	public void close() throws IOException {
 		buf = null;
-		if (in != null) {
-			in.close();
-			in = null;
+		if (this.in != null) {
+			this.in.close();
+			this.in = null;
 		}
 	}
 	
@@ -64,8 +64,8 @@ final class LEDataInputStream extends InputStream {
 	 */
 	@Override
 	public int available() throws IOException {
-		if (buf == null) throw new IOException();
-		return (buf.length - pos) + in.available();
+		if (this.buf == null) throw new IOException();
+		return (this.buf.length - this.pos) + this.in.available();
 	}
 	
 	/**
@@ -73,12 +73,12 @@ final class LEDataInputStream extends InputStream {
 	 */
 	@Override
 	public int read() throws IOException {
-		if (buf == null) throw new IOException();
-		if (pos < buf.length) {
+		if (this.buf == null) throw new IOException();
+		if (this.pos < this.buf.length) {
 			position++;
-			return (buf[pos++] & 0xFF);
+			return (this.buf[pos++] & 0xFF);
 		}
-		int c = in.read();
+		int c = this.in.read();
 		if (c != -1) position++;
 		return c;
 	}
@@ -117,7 +117,7 @@ final class LEDataInputStream extends InputStream {
 	 * @exception java.io.IOException if an IOException occurs.
 	 */
 	private int readData(byte[] buffer, int offset, int length) throws IOException {
-		if (buf == null) throw new IOException();
+		if (this.buf == null) throw new IOException();
 		if (offset < 0 || offset > buffer.length ||
   		 	length < 0 || (length > buffer.length - offset)) {
 	 		throw new ArrayIndexOutOfBoundsException();
@@ -127,10 +127,10 @@ final class LEDataInputStream extends InputStream {
 		int newOffset = offset;
 	
 		// Are there pushback bytes available?
-		int available = buf.length - pos;
+		int available = this.buf.length - this.pos;
 		if (available > 0) {
 			cacheCopied = (available >= length) ? length : available;
-			System.arraycopy(buf, pos, buffer, newOffset, cacheCopied);
+			System.arraycopy(this.buf, pos, buffer, newOffset, cacheCopied);
 			newOffset += cacheCopied;
 			pos += cacheCopied;
 		}
@@ -138,7 +138,7 @@ final class LEDataInputStream extends InputStream {
 		// Have we copied enough?
 		if (cacheCopied == length) return length;
 
-		int inCopied = in.read(buffer, newOffset, length - cacheCopied);
+		int inCopied = this.in.read(buffer, newOffset, length - cacheCopied);
 
 		if (inCopied > 0) return inCopied + cacheCopied;
 		if (cacheCopied == 0) return inCopied;
@@ -182,9 +182,9 @@ final class LEDataInputStream extends InputStream {
 	 */
 	public void unread(byte[] b) throws IOException {
 		int length = b.length;
-		if (length > pos) throw new IOException();
-		position -= length;
-		pos -= length;
+		if (length > this.pos) throw new IOException();
+		this.position -= length;
+		this.pos -= length;
 		System.arraycopy(b, 0, buf, pos, length);
 	}
 }

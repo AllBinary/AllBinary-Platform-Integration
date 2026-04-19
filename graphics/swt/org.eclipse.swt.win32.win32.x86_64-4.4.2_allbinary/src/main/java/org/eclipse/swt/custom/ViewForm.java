@@ -191,20 +191,20 @@ static int checkStyle (int style) {
 @Override
 public Rectangle computeTrim (int x, int y, int width, int height) {
 	checkWidget ();
-	int trimX = x - borderLeft - highlight;
-	int trimY = y - borderTop - highlight;
-	int trimWidth = width + borderLeft + borderRight + 2*highlight;
-	int trimHeight = height + borderTop + borderBottom + 2*highlight;
+	int trimX = x - this.borderLeft - this.highlight;
+	int trimY = y - this.borderTop - this.highlight;
+	int trimWidth = width + this.borderLeft + this.borderRight + 2*this.highlight;
+	int trimHeight = height + this.borderTop + this.borderBottom + 2*this.highlight;
 	return new Rectangle(trimX, trimY, trimWidth, trimHeight);
 }
 @Override
 public Rectangle getClientArea() {
 	checkWidget();
 	Rectangle clientArea = super.getClientArea();
-	clientArea.x += borderLeft;
-	clientArea.y += borderTop;
-	clientArea.width -= borderLeft + borderRight;
-	clientArea.height -= borderTop + borderBottom;
+	clientArea.x += this.borderLeft;
+	clientArea.y += this.borderTop;
+	clientArea.width -= this.borderLeft + this.borderRight;
+	clientArea.height -= this.borderTop + this.borderBottom;
 	return clientArea;
 }
 /**
@@ -251,62 +251,62 @@ void onDispose(Event event) {
 	notifyListeners(SWT.Dispose, event);
 	event.type = SWT.None;
 
-	topLeft = null;
-	topCenter = null;
-	topRight = null;
-	content = null;
-	oldSize = null;
-	selectionBackground = null;
+	this.topLeft = null;
+	this.topCenter = null;
+	this.topRight = null;
+	this.content = null;
+	this.oldSize = null;
+	this.selectionBackground = null;
 }
 void onPaint(GC gc) {
 	Color gcForeground = gc.getForeground();
 	Point size = getSize();
 	Color border = getDisplay().getSystemColor(BORDER1_COLOR);
-	if (showBorder) {
+	if (this.showBorder) {
 		gc.setForeground(border);
 		gc.drawRectangle(0, 0, size.x - 1, size.y - 1);
-		if (highlight > 0) {
+		if (this.highlight > 0) {
 			int x1 = 1;
 			int y1 = 1;
 			int x2 = size.x - 1;
 			int y2 = size.y - 1;
-			int[] shape = new int[] {x1,y1, x2,y1, x2,y2, x1,y2, x1,y1+highlight,
-					           x1+highlight,y1+highlight, x1+highlight,y2-highlight, 
-							   x2-highlight,y2-highlight, x2-highlight,y1+highlight, x1,y1+highlight};
+			int[] shape = new int[] {x1,y1, x2,y1, x2,y2, x1,y2, x1,y1+this.highlight,
+					           x1+this.highlight,y1+this.highlight, x1+this.highlight,y2-this.highlight, 
+							   x2-this.highlight,y2-this.highlight, x2-this.highlight,y1+this.highlight, x1,y1+this.highlight};
 			Color highlightColor = getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION);
 			gc.setBackground(highlightColor);
 			gc.fillPolygon(shape);
 		}
 	}
-	if (separator > -1) {
+	if (this.separator > -1) {
 		gc.setForeground(border);
-		gc.drawLine(borderLeft + highlight, separator, size.x - borderLeft - borderRight - highlight, separator);
+		gc.drawLine(this.borderLeft + this.highlight, separator, size.x - this.borderLeft - this.borderRight - this.highlight, separator);
 	}
 	gc.setForeground(gcForeground);
 }
 void onResize() {
 	Point size = getSize();
-	if (oldSize == null || oldSize.x == 0 || oldSize.y == 0) {
+	if (this.oldSize == null || this.oldSize.x == 0 || this.oldSize.y == 0) {
 		redraw();
 	} else {
 		int width = 0;
-		if (oldSize.x < size.x) {
-			width = size.x - oldSize.x + this.borderRight + highlight;
+		if (this.oldSize.x < size.x) {
+			width = size.x - this.oldSize.x + this.borderRight + this.highlight;
 		} else if (oldSize.x > size.x) {
 			width = this.borderRight + highlight;			
 		}
 		redraw(size.x - width, 0, width, size.y, false);
 		
 		int height = 0;
-		if (oldSize.y < size.y) {
-			height = size.y - oldSize.y + this.borderBottom + highlight;		
+		if (this.oldSize.y < size.y) {
+			height = size.y - this.oldSize.y + this.borderBottom + this.highlight;		
 		}
-		if (oldSize.y > size.y) {
-			height = this.borderBottom + highlight;		
+		if (this.oldSize.y > size.y) {
+			height = this.borderBottom + this.highlight;		
 		}
 		redraw(0, size.y - height, size.x, height, false);
 	}
-	oldSize = size;
+	this.oldSize = size;
 }
 /**
 * Sets the content.
@@ -354,9 +354,9 @@ public void setLayout (Layout layout) {
 }
 void setSelectionBackground (Color color) {
 	checkWidget();
-	if (selectionBackground == color) return;
+	if (this.selectionBackground == color) return;
 	if (color == null) color = getDisplay().getSystemColor(SELECTION_BACKGROUND);
-	selectionBackground = color;
+	this.selectionBackground = color;
 	redraw();
 }
 /**
@@ -449,15 +449,15 @@ public void setTopRight(Control c) {
 */
 public void setBorderVisible(boolean show) {
 	checkWidget();
-	if (showBorder == show) return;
+	if (this.showBorder == show) return;
 	
-	showBorder = show;
-	if (showBorder) {
+	this.showBorder = show;
+	if (this.showBorder) {
 		this.borderLeft = this.borderTop = this.borderRight = this.borderBottom = 1;
-		if ((getStyle() & SWT.FLAT)== 0) highlight = 2;
+		if ((getStyle() & SWT.FLAT)== 0) this.highlight = 2;
 	} else {
 		this.borderBottom = this.borderTop = this.borderLeft = this.borderRight = 0;
-		highlight = 0;
+		this.highlight = 0;
 	}
 	layout(false);
 	redraw();
@@ -476,7 +476,7 @@ public void setBorderVisible(boolean show) {
 */
 public void setTopCenterSeparate(boolean show) {
 	checkWidget();
-	separateTopCenter = show;
+	this.separateTopCenter = show;
 	layout(false);
 }
 }

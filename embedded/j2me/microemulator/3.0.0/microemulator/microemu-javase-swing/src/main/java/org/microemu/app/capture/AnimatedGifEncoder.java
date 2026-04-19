@@ -68,7 +68,7 @@ public class AnimatedGifEncoder {
 	 */
 	public void setDispose(int code) {
 		if (code >= 0) {
-			dispose = code;
+			this.dispose = code;
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class AnimatedGifEncoder {
 	 */
 	public void setRepeat(int iter) {
 		if (iter >= 0) {
-			repeat = iter;
+			this.repeat = iter;
 		}
 	}
 	
@@ -113,29 +113,29 @@ public class AnimatedGifEncoder {
 	 * @return true if successful.
 	 */
 	public boolean addFrame(BufferedImage im) {
-		if ((im == null) || !started) {
+		if ((im == null) || !this.started) {
 			return false;
 		}
 		boolean ok = true;
 		try {
-			if (!sizeSet) {
+			if (!this.sizeSet) {
 				// use first frame's size
 				setSize(im.getWidth(), im.getHeight());
 			}
-			image = im;
+			this.image = im;
 			getImagePixels(); // convert to correct format if necessary
 			analyzePixels(); // build color table & map pixels
-			if (firstFrame) {
+			if (this.firstFrame) {
 				writeLSD(); // logical screen descriptior
 				writePalette(); // global color table
-				if (repeat >= 0) {
+				if (this.repeat >= 0) {
 					// use NS app extension to indicate reps
 					writeNetscapeExt();
 				}
 			}
 			writeGraphicCtrlExt(); // write graphic control extension
 			writeImageDesc(); // image descriptor
-			if (!firstFrame) {
+			if (!this.firstFrame) {
 				writePalette(); // local color table
 			}
 			writePixels(); // encode and write pixel data
@@ -153,28 +153,28 @@ public class AnimatedGifEncoder {
 	 * closed.
 	 */
 	public boolean finish() {
-		if (!started) return false;
+		if (!this.started) return false;
 		boolean ok = true;
-		started = false;
+		this.started = false;
 		try {
 			out.write(0x3b); // gif trailer
 			out.flush();
-			if (closeStream) {
-				out.close();
+			if (this.closeStream) {
+				this.out.close();
 			}
 		} catch (IOException e) {
 			ok = false;
 		}
 
 		// reset for subsequent use
-		transIndex = 0;
-		out = null;
-		image = null;
-		pixels = null;
-		indexedPixels = null;
-		colorTab = null;
-		closeStream = false;
-		firstFrame = true;
+		this.transIndex = 0;
+		this.out = null;
+		this.image = null;
+		this.pixels = null;
+		this.indexedPixels = null;
+		this.colorTab = null;
+		this.closeStream = false;
+		this.firstFrame = true;
 
 		return ok;
 	}
@@ -187,7 +187,7 @@ public class AnimatedGifEncoder {
 	 */
 	public void setFrameRate(float fps) {
 		if (fps != 0f) {
-			delay = Math.round(100f / fps);
+			this.delay = Math.round(100f / fps);
 		}
 	}
 	
@@ -204,7 +204,7 @@ public class AnimatedGifEncoder {
 	 */
 	public void setQuality(int quality) {
 		if (quality < 1) quality = 1;
-		sample = quality;
+		this.sample = quality;
 	}
 	
 	/**
@@ -216,12 +216,12 @@ public class AnimatedGifEncoder {
 	 * @param h int frame width.
 	 */
 	public void setSize(int w, int h) {
-		if (started && !firstFrame) return;
-		width = w;
-		height = h;
-		if (width < 1) width = 320;
-		if (height < 1) height = 240;
-		sizeSet = true;
+		if (this.started && !this.firstFrame) return;
+		this.width = w;
+		this.height = h;
+		if (this.width < 1) this.width = 320;
+		if (this.height < 1) this.height = 240;
+		this.sizeSet = true;
 	}
 	
 	/**
@@ -234,8 +234,8 @@ public class AnimatedGifEncoder {
 	public boolean start(OutputStream os) {
 		if (os == null) return false;
 		boolean ok = true;
-		closeStream = false;
-		out = os;
+		this.closeStream = false;
+		this.out = os;
 		try {
 			writeString("GIF89a"); // header
 		} catch (IOException e) {
@@ -253,9 +253,9 @@ public class AnimatedGifEncoder {
 	public boolean start(String file) {
 		boolean ok = true;
 		try {
-			out = new BufferedOutputStream(new FileOutputStream(file));
-			ok = start(out);
-			closeStream = true;
+			this.out = new BufferedOutputStream(new FileOutputStream(file));
+			ok = start(this.out);
+			this.closeStream = true;
 		} catch (IOException e) {
 			ok = false;
 		}
@@ -268,15 +268,15 @@ public class AnimatedGifEncoder {
 	protected void analyzePixels() {
 		int len = pixels.length;
 		int nPix = len / 3;
-		indexedPixels = new byte[nPix];
-		NeuQuant nq = new NeuQuant(pixels, len, sample);
+		this.indexedPixels = new byte[nPix];
+		NeuQuant nq = new NeuQuant(this.pixels, len, sample);
 		// initialize quantizer
-		colorTab = nq.process(); // create reduced palette
+		this.colorTab = nq.process(); // create reduced palette
 		// convert map from BGR to RGB
-		for (int i = 0; i < colorTab.length; i += 3) {
-			byte temp = colorTab[i];
-			colorTab[i] = colorTab[i + 2];
-			colorTab[i + 2] = temp;
+		for (int i = 0; i < this.colorTab.length; i += 3) {
+			byte temp = this.colorTab[i];
+			this.colorTab[i] = this.colorTab[i + 2];
+			this.colorTab[i + 2] = temp;
 			this.usedEntry[i / 3] = false;
 		}
 		// map image pixels to new palette
@@ -286,15 +286,15 @@ public class AnimatedGifEncoder {
 				nq.map(pixels[k++] & 0xff,
 					   pixels[k++] & 0xff,
 					   pixels[k++] & 0xff);
-			usedEntry[index] = true;
-			indexedPixels[i] = (byte) index;
+			this.usedEntry[index] = true;
+			this.indexedPixels[i] = (byte) index;
 		}
-		pixels = null;
-		colorDepth = 8;
-		palSize = 7;
+		this.pixels = null;
+		this.colorDepth = 8;
+		this.palSize = 7;
 		// get closest match to transparent color if specified
-		if (transparent != null) {
-			transIndex = findClosest(transparent);
+		if (this.transparent != null) {
+			this.transIndex = findClosest(this.transparent);
 		}
 	}
 	
@@ -303,20 +303,20 @@ public class AnimatedGifEncoder {
 	 *
 	 */
 	protected int findClosest(Color c) {
-		if (colorTab == null) return -1;
+		if (this.colorTab == null) return -1;
 		int r = c.getRed();
 		int g = c.getGreen();
 		int b = c.getBlue();
 		int minpos = 0;
 		int dmin = 256 * 256 * 256;
-		int len = colorTab.length;
+		int len = this.colorTab.length;
 		for (int i = 0; i < len;) {
-			int dr = r - (colorTab[i++] & 0xff);
-			int dg = g - (colorTab[i++] & 0xff);
-			int db = b - (colorTab[i] & 0xff);
+			int dr = r - (this.colorTab[i++] & 0xff);
+			int dg = g - (this.colorTab[i++] & 0xff);
+			int db = b - (this.colorTab[i] & 0xff);
 			int d = dr * dr + dg * dg + db * db;
 			int index = i / 3;
-			if (usedEntry[index] && (d < dmin)) {
+			if (this.usedEntry[index] && (d < dmin)) {
 				dmin = d;
 				minpos = index;
 			}
@@ -330,19 +330,19 @@ public class AnimatedGifEncoder {
 	 */
 	protected void getImagePixels() {
 		int w = image.getWidth();
-		int h = image.getHeight();
-		int type = image.getType();
-		if ((w != width)
+		int h = this.image.getHeight();
+		int type = this.image.getType();
+		if ((w != this.width)
 			|| (h != height)
 			|| (type != BufferedImage.TYPE_3BYTE_BGR)) {
 			// create new image with right size/format
 			BufferedImage temp =
-				new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+				new BufferedImage(this.width, height, BufferedImage.TYPE_3BYTE_BGR);
 			Graphics2D g = temp.createGraphics();
-			g.drawImage(image, 0, 0, null);
-			image = temp;
+			g.drawImage(this.image, 0, 0, null);
+			this.image = temp;
 		}
-		pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+		this.pixels = ((DataBufferByte) this.image.getRaster().getDataBuffer()).getData();
 	}
 	
 	/**
@@ -353,15 +353,15 @@ public class AnimatedGifEncoder {
 		out.write(0xf9); // GCE label
 		out.write(4); // data block size
 		int transp, disp;
-		if (transparent == null) {
+		if (this.transparent == null) {
 			transp = 0;
 			disp = 0; // dispose = no action
 		} else {
 			transp = 1;
 			disp = 2; // force clear if using transparent color
 		}
-		if (dispose >= 0) {
-			disp = dispose & 7; // user override
+		if (this.dispose >= 0) {
+			disp = this.dispose & 7; // user override
 		}
 		disp <<= 2;
 
@@ -386,9 +386,9 @@ public class AnimatedGifEncoder {
 		writeShort(width); // image size
 		writeShort(height);
 		// packed fields
-		if (firstFrame) {
+		if (this.firstFrame) {
 			// no LCT  - GCT is used for first (or only) frame
-			out.write(0);
+			this.out.write(0);
 		} else {
 			// specify normal LCT
 			out.write(0x80 | // 1 local color table  1=yes
@@ -404,8 +404,8 @@ public class AnimatedGifEncoder {
 	 */
 	protected void writeLSD() throws IOException {
 		// logical screen size
-		writeShort(width);
-		writeShort(height);
+		writeShort(this.width);
+		writeShort(this.height);
 		// packed fields
 		out.write((0x80 | // 1   : global color table flag = 1 (gct used)
 				   0x70 | // 2-4 : color resolution = 7
@@ -435,10 +435,10 @@ public class AnimatedGifEncoder {
 	 * Writes color table
 	 */
 	protected void writePalette() throws IOException {
-		out.write(colorTab, 0, colorTab.length);
+		this.out.write(colorTab, 0, colorTab.length);
 		int n = (3 * 256) - colorTab.length;
 		for (int i = 0; i < n; i++) {
-			out.write(0);
+			this.out.write(0);
 		}
 	}
 	
@@ -448,7 +448,7 @@ public class AnimatedGifEncoder {
 	protected void writePixels() throws IOException {
 		LZWEncoder encoder =
 			new LZWEncoder(width, height, indexedPixels, colorDepth);
-		encoder.encode(out);
+		encoder.encode(this.out);
 	}
 	
 	/**
@@ -456,7 +456,7 @@ public class AnimatedGifEncoder {
 	 */
 	protected void writeShort(int value) throws IOException {
 		out.write(value & 0xff);
-		out.write((value >> 8) & 0xff);
+		this.out.write((value >> 8) & 0xff);
 	}
 	
 	/**
@@ -464,7 +464,7 @@ public class AnimatedGifEncoder {
 	 */
 	protected void writeString(String s) throws IOException {
 		for (int i = 0; i < s.length(); i++) {
-			out.write((byte) s.charAt(i));
+			this.out.write((byte) s.charAt(i));
 		}
 	}
 }

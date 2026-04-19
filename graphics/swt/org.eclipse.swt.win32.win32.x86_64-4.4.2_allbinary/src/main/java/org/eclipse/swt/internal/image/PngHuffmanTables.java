@@ -70,7 +70,7 @@ private PngHuffmanTable getFixedDistanceTable() {
 
 private PngHuffmanTables () {
 	literalTable = getFixedLiteralTable();
-	distanceTable = getFixedDistanceTable();
+	this.distanceTable = getFixedDistanceTable();
 }
 
 private PngHuffmanTables (PngDecodingDataStream stream) throws IOException {
@@ -104,8 +104,8 @@ private PngHuffmanTables (PngDecodingDataStream stream) throws IOException {
 	int[] distanceLengths = readLengths(
 		stream, distances, codeLengthsTable, DistanceTableSize);
 	
-	literalTable = new PngHuffmanTable(literalLengths);
-	distanceTable = new PngHuffmanTable(distanceLengths);
+	this.literalTable = new PngHuffmanTable(literalLengths);
+	this.distanceTable = new PngHuffmanTable(distanceLengths);
 }
 
 private int [] readLengths (PngDecodingDataStream stream, 

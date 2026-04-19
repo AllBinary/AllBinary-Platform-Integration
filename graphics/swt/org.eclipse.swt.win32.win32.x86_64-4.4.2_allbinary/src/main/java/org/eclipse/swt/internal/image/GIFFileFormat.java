@@ -246,9 +246,9 @@ public final class GIFFileFormat extends FileFormat {
 			// Store the user input field.
 			//userInput = (bitField & 0x02) != 0;
 			// Store the disposal method.
-			disposalMethod = (bitField >> 2) & 0x07;
+			this.disposalMethod = (bitField >> 2) & 0x07;
 			// Store the delay time.
-			delayTime = (controlBlock[1] & 0xFF) | ((controlBlock[2] & 0xFF) << 8);
+			this.delayTime = (controlBlock[1] & 0xFF) | ((controlBlock[2] & 0xFF) << 8);
 			// Store the transparent color.
 			if ((bitField & 0x01) != 0) {
 				this.transparentPixel = controlBlock[3] & 0xFF;
@@ -301,8 +301,8 @@ public final class GIFFileFormat extends FileFormat {
 				blockData[9] == '.' &&
 				blockData[10] == '0';
 			if (netscape && authentic && data[0] == 01) { //$NON-NLS-1$ //$NON-NLS-2$
-				repeatCount = (data[1] & 0xFF) | ((data[2] & 0xFF) << 8);
-				loader.repeatCount = repeatCount;
+				this.repeatCount = (data[1] & 0xFF) | ((data[2] & 0xFF) << 8);
+				loader.repeatCount = this.repeatCount;
 			}
 			return data;
 		} catch (Exception e) {
@@ -344,7 +344,7 @@ public final class GIFFileFormat extends FileFormat {
 		/* Work around: Ignore the case where a GIF specifies an
 		 * invalid index for the transparent pixel that is larger
 		 * than the number of entries in the palette. */
-		if (transparentPixel > 1 << depth) {
+		if (this.transparentPixel > 1 << depth) {
 			this.transparentPixel = -1;
 		}
 		// Promote depth to next highest supported value.
@@ -377,12 +377,12 @@ public final class GIFFileFormat extends FileFormat {
 			null,
 			null,
 			-1,
-			transparentPixel,
+			this.transparentPixel,
 			SWT.IMAGE_GIF,
 			left,
 			top,
-			disposalMethod,
-			delayTime);	
+			this.disposalMethod,
+			this.delayTime);	
 		LZWCodec codec = new LZWCodec();
 		codec.decode(inputStream, loader, image, interlaced, initialCodeSize);
 		return image;

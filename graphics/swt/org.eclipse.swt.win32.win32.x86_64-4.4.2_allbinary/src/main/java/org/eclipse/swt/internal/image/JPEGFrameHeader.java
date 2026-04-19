@@ -81,7 +81,7 @@ final class JPEGFrameHeader extends JPEGVariableSizeSegment {
 	/* Used when decoding. */
 	void initializeComponentParameters() {
 		int nf = getNumberOfImageComponents();
-		componentIdentifiers = new int[nf];
+		this.componentIdentifiers = new int[nf];
 		int[][] compSpecParams = new int[0][];
 		int hmax = 1;
 		int vmax = 1;
@@ -113,7 +113,7 @@ final class JPEGFrameHeader extends JPEGVariableSizeSegment {
 		int y = getNumberOfLines();
 		int[] multiples = new int[] { 8, 16, 24, 32 };
 		for (int i = 0; i < nf; i++) {
-			int[] compParam = compSpecParams[componentIdentifiers[i]];
+			int[] compParam = compSpecParams[this.componentIdentifiers[i]];
 			int hi = compParam[1];
 			int vi = compParam[2];
 			int compWidth = (x * hi + hmax - 1) / hmax;
@@ -125,21 +125,21 @@ final class JPEGFrameHeader extends JPEGVariableSizeSegment {
 		}
 		setMaxHFactor(hmax);
 		setMaxVFactor(vmax);
-		componentParameters = compSpecParams;
+		this.componentParameters = compSpecParams;
 	}
 	
 	/* Used when encoding. */
 	public void initializeContents() {
 		int nf = getNumberOfImageComponents();
-		if (nf == 0 || nf != componentParameters.length) {
+		if (nf == 0 || nf != this.componentParameters.length) {
 			SWT.error(SWT.ERROR_INVALID_IMAGE);
 		}
 		int hmax = 0;
 		int vmax = 0;
-		int[][] compSpecParams = componentParameters;
+		int[][] compSpecParams = this.componentParameters;
 		for (int i = 0; i < nf; i++) {
 			int ofs = i * 3 + 10;
-			int[] compParam = compSpecParams[componentIdentifiers[i]];
+			int[] compParam = compSpecParams[this.componentIdentifiers[i]];
 			int hi = compParam[1];
 			int vi = compParam[2];
 			if (hi * vi > 4) {
@@ -155,7 +155,7 @@ final class JPEGFrameHeader extends JPEGVariableSizeSegment {
 		int y = getNumberOfLines();
 		int[] multiples = new int[] {8, 16, 24, 32};
 		for (int i = 0; i < nf; i++) {
-			int[] compParam = compSpecParams[componentIdentifiers[i]];
+			int[] compParam = compSpecParams[this.componentIdentifiers[i]];
 			int hi = compParam[1];
 			int vi = compParam[2];
 			int compWidth = (x * hi + hmax - 1) / hmax;

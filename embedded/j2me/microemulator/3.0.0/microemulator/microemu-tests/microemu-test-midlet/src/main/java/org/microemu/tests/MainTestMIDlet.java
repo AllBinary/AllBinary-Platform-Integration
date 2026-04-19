@@ -57,41 +57,41 @@ public class MainTestMIDlet extends MIDlet implements CommandListener, MIDletUnd
 	protected void startApp() throws MIDletStateChangeException {
 		Manager.midletInstance = this;
 
-		if (menuList == null) {
-			testPanels = new Vector();
-			testPanels.addElement(new ItemsOnForm());
-			testPanels.addElement(new ErrorHandlingForm());
-			testPanels.addElement(new ErrorHandlingCanvas());
-			testPanels.addElement(new RecordStoreForm());
-			testPanels.addElement(new ThreadTestsForm());
+		if (this.menuList == null) {
+			this.testPanels = new Vector();
+			this.testPanels.addElement(new ItemsOnForm());
+			this.testPanels.addElement(new ErrorHandlingForm());
+			this.testPanels.addElement(new ErrorHandlingCanvas());
+			this.testPanels.addElement(new RecordStoreForm());
+			this.testPanels.addElement(new ThreadTestsForm());
 			if (OverrideNewJSRCanvas.enabled) {
-				testPanels.addElement(new OverrideNewJSRCanvas());
+				this.testPanels.addElement(new OverrideNewJSRCanvas());
 			}
 			if (OverrideNewJSR2Canvas.enabled) {
-				testPanels.addElement(new OverrideNewJSR2Canvas());
+				this.testPanels.addElement(new OverrideNewJSR2Canvas());
 			}
 			if (OverrideNewJSR2Canvas.enabled) {
-				testPanels.addElement(new OverrideNewJSR2Canvas());
+				this.testPanels.addElement(new OverrideNewJSR2Canvas());
 			}
 			if (PreporcessorTestCanvas.enabled) {
-				testPanels.addElement(new PreporcessorTestCanvas());
+				this.testPanels.addElement(new PreporcessorTestCanvas());
 			}
 
-			menuList = new List("Manual Tests", List.IMPLICIT);
+			this.menuList = new List("Manual Tests", List.IMPLICIT);
 
-			for (Enumeration iter = testPanels.elements(); iter.hasMoreElements();) {
-				menuList.append(((Displayable) iter.nextElement()).getTitle(), null);
+			for (Enumeration iter = this.testPanels.elements(); iter.hasMoreElements();) {
+				this.menuList.append(((Displayable) iter.nextElement()).getTitle(), null);
 			}
-			menuList.addCommand(exitCommand);
-			menuList.setCommandListener(this);
+			this.menuList.addCommand(exitCommand);
+			this.menuList.setCommandListener(this);
 		}
-		setCurrentDisplayable(menuList);
+		setCurrentDisplayable(this.menuList);
 	}
 
 	public void commandAction(Command c, Displayable d) {
-		if (d == menuList) {
+		if (d == this.menuList) {
 			if (c == List.SELECT_COMMAND) {
-				setCurrentDisplayable((Displayable) testPanels.elementAt(menuList.getSelectedIndex()));
+				setCurrentDisplayable((Displayable) this.testPanels.elementAt(this.menuList.getSelectedIndex()));
 			} else if (c == exitCommand) {
 				try {
 					destroyApp(true);

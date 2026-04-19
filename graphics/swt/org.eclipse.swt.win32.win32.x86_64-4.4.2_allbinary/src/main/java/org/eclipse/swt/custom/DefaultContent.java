@@ -51,15 +51,15 @@ DefaultContent() {
  */
 void addLineIndex(int start, int length) {
 	int size = lines.length;
-	if (lineCount == size) {
+	if (this.lineCount == size) {
 		// expand the lines by powers of 2
-		int[][] newLines = new int[size+Compatibility.pow2(expandExp)][2];
-		System.arraycopy(lines, 0, newLines, 0, size);
-		lines = newLines;
+		int[][] newLines = new int[size+Compatibility.pow2(this.expandExp)][2];
+		System.arraycopy(this.lines, 0, newLines, 0, size);
+		this.lines = newLines;
 		expandExp++;
 	}
 	int[] range = new int[] {start, length};
-	lines[lineCount] = range;
+	this.lines[this.lineCount] = range;
 	lineCount++;
 }
 /** 
@@ -77,7 +77,7 @@ int[][] addLineIndex(int start, int length, int[][] linesArray, int count) {
 	int size = linesArray.length;
 	int[][] newLines = linesArray;
 	if (count == size) {
-		newLines = new int[size+Compatibility.pow2(replaceExpandExp)][2];
+		newLines = new int[size+Compatibility.pow2(this.replaceExpandExp)][2];
 		replaceExpandExp++;
 		System.arraycopy(linesArray, 0, newLines, 0, size);
 	}
@@ -101,7 +101,7 @@ int[][] addLineIndex(int start, int length, int[][] linesArray, int count) {
 public void addTextChangeListener(TextChangeListener listener) {
 	if (listener == null) error(SWT.ERROR_NULL_ARGUMENT);
 	StyledTextListener typedListener = new StyledTextListener(listener);
-	textListeners.addElement(typedListener);	
+	this.textListeners.addElement(typedListener);	
 }	
 /**
  * Adjusts the gap to accommodate a text change that is occurring.
@@ -112,15 +112,15 @@ public void addTextChangeListener(TextChangeListener listener) {
  * @param line the line where the gap will go
  */
 void adjustGap(int position, int sizeHint, int line) {
-	if (position == gapStart) {
+	if (position == this.gapStart) {
 		// text is being inserted at the gap position
-		int size = (gapEnd - gapStart) - sizeHint;
-		if (lowWatermark <= size && size <= highWatermark)
+		int size = (this.gapEnd - this.gapStart) - sizeHint;
+		if (this.lowWatermark <= size && size <= this.highWatermark)
 			return;
 	} else if ((position + sizeHint == gapStart) && (sizeHint < 0)) {
 		// text is being deleted at the gap position
 		int size = (gapEnd - gapStart) - sizeHint;
-		if (lowWatermark <= size && size <= highWatermark)
+		if (this.lowWatermark <= size && size <= this.highWatermark)
 			return;
 	}
 	moveAndResizeGap(position, sizeHint, line);
@@ -131,15 +131,15 @@ void adjustGap(int position, int sizeHint, int line) {
  */
 void indexLines(){
 	int start = 0;
-	lineCount = 0;
-	int textLength = textStore.length;
+	this.lineCount = 0;
+	int textLength = this.textStore.length;
 	int i;
 	for (i = start; i < textLength; i++) {
-		char ch = textStore[i];					
+		char ch = this.textStore[i];					
 		if (ch == SWT.CR) {
 			// see if the next character is a LF
 			if (i + 1 < textLength) {
-				ch = textStore[i+1];
+				ch = this.textStore[i+1];
 				if (ch == SWT.LF) {
 					i++;
 				}
@@ -223,17 +223,17 @@ int[][] indexLines(int offset, int length, int numLines){
 	int start = 0;
 	int lineCount = 0;
 	int i;
-	replaceExpandExp = 1;
+	this.replaceExpandExp = 1;
 	for (i = start; i < length; i++) {
 		int location = i + offset; 
-		if ((location >= gapStart) && (location < gapEnd)) {
+		if ((location >= this.gapStart) && (location < this.gapEnd)) {
 			// ignore the gap
 		} else {
-			char ch = textStore[location];				
+			char ch = this.textStore[location];				
 			if (ch == SWT.CR) {
 				// see if the next character is a LF
-				if (location+1 < textStore.length) {
-					ch = textStore[location+1];
+				if (location+1 < this.textStore.length) {
+					ch = this.textStore[location+1];
 					if (ch == SWT.LF) {
 						i++;
 					} 
@@ -279,9 +279,9 @@ void insert(int position, String text) {
 	
 	if (change > 0) {
 		// shrink gap 
-		gapStart += (change);
+		this.gapStart += (change);
 		for (int i = 0; i < text.length(); i++) {
-			textStore[position + i]= text.charAt(i);
+			this.textStore[position + i]= text.charAt(i);
 		}
 	}
 		
@@ -304,22 +304,22 @@ void insert(int position, String text) {
 	// make room for the new lines
 	expandLinesBy(numNewLines);
 	// shift down the lines after the replace line
-	for (int i = lineCount - 1; i > startLine; i--) {
-		lines[i + numNewLines]=lines[i];
+	for (int i = this.lineCount - 1; i > startLine; i--) {
+		this.lines[i + numNewLines]=this.lines[i];
 	}
 	// insert the new lines
 	for (int i = 0; i < numNewLines; i++) {
 		newLines[i][0] += startLineOffset;
-		lines[startLine + i]=newLines[i];
+		this.lines[startLine + i]=newLines[i];
 	}
 	// update the last inserted line
 	if (numNewLines < newLines.length) {
 		newLines[numNewLines][0] += startLineOffset;
-		lines[startLine + numNewLines] = newLines[numNewLines];
+		this.lines[startLine + numNewLines] = newLines[numNewLines];
 	}
 	
-	lineCount += numNewLines;
-	gapLine = getLineAtPhysicalOffset(gapStart);
+	this.lineCount += numNewLines;
+	this.gapLine = getLineAtPhysicalOffset(this.gapStart);
 }
 /**
  * Moves the gap and adjusts its size in anticipation of a text change.  
@@ -333,44 +333,44 @@ void insert(int position, String text) {
  */
 void moveAndResizeGap(int position, int size, int newGapLine) {
 	char[] content = null;
-	int oldSize = gapEnd - gapStart;
+	int oldSize = this.gapEnd - this.gapStart;
 	int newSize;
 	if (size > 0) {
-		newSize = highWatermark + size;
+		newSize = this.highWatermark + size;
 	} else {
 		newSize = this.lowWatermark - size;
 	}
 	// remove the old gap from the lines information
 	if (gapExists()) {
 		// adjust the line length
-		lines[this.gapLine][1] = lines[this.gapLine][1] - oldSize;
+		this.lines[this.gapLine][1] = this.lines[this.gapLine][1] - oldSize;
 		// adjust the offsets of the lines after the gapLine
-		for (int i = gapLine + 1; i < lineCount; i++) {
-			lines[i][0] = lines[i][0] - oldSize;
+		for (int i = this.gapLine + 1; i < this.lineCount; i++) {
+			this.lines[i][0] = this.lines[i][0] - oldSize;
 		}
 	}
 	
 	if (newSize < 0) {
 		if (oldSize > 0) {
 			// removing the gap
-			content = new char[textStore.length - oldSize];
-			System.arraycopy(textStore, 0, content, 0, gapStart);
-			System.arraycopy(textStore, gapEnd, content, gapStart, content.length - gapStart);
-			textStore = content;
+			content = new char[this.textStore.length - oldSize];
+			System.arraycopy(this.textStore, 0, content, 0, gapStart);
+			System.arraycopy(this.textStore, gapEnd, content, gapStart, content.length - gapStart);
+			this.textStore = content;
 		}
 		gapStart = gapEnd = position;
 		return;
 	}
-	content = new char[textStore.length + (newSize - oldSize)];
+	content = new char[this.textStore.length + (newSize - oldSize)];
 	int newGapStart = position;
 	int newGapEnd = newGapStart + newSize;
 	if (oldSize == 0) {
-		System.arraycopy(textStore, 0, content, 0, newGapStart);
-		System.arraycopy(textStore, newGapStart, content, newGapEnd, content.length - newGapEnd);	
+		System.arraycopy(this.textStore, 0, content, 0, newGapStart);
+		System.arraycopy(this.textStore, newGapStart, content, newGapEnd, content.length - newGapEnd);	
 	} else if (newGapStart < gapStart) {
 		int delta = gapStart - newGapStart;
-		System.arraycopy(textStore, 0, content, 0, newGapStart);
-		System.arraycopy(textStore, newGapStart, content, newGapEnd, delta);
+		System.arraycopy(this.textStore, 0, content, 0, newGapStart);
+		System.arraycopy(this.textStore, newGapStart, content, newGapEnd, delta);
 		System.arraycopy(textStore, gapEnd, content, newGapEnd + delta, textStore.length - gapEnd);
 	} else {
 		int delta = newGapStart - gapStart;
@@ -387,10 +387,10 @@ void moveAndResizeGap(int position, int size, int newGapLine) {
 		this.gapLine = newGapLine;
 		// adjust the line length
 		int gapLength = gapEnd - gapStart;
-		lines[gapLine][1] = lines[gapLine][1] + (gapLength);
+		this.lines[this.gapLine][1] = this.lines[this.gapLine][1] + (gapLength);
 		// adjust the offsets of the lines after the gapLine
-		for (int i = gapLine + 1; i < lineCount; i++) {
-			lines[i][0] = lines[i][0] + gapLength;
+		for (int i = this.gapLine + 1; i < this.lineCount; i++) {
+			this.lines[i][0] = this.lines[i][0] + gapLength;
 		}
 	}
 }
@@ -409,18 +409,18 @@ int lineCount(int startOffset, int length){
 	int lineCount = 0;
 	int count = 0;
 	int i = startOffset;
-	if (i >= gapStart) {
-		i += gapEnd - gapStart;
+	if (i >= this.gapStart) {
+		i += this.gapEnd - this.gapStart;
 	}
 	while (count < length) {
-		if ((i >= gapStart) && (i < gapEnd)) {
+		if ((i >= this.gapStart) && (i < this.gapEnd)) {
 			// ignore the gap
 		} else {
-			char ch = textStore[i];			
+			char ch = this.textStore[i];			
 			if (ch == SWT.CR) {
 				// see if the next character is a LF
-				if (i + 1 < textStore.length) {
-					ch = textStore[i+1];
+				if (i + 1 < this.textStore.length) {
+					ch = this.textStore[i+1];
 					if (ch == SWT.LF) {
 						i++;
 						count++;
@@ -464,7 +464,7 @@ int lineCount(String text){
  */
 public int getCharCount() {
 	int length = gapEnd - gapStart;
-	return (textStore.length - length);
+	return (this.textStore.length - length);
 }
 /**
  * Returns the line at <code>index</code> without delimiters.
@@ -477,22 +477,22 @@ public int getCharCount() {
  * </ul>
  */
 public String getLine(int index) {
-	if ((index >= lineCount) || (index < 0)) error(SWT.ERROR_INVALID_ARGUMENT);
-	int start = lines[index][0];
-	int length = lines[index][1];
+	if ((index >= this.lineCount) || (index < 0)) error(SWT.ERROR_INVALID_ARGUMENT);
+	int start = this.lines[index][0];
+	int length = this.lines[index][1];
 	int end = start + length - 1;
-	if (!gapExists() || (end < gapStart) || (start >= gapEnd)) {
+	if (!gapExists() || (end < this.gapStart) || (start >= this.gapEnd)) {
 		// line is before or after the gap
-		while ((length - 1 >= 0) && isDelimiter(textStore[start+length-1])) {
+		while ((length - 1 >= 0) && isDelimiter(this.textStore[start+length-1])) {
 			length--;
 		}
-		return new String(textStore, start, length);
+		return new String(this.textStore, start, length);
 	} else {
 		// gap is in the specified range, strip out the gap
 		StringBuffer buf = new StringBuffer();
-		int gapLength = gapEnd - gapStart;
-		buf.append(textStore, start, gapStart - start);
-		buf.append(textStore, gapEnd, length - gapLength - (gapStart - start));
+		int gapLength = this.gapEnd - this.gapStart;
+		buf.append(this.textStore, start, gapStart - start);
+		buf.append(this.textStore, gapEnd, length - gapLength - (gapStart - start));
 		length = buf.length();
 		while ((length - 1 >=0) && isDelimiter(buf.charAt(length - 1))) {
 			length--;
@@ -520,17 +520,17 @@ public String getLineDelimiter() {
  */
 String getFullLine(int index) {
 	int start = lines[index][0];
-	int length = lines[index][1];
+	int length = this.lines[index][1];
 	int end = start + length - 1;
-	if (!gapExists() || (end < gapStart) || (start >= gapEnd)) {
+	if (!gapExists() || (end < this.gapStart) || (start >= this.gapEnd)) {
 		// line is before or after the gap
-		return new String(textStore, start, length);
+		return new String(this.textStore, start, length);
 	} else {
 		// gap is in the specified range, strip out the gap
 		StringBuffer buffer = new StringBuffer();
-		int gapLength = gapEnd - gapStart;
-		buffer.append(textStore, start, gapStart - start);
-		buffer.append(textStore, gapEnd, length - gapLength - (gapStart - start));
+		int gapLength = this.gapEnd - this.gapStart;
+		buffer.append(this.textStore, start, gapStart - start);
+		buffer.append(this.textStore, gapEnd, length - gapLength - (gapStart - start));
 		return buffer.toString();
 	}
 }
@@ -543,7 +543,7 @@ String getFullLine(int index) {
  */
 String getPhysicalLine(int index) {
 	int start = lines[index][0];
-	int length = lines[index][1];
+	int length = this.lines[index][1];
 	return getPhysicalText(start, length);
 }
 /**
@@ -565,30 +565,30 @@ public int getLineCount(){
 public int getLineAtOffset(int charPosition){
 	if ((charPosition > getCharCount()) || (charPosition < 0)) error(SWT.ERROR_INVALID_ARGUMENT);
 	int position;
-	if (charPosition < gapStart) {
+	if (charPosition < this.gapStart) {
 		// position is before the gap
 		position = charPosition;
 	} else {
 		// position includes the gap
-		position = charPosition + (gapEnd - gapStart);
+		position = charPosition + (this.gapEnd - this.gapStart);
 	}
 
 	// if last line and the line is not empty you can ask for 
 	// a position that doesn't exist (the one to the right of the 
 	// last character) - for inserting
-	if (lineCount > 0) {
-		int lastLine = lineCount - 1;
-		if (position == lines[lastLine][0] + lines[lastLine][1]) 
+	if (this.lineCount > 0) {
+		int lastLine = this.lineCount - 1;
+		if (position == this.lines[lastLine][0] + this.lines[lastLine][1]) 
 			return lastLine;
 	}
 
-	int high = lineCount;
+	int high = this.lineCount;
 	int low = -1;
-	int index = lineCount;
+	int index = this.lineCount;
 	while (high - low > 1) {
 		index = (high + low) / 2;
-		int lineStart = lines[index][0];
-		int lineEnd = lineStart + lines[index][1] - 1;
+		int lineStart = this.lines[index][0];
+		int lineEnd = lineStart + this.lines[index][1] - 1;
 		if (position <= lineStart) {
 			high = index;
 		} else if (position <= lineEnd) {
@@ -610,11 +610,11 @@ public int getLineAtOffset(int charPosition){
 int getLineAtPhysicalOffset(int position){
 	int high = lineCount;
 	int low = -1;
-	int index = lineCount;
+	int index = this.lineCount;
 	while (high - low > 1) {
 		index = (high + low) / 2;
-		int lineStart = lines[index][0];
-		int lineEnd = lineStart + lines[index][1] - 1;
+		int lineStart = this.lines[index][0];
+		int lineEnd = lineStart + this.lines[index][1] - 1;
 		if (position <= lineStart) {
 			high = index;
 		} else if (position <= lineEnd) {
@@ -639,10 +639,10 @@ int getLineAtPhysicalOffset(int position){
  */
 public int getOffsetAtLine(int lineIndex) {
 	if (lineIndex == 0) return 0;
-	if ((lineIndex >= lineCount) || (lineIndex < 0)) error(SWT.ERROR_INVALID_ARGUMENT);
-	int start = lines[lineIndex][0];
-	if (start > gapEnd) {
-		return start - (gapEnd - gapStart);
+	if ((lineIndex >= this.lineCount) || (lineIndex < 0)) error(SWT.ERROR_INVALID_ARGUMENT);
+	int start = this.lines[lineIndex][0];
+	if (start > this.gapEnd) {
+		return start - (this.gapEnd - this.gapStart);
 	} else {
 		return start;
 	}
@@ -655,12 +655,12 @@ public int getOffsetAtLine(int lineIndex) {
  */
 void expandLinesBy(int numLines) {
 	int size = lines.length;
-	if (size - lineCount >= numLines) {
+	if (size - this.lineCount >= numLines) {
 		return;
 	}
 	int[][] newLines = new int[size+Math.max(10, numLines)][2];
-	System.arraycopy(lines, 0, newLines, 0, size);
-	lines = newLines;
+	System.arraycopy(this.lines, 0, newLines, 0, size);
+	this.lines = newLines;
 }
 /**	 
  * Reports an SWT error.
@@ -678,7 +678,7 @@ void error (int code) {
  * @return true if gap exists, false otherwise
  */
 boolean gapExists() {
-	return gapStart != gapEnd;
+	return gapStart != this.gapEnd;
 }
 /**
  * Returns a string representing the continuous content of
@@ -690,7 +690,7 @@ boolean gapExists() {
  * @return the text
  */
 String getPhysicalText(int start, int length) {
-	return new String(textStore, start, length);
+	return new String(this.textStore, start, length);
 }
 /**
  * Returns a string representing the logical content of
@@ -702,20 +702,20 @@ String getPhysicalText(int start, int length) {
  * @return the text
  */
 public String getTextRange(int start, int length) {
-	if (textStore == null)
+	if (this.textStore == null)
 		return "";
 	if (length == 0)
 		return "";
 	int end= start + length;
-	if (!gapExists() || (end < gapStart))
-		return new String(textStore, start, length);
-	if (gapStart < start) {
-		int gapLength= gapEnd - gapStart;
-		return new String(textStore, start + gapLength , length);
+	if (!gapExists() || (end < this.gapStart))
+		return new String(this.textStore, start, length);
+	if (this.gapStart < start) {
+		int gapLength= this.gapEnd - this.gapStart;
+		return new String(this.textStore, start + gapLength , length);
 	}
 	StringBuffer buf = new StringBuffer();
-	buf.append(textStore, start, gapStart - start);
-	buf.append(textStore, gapEnd, end - gapStart);
+	buf.append(this.textStore, start, gapStart - start);
+	buf.append(this.textStore, gapEnd, end - gapStart);
 	return buf.toString();
 }
 /**
@@ -730,10 +730,10 @@ public String getTextRange(int start, int length) {
  */
 public void removeTextChangeListener(TextChangeListener listener){
 	if (listener == null) error(SWT.ERROR_NULL_ARGUMENT);
-	for (int i = 0; i < textListeners.size(); i++) {
-		TypedListener typedListener = (TypedListener) textListeners.elementAt(i);
+	for (int i = 0; i < this.textListeners.size(); i++) {
+		TypedListener typedListener = (TypedListener) this.textListeners.elementAt(i);
 		if (typedListener.getEventListener () == listener) {
-			textListeners.removeElementAt(i);
+			this.textListeners.removeElementAt(i);
 			break;
 		}
 	}
@@ -793,8 +793,8 @@ public void replaceTextRange(int start, int replaceLength, String newText){
  * Sends the text listeners the TextChanged event.
  */
 void sendTextEvent(StyledTextEvent event) {
-	for (int i = 0; i < textListeners.size(); i++) {
-		((StyledTextListener)textListeners.elementAt(i)).handleEvent(event);
+	for (int i = 0; i < this.textListeners.size(); i++) {
+		((StyledTextListener)this.textListeners.elementAt(i)).handleEvent(event);
 	}
 }		
 /**
@@ -806,9 +806,9 @@ void sendTextEvent(StyledTextEvent event) {
  */
 public void setText (String text){
 	textStore = text.toCharArray();
-	gapStart = -1;
-	gapEnd = -1;
-	expandExp = 1;
+	this.gapStart = -1;
+	this.gapEnd = -1;
+	this.expandExp = 1;
 	indexLines();
 	StyledTextEvent event = new StyledTextEvent(this);
 	event.type = ST.TextSet;
@@ -839,26 +839,26 @@ void delete(int position, int length, int numLines) {
 	}
 
 	adjustGap(position + length, -length, startLine);
-	int [][] oldLines = indexLines(position, length + (gapEnd - gapStart), numLines);
+	int [][] oldLines = indexLines(position, length + (this.gapEnd - this.gapStart), numLines);
 	
 	// enlarge the gap - the gap can be enlarged either to the
 	// right or left
-	if (position + length == gapStart) {
-		gapStart -= length;
+	if (position + length == this.gapStart) {
+		this.gapStart -= length;
 	} else {
-		gapEnd += length;
+		this.gapEnd += length;
 	}		
 
 	// figure out the length of the new concatenated line, do so by
 	// finding the first line delimiter after position
 	int j = position;
 	boolean eol = false;
-	while (j < textStore.length && !eol) {
-		if (j < gapStart || j >= gapEnd) {
-			char ch = textStore[j];
+	while (j < this.textStore.length && !eol) {
+		if (j < this.gapStart || j >= this.gapEnd) {
+			char ch = this.textStore[j];
 			if (isDelimiter(ch)) {
-				if (j + 1 < textStore.length) {
-					if (ch == SWT.CR && (textStore[j+1] == SWT.LF)) {
+				if (j + 1 < this.textStore.length) {
+					if (ch == SWT.CR && (this.textStore[j+1] == SWT.LF)) {
 						j++;
 					}
 				}
@@ -868,16 +868,16 @@ void delete(int position, int length, int numLines) {
 		j++;
 	}
 	// update the line where the deletion started
-	lines[startLine][1] = (position - startLineOffset) + (j - position);
+	this.lines[startLine][1] = (position - startLineOffset) + (j - position);
 	// figure out the number of lines that have been deleted
 	int numOldLines = oldLines.length - 1;
 	if (splittingDelimiter) numOldLines -= 1;
 	// shift up the lines after the last deleted line, no need to update
 	// the offset or length of the lines
-	for (int i = endLine + 1; i < lineCount; i++) {
-		lines[i - numOldLines] = lines[i];
+	for (int i = endLine + 1; i < this.lineCount; i++) {
+		this.lines[i - numOldLines] = this.lines[i];
 	}
-	lineCount -= numOldLines;
-	gapLine = getLineAtPhysicalOffset(gapStart);		
+	this.lineCount -= numOldLines;
+	this.gapLine = getLineAtPhysicalOffset(this.gapStart);		
 }
 }

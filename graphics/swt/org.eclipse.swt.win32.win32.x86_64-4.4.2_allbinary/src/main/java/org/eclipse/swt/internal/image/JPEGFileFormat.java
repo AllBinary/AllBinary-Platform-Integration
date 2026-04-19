@@ -220,18 +220,18 @@ void compress(ImageData image, byte[] dataYComp, byte[] dataCbComp, byte[] dataC
 	int srcHeight = image.height;
 	int vhFactor = maxV * maxH;
 	int[] frameComponent;
-	this.imageComponents = new byte[nComponents][];
-	for (int i = 0; i < nComponents; i++) {
-		frameComponent = this.frameComponents[componentIds[i]];
+	this.imageComponents = new byte[this.nComponents][];
+	for (int i = 0; i < this.nComponents; i++) {
+		frameComponent = this.frameComponents[this.componentIds[i]];
 		this.imageComponents[i] = new byte[frameComponent[CW] * frameComponent[CH]];
 	}
-	frameComponent = this.frameComponents[componentIds[ID_Y]];
+	frameComponent = this.frameComponents[this.componentIds[ID_Y]];
 	for (int yPos = 0; yPos < srcHeight; yPos++) {
 		int srcOfs = yPos * srcWidth;
 		int dstOfs = yPos * frameComponent[CW];
 		System.arraycopy(dataYComp, srcOfs, imageComponents[ID_Y], dstOfs, srcWidth);
 	}
-	frameComponent = frameComponents[componentIds[ID_CB]];
+	frameComponent = this.frameComponents[this.componentIds[ID_CB]];
 	for (int yPos = 0; yPos < srcHeight / maxV; yPos++) {
 		int destRowIndex = yPos * frameComponent[CW];
 		for (int xPos = 0; xPos < srcWidth / maxH; xPos++) {
@@ -245,7 +245,7 @@ void compress(ImageData image, byte[] dataYComp, byte[] dataCbComp, byte[] dataC
 			imageComponents[ID_CB][destRowIndex + xPos] = (byte)(sum / vhFactor);
 		}
 	}
-	frameComponent = frameComponents[componentIds[ID_CR]];
+	frameComponent = this.frameComponents[this.componentIds[ID_CR]];
 	for (int yPos = 0; yPos < srcHeight / maxV; yPos++) {
 		int destRowIndex = yPos * frameComponent[CW];
 		for (int xPos = 0; xPos < srcWidth / maxH; xPos++) {
@@ -259,9 +259,9 @@ void compress(ImageData image, byte[] dataYComp, byte[] dataCbComp, byte[] dataC
 			imageComponents[ID_CR][destRowIndex + xPos] = (byte)(sum / vhFactor);
 		}
 	}
-	for (int iComp = 0; iComp < nComponents; iComp++) {
+	for (int iComp = 0; iComp < this.nComponents; iComp++) {
 		byte[] imageComponent = this.imageComponents[iComp];
-		frameComponent = this.frameComponents[componentIds[iComp]];
+		frameComponent = this.frameComponents[this.componentIds[iComp]];
 		int hFactor = frameComponent[HI];
 		int vFactor = frameComponent[VI];
 		int componentWidth = frameComponent[CW];
@@ -456,7 +456,7 @@ byte[] convertYToRGB() {
 	int compWidth = this.frameComponents[componentIds[ID_Y]][CW];
 	int bytesPerLine = (((imageWidth * 8 + 7) / 8) + 3) / 4 * 4;
 	byte[] data = new byte[bytesPerLine * imageHeight];
-	byte[] yComp = imageComponents[ID_Y];
+	byte[] yComp = this.imageComponents[ID_Y];
 	int destIndex = 0;
 	for (int i = 0; i < imageHeight; i++) {
 		int srcIndex = i * compWidth;
@@ -509,10 +509,10 @@ byte[] convertYCbCrToRGB() {
 	byte[] rgbData = new byte[bSize];
 	int destIndex = 0;
 	expandImageComponents();
-	byte[] yComp = imageComponents[ID_Y];
-	byte[] cbComp = imageComponents[ID_CB];
-	byte[] crComp = imageComponents[ID_CR];
-	int compWidth = frameComponents[componentIds[ID_Y]][CW];
+	byte[] yComp = this.imageComponents[ID_Y];
+	byte[] cbComp = this.imageComponents[ID_CB];
+	byte[] crComp = this.imageComponents[ID_CR];
+	int compWidth = this.frameComponents[this.componentIds[ID_Y]][CW];
 	for (int v = 0; v < imageHeight; v++) {
 		int srcIndex = v * compWidth;
 		for (int i = 0; i < imageWidth; i++) {
@@ -569,11 +569,11 @@ void decodeACCoefficients(int[] dataUnit, int iComp) {
 	}
 }
 void decodeACFirstCoefficients(int[] dataUnit, int iComp, int start, int end, int approxBit) {
-	if (eobrun > 0) {
+	if (this.eobrun > 0) {
 		eobrun--;
 		return;
 	}
-	int[] sParams = scanHeader.componentParameters[componentIds[iComp]];
+	int[] sParams = this.scanHeader.componentParameters[this.componentIds[iComp]];
 	JPEGHuffmanTable acTable = this.acHuffmanTables[sParams[AC]];
 	int k = start;
 	while (k <= end) {
@@ -584,7 +584,7 @@ void decodeACFirstCoefficients(int[] dataUnit, int iComp, int start, int end, in
 			if (r == 15) {
 				k += 16;
 			} else {
-				eobrun = (1 << r) + receive(r) - 1;
+				this.eobrun = (1 << r) + receive(r) - 1;
 				break;
 			}
 		} else {
@@ -600,7 +600,7 @@ void decodeACRefineCoefficients(int[] dataUnit, int iComp, int start, int end, i
 	JPEGHuffmanTable acTable = this.acHuffmanTables[sParams[AC]];
 	int k = start;
 	while (k <= end) {
-		if (eobrun > 0) {
+		if (this.eobrun > 0) {
 			while (k <= end) {
 				int zzIndex = ZigZag8x8[k];
 				if (dataUnit[zzIndex] != 0) {
@@ -626,7 +626,7 @@ void decodeACRefineCoefficients(int[] dataUnit, int iComp, int start, int end, i
 						k++;
 					}
 				} else {
-					eobrun = (1 << r) + receive(r);
+					this.eobrun = (1 << r) + receive(r);
 				}
 			} else {
 				int bit = receive(s);
@@ -669,7 +669,7 @@ void decodeDCCoefficient(int[] dataUnit, int iComp, boolean first, int approxBit
 	int[] sParams = scanHeader.componentParameters[componentIds[iComp]];
 	JPEGHuffmanTable dcTable = this.dcHuffmanTables[sParams[DC]];
 	int lastDC = 0;
-	if (progressive && !first) {
+	if (this.progressive && !first) {
 		int bit = nextBit();
 		lastDC = dataUnit[0] + (bit << approxBit);
 	} else {
@@ -679,9 +679,9 @@ void decodeDCCoefficient(int[] dataUnit, int iComp, boolean first, int approxBit
 			int bits = receive(nBits);
 			int diff = extendBy(bits, nBits);
 			lastDC += diff;
-			precedingDCs[iComp] = lastDC;
+			this.precedingDCs[iComp] = lastDC;
 		}
-		if (progressive) {
+		if (this.progressive) {
 			lastDC = lastDC << approxBit;
 		}
 	}
@@ -695,14 +695,14 @@ void dequantize(int[] dataUnit, int iComp) {
 	}
 }
 byte[] decodeImageComponents() {
-	if (nComponents == 3) { // compIds 1, 2, 3
+	if (this.nComponents == 3) { // compIds 1, 2, 3
 		return convertYCbCrToRGB();
 	}
 //	if (nComponents == 3) { // compIds 1, 4, 5
 //		Unsupported CMYK format.
 //		return convertYIQToRGB();
 //	}
-	if (nComponents == 4) {
+	if (this.nComponents == 4) {
 		return convertCMYKToRGB();
 	}
 	return convertYToRGB();
@@ -710,10 +710,10 @@ byte[] decodeImageComponents() {
 void decodeMCUAtXAndY(int xmcu, int ymcu, int nComponentsInScan, boolean first, int start, int end, int approxBit) {
 	for (int iComp = 0; iComp < nComponentsInScan; iComp++) {
 		int scanComponent = iComp;
-		while (scanHeader.componentParameters[componentIds[scanComponent]] == null) {
+		while (this.scanHeader.componentParameters[this.componentIds[scanComponent]] == null) {
 			scanComponent++;
 		}
-		int[] frameComponent = this.frameComponents[componentIds[scanComponent]];
+		int[] frameComponent = this.frameComponents[this.componentIds[scanComponent]];
 		int hi = frameComponent[HI];
 		int vi = frameComponent[VI];
 		if (nComponentsInScan == 1) {
@@ -723,44 +723,44 @@ void decodeMCUAtXAndY(int xmcu, int ymcu, int nComponentsInScan, boolean first, 
 		int compWidth = frameComponent[CW];
 		for (int ivi = 0; ivi < vi; ivi++) {
 			for (int ihi = 0; ihi < hi; ihi++) {
-				if (progressive) {
+				if (this.progressive) {
 					// Progressive: First scan - create a new data unit.
 					// Subsequent scans - refine the existing data unit.
 					int index = (ymcu * vi + ivi) * compWidth + xmcu * hi + ihi;
-					dataUnit = dataUnits[scanComponent][index];
-					if (dataUnit == null) {
-						dataUnit = new int[64];
+					this.dataUnit = this.dataUnits[scanComponent][index];
+					if (this.dataUnit == null) {
+						this.dataUnit = new int[64];
 						this.dataUnits[scanComponent][index] = dataUnit;
 					}
 				} else {
 					// Sequential: Clear and reuse the data unit buffer.
-					for (int i = 0; i < dataUnit.length; i++) {
-						dataUnit[i] = 0;
+					for (int i = 0; i < this.dataUnit.length; i++) {
+						this.dataUnit[i] = 0;
 					}
 				}
-				if (!progressive || scanHeader.isDCProgressiveScan()) {
-					decodeDCCoefficient(dataUnit, scanComponent, first, approxBit);
+				if (!this.progressive || this.scanHeader.isDCProgressiveScan()) {
+					decodeDCCoefficient(this.dataUnit, scanComponent, first, approxBit);
 				}
-				if (!progressive) {
-					decodeACCoefficients(dataUnit, scanComponent);
+				if (!this.progressive) {
+					decodeACCoefficients(this.dataUnit, scanComponent);
 				} else {
-					if (scanHeader.isACProgressiveScan()) {
+					if (this.scanHeader.isACProgressiveScan()) {
 						if (first) {
-							decodeACFirstCoefficients(dataUnit, scanComponent, start, end, approxBit);
+							decodeACFirstCoefficients(this.dataUnit, scanComponent, start, end, approxBit);
 						} else {
-							decodeACRefineCoefficients(dataUnit, scanComponent, start, end, approxBit);
+							decodeACRefineCoefficients(this.dataUnit, scanComponent, start, end, approxBit);
 						}
 					}
 					if (loader.hasListeners()) {
 						// Dequantization, IDCT, up-sampling and color conversion
 						// are done on a copy of the coefficient data in order to
 						// display the image incrementally.
-						int[] temp = dataUnit;
-						dataUnit = new int[64];
+						int[] temp = this.dataUnit;
+						this.dataUnit = new int[64];
 						System.arraycopy(temp, 0, dataUnit, 0, 64);
 					}
 				}
-				if (!progressive || (progressive && loader.hasListeners())) {
+				if (!this.progressive || (this.progressive && loader.hasListeners())) {
 					dequantize(dataUnit, scanComponent);
 					inverseDCT(dataUnit);
 					storeData(dataUnit, scanComponent, xmcu, ymcu, hi, ihi, vi, ivi);
@@ -770,19 +770,19 @@ void decodeMCUAtXAndY(int xmcu, int ymcu, int nComponentsInScan, boolean first, 
 	}
 }
 void decodeScan() {
-	if (progressive && !scanHeader.verifyProgressiveScan()) {
+	if (this.progressive && !this.scanHeader.verifyProgressiveScan()) {
 		SWT.error(SWT.ERROR_INVALID_IMAGE);
 	}
-	int nComponentsInScan = scanHeader.getNumberOfImageComponents();
+	int nComponentsInScan = this.scanHeader.getNumberOfImageComponents();
 	int mcuRowsInScan = interleavedMcuRows;
 	int mcusPerRow = interleavedMcuCols;
 	if (nComponentsInScan == 1) {
 		// Non-interleaved.
 		int scanComponent = 0;
-		while (scanHeader.componentParameters[componentIds[scanComponent]] == null) {
+		while (this.scanHeader.componentParameters[this.componentIds[scanComponent]] == null) {
 			scanComponent++;
 		}
-		int[] frameComponent = this.frameComponents[componentIds[scanComponent]];
+		int[] frameComponent = this.frameComponents[this.componentIds[scanComponent]];
 		int hi = frameComponent[HI];
 		int vi = frameComponent[VI];
 		int mcuWidth = DCTSIZE * maxH / hi;
@@ -790,16 +790,16 @@ void decodeScan() {
 		mcusPerRow = (imageWidth + mcuWidth - 1) / mcuWidth;
 		mcuRowsInScan = (imageHeight + mcuHeight - 1) / mcuHeight;
 	}
-	boolean first = scanHeader.isFirstScan();
-	int start = scanHeader.getStartOfSpectralSelection();
-	int end = scanHeader.getEndOfSpectralSelection();
-	int approxBit = scanHeader.getApproxBitPositionLow();
-	restartsToGo = restartInterval;
-	nextRestartNumber = 0;
+	boolean first = this.scanHeader.isFirstScan();
+	int start = this.scanHeader.getStartOfSpectralSelection();
+	int end = this.scanHeader.getEndOfSpectralSelection();
+	int approxBit = this.scanHeader.getApproxBitPositionLow();
+	this.restartsToGo = this.restartInterval;
+	this.nextRestartNumber = 0;
 	for (int ymcu = 0; ymcu < mcuRowsInScan; ymcu++) {
 		for (int xmcu = 0; xmcu < mcusPerRow; xmcu++) {
-			if (restartInterval != 0) {
-				if (restartsToGo == 0) processRestartInterval();
+			if (this.restartInterval != 0) {
+				if (this.restartsToGo == 0) processRestartInterval();
 				restartsToGo--;
 			}
 			decodeMCUAtXAndY(xmcu, ymcu, nComponentsInScan, first, start, end, approxBit);
@@ -828,37 +828,37 @@ void emit(int huffCode, int nBits) {
 		1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191, 
 		16383, 32767, 65535, 131125
 	};
-	int code = (huffCode & power2m1[nBits - 1]) << (24 - nBits - currentBitCount);
+	int code = (huffCode & power2m1[nBits - 1]) << (24 - nBits - this.currentBitCount);
 	byte[] codeBuffer = new byte[4];
 	codeBuffer[0] = (byte)(code & 0xFF);
 	codeBuffer[1] = (byte)((code >> 8) & 0xFF);
 	codeBuffer[2] = (byte)((code >> 16) & 0xFF);
 	codeBuffer[3] = (byte)((code >> 24) & 0xFF);
-	int abs = nBits - (8 - currentBitCount);
+	int abs = nBits - (8 - this.currentBitCount);
 	if (abs < 0) abs = -abs;
 	if ((abs >> 3) > 0) {
 		this.currentByte += codeBuffer[2];
-		emitByte((byte)currentByte);
+		emitByte((byte)this.currentByte);
 		emitByte(codeBuffer[1]);
-		currentByte = codeBuffer[0];
-		currentBitCount += nBits - 16;
+		this.currentByte = codeBuffer[0];
+		this.currentBitCount += nBits - 16;
 	} else {
-		currentBitCount += nBits;
-		if (currentBitCount >= 8) {
+		this.currentBitCount += nBits;
+		if (this.currentBitCount >= 8) {
 			this.currentByte += codeBuffer[2];
-			emitByte((byte)currentByte);
-			currentByte = codeBuffer[1];
-			currentBitCount -= 8;
+			emitByte((byte)this.currentByte);
+			this.currentByte = codeBuffer[1];
+			this.currentBitCount -= 8;
 		} else {
 			this.currentByte += codeBuffer[2];
 		}
 	}
 }
 void emitByte(byte byteValue) {
-	if (bufferCurrentPosition >= 512) {
+	if (this.bufferCurrentPosition >= 512) {
 		resetOutputBuffer();
 	}
-	dataBuffer[bufferCurrentPosition] = byteValue;
+	this.dataBuffer[this.bufferCurrentPosition] = byteValue;
 	bufferCurrentPosition++;
 	if (byteValue == -1) {
 		emitByte((byte)0);
@@ -924,18 +924,18 @@ void encodeDCCoefficients(int[] dataUnit, int iComp) {
 }
 void encodeMCUAtXAndY(int xmcu, int ymcu) {
 	int nComponentsInScan = scanHeader.getNumberOfImageComponents();
-	dataUnit = new int[64];
+	this.dataUnit = new int[64];
 	for (int iComp = 0; iComp < nComponentsInScan; iComp++) {
-		int[] frameComponent = this.frameComponents[componentIds[iComp]];
+		int[] frameComponent = this.frameComponents[this.componentIds[iComp]];
 		int hi = frameComponent[HI];
 		int vi = frameComponent[VI];
 		for (int ivi = 0; ivi < vi; ivi++) {
 			for (int ihi = 0; ihi < hi; ihi++) {
-				extractData(dataUnit, iComp, xmcu, ymcu, ihi, ivi);
-				forwardDCT(dataUnit);
-				quantizeData(dataUnit, iComp);
-				encodeDCCoefficients(dataUnit, iComp);
-				encodeACCoefficients(dataUnit, iComp);
+				extractData(this.dataUnit, iComp, xmcu, ymcu, ihi, ivi);
+				forwardDCT(this.dataUnit);
+				quantizeData(this.dataUnit, iComp);
+				encodeDCCoefficients(this.dataUnit, iComp);
+				encodeACCoefficients(this.dataUnit, iComp);
 			}
 		}
 	}
@@ -946,14 +946,14 @@ void encodeScan() {
 			encodeMCUAtXAndY(xmcu, ymcu);
 		}
 	}
-	if (currentBitCount != 0) {
-		emitByte((byte)currentByte);
+	if (this.currentBitCount != 0) {
+		emitByte((byte)this.currentByte);
 	}
 	resetOutputBuffer();
 }
 void expandImageComponents() {
-	for (int iComp = 0; iComp < nComponents; iComp++) {
-		int[] frameComponent = this.frameComponents[componentIds[iComp]];
+	for (int iComp = 0; iComp < this.nComponents; iComp++) {
+		int[] frameComponent = this.frameComponents[this.componentIds[iComp]];
 		int hi = frameComponent[HI];
 		int vi = frameComponent[VI];
 		int upH = maxH / hi;
@@ -966,7 +966,7 @@ void expandImageComponents() {
 			int upCompHeight = compHeight * upV;
 			ImageData src = new ImageData(compWidth, compHeight, 8, new PaletteData(RGB16), 4, component);
 			ImageData dest = src.scaledTo(upCompWidth, upCompHeight);
-			imageComponents[iComp] = dest.data;
+			this.imageComponents[iComp] = dest.data;
 		}
 	}
 }
@@ -979,7 +979,7 @@ int extendBy(int diff, int t) {
 }
 void extractData(int[] dataUnit, int iComp, int xmcu, int ymcu, int ihi, int ivi) {
 	byte[] compImage = this.imageComponents[iComp];
-	int[] frameComponent = this.frameComponents[componentIds[iComp]];
+	int[] frameComponent = this.frameComponents[this.componentIds[iComp]];
 	int hi = frameComponent[HI];
 	int vi = frameComponent[VI];
 	int compWidth = frameComponent[CW];
@@ -1163,19 +1163,19 @@ void getDHT() {
 	if (!dht.verify()) {
 		SWT.error(SWT.ERROR_INVALID_IMAGE);
 	}
-	if (acHuffmanTables == null) {
+	if (this.acHuffmanTables == null) {
 		this.acHuffmanTables = new JPEGHuffmanTable[4];
 	}
-	if (dcHuffmanTables == null) {
+	if (this.dcHuffmanTables == null) {
 		this.dcHuffmanTables = new JPEGHuffmanTable[4];
 	}
 	JPEGHuffmanTable[] dhtTables = dht.getAllTables();
 	for (int i = 0; i < dhtTables.length; i++) {
 		JPEGHuffmanTable dhtTable = dhtTables[i];
 		if (dhtTable.getTableClass() == 0) {
-			dcHuffmanTables[dhtTable.getTableIdentifier()] = dhtTable;
+			this.dcHuffmanTables[dhtTable.getTableIdentifier()] = dhtTable;
 		} else {
-			acHuffmanTables[dhtTable.getTableIdentifier()] = dhtTable;
+			this.acHuffmanTables[dhtTable.getTableIdentifier()] = dhtTable;
 		}
 	}
 }
@@ -1184,7 +1184,7 @@ void getDNL() {
 }
 void getDQT() {
 	JPEGQuantizationTable dqt = new JPEGQuantizationTable(inputStream);
-	int[][] currentTables = quantizationTables;
+	int[][] currentTables = this.quantizationTables;
 	if (currentTables == null) {
 		currentTables = new int[4][];
 	}
@@ -1201,7 +1201,7 @@ void getDRI() {
 	if (!dri.verify()) {
 		SWT.error(SWT.ERROR_INVALID_IMAGE);
 	}
-	restartInterval = dri.getRestartInterval();
+	this.restartInterval = dri.getRestartInterval();
 }
 void inverseDCT(int[] dataUnit) {
 	for (int row = 0; row < 8; row++) {
@@ -1391,40 +1391,40 @@ ImageData[] loadFromByteStream() {
 	}
 	JPEGStartOfImage soi = new JPEGStartOfImage(inputStream);
 	if (!soi.verify()) SWT.error(SWT.ERROR_INVALID_IMAGE);
-	restartInterval = 0;
+	this.restartInterval = 0;
 
 	/* Process the tables preceding the frame header. */
 	processTables();
 	
 	/* Start of Frame. */
-	frameHeader = new JPEGFrameHeader(inputStream);
-	if (!frameHeader.verify()) SWT.error(SWT.ERROR_INVALID_IMAGE);
-	imageWidth = frameHeader.getSamplesPerLine();
-	imageHeight = frameHeader.getNumberOfLines();
-	maxH = frameHeader.getMaxHFactor();
-	maxV = frameHeader.getMaxVFactor();
+	this.frameHeader = new JPEGFrameHeader(inputStream);
+	if (!this.frameHeader.verify()) SWT.error(SWT.ERROR_INVALID_IMAGE);
+	imageWidth = this.frameHeader.getSamplesPerLine();
+	imageHeight = this.frameHeader.getNumberOfLines();
+	maxH = this.frameHeader.getMaxHFactor();
+	maxV = this.frameHeader.getMaxVFactor();
 	int mcuWidth = maxH * DCTSIZE;
 	int mcuHeight = maxV * DCTSIZE;
 	interleavedMcuCols = (imageWidth + mcuWidth - 1) / mcuWidth;
 	interleavedMcuRows = (imageHeight + mcuHeight - 1) / mcuHeight;
-	progressive = frameHeader.isProgressive();
-	samplePrecision = frameHeader.getSamplePrecision();
-	nComponents = frameHeader.getNumberOfImageComponents();
-	frameComponents = frameHeader.componentParameters;
-	componentIds = frameHeader.componentIdentifiers;
-	imageComponents = new byte[nComponents][];
-	if (progressive) {
+	this.progressive = this.frameHeader.isProgressive();
+	this.samplePrecision = this.frameHeader.getSamplePrecision();
+	this.nComponents = this.frameHeader.getNumberOfImageComponents();
+	this.frameComponents = this.frameHeader.componentParameters;
+	this.componentIds = this.frameHeader.componentIdentifiers;
+	this.imageComponents = new byte[this.nComponents][];
+	if (this.progressive) {
 		// Progressive jpeg: need to keep all of the data units.
-		this.dataUnits = new int[nComponents][][];
+		this.dataUnits = new int[this.nComponents][][];
 	} else {
 		// Sequential jpeg: only need one data unit.
-		dataUnit = new int[8 * 8];
+		this.dataUnit = new int[8 * 8];
 	}
-	for (int i = 0; i < nComponents; i++) {
-		int[] frameComponent = this.frameComponents[componentIds[i]];
+	for (int i = 0; i < this.nComponents; i++) {
+		int[] frameComponent = this.frameComponents[this.componentIds[i]];
 		int bufferSize = frameComponent[CW] * frameComponent[CH];
 		this.imageComponents[i] = new byte[bufferSize];
-		if (progressive) {
+		if (this.progressive) {
 			this.dataUnits[i] = new int[bufferSize][];
 		}
 	}
@@ -1433,27 +1433,27 @@ ImageData[] loadFromByteStream() {
 	processTables();
 	
 	/* Start of Scan. */
-	scanHeader = new JPEGScanHeader(inputStream);
-	if (!scanHeader.verify()) SWT.error(SWT.ERROR_INVALID_IMAGE);
+	this.scanHeader = new JPEGScanHeader(inputStream);
+	if (!this.scanHeader.verify()) SWT.error(SWT.ERROR_INVALID_IMAGE);
 	
 	/* Process scan(s) and further tables until EOI. */
 	int progressiveScanCount = 0;
 	boolean done = false;
 	while(!done) {
 		resetInputBuffer();
-		precedingDCs = new int[4];
+		this.precedingDCs = new int[4];
 		decodeScan();
-		if (progressive && loader.hasListeners()) {
+		if (this.progressive && loader.hasListeners()) {
 			ImageData imageData = createImageData();
 			loader.notifyListeners(new ImageLoaderEvent(loader, imageData, progressiveScanCount, false));
 			progressiveScanCount++;
 		}
 
 		/* Unread any buffered data before looking for tables again. */
-		int delta = 512 - bufferCurrentPosition - 1;
+		int delta = 512 - this.bufferCurrentPosition - 1;
 		if (delta > 0) {
 			byte[] unreadBuffer = new byte[delta];
-			System.arraycopy(dataBuffer, bufferCurrentPosition + 1, unreadBuffer, 0, delta);
+			System.arraycopy(this.dataBuffer, bufferCurrentPosition + 1, unreadBuffer, 0, delta);
 			try {
 				inputStream.unread(unreadBuffer);
 			} catch (IOException e) {
@@ -1466,35 +1466,35 @@ ImageData[] loadFromByteStream() {
 		if (jpegSegment == null || jpegSegment.getSegmentMarker() == EOI) {
 			done = true;
 		} else {
-			scanHeader = new JPEGScanHeader(inputStream);
-			if (!scanHeader.verify()) SWT.error(SWT.ERROR_INVALID_IMAGE);
+			this.scanHeader = new JPEGScanHeader(inputStream);
+			if (!this.scanHeader.verify()) SWT.error(SWT.ERROR_INVALID_IMAGE);
 		}
 	}
 	
-	if (progressive) {
+	if (this.progressive) {
 		for (int ymcu = 0; ymcu < interleavedMcuRows; ymcu++) {
 			for (int xmcu = 0; xmcu < interleavedMcuCols; xmcu++) {
-				for (int iComp = 0; iComp < nComponents; iComp++) {
-					int[] frameComponent = this.frameComponents[componentIds[iComp]];
+				for (int iComp = 0; iComp < this.nComponents; iComp++) {
+					int[] frameComponent = this.frameComponents[this.componentIds[iComp]];
 					int hi = frameComponent[HI];
 					int vi = frameComponent[VI];
 					int compWidth = frameComponent[CW];
 					for (int ivi = 0; ivi < vi; ivi++) {
 						for (int ihi = 0; ihi < hi; ihi++) {
 							int index = (ymcu * vi + ivi) * compWidth + xmcu * hi + ihi;
-							dataUnit = dataUnits[iComp][index];
-							dequantize(dataUnit, iComp);
-							inverseDCT(dataUnit);
-							storeData(dataUnit, iComp, xmcu, ymcu, hi, ihi, vi, ivi);
+							this.dataUnit = this.dataUnits[iComp][index];
+							dequantize(this.dataUnit, iComp);
+							inverseDCT(this.dataUnit);
+							storeData(this.dataUnit, iComp, xmcu, ymcu, hi, ihi, vi, ivi);
 						}
 					}
 				}
 			}
 		}
-		dataUnits = null; // release memory
+		this.dataUnits = null; // release memory
 	}
 	ImageData imageData = createImageData();
-	if (progressive && loader.hasListeners()) {
+	if (this.progressive && loader.hasListeners()) {
 		loader.notifyListeners(new ImageLoaderEvent(loader, imageData, progressiveScanCount, true));
 	}
 	return new ImageData[] {imageData};
@@ -1503,7 +1503,7 @@ ImageData createImageData() {
 	return ImageData.internal_new(
 		imageWidth,
 		imageHeight, 
-		nComponents * samplePrecision,
+		this.nComponents * this.samplePrecision,
 		setUpPalette(),
 		nComponents == 1 ? 4 : 1,
 		decodeImageComponents(),
@@ -1519,10 +1519,10 @@ ImageData createImageData() {
 		0);
 }
 int nextBit() {
-	if (currentBitCount != 0) {
+	if (this.currentBitCount != 0) {
 		currentBitCount--;
 		this.currentByte *= 2;
-		if (currentByte > 255) {
+		if (this.currentByte > 255) {
 			this.currentByte -= 256;
 			return 1;
 		} else {
@@ -1530,26 +1530,26 @@ int nextBit() {
 		}
 	}
 	bufferCurrentPosition++;
-	if (bufferCurrentPosition >= 512) {
+	if (this.bufferCurrentPosition >= 512) {
 		resetInputBuffer();
-		bufferCurrentPosition = 0;
+		this.bufferCurrentPosition = 0;
 	}
-	currentByte = dataBuffer[bufferCurrentPosition] & 0xFF;
-	currentBitCount = 8;
+	this.currentByte = this.dataBuffer[this.bufferCurrentPosition] & 0xFF;
+	this.currentBitCount = 8;
 	byte nextByte;
-	if (bufferCurrentPosition == 511) {
+	if (this.bufferCurrentPosition == 511) {
 		resetInputBuffer();
-		currentBitCount = 8;
-		nextByte = dataBuffer[0];
+		this.currentBitCount = 8;
+		nextByte = this.dataBuffer[0];
 	} else {
-		nextByte = dataBuffer[bufferCurrentPosition + 1];
+		nextByte = this.dataBuffer[this.bufferCurrentPosition + 1];
 	}
-	if (currentByte == 0xFF) {
+	if (this.currentByte == 0xFF) {
 		if (nextByte == 0) {
-			bufferCurrentPosition ++;
+			this.bufferCurrentPosition ++;
 			currentBitCount--;
 			this.currentByte *= 2;
-			if (currentByte > 255) {
+			if (this.currentByte > 255) {
 				this.currentByte -= 256;
 				return 1;
 			} else {
@@ -1567,7 +1567,7 @@ int nextBit() {
 	} else {
 		currentBitCount--;
 		this.currentByte *= 2;
-		if (currentByte > 255) {
+		if (this.currentByte > 255) {
 			this.currentByte -= 256;
 			return 1;
 		} else {
@@ -1578,34 +1578,34 @@ int nextBit() {
 void processRestartInterval() {
 	do {
 		bufferCurrentPosition++;
-		if (bufferCurrentPosition > 511) {
+		if (this.bufferCurrentPosition > 511) {
 			resetInputBuffer();
-			bufferCurrentPosition = 0;
+			this.bufferCurrentPosition = 0;
 		}
-		currentByte = dataBuffer[bufferCurrentPosition] & 0xFF;
-	} while (currentByte != 0xFF);
-	while (currentByte == 0xFF) {
+		this.currentByte = this.dataBuffer[this.bufferCurrentPosition] & 0xFF;
+	} while (this.currentByte != 0xFF);
+	while (this.currentByte == 0xFF) {
 		bufferCurrentPosition++;
-		if (bufferCurrentPosition > 511) {
+		if (this.bufferCurrentPosition > 511) {
 			resetInputBuffer();
-			bufferCurrentPosition = 0;
+			this.bufferCurrentPosition = 0;
 		}
-		currentByte = dataBuffer[bufferCurrentPosition] & 0xFF;
+		this.currentByte = this.dataBuffer[this.bufferCurrentPosition] & 0xFF;
 	}
-	if (currentByte != ((RST0 + nextRestartNumber) & 0xFF)) {
+	if (this.currentByte != ((RST0 + this.nextRestartNumber) & 0xFF)) {
 		SWT.error(SWT.ERROR_INVALID_IMAGE);
 	}
 	bufferCurrentPosition++;
-	if (bufferCurrentPosition > 511) {
+	if (this.bufferCurrentPosition > 511) {
 		resetInputBuffer();
-		bufferCurrentPosition = 0;
+		this.bufferCurrentPosition = 0;
 	}
-	currentByte = dataBuffer[bufferCurrentPosition] & 0xFF;
-	currentBitCount = 8;
-	restartsToGo = restartInterval;
-	nextRestartNumber = (nextRestartNumber + 1) & 0x7;
-	precedingDCs = new int[4];
-	eobrun = 0;
+	this.currentByte = this.dataBuffer[this.bufferCurrentPosition] & 0xFF;
+	this.currentBitCount = 8;
+	this.restartsToGo = this.restartInterval;
+	this.nextRestartNumber = (this.nextRestartNumber + 1) & 0x7;
+	this.precedingDCs = new int[4];
+	this.eobrun = 0;
 }
 /* Process all markers until a frame header, scan header, or EOI is found. */
 JPEGSegment processTables() {
@@ -1676,23 +1676,23 @@ int receive(int nBits) {
 	return v;
 }
 void resetInputBuffer() {
-	if (dataBuffer == null) {
-		dataBuffer = new byte[512];
+	if (this.dataBuffer == null) {
+		this.dataBuffer = new byte[512];
 	}
 	try {
-		inputStream.read(dataBuffer);
+		inputStream.read(this.dataBuffer);
 	} catch (IOException e) {
 		SWT.error(SWT.ERROR_IO, e);
 	}
-	currentBitCount = 0;
-	bufferCurrentPosition = -1;
+	this.currentBitCount = 0;
+	this.bufferCurrentPosition = -1;
 }
 void resetOutputBuffer() {
-	if (dataBuffer == null) {
-		dataBuffer = new byte[512];
+	if (this.dataBuffer == null) {
+		this.dataBuffer = new byte[512];
 	} else {
 		try {
-			outputStream.write(dataBuffer, 0, bufferCurrentPosition);
+			outputStream.write(this.dataBuffer, 0, bufferCurrentPosition);
 		} catch (IOException e) {
 			SWT.error(SWT.ERROR_IO, e);
 		}
@@ -1718,7 +1718,7 @@ static JPEGSegment seekUnspecifiedMarker(LEDataInputStream byteStream) {
 	return null;
 }
 PaletteData setUpPalette() {
-	if (nComponents == 1) {
+	if (this.nComponents == 1) {
 		RGB[] entries = new RGB[256];
 		for (int i = 0; i < 256; i++) {
 			entries[i] = new RGB(i, i, i);
@@ -1746,7 +1746,7 @@ static void skipSegmentFrom(LEDataInputStream byteStream) {
 }
 void storeData(int[] dataUnit, int iComp, int xmcu, int ymcu, int hi, int ihi, int vi, int ivi) {
 	byte[] compImage = this.imageComponents[iComp];
-	int[] frameComponent = this.frameComponents[componentIds[iComp]];
+	int[] frameComponent = this.frameComponents[this.componentIds[iComp]];
 	int compWidth = frameComponent[CW];
 	int destIndex = ((ymcu * vi + ivi) * compWidth * DCTSIZE) + ((xmcu * hi + ihi) * DCTSIZE);
 	int srcIndex = 0;
@@ -1774,7 +1774,7 @@ void unloadIntoByteStream(ImageLoader loader) {
 	if (!appn.writeToStream(outputStream)) {
 		SWT.error(SWT.ERROR_IO);
 	}
-	quantizationTables = new int[4][];
+	this.quantizationTables = new int[4][];
 	JPEGQuantizationTable chromDQT = JPEGQuantizationTable.defaultChrominanceTable();
 	int encoderQFactor = loader.compression >= 1 && loader.compression <= 100 ? loader.compression : 75;
 	chromDQT.scaleBy(encoderQFactor);
@@ -1805,7 +1805,7 @@ void unloadIntoByteStream(ImageLoader loader) {
 		scanParams = new int[1][];
 		scanParams[0] = new int[] {0, 0};
 		scanLength = 8;
-		nComponents = 1;
+		this.nComponents = 1;
 		precision = 1;
 	} else {
 		frameLength = 17;
@@ -1818,34 +1818,34 @@ void unloadIntoByteStream(ImageLoader loader) {
 		scanParams[1] = new int[] {1, 1};
 		scanParams[2] = new int[] {1, 1};
 		scanLength = 12;
-		nComponents = 3;
+		this.nComponents = 3;
 		precision = 8;
 	}
 	imageWidth = image.width;
 	imageHeight = image.height;
-	frameHeader = new JPEGFrameHeader(new byte[19]);
-	frameHeader.setSegmentMarker(SOF0);
-	frameHeader.setSegmentLength(frameLength);
-	frameHeader.setSamplePrecision(precision);
-	frameHeader.setSamplesPerLine(imageWidth);
-	frameHeader.setNumberOfLines(imageHeight);
-	frameHeader.setNumberOfImageComponents(nComponents);
-	frameHeader.componentParameters = frameParams;
-	frameHeader.componentIdentifiers = new int[] {0, 1, 2};
-	frameHeader.initializeContents();
-	if (!frameHeader.writeToStream(outputStream)) {
+	this.frameHeader = new JPEGFrameHeader(new byte[19]);
+	this.frameHeader.setSegmentMarker(SOF0);
+	this.frameHeader.setSegmentLength(frameLength);
+	this.frameHeader.setSamplePrecision(precision);
+	this.frameHeader.setSamplesPerLine(imageWidth);
+	this.frameHeader.setNumberOfLines(imageHeight);
+	this.frameHeader.setNumberOfImageComponents(this.nComponents);
+	this.frameHeader.componentParameters = frameParams;
+	this.frameHeader.componentIdentifiers = new int[] {0, 1, 2};
+	this.frameHeader.initializeContents();
+	if (!this.frameHeader.writeToStream(outputStream)) {
 		SWT.error(SWT.ERROR_IO);
 	}
-	frameComponents = frameParams;
-	componentIds = frameHeader.componentIdentifiers;
-	maxH = frameHeader.getMaxHFactor();
-	maxV = frameHeader.getMaxVFactor();
+	this.frameComponents = frameParams;
+	this.componentIds = this.frameHeader.componentIdentifiers;
+	maxH = this.frameHeader.getMaxHFactor();
+	maxV = this.frameHeader.getMaxVFactor();
 	int mcuWidth = maxH * DCTSIZE;
 	int mcuHeight = maxV * DCTSIZE;
 	interleavedMcuCols = (imageWidth + mcuWidth - 1) / mcuWidth;
 	interleavedMcuRows = (imageHeight + mcuHeight - 1) / mcuHeight;
-	acHuffmanTables = new JPEGHuffmanTable[4];
-	dcHuffmanTables = new JPEGHuffmanTable[4];
+	this.acHuffmanTables = new JPEGHuffmanTable[4];
+	this.dcHuffmanTables = new JPEGHuffmanTable[4];
 	JPEGHuffmanTable[] dhtTables = new JPEGHuffmanTable[] {
 		JPEGHuffmanTable.getDefaultDCLuminanceTable(),
 		JPEGHuffmanTable.getDefaultDCChrominanceTable(),
@@ -1861,28 +1861,28 @@ void unloadIntoByteStream(ImageLoader loader) {
 		for (int j = 0; j < allTables.length; j++) {
 			JPEGHuffmanTable huffmanTable = allTables[j];
 			if (huffmanTable.getTableClass() == 0) {
-				dcHuffmanTables[huffmanTable.getTableIdentifier()] = huffmanTable;
+				this.dcHuffmanTables[huffmanTable.getTableIdentifier()] = huffmanTable;
 			} else {
-				acHuffmanTables[huffmanTable.getTableIdentifier()] = huffmanTable;
+				this.acHuffmanTables[huffmanTable.getTableIdentifier()] = huffmanTable;
 			}
 		}
 	}
-	precedingDCs = new int[4];
-	scanHeader = new JPEGScanHeader(new byte[14]);
-	scanHeader.setSegmentMarker(SOS);
-	scanHeader.setSegmentLength(scanLength);
-	scanHeader.setNumberOfImageComponents(nComponents);
-	scanHeader.setStartOfSpectralSelection(0);
-	scanHeader.setEndOfSpectralSelection(63);
-	scanHeader.componentParameters = scanParams;
-	scanHeader.initializeContents();
-	if (!scanHeader.writeToStream(outputStream)) {
+	this.precedingDCs = new int[4];
+	this.scanHeader = new JPEGScanHeader(new byte[14]);
+	this.scanHeader.setSegmentMarker(SOS);
+	this.scanHeader.setSegmentLength(scanLength);
+	this.scanHeader.setNumberOfImageComponents(this.nComponents);
+	this.scanHeader.setStartOfSpectralSelection(0);
+	this.scanHeader.setEndOfSpectralSelection(63);
+	this.scanHeader.componentParameters = scanParams;
+	this.scanHeader.initializeContents();
+	if (!this.scanHeader.writeToStream(outputStream)) {
 		SWT.error(SWT.ERROR_IO);
 	}
 	convertImageToYCbCr(image);
 	resetOutputBuffer();
-	currentByte = 0;
-	currentBitCount = 0;
+	this.currentByte = 0;
+	this.currentBitCount = 0;
 	encodeScan();
 	if (!new JPEGEndOfImage().writeToStream(outputStream)) {
 		SWT.error(SWT.ERROR_IO);

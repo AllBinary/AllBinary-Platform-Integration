@@ -62,8 +62,8 @@ public class InputMethod
 
 	public void removeInputMethodListener(InputMethodListener l)
 	{
-		if (l == inputMethodListener) {
-			inputMethodListener = null;
+		if (l == this.inputMethodListener) {
+			this.inputMethodListener = null;
 			setInputMode(INPUT_NONE);
 		}
 	}
@@ -71,7 +71,7 @@ public class InputMethod
 
 	public void setInputMethodListener(InputMethodListener l)
 	{
-		inputMethodListener = l;
+		this.inputMethodListener = l;
         switch (l.getConstraints() & TextField.CONSTRAINT_MASK) {
 	        case TextField.ANY :
 	        case TextField.EMAILADDR :

@@ -13,9 +13,9 @@ public class Number3d
 
     public Number3d()
     {
-        x = 0.0f;
-        y = 0.0f;
-        z = 0.0f;
+        this.x = 0.0f;
+        this.y = 0.0f;
+        this.z = 0.0f;
     }
 
     public Number3d(float x, float y, float z)
@@ -75,15 +75,15 @@ public class Number3d
 
     public Number3d clone()
     {
-        return new Number3d(x, y, z);
+        return new Number3d(this.x, y, z);
     }
 
     private final NoDecimalTrigTable noDecimalTrigTable = NoDecimalTrigTable.getInstance();
 
     public void rotateX(int angle, Number3d initialNumber3d)
     {
-        float cosRY = (float) noDecimalTrigTable.cos(angle) / 10000;
-        float sinRY = (float) noDecimalTrigTable.sin(angle) / 10000;
+        float cosRY = (float) this.noDecimalTrigTable.cos(angle) / 10000;
+        float sinRY = (float) this.noDecimalTrigTable.sin(angle) / 10000;
 
         this.y = (initialNumber3d.y * cosRY) - (initialNumber3d.z * sinRY);
         this.z = (initialNumber3d.y * sinRY) + (initialNumber3d.z * cosRY);
@@ -91,8 +91,8 @@ public class Number3d
 
     public void rotateY(int angle, Number3d initialNumber3d)
     {
-        float cosRY = (float) noDecimalTrigTable.cos(angle) / 10000;
-        float sinRY = (float) noDecimalTrigTable.sin(angle) / 10000;
+        float cosRY = (float) this.noDecimalTrigTable.cos(angle) / 10000;
+        float sinRY = (float) this.noDecimalTrigTable.sin(angle) / 10000;
 
         this.x = (initialNumber3d.x * cosRY) + (initialNumber3d.z * sinRY);
         this.z = (initialNumber3d.x * -sinRY) + (initialNumber3d.z * cosRY);
@@ -100,8 +100,8 @@ public class Number3d
 
     public void rotateZ(int angle, Number3d initialNumber3d)
     {
-        float cosRY = (float) noDecimalTrigTable.cos(angle) / 10000;
-        float sinRY = (float) noDecimalTrigTable.sin(angle) / 10000;
+        float cosRY = (float) this.noDecimalTrigTable.cos(angle) / 10000;
+        float sinRY = (float) this.noDecimalTrigTable.sin(angle) / 10000;
 
         this.x = (initialNumber3d.x * cosRY) - (initialNumber3d.y * sinRY);
         this.z = (initialNumber3d.x * sinRY) + (initialNumber3d.y * cosRY);
@@ -146,11 +146,11 @@ public class Number3d
 
         final String COMMA_SEP = CommonSeps.getInstance().COMMA_SEP;
 
-        stringBuffer.append(Float.toString(x));
+        stringBuffer.append(Float.toString(this.x));
         stringBuffer.append(COMMA_SEP);
-        stringBuffer.append(Float.toString(y));
+        stringBuffer.append(Float.toString(this.y));
         stringBuffer.append(COMMA_SEP);
-        stringBuffer.append(Float.toString(z));
+        stringBuffer.append(Float.toString(this.z));
         
     }
         

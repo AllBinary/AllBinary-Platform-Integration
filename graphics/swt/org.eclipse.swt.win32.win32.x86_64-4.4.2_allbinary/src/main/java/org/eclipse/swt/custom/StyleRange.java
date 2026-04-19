@@ -109,8 +109,8 @@ public boolean equals(Object object) {
 	if (object == this) return true;
 	if (object instanceof StyleRange) {
 		StyleRange style = (StyleRange)object;
-		if (start != style.start) return false;
-		if (length != style.length) return false;
+		if (this.start != style.start) return false;
+		if (this.length != style.length) return false;
 		return similarTo(style);
 	}
 	return false;
@@ -128,7 +128,7 @@ public boolean equals(Object object) {
  */
 @Override
 public int hashCode() {
-	return super.hashCode() ^ fontStyle;
+	return super.hashCode() ^ this.fontStyle;
 }
 boolean isVariableHeight() {
 	return font != null || metrics != null || rise != 0;
@@ -145,7 +145,7 @@ public boolean isUnstyled() {
 	if (metrics != null) return false;
 	if (foreground != null) return false;
 	if (background != null) return false;
-	if (fontStyle != SWT.NORMAL) return false;
+	if (this.fontStyle != SWT.NORMAL) return false;
 	if (underline) return false;
 	if (strikeout) return false;
 	if (borderStyle != SWT.NONE) return false;
@@ -162,7 +162,7 @@ public boolean isUnstyled() {
  */
 public boolean similarTo(StyleRange style) {
 	if (!super.equals(style)) return false;
-	if (fontStyle != style.fontStyle) return false;
+	if (this.fontStyle != style.fontStyle) return false;
 	return true;
 }
 
@@ -190,9 +190,9 @@ public Object clone() {
 public String toString() {
 	StringBuffer buffer = new StringBuffer();
 	buffer.append("StyleRange {");
-	buffer.append(start);
+	buffer.append(this.start);
 	buffer.append(", ");
-	buffer.append(length);
+	buffer.append(this.length);
 	buffer.append(", fontStyle=");
 	switch (fontStyle) {
 		case SWT.BOLD:

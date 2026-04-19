@@ -111,14 +111,14 @@ public int decode(byte[] src, byte[] dest, int offsetDest, int rowSize, int nRow
 	this.dest = dest;
 	this.rowSize = rowSize;
 	this.byteOffsetSrc = 0;
-	bitOffsetSrc = 0;
+	this.bitOffsetSrc = 0;
 	this.byteOffsetDest = offsetDest;
 	this.bitOffsetDest = 0;
 	int cnt = 0;
 	while (cnt < nRows && decodeRow()) {
 		cnt++;
 		/* byte aligned */
-		if (bitOffsetDest > 0) {
+		if (this.bitOffsetDest > 0) {
 			byteOffsetDest++;
 			this.bitOffsetDest = 0; 
 		}
@@ -129,12 +129,12 @@ public int decode(byte[] src, byte[] dest, int offsetDest, int rowSize, int nRow
 boolean decodeRow() {
 	this.isWhite = true;
 	int n = 0;
-	while (n < rowSize) {
+	while (n < this.rowSize) {
 		int runLength = decodeRunLength();
 		if (runLength < 0) return false;
 		n += runLength;
-		setNextBits(isWhite ? whiteValue : blackValue, runLength);
-		isWhite = !isWhite;
+		setNextBits(this.isWhite ? this.whiteValue : this.blackValue, runLength);
+		this.isWhite = !this.isWhite;
 	}
 	return true;
 }
@@ -145,16 +145,16 @@ int decodeRunLength() {
 	short[][][] huffmanCode = this.isWhite ? WHITE_CODE : BLACK_CODE;
 	while (true) {
 		boolean found = false;
-		nbrBits = this.isWhite ? WHITE_MIN_BITS : BLACK_MIN_BITS;
-		code = getNextBits(nbrBits);
+		this.nbrBits = this.isWhite ? WHITE_MIN_BITS : BLACK_MIN_BITS;
+		this.code = getNextBits(this.nbrBits);
 		for (int i = 0; i < huffmanCode.length; i++) {
 			for (int j = 0; j < huffmanCode[i].length; j++) {
-				if (huffmanCode[i][j][0] == code) {
+				if (huffmanCode[i][j][0] == this.code) {
 					found = true;
 					partialRun = huffmanCode[i][j][1];
 					if (partialRun == -1) {
 						/* Stop when reaching final EOL on last byte */
-						if (byteOffsetSrc == src.length - 1) return -1;
+						if (this.byteOffsetSrc == this.src.length - 1) return -1;
 						/* Group 3 starts each row with an EOL - ignore it */
 					} else {
 						runLength += partialRun;
@@ -164,7 +164,7 @@ int decodeRunLength() {
 				}
 			}
 			if (found) break;
-			code = code << 1 | getNextBit();
+			this.code = this.code << 1 | getNextBit();
 		}
 		if (!found) SWT.error(SWT.ERROR_INVALID_IMAGE);			 
 	}
@@ -173,9 +173,9 @@ int decodeRunLength() {
 int getNextBit() {
 	int value = (src[byteOffsetSrc] >>> (7 - bitOffsetSrc)) & 0x1;
 	bitOffsetSrc++;
-	if (bitOffsetSrc > 7) {
+	if (this.bitOffsetSrc > 7) {
 		byteOffsetSrc++;
-		bitOffsetSrc = 0;
+		this.bitOffsetSrc = 0;
 	}
 	return value;
 }
@@ -190,23 +190,23 @@ int getNextBits(int cnt) {
 
 void setNextBits(int value, int cnt) {
 	int n = cnt;
-	while (bitOffsetDest > 0 && bitOffsetDest <= 7 && n > 0) {
-		dest[this.byteOffsetDest] = value == 1 ?
+	while (this.bitOffsetDest > 0 && this.bitOffsetDest <= 7 && n > 0) {
+		this.dest[this.byteOffsetDest] = value == 1 ?
 			(byte)(dest[byteOffsetDest] | (1 << (7 - bitOffsetDest))) :
 			(byte)(dest[byteOffsetDest] & ~(1 << (7 - bitOffsetDest)));
 		n--;
 		bitOffsetDest++; 
 	}
-	if (bitOffsetDest == 8) {
+	if (this.bitOffsetDest == 8) {
 		byteOffsetDest++;
 		this.bitOffsetDest = 0;
 	}
 	while (n >= 8) {
-		dest[byteOffsetDest++] = (byte) (value == 1 ? 0xFF : 0);
+		this.dest[byteOffsetDest++] = (byte) (value == 1 ? 0xFF : 0);
 		n -= 8;
 	}
 	while (n > 0) {
-		dest[this.byteOffsetDest] = value == 1 ?
+		this.dest[this.byteOffsetDest] = value == 1 ?
 			(byte)(dest[byteOffsetDest] | (1 << (7 - bitOffsetDest))) :
 			(byte)(dest[byteOffsetDest] & ~(1 << (7 - bitOffsetDest)));
 		n--;

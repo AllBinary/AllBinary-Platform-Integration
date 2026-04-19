@@ -93,7 +93,7 @@ public class DirectGraphicsImp implements DirectGraphics{
      */
     public void setARGBColor(int argb) {
         alphaComponent=(argb >> 24 & 0xff);
-        graphics.setColor(argb & 0xffffff);
+        this.graphics.setColor(argb & 0xffffff);
     }
     
     /**
@@ -182,7 +182,7 @@ public class DirectGraphicsImp implements DirectGraphics{
             throw new IllegalArgumentException();
         }
         
-        Graphics g=graphics;
+        Graphics g=this.graphics;
         int c;
         
         if (format == TYPE_BYTE_1_GRAY) {
@@ -243,7 +243,7 @@ public class DirectGraphicsImp implements DirectGraphics{
         }
         
         //Graphics g = image.getGraphics();
-        Graphics g = graphics;
+        Graphics g = this.graphics;
         
         for (int iy = 0; iy < height; iy++) {
             for (int ix = 0; ix < width; ix ++) {

@@ -106,15 +106,15 @@ public class ResizeDeviceDisplayDialog extends SwingDialogPanel {
 
     public void setDeviceDisplaySize(int width, int height) {
         widthField.setText("" + width);
-        heightField.setText("" + height);
+        this.heightField.setText("" + height);
     }
     
     public int getDeviceDisplayWidth() {
-        return Integer.parseInt(widthField.getText());
+        return Integer.parseInt(this.widthField.getText());
     }
     
     public int getDeviceDisplayHeight() {
-        return Integer.parseInt(heightField.getText());
+        return Integer.parseInt(this.heightField.getText());
     }
 
 }

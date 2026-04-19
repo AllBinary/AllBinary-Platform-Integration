@@ -97,9 +97,9 @@ class BooleanTokenizer {
 	 */
 	public BooleanTokenizer(String expr) {
 		this.sourceText = expr + " ";
-		sourcePos = 0;
+		this.sourcePos = 0;
 		this.tokenType = -1;
-		tokenPos = 0;
+		this.tokenPos = 0;
 	}
 
 	/**
@@ -108,9 +108,9 @@ class BooleanTokenizer {
 	 */
 	private void skipBlanks() {
 		while (true) {
-			if (sourcePos >= sourceText.length())
+			if (this.sourcePos >= this.sourceText.length())
 				break;
-			char c = sourceText.charAt(sourcePos);
+			char c = this.sourceText.charAt(this.sourcePos);
 			if ((c != ' ') && (c != '\t'))
 				break;
 			sourcePos++;
@@ -123,20 +123,20 @@ class BooleanTokenizer {
 	 */
 	public int nextToken() throws PreprocessorException {
 		skipBlanks();
-		tokenPos = sourcePos;
+		this.tokenPos = this.sourcePos;
 
 		/* Check for end of source */
-		if (sourcePos >= sourceText.length()) {
+		if (this.sourcePos >= this.sourceText.length()) {
 			this.tokenType = TYPE_STOP;
 			return tokenType;
 		}
 
 		/* Check for other kinds of tokens */
-		char c = sourceText.charAt(sourcePos);
+		char c = this.sourceText.charAt(this.sourcePos);
 		if (Character.isJavaIdentifierStart(c)) {
 			this.tokenType = TYPE_ID;
 			sourcePos++;
-			while (isIdentifierPart(sourceText.charAt(sourcePos))) {
+			while (isIdentifierPart(this.sourceText.charAt(this.sourcePos))) {
 				sourcePos++;
 			}
 		}
@@ -151,14 +151,14 @@ class BooleanTokenizer {
 		else if (c == '&') {
 			this.tokenType = TYPE_AND;
 			sourcePos++;
-			if (sourceText.charAt(sourcePos) == '&') {
+			if (this.sourceText.charAt(this.sourcePos) == '&') {
 				sourcePos++;
 			}
 		}
 		else if (c == '|') {
 			this.tokenType = TYPE_OR;
 			sourcePos++;
-			if (sourceText.charAt(sourcePos) == '|') {
+			if (this.sourceText.charAt(this.sourcePos) == '|') {
 				sourcePos++;
 			}
 		}
@@ -194,11 +194,11 @@ class BooleanTokenizer {
 	 * Usually called to find out the name of an identifier.
 	 */
 	public String getTokenText() {
-		if (tokenType == TYPE_STOP) {
+		if (this.tokenType == TYPE_STOP) {
 			return "";
 		}
 		else {
-			return sourceText.substring(tokenPos, sourcePos);
+			return sourceText.substring(this.tokenPos, sourcePos);
 		}
 	}
 }

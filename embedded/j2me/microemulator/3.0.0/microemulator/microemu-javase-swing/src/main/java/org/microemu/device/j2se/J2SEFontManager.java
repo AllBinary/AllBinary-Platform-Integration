@@ -54,7 +54,7 @@ public class J2SEFontManager implements FontManagerImpl
     	key |= meFont.getStyle();
     	key |= meFont.getSize();
     	
-    	org.microemu.device.impl.Font result = (org.microemu.device.impl.Font) fonts.get(new Integer(key));
+    	org.microemu.device.impl.Font result = (org.microemu.device.impl.Font) this.fonts.get(new Integer(key));
 	    
 	    if (result == null) {
 	    	String name = null;
@@ -90,14 +90,14 @@ public class J2SEFontManager implements FontManagerImpl
                 //Using the specified size breaks from the J2ME impl.
                 if(Common.allowJ2SEFontSizing) {
                     //System.out.println(new StringBuffer().append("Sizeable J2SESystemFont: ").append(name).append(" style: ").append(style).append(" size: ").append(meFont.getSize()).toString());
-                    result = new J2SESystemFont(name, style, meFont.getSize(), antialiasing);
+                    result = new J2SESystemFont(name, style, meFont.getSize(), this.antialiasing);
                 } else {
                     //System.out.println(new StringBuffer().append("Sizeable J2SESystemFont: ").append(name).append(" style: ").append(style).append(" size: ").append(size).toString());
-                    result = new J2SESystemFont(name, style, size, antialiasing);
+                    result = new J2SESystemFont(name, style, size, this.antialiasing);
                 }
                 
                 //System.out.println("J2SEFontManager put - font");
-	    	fonts.put(new Integer(key), result);
+	    	this.fonts.put(new Integer(key), result);
 	    }
 	    
 	    return result;
@@ -107,7 +107,7 @@ public class J2SEFontManager implements FontManagerImpl
 	public void init()
 	{
             //System.out.println("J2SEFontManager init - clear fonts");
-		fonts.clear();
+		this.fonts.clear();
 	}
   
 
@@ -155,7 +155,7 @@ public class J2SEFontManager implements FontManagerImpl
 	{
 		this.antialiasing = antialiasing;
 		
-		Enumeration en = fonts.elements();
+		Enumeration en = this.fonts.elements();
 		while (en.hasMoreElements()) {
 			J2SEFont font = (J2SEFont) en.nextElement();
 			font.setAntialiasing(antialiasing);
@@ -196,7 +196,7 @@ public class J2SEFontManager implements FontManagerImpl
 			key |= Font.SIZE_LARGE;
 		}
 		
-		fonts.put(new Integer(key), font);
+		this.fonts.put(new Integer(key), font);
 	}
 
 

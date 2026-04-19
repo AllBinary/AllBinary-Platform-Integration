@@ -47,7 +47,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 	}
 
 	public String getAddress() throws IOException {
-		if (socket == null || socket.isClosed()) {
+		if (this.socket == null || this.socket.isClosed()) {
 			throw new IOException();
 		}
 
@@ -55,7 +55,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 	}
 
 	public String getLocalAddress() throws IOException {
-		if (socket == null || socket.isClosed()) {
+		if (this.socket == null || this.socket.isClosed()) {
 			throw new IOException();
 		}
 
@@ -63,7 +63,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 	}
 
 	public int getLocalPort() throws IOException {
-		if (socket == null || socket.isClosed()) {
+		if (this.socket == null || this.socket.isClosed()) {
 			throw new IOException();
 		}
 
@@ -71,7 +71,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 	}
 
 	public int getPort() throws IOException {
-		if (socket == null || socket.isClosed()) {
+		if (this.socket == null || this.socket.isClosed()) {
 			throw new IOException();
 		}
 
@@ -80,25 +80,25 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 
 	public int getSocketOption(byte option) throws IllegalArgumentException,
 			IOException {
-		if (socket != null && socket.isClosed()) {
+		if (this.socket != null && this.socket.isClosed()) {
 			throw new IOException();
 		}
 		switch (option) {
 		case DELAY:
-			if (socket.getTcpNoDelay()) {
+			if (this.socket.getTcpNoDelay()) {
 				return 1;
 			} else {
 				return 0;
 			}
 		case LINGER:
-			int value = socket.getSoLinger();
+			int value = this.socket.getSoLinger();
 			if (value == -1) {
 				return 0;
 			} else {
 				return value;
 			}
 		case KEEPALIVE:
-			if (socket.getKeepAlive()) {
+			if (this.socket.getKeepAlive()) {
 				return 1;
 			} else {
 				return 0;
@@ -114,7 +114,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 
 	public void setSocketOption(byte option, int value)
 			throws IllegalArgumentException, IOException {
-		if (socket.isClosed()) {
+		if (this.socket.isClosed()) {
 			throw new IOException();
 		}
 		switch (option) {
@@ -125,13 +125,13 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 			} else {
 				delay = 1;
 			}
-			socket.setTcpNoDelay(delay == 0 ? false : true);
+			this.socket.setTcpNoDelay(delay == 0 ? false : true);
 			break;
 		case LINGER:
 			if (value < 0) {
 				throw new IllegalArgumentException();
 			}
-			socket.setSoLinger(value == 0 ? false : true, value);
+			this.socket.setSoLinger(value == 0 ? false : true, value);
 			break;
 		case KEEPALIVE:
 			int keepalive;
@@ -140,19 +140,19 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 			} else {
 				keepalive = 1;
 			}
-			socket.setKeepAlive(keepalive == 0 ? false : true);
+			this.socket.setKeepAlive(keepalive == 0 ? false : true);
 			break;
 		case RCVBUF:
 			if (value <= 0) {
 				throw new IllegalArgumentException();
 			}
-			socket.setReceiveBufferSize(value);
+			this.socket.setReceiveBufferSize(value);
 			break;
 		case SNDBUF:
 			if (value <= 0) {
 				throw new IllegalArgumentException();
 			}
-			socket.setSendBufferSize(value);
+			this.socket.setSendBufferSize(value);
 			break;
 		default:
 			throw new IllegalArgumentException();

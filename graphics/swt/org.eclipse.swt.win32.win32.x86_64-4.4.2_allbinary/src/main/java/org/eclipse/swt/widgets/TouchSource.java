@@ -84,7 +84,7 @@ public Rectangle getBounds () {
  */
 @Override
 public String toString () {
-	return "TouchSource {handle=" + handle + " direct=" + direct + " bounds=" + bounds + "}";
+	return "TouchSource {handle=" + this.handle + " direct=" + this.direct + " bounds=" + this.bounds + "}";
 }
 
 }

@@ -67,7 +67,7 @@ public class InputMethodImpl extends InputMethod implements Runnable {
 	// Runnable
 	public void run() 
 	{
-		while (!cancel) {
+		while (!this.cancel) {
 			try {
 				this.resetKey = true;
 				synchronized (this) {
@@ -76,7 +76,7 @@ public class InputMethodImpl extends InputMethod implements Runnable {
 			} catch (InterruptedException ex) {
 			}
 			synchronized (this) {
-				if (resetKey && lastButton != null && inputMethodListener != null) {
+				if (this.resetKey && this.lastButton != null && inputMethodListener != null) {
 					int caret = inputMethodListener.getCaretPosition() + 1;
                     if (caret <= inputMethodListener.getText().length()) {
     					this.lastButton = null;
@@ -92,8 +92,8 @@ public class InputMethodImpl extends InputMethod implements Runnable {
     public void setInputMethodListener(InputMethodListener l) {
         super.setInputMethodListener(l);
 
-        lastButton = null;
-        lastButtonCharIndex = -1;
+        this.lastButton = null;
+        this.lastButtonCharIndex = -1;
     }
 	
 	public void pointerPressed(int x, int y) {		
@@ -119,7 +119,7 @@ public class InputMethodImpl extends InputMethod implements Runnable {
 			int caret = inputMethodListener.getCaretPosition();
 			String tmp = "";
 			synchronized (this) {
-				if (lastButton != null) {
+				if (this.lastButton != null) {
 					caret++;
 					this.lastButton = null;
 					this.lastButtonCharIndex = -1;

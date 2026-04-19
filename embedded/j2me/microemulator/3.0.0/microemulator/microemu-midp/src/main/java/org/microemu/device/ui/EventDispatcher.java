@@ -51,14 +51,14 @@ public class EventDispatcher implements Runnable {
 	
 	public void run() {
 
-		while (!cancelled) {
+		while (!this.cancelled) {
 			Event event = null;
 			synchronized (this) {
-				if (head != null) {
+				if (this.head != null) {
 					event = this.head;
 
 					if (maxFps > 0 && event instanceof PaintEvent) {
-						long difference = System.currentTimeMillis() - lastPaintEventTime;
+						long difference = System.currentTimeMillis() - this.lastPaintEventTime;
 						if (difference < (1000 / maxFps)) {
 							event = null;
 							try {
@@ -70,7 +70,7 @@ public class EventDispatcher implements Runnable {
 					
 					if (event != null) {
 						this.head = event.next;
-						if (head == null) {
+						if (this.head == null) {
 							this.tail = null;
 						}
 						if (event instanceof PointerEvent && ((PointerEvent) event).type == PointerEvent.POINTER_DRAGGED) {
@@ -87,13 +87,13 @@ public class EventDispatcher implements Runnable {
 
 			if (event != null) {
 				if (event instanceof PaintEvent) {
-					synchronized (serviceRepaintsLock) {
+					synchronized (this.serviceRepaintsLock) {
 						synchronized (this) {
 							this.scheduledPaintEvent = null;
 						}
-						lastPaintEventTime = System.currentTimeMillis();
+						this.lastPaintEventTime = System.currentTimeMillis();
 						post(event);
-						serviceRepaintsLock.notifyAll();
+						this.serviceRepaintsLock.notifyAll();
 					}					
 				} else {
 					post(event);
@@ -114,24 +114,24 @@ public class EventDispatcher implements Runnable {
 
 	public void put(Event event) {
 		synchronized (this) {
-			if (event instanceof PaintEvent && scheduledPaintEvent != null) {
-				scheduledPaintEvent.merge((PaintEvent) event);
+			if (event instanceof PaintEvent && this.scheduledPaintEvent != null) {
+				this.scheduledPaintEvent.merge((PaintEvent) event);
 			} else if (event instanceof PointerEvent && scheduledPointerDraggedEvent != null
 					&& ((PointerEvent) event).type == PointerEvent.POINTER_DRAGGED) {
-				scheduledPointerDraggedEvent.x = ((PointerEvent) event).x;
-				scheduledPointerDraggedEvent.y = ((PointerEvent) event).y;
+				this.scheduledPointerDraggedEvent.x = ((PointerEvent) event).x;
+				this.scheduledPointerDraggedEvent.y = ((PointerEvent) event).y;
 			} else {
 				if (event instanceof PaintEvent) {
-					scheduledPaintEvent = (PaintEvent) event;
+					this.scheduledPaintEvent = (PaintEvent) event;
 				}
 				if (event instanceof PointerEvent && ((PointerEvent) event).type == PointerEvent.POINTER_DRAGGED) {
-					scheduledPointerDraggedEvent = (PointerEvent) event;
+					this.scheduledPointerDraggedEvent = (PointerEvent) event;
 				}
-				if (tail != null) {
-					tail.next = event;
+				if (this.tail != null) {
+					this.tail.next = event;
 				}
 				this.tail = event;
-				if (head == null) {
+				if (this.head == null) {
 					this.head = event;
 				}
 				notify();
@@ -144,9 +144,9 @@ public class EventDispatcher implements Runnable {
 	}
 
 	public void serviceRepaints() {
-		synchronized (serviceRepaintsLock) {
+		synchronized (this.serviceRepaintsLock) {
 			synchronized (this) {
-				if (scheduledPaintEvent == null) {
+				if (this.scheduledPaintEvent == null) {
 					return;
 				}
 
@@ -154,7 +154,7 @@ public class EventDispatcher implements Runnable {
 			}
 
 			try {
-				serviceRepaintsLock.wait();
+				this.serviceRepaintsLock.wait();
 			} catch (InterruptedException e) {
 			}
 		}
@@ -188,7 +188,7 @@ public class EventDispatcher implements Runnable {
 
 		public void run() {
                     System.out.println(REPAINT + Thread.currentThread());
-			DeviceFactory.getDevice().getDeviceDisplay().repaint(x, y, width, height);
+			DeviceFactory.getDevice().getDeviceDisplay().repaint(this.x, y, width, height);
 		}
 
 		/**
@@ -198,7 +198,7 @@ public class EventDispatcher implements Runnable {
 		 */
 		public final void merge(PaintEvent event) {
 			int xMax = x + width;
-			int yMax = y + height;
+			int yMax = this.y + height;
 
 			this.x = Math.min(this.x, event.x);
 			xMax = Math.max(xMax, event.x + event.width);
@@ -206,8 +206,8 @@ public class EventDispatcher implements Runnable {
 			this.y = Math.min(this.y, event.y);
 			yMax = Math.max(yMax, event.y + event.height);
 
-			this.width = xMax - x;
-			this.height = yMax - y;
+			this.width = xMax - this.x;
+			this.height = yMax - this.y;
 		}
 
 	}

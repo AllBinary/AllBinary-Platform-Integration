@@ -77,15 +77,15 @@ public abstract class AbstractUI<T extends Displayable> extends NSObject impleme
 	}
 
 	protected void updateToolbar() {
-		if (toolbar != null) {
-			NSMutableArray items = new NSMutableArray().initWithCapacity$(commands.size());
-			for (int i = 0; i < commands.size(); i++) {
-				CommandUI command = commands.get(i);
+		if (this.toolbar != null) {
+			NSMutableArray items = new NSMutableArray().initWithCapacity$(this.commands.size());
+			for (int i = 0; i < this.commands.size(); i++) {
+				CommandUI command = this.commands.get(i);
 				System.out.println(command.getCommand().getLabel());
 				items.setObject$atIndex$(new UIBarButtonItem().initWithTitle$style$target$action$(command.getCommand().getLabel(),
 						0, new CommandCaller(command.getCommand()), new Selector("call")), i);
 			}
-			toolbar.setItems$(items);
+			this.toolbar.setItems$(items);
 		}
 	}
 

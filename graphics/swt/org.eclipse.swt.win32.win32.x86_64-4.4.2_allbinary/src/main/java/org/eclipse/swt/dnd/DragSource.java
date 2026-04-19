@@ -277,13 +277,13 @@ protected void checkSubclass() {
 }
 
 private void disposeCOMInterfaces() {
-	if (iDropSource != null)
-		iDropSource.dispose();
-	iDropSource = null;
+	if (this.iDropSource != null)
+		this.iDropSource.dispose();
+	this.iDropSource = null;
 
-	if (iDataObject != null)
-		iDataObject.dispose();
-	iDataObject = null;
+	if (this.iDataObject != null)
+		this.iDataObject.dispose();
+	this.iDataObject = null;
 }
 
 private void drag(Event dragEvent) {
@@ -294,22 +294,22 @@ private void drag(Event dragEvent) {
 	event.time = OS.GetMessageTime();
 	event.doit = true;
 	notifyListeners(DND.DragStart,event);
-	if (!event.doit || transferAgents == null || transferAgents.length == 0 ) return;
+	if (!event.doit || this.transferAgents == null || this.transferAgents.length == 0 ) return;
 	
 	int[] pdwEffect = new int[1];
 	int operations = opToOs(getStyle());
-	Display display = control.getDisplay();
+	Display display = this.control.getDisplay();
 	String key = "org.eclipse.swt.internal.win32.runMessagesInIdle"; //$NON-NLS-1$
 	Object oldValue = display.getData(key);
 	display.setData(key, new Boolean(true));
 	ImageList imagelist = null;
 	Image image = event.image;
-	hwndDrag = 0;
-	topControl = null;
+	this.hwndDrag = 0;
+	this.topControl = null;
 	if (image != null) {
 		imagelist = new ImageList(SWT.NONE);
 		imagelist.add(image);
-		topControl = control.getShell();
+		this.topControl = this.control.getShell();
 		/* 
 		 * Bug in Windows. The image is inverted if the shell is RIGHT_TO_LEFT.
 		 * The fix is to create a transparent window that covers the shell client
@@ -317,23 +317,23 @@ private void drag(Event dragEvent) {
 		 * On XP if the shell is RTL, the image is not displayed.
 		 */
 		int offsetX = event.offsetX;
-		hwndDrag = topControl.handle;
-		if ((topControl.getStyle() & SWT.RIGHT_TO_LEFT) != 0) {
+		this.hwndDrag = this.topControl.handle;
+		if ((this.topControl.getStyle() & SWT.RIGHT_TO_LEFT) != 0) {
 			offsetX = image.getBounds().width - offsetX;
 			RECT rect = new RECT ();
-			OS.GetClientRect (topControl.handle, rect);
-			hwndDrag = OS.CreateWindowEx (
+			OS.GetClientRect (this.topControl.handle, rect);
+			this.hwndDrag = OS.CreateWindowEx (
 				OS.WS_EX_TRANSPARENT | OS.WS_EX_NOINHERITLAYOUT,
 				WindowClass,
 				null,
 				OS.WS_CHILD | OS.WS_CLIPSIBLINGS,
 				0, 0,
 				rect.right - rect.left, rect.bottom - rect.top, 
-				topControl.handle,
+				this.topControl.handle,
 				0,
 				OS.GetModuleHandle (null),
 				null);
-			OS.ShowWindow (hwndDrag, OS.SW_SHOW);
+			OS.ShowWindow (this.hwndDrag, OS.SW_SHOW);
 		}
 		OS.ImageList_BeginDrag(imagelist.getHandle(), 0, offsetX, event.offsetY);
         /*
@@ -345,39 +345,39 @@ private void drag(Event dragEvent) {
         * calling ImageList_DragEnter().
         */
 		if (OS.IsWinCE) {
-			OS.UpdateWindow (topControl.handle);
+			OS.UpdateWindow (this.topControl.handle);
 		} else {
 			int flags = OS.RDW_UPDATENOW | OS.RDW_ALLCHILDREN;
-			OS.RedrawWindow (topControl.handle, null, 0, flags);
+			OS.RedrawWindow (this.topControl.handle, null, 0, flags);
 		}
 		POINT pt = new POINT ();
 		pt.x = dragEvent.x;
 		pt.y = dragEvent.y;
-		OS.MapWindowPoints (control.handle, 0, pt, 1);
+		OS.MapWindowPoints (this.control.handle, 0, pt, 1);
 		RECT rect = new RECT ();
-		OS.GetWindowRect (hwndDrag, rect);
-		OS.ImageList_DragEnter(hwndDrag, pt.x - rect.left, pt.y - rect.top);
+		OS.GetWindowRect (this.hwndDrag, rect);
+		OS.ImageList_DragEnter(this.hwndDrag, pt.x - rect.left, pt.y - rect.top);
 	}
 	int result = COM.DRAGDROP_S_CANCEL;
 	try {
-		result = COM.DoDragDrop(iDataObject.getAddress(), iDropSource.getAddress(), operations, pdwEffect);
+		result = COM.DoDragDrop(this.iDataObject.getAddress(), iDropSource.getAddress(), operations, pdwEffect);
 	} finally {
 		// ensure that we don't leave transparent window around
-		if (hwndDrag != 0) {
-			OS.ImageList_DragLeave(hwndDrag);
+		if (this.hwndDrag != 0) {
+			OS.ImageList_DragLeave(this.hwndDrag);
 			OS.ImageList_EndDrag();
 			imagelist.dispose();
-			if (hwndDrag != topControl.handle) OS.DestroyWindow(hwndDrag);
-			hwndDrag = 0;
-			topControl = null;
+			if (this.hwndDrag != this.topControl.handle) OS.DestroyWindow(this.hwndDrag);
+			this.hwndDrag = 0;
+			this.topControl = null;
 		}
 		display.setData(key, oldValue);
 	}
 	int operation = osToOp(pdwEffect[0]);
-	if (dataEffect == DND.DROP_MOVE) {
+	if (this.dataEffect == DND.DROP_MOVE) {
 		operation = (operation == DND.DROP_NONE || operation == DND.DROP_COPY) ? DND.DROP_TARGET_MOVE : DND.DROP_MOVE;
 	} else {
-		if (dataEffect != DND.DROP_NONE) {
+		if (this.dataEffect != DND.DROP_NONE) {
 			operation = this.dataEffect;
 		}
 	}
@@ -387,7 +387,7 @@ private void drag(Event dragEvent) {
 	event.doit = (result == COM.DRAGDROP_S_DROP);
 	event.detail = operation;
 	notifyListeners(DND.DragEnd,event);
-	dataEffect = DND.DROP_NONE;
+	this.dataEffect = DND.DROP_NONE;
 }
 /* 
  * EnumFormatEtc([in] dwDirection, [out] ppenumFormatetc)
@@ -400,8 +400,8 @@ private int EnumFormatEtc(int dwDirection, long /*int*/ ppenumFormatetc) {
 
 	// what types have been registered?
 	TransferData[] allowedDataTypes = new TransferData[0];
-	for (int i = 0; i < transferAgents.length; i++){
-		Transfer transferAgent = transferAgents[i];
+	for (int i = 0; i < this.transferAgents.length; i++){
+		Transfer transferAgent = this.transferAgents[i];
 		if (transferAgent != null) {
 			TransferData[] formats = transferAgent.getSupportedTypes();
 			TransferData[] newAllowedDataTypes = new TransferData[allowedDataTypes.length + formats.length];
@@ -460,8 +460,8 @@ private int GetData(long /*int*/ pFormatetc, long /*int*/ pmedium) {
 	
 	// get matching transfer agent to perform conversion
 	Transfer transfer = null;
-	for (int i = 0; i < transferAgents.length; i++){
-		Transfer transferAgent = transferAgents[i];
+	for (int i = 0; i < this.transferAgents.length; i++){
+		Transfer transferAgent = this.transferAgents[i];
 		if (transferAgent != null && transferAgent.isSupportedType(transferData)){
 			transfer = transferAgent;
 			break;
@@ -539,9 +539,9 @@ private int GiveFeedback(int dwEffect) {
 }
 
 private int QueryContinueDrag(int fEscapePressed, int grfKeyState) {
-	if (topControl != null && topControl.isDisposed()) return COM.DRAGDROP_S_CANCEL;
+	if (this.topControl != null && this.topControl.isDisposed()) return COM.DRAGDROP_S_CANCEL;
 	if (fEscapePressed != 0){
-		if (hwndDrag != 0) OS.ImageList_DragLeave(hwndDrag);
+		if (this.hwndDrag != 0) OS.ImageList_DragLeave(this.hwndDrag);
 		return COM.DRAGDROP_S_CANCEL;
 	}
 	/*
@@ -553,31 +553,31 @@ private int QueryContinueDrag(int fEscapePressed, int grfKeyState) {
 	int mask = OS.MK_LBUTTON | OS.MK_MBUTTON | OS.MK_RBUTTON;
 //	if (display.xMouse) mask |= OS.MK_XBUTTON1 | OS.MK_XBUTTON2;
 	if ((grfKeyState & mask) == 0) {
-		if (hwndDrag != 0) OS.ImageList_DragLeave(hwndDrag);
+		if (this.hwndDrag != 0) OS.ImageList_DragLeave(this.hwndDrag);
 		return COM.DRAGDROP_S_DROP;
 	}
 	
-	if (hwndDrag != 0) {
+	if (this.hwndDrag != 0) {
 		POINT pt = new POINT ();
 		OS.GetCursorPos (pt);
 		RECT rect = new RECT ();
-		OS.GetWindowRect (hwndDrag, rect);
+		OS.GetWindowRect (this.hwndDrag, rect);
 		OS.ImageList_DragMove (pt.x - rect.left, pt.y - rect.top);
 	}
 	return COM.S_OK;
 }
 
 private void onDispose() {
-	if (control == null) return;
+	if (this.control == null) return;
 	this.Release();
-	if (controlListener != null){
-		control.removeListener(SWT.Dispose, controlListener);
-		control.removeListener(SWT.DragDetect, controlListener);
+	if (this.controlListener != null){
+		this.control.removeListener(SWT.Dispose, controlListener);
+		this.control.removeListener(SWT.DragDetect, controlListener);
 	}
 	controlListener = null;
-	control.setData(DND.DRAG_SOURCE_KEY, null);
-	control = null;
-	transferAgents = null;
+	this.control.setData(DND.DRAG_SOURCE_KEY, null);
+	this.control = null;
+	this.transferAgents = null;
 }
 
 private int opToOs(int operation) {
@@ -609,15 +609,15 @@ private int osToOp(int osOperation){
 }
 
 private int QueryGetData(long /*int*/ pFormatetc) {
-	if (transferAgents == null) return COM.E_FAIL;
+	if (this.transferAgents == null) return COM.E_FAIL;
 	TransferData transferData = new TransferData();
 	transferData.formatetc = new FORMATETC();
 	COM.MoveMemory(transferData.formatetc, pFormatetc, FORMATETC.sizeof);
 	transferData.type = transferData.formatetc.cfFormat;
 
 	// is this type supported by the transfer agent?
-	for (int i = 0; i < transferAgents.length; i++){
-		Transfer transfer = transferAgents[i];
+	for (int i = 0; i < this.transferAgents.length; i++){
+		Transfer transfer = this.transferAgents[i];
 		if (transfer != null && transfer.isSupportedType(transferData))
 			return COM.S_OK;
 	}
@@ -636,13 +636,13 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 	COM.MoveMemory(guid, riid, GUID.sizeof);
 	
 	if (COM.IsEqualGUID(guid, COM.IIDIUnknown) || COM.IsEqualGUID(guid, COM.IIDIDropSource)) {
-		OS.MoveMemory(ppvObject, new long /*int*/[] {iDropSource.getAddress()}, OS.PTR_SIZEOF);
+		OS.MoveMemory(ppvObject, new long /*int*/[] {this.iDropSource.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
 
 	if (COM.IsEqualGUID(guid, COM.IIDIDataObject) ) {
-		OS.MoveMemory(ppvObject, new long /*int*/[] {iDataObject.getAddress()}, OS.PTR_SIZEOF);
+		OS.MoveMemory(ppvObject, new long /*int*/[] {this.iDataObject.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
@@ -653,7 +653,7 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 
 private int Release() {
 	refCount--;
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		disposeCOMInterfaces();
 		if (COM.FreeUnusedLibraries) {
 			COM.CoFreeUnusedLibraries();
@@ -699,7 +699,7 @@ private int SetData(long /*int*/ pFormatetc, long /*int*/ pmedium, int fRelease)
 		OS.MoveMemory(ptrEffect, stgmedium.unionField, OS.PTR_SIZEOF);
 		int[] effect = new int[1];
 		OS.MoveMemory(effect, ptrEffect[0], 4);
-		dataEffect = osToOp(effect[0]);
+		this.dataEffect = osToOp(effect[0]);
 	}
 	if (fRelease == 1) {
 		COM.ReleaseStgMedium(pmedium);

@@ -35,8 +35,8 @@ public final class ExtendedModifyEvent extends TypedEvent {
  */
 public ExtendedModifyEvent(StyledTextEvent e) {
 	super(e);
-	start = e.start;
-	length = e.end - e.start;
-	replacedText = e.text;
+	this.start = e.start;
+	this.length = e.end - e.start;
+	this.replacedText = e.text;
 }
 }

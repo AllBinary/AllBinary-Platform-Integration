@@ -80,14 +80,14 @@ public class BasicTileCutter implements TileCutter {
     /** {@inheritDoc} */
     @Override
     public Image getNextTile() {
-        if (nextY + tileHeight + tileMargin <= image.getHeight()) {
+        if (nextY + this.tileHeight + this.tileMargin <= this.image.getHeight()) {
             Image tile = null;
                     //= image.getSubimage(nextX, nextY, tileWidth, tileHeight);
-            nextX += tileWidth + tileSpacing;
+            nextX += this.tileWidth + this.tileSpacing;
 
-            if (nextX + tileWidth + tileMargin > image.getWidth()) {
-                nextX = tileMargin;
-                nextY += tileHeight + tileSpacing;
+            if (nextX + this.tileWidth + this.tileMargin > this.image.getWidth()) {
+                nextX = this.tileMargin;
+                nextY += this.tileHeight + this.tileSpacing;
             }
 
             throw new RuntimeException();
@@ -101,7 +101,7 @@ public class BasicTileCutter implements TileCutter {
     @Override
     public final void reset() {
         nextX = tileMargin;
-        nextY = tileMargin;
+        nextY = this.tileMargin;
     }
 
     /** {@inheritDoc} */
@@ -140,7 +140,7 @@ public class BasicTileCutter implements TileCutter {
      * @return the number of tiles per row in the tileset image.
      */
     public int getColumns() {
-        return (image.getWidth() - 2 * tileMargin + tileSpacing)
-                / (tileWidth + tileSpacing);
+        return (this.image.getWidth() - 2 * this.tileMargin + this.tileSpacing)
+                / (this.tileWidth + this.tileSpacing);
     }
 }

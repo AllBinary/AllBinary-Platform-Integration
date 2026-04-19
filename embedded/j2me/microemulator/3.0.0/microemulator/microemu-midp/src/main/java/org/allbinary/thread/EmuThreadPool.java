@@ -40,10 +40,10 @@ public class EmuThreadPool
     {
         if (!this.isAlive)
         {
-            isAlive = true;
+            this.isAlive = true;
 
-            taskQueue = new ArrayList();
-            for (int i = 0; i < numThreads; i++)
+            this.taskQueue = new ArrayList();
+            for (int i = 0; i < this.numThreads; i++)
             {
                 new DisplayPooledThread().start();
             }
@@ -52,7 +52,7 @@ public class EmuThreadPool
 
     public synchronized void runTask(Runnable task)
     {
-        if (!isAlive)
+        if (!this.isAlive)
         {
             this.init();
             //throw new IllegalStateException();
@@ -63,7 +63,7 @@ public class EmuThreadPool
             //logUtil.putF("Add: ").append(task, this, "runTask");
             //PreLogUtil.put("Add: ").append(task, this, "runTask");
 
-            taskQueue.add(task);
+            this.taskQueue.add(task);
             notify();
         }
     }
@@ -71,23 +71,23 @@ public class EmuThreadPool
     protected synchronized Runnable getTask()
             throws InterruptedException
     {
-        while (taskQueue.size() == 0)
+        while (this.taskQueue.size() == 0)
         {
-            if (!isAlive)
+            if (!this.isAlive)
             {
                 return null;
             }
             this.wait();
         }
-        return (Runnable) taskQueue.remove(0);
+        return (Runnable) this.taskQueue.remove(0);
     }
 
     public synchronized void close()
     {
-        if (isAlive)
+        if (this.isAlive)
         {
-            isAlive = false;
-            taskQueue.clear();
+            this.isAlive = false;
+            this.taskQueue.clear();
             //interrupt();
         }
     }
@@ -97,7 +97,7 @@ public class EmuThreadPool
 
         synchronized (this)
         {
-            isAlive = false;
+            this.isAlive = false;
             notifyAll();
         }
 

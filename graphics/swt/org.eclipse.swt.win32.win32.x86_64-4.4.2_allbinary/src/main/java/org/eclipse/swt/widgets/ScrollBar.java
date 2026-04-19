@@ -194,7 +194,7 @@ void destroyWidget () {
 	} else {
 		OS.ShowScrollBar (hwnd, type, false);
 	}
-	parent.destroyScrollBar (style);
+	this.parent.destroyScrollBar (style);
 	releaseHandle ();
 	//This code is intentionally commented
 	//parent.sendEvent (SWT.Resize);
@@ -204,7 +204,7 @@ Rectangle getBounds () {
 //	checkWidget ();
 	parent.forceResize ();
 	RECT rect = new RECT ();
-	OS.GetClientRect (parent.scrolledHandle (), rect);
+	OS.GetClientRect (this.parent.scrolledHandle (), rect);
 	int x = 0, y = 0, width, height;
 	if ((style & SWT.HORIZONTAL) != 0) {
 		y = rect.bottom - rect.top;
@@ -365,9 +365,9 @@ public int getSelection () {
  */
 public Point getSize () {
 	checkWidget();
-	parent.forceResize ();
+	this.parent.forceResize ();
 	RECT rect = new RECT ();
-	OS.GetClientRect (parent.scrolledHandle (), rect);
+	OS.GetClientRect (this.parent.scrolledHandle (), rect);
 	int width, height;
 	if ((style & SWT.HORIZONTAL) != 0) {
 		width = rect.right - rect.left;
@@ -418,18 +418,18 @@ public int getThumb () {
  */
 public Rectangle getThumbBounds () {
 	checkWidget();
-	parent.forceResize ();
+	this.parent.forceResize ();
 	SCROLLBARINFO info = new SCROLLBARINFO();
 	info.cbSize = SCROLLBARINFO.sizeof;
 	int x, y, width, height;
 	if ((style & SWT.HORIZONTAL) != 0) {
-		OS.GetScrollBarInfo(parent.handle, OS.OBJID_HSCROLL, info);
+		OS.GetScrollBarInfo(this.parent.handle, OS.OBJID_HSCROLL, info);
 		x = info.rcScrollBar.left + info.xyThumbTop;
 		y = info.rcScrollBar.top;
 		width = info.xyThumbBottom - info.xyThumbTop;
 		height = info.rcScrollBar.bottom - info.rcScrollBar.top;
 	} else {
-		OS.GetScrollBarInfo(parent.handle, OS.OBJID_VSCROLL, info);
+		OS.GetScrollBarInfo(this.parent.handle, OS.OBJID_VSCROLL, info);
 		x = info.rcScrollBar.left;
 		y = info.rcScrollBar.top + info.xyThumbTop;
 		width = info.rcScrollBar.right - info.rcScrollBar.left;
@@ -460,12 +460,12 @@ public Rectangle getThumbBounds () {
  */
 public Rectangle getThumbTrackBounds () {
 	checkWidget();
-	parent.forceResize ();
+	this.parent.forceResize ();
 	SCROLLBARINFO info = new SCROLLBARINFO();
 	info.cbSize = SCROLLBARINFO.sizeof;
 	int x = 0, y = 0, width, height;
 	if ((style & SWT.HORIZONTAL) != 0) {
-		OS.GetScrollBarInfo(parent.handle, OS.OBJID_HSCROLL, info);
+		OS.GetScrollBarInfo(this.parent.handle, OS.OBJID_HSCROLL, info);
 		int size = OS.GetSystemMetrics (OS.SM_CYHSCROLL);
 		y = info.rcScrollBar.top;
 		width = info.rcScrollBar.right - info.rcScrollBar.left;
@@ -478,7 +478,7 @@ public Rectangle getThumbTrackBounds () {
 			width -= 2 * size;
 		}
 	} else {
-		OS.GetScrollBarInfo(parent.handle, OS.OBJID_VSCROLL, info);
+		OS.GetScrollBarInfo(this.parent.handle, OS.OBJID_VSCROLL, info);
 		int size = OS.GetSystemMetrics (OS.SM_CYVSCROLL);
 		x = info.rcScrollBar.left;
 		width = size;
@@ -550,7 +550,7 @@ long /*int*/ hwndScrollBar () {
  */
 public boolean isEnabled () {
 	checkWidget();
-	return getEnabled () && parent.isEnabled ();
+	return getEnabled () && this.parent.isEnabled ();
 }
 
 /**
@@ -569,18 +569,18 @@ public boolean isEnabled () {
  */
 public boolean isVisible () {
 	checkWidget();
-	return getVisible () && parent.isVisible ();
+	return getVisible () && this.parent.isVisible ();
 }
 
 void releaseHandle () {
 	super.releaseHandle ();
-	parent = null;
+	this.parent = null;
 }
 
 void releaseParent () {
 	super.releaseParent ();
-	if (parent.horizontalBar == this) parent.horizontalBar = null;
-	if (parent.verticalBar == this) parent.verticalBar = null;
+	if (this.parent.horizontalBar == this) this.parent.horizontalBar = null;
+	if (this.parent.verticalBar == this) this.parent.verticalBar = null;
 }
 
 /**
@@ -758,10 +758,10 @@ boolean SetScrollInfo (long /*int*/ hwnd, int flags, SCROLLINFO info, boolean fR
 	if (!OS.IsWinCE) {
 		switch (flags) {
 			case OS.SB_HORZ:
-				bar = parent.getVerticalBar ();
+				bar = this.parent.getVerticalBar ();
 				break;
 			case OS.SB_VERT:
-				bar = parent.getHorizontalBar ();
+				bar = this.parent.getHorizontalBar ();
 				break;
 		}
 		barVisible = bar != null && bar.getVisible ();

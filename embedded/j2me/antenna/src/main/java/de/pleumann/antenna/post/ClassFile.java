@@ -92,7 +92,7 @@ public class ClassFile {
 
                 String cls = new String(name.data).replace('/', '.');
 				if (!cls.startsWith("["))
-					classes.addElement(cls);
+					this.classes.addElement(cls);
 			}
 
 		}
@@ -103,6 +103,6 @@ public class ClassFile {
 	}
 
 	public String getRequiredClass(int index) {
-		return (String) classes.elementAt(index);
+		return (String) this.classes.elementAt(index);
 	}
 }

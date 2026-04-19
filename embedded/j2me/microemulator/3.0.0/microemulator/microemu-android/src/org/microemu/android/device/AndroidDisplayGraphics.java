@@ -89,10 +89,10 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
         this.canvas.clipRect(0, 0, bitmap.getWidth(), bitmap.getHeight());
         this.delegate = null;
         
-		strokePaint.setAntiAlias(true);
-		strokePaint.setStyle(Paint.Style.STROKE);
-		fillPaint.setAntiAlias(true);
-		fillPaint.setStyle(Paint.Style.FILL);
+		this.strokePaint.setAntiAlias(true);
+		this.strokePaint.setStyle(Paint.Style.STROKE);
+		this.fillPaint.setAntiAlias(true);
+		this.fillPaint.setStyle(Paint.Style.FILL);
         
         reset(this.canvas);
     }
@@ -102,12 +102,12 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 	    
 		Rect tmp = this.canvas.getClipBounds();
 		AndroidDeviceDisplay deviceDisplay = (AndroidDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay();
-		width = deviceDisplay.getFullWidth();
-		height = deviceDisplay.getFullHeight();
+		this.width = deviceDisplay.getFullWidth();
+		this.height = deviceDisplay.getFullHeight();
 		this.canvas.setMatrix(identityMatrix);
 		// setMatrix changes the clipping too
 		this.canvas.clipRect(tmp, Region.Op.REPLACE);
-		clip = this.canvas.getClipBounds();
+		this.clip = this.canvas.getClipBounds();
 		setFont(Font.getDefaultFont());
 	}
 	
@@ -121,21 +121,21 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 
 	public void clipRect(int x, int y, int width, int height) {
 		canvas.clipRect(x, y, x + width, y + height);
-		clip = canvas.getClipBounds();
+		this.clip = this.canvas.getClipBounds();
 		
-        if (delegate != null) {
-            delegate.setClip(clip.left, clip.top, clip.right - clip.left, clip.bottom - clip.top);
+        if (this.delegate != null) {
+            this.delegate.setClip(clip.left, clip.top, clip.right - clip.left, clip.bottom - clip.top);
         }
 	}
 
 	public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 	    RectF rect = new RectF(x, y, x + width, y + height);
-	    canvas.drawArc(rect, -startAngle, -arcAngle, false, strokePaint);
+	    this.canvas.drawArc(rect, -startAngle, -arcAngle, false, strokePaint);
     }
 
 	public void drawImage(Image img, int x, int y, int anchor) {
-        if (delegate != null) {
-            delegate.drawImage(img, x, y, anchor);
+        if (this.delegate != null) {
+            this.delegate.drawImage(img, x, y, anchor);
         } else {
             int newx = x;
             int newy = y;
@@ -156,32 +156,32 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
             }
     
             if (img.isMutable()) {
-                canvas.drawBitmap(((AndroidMutableImage) img).getBitmap(), newx, newy, strokePaint);
+                this.canvas.drawBitmap(((AndroidMutableImage) img).getBitmap(), newx, newy, strokePaint);
             } else {
-                canvas.drawBitmap(((AndroidImmutableImage) img).getBitmap(), newx, newy, strokePaint);
+                this.canvas.drawBitmap(((AndroidImmutableImage) img).getBitmap(), newx, newy, strokePaint);
             }
         }
 	}
 
 	public void drawLine(int x1, int y1, int x2, int y2) {
-        if (delegate != null) {
-            delegate.drawLine(x1, y1, x2, y2);
+        if (this.delegate != null) {
+            this.delegate.drawLine(x1, y1, x2, y2);
         } else {
     		if (x1 == x2) {
-    			canvas.drawLine(x1, y1, x2, y2 + 1, strokePaint);
+    			this.canvas.drawLine(x1, y1, x2, y2 + 1, strokePaint);
     		} else if (y1 == y2) {
     			canvas.drawLine(x1, y1, x2 + 1, y2, strokePaint);
     		} else { 
-    			canvas.drawLine(x1, y1, x2 + 1, y2 + 1, strokePaint);
+    			this.canvas.drawLine(x1, y1, x2 + 1, y2 + 1, strokePaint);
     		}
         }
 	}
 
 	public void drawRect(int x, int y, int width, int height) {
-	    if (delegate != null) {
-	        delegate.drawRect(x, y, width, height);
+	    if (this.delegate != null) {
+	        this.delegate.drawRect(x, y, width, height);
 	    } else {
-	        canvas.drawRect(x, y, x + width, y + height, strokePaint);
+	        this.canvas.drawRect(x, y, x + width, y + height, strokePaint);
 	    }
 	}
 
@@ -202,35 +202,35 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
         }
         
         if ((anchor & javax.microedition.lcdui.Graphics.TOP) != 0) {
-            newy -= androidFont.metrics.ascent;
+            newy -= this.androidFont.metrics.ascent;
         } else if ((anchor & javax.microedition.lcdui.Graphics.BOTTOM) != 0) {
             newy -= androidFont.metrics.descent;
         }
         if ((anchor & javax.microedition.lcdui.Graphics.HCENTER) != 0) {
-            newx -= androidFont.paint.measureText(str) / 2;
+            newx -= this.androidFont.paint.measureText(str) / 2;
         } else if ((anchor & javax.microedition.lcdui.Graphics.RIGHT) != 0) {
             newx -= androidFont.paint.measureText(str);
         }
 
-        androidFont.paint.setColor(strokePaint.getColor());
+        this.androidFont.paint.setColor(this.strokePaint.getColor());
 
-        if (delegate != null) {
-	        delegate.drawSubstringDelegate(str, offset, len, newx, newy, anchor);
+        if (this.delegate != null) {
+	        this.delegate.drawSubstringDelegate(str, offset, len, newx, newy, anchor);
 	    } else {    
-            canvas.drawText(str, offset, len + offset, newx, newy, androidFont.paint);
+            this.canvas.drawText(str, offset, len + offset, newx, newy, androidFont.paint);
 	    }
 	}
 
     public void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
 	    RectF rect = new RectF(x, y, x + width, y + height);
-	    canvas.drawArc(rect, -startAngle, -arcAngle, true, fillPaint);
+	    this.canvas.drawArc(rect, -startAngle, -arcAngle, true, fillPaint);
     }
 
 	public void fillRect(int x, int y, int width, int height) {
-        if (delegate != null) {
-            delegate.fillRect(x, y, width, height);
+        if (this.delegate != null) {
+            this.delegate.fillRect(x, y, width, height);
         } else {
-            canvas.drawRect(x, y, x + width, y + height, fillPaint);
+            this.canvas.drawRect(x, y, x + width, y + height, fillPaint);
         }
 	}
 
@@ -290,30 +290,30 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 			}
 		}
 		
-		if (x == clip.left && x + width == clip.right && y == clip.top && y + height == clip.bottom) {
+		if (x == this.clip.left && x + width == this.clip.right && y == this.clip.top && y + height == this.clip.bottom) {
 			return;
 		}
 
-        if (delegate != null) {
-            delegate.setClip(x, y, width, height);
+        if (this.delegate != null) {
+            this.delegate.setClip(x, y, width, height);
         }
 
-        clip.left = x;
-        clip.top = y;
-        clip.right = x + width;
-        clip.bottom = y + height;
-		canvas.clipRect(clip, Region.Op.REPLACE);
+        this.clip.left = x;
+        this.clip.top = y;
+        this.clip.right = x + width;
+        this.clip.bottom = y + height;
+		this.canvas.clipRect(this.clip, Region.Op.REPLACE);
 	}
 
 	public void setColor(int RGB) {
 		strokePaint.setColor(0xff000000 | RGB);
-		fillPaint.setColor(0xff000000 | RGB);
+		this.fillPaint.setColor(0xff000000 | RGB);
 	}
 
 	public void setFont(Font font) {
 		this.font = font;
 		
-        androidFont = AndroidFontManager.getFont(font);
+        this.androidFont = AndroidFontManager.getFont(font);
 
 	}
 	
@@ -325,27 +325,27 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 		this.strokeStyle = style;
 		
 		if (style == SOLID) {
-			strokePaint.setPathEffect(null);
-			fillPaint.setPathEffect(null);
+			this.strokePaint.setPathEffect(null);
+			this.fillPaint.setPathEffect(null);
 		} else { // DOTTED
-			strokePaint.setPathEffect(dashPathEffect);
-			fillPaint.setPathEffect(dashPathEffect);
+			this.strokePaint.setPathEffect(dashPathEffect);
+			this.fillPaint.setPathEffect(dashPathEffect);
 		}
 	}
 
     public void translate(int x, int y) {
-        if (delegate != null) {
-            delegate.translate(x, y);
+        if (this.delegate != null) {
+            this.delegate.translate(x, y);
         } else {
-            canvas.translate(x, y);
+            this.canvas.translate(x, y);
         }
             
         super.translate(x, y);
             
-        clip.left -= x;
-        clip.right -= x;
-        clip.top -= y;
-        clip.bottom -= y;
+        this.clip.left -= x;
+        this.clip.right -= x;
+        this.clip.top -= y;
+        this.clip.bottom -= y;
     }
 
 	public void drawRegion(Image src, int x_src, int y_src, int width,
@@ -369,14 +369,14 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
             img = ((AndroidImmutableImage) src).getBitmap();
         }            
 
-        tmpMatrix.reset();
+        this.tmpMatrix.reset();
         int dW = width, dH = height;
         switch (transform) {
         case Sprite.TRANS_NONE: {
             break;
         }
         case Sprite.TRANS_ROT90: {
-            tmpMatrix.preRotate(90);
+            this.tmpMatrix.preRotate(90);
         	img = Bitmap.createBitmap(img, x_src, y_src, width, height, tmpMatrix, true);
             dW = height;
             dH = width;
@@ -479,19 +479,19 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
             throw new IllegalArgumentException("Bad Anchor");
         }
          
-        tmpRect.left = x_src;
-        tmpRect.top = y_src;
-        tmpRect.right = x_src + width;
-        tmpRect.bottom = y_src + height;
-        tmpRectSecond.left = x_dst;
-        tmpRectSecond.top = y_dst;
-        tmpRectSecond.right = x_dst + width;
-        tmpRectSecond.bottom = y_dst + height;
+        this.tmpRect.left = x_src;
+        this.tmpRect.top = y_src;
+        this.tmpRect.right = x_src + width;
+        this.tmpRect.bottom = y_src + height;
+        this.tmpRectSecond.left = x_dst;
+        this.tmpRectSecond.top = y_dst;
+        this.tmpRectSecond.right = x_dst + width;
+        this.tmpRectSecond.bottom = y_dst + height;
         
-        if (delegate != null) {
-            delegate.drawRegionDelegate(img, tmpRect, tmpRectSecond);
+        if (this.delegate != null) {
+            this.delegate.drawRegionDelegate(img, tmpRect, tmpRectSecond);
         } else {
-            canvas.drawBitmap(img, tmpRect, tmpRectSecond, strokePaint);
+            this.canvas.drawBitmap(img, tmpRect, tmpRectSecond, strokePaint);
         }
 	}
 
@@ -519,19 +519,19 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
         	height = rows;
         }
         
-       	canvas.drawBitmap(rgbData, offset, scanlength, x, y, width, height, processAlpha, strokePaint);
+       	this.canvas.drawBitmap(rgbData, offset, scanlength, x, y, width, height, processAlpha, strokePaint);
 	}
 
 	public void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
-	    if (delegate != null) {
-	        delegate.fillTriangle(x1, y1, x2, y2, x3, y3);
+	    if (this.delegate != null) {
+	        this.delegate.fillTriangle(x1, y1, x2, y2, x3, y3);
 	    } else {
     		Path path = new Path();
     		path.moveTo(x1, y1);
     		path.lineTo(x2, y2);
     		path.lineTo(x3, y3);
     		path.lineTo(x1, y1);
-    		canvas.drawPath(path, fillPaint);
+    		this.canvas.drawPath(path, fillPaint);
 	    }
 	}
 

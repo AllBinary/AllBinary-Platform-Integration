@@ -92,8 +92,8 @@ public class TiledLayer extends Layer {
 	        if (staticTileIndex < 0 || staticTileIndex > numStaticTiles)
 	            throw new IndexOutOfBoundsException();
 	        
-	        if (numAnimatedTiles == animatedTiles.length) {
-	            int [] temp = new int [numAnimatedTiles + 6];
+	        if (this.numAnimatedTiles == animatedTiles.length) {
+	            int [] temp = new int [this.numAnimatedTiles + 6];
 	            System.arraycopy(animatedTiles, 0, temp, 0, numAnimatedTiles);
 	            animatedTiles = temp;
 	        }
@@ -108,7 +108,7 @@ public class TiledLayer extends Layer {
     	//synchronized (this) {
 	        index = -index-1;
                 //System.out.println("getAnimatedTile: " + index);
-	        if (index < 0 || index >= numAnimatedTiles)
+	        if (index < 0 || index >= this.numAnimatedTiles)
 	            throw new IndexOutOfBoundsException();
 	        return animatedTiles[index];
     	//}
@@ -117,7 +117,7 @@ public class TiledLayer extends Layer {
     public void setAnimatedTile(int index, int staticTileIndex) {
     	//synchronized (this) {
 	        index = -index-1;
-	        if (index < 0 || index >= numAnimatedTiles)
+	        if (index < 0 || index >= this.numAnimatedTiles)
 	            throw new IndexOutOfBoundsException();
 	        if (staticTileIndex < 0 || staticTileIndex > numStaticTiles)
 	            throw new IndexOutOfBoundsException();
@@ -133,7 +133,7 @@ public class TiledLayer extends Layer {
 //    boolean found;
     public void setCell(int col, int row, int index) {
     	//synchronized (this) {
-	        if (-index-1 >= numAnimatedTiles || index > numStaticTiles)
+	        if (-index-1 >= this.numAnimatedTiles || index > numStaticTiles)
 	            throw new IndexOutOfBoundsException();
 //                if(!found && index < 0) {
 //                    found = true;
@@ -145,15 +145,15 @@ public class TiledLayer extends Layer {
     
     public void setStaticTileSet(Image image, int tileWidth, int tileHeight) {
     	//synchronized (this) {
-	        if (img == null)
+	        if (this.img == null)
 	            throw new NullPointerException();
 	        if (tileHeight <= 0 || tileWidth <= 0)
 	            throw new IllegalArgumentException();
-	        if (img.getWidth() % tileWidth != 0 || img.getHeight() % tileHeight != 0)
+	        if (this.img.getWidth() % tileWidth != 0 || this.img.getHeight() % tileHeight != 0)
 	            throw new IllegalArgumentException();
 	
-	        int newNumStaticTiles = (img.getWidth() / getCellWidth()) * 
-	                                    (img.getHeight() / getCellHeight());
+	        int newNumStaticTiles = (this.img.getWidth() / getCellWidth()) * 
+	                                    (this.img.getHeight() / getCellHeight());
 	        
 	        
 	        // recalculate size
@@ -187,7 +187,7 @@ public class TiledLayer extends Layer {
 	            throw new IllegalArgumentException();
 	        if (row < 0 || col < 0 || col + numCols > this.columnTotal || row + numRows > this.rowTotal)    
 	            throw new IndexOutOfBoundsException();
-	        if (-index-1 >= numAnimatedTiles || index > numStaticTiles)
+	        if (-index-1 >= this.numAnimatedTiles || index > numStaticTiles)
 	            throw new IndexOutOfBoundsException();
 	        
 	        int maxRow = row + numRows;
@@ -346,7 +346,7 @@ public class TiledLayer extends Layer {
 	        int x0 = x;
 	        int anchor = Graphics.LEFT | Graphics.TOP;
 	        
-	        int imgCols = img.getWidth() / tileWidth;
+	        int imgCols = this.img.getWidth() / tileWidth;
 	        //int imgRows = img.getHeight() / tileHeight;
 	                
                 int tile = 0;
@@ -368,7 +368,7 @@ public class TiledLayer extends Layer {
 	                xSrc = tileWidth * (tile % imgCols);
 	                ySrc = (tile / imgCols) * tileHeight;
 	                
-	                graphics.drawRegion(img, xSrc, ySrc, tileWidth, tileHeight, Sprite.TRANS_NONE, x, y, anchor);
+	                graphics.drawRegion(this.img, xSrc, ySrc, tileWidth, tileHeight, Sprite.TRANS_NONE, x, y, anchor);
 	            }
 	        }
     	//}

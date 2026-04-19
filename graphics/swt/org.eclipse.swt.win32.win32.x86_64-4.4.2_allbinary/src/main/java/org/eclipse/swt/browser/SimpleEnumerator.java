@@ -59,19 +59,19 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (simpleEnumerator != null) {
-		simpleEnumerator.dispose ();
-		simpleEnumerator = null;	
+	if (this.simpleEnumerator != null) {
+		this.simpleEnumerator.dispose ();
+		this.simpleEnumerator = null;	
 	}
-	if (values != null) {
-		for (int i = 0; i < values.length; i++) {
-			values[i].Release ();
+	if (this.values != null) {
+		for (int i = 0; i < this.values.length; i++) {
+			this.values[i].Release ();
 		}
-		values = null;
+		this.values = null;
 	}
 }
 
@@ -85,12 +85,12 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsISimpleEnumerator.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {simpleEnumerator.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.simpleEnumerator.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
@@ -101,7 +101,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 
@@ -112,8 +112,8 @@ int HasMoreElements (long /*int*/ _retval) {
 }	
 	
 int GetNext (long /*int*/ _retval) {
-	if (values == null || index == values.length) return XPCOM.NS_ERROR_UNEXPECTED;
-	nsISupports value = values[index++];
+	if (this.values == null || this.index == this.values.length) return XPCOM.NS_ERROR_UNEXPECTED;
+	nsISupports value = this.values[index++];
     value.AddRef ();
     XPCOM.memmove (_retval, new long /*int*/[] {value.getAddress ()}, C.PTR_SIZEOF);
     return XPCOM.NS_OK;

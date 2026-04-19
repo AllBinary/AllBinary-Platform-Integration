@@ -178,7 +178,7 @@ long /*int*/ callWindowProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, lo
 		case OS.WM_PAINT: {
 			boolean doubleBuffer = findImageControl () != null;
 			boolean drawMessage = false;
-			if ((style & SWT.SINGLE) != 0 && message.length () > 0) {
+			if ((style & SWT.SINGLE) != 0 && this.message.length () > 0) {
 				if ((!OS.IsWinCE && OS.WIN32_VERSION < OS.VERSION (6, 0)) || (style & SWT.READ_ONLY) != 0) {
 					drawMessage = hwnd != OS.GetFocus () && OS.GetWindowTextLength (handle) == 0;
 				}
@@ -464,7 +464,7 @@ void applySegments () {
 	 * disposed the widget in the modify event. If this happens, return to
 	 * cancel the operation.
 	 */
-	if (isDisposed() || --clearSegmentsCount != 0) return;
+	if (isDisposed() || --this.clearSegmentsCount != 0) return;
 	if (!hooks (SWT.Segments) && !filters (SWT.Segments)) return;
 	int length = OS.GetWindowTextLength (handle);
 	int cp = getCodePage ();
@@ -474,11 +474,11 @@ void applySegments () {
 	/* Get segments text */
 	Event event = new Event ();
 	event.text = string;
-	event.segments = segments;
+	event.segments = this.segments;
 	sendEvent (SWT.Segments, event);
-	segments = event.segments;
-	if (segments == null) return;
-	int nSegments = segments.length;
+	this.segments = event.segments;
+	if (this.segments == null) return;
+	int nSegments = this.segments.length;
 	if (nSegments == 0) return;
 	length = string == null ? 0 : string.length ();
 
@@ -498,7 +498,7 @@ void applySegments () {
 			segmentsCrLf [i + c] = this.segments [i];
 		}
 		this.segments = segmentsCrLf;
-		nSegments = segments.length;
+		nSegments = this.segments.length;
 		segmentsChars = segmentsCharsCrLf;
 	}
 
@@ -509,7 +509,7 @@ void applySegments () {
 	int charCount = 0, segmentCount = 0;
 	char defaultSeparator = getOrientation () == SWT.RIGHT_TO_LEFT ? RTL_MARK : LTR_MARK;
 	while (charCount < length) {
-		if (segmentCount < nSegments && charCount - segmentCount == segments [segmentCount]) {
+		if (segmentCount < nSegments && charCount - segmentCount == this.segments [segmentCount]) {
 			char separator = segmentsChars != null && segmentsChars.length > segmentCount ? segmentsChars [segmentCount] : defaultSeparator;
 			newChars [charCount++] = separator;
 			segmentCount++;
@@ -581,8 +581,8 @@ static int checkStyle (int style) {
 
 void clearSegments (boolean applyText) {
 	if (clearSegmentsCount++ != 0) return;
-	if (segments == null) return;
-	int nSegments = segments.length;
+	if (this.segments == null) return;
+	int nSegments = this.segments.length;
 	if (nSegments == 0) return;
 	int/*64*/ limit = (int/*64*/)OS.SendMessage (handle, OS.EM_GETLIMITTEXT, 0, 0) & 0x7fffffff;
 	if (limit < LIMIT) {
@@ -608,7 +608,7 @@ void clearSegments (boolean applyText) {
 	}
 	start [0] = untranslateOffset (start [0]);
 	end [0] = untranslateOffset (end[0]);
-	segments = null;
+	this.segments = null;
 	/*
 	 * SetWindowText empties the undo buffer and disables undo in the context
 	 * menu. Sending OS.EM_REPLACESEL message instead.
@@ -684,7 +684,7 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 			int newHeight = rect.bottom - rect.top;
 			if (newHeight != 0) height = newHeight;
 		}
-		if ((style & SWT.SINGLE) != 0 && message.length () > 0) {
+		if ((style & SWT.SINGLE) != 0 && this.message.length () > 0) {
 			OS.SetRect (rect, 0, 0, 0, 0);
 			TCHAR buffer = new TCHAR (getCodePage (), message, false);
 			OS.DrawText (hDC, buffer, buffer.length (), rect, flags);
@@ -741,7 +741,7 @@ public void copy () {
 
 void createWidget () {
 	super.createWidget ();
-	message = "";
+	this.message = "";
 	doubleClick = true;
 	setTabStops (tabs = 8);
 	fixAlignment ();
@@ -783,14 +783,14 @@ TCHAR deprocessText (TCHAR text, int start, int end, boolean terminate) {
 		length = OS.MultiByteToWideChar (getCodePage (), OS.MB_PRECOMPOSED, text.bytes, length, chars, length);
 	}
 	if (end == -1) end = length;
-	if (segments != null && end > segments [0]) {
-		int nSegments = segments.length;
-		if (nSegments > 0 && start <= segments [nSegments - 1]) {
+	if (this.segments != null && end > this.segments [0]) {
+		int nSegments = this.segments.length;
+		if (nSegments > 0 && start <= this.segments [nSegments - 1]) {
 			int nLeadSegments = 0;
-			while (start - nLeadSegments > segments [nLeadSegments]) nLeadSegments++;
+			while (start - nLeadSegments > this.segments [nLeadSegments]) nLeadSegments++;
 			int segmentCount = nLeadSegments;
 			for (int i = start; i < end; i++) {
-				if (segmentCount < nSegments && i - segmentCount == segments [segmentCount]) {
+				if (segmentCount < nSegments && i - segmentCount == this.segments [segmentCount]) {
 					++segmentCount;
 				} else {
 					chars [i - segmentCount + nLeadSegments] = chars [i];
@@ -1292,7 +1292,7 @@ public String getSelectionText () {
 	if (start [0] == end [0]) return "";
 	TCHAR buffer = new TCHAR (getCodePage (), length + 1);
 	OS.GetWindowText (handle, buffer, length + 1);
-	if (segments != null) {
+	if (this.segments != null) {
 		buffer = deprocessText (buffer, start [0], end [0], false);
 		return buffer.toString ();
 	}
@@ -1353,7 +1353,7 @@ public String getText () {
 	if (length == 0) return "";
 	TCHAR buffer = new TCHAR (getCodePage (), length + 1);
 	OS.GetWindowText (handle, buffer, length + 1);
-	if (segments != null) {
+	if (this.segments != null) {
 		buffer = deprocessText (buffer, 0, -1, false);
 		return buffer.toString ();
 	}
@@ -1391,7 +1391,7 @@ public char[] getTextChars () {
 	if (length == 0) return new char[0];
 	TCHAR buffer = new TCHAR (getCodePage (), length + 1);
 	OS.GetWindowText (handle, buffer, length + 1);
-	if (segments != null) buffer = deprocessText (buffer, 0, -1, false);
+	if (this.segments != null) buffer = deprocessText (buffer, 0, -1, false);
 	char [] chars = new char [length];
 	System.arraycopy (buffer.chars, 0, chars, 0, length);
 	buffer.clear ();
@@ -1451,7 +1451,7 @@ public String getText (int start, int end) {
 public int getTextLimit () {
 	checkWidget ();
 	int/*64*/ limit = (int)/*64*/OS.SendMessage (handle, OS.EM_GETLIMITTEXT, 0, 0) & 0x7FFFFFFF;
-	if (segments != null && limit < LIMIT) limit = Math.max (1, limit - segments.length);
+	if (this.segments != null && limit < LIMIT) limit = Math.max (1, limit - this.segments.length);
 	return limit;
 }
 
@@ -1613,7 +1613,7 @@ public void paste () {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	message = null;
+	this.message = null;
 }
 
 /**
@@ -2362,8 +2362,8 @@ public void setTextChars (char[] text) {
 public void setTextLimit (int limit) {
 	checkWidget ();
 	if (limit == 0) error (SWT.ERROR_CANNOT_BE_ZERO);
-	if (segments != null && limit > 0) {
-		OS.SendMessage (handle, OS.EM_SETLIMITTEXT, limit + Math.min (segments.length, LIMIT - limit), 0);
+	if (this.segments != null && limit > 0) {
+		OS.SendMessage (handle, OS.EM_SETLIMITTEXT, limit + Math.min (this.segments.length, LIMIT - limit), 0);
 	} else {
 		OS.SendMessage (handle, OS.EM_SETLIMITTEXT, limit, 0);
 	}
@@ -2409,16 +2409,16 @@ public void showSelection () {
 }
 
 int translateOffset (int offset) {
-	if (segments == null) return offset;
-	for (int i = 0, nSegments = segments.length; i < nSegments && offset - i >= segments [i]; i++) {
+	if (this.segments == null) return offset;
+	for (int i = 0, nSegments = this.segments.length; i < nSegments && offset - i >= this.segments [i]; i++) {
 		offset++;
 	}	
 	return offset;
 }
 
 int untranslateOffset (int offset) {
-	if (segments == null) return offset;
-	for (int i = 0, nSegments = segments.length; i < nSegments && offset > segments [i]; i++) {
+	if (this.segments == null) return offset;
+	for (int i = 0, nSegments = this.segments.length; i < nSegments && offset > this.segments [i]; i++) {
 		offset--;
 	}
 	return offset;
@@ -3025,7 +3025,7 @@ LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 	LRESULT result = super.wmKeyDown (hwnd, wParam, lParam);
 	if (result != null) return result;
 	
-	if (segments != null) {
+	if (this.segments != null) {
 		switch ((int)/*64*/wParam) {
 		case OS.VK_LEFT:
 		case OS.VK_UP:

@@ -145,7 +145,7 @@ void reset() {
 public ImageData[] load(InputStream stream) {
 	if (stream == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	reset();
-	data = FileFormat.load(stream, this);
+	this.data = FileFormat.load(stream, this);
 	return data;
 }
 
@@ -288,10 +288,10 @@ public void save(String filename, int format) {
  */
 public void addImageLoaderListener(ImageLoaderListener listener) {
 	if (listener == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	if (imageLoaderListeners == null) {
-		imageLoaderListeners = new Vector();
+	if (this.imageLoaderListeners == null) {
+		this.imageLoaderListeners = new Vector();
 	}
-	imageLoaderListeners.addElement(listener);
+	this.imageLoaderListeners.addElement(listener);
 }
 
 /**	 
@@ -308,8 +308,8 @@ public void addImageLoaderListener(ImageLoaderListener listener) {
  */
 public void removeImageLoaderListener(ImageLoaderListener listener) {
 	if (listener == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	if (imageLoaderListeners == null) return;
-	imageLoaderListeners.removeElement(listener);
+	if (this.imageLoaderListeners == null) return;
+	this.imageLoaderListeners.removeElement(listener);
 }
 
 /**	 
@@ -333,9 +333,9 @@ public boolean hasListeners() {
  */
 public void notifyListeners(ImageLoaderEvent event) {
 	if (!hasListeners()) return;
-	int size = imageLoaderListeners.size();
+	int size = this.imageLoaderListeners.size();
 	for (int i = 0; i < size; i++) {
-		ImageLoaderListener listener = (ImageLoaderListener) imageLoaderListeners.elementAt(i);
+		ImageLoaderListener listener = (ImageLoaderListener) this.imageLoaderListeners.elementAt(i);
 		listener.imageDataLoaded(event);
 	}
 }

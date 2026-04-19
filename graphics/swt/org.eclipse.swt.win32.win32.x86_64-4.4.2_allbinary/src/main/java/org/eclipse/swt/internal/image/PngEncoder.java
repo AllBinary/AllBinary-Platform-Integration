@@ -51,17 +51,17 @@ public PngEncoder(ImageLoader loader) {
 
 	this.loader = loader;
 	this.data = loader.data[0];
-	this.transparencyType = data.getTransparencyType();
+	this.transparencyType = this.data.getTransparencyType();
 	
-	this.width = data.width;
-	this.height = data.height;
+	this.width = this.data.width;
+	this.height = this.data.height;
 	
 	this.bitDepth = 8;
 	
 	this.colorType = 2;
 	
-	if (data.palette.isDirect) {
-		if (transparencyType == SWT.TRANSPARENCY_ALPHA) {
+	if (this.data.palette.isDirect) {
+		if (this.transparencyType == SWT.TRANSPARENCY_ALPHA) {
 			this.colorType = 6;
 		}
 	}
@@ -97,19 +97,19 @@ void writeChunk(byte[] tag, byte[] buffer) {
 
 	int bufferLength = (buffer != null) ? buffer.length : 0;
 	
-	chunk = new PngChunk(bufferLength);
+	this.chunk = new PngChunk(bufferLength);
 	
-	writeInt(bytes, bufferLength);
-	bytes.write(tag, 0, 4);
-	chunk.setType(tag);
+	writeInt(this.bytes, bufferLength);
+	this.bytes.write(tag, 0, 4);
+	this.chunk.setType(tag);
 	if (bufferLength != 0) {
-		bytes.write(buffer, 0, bufferLength);
-		chunk.setData(buffer);
+		this.bytes.write(buffer, 0, bufferLength);
+		this.chunk.setData(buffer);
 	}
 	else {
-		chunk.setCRC(chunk.computeCRC());
+		this.chunk.setCRC(this.chunk.computeCRC());
 	}
-	writeInt(bytes, chunk.getCRC());
+	writeInt(this.bytes, chunk.getCRC());
 
 }
 
@@ -127,9 +127,9 @@ void writeHeader() {
 	writeInt(baos, height);
 	baos.write(bitDepth);
 	baos.write(colorType);
-	baos.write(compressionMethod);
-	baos.write(filterMethod);
-	baos.write(interlaceMethod);
+	baos.write(this.compressionMethod);
+	baos.write(this.filterMethod);
+	baos.write(this.interlaceMethod);
 	
 	writeChunk(TAG_IHDR, baos.toByteArray());
 
@@ -159,20 +159,20 @@ void writeTransparency() {
 
 	ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	
-	switch (transparencyType) {
+	switch (this.transparencyType) {
 	
 		case SWT.TRANSPARENCY_ALPHA:
 			
 			int pixelValue, alphaValue;
 			
-			byte[] alphas = new byte[data.palette.getRGBs().length];
+			byte[] alphas = new byte[this.data.palette.getRGBs().length];
 			
 			for (int y = 0; y < height; y++) {
 			
 				for (int x = 0; x < width; x++) {
 				
-					pixelValue = data.getPixel(x, y);
-					alphaValue = data.getAlpha(x, y);
+					pixelValue = this.data.getPixel(x, y);
+					alphaValue = this.data.getAlpha(x, y);
 					
 					alphas[pixelValue] = (byte) alphaValue;
 				
@@ -186,16 +186,16 @@ void writeTransparency() {
 		
 		case SWT.TRANSPARENCY_PIXEL:
 			
-			int pixel = data.transparentPixel;
+			int pixel = this.data.transparentPixel;
 			
 			if (colorType == 2) {
 			
-				int redMask = data.palette.redMask;
-				int redShift = data.palette.redShift;
-				int greenMask = data.palette.greenMask;
-				int greenShift = data.palette.greenShift;
-				int blueShift = data.palette.blueShift;
-				int blueMask = data.palette.blueMask;
+				int redMask = this.data.palette.redMask;
+				int redShift = this.data.palette.redShift;
+				int greenMask = this.data.palette.greenMask;
+				int greenShift = this.data.palette.greenShift;
+				int blueShift = this.data.palette.blueShift;
+				int blueMask = this.data.palette.blueMask;
 				
 				int r = pixel & redMask;
 				r = (redShift < 0) ? r >>> -redShift : r << redShift;
@@ -238,7 +238,7 @@ void writeImageData() throws IOException {
 
 	ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
 	OutputStream os = null;
-	switch (loader.compression) {
+	switch (this.loader.compression) {
 	case 0:
 		os = Compatibility.newDeflaterOutputStream(baos, NO_COMPRESSION);
 		break;
@@ -263,7 +263,7 @@ void writeImageData() throws IOException {
 			int filter = 0;
 			os.write(filter);
 			
-			data.getPixels(0, y, width, lineData, 0);
+			this.data.getPixels(0, y, width, lineData, 0);
 			
 			os.write(lineData);
 		
@@ -279,12 +279,12 @@ void writeImageData() throws IOException {
 			alphaData = new byte[width];
 		}
 		
-		int redMask = data.palette.redMask;
-		int redShift = data.palette.redShift;
-		int greenMask = data.palette.greenMask;
-		int greenShift = data.palette.greenShift;
-		int blueShift = data.palette.blueShift;
-		int blueMask = data.palette.blueMask;
+		int redMask = this.data.palette.redMask;
+		int redShift = this.data.palette.redShift;
+		int greenMask = this.data.palette.greenMask;
+		int greenShift = this.data.palette.greenShift;
+		int blueShift = this.data.palette.blueShift;
+		int blueMask = this.data.palette.blueMask;
 		
 		byte[] lineBytes = new byte[width * (colorType == 6 ? 4 : 3)];
 		
@@ -293,10 +293,10 @@ void writeImageData() throws IOException {
 			int filter = 0;
 			os.write(filter);
 			
-			data.getPixels(0, y, width, lineData, 0);
+			this.data.getPixels(0, y, width, lineData, 0);
 			
 			if (colorType == 6) {
-				data.getAlphas(0, y, width, alphaData, 0);
+				this.data.getAlphas(0, y, width, alphaData, 0);
 			}
 			
 			int offset = 0;
@@ -357,8 +357,8 @@ public void encode(LEDataOutputStream outputStream) {
 			writePalette();
 		}
 		
-		boolean transparencyAlpha = (transparencyType == SWT.TRANSPARENCY_ALPHA);
-		boolean transparencyPixel = (transparencyType == SWT.TRANSPARENCY_PIXEL);
+		boolean transparencyAlpha = (this.transparencyType == SWT.TRANSPARENCY_ALPHA);
+		boolean transparencyPixel = (this.transparencyType == SWT.TRANSPARENCY_PIXEL);
 		boolean type2Transparency = (colorType == 2 && transparencyPixel);
 		boolean type3Transparency = (colorType == 3 && (transparencyAlpha || transparencyPixel));
 		
@@ -369,7 +369,7 @@ public void encode(LEDataOutputStream outputStream) {
 		writeImageData();
 		writeEnd();
 		
-		outputStream.write(bytes.toByteArray());
+		outputStream.write(this.bytes.toByteArray());
 	
 	}
 	

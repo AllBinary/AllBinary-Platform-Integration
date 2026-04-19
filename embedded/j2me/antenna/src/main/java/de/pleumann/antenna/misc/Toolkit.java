@@ -22,15 +22,15 @@ public class Toolkit {
     public Toolkit(String filename) {
         props = new Properties();
         loadProps(filename);
-        this.name = props.getProperty(NAME, "invalid");
-        if (props.containsKey(INCLUDE)) {
-            loadProps(props.getProperty(INCLUDE));
+        this.name = this.props.getProperty(NAME, "invalid");
+        if (this.props.containsKey(INCLUDE)) {
+            loadProps(this.props.getProperty(INCLUDE));
         }
     }
 
     private void loadProps(String filename) {
         try {
-            props.load(getClass().getResourceAsStream("/toolkit/" + filename + ".properties"));
+            this.props.load(getClass().getResourceAsStream("/toolkit/" + filename + ".properties"));
         } catch (IOException e) {
 
         }
@@ -39,6 +39,6 @@ public class Toolkit {
     public Toolkit(String name, String api) {
         this.name = name;
         this.props = new Properties();
-        props.setProperty("api", api);
+        this.props.setProperty("api", api);
     }
 }

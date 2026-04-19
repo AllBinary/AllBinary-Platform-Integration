@@ -77,7 +77,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	{
 		if (recordStores == null) {
 			recordStores = new ConcurrentHashMap<String, Object>();
-			String[] list = activity.fileList();
+			String[] list = this.activity.fileList();
 			if (list != null && list.length > 0) {
 				for (int i = 0; i < list.length; i++) {	
 					if (list[i].endsWith(RECORD_STORE_HEADER_SUFFIX)) {
@@ -105,7 +105,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 
 		RecordStoreImpl recordStoreImpl;
 		try {
-			DataInputStream dis = new DataInputStream(activity.openFileInput(getHeaderFileName(recordStoreName)));
+			DataInputStream dis = new DataInputStream(this.activity.openFileInput(getHeaderFileName(recordStoreName)));
 			recordStoreImpl = new RecordStoreImpl(this);
 			recordStoreImpl.readHeader(dis);
 			dis.close();
@@ -117,10 +117,10 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 		recordStoreImpl.setOpen(true);
 		RecordEnumeration re = recordStoreImpl.enumerateRecords(null, null, false);
 		while (re.hasNextElement()) {
-			activity.deleteFile(getRecordFileName(recordStoreName, re.nextRecordId()));
+			this.activity.deleteFile(getRecordFileName(recordStoreName, re.nextRecordId()));
 		}
 		recordStoreImpl.setOpen(false);
-		activity.deleteFile(getHeaderFileName(recordStoreName));
+		this.activity.deleteFile(getHeaderFileName(recordStoreName));
 		
 		recordStores.remove(recordStoreName);
 		
@@ -135,7 +135,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 		RecordStoreImpl recordStoreImpl;
 		try {
 			DataInputStream dis = new DataInputStream(
-					activity.openFileInput(getHeaderFileName(recordStoreName)));
+					this.activity.openFileInput(getHeaderFileName(recordStoreName)));
 			recordStoreImpl = new RecordStoreImpl(this);
 			recordStoreImpl.readHeader(dis);
 			recordStoreImpl.setOpen(true);
@@ -150,8 +150,8 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 		} catch (IOException e) {
 			throw new RecordStoreException();
 		}
-		if (recordListener != null) {
-			recordStoreImpl.addRecordListener(recordListener);
+		if (this.recordListener != null) {
+			recordStoreImpl.addRecordListener(this.recordListener);
 		}
 
 		recordStores.put(recordStoreName, recordStoreImpl);
@@ -184,7 +184,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	{
 		try {
 			DataInputStream dis = new DataInputStream(
-					activity.openFileInput(getRecordFileName(recordStoreImpl.getName(), recordId)));
+					this.activity.openFileInput(getRecordFileName(recordStoreImpl.getName(), recordId)));
 			recordStoreImpl.readRecord(dis);
 			dis.close();
 		} catch (FileNotFoundException e) {
@@ -221,7 +221,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	{
 		try {
 			DataOutputStream dos = new DataOutputStream(
-					activity.openFileOutput(getHeaderFileName(recordStore.getName()), Context.MODE_PRIVATE));
+					this.activity.openFileOutput(getHeaderFileName(recordStore.getName()), Context.MODE_PRIVATE));
 			recordStore.writeHeader(dos);
 			dos.close();
 		} catch (IOException e) {
@@ -229,7 +229,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 			throw new RecordStoreException(e.getMessage());
 		}
 		
-		activity.deleteFile(getRecordFileName(recordStore.getName(), recordId));
+		this.activity.deleteFile(getRecordFileName(recordStore.getName(), recordId));
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	{
 		try {
 			DataOutputStream dos = new DataOutputStream(
-					activity.openFileOutput(getHeaderFileName(recordStore.getName()), Context.MODE_PRIVATE));
+					this.activity.openFileOutput(getHeaderFileName(recordStore.getName()), Context.MODE_PRIVATE));
 			recordStore.writeHeader(dos);
 			dos.close();
 		} catch (IOException e) {
@@ -251,7 +251,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 		if (recordId != -1) {
 			try {
 				DataOutputStream dos = new DataOutputStream(
-						activity.openFileOutput(getRecordFileName(recordStore.getName(), recordId), Context.MODE_PRIVATE));
+						this.activity.openFileOutput(getRecordFileName(recordStore.getName(), recordId), Context.MODE_PRIVATE));
 				recordStore.writeRecord(dos, recordId);
 				dos.close();
 			} catch (IOException e) {
@@ -271,8 +271,8 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	}
 
 	public void fireRecordStoreListener(int type, String recordStoreName) {
-		if (recordListener != null) {
-			recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
+		if (this.recordListener != null) {
+			this.recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
 		}
 	}
 	

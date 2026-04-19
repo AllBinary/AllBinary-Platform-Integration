@@ -47,17 +47,17 @@ public class PreprocessorBridge implements IPreprocessor
 			};
 		}
 		
-		m_preprocessor = new Preprocessor(logger, filter);
+		this.m_preprocessor = new Preprocessor(logger, filter);
 	}
 
 	public void setMode(int mode)
 	{
-		m_preprocessor.setVerbose((mode & IPreprocessor.MODE_VERBOSE) != 0);
+		this.m_preprocessor.setVerbose((mode & IPreprocessor.MODE_VERBOSE) != 0);
 	}
 	
 	public void setFile(File fileName)
 	{
-		m_preprocessor.setFile(fileName);
+		this.m_preprocessor.setFile(fileName);
 	}
 	
 //	public boolean preprocess(Defines defines, String inputFile, String outputFile, String encoding)
@@ -110,7 +110,7 @@ public class PreprocessorBridge implements IPreprocessor
 	{
 		try
 		{
-			m_preprocessor.addDefines(defines);
+			this.m_preprocessor.addDefines(defines);
 		}
 		catch (PPException e)
 		{
@@ -122,7 +122,7 @@ public class PreprocessorBridge implements IPreprocessor
 	{
 		try
 		{
-			m_preprocessor.addDefines(in);
+			this.m_preprocessor.addDefines(in);
 		}
 		catch (PPException e)
 		{
@@ -134,7 +134,7 @@ public class PreprocessorBridge implements IPreprocessor
 	{
 		try
 		{
-			m_preprocessor.addDefines(file);
+			this.m_preprocessor.addDefines(file);
 		}
 		catch (PPException e)
 		{
@@ -144,7 +144,7 @@ public class PreprocessorBridge implements IPreprocessor
 
 	public void clearSymbols() throws PreprocessorException
 	{
-		m_preprocessor.clearDefines();
+		this.m_preprocessor.clearDefines();
 	}
 
 	public void outputDefinesToFile(File file, String encoding) throws PreprocessorException, IOException
@@ -153,7 +153,7 @@ public class PreprocessorBridge implements IPreprocessor
 		try
 		{
 			out = new FileOutputStream(file);
-			out.write(m_preprocessor.getDefines().toString().getBytes(encoding != null ? encoding : "UTF-8"));
+			out.write(this.m_preprocessor.getDefines().toString().getBytes(encoding != null ? encoding : "UTF-8"));
 			out.flush();
 		}
 		finally
@@ -164,14 +164,14 @@ public class PreprocessorBridge implements IPreprocessor
 
 	public void printSymbols() throws PreprocessorException
 	{
-		m_utility.getProject().log("Symbols: " + m_preprocessor.getDefines().toString());
+		this.m_utility.getProject().log("Symbols: " + this.m_preprocessor.getDefines().toString());
 	}
 
 	public void setDebugLevel(String level) throws PreprocessorException
 	{
 		if ("none".equals(level) || level == null)
 		{
-			m_preprocessor.getDefines().undefine("DEBUG");	
+			this.m_preprocessor.getDefines().undefine("DEBUG");	
 		}
 		else
 		{
@@ -183,7 +183,7 @@ public class PreprocessorBridge implements IPreprocessor
 			{
 				try
 				{
-					m_preprocessor.addDefines("DEBUG=" + level);
+					this.m_preprocessor.addDefines("DEBUG=" + level);
 				} 
 				catch (PPException e)
 				{

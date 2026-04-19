@@ -61,13 +61,13 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (helperAppLauncherDialog != null) {
-		helperAppLauncherDialog.dispose ();
-		helperAppLauncherDialog = null;	
+	if (this.helperAppLauncherDialog != null) {
+		this.helperAppLauncherDialog.dispose ();
+		this.helperAppLauncherDialog = null;	
 	}
 }
 
@@ -81,12 +81,12 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IHELPERAPPLAUNCHERDIALOG_1_9_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {helperAppLauncherDialog.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.helperAppLauncherDialog.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
@@ -104,7 +104,7 @@ int Release () {
 	* cancels the File Dialog, cancels or closes the Download Dialog
 	* and when the Download Dialog goes away after the download is completed.
 	*/
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 

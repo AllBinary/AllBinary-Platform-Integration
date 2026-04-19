@@ -31,6 +31,6 @@ public class CaretEvent extends TypedEvent {
 
 CaretEvent(StyledTextEvent e) {
 	super(e);
-	caretOffset = e.end;
+	this.caretOffset = e.end;
 }
 }

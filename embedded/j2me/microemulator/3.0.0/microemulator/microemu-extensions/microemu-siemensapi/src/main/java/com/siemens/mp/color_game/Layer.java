@@ -35,7 +35,7 @@ public abstract class Layer {
     
     protected Layer(Image img) {
         this(img.getWidth(),img.getHeight());
-        image=img;
+        this.image=img;
     }
     
     protected  void copyAllLayerVariables(com.siemens.mp.color_game.Layer l) {

@@ -212,7 +212,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 	}
         
 	public SwtMutableImage getDisplayImage() {
-            return ((SwtDisplayComponent) context.getDisplayComponent()).getDisplayImage();
+            return ((SwtDisplayComponent) this.context.getDisplayComponent()).getDisplayImage();
 	}
 
 	public int getHeight() {
@@ -318,7 +318,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
                 g.setForeground(g.getColor(this.foregroundColorRBGA));
 
 		org.eclipse.swt.graphics.Rectangle oldclip = g.getClipping();
-                final boolean shouldTranslate = !(current.getTypeAsInt() == Canvas.TYPE) || ((Canvas) current).getWidth() != displayRectangle.width || ((Canvas) current).getHeight() != displayRectangle.height;
+                final boolean shouldTranslate = !(current.getTypeAsInt() == Canvas.TYPE) || ((Canvas) current).getWidth() != this.displayRectangle.width || ((Canvas) current).getHeight() != this.displayRectangle.height;
 		if (shouldTranslate) {
 			g.translate(displayPaintable.x, displayPaintable.y);
 		}
@@ -365,7 +365,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 		Enumeration en = DeviceFactory.getDevice().getSoftButtons().elements();
 		while (en.hasMoreElements()) {
 			SoftButton button = (SoftButton) en.nextElement();
-			if (button.getType() == SoftButton.TYPE_ICON && button.getName().equals(commonStrings.DOWN)) {
+			if (button.getType() == SoftButton.TYPE_ICON && button.getName().equals(this.commonStrings.DOWN)) {
 				button.setVisible(state);
 			}
 		}
@@ -375,7 +375,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 		Enumeration en = DeviceFactory.getDevice().getSoftButtons().elements();
 		while (en.hasMoreElements()) {
 			SoftButton button = (SoftButton) en.nextElement();
-			if (button.getType() == SoftButton.TYPE_ICON && button.getName().equals(commonStrings.UP)) {
+			if (button.getType() == SoftButton.TYPE_ICON && button.getName().equals(this.commonStrings.UP)) {
 				button.setVisible(state);
 			}
 		}
@@ -478,7 +478,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 	 * @see com.barteo.emulator.device.impl.DeviceDisplayImpl#setForegroundColor(java.awt.Color)
 	 */
 	public void setForegroundColor(Color color) {
-		foregroundColor = color;
+		this.foregroundColor = color;
                 this.foregroundColorRBGA = new RGBA(foregroundColor.getRed(), foregroundColor.getGreen(), foregroundColor.getBlue(), 255);
                 this.foregroundGraphicsProcessor = new NewColorSwtGraphicsProcessor(this);
 	}
@@ -532,7 +532,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 
         private final String URL = "URL";
 	public Image createSystemImage(URL url) throws IOException {
-		return new SwtImmutableImage( URL, SwtDeviceComponent.createImage(url.openStream()));
+		return new SwtImmutableImage( this.URL, SwtDeviceComponent.createImage(url.openStream()));
                 //return new SwtMutableImage( URL, SwtDeviceComponent.createImage(url.openStream()));
 	}
 
@@ -623,7 +623,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 //			}
 //		}
 
-		return new SwtImmutableImage(RGB, SwtDeviceComponent.createImage(imageData));
+		return new SwtImmutableImage(this.RGB, SwtDeviceComponent.createImage(imageData));
                 //return new SwtMutableImage(RGB, SwtDeviceComponent.createImage(imageData));
 	}
 

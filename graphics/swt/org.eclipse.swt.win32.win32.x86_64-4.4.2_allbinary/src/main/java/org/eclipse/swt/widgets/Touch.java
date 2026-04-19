@@ -89,12 +89,12 @@ Touch (long identity, TouchSource source, int state, boolean primary, int x, int
  */
 @Override
 public String toString() {
-	return "Touch {id=" + id
-	+ " source=" + source
-	+ " state=" + state
-	+ " primary=" + primary
-	+ " x=" + x
-	+ " y=" + y
+	return "Touch {id=" + this.id
+	+ " source=" + this.source
+	+ " state=" + this.state
+	+ " primary=" + this.primary
+	+ " x=" + this.x
+	+ " y=" + this.y
 	+ "}";
 }
 

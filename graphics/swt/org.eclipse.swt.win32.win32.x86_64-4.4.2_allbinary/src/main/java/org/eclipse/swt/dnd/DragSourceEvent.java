@@ -134,9 +134,9 @@ void updateEvent(DNDEvent e) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " operation=" + detail
-		+ " type=" + (dataType != null ? dataType.type : 0)
-		+ " doit=" + doit
+		+ " operation=" + this.detail
+		+ " type=" + (this.dataType != null ? this.dataType.type : 0)
+		+ " doit=" + this.doit
 		+ "}";
 }
 }

@@ -72,7 +72,7 @@ public class FileSystemConnectorImpl extends ConnectorAdapter implements Impleme
 						FileSystemConnectorImpl.this);
 			}
 		}, acc);
-		openConnection.add(con);
+		this.openConnection.add(con);
 		return con;
 	}
 
@@ -88,8 +88,8 @@ public class FileSystemConnectorImpl extends ConnectorAdapter implements Impleme
 	}
 
 	void notifyMIDletDestroyed() {
-		if (openConnection.size() > 0) {
-			Logger.warn("Still has " + openConnection.size() + " open file connections");
+		if (this.openConnection.size() > 0) {
+			Logger.warn("Still has " + this.openConnection.size() + " open file connections");
 		}
 	}
 

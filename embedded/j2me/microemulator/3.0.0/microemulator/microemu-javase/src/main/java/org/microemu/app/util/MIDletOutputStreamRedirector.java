@@ -64,23 +64,23 @@ public class MIDletOutputStreamRedirector extends PrintStream {
 		}
 
 		public void flush() {
-			if (buffer.length() > 0) {
+			if (this.buffer.length() > 0) {
 				write('\n');
 			}
 		}
 
 		public void write(int b) {
 			if ((b == '\n') || (b == '\r')) {
-				if (buffer.length() > 0) {
-					if (isErrorStream) {
-						Logger.error(buffer.toString());
+				if (this.buffer.length() > 0) {
+					if (this.isErrorStream) {
+						Logger.error(this.buffer.toString());
 					} else {
-						Logger.info(buffer.toString());
+						Logger.info(this.buffer.toString());
 					}
-					buffer = new StringBuffer();
+					this.buffer = new StringBuffer();
 				}
 			} else {
-				buffer.append((char) b);
+				this.buffer.append((char) b);
 			}
 		}
 
@@ -173,7 +173,7 @@ public class MIDletOutputStreamRedirector extends PrintStream {
 	public void println(Object x) {
 		if (keepMultiLinePrint) {
 			super.flush();
-			if (isErrorStream) {
+			if (this.isErrorStream) {
 				Logger.error(x);
 			} else {
 				Logger.info(x);
@@ -186,7 +186,7 @@ public class MIDletOutputStreamRedirector extends PrintStream {
 	public void println(String x) {
 		if (keepMultiLinePrint) {
 			super.flush();
-			if (isErrorStream) {
+			if (this.isErrorStream) {
 				Logger.error(x);
 			} else {
 				Logger.info(x);

@@ -77,11 +77,11 @@ public class HTTPPanel extends BaseExamplesForm {
 	}
 
 	private void makeConnection() {
-		if (requestThread == null) {
-			requestThread = new Thread(new ConnectionRun());
-			requestThread.start();
+		if (this.requestThread == null) {
+			this.requestThread = new Thread(new ConnectionRun());
+			this.requestThread.start();
 		} else {
-			message.setText("Request still running");  
+			this.message.setText("Request still running");  
 		}
 	}
 	
@@ -96,10 +96,10 @@ public class HTTPPanel extends BaseExamplesForm {
 		Connection c = null;
 		InputStream is = null;
 		try {
-			status.setText("Connecting...");
-			c = Connector.open(url.getString(), Connector.READ, true);
+			this.status.setText("Connecting...");
+			c = Connector.open(this.url.getString(), Connector.READ, true);
 			HttpConnection hcon = (HttpConnection) c;
-			status.setText("http:" + String.valueOf(hcon.getResponseCode()) + " len:" + String.valueOf(hcon.getLength()));
+			this.status.setText("http:" + String.valueOf(hcon.getResponseCode()) + " len:" + String.valueOf(hcon.getLength()));
 			int length = (int) hcon.getLength();
             byte[] data = null;
             if (length != -1) {
@@ -128,12 +128,12 @@ public class HTTPPanel extends BaseExamplesForm {
                 data = new byte[index];
                 System.arraycopy(readData, 0, data, 0, index);
             }
-            message.setText(new String(data));            
+            this.message.setText(new String(data));            
 		} catch (Throwable e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
-			status.setText(e.toString());
-			message.setText("");
+			this.status.setText(e.toString());
+			this.message.setText("");
 			Alert alert = new Alert("Error", e.getMessage() + " " + e.toString(), null, AlertType.ERROR);
 			alert.setTimeout(Alert.FOREVER);
 			SimpleDemoMIDlet.setCurrentDisplayable(alert);

@@ -35,7 +35,7 @@ class ImageStringItem extends Item
   public ImageStringItem(String label, Image img, String text)
   {
     super(label);
-		stringComponent = new StringComponent(text);
+		this.stringComponent = new StringComponent(text);
     setImage(img);
   }
 
@@ -50,7 +50,7 @@ class ImageStringItem extends Item
 	{
     this.img = img;
 		if (this.img != NullCanvas.NULL_IMAGE) {
-			stringComponent.setWidthDecreaser(img.getWidth() + 2);
+			this.stringComponent.setWidthDecreaser(img.getWidth() + 2);
 		}
 	}
 
@@ -63,14 +63,14 @@ class ImageStringItem extends Item
 
 	public void setText(String text)
 	{
-		stringComponent.setText(text);
+		this.stringComponent.setText(text);
 	}
 	
 
         //TWB - made public
 	public int getHeight()
 	{
-		if (img != NullCanvas.NULL_IMAGE && img.getHeight() > stringComponent.getHeight()) {
+		if (this.img != NullCanvas.NULL_IMAGE && this.img.getHeight() > this.stringComponent.getHeight()) {
 			return img.getHeight();
 		} else {
 			return stringComponent.getHeight();
@@ -80,26 +80,26 @@ class ImageStringItem extends Item
 
   void invertPaint(boolean state)
   {
-    stringComponent.invertPaint(state);
+    this.stringComponent.invertPaint(state);
   }
 
 
   //TWB - made public
   public int paint(Graphics g)
   {
-		if (stringComponent == null) {
+		if (this.stringComponent == null) {
 			return 0;
 		}
 
-		if (img != NullCanvas.NULL_IMAGE) {
-			g.drawImage(img, 0, 0, Graphics.LEFT | Graphics.TOP);
-			g.translate(img.getWidth() + 2, 0);
+		if (this.img != NullCanvas.NULL_IMAGE) {
+			g.drawImage(this.img, 0, 0, Graphics.LEFT | Graphics.TOP);
+			g.translate(this.img.getWidth() + 2, 0);
 		}
 
-		int y = stringComponent.paint(g);
+		int y = this.stringComponent.paint(g);
 
-		if (img != NullCanvas.NULL_IMAGE) {
-			g.translate(-img.getWidth() - 2, 0);
+		if (this.img != NullCanvas.NULL_IMAGE) {
+			g.translate(-this.img.getWidth() - 2, 0);
 		}
 
 		return y;

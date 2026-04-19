@@ -53,7 +53,7 @@ public class ResURLConnection extends URLConnection {
 			throw new IOException();
 		}
 		location = location.substring(idx + PREFIX.length());
-		byte[] data = (byte[]) entries.get(location);
+		byte[] data = (byte[]) this.entries.get(location);
 		if (data == null) {
 			throw new IOException();
 		}

@@ -152,13 +152,13 @@ public class Defines {
     public void loadDefines(InputStream in) throws RecognitionException,
             IOException {
         String line;
-        Hashtable backup = (Hashtable) m_defines.clone();
+        Hashtable backup = (Hashtable) this.m_defines.clone();
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
         try {
             while ((line = reader.readLine()) != null) {
-                if (m_lineFilter != null) {
-                    line = m_lineFilter.filter(line);
+                if (this.m_lineFilter != null) {
+                    line = this.m_lineFilter.filter(line);
                 }
 
                 APPLexer lexer = new APPLexer(new ANTLRReaderStream(
@@ -263,14 +263,14 @@ public class Defines {
 
         switch (action) {
         case -1:
-            m_defines.put(key, define);
+            this.m_defines.put(key, define);
             break;
         case APPLexer.ADD_IF_NEW: // LITERAL add_if_new:
-            if (!m_defines.containsKey(key))
-                m_defines.put(key, define);
+            if (!this.m_defines.containsKey(key))
+                this.m_defines.put(key, define);
             break;
         case APPLexer.UNSET: // LITERAL unset
-            m_defines.remove(key);
+            this.m_defines.remove(key);
             break;
         default:
             /* "Unsupported action " + action */
@@ -291,7 +291,7 @@ public class Defines {
      * @return
      */
     public Define getDefine(String text) {
-        return (Define) m_defines.get(text);
+        return (Define) this.m_defines.get(text);
     }
 
     /**
@@ -309,7 +309,7 @@ public class Defines {
      */
     public String toString() {
         Enumeration keys = m_defines.keys();
-        Vector v = new Vector(m_defines.size());
+        Vector v = new Vector(this.m_defines.size());
         while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             v.add(key);
@@ -342,7 +342,7 @@ public class Defines {
         StringBuffer b = new StringBuffer();
         for (int i = 0; i < v.size(); i++) {
             String key = (String) v.get(i);
-            Define def = (Define) m_defines.get(key);
+            Define def = (Define) this.m_defines.get(key);
             b.append(def);
             b.append("\n");
         }
@@ -354,7 +354,7 @@ public class Defines {
      */
     public String[] keys() {
         String keys[] = new String[m_defines.size()];
-        m_defines.keySet().toArray(keys);
+        this.m_defines.keySet().toArray(keys);
         return keys;
     }
 
@@ -363,7 +363,7 @@ public class Defines {
      */
     public Define[] values() {
         Define defines[] = new Define[m_defines.size()];
-        m_defines.values().toArray(defines);
+        this.m_defines.values().toArray(defines);
         return defines;
     }
 
@@ -374,7 +374,7 @@ public class Defines {
     public Defines copy() {
 
         Defines copy = new Defines();
-        copy.m_defines = (Hashtable) m_defines.clone();
+        copy.m_defines = (Hashtable) this.m_defines.clone();
         return copy;
     }
 

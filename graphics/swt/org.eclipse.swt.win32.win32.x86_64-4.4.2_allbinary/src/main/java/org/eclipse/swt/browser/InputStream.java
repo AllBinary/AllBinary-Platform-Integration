@@ -22,7 +22,7 @@ class InputStream {
 	
 InputStream (byte[] buffer) {
 	this.buffer = buffer;
-	index = 0;
+	this.index = 0;
 	createCOMInterfaces ();
 }
 
@@ -54,9 +54,9 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (inputStream != null) {
-		inputStream.dispose ();
-		inputStream = null;	
+	if (this.inputStream != null) {
+		this.inputStream.dispose ();
+		this.inputStream = null;	
 	}
 }
 
@@ -70,12 +70,12 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 	
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {inputStream.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.inputStream.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIInputStream.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {inputStream.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.inputStream.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}	
@@ -85,7 +85,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
         	
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 	
@@ -93,7 +93,7 @@ int Release () {
 
 int Close () {
 	buffer = null;
-	index = 0;
+	this.index = 0;
 	return XPCOM.NS_OK;
 }
 

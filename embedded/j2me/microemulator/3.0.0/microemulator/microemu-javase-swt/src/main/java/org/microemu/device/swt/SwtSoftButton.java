@@ -87,7 +87,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 
 		if (alignmentName != null) {
 			try {
-				alignment = SwtSoftButton.class.getField(alignmentName).getInt(null);
+				this.alignment = SwtSoftButton.class.getField(alignmentName).getInt(null);
 			} catch (Exception ex) {
 				System.err.println(ex);
 			}
@@ -163,18 +163,18 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 	}
 
 	public void paint(SwtGraphics g) {
-		if (!visible  || paintable == null) {
+		if (!this.visible  || this.paintable == null) {
 			return;
 		}
 
 		org.eclipse.swt.graphics.Rectangle clip = g.getClipping();
 		
 		g.setClipping(paintable.x, paintable.y, paintable.width, paintable.height);
-		if (type == TYPE_COMMAND) {
+		if (this.type == TYPE_COMMAND) {
 			int xoffset = 0;
 			Device device = DeviceFactory.getDevice();
 			SwtDeviceDisplay deviceDisplay = (SwtDeviceDisplay) device.getDeviceDisplay();
-			if (pressed) {
+			if (this.pressed) {
 				g.setForeground(g.getColor(new RGBA(deviceDisplay
 						.getForegroundColor().getRed(), deviceDisplay
 						.getForegroundColor().getGreen(), deviceDisplay
@@ -188,17 +188,17 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 			g.fillRectangle(paintable.x, paintable.y, paintable.width,
 					paintable.height);
 			synchronized (this) {
-				if (command != null) {
-					if (font != null) {
+				if (this.command != null) {
+					if (this.font != null) {
 						SwtFontManager fontManager = (SwtFontManager) device.getFontManager();
-						SwtFont buttonFont = (SwtFont) fontManager.getFont(font);
+						SwtFont buttonFont = (SwtFont) fontManager.getFont(this.font);
 						g.setFont(buttonFont.getFont());
 					}
-					if (alignment == RIGHT) {
+					if (this.alignment == RIGHT) {
 						xoffset = paintable.width
-								- g.stringWidth(command.getLabel());
+								- g.stringWidth(this.command.getLabel());
 					}
-					if (pressed) {
+					if (this.pressed) {
 						g.setBackground(g.getColor(new RGBA(deviceDisplay
 								.getBackgroundColor().getRed(), deviceDisplay
 								.getBackgroundColor().getGreen(), deviceDisplay
@@ -217,10 +217,10 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 			}
 		} else if (type == TYPE_ICON) {
                         //SwtImmutableImage
-			if (pressed) {
-				g.drawImage((org.eclipse.swt.graphics.Image) pressedImage.getImage(), paintable.x, paintable.y);
+			if (this.pressed) {
+				g.drawImage((org.eclipse.swt.graphics.Image) this.pressedImage.getImage(), paintable.x, paintable.y);
 			} else {
-				g.drawImage((org.eclipse.swt.graphics.Image) normalImage.getImage(), paintable.x, paintable.y);
+				g.drawImage((org.eclipse.swt.graphics.Image) this.normalImage.getImage(), paintable.x, paintable.y);
 			}
 		}
 		
@@ -228,7 +228,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 	}
 
 	public boolean preferredCommandType(Command cmd) {
-		for (Enumeration ct = commandTypes.elements(); ct.hasMoreElements();) {
+		for (Enumeration ct = this.commandTypes.elements(); ct.hasMoreElements();) {
 			if (cmd.getCommandType() == ((Integer) ct.nextElement()).intValue()) {
 				return true;
 			}

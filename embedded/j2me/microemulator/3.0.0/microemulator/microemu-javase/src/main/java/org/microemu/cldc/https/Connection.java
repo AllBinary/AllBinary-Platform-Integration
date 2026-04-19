@@ -46,16 +46,16 @@ public class Connection extends org.microemu.cldc.http.Connection implements Htt
 
 	public Connection() {
 	    try {
-			sslContext = SSLContext.getInstance("TLS");
+			this.sslContext = SSLContext.getInstance("TLS");
 		} catch (NoSuchAlgorithmException ex) {
 			Logger.error(ex);
 		}
 
-		securityInfo = null;
+		this.securityInfo = null;
 	}
 
 	public SecurityInfo getSecurityInfo() throws IOException {
-		if (securityInfo == null) {
+		if (this.securityInfo == null) {
 		    if (cn == null) {
 				throw new IOException();
 			}
@@ -69,7 +69,7 @@ public class Connection extends org.microemu.cldc.http.Connection implements Htt
 			if (certs.length == 0) {
 				throw new IOException();
 			}
-			securityInfo = new SecurityInfoImpl(
+			this.securityInfo = new SecurityInfoImpl(
 					https.getCipherSuite(),
 					sslContext.getProtocol(),
 					new CertificateImpl((X509Certificate) certs[0]));

@@ -367,34 +367,34 @@ void addEventListener(long /*int*/ iunknown, GUID guid, int eventID, OleListener
 	if (listener == null || iunknown == 0 || guid == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
 	// have we connected to this kind of event sink before?
 	int index = -1;
-	for (int i = 0; i < oleEventSinkGUID.length; i++) {
-		if (COM.IsEqualGUID(oleEventSinkGUID[i], guid)) {
-			if (iunknown == oleEventSinkIUnknown[i]) {
+	for (int i = 0; i < this.oleEventSinkGUID.length; i++) {
+		if (COM.IsEqualGUID(this.oleEventSinkGUID[i], guid)) {
+			if (iunknown == this.oleEventSinkIUnknown[i]) {
 				index = i; 
 				break;
 			}
 		}
 	}
 	if (index != -1) {
-		oleEventSink[index].addListener(eventID, listener);
+		this.oleEventSink[index].addListener(eventID, listener);
 	} else {
-		int oldLength = oleEventSink.length;
+		int oldLength = this.oleEventSink.length;
 		OleEventSink[] newOleEventSink = new OleEventSink[oldLength + 1];
 		GUID[] newOleEventSinkGUID = new GUID[oldLength + 1];
 		long /*int*/[] newOleEventSinkIUnknown = new long /*int*/[oldLength + 1];
-		System.arraycopy(oleEventSink, 0, newOleEventSink, 0, oldLength);
-		System.arraycopy(oleEventSinkGUID, 0, newOleEventSinkGUID, 0, oldLength);
-		System.arraycopy(oleEventSinkIUnknown, 0, newOleEventSinkIUnknown, 0, oldLength);
-		oleEventSink = newOleEventSink;
-		oleEventSinkGUID = newOleEventSinkGUID;
-		oleEventSinkIUnknown = newOleEventSinkIUnknown;
+		System.arraycopy(this.oleEventSink, 0, newOleEventSink, 0, oldLength);
+		System.arraycopy(this.oleEventSinkGUID, 0, newOleEventSinkGUID, 0, oldLength);
+		System.arraycopy(this.oleEventSinkIUnknown, 0, newOleEventSinkIUnknown, 0, oldLength);
+		this.oleEventSink = newOleEventSink;
+		this.oleEventSinkGUID = newOleEventSinkGUID;
+		this.oleEventSinkIUnknown = newOleEventSinkIUnknown;
 		
-		oleEventSink[oldLength] = new OleEventSink(this, iunknown, guid);
-		oleEventSinkGUID[oldLength] = guid;
-		oleEventSinkIUnknown[oldLength] = iunknown;
-		oleEventSink[oldLength].AddRef();
-		oleEventSink[oldLength].connect();
-		oleEventSink[oldLength].addListener(eventID, listener);
+		this.oleEventSink[oldLength] = new OleEventSink(this, iunknown, guid);
+		this.oleEventSinkGUID[oldLength] = guid;
+		this.oleEventSinkIUnknown[oldLength] = iunknown;
+		this.oleEventSink[oldLength].AddRef();
+		this.oleEventSink[oldLength].connect();
+		this.oleEventSink[oldLength].addListener(eventID, listener);
 		
 	}
 }
@@ -411,8 +411,8 @@ protected void addObjectReferences() {
 		IOleControl objIOleControl = new IOleControl(ppvObject[0]);
 		// ask the control for its info in case users
 		// need to act on it
-		currentControlInfo = new CONTROLINFO();
-		objIOleControl.GetControlInfo(currentControlInfo);
+		this.currentControlInfo = new CONTROLINFO();
+		objIOleControl.GetControlInfo(this.currentControlInfo);
 		objIOleControl.Release();
 	}		
 }
@@ -428,13 +428,13 @@ protected void addObjectReferences() {
  */
 public void addPropertyListener(int propertyID, OleListener listener) {
 	if (listener == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	olePropertyChangeSink.addListener(propertyID, listener);	
+	this.olePropertyChangeSink.addListener(propertyID, listener);	
 }
 
 private void connectPropertyChangeSink() {
 	olePropertyChangeSink = new OlePropertyChangeSink(this);
-	olePropertyChangeSink.AddRef();
-	olePropertyChangeSink.connect(objIUnknown);
+	this.olePropertyChangeSink.AddRef();
+	this.olePropertyChangeSink.connect(objIUnknown);
 }
 protected void createCOMInterfaces () {
 	super.createCOMInterfaces();
@@ -465,33 +465,33 @@ protected void createCOMInterfaces () {
 }
 private void disconnectEventSinks() {
 
-	for (int i = 0; i < oleEventSink.length; i++) {
-		OleEventSink sink = oleEventSink[i];
+	for (int i = 0; i < this.oleEventSink.length; i++) {
+		OleEventSink sink = this.oleEventSink[i];
 		sink.disconnect();
 		sink.Release();
 	}
-	oleEventSink = new OleEventSink[0];
-	oleEventSinkGUID = new GUID[0];
-	oleEventSinkIUnknown = new long /*int*/[0];
+	this.oleEventSink = new OleEventSink[0];
+	this.oleEventSinkGUID = new GUID[0];
+	this.oleEventSinkIUnknown = new long /*int*/[0];
 }
 private void disconnectPropertyChangeSink() {
 
-	if (olePropertyChangeSink != null) {
-		olePropertyChangeSink.disconnect(objIUnknown);
-		olePropertyChangeSink.Release();
+	if (this.olePropertyChangeSink != null) {
+		this.olePropertyChangeSink.disconnect(objIUnknown);
+		this.olePropertyChangeSink.Release();
 	}
-	olePropertyChangeSink = null;
+	this.olePropertyChangeSink = null;
 }
 protected void disposeCOMInterfaces() {
 	super.disposeCOMInterfaces();
 
-	if (iOleControlSite != null)
-		iOleControlSite.dispose();
-	iOleControlSite = null;
+	if (this.iOleControlSite != null)
+		this.iOleControlSite.dispose();
+	this.iOleControlSite = null;
 
-	if (iDispatch != null)
-		iDispatch.dispose();
-	iDispatch = null;
+	if (this.iDispatch != null)
+		this.iDispatch.dispose();
+	this.iDispatch = null;
 }
 public Color getBackground () {
 
@@ -592,8 +592,8 @@ protected long /*int*/ getLicenseInfo(GUID clsid) {
  * @since 2.1
  */
 public Variant getSiteProperty(int dispId){
-	for (int i = 0; i < sitePropertyIds.length; i++) {
-		if (sitePropertyIds[i] == dispId) {
+	for (int i = 0; i < this.sitePropertyIds.length; i++) {
+		if (this.sitePropertyIds[i] == dispId) {
 			return sitePropertyValues[i];
 		}
 	}
@@ -659,8 +659,8 @@ private int OnControlInfoChanged() {
 		IOleControl objIOleControl = new IOleControl(ppvObject[0]);
 		// ask the control for its info in case users
 		// need to act on it
-		currentControlInfo = new CONTROLINFO();
-		objIOleControl.GetControlInfo(currentControlInfo);
+		this.currentControlInfo = new CONTROLINFO();
+		objIOleControl.GetControlInfo(this.currentControlInfo);
 		objIOleControl.Release();
 	}
 	return COM.S_OK;
@@ -748,12 +748,12 @@ protected int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 	GUID guid = new GUID();
 	COM.MoveMemory(guid, riid, GUID.sizeof);
 	if (COM.IsEqualGUID(guid, COM.IIDIOleControlSite)) {
-		COM.MoveMemory(ppvObject, new long /*int*/[] {iOleControlSite.getAddress()}, OS.PTR_SIZEOF);
+		COM.MoveMemory(ppvObject, new long /*int*/[] {this.iOleControlSite.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
 	if (COM.IsEqualGUID(guid, COM.IIDIDispatch)) {
-		COM.MoveMemory(ppvObject, new long /*int*/[] {iDispatch.getAddress()}, OS.PTR_SIZEOF);
+		COM.MoveMemory(ppvObject, new long /*int*/[] {this.iDispatch.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
@@ -763,11 +763,11 @@ protected int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 protected int Release() {
 	int result = super.Release();
 	if (result == 0) {
-		for (int i = 0; i < sitePropertyIds.length; i++) {
-			sitePropertyValues[i].dispose();
+		for (int i = 0; i < this.sitePropertyIds.length; i++) {
+			this.sitePropertyValues[i].dispose();
 		}
-		sitePropertyIds = new int[0];
-		sitePropertyValues = new Variant[0];
+		this.sitePropertyIds = new int[0];
+		this.sitePropertyValues = new Variant[0];
 	}
 	return result;
 }
@@ -847,34 +847,34 @@ public void removeEventListener(OleAutomation automation, int eventID, OleListen
 }
 void removeEventListener(long /*int*/ iunknown, GUID guid, int eventID, OleListener listener) {
 	if (listener == null || guid == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	for (int i = 0; i < oleEventSink.length; i++) {
-		if (COM.IsEqualGUID(oleEventSinkGUID[i], guid)) {
-			if (iunknown == oleEventSinkIUnknown[i]) {
-				oleEventSink[i].removeListener(eventID, listener);
-				if (!oleEventSink[i].hasListeners()) {
+	for (int i = 0; i < this.oleEventSink.length; i++) {
+		if (COM.IsEqualGUID(this.oleEventSinkGUID[i], guid)) {
+			if (iunknown == this.oleEventSinkIUnknown[i]) {
+				this.oleEventSink[i].removeListener(eventID, listener);
+				if (!this.oleEventSink[i].hasListeners()) {
 					//free resources associated with event sink
-					oleEventSink[i].disconnect();
-					oleEventSink[i].Release();
-					int oldLength = oleEventSink.length;
+					this.oleEventSink[i].disconnect();
+					this.oleEventSink[i].Release();
+					int oldLength = this.oleEventSink.length;
 					if (oldLength == 1) {
-						oleEventSink = new OleEventSink[0];
-						oleEventSinkGUID = new GUID[0];
-						oleEventSinkIUnknown = new long /*int*/[0];
+						this.oleEventSink = new OleEventSink[0];
+						this.oleEventSinkGUID = new GUID[0];
+						this.oleEventSinkIUnknown = new long /*int*/[0];
 					} else {
 						OleEventSink[] newOleEventSink = new OleEventSink[oldLength - 1];
-						System.arraycopy(oleEventSink, 0, newOleEventSink, 0, i);
-						System.arraycopy(oleEventSink, i + 1, newOleEventSink, i, oldLength - i - 1);
-						oleEventSink = newOleEventSink;
+						System.arraycopy(this.oleEventSink, 0, newOleEventSink, 0, i);
+						System.arraycopy(this.oleEventSink, i + 1, newOleEventSink, i, oldLength - i - 1);
+						this.oleEventSink = newOleEventSink;
 						
 						GUID[] newOleEventSinkGUID = new GUID[oldLength - 1];
-						System.arraycopy(oleEventSinkGUID, 0, newOleEventSinkGUID, 0, i);
-						System.arraycopy(oleEventSinkGUID, i + 1, newOleEventSinkGUID, i, oldLength - i - 1);
-						oleEventSinkGUID = newOleEventSinkGUID;
+						System.arraycopy(this.oleEventSinkGUID, 0, newOleEventSinkGUID, 0, i);
+						System.arraycopy(this.oleEventSinkGUID, i + 1, newOleEventSinkGUID, i, oldLength - i - 1);
+						this.oleEventSinkGUID = newOleEventSinkGUID;
 						
 						long /*int*/[] newOleEventSinkIUnknown = new long /*int*/[oldLength - 1];
-						System.arraycopy(oleEventSinkIUnknown, 0, newOleEventSinkIUnknown, 0, i);
-						System.arraycopy(oleEventSinkIUnknown, i + 1, newOleEventSinkIUnknown, i, oldLength - i - 1);
-						oleEventSinkIUnknown = newOleEventSinkIUnknown;
+						System.arraycopy(this.oleEventSinkIUnknown, 0, newOleEventSinkIUnknown, 0, i);
+						System.arraycopy(this.oleEventSinkIUnknown, i + 1, newOleEventSinkIUnknown, i, oldLength - i - 1);
+						this.oleEventSinkIUnknown = newOleEventSinkIUnknown;
 					}
 				}
 				return;
@@ -894,7 +894,7 @@ void removeEventListener(long /*int*/ iunknown, GUID guid, int eventID, OleListe
  */
 public void removePropertyListener(int propertyID, OleListener listener) {
 	if (listener == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	olePropertyChangeSink.removeListener(propertyID, listener);
+	this.olePropertyChangeSink.removeListener(propertyID, listener);
 }
 public void setBackground (Color color) {
 
@@ -954,35 +954,35 @@ public void setForeground (Color color) {
  * @since 2.1
  */
 public void setSiteProperty(int dispId, Variant value){
-	for (int i = 0; i < sitePropertyIds.length; i++) {
-		if (sitePropertyIds[i] == dispId) {
-			if (sitePropertyValues[i] != null) {
-				sitePropertyValues[i].dispose();
+	for (int i = 0; i < this.sitePropertyIds.length; i++) {
+		if (this.sitePropertyIds[i] == dispId) {
+			if (this.sitePropertyValues[i] != null) {
+				this.sitePropertyValues[i].dispose();
 			}
 			if (value != null) {
-				sitePropertyValues[i] = value;
+				this.sitePropertyValues[i] = value;
 			} else {
-				int oldLength = sitePropertyIds.length;
+				int oldLength = this.sitePropertyIds.length;
 				int[] newSitePropertyIds = new int[oldLength - 1];
 				Variant[] newSitePropertyValues = new Variant[oldLength - 1];
-				System.arraycopy(sitePropertyIds, 0, newSitePropertyIds, 0, i);
-				System.arraycopy(sitePropertyIds, i + 1, newSitePropertyIds, i, oldLength - i - 1);
-				System.arraycopy(sitePropertyValues, 0, newSitePropertyValues, 0, i);
-				System.arraycopy(sitePropertyValues, i + 1, newSitePropertyValues, i, oldLength - i - 1);
-				sitePropertyIds = newSitePropertyIds;
-				sitePropertyValues = newSitePropertyValues;
+				System.arraycopy(this.sitePropertyIds, 0, newSitePropertyIds, 0, i);
+				System.arraycopy(this.sitePropertyIds, i + 1, newSitePropertyIds, i, oldLength - i - 1);
+				System.arraycopy(this.sitePropertyValues, 0, newSitePropertyValues, 0, i);
+				System.arraycopy(this.sitePropertyValues, i + 1, newSitePropertyValues, i, oldLength - i - 1);
+				this.sitePropertyIds = newSitePropertyIds;
+				this.sitePropertyValues = newSitePropertyValues;
 			}
 			return;
 		}
 	}
-	int oldLength = sitePropertyIds.length;
+	int oldLength = this.sitePropertyIds.length;
 	int[] newSitePropertyIds = new int[oldLength + 1];
 	Variant[] newSitePropertyValues = new Variant[oldLength + 1];
-	System.arraycopy(sitePropertyIds, 0, newSitePropertyIds, 0, oldLength);
-	System.arraycopy(sitePropertyValues, 0, newSitePropertyValues, 0, oldLength);
+	System.arraycopy(this.sitePropertyIds, 0, newSitePropertyIds, 0, oldLength);
+	System.arraycopy(this.sitePropertyValues, 0, newSitePropertyValues, 0, oldLength);
 	newSitePropertyIds[oldLength] = dispId;
 	newSitePropertyValues[oldLength] = value;
-	sitePropertyIds = newSitePropertyIds;
-	sitePropertyValues = newSitePropertyValues;
+	this.sitePropertyIds = newSitePropertyIds;
+	this.sitePropertyValues = newSitePropertyValues;
 }
 }

@@ -1032,7 +1032,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
         if(System.getProperty("os.name").indexOf("Windows") >= 0)
         {
-            isWindows = true;
+            this.isWindows = true;
         }
 
         setLocationRelativeTo(null);
@@ -1042,10 +1042,10 @@ implements ScreenListenerInterface, ResizableListenerInterface
         ScreenListenerHandler.getInstance().setListener(this);
 
         this.logQueueAppender = new QueueAppender(1024);
-        Logger.addAppender(logQueueAppender);
+        Logger.addAppender(this.logQueueAppender);
 
         /*		this.logQueueAppender = new QueueAppender(1024);
-                Logger.addAppender(logQueueAppender);
+                Logger.addAppender(this.logQueueAppender);
 
                 JMenuBar menuBar = new JMenuBar();
 
@@ -1103,37 +1103,37 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
                 JMenu menuScaleLCD = new JMenu("Scaled display");
                 menuOptions.add(menuScaleLCD);
-                zoomLevels = new JCheckBoxMenuItem[3];
-                for (int i = 0; i < zoomLevels.length; ++i) {
-                        zoomLevels[i] = new JCheckBoxMenuItem("x " + (i + 2));
-                        zoomLevels[i].setActionCommand("" + (i + 2));
-                        zoomLevels[i].addActionListener(menuScaledDisplayListener);
-                        menuScaleLCD.add(zoomLevels[i]);
+                this.zoomLevels = new JCheckBoxMenuItem[3];
+                for (int i = 0; i < this.zoomLevels.length; ++i) {
+                        this.zoomLevels[i] = new JCheckBoxMenuItem("x " + (i + 2));
+                        this.zoomLevels[i].setActionCommand("" + (i + 2));
+                        this.zoomLevels[i].addActionListener(menuScaledDisplayListener);
+                        menuScaleLCD.add(this.zoomLevels[i]);
                 }
 
-                menuStartCapture = new JMenuItem("Start capture to GIF...");
-                menuStartCapture.addActionListener(menuStartCaptureListener);
-                menuOptions.add(menuStartCapture);
+                this.menuStartCapture = new JMenuItem("Start capture to GIF...");
+                this.menuStartCapture.addActionListener(menuStartCaptureListener);
+                menuOptions.add(this.menuStartCapture);
 
-                menuStopCapture = new JMenuItem("Stop capture");
-                menuStopCapture.setEnabled(false);
-                menuStopCapture.addActionListener(menuStopCaptureListener);
-                menuOptions.add(menuStopCapture);
+                this.menuStopCapture = new JMenuItem("Stop capture");
+                this.menuStopCapture.setEnabled(false);
+                this.menuStopCapture.addActionListener(menuStopCaptureListener);
+                menuOptions.add(this.menuStopCapture);
 
-                menuMIDletNetworkConnection = new JCheckBoxMenuItem("MIDlet Network access");
-                menuMIDletNetworkConnection.setState(true);
-                menuMIDletNetworkConnection.addActionListener(menuMIDletNetworkConnectionListener);
-                menuOptions.add(menuMIDletNetworkConnection);
+                this.menuMIDletNetworkConnection = new JCheckBoxMenuItem("MIDlet Network access");
+                this.menuMIDletNetworkConnection.setState(true);
+                this.menuMIDletNetworkConnection.addActionListener(menuMIDletNetworkConnectionListener);
+                menuOptions.add(this.menuMIDletNetworkConnection);
 
-                menuRecordStoreManager = new JCheckBoxMenuItem("Record Store Manager");
-                menuRecordStoreManager.setState(false);
-                menuRecordStoreManager.addActionListener(menuRecordStoreManagerListener);
-                menuOptions.add(menuRecordStoreManager);
+                this.menuRecordStoreManager = new JCheckBoxMenuItem("Record Store Manager");
+                this.menuRecordStoreManager.setState(false);
+                this.menuRecordStoreManager.addActionListener(menuRecordStoreManagerListener);
+                menuOptions.add(this.menuRecordStoreManager);
 
-                menuLogConsole = new JCheckBoxMenuItem("Log console");
-                menuLogConsole.setState(false);
-                menuLogConsole.addActionListener(menuLogConsoleListener);
-                menuOptions.add(menuLogConsole);
+                this.menuLogConsole = new JCheckBoxMenuItem("Log console");
+                this.menuLogConsole.setState(false);
+                this.menuLogConsole.addActionListener(menuLogConsoleListener);
+                menuOptions.add(this.menuLogConsole);
 
                 menuOptions.addSeparator();
                 JCheckBoxMenuItem menuShowMouseCoordinates = new JCheckBoxMenuItem("Mouse coordinates");
@@ -1171,7 +1171,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
                 //getContentPane().add(createContents(getContentPane()), "Center");
                 getContentPane().add(createContents(getContentPane()));
 
-                selectDevicePanel = new SwingSelectDevicePanel(emulatorContext);
+                this.selectDevicePanel = new SwingSelectDevicePanel(emulatorContext);
 
                 this.common = new Common(emulatorContext, NullUtil.getInstance().NULL_OBJECT);
                 this.common.setStatusBarListener(statusBarListener);
@@ -1197,7 +1197,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
                 JPanel statusPanel = new JPanel();
                 statusPanel.setLayout(new BorderLayout());
-                statusPanel.add(statusBar, "West");
+                statusPanel.add(this.statusBar, "West");
                 statusPanel.add(this.resizeButton, "East");
 
                 getContentPane().add(statusPanel, "South");
@@ -1205,7 +1205,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
                 Message.addListener(new SwingErrorMessageDialogPanel(this));
 
-                devicePanel.setTransferHandler(new DropTransferHandler());
+                this.devicePanel.setTransferHandler(new DropTransferHandler());
         }
 
     public void onResizable(boolean isResizable)
@@ -1294,7 +1294,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
             //this.addNotify();
 
-            if(isWindows)
+            if(this.isWindows)
             {
                 //this.getExtendedState() |
                 this.setExtendedState(Frame.ICONIFIED);
@@ -1339,7 +1339,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
             //this.addNotify();
 
-            if(isWindows)
+            if(this.isWindows)
             {
                 //this.setExtendedState(this.getExtendedState() | Frame.ICONIFIED | Frame.MAXIMIZED_BOTH);
             //this.setExtendedState(Frame.ICONIFIED);
@@ -1373,15 +1373,15 @@ implements ScreenListenerInterface, ResizableListenerInterface
         }
 
            /*
-        win.setFocusable(true);
-        win.setVisible(true);
-        win.requestFocus();
-        win.requestFocusInWindow();
-        win.validate();
-        win.requestFocus();
-        win.requestFocusInWindow();
-        win.repaint();
-        win.toFront();
+        this.win.setFocusable(true);
+        this.win.setVisible(true);
+        this.win.requestFocus();
+        this.win.requestFocusInWindow();
+        this.win.validate();
+        this.win.requestFocus();
+        this.win.requestFocusInWindow();
+        this.win.repaint();
+        this.win.toFront();
             */
         
         //
@@ -1397,16 +1397,16 @@ implements ScreenListenerInterface, ResizableListenerInterface
         this.toFront();
 
         /*
-        devicePanel.setFocusable(true);
-        devicePanel.setVisible(true);
-        devicePanel.requestFocus();
-        devicePanel.requestFocusInWindow();
-        devicePanel.validate();
-        devicePanel.requestFocus();
-        devicePanel.requestFocusInWindow();
+        this.devicePanel.setFocusable(true);
+        this.devicePanel.setVisible(true);
+        this.devicePanel.requestFocus();
+        this.devicePanel.requestFocusInWindow();
+        this.devicePanel.validate();
+        this.devicePanel.requestFocus();
+        this.devicePanel.requestFocusInWindow();
          */  
 
-        devicePanel.repaint();
+        this.devicePanel.repaint();
     }
     
     private void setup() {
@@ -1423,8 +1423,8 @@ implements ScreenListenerInterface, ResizableListenerInterface
     
 	protected Component createContents(Container parent) {
             devicePanel = new SwingDeviceComponent();
-            devicePanel.addKeyListener(devicePanel);
-            addKeyListener(devicePanel);
+            this.devicePanel.addKeyListener(this.devicePanel);
+            addKeyListener(this.devicePanel);
 
             return devicePanel;
     }
@@ -1457,7 +1457,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
                                 setDeviceSize(deviceDisplay, size.width, size.height);
                             }
                     }
-                    common.setDevice(device);
+                    this.common.setDevice(device);
                     updateDevice();
                     return true;
             } catch (MalformedURLException e) {
@@ -1484,7 +1484,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
     // resize the display area
     deviceDisplay.setDisplayPaintable(new Rectangle(0, 0, width, height - menuh));
     deviceDisplay.setDisplayRectangle(new Rectangle(0, 0, width, height));
-    ((SwingDisplayComponent) devicePanel.getDisplayComponent()).init();
+    ((SwingDisplayComponent) this.devicePanel.getDisplayComponent()).init();
     // update display
     MIDletAccess ma = MIDletBridge.getMIDletAccess();
     if (ma == null) {
@@ -1500,10 +1500,10 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
     protected void updateDevice()
     {
-            devicePanel.init();
+            this.devicePanel.init();
             if (((DeviceDisplayImpl) DeviceFactory.getDevice().getDeviceDisplay()).isResizable()) {
                     setResizable(true);
-                    resizeButton.setVisible(true);
+                    this.resizeButton.setVisible(true);
             } else {
                     setResizable(false);
                     //resizeButton.setVisible(false);
@@ -1511,7 +1511,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
 
             pack();
 
-            devicePanel.requestFocus();
+            this.devicePanel.requestFocus();
     }
     
 	private abstract class CountTimerTask extends TimerTask {

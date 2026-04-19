@@ -97,9 +97,9 @@ String getName () {
 @Override
 public String toString() {
 	return getName ()
-		+ "{" + widget
-		+ " time=" + time
-		+ " data=" + data
+		+ "{" + this.widget
+		+ " time=" + this.time
+		+ " data=" + this.data
 		+ "}";
 }
 }

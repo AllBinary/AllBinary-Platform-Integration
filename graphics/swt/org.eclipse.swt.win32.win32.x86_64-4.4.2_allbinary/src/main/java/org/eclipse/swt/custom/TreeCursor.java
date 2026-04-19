@@ -76,7 +76,7 @@ public class TreeCursor extends Canvas {
  */
 public TreeCursor(Tree parent, int style) {
 	super(parent, style);
-	tree = parent;
+	this.tree = parent;
 	setBackground(null);
 	setForeground(null);
 
@@ -154,10 +154,10 @@ public TreeCursor(Tree parent, int style) {
 			}
 		}
 	};
-	tree.addListener(SWT.Collapse, treeListener);
-	tree.addListener(SWT.Expand, treeListener);
-	tree.addListener(SWT.FocusIn, treeListener);
-	tree.addListener(SWT.MouseDown, treeListener);
+	this.tree.addListener(SWT.Collapse, treeListener);
+	this.tree.addListener(SWT.Expand, treeListener);
+	this.tree.addListener(SWT.FocusIn, treeListener);
+	this.tree.addListener(SWT.MouseDown, treeListener);
 	
 	disposeItemListener = new Listener() {
 		public void handleEvent(Event event) {
@@ -314,7 +314,7 @@ int findIndex(TreeItem[] items, TreeItem treeItem) {
 		if (rect.y > rect1.y && i == items.length - 1) {
 			return index + findIndex(currentItem.getItems(), treeItem);
 		}
-		if (rect.y >= rect1.y + (1 + currentItem.getItemCount()) * tree.getItemHeight() && currentItem.getExpanded()) {
+		if (rect.y >= rect1.y + (1 + currentItem.getItemCount()) * this.tree.getItemHeight() && currentItem.getExpanded()) {
 			index += countSubTreePages(currentItem);
 			continue;
 		}
@@ -344,13 +344,13 @@ TreeItem findItem(TreeItem[] items, Point pt) {
 			if (!items[end].getExpanded()) return null;
 			return findItem(items[end].getItems(), pt);
 		}
-		int[] columnOrder = tree.getColumnOrder();
+		int[] columnOrder = this.tree.getColumnOrder();
 		Rectangle bounds = null;
 		if (columnOrder.length > 0) {
 			Rectangle rect1 = items[end].getBounds(columnOrder[0]);
 			Rectangle rect2 = items[end].getBounds(columnOrder[columnOrder.length - 1]);
 			bounds = rect1.union(rect2);
-			bounds.height += tree.getLinesVisible() ? tree.getGridLineWidth() : 0;
+			bounds.height += this.tree.getLinesVisible() ? this.tree.getGridLineWidth() : 0;
 		} else {
 			bounds = items[end].getBounds();
 		}
@@ -361,13 +361,13 @@ TreeItem findItem(TreeItem[] items, Point pt) {
 	if (startBounds.y + startBounds.height < pt.y) {
 		return findItem(items[start].getItems(), pt);
 	}
-	int[] columnOrder = tree.getColumnOrder();
+	int[] columnOrder = this.tree.getColumnOrder();
 	Rectangle bounds = null;
 	if (columnOrder.length > 0) {
 		Rectangle rect1 = items[start].getBounds(columnOrder[0]);
 		Rectangle rect2 = items[start].getBounds(columnOrder[columnOrder.length - 1]);
 		bounds = rect1.union(rect2);
-		bounds.height += tree.getLinesVisible() ? tree.getGridLineWidth() : 0;
+		bounds.height += this.tree.getLinesVisible() ? this.tree.getGridLineWidth() : 0;
 	} else {
 		bounds = items[start].getBounds();
 	}
@@ -382,7 +382,7 @@ TreeItem findItem(TreeItem[] items, Point pt) {
 @Override
 public Color getBackground() {
 	checkWidget();
-	if (background == null) {
+	if (this.background == null) {
 		return getDisplay().getSystemColor(BACKGROUND);
 	}
 	return background;
@@ -400,7 +400,7 @@ public Color getBackground() {
  */
 public int getColumn() {
 	checkWidget();
-	return column == null ? 0 : tree.indexOf(column);
+	return column == null ? 0 : this.tree.indexOf(column);
 }
 
 /**
@@ -411,7 +411,7 @@ public int getColumn() {
 @Override
 public Color getForeground() {
 	checkWidget();
-	if (foreground == null) {
+	if (this.foreground == null) {
 		return getDisplay().getSystemColor(FOREGROUND);
 	}
 	return foreground;
@@ -442,9 +442,9 @@ TreeItem getNextItem(TreeItem item) {
 		item = parentItem;
 		parentItem = item.getParentItem();
 	}
-	int index = tree.indexOf(item);
+	int index = this.tree.indexOf(item);
 	if (index == -1) return null;
-	if (index == tree.getItemCount() - 1) return null;
+	if (index == this.tree.getItemCount() - 1) return null;
 	return tree.getItem(index + 1);	
 }
 
@@ -452,9 +452,9 @@ TreeItem getPreviousItem(TreeItem item) {
 	if (item == null) return null;
 	TreeItem parentItem = item.getParentItem();
 	if (parentItem == null) {
-		int index = tree.indexOf(item);
+		int index = this.tree.indexOf(item);
 		if (index == -1 || index == 0) return null;
-		item = tree.getItem(index - 1);
+		item = this.tree.getItem(index - 1);
 		if (item.getExpanded() && item.getItemCount() > 0) {
 			return getLastVisibleItem(item.getItems());
 		}
@@ -486,7 +486,7 @@ public TreeItem getRow() {
 }
 
 void keyDown(Event event) {
-	if (row == null) return;
+	if (this.row == null) return;
 	switch (event.character) {
 		case SWT.CR:
 			notifyListeners(SWT.DefaultSelection, new Event());
@@ -494,13 +494,13 @@ void keyDown(Event event) {
 	}
 	switch (event.keyCode) {
 		case SWT.ARROW_UP:
-			TreeItem previousItem = getPreviousItem(row);
+			TreeItem previousItem = getPreviousItem(this.row);
 			if (previousItem != null) {
 				setRowColumn(previousItem, column, true);
 			}
 			break;
 		case SWT.ARROW_DOWN:
-			TreeItem nextItem = getNextItem(row);
+			TreeItem nextItem = getNextItem(this.row);
 			if (nextItem != null) {
 				setRowColumn(nextItem, column, true);
 			}
@@ -508,13 +508,13 @@ void keyDown(Event event) {
 		case SWT.ARROW_LEFT:
 		case SWT.ARROW_RIGHT: {
 			if ((event.stateMask & SWT.MOD1) != 0) {
-				row.setExpanded (event.keyCode == SWT.ARROW_RIGHT);
+				this.row.setExpanded (event.keyCode == SWT.ARROW_RIGHT);
 				break;
 			}
-			int columnCount = tree.getColumnCount();
+			int columnCount = this.tree.getColumnCount();
 			if (columnCount == 0) break;
-			int columnIndex = column == null ? 0 : tree.indexOf(column);
-			int[] columnOrder = tree.getColumnOrder();
+			int columnIndex = column == null ? 0 : this.tree.indexOf(column);
+			int[] columnOrder = this.tree.getColumnOrder();
 			int index = 0;
 			while (index < columnOrder.length) {
 				if (columnOrder[index] == columnIndex) break;
@@ -522,17 +522,17 @@ void keyDown(Event event) {
 			}
 			if (index == columnOrder.length) index = 0;
 			int leadKey = (getStyle() & SWT.RIGHT_TO_LEFT) != 0 ? SWT.ARROW_RIGHT : SWT.ARROW_LEFT;
-			TreeItem parentRow = row.getParentItem();
-			int rowIndex = tree.indexOf(row);
+			TreeItem parentRow = this.row.getParentItem();
+			int rowIndex = this.tree.indexOf(this.row);
 			if (event.keyCode == leadKey) {
 				if (parentRow != null) {
-					setRowColumn(row, tree.getColumn(columnOrder[Math.max(0, index - 1)]), true);
+					setRowColumn(this.row, tree.getColumn(columnOrder[Math.max(0, index - 1)]), true);
 				} else {
 					setRowColumn(rowIndex, columnOrder[Math.max(0, index - 1)], true);
 				}
 			} else {
 				if (parentRow != null) {
-					setRowColumn(row, tree.getColumn(columnOrder[Math.min(columnCount - 1, index + 1)]), true);
+					setRowColumn(this.row, tree.getColumn(columnOrder[Math.min(columnCount - 1, index + 1)]), true);
 				} else {
 					setRowColumn(rowIndex, columnOrder[Math.min(columnCount - 1, index + 1)], true);
 				}
@@ -551,7 +551,7 @@ void keyDown(Event event) {
 		case SWT.PAGE_UP: {
 			Rectangle rect = tree.getClientArea();
 			Rectangle itemRect = tree.getTopItem().getBounds();
-			TreeItem item = row;
+			TreeItem item = this.row;
 			int index = findIndex(tree.getItems(), item);
 			int itemHeight = tree.getItemHeight();
 			rect.height -= itemRect.y;
@@ -570,7 +570,7 @@ void keyDown(Event event) {
 		case SWT.PAGE_DOWN: {
 			Rectangle rect = tree.getClientArea();
 			Rectangle itemRect = tree.getTopItem().getBounds();
-			TreeItem item = row;
+			TreeItem item = this.row;
 			int index = findIndex(tree.getItems(), item);
 			int height = tree.getItemHeight();
 			rect.height -= itemRect.y;
@@ -595,26 +595,26 @@ void onDispose(Event event) {
 	notifyListeners(SWT.Dispose, event);
 	event.type = SWT.None;
 
-	tree.removeListener(SWT.Collapse, treeListener);
-	tree.removeListener(SWT.Expand, treeListener);
-	tree.removeListener(SWT.FocusIn, treeListener);
-	tree.removeListener(SWT.MouseDown, treeListener);
+	this.tree.removeListener(SWT.Collapse, treeListener);
+	this.tree.removeListener(SWT.Expand, treeListener);
+	this.tree.removeListener(SWT.FocusIn, treeListener);
+	this.tree.removeListener(SWT.MouseDown, treeListener);
 	unhookRowColumnListeners();
-	ScrollBar hBar = tree.getHorizontalBar();
+	ScrollBar hBar = this.tree.getHorizontalBar();
 	if (hBar != null) {
 		hBar.removeListener(SWT.Selection, resizeListener);
 	}
-	ScrollBar vBar = tree.getVerticalBar();
+	ScrollBar vBar = this.tree.getVerticalBar();
 	if (vBar != null) {
 		vBar.removeListener(SWT.Selection, resizeListener);
 	}
 }
 
 void paint(Event event) {
-	if (row == null) return;
-	int columnIndex = column == null ? 0 : tree.indexOf(column);
+	if (this.row == null) return;
+	int columnIndex = this.column == null ? 0 : this.tree.indexOf(this.column);
 	int orderedIndex = columnIndex;
-	int[] columnOrder = tree.getColumnOrder();
+	int[] columnOrder = this.tree.getColumnOrder();
 	for (int i = 0; i < columnOrder.length; i++) {
 		if (columnOrder[i] == columnIndex) {
 			orderedIndex = i;
@@ -625,7 +625,7 @@ void paint(Event event) {
 	gc.setBackground(getBackground());
 	gc.setForeground(getForeground());
 	gc.fillRectangle(event.x, event.y, event.width, event.height);
-	Image image = row.getImage(columnIndex);
+	Image image = this.row.getImage(columnIndex);
 	int x = 0;
 	// Temporary code - need a better way to determine trim
 	String platform = SWT.getPlatform();
@@ -645,16 +645,16 @@ void paint(Event event) {
 		gc.drawImage(image, x, imageY);
 		x += imageSize.width;
 	}
-	String text = row.getText(columnIndex);
+	String text = this.row.getText(columnIndex);
 	if (text.length() > 0) {
-		Rectangle bounds = row.getBounds(columnIndex);
+		Rectangle bounds = this.row.getBounds(columnIndex);
 		Point extent = gc.stringExtent(text);
 		// Temporary code - need a better way to determine trim
 		if ("win32".equals(platform)) { //$NON-NLS-1$
-			if (tree.getColumnCount() == 0 || orderedIndex == 0) {
+			if (this.tree.getColumnCount() == 0 || orderedIndex == 0) {
 				x += image == null ? 2 : 5;
 			} else {
-				int alignmnent = column.getAlignment();
+				int alignmnent = this.column.getAlignment();
 				switch (alignmnent) {
 					case SWT.LEFT:
 						x += image == null ? 5 : 3;
@@ -668,10 +668,10 @@ void paint(Event event) {
 				}
 			}
 		} else {
-			if (tree.getColumnCount() == 0) {
+			if (this.tree.getColumnCount() == 0) {
 				x += image == null ? 4 : 3;
 			} else {
-				int alignmnent = column.getAlignment();
+				int alignmnent = this.column.getAlignment();
 				switch (alignmnent) {
 					case SWT.LEFT:
 						x += image == null ? 5 : 3;
@@ -721,11 +721,11 @@ public void removeSelectionListener(SelectionListener listener) {
 }
 
 void _resize() {
-	if (row == null) {
+	if (this.row == null) {
 		setBounds(-200, -200, 0, 0);
 	} else {
-		int columnIndex = column == null ? 0 : tree.indexOf(column);
-		setBounds(row.getBounds(columnIndex));
+		int columnIndex = this.column == null ? 0 : this.tree.indexOf(this.column);
+		setBounds(this.row.getBounds(columnIndex));
 	}
 }
 
@@ -779,7 +779,7 @@ public void setForeground (Color color) {
 
 void setRowColumn(int row, int column, boolean notify) {
 	TreeItem item = row == -1 ? null : tree.getItem(row);
-	TreeColumn col = column == -1 || tree.getColumnCount() == 0 ? null : tree.getColumn(column);
+	TreeColumn col = column == -1 || this.tree.getColumnCount() == 0 ? null : this.tree.getColumn(column);
 	setRowColumn(item, col, notify);
 }
 
@@ -806,16 +806,16 @@ void setRowColumn(TreeItem row, TreeColumn column, boolean notify) {
 				currentItem.addListener(SWT.Dispose, disposeItemListener);
 				currentItem = currentItem.getParentItem();
 			}
-			tree.showItem(row);
+			this.tree.showItem(row);
 		}
 		if (this.column != column && column != null) {
 			this.column = column;
 			column.addListener(SWT.Dispose, disposeColumnListener);
 			column.addListener(SWT.Move, resizeListener);
 			column.addListener(SWT.Resize, resizeListener);
-			tree.showColumn(column);
+			this.tree.showColumn(column);
 		}
-		int columnIndex = column == null ? 0 : tree.indexOf(column);
+		int columnIndex = column == null ? 0 : this.tree.indexOf(column);
 		setBounds(row.getBounds(columnIndex));
 		redraw();
 		if (notify) notifyListeners(SWT.Selection, new Event());
@@ -835,9 +835,9 @@ void setRowColumn(TreeItem row, TreeColumn column, boolean notify) {
  */
 public void setSelection(int row, int column) {
 	checkWidget();
-	int columnCount = tree.getColumnCount();
+	int columnCount = this.tree.getColumnCount();
 	int maxColumnIndex = columnCount == 0 ? 0 : columnCount - 1;
-	if (row < 0 || row >= tree.getItemCount() || column < 0 || column > maxColumnIndex) {
+	if (row < 0 || row >= this.tree.getItemCount() || column < 0 || column > maxColumnIndex) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
 	setRowColumn(row, column, false);
@@ -856,12 +856,12 @@ public void setSelection(int row, int column) {
  */
 public void setSelection(TreeItem row, int column) {
 	checkWidget();
-	int columnCount = tree.getColumnCount();
+	int columnCount = this.tree.getColumnCount();
 	int maxColumnIndex = columnCount == 0 ? 0 : columnCount - 1;
 	if (row == null || row.isDisposed() || column < 0 || column > maxColumnIndex) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	TreeColumn col = tree.getColumnCount() == 0 ? null : tree.getColumn(column);
+	TreeColumn col = this.tree.getColumnCount() == 0 ? null : this.tree.getColumn(column);
 	setRowColumn(row, col, false);
 }
 
@@ -875,9 +875,9 @@ public void setVisible(boolean visible) {
 }
 
 void treeCollapse(Event event) {
-	if (row == null) return;
+	if (this.row == null) return;
 	TreeItem root = (TreeItem)event.item;
-	TreeItem parentItem = row.getParentItem();
+	TreeItem parentItem = this.row.getParentItem();
 	while (parentItem != null) {
 		if (parentItem == root) {
 			setRowColumn(root, column, true);
@@ -905,24 +905,24 @@ void treeExpand(Event event) {
 
 void treeFocusIn(Event event) {
 	if (isVisible()) {
-		if (row == null && column == null) return;
+		if (this.row == null && this.column == null) return;
 		setFocus();
 	}
 }
 
 void treeMouseDown(Event event) {
-	if (tree.getItemCount() == 0) return;
+	if (this.tree.getItemCount() == 0) return;
 	Point pt = new Point(event.x, event.y);
-	TreeItem item = tree.getItem(pt);
-	if (item == null && (tree.getStyle() & SWT.FULL_SELECTION) == 0) {
-		TreeItem currentItem = tree.getTopItem();
+	TreeItem item = this.tree.getItem(pt);
+	if (item == null && (this.tree.getStyle() & SWT.FULL_SELECTION) == 0) {
+		TreeItem currentItem = this.tree.getTopItem();
 		TreeItem parentItem = currentItem.getParentItem();
 		while (parentItem != null) {
 			currentItem = parentItem;
 			parentItem = currentItem.getParentItem();
 		}
-		int start = tree.indexOf(currentItem);
-		int viewportItemCount = tree.getClientArea().height / tree.getItemHeight();
+		int start = this.tree.indexOf(currentItem);
+		int viewportItemCount = this.tree.getClientArea().height / this.tree.getItemHeight();
 		int end = Math.min(start + viewportItemCount, tree.getItemCount() - 1);
 		TreeItem[] allItems = tree.getItems();
 		TreeItem[] items = new TreeItem[end - start + 1];
@@ -953,20 +953,20 @@ void treeMouseDown(Event event) {
 }
 
 void unhookRowColumnListeners() {
-	if (column != null && !column.isDisposed()) {
-		column.removeListener(SWT.Dispose, disposeColumnListener);
-		column.removeListener(SWT.Move, resizeListener);
-		column.removeListener(SWT.Resize, resizeListener);
+	if (this.column != null && !this.column.isDisposed()) {
+		this.column.removeListener(SWT.Dispose, disposeColumnListener);
+		this.column.removeListener(SWT.Move, resizeListener);
+		this.column.removeListener(SWT.Resize, resizeListener);
 	}
-	column = null;
-	if (row != null && !row.isDisposed()) {
-		TreeItem currentItem = row;
+	this.column = null;
+	if (this.row != null && !this.row.isDisposed()) {
+		TreeItem currentItem = this.row;
 		while (currentItem != null) {
 			currentItem.removeListener(SWT.Dispose, disposeItemListener);
 			currentItem = currentItem.getParentItem();
 		}
 	}
-	row = null;
+	this.row = null;
 }
 
 }

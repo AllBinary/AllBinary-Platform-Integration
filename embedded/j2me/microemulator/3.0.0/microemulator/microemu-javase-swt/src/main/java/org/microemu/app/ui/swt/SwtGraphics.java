@@ -64,10 +64,10 @@ public class SwtGraphics
 
 	public void dispose()
 	{
-		gc.dispose();
+		this.gc.dispose();
 		
-		if (colors != null) {
-			for (Iterator it = colors.values().iterator(); it.hasNext(); ) {
+		if (this.colors != null) {
+			for (Iterator it = this.colors.values().iterator(); it.hasNext(); ) {
 				((Color) it.next()).dispose();
 			}
 		}
@@ -76,27 +76,27 @@ public class SwtGraphics
 
         public void setTransform(final Transform transform) {
             gc.setTransform(transform);
-            gc.setAntialias(SWT.ON);
-            gc.setInterpolation(SWT.HIGH);
+            this.gc.setAntialias(SWT.ON);
+            this.gc.setInterpolation(SWT.HIGH);
         }
 
 	public void drawImage(Image image, int srcX, int srcY, int srcWidth, int srcHeight,
 			int destX, int destY, int destWidth, int destHeight) 
 	{            
-		gc.drawImage(image, srcX, srcY, srcWidth, srcHeight, destX + transX, destY + transY, destWidth, destHeight);
+		this.gc.drawImage(image, srcX, srcY, srcWidth, srcHeight, destX + this.transX, destY + this.transY, destWidth, destHeight);
 	}
 
 
 	public void drawImage(Image image, int x, int y) 
 	{
-		gc.drawImage(image, x + transX, y + transY);
+		this.gc.drawImage(image, x + this.transX, y + this.transY);
 	}
 	
 	
 	public void translate(int x, int y)
 	{
-		transX += x;
-		transY += y;
+		this.transX += x;
+		this.transY += y;
 	}
 	
 	
@@ -118,14 +118,14 @@ public class SwtGraphics
         //TWB - Required SWT 4.5
 	public Color getColor(final RGBA rgb)
 	{
-		if (colors == null) {
-			colors = new HashMap();
+		if (this.colors == null) {
+			this.colors = new HashMap();
 		}
 		
-		Color result = (Color) colors.get(rgb);
+		Color result = (Color) this.colors.get(rgb);
 		if (result == null) {
-			result = new Color(display, rgb);
-			colors.put(rgb, result);
+			result = new Color(this.display, rgb);
+			this.colors.put(rgb, result);
 		}
 		
 		return result;
@@ -140,7 +140,7 @@ public class SwtGraphics
 
 	public void setFont(Font font) 
 	{
-		gc.setFont(font);
+		this.gc.setFont(font);
 	}
 
 
@@ -158,14 +158,14 @@ public class SwtGraphics
 
 	public void setBackground(Color color) 
 	{
-		gc.setBackground(color);
+		this.gc.setBackground(color);
 	}
 
 
 	public void setForeground(Color color) 
 	{
-		gc.setForeground(color);
-                gc.setAlpha(color.getAlpha());
+		this.gc.setForeground(color);
+                this.gc.setAlpha(color.getAlpha());
 	}
 
 
@@ -177,59 +177,59 @@ public class SwtGraphics
 
 	public void setClipping(int x, int y, int width, int height) 
 	{
-		gc.setClipping(x + transX, y + transY, width, height);
+		this.gc.setClipping(x + this.transX, y + this.transY, width, height);
 	}
 
 
 	public void drawArc(int x, int y, int width, int height, int startAngle, int endAngle) 
 	{
-		gc.drawArc(x + transX, y + transY, width, height, startAngle, endAngle);
+		this.gc.drawArc(x + this.transX, y + this.transY, width, height, startAngle, endAngle);
 	}
 
 
 	public void drawLine(int x1, int y1, int x2, int y2) 
 	{
-		gc.drawLine(x1 + transX, y1 + transY, x2 + transX, y2 + transY);
+		this.gc.drawLine(x1 + this.transX, y1 + this.transY, x2 + this.transX, y2 + this.transY);
 	}
 
         public void drawRectangle(int x, int y, int width, int height) 
 	{
-		gc.drawRectangle(x + transX, y + transY, width - x, height - y);
+		this.gc.drawRectangle(x + this.transX, y + this.transY, width - x, height - y);
 	}
 
 	public void drawRoundRectangle(int x, int y, int width, int height, int arcWidth, int arcHeight) 
 	{
-		gc.drawRoundRectangle(x + transX, y + transY, width - x, height - y, arcWidth, arcHeight);
+		this.gc.drawRoundRectangle(x + this.transX, y + this.transY, width - x, height - y, arcWidth, arcHeight);
 	}
 
 
 	public void drawString(String string, int x, int y, boolean isTransparent) 
 	{
-		gc.drawString(string, x + transX, y + transY, isTransparent);
+		this.gc.drawString(string, x + this.transX, y + this.transY, isTransparent);
 	}
 
 
 	public void fillArc(int x, int y, int width, int height, int startAngle, int endAngle) 
 	{
-		gc.fillArc(x + transX, y + transY, width, height, startAngle, endAngle);
+		this.gc.fillArc(x + this.transX, y + this.transY, width, height, startAngle, endAngle);
 	}
 
 
 	public void fillPolygon(int[] pointArray) 
 	{
-		gc.fillPolygon(pointArray);
+		this.gc.fillPolygon(pointArray);
 	}
 
 
 	public void fillRectangle(int x, int y, int width, int height) 
 	{
-		gc.fillRectangle(x + transX, y + transY, width, height);
+		this.gc.fillRectangle(x + this.transX, y + this.transY, width, height);
 	}
 
 
 	public void fillRoundRectangle(int x, int y, int width, int height, int arcWidth, int arcHeight) 
 	{
-		gc.fillRoundRectangle(x + transX, y + transY, width, height, arcWidth, arcHeight);
+		this.gc.fillRoundRectangle(x + this.transX, y + this.transY, width, height, arcWidth, arcHeight);
 	}
 
 
@@ -247,14 +247,14 @@ public class SwtGraphics
 
 	public void setClipping(Rectangle rect) 
 	{
-		Rectangle tmp = new Rectangle(rect.x + transX, rect.y + transY, rect.width, rect.height);
-		gc.setClipping(tmp);
+		Rectangle tmp = new Rectangle(rect.x + this.transX, rect.y + this.transY, rect.width, rect.height);
+		this.gc.setClipping(tmp);
 	}
 	
 	
 	public boolean getAntialias()
 	{
-		if (gc.getAntialias() == SWT.ON) {
+		if (this.gc.getAntialias() == SWT.ON) {
 			return  true;
 		} else {
 			return false;
@@ -265,9 +265,9 @@ public class SwtGraphics
 	public void setAntialias(boolean antialias)
 	{
 		if (antialias) {
-			gc.setAntialias(SWT.ON);
+			this.gc.setAntialias(SWT.ON);
 		} else {
-			gc.setAntialias(SWT.OFF);
+			this.gc.setAntialias(SWT.OFF);
 		}
 	}
 

@@ -79,22 +79,22 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 		if (fullScreenMode) {
 			writeln(g, line++, "Back - same key 3 times");
 		}
-		if (sameKeyCount > 0) {
-			writeln(g, line++, "KeyCode: " + lastKeyCode); 
-			writeln(g, line++, "As char: " +  (char) lastKeyCode);
-			writeln(g, line++, "GameAction: " + gameActionName(getGameAction(lastKeyCode)));
-			writeln(g, line++, "KeyName: " + getKeyName(lastKeyCode));
+		if (this.sameKeyCount > 0) {
+			writeln(g, line++, "KeyCode: " + this.lastKeyCode); 
+			writeln(g, line++, "As char: " +  (char) this.lastKeyCode);
+			writeln(g, line++, "GameAction: " + gameActionName(getGameAction(this.lastKeyCode)));
+			writeln(g, line++, "KeyName: " + getKeyName(this.lastKeyCode));
 			StringBuffer pressed = new StringBuffer();
-			for(Enumeration en = keysPressed.elements(); en.hasMoreElements(); ) {
+			for(Enumeration en = this.keysPressed.elements(); en.hasMoreElements(); ) {
 			    pressed.append(en.nextElement());
 			}
 			writeln(g, line++, "Pressed: " + pressed.toString());
-			writeln(g, line++, "Event: " + lastKeyEvent);
+			writeln(g, line++, "Event: " + this.lastKeyEvent);
 		}
-		if (keysHistory.size() > 0) {
+		if (this.keysHistory.size() > 0) {
 			writeln(g, line++, "- history -");
-			for (int i = keysHistory.size() - 1; i >= 0; i--) {
-				if (writeln(g, line++, (String) keysHistory.elementAt(i)) > height) {
+			for (int i = this.keysHistory.size() - 1; i >= 0; i--) {
+				if (writeln(g, line++, (String) this.keysHistory.elementAt(i)) > height) {
 					break;
 				}
 			}
@@ -110,9 +110,9 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 	}
 	
 	public void keyPressed(int keyCode) {
-		if (lastKeyCode == keyCode) {
+		if (this.lastKeyCode == keyCode) {
 			this.sameKeyCount ++;
-			if ((fullScreenMode) && (sameKeyCount >= 3)) {
+			if ((fullScreenMode) && (this.sameKeyCount >= 3)) {
 				setFullScreenMode(false);
 				SimpleDemoMIDlet.showMenu();
 			}
@@ -120,50 +120,50 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 			this.sameKeyCount = 1;
 			logEvent(String.valueOf(keyCode) + " " + getKeyName(keyCode));
 		}
-		keyRepeatedTime = System.currentTimeMillis();
-		lastKeyCode = keyCode;
-		lastKeyEvent = "keyPressed";
-		keysPressed.addElement(shortName(keyCode));
-		if (debug) {
-		    System.out.println(lastKeyEvent + " " + keyCode);
+		this.keyRepeatedTime = System.currentTimeMillis();
+		this.lastKeyCode = keyCode;
+		this.lastKeyEvent = "keyPressed";
+		this.keysPressed.addElement(shortName(keyCode));
+		if (this.debug) {
+		    System.out.println(this.lastKeyEvent + " " + keyCode);
 		}
 		repaint();
 	}
 	
 	public void keyReleased(int keyCode) {
 		lastKeyEvent = "keyReleased";
-		lastKeyCode = keyCode;
-		if (debug) {
-            System.out.println(lastKeyEvent + " " + keyCode);
+		this.lastKeyCode = keyCode;
+		if (this.debug) {
+            System.out.println(this.lastKeyEvent + " " + keyCode);
         }
-		keysPressed.removeElement(shortName(keyCode));
-		keyRepeatedCount = 1;
-        keyRepeatedTime = 0;
-        keyRepeatedInitialDellay = 0;
+		this.keysPressed.removeElement(shortName(keyCode));
+		this.keyRepeatedCount = 1;
+        this.keyRepeatedTime = 0;
+        this.keyRepeatedInitialDellay = 0;
 		repaint();
 	}
 
 	public void keyRepeated(int keyCode) {
 	    long keyRepeatedDellay = 0;
-		if (lastKeyRepeatedKeyCode == keyCode) {
+		if (this.lastKeyRepeatedKeyCode == keyCode) {
 			this.keyRepeatedCount ++;
 		} else {
 			this.keyRepeatedCount = 1;
 		}
-		keyRepeatedDellay = System.currentTimeMillis() - keyRepeatedTime; 
-        if (keyRepeatedInitialDellay == 0) {
+		keyRepeatedDellay = System.currentTimeMillis() - this.keyRepeatedTime; 
+        if (this.keyRepeatedInitialDellay == 0) {
             this.keyRepeatedInitialDellay = keyRepeatedDellay;
         }
-        keyRepeatedTime = System.currentTimeMillis();
+        this.keyRepeatedTime = System.currentTimeMillis();
         
-		lastKeyEvent = "keyRepeated (" + Utils.d00(keyRepeatedCount) + ")";
+		this.lastKeyEvent = "keyRepeated (" + Utils.d00(this.keyRepeatedCount) + ")";
 		if (keyRepeatedDellay != 0) {
-		    lastKeyEvent += " " + this.keyRepeatedInitialDellay + "/" + keyRepeatedDellay + " ms";
+		    this.lastKeyEvent += " " + this.keyRepeatedInitialDellay + "/" + keyRepeatedDellay + " ms";
 		}
-		lastKeyCode = keyCode;
+		this.lastKeyCode = keyCode;
 		this.lastKeyRepeatedKeyCode = keyCode;
-		if (debug) {
-            System.out.println(lastKeyEvent + " " + keyCode);
+		if (this.debug) {
+            System.out.println(this.lastKeyEvent + " " + keyCode);
         }
 		repaint();
 	}
@@ -172,7 +172,7 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 		StringBuffer sb = new StringBuffer();
         sb.append(Utils.when());
         sb.append("   ").append(e);
-		keysHistory.addElement(sb.toString());
+		this.keysHistory.addElement(sb.toString());
 	}
 
 	

@@ -77,9 +77,9 @@ public class CommandManager
 	
 	private void lateInit() {
 		menuList = new List("Menu", List.IMPLICIT);
-		menuList.addCommand(CMD_BACK);
-		menuList.addCommand(CMD_SELECT);
-		menuList.setCommandListener(menuCommandListener);
+		this.menuList.addCommand(CMD_BACK);
+		this.menuList.addCommand(CMD_SELECT);
+		this.menuList.setCommandListener(menuCommandListener);
 	}
 	
 	
@@ -91,18 +91,18 @@ public class CommandManager
 	
 	public void commandAction(Command command)
 	{
-		if (menuList == null) {
+		if (this.menuList == null) {
 			lateInit();
 		}
 
-		previous = MIDletBridge.getMIDletAccess().getDisplayAccess().getCurrent();
-		MIDletBridge.getMIDletAccess().getDisplayAccess().setCurrent(menuList);
+		this.previous = MIDletBridge.getMIDletAccess().getDisplayAccess().getCurrent();
+		MIDletBridge.getMIDletAccess().getDisplayAccess().setCurrent(this.menuList);
 	}
 	
 	
 	public void updateCommands(Vector commands)
 	{
-		if (menuList == null) {
+		if (this.menuList == null) {
 			lateInit();
 		}
 		
@@ -154,12 +154,12 @@ public class CommandManager
 		// Menu is needed
 		commandsTable.insertElementAt(CMD_MENU, 0);
 		fillPossibleCommands(buttons, commandsTable);
-		while (menuList.size() > 0) {
-	        menuList.delete(0);
+		while (this.menuList.size() > 0) {
+	        this.menuList.delete(0);
 	    }
 		for (int i = 0; i < commandsTable.size(); i++) {
 			this.menuCommands = commandsTable;
-			menuList.append(((Command) commandsTable.elementAt(i)).getLabel(), NullCanvas.NULL_IMAGE);
+			this.menuList.append(((Command) commandsTable.elementAt(i)).getLabel(), NullCanvas.NULL_IMAGE);
 		}
 	}
 	

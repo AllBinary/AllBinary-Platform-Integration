@@ -169,8 +169,8 @@ void _setMaximized (boolean maximized) {
 			int width = rect.right - rect.left, height = rect.bottom - rect.top;
 			if (OS.IsPPC) {
 				/* Leave space for the menu bar */
-				if (menuBar != null) {
-					long /*int*/ hwndCB = menuBar.hwndCB;
+				if (this.menuBar != null) {
+					long /*int*/ hwndCB = this.menuBar.hwndCB;
 					RECT rectCB = new RECT ();
 					OS.GetWindowRect (hwndCB, rectCB);
 					height -= rectCB.bottom - rectCB.top;
@@ -201,15 +201,15 @@ void _setMinimized (boolean minimized) {
 }
 
 void addMenu (Menu menu) {
-	if (menus == null) menus = new Menu [4];
-	for (int i=0; i<menus.length; i++) {
-		if (menus [i] == null) {
-			menus [i] = menu;
+	if (this.menus == null) this.menus = new Menu [4];
+	for (int i=0; i<this.menus.length; i++) {
+		if (this.menus [i] == null) {
+			this.menus [i] = menu;
 			return;
 		}
 	}
-	Menu [] newMenus = new Menu [menus.length + 4];
-	newMenus [menus.length] = menu;
+	Menu [] newMenus = new Menu [this.menus.length + 4];
+	newMenus [this.menus.length] = menu;
 	System.arraycopy (menus, 0, newMenus, 0, menus.length);
 	menus = newMenus;
 }
@@ -373,7 +373,7 @@ void createAccelerators () {
 	hAccel = nAccel = 0;
 	int maxAccel = 0;
 	MenuItem [] items = display.items;
-	if (menuBar == null || items == null) {
+	if (this.menuBar == null || items == null) {
 		if (!OS.IsPPC) return;
 		maxAccel = 1;
 	} else {
@@ -382,16 +382,16 @@ void createAccelerators () {
 	ACCEL accel = new ACCEL ();
 	byte [] buffer1 = new byte [ACCEL.sizeof];	
 	byte [] buffer2 = new byte [maxAccel * ACCEL.sizeof];
-	if (menuBar != null && items != null) {
+	if (this.menuBar != null && items != null) {
 		for (int i=0; i<items.length; i++) {
 			MenuItem item = items [i];
 			if (item != null && item.accelerator != 0) {
 				Menu menu = item.parent;
 				if (menu.parent == this) {
-					while (menu != null && menu != menuBar) {
+					while (menu != null && menu != this.menuBar) {
 						menu = menu.getParentMenu ();
 					}
-					if (menu == menuBar && item.fillAccel (accel)) {
+					if (menu == this.menuBar && item.fillAccel (accel)) {
 						OS.MoveMemory (buffer1, accel, ACCEL.sizeof);
 						System.arraycopy (buffer1, 0, buffer2, nAccel * ACCEL.sizeof, ACCEL.sizeof);
 						nAccel++;
@@ -412,7 +412,7 @@ void createAccelerators () {
 		System.arraycopy (buffer1, 0, buffer2, nAccel * ACCEL.sizeof, ACCEL.sizeof);
 		nAccel++;			
 	}
-	if (nAccel != 0) hAccel = OS.CreateAcceleratorTable (buffer2, nAccel);
+	if (nAccel != 0) this.hAccel = OS.CreateAcceleratorTable (buffer2, nAccel);
 }
 
 void createHandle () {
@@ -426,12 +426,12 @@ void createHandle () {
 void createWidget () {
 	super.createWidget ();
 	swFlags = OS.IsWinCE ? OS.SW_SHOWMAXIMIZED : OS.SW_SHOWNOACTIVATE;
-	hAccel = -1;
+	this.hAccel = -1;
 }
 
 void destroyAccelerators () {
-	if (hAccel != 0 && hAccel != -1) OS.DestroyAcceleratorTable (hAccel);
-	hAccel = -1;
+	if (this.hAccel != 0 && this.hAccel != -1) OS.DestroyAcceleratorTable (this.hAccel);
+	this.hAccel = -1;
 }
 
 public void dispose () {
@@ -448,9 +448,9 @@ public void dispose () {
 }
 
 Menu findMenu (long /*int*/ hMenu) {
-	if (menus == null) return null;
-	for (int i=0; i<menus.length; i++) {
-		Menu menu = menus [i];
+	if (this.menus == null) return null;
+	for (int i=0; i<this.menus.length; i++) {
+		Menu menu = this.menus [i];
 		if (menu != null && hMenu == menu.handle) return menu;
 	}
 	return null;
@@ -458,7 +458,7 @@ Menu findMenu (long /*int*/ hMenu) {
 
 void fixDecorations (Decorations newDecorations, Control control, Menu [] menus) {
 	if (this == newDecorations) return;
-	if (control == savedFocus) savedFocus = null;
+	if (control == this.savedFocus) this.savedFocus = null;
 	if (control == defaultButton) defaultButton = null;
 	if (control == saveDefault) saveDefault = null;
 	if (menus == null) return;
@@ -486,8 +486,8 @@ public Rectangle getBounds () {
 			lpwndpl.length = WINDOWPLACEMENT.sizeof;
 			OS.GetWindowPlacement (handle, lpwndpl);
 			if ((lpwndpl.flags & OS.WPF_RESTORETOMAXIMIZED) != 0) {
-				int width = maxRect.right - maxRect.left;
-				int height = maxRect.bottom - maxRect.top;
+				int width = this.maxRect.right - this.maxRect.left;
+				int height = this.maxRect.bottom - this.maxRect.top;
 				return new Rectangle (maxRect.left, maxRect.top, width, height);
 			}
 			int width = lpwndpl.right - lpwndpl.left;
@@ -507,8 +507,8 @@ public Rectangle getClientArea () {
 	*/
 	if (OS.IsHPC) {
 		Rectangle rect = super.getClientArea ();
-		if (menuBar != null) {
-			long /*int*/ hwndCB = menuBar.hwndCB;
+		if (this.menuBar != null) {
+			long /*int*/ hwndCB = this.menuBar.hwndCB;
 			int height = OS.CommandBar_Height (hwndCB);
 			rect.y += height;
 			rect.height = Math.max (0, rect.height - height);
@@ -625,8 +625,8 @@ public Image getImage () {
  */
 public Image [] getImages () {
 	checkWidget ();
-	if (images == null) return new Image [0];
-	Image [] result = new Image [images.length];
+	if (this.images == null) return new Image [0];
+	Image [] result = new Image [this.images.length];
 	System.arraycopy (images, 0, result, 0, images.length);
 	return result;
 }
@@ -717,8 +717,8 @@ public Point getSize () {
 			lpwndpl.length = WINDOWPLACEMENT.sizeof;
 			OS.GetWindowPlacement (handle, lpwndpl);
 			if ((lpwndpl.flags & OS.WPF_RESTORETOMAXIMIZED) != 0) {
-				int width = maxRect.right - maxRect.left;
-				int height = maxRect.bottom - maxRect.top;
+				int width = this.maxRect.right - this.maxRect.left;
+				int height = this.maxRect.bottom - this.maxRect.top;
 				return new Point (width, height);
 			}
 			int width = lpwndpl.right - lpwndpl.left;
@@ -782,19 +782,19 @@ Decorations menuShell () {
 }
 
 void releaseChildren (boolean destroy) {
-	if (menuBar != null) {
-		menuBar.release (false);
-		menuBar = null;
+	if (this.menuBar != null) {
+		this.menuBar.release (false);
+		this.menuBar = null;
 	}
 	super.releaseChildren (destroy);
-	if (menus != null) {
-		for (int i=0; i<menus.length; i++) {
-			Menu menu = menus [i];
+	if (this.menus != null) {
+		for (int i=0; i<this.menus.length; i++) {
+			Menu menu = this.menus [i];
 			if (menu != null && !menu.isDisposed ()) {
 				menu.dispose ();
 			}
 		}
-		menus = null;
+		this.menus = null;
 	}
 }
 
@@ -803,28 +803,28 @@ void releaseWidget () {
 	if (smallImage != null) smallImage.dispose ();
 	if (largeImage != null) largeImage.dispose ();
 	smallImage = largeImage = image = null;
-	images = null;
-	savedFocus = null;
+	this.images = null;
+	this.savedFocus = null;
 	defaultButton = saveDefault = null;
-	if (hAccel != 0 && hAccel != -1) OS.DestroyAcceleratorTable (hAccel);
-	hAccel = -1;
+	if (this.hAccel != 0 && this.hAccel != -1) OS.DestroyAcceleratorTable (this.hAccel);
+	this.hAccel = -1;
 }
 
 void removeMenu (Menu menu) {
-	if (menus == null) return;
-	for (int i=0; i<menus.length; i++) {
-		if (menus [i] == menu) {
-			menus [i] = null;
+	if (this.menus == null) return;
+	for (int i=0; i<this.menus.length; i++) {
+		if (this.menus [i] == menu) {
+			this.menus [i] = null;
 			return;
 		}
 	}
 }
 
 void reskinChildren (int flags) {
-	if (menuBar != null) menuBar.reskin (flags);
-	if (menus != null) {
-		for (int i=0; i<menus.length; i++) {
-			Menu menu = menus [i];
+	if (this.menuBar != null) this.menuBar.reskin (flags);
+	if (this.menus != null) {
+		for (int i=0; i<this.menus.length; i++) {
+			Menu menu = this.menus [i];
 			if (menu != null) menu.reskin (flags);
 		}
 	}
@@ -833,8 +833,8 @@ void reskinChildren (int flags) {
 
 boolean restoreFocus () {
 	if (display.ignoreRestoreFocus) return true;
-	if (savedFocus != null && savedFocus.isDisposed ()) savedFocus = null;
-	if (savedFocus != null && savedFocus.setSavedFocus ()) return true;
+	if (this.savedFocus != null && this.savedFocus.isDisposed ()) this.savedFocus = null;
+	if (this.savedFocus != null && this.savedFocus.setSavedFocus ()) return true;
 	/*
 	* This code is intentionally commented.  When no widget
 	* has been given focus, some platforms give focus to the
@@ -1128,7 +1128,7 @@ public void setMaximized (boolean maximized) {
  */
 public void setMenuBar (Menu menu) {
 	checkWidget ();
-	if (menuBar == menu) return;
+	if (this.menuBar == menu) return;
 	if (menu != null) {
 		if (menu.isDisposed()) error(SWT.ERROR_INVALID_ARGUMENT);
 		if ((menu.style & SWT.BAR) == 0) error (SWT.ERROR_MENU_NOT_BAR);
@@ -1136,10 +1136,10 @@ public void setMenuBar (Menu menu) {
 	}	
 	if (OS.IsWinCE) {
 		if (OS.IsHPC) {
-			boolean resize = menuBar != menu;
-			if (menuBar != null) OS.CommandBar_Show (menuBar.hwndCB, false);
-			menuBar = menu;
-			if (menuBar != null) OS.CommandBar_Show (menuBar.hwndCB, true);
+			boolean resize = this.menuBar != menu;
+			if (this.menuBar != null) OS.CommandBar_Show (this.menuBar.hwndCB, false);
+			this.menuBar = menu;
+			if (this.menuBar != null) OS.CommandBar_Show (this.menuBar.hwndCB, true);
 			if (resize) {
 				sendEvent (SWT.Resize);
 				if (isDisposed ()) return;
@@ -1155,22 +1155,22 @@ public void setMenuBar (Menu menu) {
 				* If the shell is full screen, resize its window to leave
 				* space for the menu bar.
 				*/
-				boolean resize = getMaximized () && menuBar != menu;
-				if (menuBar != null) OS.ShowWindow (menuBar.hwndCB, OS.SW_HIDE);
-				menuBar = menu;
-				if (menuBar != null) OS.ShowWindow (menuBar.hwndCB, OS.SW_SHOW);
+				boolean resize = getMaximized () && this.menuBar != menu;
+				if (this.menuBar != null) OS.ShowWindow (this.menuBar.hwndCB, OS.SW_HIDE);
+				this.menuBar = menu;
+				if (this.menuBar != null) OS.ShowWindow (this.menuBar.hwndCB, OS.SW_SHOW);
 				if (resize) _setMaximized (true);
 			}
 			if (OS.IsSP) {
-				if (menuBar != null) OS.ShowWindow (menuBar.hwndCB, OS.SW_HIDE);
-				menuBar = menu;
-				if (menuBar != null) OS.ShowWindow (menuBar.hwndCB, OS.SW_SHOW);
+				if (this.menuBar != null) OS.ShowWindow (this.menuBar.hwndCB, OS.SW_HIDE);
+				this.menuBar = menu;
+				if (this.menuBar != null) OS.ShowWindow (this.menuBar.hwndCB, OS.SW_SHOW);
 			}
 		} 
 	} else {
 		if (menu != null) display.removeBar (menu);
-		menuBar = menu;
-		long /*int*/ hMenu = menuBar != null ? menuBar.handle: 0;
+		this.menuBar = menu;
+		long /*int*/ hMenu = this.menuBar != null ? this.menuBar.handle: 0;
 		OS.SetMenu (handle, hMenu);
 	}
 	destroyAccelerators ();
@@ -1207,9 +1207,9 @@ public void setMinimized (boolean minimized) {
 
 public void setOrientation (int orientation) {
     super.setOrientation (orientation);
-    if (menus != null) {
-        for (int i=0; i<menus.length; i++) {
-            Menu menu = menus [i];
+    if (this.menus != null) {
+        for (int i=0; i<this.menus.length; i++) {
+            Menu menu = this.menus [i];
             if (menu != null && !menu.isDisposed () && (menu.getStyle () & SWT.POP_UP) != 0) {
                 menu._setOrientation (menu.getOrientation ());
             }
@@ -1272,7 +1272,7 @@ void setPlacement (int x, int y, int width, int height, int flags) {
 		if (sameOrigin) {
 			moved = true;
 			Point location = getLocation ();
-			oldX = location.x;
+			this.oldX = location.x;
 			oldY = location.y;
 			sendEvent (SWT.Move);
 			if (isDisposed ()) return;
@@ -1280,7 +1280,7 @@ void setPlacement (int x, int y, int width, int height, int flags) {
 		if (sameExtent) {
 			resized = true;
 			Rectangle rect = getClientArea ();
-			oldWidth = rect.width;
+			this.oldWidth = rect.width;
 			oldHeight = rect.height;
 			sendEvent (SWT.Resize);
 			if (isDisposed ()) return;
@@ -1384,8 +1384,8 @@ public void setVisible (boolean visible) {
 		sendEvent (SWT.Show);
 		if (isDisposed ()) return;
 		if (OS.IsHPC) {
-			if (menuBar != null) {
-				long /*int*/ hwndCB = menuBar.hwndCB;
+			if (this.menuBar != null) {
+				long /*int*/ hwndCB = this.menuBar.hwndCB;
 				OS.CommandBar_DrawMenuBar (hwndCB, 0);
 			}
 		}
@@ -1395,8 +1395,8 @@ public void setVisible (boolean visible) {
 			if (OS.IsWinCE) {
 				OS.ShowWindow (handle, OS.SW_SHOW);
 			} else {
-				if (menuBar != null) {
-					display.removeBar (menuBar);
+				if (this.menuBar != null) {
+					display.removeBar (this.menuBar);
 					OS.DrawMenuBar (handle);
 				}
 				STARTUPINFO lpStartUpInfo = Display.lpStartupInfo;
@@ -1411,13 +1411,13 @@ public void setVisible (boolean visible) {
 			if (!moved) {
 				moved = true;
 				Point location = getLocation ();
-				oldX = location.x;
+				this.oldX = location.x;
 				oldY = location.y;
 			}
 			if (!resized) {
 				resized = true;
 				Rectangle rect = getClientArea ();
-				oldWidth = rect.width;
+				this.oldWidth = rect.width;
 				oldHeight = rect.height;
 			}
 			/*
@@ -1477,14 +1477,14 @@ void sort (Image [] images, ImageData [] datas, int width, int height, int depth
 
 boolean translateAccelerator (MSG msg) {
 	if (!isEnabled () || !isActive ()) return false;
-	if (menuBar != null && !menuBar.isEnabled ()) return false;
+	if (this.menuBar != null && !this.menuBar.isEnabled ()) return false;
 	if (translateMDIAccelerator (msg) || translateMenuAccelerator (msg)) return true;
 	Decorations decorations = parent.menuShell ();
 	return decorations.translateAccelerator (msg);
 }
 
 boolean translateMenuAccelerator (MSG msg) {
-	if (hAccel == -1) createAccelerators ();
+	if (this.hAccel == -1) createAccelerators ();
 	return hAccel != 0 && OS.TranslateAccelerator (handle, hAccel, msg) != 0;
 }
 
@@ -1620,8 +1620,8 @@ long /*int*/ windowProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long /
 	switch (msg) {
 		case Display.SWT_GETACCEL:
 		case Display.SWT_GETACCELCOUNT:
-			if (hAccel == -1) createAccelerators ();
-			return msg == Display.SWT_GETACCELCOUNT ? nAccel : hAccel;
+			if (this.hAccel == -1) createAccelerators ();
+			return msg == Display.SWT_GETACCELCOUNT ? nAccel : this.hAccel;
 	}
 	return super.windowProc (hwnd, msg, wParam, lParam);
 }
@@ -1732,7 +1732,7 @@ LRESULT WM_KILLFOCUS (long /*int*/ wParam, long /*int*/ lParam) {
 LRESULT WM_MOVE (long /*int*/ wParam, long /*int*/ lParam) {
 	if (moved) {
 		Point location = getLocation ();
-		if (location.x == oldX && location.y == oldY) {
+		if (location.x == this.oldX && location.y == oldY) {
 			return null;
 		}
 		this.oldX = location.x;
@@ -1778,7 +1778,7 @@ LRESULT WM_QUERYOPEN (long /*int*/ wParam, long /*int*/ lParam) {
 LRESULT WM_SETFOCUS (long /*int*/ wParam, long /*int*/ lParam) {
 	LRESULT result = super.WM_SETFOCUS (wParam, lParam);
 	if (isDisposed ()) return result;
-	if (savedFocus != this) restoreFocus ();
+	if (this.savedFocus != this) restoreFocus ();
 	return result;
 }
 
@@ -1800,9 +1800,9 @@ LRESULT WM_SIZE (long /*int*/ wParam, long /*int*/ lParam) {
 				newHeight = rect.height;
 				break;
 		}
-		changed = newWidth != oldWidth || newHeight != oldHeight;
+		changed = newWidth != this.oldWidth || newHeight != oldHeight;
 		if (changed) {
-			oldWidth = newWidth;
+			this.oldWidth = newWidth;
 			oldHeight = newHeight;
 		}
 	}

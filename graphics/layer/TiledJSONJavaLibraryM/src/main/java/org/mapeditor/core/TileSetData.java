@@ -290,8 +290,8 @@ public class TileSetData {
      */
     
     public BasicArrayList getInternalTiles() {
-        if (internalTiles == null) {
-            internalTiles = new BasicArrayList();
+        if (this.internalTiles == null) {
+            this.internalTiles = new BasicArrayList();
         }
         return this.internalTiles;
     }

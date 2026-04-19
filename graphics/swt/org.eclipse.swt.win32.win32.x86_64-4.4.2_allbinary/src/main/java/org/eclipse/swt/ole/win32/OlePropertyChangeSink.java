@@ -37,8 +37,8 @@ OlePropertyChangeSink(OleControlSite controlSite) {
 }
 void addListener(int propertyID, OleListener listener) {
 	if (listener == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
-	if (eventTable == null) eventTable = new OleEventTable ();
-	eventTable.hook(propertyID, listener);
+	if (this.eventTable == null) this.eventTable = new OleEventTable ();
+	this.eventTable.hook(propertyID, listener);
 }
 int AddRef() {
 	refCount++;
@@ -53,7 +53,7 @@ void connect(IUnknown objIUnknown) {
 		if (cpc.FindConnectionPoint(COM.IIDIPropertyNotifySink, ppvObject) == COM.S_OK) {
 			IConnectionPoint cp = new IConnectionPoint(ppvObject[0]);
 			int[] cookie = new int[1];
-			if (cp.Advise(iPropertyNotifySink.getAddress(), cookie) == COM.S_OK) {
+			if (cp.Advise(this.iPropertyNotifySink.getAddress(), cookie) == COM.S_OK) {
 				this.propertyCookie = cookie[0];
 			}
 			cp.Release();
@@ -80,13 +80,13 @@ private void createCOMInterfaces() {
 void disconnect(IUnknown objIUnknown) {
 
 	// disconnect property notification sink
-	if (propertyCookie != 0 && objIUnknown != null) {
+	if (this.propertyCookie != 0 && objIUnknown != null) {
 		long /*int*/[] ppvObject = new long /*int*/[1];
 		if (objIUnknown.QueryInterface(COM.IIDIConnectionPointContainer, ppvObject) == COM.S_OK) {
 			IConnectionPointContainer cpc = new IConnectionPointContainer(ppvObject[0]);
 			if (cpc.FindConnectionPoint(COM.IIDIPropertyNotifySink, ppvObject) == COM.S_OK) {
 				IConnectionPoint cp = new IConnectionPoint(ppvObject[0]);
-				if (cp.Unadvise(propertyCookie) == COM.S_OK) {
+				if (cp.Unadvise(this.propertyCookie) == COM.S_OK) {
 					this.propertyCookie = 0;
 				}
 				cp.Release();
@@ -96,10 +96,10 @@ void disconnect(IUnknown objIUnknown) {
 	}
 }
 private void disposeCOMInterfaces() {
-	if (iUnknown != null) iUnknown.dispose();
-	iUnknown = null;
-	if (iPropertyNotifySink != null) iPropertyNotifySink.dispose();
-	iPropertyNotifySink = null;
+	if (this.iUnknown != null) this.iUnknown.dispose();
+	this.iUnknown = null;
+	if (this.iPropertyNotifySink != null) this.iPropertyNotifySink.dispose();
+	this.iPropertyNotifySink = null;
 }
 /**
 * Notify listeners of an event.
@@ -120,20 +120,20 @@ private void disposeCOMInterfaces() {
 */
 private void notifyListener (int eventType, OleEvent event) {
 	if (event == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
-	if (eventTable == null) return;
+	if (this.eventTable == null) return;
 	event.type = eventType;
-	event.widget = controlSite;
-	eventTable.sendEvent (event);
+	event.widget = this.controlSite;
+	this.eventTable.sendEvent (event);
 }
 private int OnChanged(int dispID) {
-	if (eventTable == null || !eventTable.hooks(dispID)) return COM.S_OK;
+	if (this.eventTable == null || !this.eventTable.hooks(dispID)) return COM.S_OK;
 	OleEvent event = new OleEvent();
 	event.detail = OLE.PROPERTY_CHANGED;
 	notifyListener(dispID,event);
 	return COM.S_OK;
 }
 private int OnRequestEdit(int dispID) {
-	if (eventTable == null || !eventTable.hooks(dispID)) return COM.S_OK;
+	if (this.eventTable == null || !this.eventTable.hooks(dispID)) return COM.S_OK;
 	OleEvent event = new OleEvent();
 	event.doit = true;
 	event.detail = OLE.PROPERTY_CHANGING;
@@ -146,12 +146,12 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 	GUID guid = new GUID();
 	COM.MoveMemory(guid, riid, GUID.sizeof);
 	if (COM.IsEqualGUID(guid, COM.IIDIUnknown)) {
-		COM.MoveMemory(ppvObject, new long /*int*/[] {iUnknown.getAddress()}, OS.PTR_SIZEOF);
+		COM.MoveMemory(ppvObject, new long /*int*/[] {this.iUnknown.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
 	if (COM.IsEqualGUID(guid, COM.IIDIPropertyNotifySink)) {
-		COM.MoveMemory(ppvObject, new long /*int*/[] {iPropertyNotifySink.getAddress()}, OS.PTR_SIZEOF);
+		COM.MoveMemory(ppvObject, new long /*int*/[] {this.iPropertyNotifySink.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
@@ -160,14 +160,14 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 }
 int Release() {
 	refCount--;
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		disposeCOMInterfaces();
 	}
 	return refCount;
 }
 void removeListener(int propertyID, OleListener listener) {
 	if (listener == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
-	if (eventTable == null) return;
-	eventTable.unhook (propertyID, listener);
+	if (this.eventTable == null) return;
+	this.eventTable.unhook (propertyID, listener);
 }
 }

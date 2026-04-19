@@ -33,7 +33,7 @@ public class MapReaderData {
     public final long FLIPPED_DIAGONALLY_FLAG =    0x0000000020000000L;
 
     public final long ALL_FLAGS =
-        FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG;
+        this.FLIPPED_HORIZONTALLY_FLAG | this.FLIPPED_VERTICALLY_FLAG | this.FLIPPED_DIAGONALLY_FLAG;
     
     public final String LAYERS = "layers";
     

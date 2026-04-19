@@ -64,7 +64,7 @@ class Relation {
 	
 	long /*int*/ getAddress() {
 		/* The address of a Relation is the address of its IAccessibleRelation COMObject. */
-		if (objIAccessibleRelation == null) createIAccessibleRelation();
+		if (this.objIAccessibleRelation == null) createIAccessibleRelation();
 		return objIAccessibleRelation.getAddress();
 	}
 	
@@ -106,36 +106,36 @@ class Relation {
 	int Release() {
 		refCount--;
 
-		if (refCount == 0) {
-			if (objIAccessibleRelation != null)
-				objIAccessibleRelation.dispose();
-			objIAccessibleRelation = null;
+		if (this.refCount == 0) {
+			if (this.objIAccessibleRelation != null)
+				this.objIAccessibleRelation.dispose();
+			this.objIAccessibleRelation = null;
 		}
 		return refCount;
 	}
 
 	/* IAccessibleRelation::get_relationType([out] pbstrRelationType) */
 	int get_relationType(long /*int*/ pbstrRelationType) {
-		setString(pbstrRelationType, relationTypeString[type]);
+		setString(pbstrRelationType, relationTypeString[this.type]);
 		return COM.S_OK;
 	}
 
 	/* IAccessibleRelation::get_localizedRelationType([out] pbstrLocalizedRelationType) */
 	int get_localizedRelationType(long /*int*/ pbstrLocalizedRelationType) {
-		setString(pbstrLocalizedRelationType, localizedRelationTypeString[type]);
+		setString(pbstrLocalizedRelationType, localizedRelationTypeString[this.type]);
 		return COM.S_OK;
 	}
 
 	/* IAccessibleRelation::get_nTargets([out] pNTargets) */
 	int get_nTargets(long /*int*/ pNTargets) {
-		COM.MoveMemory(pNTargets, new int [] { targets.length }, 4);
+		COM.MoveMemory(pNTargets, new int [] { this.targets.length }, 4);
 		return COM.S_OK;
 	}
 
 	/* IAccessibleRelation::get_target([in] targetIndex, [out] ppTarget) */
 	int get_target(int targetIndex, long /*int*/ ppTarget) {
-		if (targetIndex < 0 || targetIndex >= targets.length) return COM.E_INVALIDARG;
-		Accessible target = targets[targetIndex];
+		if (targetIndex < 0 || targetIndex >= this.targets.length) return COM.E_INVALIDARG;
+		Accessible target = this.targets[targetIndex];
 		target.AddRef();
 		COM.MoveMemory(ppTarget, new long /*int*/[] { target.getAddress() }, OS.PTR_SIZEOF);
 		return COM.S_OK;
@@ -143,9 +143,9 @@ class Relation {
 
 	/* IAccessibleRelation::get_targets([in] maxTargets, [out] ppTargets, [out] pNTargets) */
 	int get_targets(int maxTargets, long /*int*/ ppTargets, long /*int*/ pNTargets) {
-		int count = Math.min(targets.length, maxTargets);
+		int count = Math.min(this.targets.length, maxTargets);
 		for (int i = 0; i < count; i++) {
-			Accessible target = targets[i];
+			Accessible target = this.targets[i];
 			target.AddRef();
 			COM.MoveMemory(ppTargets + i * OS.PTR_SIZEOF, new long /*int*/[] { target.getAddress() }, OS.PTR_SIZEOF);
 		}
@@ -155,29 +155,29 @@ class Relation {
 
 	void addTarget(Accessible target) {
 		if (containsTarget(target)) return;
-		Accessible[] newTargets = new Accessible[targets.length + 1];
+		Accessible[] newTargets = new Accessible[this.targets.length + 1];
 		System.arraycopy(targets, 0, newTargets, 0, targets.length);
 		newTargets[targets.length] = target;
 		targets = newTargets;
 	}
 
 	boolean containsTarget(Accessible target) {
-		for (int i = 0; i < targets.length; i++) {
-			if (targets[i] == target) return true;
+		for (int i = 0; i < this.targets.length; i++) {
+			if (this.targets[i] == target) return true;
 		}
 		return false;
 	}
 
 	void removeTarget(Accessible target) {
 		if (!containsTarget(target)) return;
-		Accessible[] newTargets = new Accessible[targets.length - 1];
+		Accessible[] newTargets = new Accessible[this.targets.length - 1];
 		int j = 0;
-		for (int i = 0; i < targets.length; i++) {
-			if (targets[i] != target) {
-				newTargets[j++] = targets[i];
+		for (int i = 0; i < this.targets.length; i++) {
+			if (this.targets[i] != target) {
+				newTargets[j++] = this.targets[i];
 			}
 		}
-		targets = newTargets;
+		this.targets = newTargets;
 	}
 
 	boolean hasTargets() {

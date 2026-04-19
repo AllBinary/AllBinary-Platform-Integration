@@ -31,7 +31,7 @@ public class Capability
 				else
 				if ("extension-mode".equals(tagName))
 				{
-					m_extention_mode = text;
+					this.m_extention_mode = text;
 				}
 				else
 				if ("group".equals(tagName))
@@ -41,7 +41,7 @@ public class Capability
 				else
 				if ("required".equals(tagName))
 				{
-					m_required = "yes".equalsIgnoreCase(text) || "true".equalsIgnoreCase(text);
+					this.m_required = "yes".equalsIgnoreCase(text) || "true".equalsIgnoreCase(text);
 				}
 				else
 				if ("type".equals(tagName))
@@ -64,12 +64,12 @@ public class Capability
 	
 	public boolean extendByOverwrite()
 	{
-		return "overwrite".equalsIgnoreCase(m_extention_mode);
+		return "overwrite".equalsIgnoreCase(this.m_extention_mode);
 	}
 	
 	public boolean extendByAppend()
 	{
-		return "append".equalsIgnoreCase(m_extention_mode);
+		return "append".equalsIgnoreCase(this.m_extention_mode);
 	}
 	
 }

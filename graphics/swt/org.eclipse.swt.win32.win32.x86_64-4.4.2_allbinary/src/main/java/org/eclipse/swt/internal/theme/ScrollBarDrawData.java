@@ -40,7 +40,7 @@ void draw(Theme theme, GC gc, Rectangle bounds) {
 			part = getPartId(DrawData.SCROLLBAR_DOWN_ARROW);
 			OS.DrawThemeBackground (hTheme, gc.handle, part[0], part[1], rect, null);
 			int totalWidth = bounds.height - 2 * width;
-			int thumbWidth = Math.max(width / 2, (totalWidth * thumb) / Math.max(1, (maximum - minimum)));//BAD
+			int thumbWidth = Math.max(width / 2, (totalWidth * this.thumb) / Math.max(1, (maximum - minimum)));//BAD
 			int thumbPos = bounds.y + width + Math.max(0, (totalWidth * selection) / Math.max(1, (maximum - minimum)));
 			rect.top = bounds.y + width;		
 			rect.bottom = thumbPos;
@@ -69,7 +69,7 @@ void draw(Theme theme, GC gc, Rectangle bounds) {
 			part = getPartId(DrawData.SCROLLBAR_RIGHT_ARROW);
 			OS.DrawThemeBackground (hTheme, gc.handle, part[0], part[1], rect, null);
 			int totalWidth = bounds.width - 2 * height;
-			int thumbWidth = Math.max(height / 2, (totalWidth * thumb) / (maximum - minimum));//BAD
+			int thumbWidth = Math.max(height / 2, (totalWidth * this.thumb) / (maximum - minimum));//BAD
 			int thumbPos = bounds.x + height + Math.max(0, (totalWidth * selection) / Math.max(1, (maximum - minimum)));
 			rect.left = bounds.x + height;		
 			rect.right = thumbPos;
@@ -163,7 +163,7 @@ Rectangle getBounds(int part, Rectangle bounds) {
 		if ((style & SWT.VERTICAL) != 0) {
 			int width = OS.GetThemeSysSize(hTheme, OS.SM_CXVSCROLL);
 			int totalWidth = bounds.height - 2 * width;
-			int thumbWidth = Math.max(width / 2, (totalWidth * thumb) / Math.max(1, (maximum - minimum)));//BAD
+			int thumbWidth = Math.max(width / 2, (totalWidth * this.thumb) / Math.max(1, (maximum - minimum)));//BAD
 			int thumbPos = bounds.y + width + Math.max(0, (totalWidth * selection) / Math.max(1, (maximum - minimum)));
 			switch (part) {
 				case DrawData.SCROLLBAR_DOWN_ARROW:
@@ -194,7 +194,7 @@ int getSelection(Point position, Rectangle bounds) {
 			int thumbPos = bounds.y + width + Math.max(0, (totalWidth * selection) / Math.max(1, (maximum - minimum)));
 			thumbPos += position.y;
 			int selection = ((thumbPos - bounds.y - width) * (maximum - minimum)) / totalWidth;
-			return Math.max(0, Math.min(selection, maximum - thumb));
+			return Math.max(0, Math.min(selection, maximum - this.thumb));
 		} else {
 			
 		}
@@ -229,7 +229,7 @@ int hit(Theme theme, Point position, Rectangle bounds) {
 			OS.HitTestThemeBackground(hTheme, hDC, part[0], part[1], 0, rect, 0, pt, code);
 			if (code[0] != OS.HTNOWHERE) return DrawData.SCROLLBAR_DOWN_ARROW;
 			int totalWidth = bounds.height - 2 * width;
-			int thumbWidth = Math.max(width / 2, (totalWidth * thumb) / Math.max(1, (maximum - minimum)));//BAD
+			int thumbWidth = Math.max(width / 2, (totalWidth * this.thumb) / Math.max(1, (maximum - minimum)));//BAD
 			int thumbPos = bounds.y + width + Math.max(0, (totalWidth * selection) / Math.max(1, (maximum - minimum)));
 			rect.top = bounds.y + width;		
 			rect.bottom = thumbPos;
@@ -261,7 +261,7 @@ int hit(Theme theme, Point position, Rectangle bounds) {
 			OS.HitTestThemeBackground(hTheme, hDC, part[0], part[1], 0, rect, 0, pt, code);
 			if (code[0] != OS.HTNOWHERE) return DrawData.SCROLLBAR_DOWN_ARROW;
 			int totalWidth = bounds.width - 2 * height;
-			int thumbWidth = Math.max(height / 2, (totalWidth * thumb) / (maximum - minimum));//BAD
+			int thumbWidth = Math.max(height / 2, (totalWidth * this.thumb) / (maximum - minimum));//BAD
 			int thumbPos = bounds.x + height + Math.max(0, (totalWidth * selection) / Math.max(1, (maximum - minimum)));
 			rect.left = bounds.x + height;		
 			rect.right = thumbPos;

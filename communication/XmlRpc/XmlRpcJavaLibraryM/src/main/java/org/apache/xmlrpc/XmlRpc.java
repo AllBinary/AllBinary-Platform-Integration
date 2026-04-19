@@ -381,20 +381,20 @@ public abstract class XmlRpc extends HandlerBase
        try
        {           
         // reset values (XmlRpc objects are reusable)
-        errorLevel = NONE;
-        errorMsg = null;
-        values = new Stack ();
-        if (cdata == null)
+        this.errorLevel = NONE;
+        this.errorMsg = null;
+        this.values = new Stack ();
+        if (this.cdata == null)
         {
-            cdata = new StringBuffer(128);
+            this.cdata = new StringBuffer(128);
         }
         else
         {
-            cdata.setLength(0);
+            this.cdata.setLength(0);
         }
         
-        readCdata = false;
-        currentValue = null;
+        this.readCdata = false;
+        this.currentValue = null;
 
         long now = System.currentTimeMillis();
         if (parserClass == null)
@@ -443,11 +443,11 @@ public abstract class XmlRpc extends HandlerBase
         finally
         {
             // Clear any huge buffers.
-            if (cdata.length() > 128 * 4)
+            if (this.cdata.length() > 128 * 4)
             {
                 // Exceeded original capacity by greater than 4x; release
                 // buffer to prevent leakage.
-                cdata = null;
+                this.cdata = null;
             }
         }
         if (debug)
@@ -481,9 +481,9 @@ public abstract class XmlRpc extends HandlerBase
     public void characters(char ch[], int start, int length)
             throws SAXException
     {
-        if (readCdata)
+        if (this.readCdata)
         {
-            cdata.append(ch, start, length);
+            this.cdata.append(ch, start, length);
         }
     }
 
@@ -499,11 +499,11 @@ public abstract class XmlRpc extends HandlerBase
         }
 
         // finalize character data, if appropriate
-        if (currentValue != null && readCdata)
+        if (this.currentValue != null && this.readCdata)
         {
-            currentValue.characterData(cdata.toString());
-            cdata.setLength(0);
-            readCdata = false;
+            this.currentValue.characterData(this.cdata.toString());
+            this.cdata.setLength(0);
+            this.readCdata = false;
         }
 
         if ("value".equals(name))
@@ -511,23 +511,23 @@ public abstract class XmlRpc extends HandlerBase
             // Only handle top level objects or objects contained in
             // arrays here.  For objects contained in structs, wait
             // for </member> (see code below).
-            int depth = values.size ();
-            if (depth < 2 || values.elementAt(depth - 2).hashCode() != STRUCT)
+            int depth = this.values.size ();
+            if (depth < 2 || this.values.elementAt(depth - 2).hashCode() != STRUCT)
             {
-                Value v = currentValue;
-                values.pop();
+                Value v = this.currentValue;
+                this.values.pop();
                 if (depth < 2)
                 {
                     // This is a top-level object
                     objectParsed(v.value);
-                    currentValue = null;
+                    this.currentValue = null;
                 }
                 else
                 {
                     // Add object to sub-array; if current container
                     // is a struct, add later (at </member>).
-                    currentValue = (Value) values.peek();
-                    currentValue.endElement(v);
+                    this.currentValue = (Value) this.values.peek();
+                    this.currentValue.endElement(v);
                 }
             }
         }
@@ -535,17 +535,17 @@ public abstract class XmlRpc extends HandlerBase
         // Handle objects contained in structs.
         if ("member".equals(name))
         {
-            Value v = currentValue;
-            values.pop();
-            currentValue = (Value) values.peek();
-            currentValue.endElement(v);
+            Value v = this.currentValue;
+            this.values.pop();
+            this.currentValue = (Value) this.values.peek();
+            this.currentValue.endElement(v);
         }
 
         else if ("methodName".equals(name))
         {
-            methodName = cdata.toString();
-            cdata.setLength(0);
-            readCdata = false;
+            this.methodName = this.cdata.toString();
+            this.cdata.setLength(0);
+            this.readCdata = false;
         }
     }
 
@@ -563,65 +563,65 @@ public abstract class XmlRpc extends HandlerBase
         if ("value".equals(name))
         {
             Value v = new Value();
-            values.push(v);
-            currentValue = v;
+            this.values.push(v);
+            this.currentValue = v;
             // cdata object is reused
-            cdata.setLength(0);
-            readCdata = true;
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("methodName".equals(name))
         {
-            cdata.setLength(0);
-            readCdata = true;
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("name".equals(name))
         {
-            cdata.setLength(0);
-            readCdata = true;
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("string".equals(name))
         {
             // currentValue.setType (STRING);
-            cdata.setLength(0);
-            readCdata = true;
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("i4".equals(name) || "int".equals(name))
         {
-            currentValue.setType(INTEGER);
-            cdata.setLength(0);
-            readCdata = true;
+            this.currentValue.setType(INTEGER);
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("boolean".equals(name))
         {
-            currentValue.setType(BOOLEAN);
-            cdata.setLength(0);
-            readCdata = true;
+            this.currentValue.setType(BOOLEAN);
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("double".equals(name))
         {
-            currentValue.setType(DOUBLE);
-            cdata.setLength(0);
-            readCdata = true;
+            this.currentValue.setType(DOUBLE);
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("dateTime.iso8601".equals(name))
         {
-            currentValue.setType(DATE);
-            cdata.setLength(0);
-            readCdata = true;
+            this.currentValue.setType(DATE);
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("base64".equals(name))
         {
-            currentValue.setType(BASE64);
-            cdata.setLength(0);
-            readCdata = true;
+            this.currentValue.setType(BASE64);
+            this.cdata.setLength(0);
+            this.readCdata = true;
         }
         else if ("struct".equals(name))
         {
-            currentValue.setType(STRUCT);
+            this.currentValue.setType(STRUCT);
         }
         else if ("array".equals(name))
         {
-            currentValue.setType(ARRAY);
+            this.currentValue.setType(ARRAY);
         }
     }
 
@@ -633,8 +633,8 @@ public abstract class XmlRpc extends HandlerBase
     public void error(SAXParseException e) throws SAXException
     {
         System.err.println("Error parsing XML: " + e);
-        errorLevel = RECOVERABLE;
-        errorMsg = e.toString();
+        this.errorLevel = RECOVERABLE;
+        this.errorMsg = e.toString();
     }
 
     /**
@@ -645,8 +645,8 @@ public abstract class XmlRpc extends HandlerBase
     public void fatalError(SAXParseException e) throws SAXException
     {
         System.err.println("Fatal error parsing XML: " + e);
-        errorLevel = FATAL;
-        errorMsg = e.toString();
+        this.errorLevel = FATAL;
+        this.errorMsg = e.toString();
     }
 
     /**

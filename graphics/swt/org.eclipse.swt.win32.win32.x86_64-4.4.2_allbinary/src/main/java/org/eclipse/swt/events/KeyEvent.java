@@ -125,11 +125,11 @@ public KeyEvent(Event e) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " character='" + ((character == 0) ? "\\0" : String.valueOf(character)) + "'=0x" + Integer.toHexString(character)
-		+ " keyCode=0x" + Integer.toHexString(keyCode)
-		+ " keyLocation=0x" + Integer.toHexString(keyLocation)
-		+ " stateMask=0x" + Integer.toHexString(stateMask)
-		+ " doit=" + doit
+		+ " character='" + ((this.character == 0) ? "\\0" : String.valueOf(this.character)) + "'=0x" + Integer.toHexString(this.character)
+		+ " keyCode=0x" + Integer.toHexString(this.keyCode)
+		+ " keyLocation=0x" + Integer.toHexString(this.keyLocation)
+		+ " stateMask=0x" + Integer.toHexString(this.stateMask)
+		+ " doit=" + this.doit
 		+ "}";
 }
 }

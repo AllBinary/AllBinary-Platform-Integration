@@ -56,7 +56,7 @@ public class IPhoneImmutableImage extends javax.microedition.lcdui.Image impleme
 		Pointer<Byte> imageDataPointer=Pointer.box(offsetImageData);
 		UIImage uiiImage=new UIImage().initWithData$(NSData.$dataWithBytes$length$(imageDataPointer, imageLength));
 		uiiImage.retain();
-		bitmap=uiiImage.imageRef();
+		this.bitmap=uiiImage.imageRef();
     }
     
     public IPhoneImmutableImage(int[] argb, int width, int height){
@@ -67,7 +67,7 @@ public class IPhoneImmutableImage extends javax.microedition.lcdui.Image impleme
 				width, height, 8, width * 4, colorSpace,
 				CoreGraphicsConstants.kCGBitmapByteOrder32Little | CGImageAlphaInfo.kCGImageAlphaNoneSkipFirst);
 
-		bitmap = CoreGraphics.CGBitmapContextCreateImage(imageContext);
+		this.bitmap = CoreGraphics.CGBitmapContextCreateImage(imageContext);
 //
 //		Pointer<CGRect> rect=CoreGraphics.CGRectMake(GAME_FIELD_X, GAME_FIELD_Y, GAME_FIELD_WIDTH, GAME_FIELD_HEIGHT);
 //
@@ -91,12 +91,12 @@ public class IPhoneImmutableImage extends javax.microedition.lcdui.Image impleme
 
 	@Override
 	public int getWidth() {
-		return (int) CoreGraphics.CGImageGetWidth(bitmap);
+		return (int) CoreGraphics.CGImageGetWidth(this.bitmap);
 	}
 	
 	@Override
 	public int getHeight() {
-		return (int) CoreGraphics.CGImageGetHeight(bitmap);
+		return (int) CoreGraphics.CGImageGetHeight(this.bitmap);
 	}
 
 	@Override

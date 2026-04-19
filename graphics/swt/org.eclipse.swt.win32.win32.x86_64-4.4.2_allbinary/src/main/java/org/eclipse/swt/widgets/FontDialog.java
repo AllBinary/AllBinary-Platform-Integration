@@ -119,9 +119,9 @@ public FontData getFontData () {
  * @since 2.1.1
  */
 public FontData [] getFontList () {
-	if (fontData == null) return null;
+	if (this.fontData == null) return null;
 	FontData [] result = new FontData [1];
-	result [0] = fontData;
+	result [0] = this.fontData;
 	return result;
 }
 
@@ -192,16 +192,16 @@ public FontData open () {
 	lpcf.lStructSize = CHOOSEFONT.sizeof;
 	lpcf.hwndOwner = hwndOwner;
 	lpcf.Flags = OS.CF_SCREENFONTS;
-	if (effectsVisible) {
+	if (this.effectsVisible) {
 		lpcf.Flags |= OS.CF_EFFECTS;
 	}
 
 	long /*int*/ lpLogFont = OS.HeapAlloc (hHeap, OS.HEAP_ZERO_MEMORY, LOGFONT.sizeof);
-	if (fontData != null && fontData.data != null) {
-		LOGFONT logFont = fontData.data;
+	if (this.fontData != null && this.fontData.data != null) {
+		LOGFONT logFont = this.fontData.data;
 		int lfHeight = logFont.lfHeight;
 		long /*int*/ hDC = OS.GetDC (0);
-		int pixels = -(int)(0.5f + (fontData.height * OS.GetDeviceCaps(hDC, OS.LOGPIXELSY) / 72));
+		int pixels = -(int)(0.5f + (this.fontData.height * OS.GetDeviceCaps(hDC, OS.LOGPIXELSY) / 72));
 		OS.ReleaseDC (0, hDC);
 		logFont.lfHeight = pixels;
 		lpcf.Flags |= OS.CF_INITTOLOGFONTSTRUCT;
@@ -209,10 +209,10 @@ public FontData open () {
 		logFont.lfHeight = lfHeight;
 	}
 	lpcf.lpLogFont = lpLogFont;
-	if (rgb != null) {
-		int red = rgb.red & 0xFF;
-		int green = (rgb.green << 8) & 0xFF00;
-		int blue = (rgb.blue << 16) & 0xFF0000;
+	if (this.rgb != null) {
+		int red = this.rgb.red & 0xFF;
+		int green = (this.rgb.green << 8) & 0xFF00;
+		int blue = (this.rgb.blue << 16) & 0xFF0000;
 		lpcf.rgbColors = red | green | blue;
 	}
 	
@@ -267,12 +267,12 @@ public FontData open () {
 		OS.ReleaseDC(0, hDC);
 
 		float points = pixels * 72f /logPixelsY;
-		fontData = FontData.win32_new (logFont, points);
-		if (effectsVisible) {
+		this.fontData = FontData.win32_new (logFont, points);
+		if (this.effectsVisible) {
 			int red = lpcf.rgbColors & 0xFF;
 			int green = (lpcf.rgbColors >> 8) & 0xFF;
 			int blue = (lpcf.rgbColors >> 16) & 0xFF;
-			rgb = new RGB (red, green, blue);
+			this.rgb = new RGB (red, green, blue);
 		}
 	}
 		

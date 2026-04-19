@@ -52,8 +52,8 @@ public class CustomForm extends CustomScreen
         {
             this.items = new CustomItem[items.length];
             System.arraycopy(items, 0, this.items, 0, items.length);
-            numOfItems = this.items.length;
-            for (int i = 0; i < numOfItems; i++) 
+            this.numOfItems = this.items.length;
+            for (int i = 0; i < this.numOfItems; i++) 
             {
                 verifyItem(this.items[i]);
             }
@@ -74,12 +74,12 @@ public class CustomForm extends CustomScreen
 	{
 		verifyItem(item);
 
-		if (numOfItems + 1 >= items.length) {
-			CustomItem newitems[] = new CustomItem[numOfItems + 4];
-			System.arraycopy(items, 0, newitems, 0, numOfItems);
-			items = newitems;
+		if (this.numOfItems + 1 >= this.items.length) {
+			CustomItem newitems[] = new CustomItem[this.numOfItems + 4];
+			System.arraycopy(this.items, 0, newitems, 0, numOfItems);
+			this.items = newitems;
 		}
-		items[numOfItems] = item;
+		this.items[numOfItems] = item;
 		numOfItems++;
 
 		return (numOfItems - 1);
@@ -105,7 +105,7 @@ public class CustomForm extends CustomScreen
 	{
 		verifyItemNum(itemNum);
 
-		items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
+		this.items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
 		System.arraycopy(items, itemNum + 1, items, itemNum, numOfItems - itemNum - 1);
 		numOfItems--;
 	}
@@ -113,10 +113,10 @@ public class CustomForm extends CustomScreen
 	
 	public void deleteAll()
 	{
-		for (int i = 0; i < numOfItems; i++) {
-			items[i].setOwner(NullCanvas.NULL_SCREEN);
+		for (int i = 0; i < this.numOfItems; i++) {
+			this.items[i].setOwner(NullCanvas.NULL_SCREEN);
 		}
-		numOfItems = 0;
+		this.numOfItems = 0;
 	}
 
 	
@@ -146,10 +146,10 @@ public class CustomForm extends CustomScreen
 		verifyItemNum(itemNum);
 		verifyItem(item);
 
-		if (numOfItems + 1 == items.length) {
-			CustomItem newitems[] = new CustomItem[numOfItems + 4];
-			System.arraycopy(items, 0, newitems, 0, numOfItems);
-			items = newitems;
+		if (this.numOfItems + 1 == this.items.length) {
+			CustomItem newitems[] = new CustomItem[this.numOfItems + 4];
+			System.arraycopy(this.items, 0, newitems, 0, numOfItems);
+			this.items = newitems;
 		}
 		System.arraycopy(
 			items,
@@ -157,7 +157,7 @@ public class CustomForm extends CustomScreen
 			items,
 			itemNum + 1,
 			numOfItems - itemNum);
-		items[itemNum] = item;
+		this.items[itemNum] = item;
 		//items[itemNum].setOwner(this);
 		numOfItems++;
 		
@@ -170,9 +170,9 @@ public class CustomForm extends CustomScreen
 		verifyItem(item);
 
 		// TODO add this to MIDP1
-		items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
+		this.items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
 		
-		items[itemNum] = item;
+		this.items[itemNum] = item;
 		//items[itemNum].setOwner(this);
 	}
 
@@ -224,16 +224,16 @@ public class CustomForm extends CustomScreen
 	    int contentHeight = 0;
 		int translateY = 0;
 
-		for (int index = 0; index < numOfItems; index++)
+		for (int index = 0; index < this.numOfItems; index++)
 		{
 			//logUtil.putF("Painting: " + items[i].getLabel(), this, "paint");
-		    if(items[index].hasFocus())
+		    if(this.items[index].hasFocus())
 		    {
-	            graphics.setColor(LIGHT_GREY);
+	            graphics.setColor(this.LIGHT_GREY);
 	            graphics.drawRect(0, 0, this.getWidth(), this.getItemTotalHeight(index));
 		    }
 
-			translateY = items[index].paint(graphics);
+			translateY = this.items[index].paint(graphics);
 			graphics.translate(0, translateY);
 			contentHeight += translateY;
 		}
@@ -244,15 +244,15 @@ public class CustomForm extends CustomScreen
 	}
     
 	void fireItemStateListener(CustomItem item) {
-        if (itemStateListener != null) {
-            itemStateListener.itemStateChanged(item);
+        if (this.itemStateListener != null) {
+            this.itemStateListener.itemStateChanged(item);
         }
 	}
 	
 	void fireItemStateListener()
     {
-		if (getSelectedIndex() >= 0 && getSelectedIndex() < items.length)
-			fireItemStateListener(items[getSelectedIndex()]);
+		if (getSelectedIndex() >= 0 && getSelectedIndex() < this.items.length)
+			fireItemStateListener(this.items[getSelectedIndex()]);
     }
 
 	
@@ -262,9 +262,9 @@ public class CustomForm extends CustomScreen
 		super.hideNotify();
 		// TODO eliminate this to
 		// allow focus restoring
-		for (int i = 0; i < numOfItems; i++) {
-			if (items[i].isFocusable() && items[i].hasFocus()) {
-				items[i].setFocus(false);
+		for (int i = 0; i < this.numOfItems; i++) {
+			if (this.items[i].isFocusable() && this.items[i].hasFocus()) {
+				this.items[i].setFocus(false);
 				setSelectedIndex(-1);
 				break;
 			}
@@ -277,8 +277,8 @@ public class CustomForm extends CustomScreen
     
     public void traverse(int keyCode)
     {
-        viewPortY = 0;
-        viewPortY += traverse(keyCode, viewPortY, viewPortY + viewPortHeight);        
+        this.viewPortY = 0;
+        viewPortY += traverse(keyCode, viewPortY, viewPortY + this.viewPortHeight);        
     }
 	
     private final GameKeyFactory gameKeyFactory = GameKeyFactory.getInstance();
@@ -297,17 +297,17 @@ public class CustomForm extends CustomScreen
 
             //PreLogUtil.put(commonStrings.START + gameKey, this, gameInputStrings.KEY_PRESSED);
             
-            Input input = inputFactory.getInstance(keyCode);
+            Input input = this.inputFactory.getInstance(keyCode);
             PlatformKeyFactory platformKeyFactory = PlatformKeyFactory.getInstance();
             
             if(platformKeyFactory.isEnter(input))
             {
-                gameKey = gameKeyFactory.DOWN;
+                gameKey = this.gameKeyFactory.DOWN;
             }
 
-		    if (gameKey == gameKeyFactory.UP || gameKey == gameKeyFactory.DOWN)
+		    if (gameKey == this.gameKeyFactory.UP || gameKey == this.gameKeyFactory.DOWN)
 		    {
-		        logUtil.putF(gameKey.toString(), this, gameInputStrings.KEY_PRESSED);
+		        this.logUtil.putF(gameKey.toString(), this, gameInputStrings.KEY_PRESSED);
 		        
                 this.traverse(gameKey.getId());
 		    }
@@ -319,13 +319,13 @@ public class CustomForm extends CustomScreen
 	                /*
 	                //Display.getGameAction()
 	                if (keyCode == Canvas.FIRE) {
-	                    items[selectedIndex].select();
+	                    this.items[this.selectedIndex].select();
 	                    // why do we call this here?
 	                    // Andres Navarro
 	                    fireItemStateListener();
 	                } else {
 	                */
-	                    items[getSelectedIndex()].keyPressed(keyCode);
+	                    this.items[getSelectedIndex()].keyPressed(keyCode);
 	                //}
 	            }
 
@@ -334,7 +334,7 @@ public class CustomForm extends CustomScreen
 		}
 		catch(Exception e)
 		{
-		    logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
+		    this.logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
 		}
 	}
 
@@ -344,9 +344,9 @@ public class CustomForm extends CustomScreen
 		if (focusItemIndex == -2) {
 			focusItemIndex = -1;
 
-			for (int i = 0; i < numOfItems; i++) {
-				if (items[i].isFocusable()) {
-					items[i].setFocus(true);
+			for (int i = 0; i < this.numOfItems; i++) {
+				if (this.items[i].isFocusable()) {
+					this.items[i].setFocus(true);
 					focusItemIndex = i;
 					break;
 				}
@@ -355,7 +355,7 @@ public class CustomForm extends CustomScreen
 		if (focusItemIndex < 0)
 			return;
 		int heightToItem = getHeightToItem(focusItemIndex);
-		int heightAfterItem = heightToItem + items[focusItemIndex].getHeight();
+		int heightAfterItem = heightToItem + this.items[focusItemIndex].getHeight();
 		
 		//if (viewPortY > heightToItem) {
 //			viewPortY = heightToItem;
@@ -389,7 +389,7 @@ public class CustomForm extends CustomScreen
 		int height, testItemIndex, traverse, i;
 		int topItemIndex, bottomItemIndex;
 
-		if (numOfItems == 0) {
+		if (this.numOfItems == 0) {
 			return 0;
 		}
 		
@@ -433,11 +433,11 @@ public class CustomForm extends CustomScreen
 					// jesli tak to zrob na nim traverse(false) i return
 					// traverse
 					for (i = testItemIndex - 1; i >= topItemIndex; i--) {
-						if (items[i].isFocusable()) {
+						if (this.items[i].isFocusable()) {
 							if (getSelectedIndex() != -1) {
-								items[getSelectedIndex()].setFocus(false);
+								this.items[getSelectedIndex()].setFocus(false);
 							}
-							items[i].setFocus(true);
+							this.items[i].setFocus(true);
 							setSelectedIndex(i);
 							height = getHeightToItem(i);
 							traverse =
@@ -510,17 +510,17 @@ public class CustomForm extends CustomScreen
 				return traverse;
 			} else {
 			    
-				if (testItemIndex < numOfItems - 1) {
+				if (testItemIndex < this.numOfItems - 1) {
 					// Czy istnieje obiekt focusable ponizej testItemIndex
 					// widoczny na ekranie
 					// jesli tak to zrob na nim traverse(false) i return
 					// traverse
 					for (i = testItemIndex + 1; i <= bottomItemIndex; i++) {
-						if (items[i].isFocusable()) {
+						if (this.items[i].isFocusable()) {
 							if (getSelectedIndex() != -1) {
-								items[getSelectedIndex()].setFocus(false);
+								this.items[getSelectedIndex()].setFocus(false);
 							}
-							items[i].setFocus(true);
+							this.items[i].setFocus(true);
 							setSelectedIndex(i);
 							height = getHeightToItem(i);
 							traverse =
@@ -569,8 +569,8 @@ public class CustomForm extends CustomScreen
 	{
 		int height = 0;
 
-		for (int i = 0; i < numOfItems; i++) {
-			height += items[i].getHeight();
+		for (int i = 0; i < this.numOfItems; i++) {
+			height += this.items[i].getHeight();
 			if (height >= top) {
 				return i;
 			}
@@ -585,7 +585,7 @@ public class CustomForm extends CustomScreen
 		int height = 0;
 
 		for (int i = 0; i < numOfItems; i++) {
-			height += items[i].getHeight();
+			height += this.items[i].getHeight();
 			if (height > bottom) {
 				return i;
 			}
@@ -600,7 +600,7 @@ public class CustomForm extends CustomScreen
 		int height = 0;
 
 		for (int i = 0; i < itemIndex; i++) {
-			height += items[i].getHeight();
+			height += this.items[i].getHeight();
 		}
 
 		return height;
@@ -656,7 +656,7 @@ public class CustomForm extends CustomScreen
         stringBuffer.append(commonLabels.INDEX_LABEL);
         stringBuffer.appendint(selectedIndex);
         
-        logUtil.putF(stringBuffer.toString(), this, SET_SELECTED_INDEX);
+        this.logUtil.putF(stringBuffer.toString(), this, SET_SELECTED_INDEX);
         
         this.selectedIndex = selectedIndex;
     }

@@ -56,7 +56,7 @@ public class JadMidletEntry
   // remove it later
   public String toString()
   {
-    return name +"+"+ icon +"+"+ className;
+    return name +"+"+ this.icon +"+"+ this.className;
   }
   
 }

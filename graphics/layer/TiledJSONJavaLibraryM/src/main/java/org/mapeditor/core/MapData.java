@@ -198,8 +198,8 @@ public class MapData {
      * 
      */
     public BasicArrayList getTileSets() {
-        if (tileSets == null) {
-            tileSets = new BasicArrayList();
+        if (this.tileSets == null) {
+            this.tileSets = new BasicArrayList();
         }
         return this.tileSets;
     }
@@ -208,8 +208,8 @@ public class MapData {
      * 
      */
     public BasicArrayList getLayers() {
-        if (layers == null) {
-            layers = new BasicArrayList();
+        if (this.layers == null) {
+            this.layers = new BasicArrayList();
         }
         return this.layers;
     }
@@ -224,7 +224,7 @@ public class MapData {
      *     
      */
     public String getVersion() {
-        if (version == null) {
+        if (this.version == null) {
             return "1.0";
         } else {
             return version;
@@ -318,7 +318,7 @@ public class MapData {
      */
     
     public RenderOrder getRenderorder() {
-        if (renderorder == null) {
+        if (this.renderorder == null) {
             return RenderOrder.RIGHT_DOWN;
         } else {
             return renderorder;

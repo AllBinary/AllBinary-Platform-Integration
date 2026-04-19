@@ -81,8 +81,8 @@ public class SwtMessageDialog extends SwtDialog
 	{
 		super.configureShell(shell);
 		
-		if (title != null) {
-			shell.setText(title);
+		if (this.title != null) {
+			shell.setText(this.title);
 		}
 	}
 	
@@ -94,7 +94,7 @@ public class SwtMessageDialog extends SwtDialog
 		composite.setLayout(gridLayout);
 
 		Label lbMessage = new Label(composite, SWT.NONE);
-		lbMessage.setText(message);
+		lbMessage.setText(this.message);
 		lbMessage.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		return composite;
@@ -105,13 +105,13 @@ public class SwtMessageDialog extends SwtDialog
 	{
 		Composite composite = new Composite(parent, SWT.NONE);
 		
-		composite.setLayout(new GridLayout(buttonLabels.length, false));
+		composite.setLayout(new GridLayout(this.buttonLabels.length, false));
 		composite.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
 		composite.setFont(parent.getFont());
 
-		for (int i = 0; i < buttonLabels.length; i++) {
+		for (int i = 0; i < this.buttonLabels.length; i++) {
 			Button button = new Button(composite, SWT.PUSH);
-			button.setText(buttonLabels[i]);
+			button.setText(this.buttonLabels[i]);
 			button.setData(new Integer(i));
 			button.addSelectionListener(new SelectionAdapter() 
 			{
@@ -121,7 +121,7 @@ public class SwtMessageDialog extends SwtDialog
 				}
 			});
 			
-			if (i == defaultIndex) {
+			if (i == this.defaultIndex) {
 				Shell shell = parent.getShell();
 				if (shell != null) {
 					shell.setDefaultButton(button);

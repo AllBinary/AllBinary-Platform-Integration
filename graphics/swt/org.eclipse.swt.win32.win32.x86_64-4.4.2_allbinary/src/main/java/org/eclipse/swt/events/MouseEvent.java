@@ -99,11 +99,11 @@ public MouseEvent(Event e) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " button=" + button
-		+ " stateMask=0x" + Integer.toHexString(stateMask)
-		+ " x=" + x
-		+ " y=" + y
-		+ " count=" + count
+		+ " button=" + this.button
+		+ " stateMask=0x" + Integer.toHexString(this.stateMask)
+		+ " x=" + this.x
+		+ " y=" + this.y
+		+ " count=" + this.count
 		+ "}";
 }
 }

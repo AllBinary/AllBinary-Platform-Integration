@@ -88,10 +88,10 @@ public MenuDetectEvent(Event e) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " x=" + x
-		+ " y=" + y
-		+ " doit=" + doit
-		+ " detail=" + detail
+		+ " x=" + this.x
+		+ " y=" + this.y
+		+ " doit=" + this.doit
+		+ " detail=" + this.detail
 		+ "}";
 }
 }

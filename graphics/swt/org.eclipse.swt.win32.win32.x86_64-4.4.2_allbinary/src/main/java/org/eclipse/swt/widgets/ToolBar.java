@@ -257,7 +257,7 @@ public Rectangle computeTrim (int x, int y, int width, int height) {
 
 Widget computeTabGroup () {
 	ToolItem [] items = _getItems ();
-	if (tabItemList == null) {
+	if (this.tabItemList == null) {
 		int i = 0;
 		while (i < items.length && items [i].control == null) i++;
 		if (i == items.length) return super.computeTabGroup (); 
@@ -274,7 +274,7 @@ Widget computeTabGroup () {
 
 Widget [] computeTabList () {
 	ToolItem [] items = _getItems ();
-	if (tabItemList == null) {
+	if (this.tabItemList == null) {
 		int i = 0;
 		while (i < items.length && items [i].control == null) i++;
 		if (i == items.length) return super.computeTabList (); 
@@ -363,9 +363,9 @@ void createItem (ToolItem item, int index) {
 	int count = (int)/*64*/OS.SendMessage (handle, OS.TB_BUTTONCOUNT, 0, 0);
 	if (!(0 <= index && index <= count)) error (SWT.ERROR_INVALID_RANGE);
 	int id = 0;
-	while (id < items.length && items [id] != null) id++;
-	if (id == items.length) {
-		ToolItem [] newItems = new ToolItem [items.length + 4];
+	while (id < this.items.length && this.items [id] != null) id++;
+	if (id == this.items.length) {
+		ToolItem [] newItems = new ToolItem [this.items.length + 4];
 		System.arraycopy (items, 0, newItems, 0, items.length);
 		items = newItems;
 	}
@@ -398,7 +398,7 @@ void createItem (ToolItem item, int index) {
 
 void createWidget () {
 	super.createWidget ();
-	items = new ToolItem [4];
+	this.items = new ToolItem [4];
 	lastFocusId = lastArrowId = lastHotId = -1;
 }
 
@@ -431,7 +431,7 @@ void destroyItem (ToolItem item) {
 	if (item.id == lastFocusId) lastFocusId = -1;
 	if (item.id == lastArrowId) lastArrowId = -1;
 	if (item.id == lastHotId) lastHotId = -1;
-	items [item.id] = null;
+	this.items [item.id] = null;
 	item.id = -1;
 	int count = (int)/*64*/OS.SendMessage (handle, OS.TB_BUTTONCOUNT, 0, 0);
 	if (count == 0) {
@@ -448,7 +448,7 @@ void destroyItem (ToolItem item) {
 			display.releaseToolDisabledImageList (disabledImageList);
 		}
 		imageList = hotImageList = disabledImageList = null;
-		items = new ToolItem [4];
+		this.items = new ToolItem [4];
 	}
 	if ((style & SWT.VERTICAL) != 0) setRowCount (count - 1);
 	layoutItems ();
@@ -468,8 +468,8 @@ void enableWidget (boolean enabled) {
 	* The fix is to use the disabled image in all image
 	* lists for all items.
 	*/
-	for (int i=0; i<items.length; i++) {
-		ToolItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		ToolItem item = this.items [i];
 		if (item != null) {
 			if ((item.style & SWT.SEPARATOR) == 0) {
 				item.updateImages (enabled && item.getEnabled ());
@@ -584,7 +584,7 @@ ToolItem [] _getItems () {
 	ToolItem [] result = new ToolItem [count];
 	for (int i=0; i<count; i++) {
 		OS.SendMessage (handle, OS.TB_GETBUTTON, i, lpButton);
-		result [i] = items [lpButton.idCommand];
+		result [i] = this.items [lpButton.idCommand];
 	}
 	return result;
 }
@@ -670,8 +670,8 @@ void layoutItems () {
 	if (OS.COMCTL32_MAJOR >= 6 && OS.IsAppThemed ()) {
 		if ((style & SWT.RIGHT) != 0 && (style & SWT.VERTICAL) == 0) {
 			boolean hasText = false, hasImage = false;
-			for (int i=0; i<items.length; i++) {
-				ToolItem item = items [i];
+			for (int i=0; i<this.items.length; i++) {
+				ToolItem item = this.items [i];
 				if (item != null) {
 					if (!hasText) hasText = item.text.length () != 0;
 					if (!hasImage) hasImage = item.image != null;
@@ -718,17 +718,17 @@ void layoutItems () {
 			long /*int*/ size = OS.SendMessage (handle, OS.TB_GETBUTTONSIZE, 0, 0);
 			info.cx = (short) OS.LOWORD (size);
 			int index = 0;
-			while (index < items.length) {
-				ToolItem item = items [index];
+			while (index < this.items.length) {
+				ToolItem item = this.items [index];
 				if (item != null && (item.style & SWT.DROP_DOWN) != 0) break;
 				index++;
 			}
-			if (index < items.length) {
+			if (index < this.items.length) {
 				long /*int*/ padding = OS.SendMessage (handle, OS.TB_GETPADDING, 0, 0);
 				info.cx += OS.LOWORD (padding) * 2;
 			}
-			for (int i=0; i<items.length; i++) {
-				ToolItem item = items [i];
+			for (int i=0; i<this.items.length; i++) {
+				ToolItem item = this.items [i];
 				if (item != null && (item.style & SWT.SEPARATOR) == 0) {
 					OS.SendMessage (handle, OS.TB_SETBUTTONINFO, item.id, info);
 				}
@@ -752,8 +752,8 @@ void layoutItems () {
 			TBBUTTONINFO info = new TBBUTTONINFO ();
 			info.cbSize = TBBUTTONINFO.sizeof;
 			info.dwMask = OS.TBIF_SIZE;
-			for (int i=0; i<items.length; i++) {
-				ToolItem item = items [i];
+			for (int i=0; i<this.items.length; i++) {
+				ToolItem item = this.items [i];
 				if (item != null && item.cx > 0) {
 					info.cx = item.cx;
 					OS.SendMessage (handle, OS.TB_SETBUTTONINFO, item.id, info);
@@ -762,8 +762,8 @@ void layoutItems () {
 		}
 	}
 	
-	for (int i=0; i<items.length; i++) {
-		ToolItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		ToolItem item = this.items [i];
 		if (item != null) item.resizeControl ();
 	}
 }
@@ -778,7 +778,7 @@ boolean mnemonicHit (char ch) {
 	int index = (int)/*64*/OS.SendMessage (handle, OS.TB_COMMANDTOINDEX, id [0], 0);
 	if (index == -1) return false;
 	OS.SendMessage (handle, OS.TB_SETHOTITEM, index, 0);
-	items [id [0]].click (false);
+	this.items [id [0]].click (false);
 	return true;
 }
 
@@ -796,18 +796,18 @@ boolean mnemonicMatch (char ch) {
 	*/
 	int index = (int)/*64*/OS.SendMessage (handle, OS.TB_COMMANDTOINDEX, id [0], 0);
 	if (index == -1) return false;
-	return findMnemonic (items [id [0]].text) != '\0';
+	return findMnemonic (this.items [id [0]].text) != '\0';
 }
 
 void releaseChildren (boolean destroy) {
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			ToolItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			ToolItem item = this.items [i];
 			if (item != null && !item.isDisposed ()) {
 				item.release (false);
 			}
 		}
-		items = null;
+		this.items = null;
 	}
 	super.releaseChildren (destroy);
 }
@@ -831,8 +831,8 @@ void releaseWidget () {
 
 void removeControl (Control control) {
 	super.removeControl (control);
-	for (int i=0; i<items.length; i++) {
-		ToolItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		ToolItem item = this.items [i];
 		if (item != null && item.control == control) {
 			item.setControl (null);
 		}
@@ -840,9 +840,9 @@ void removeControl (Control control) {
 }
 
 void reskinChildren (int flags) {
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			ToolItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			ToolItem item = this.items [i];
 			if (item != null) item.reskin (flags);
 		}
 	}
@@ -923,8 +923,8 @@ void setDropDownItems (boolean set) {
 	*/
 	if (OS.COMCTL32_MAJOR >= 6 && OS.IsAppThemed ()) {
 		boolean hasText = false, hasImage = false;
-		for (int i=0; i<items.length; i++) {
-			ToolItem item = items [i];
+		for (int i=0; i<this.items.length; i++) {
+			ToolItem item = this.items [i];
 			if (item != null) {
 				if (!hasText) hasText = item.text.length () != 0;
 				if (!hasImage) hasImage = item.image != null;
@@ -932,8 +932,8 @@ void setDropDownItems (boolean set) {
 			}
 		}
 		if (hasImage && !hasText) {
-			for (int i=0; i<items.length; i++) {
-				ToolItem item = items [i];
+			for (int i=0; i<this.items.length; i++) {
+				ToolItem item = this.items [i];
 				if (item != null && (item.style & SWT.DROP_DOWN) != 0) {
 					TBBUTTONINFO info = new TBBUTTONINFO ();
 					info.cbSize = TBBUTTONINFO.sizeof;
@@ -975,12 +975,12 @@ public void setFont (Font font) {
 	*/
 	int index = 0;
 	int mask = SWT.PUSH | SWT.CHECK | SWT.RADIO | SWT.DROP_DOWN;
-	while (index < items.length) {
-		ToolItem item = items [index];
+	while (index < this.items.length) {
+		ToolItem item = this.items [index];
 		if (item != null && (item.style & mask) != 0) break;		
 		index++;
 	}
-	if (index == items.length) {
+	if (index == this.items.length) {
 		OS.SendMessage (handle, OS.TB_SETBITMAPSIZE, 0, 0);
 		OS.SendMessage (handle, OS.TB_SETBUTTONSIZE, 0, 0);
 	}
@@ -1087,14 +1087,14 @@ void setRowCount (int count) {
 
 boolean setTabItemFocus () {
 	int index = 0;
-	while (index < items.length) {
-		ToolItem item = items [index];
+	while (index < this.items.length) {
+		ToolItem item = this.items [index];
 		if (item != null && (item.style & SWT.SEPARATOR) == 0) {
 			if (item.getEnabled ()) break;
 		}
 		index++;
 	}
-	if (index == items.length) return false;
+	if (index == this.items.length) return false;
 	return super.setTabItemFocus ();
 }
 
@@ -1139,8 +1139,8 @@ String toolTipText (NMTTDISPINFO hdr) {
 			hdr.uFlags &= ~OS.TTF_RTLREADING;
 		}
 		if (toolTipText != null) return ""; //$NON-NLS-1$
-		if (0 <= index && index < items.length) {
-			ToolItem item = items [index];
+		if (0 <= index && index < this.items.length) {
+			ToolItem item = this.items [index];
 			if (item != null) {	
 				/*
 				* Bug in Windows.  When the  arrow keys are used to change
@@ -1169,7 +1169,7 @@ void updateOrientation () {
 		info.dwMask = OS.TBIF_IMAGE;
 		int count = (int)/*64*/OS.SendMessage (handle, OS.TB_BUTTONCOUNT, 0, 0);
 		for (int i=0; i<count; i++) {
-			ToolItem item = items [i];
+			ToolItem item = this.items [i];
 			if ((item.style & SWT.SEPARATOR) != 0) continue;
 			if (item.image == null) continue;
 			OS.SendMessage (handle, OS.TB_GETBUTTONINFO, item.id, info);
@@ -1240,8 +1240,8 @@ LRESULT WM_CAPTURECHANGED (long /*int*/ wParam, long /*int*/ lParam) {
 	* item is pressed, the item remains pressed.  The fix is
 	* unpress all items using TB_SETSTATE and TBSTATE_PRESSED.
 	*/
-	for (int i=0; i<items.length; i++) {
-		ToolItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		ToolItem item = this.items [i];
 		if (item != null) {
 			int fsState = (int)/*64*/OS.SendMessage (handle, OS.TB_GETSTATE, item.id, 0);
 			if ((fsState & OS.TBSTATE_PRESSED) != 0) {
@@ -1263,7 +1263,7 @@ LRESULT WM_CHAR (long /*int*/ wParam, long /*int*/ lParam) {
 				TBBUTTON lpButton = new TBBUTTON ();
 				long /*int*/ code = OS.SendMessage (handle, OS.TB_GETBUTTON, index, lpButton);
 				if (code != 0) {
-					items [lpButton.idCommand].click (false);
+					this.items [lpButton.idCommand].click (false);
 					return LRESULT.ZERO;
 				}
 			}
@@ -1517,7 +1517,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 		case OS.TBN_DROPDOWN:
 			NMTOOLBAR lpnmtb = new NMTOOLBAR ();
 			OS.MoveMemory (lpnmtb, lParam, NMTOOLBAR.sizeof);
-			ToolItem child = items [lpnmtb.iItem];
+			ToolItem child = this.items [lpnmtb.iItem];
 			if (child != null) {
 				Event event = new Event ();
 				event.detail = SWT.ARROW;

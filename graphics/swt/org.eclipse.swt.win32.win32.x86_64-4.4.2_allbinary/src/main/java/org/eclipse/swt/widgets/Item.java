@@ -61,7 +61,7 @@ public abstract class Item extends Widget {
  */
 public Item (Widget parent, int style) {
 	super (parent, style);
-	text = "";
+	this.text = "";
 }
 
 /**
@@ -143,8 +143,8 @@ public String getText () {
 @Override
 void releaseWidget () {
 	super.releaseWidget ();
-	text = null;
-	image = null;
+	this.text = null;
+	this.image = null;
 }
 
 /**
@@ -183,7 +183,7 @@ public void setImage (Image image) {
 public void setText (String string) {
 	checkWidget ();
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
-	text = string;
+	this.text = string;
 }
 
 boolean updateTextDirection(int textDirection) {

@@ -134,7 +134,7 @@ public class SwtImmutableImage extends javax.microedition.lcdui.Image {
 
 //        System.out.println("TWB immutable id: " + img);
 //        //final byte[] alphas = new byte[width];
-        final ImageData imageData = image.getImageData();
+        final ImageData imageData = this.image.getImageData();
         this.depth = imageData.depth;
         //System.out.println("TWB mutable id: " + img);
         final byte[] alphas = new byte[width * height];
@@ -203,7 +203,7 @@ public class SwtImmutableImage extends javax.microedition.lcdui.Image {
             }
         }
 
-        final ImageData imageData = image.getImageData();
+        final ImageData imageData = this.image.getImageData();
         this.depth = imageData.depth;
         for (int i = 0; i < height; i++) {
             imageData.setPixels(x, y + i, width, argb, offset + i * scanlength);

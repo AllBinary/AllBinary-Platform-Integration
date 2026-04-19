@@ -51,26 +51,26 @@ private void createCOMInterfaces() {
 }
 private void disposeCOMInterfaces() {
 	
-	if (iUnknown != null)
-		iUnknown.dispose();
-	iUnknown = null;
+	if (this.iUnknown != null)
+		this.iUnknown.dispose();
+	this.iUnknown = null;
 	
-	if (iEnumFORMATETC != null)
-		iEnumFORMATETC.dispose();
-	iEnumFORMATETC = null;
+	if (this.iEnumFORMATETC != null)
+		this.iEnumFORMATETC.dispose();
+	this.iEnumFORMATETC = null;
 }
 long /*int*/ getAddress() {
 	return iEnumFORMATETC.getAddress();
 }
 private FORMATETC[] getNextItems(int numItems){
 
-	if (formats == null || numItems < 1) return null;
+	if (this.formats == null || numItems < 1) return null;
 
-	int endIndex = index + numItems - 1;
-	if (endIndex > (formats.length - 1)) endIndex = formats.length - 1;
-	if (index > endIndex) return null;
+	int endIndex = this.index + numItems - 1;
+	if (endIndex > (this.formats.length - 1)) endIndex = this.formats.length - 1;
+	if (this.index > endIndex) return null;
 	
-	FORMATETC[] items =  new FORMATETC[endIndex - index + 1];
+	FORMATETC[] items =  new FORMATETC[endIndex - this.index + 1];
 	for (int i = 0; i < items.length; i++){
 		items[i] = this.formats[this.index];
 		index++;
@@ -116,12 +116,12 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 	COM.MoveMemory(guid, riid, GUID.sizeof);
 
 	if (COM.IsEqualGUID(guid, COM.IIDIUnknown)) {
-		COM.MoveMemory(ppvObject, new long /*int*/[] {iUnknown.getAddress()}, OS.PTR_SIZEOF);
+		COM.MoveMemory(ppvObject, new long /*int*/[] {this.iUnknown.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
 	if (COM.IsEqualGUID(guid, COM.IIDIEnumFORMATETC)) {
-		COM.MoveMemory(ppvObject, new long /*int*/[] {iEnumFORMATETC.getAddress()}, OS.PTR_SIZEOF);
+		COM.MoveMemory(ppvObject, new long /*int*/[] {this.iEnumFORMATETC.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
@@ -131,7 +131,7 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 int Release() {
 	refCount--;
 	
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		disposeCOMInterfaces();
 		if (COM.FreeUnusedLibraries) {
 			COM.CoFreeUnusedLibraries();
@@ -153,9 +153,9 @@ private int Skip(int celt) {
 	//Skips over the next specified number of elements in the enumeration sequence.
 	if (celt < 1 ) return COM.E_INVALIDARG;
 	
-	index += celt;
-	if (index > (formats.length - 1)){
-		this.index = formats.length - 1;
+	this.index += celt;
+	if (this.index > (this.formats.length - 1)){
+		this.index = this.formats.length - 1;
 		return COM.S_FALSE;
 	}
 	return COM.S_OK;

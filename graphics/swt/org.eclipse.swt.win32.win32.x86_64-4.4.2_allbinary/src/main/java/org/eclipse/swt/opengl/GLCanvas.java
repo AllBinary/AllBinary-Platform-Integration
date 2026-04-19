@@ -77,14 +77,14 @@ public GLCanvas (Composite parent, int style, GLData data) {
 //	}
 
 	long /*int*/ hDC = OS.GetDC (handle);
-	pixelFormat = WGL.ChoosePixelFormat (hDC, pfd);
-	if (pixelFormat == 0 || !WGL.SetPixelFormat (hDC, pixelFormat, pfd)) {
+	this.pixelFormat = WGL.ChoosePixelFormat (hDC, pfd);
+	if (this.pixelFormat == 0 || !WGL.SetPixelFormat (hDC, this.pixelFormat, pfd)) {
 		OS.ReleaseDC (handle, hDC);
 		dispose ();
 		SWT.error (SWT.ERROR_UNSUPPORTED_DEPTH);
 	}
-	context = WGL.wglCreateContext (hDC);
-	if (context == 0) {
+	this.context = WGL.wglCreateContext (hDC);
+	if (this.context == 0) {
 		OS.ReleaseDC (handle, hDC);
 		SWT.error (SWT.ERROR_NO_HANDLES);
 	}
@@ -159,7 +159,7 @@ public GLData getGLData () {
  */
 public boolean isCurrent () {
 	checkWidget ();
-	return WGL.wglGetCurrentContext () == context;
+	return WGL.wglGetCurrentContext () == this.context;
 }
 
 /**
@@ -173,7 +173,7 @@ public boolean isCurrent () {
  */
 public void setCurrent () {
 	checkWidget ();
-	if (WGL.wglGetCurrentContext () == context) return;
+	if (WGL.wglGetCurrentContext () == this.context) return;
 	long /*int*/ hDC = OS.GetDC (handle);
 	WGL.wglMakeCurrent (hDC, context);
 	OS.ReleaseDC (handle, hDC);

@@ -91,8 +91,8 @@ public final class OleAutomation {
 	
 OleAutomation(IDispatch idispatch) {
 	if (idispatch == null) OLE.error(OLE.ERROR_INVALID_INTERFACE_ADDRESS);
-	objIDispatch = idispatch;
-	objIDispatch.AddRef();
+	this.objIDispatch = idispatch;
+	this.objIDispatch.AddRef();
 	
 	long /*int*/[] ppv = new long /*int*/[1];
 	/* GetTypeInfo([in] iTInfo, [in] lcid, [out] ppTInfo) 
@@ -100,7 +100,7 @@ OleAutomation(IDispatch idispatch) {
 	 */
 	int result = objIDispatch.GetTypeInfo(0, COM.LOCALE_USER_DEFAULT, ppv);
 	if (result == OLE.S_OK) {
-		objITypeInfo = new ITypeInfo(ppv[0]);
+		this.objITypeInfo = new ITypeInfo(ppv[0]);
 	}
 }
 /**
@@ -115,7 +115,7 @@ OleAutomation(IDispatch idispatch) {
  */
 public OleAutomation(OleClientSite clientSite) {
 	if (clientSite == null) OLE.error(OLE.ERROR_INVALID_INTERFACE_ADDRESS);
-	objIDispatch = clientSite.getAutomationObject();
+	this.objIDispatch = clientSite.getAutomationObject();
 
 	long /*int*/[] ppv = new long /*int*/[1];
 	/* GetTypeInfo([in] iTInfo, [in] lcid, [out] ppTInfo) 
@@ -123,7 +123,7 @@ public OleAutomation(OleClientSite clientSite) {
 	 */
 	int result = objIDispatch.GetTypeInfo(0, COM.LOCALE_USER_DEFAULT, ppv);
 	if (result == OLE.S_OK) {
-		objITypeInfo = new ITypeInfo(ppv[0]);
+		this.objITypeInfo = new ITypeInfo(ppv[0]);
 	}
 }
 /**
@@ -158,17 +158,17 @@ public OleAutomation(String progId) {
 			OS.OleUninitialize();
 			OLE.error(OLE.ERROR_CANNOT_CREATE_OBJECT, result);
 		}
-		objIUnknown = new IUnknown(ppvObject[0]);
+		this.objIUnknown = new IUnknown(ppvObject[0]);
 		
 		ppvObject[0] = 0;
-		result = objIUnknown.QueryInterface(COM.IIDIDispatch, ppvObject); 
+		result = this.objIUnknown.QueryInterface(COM.IIDIDispatch, ppvObject); 
 		if (result != COM.S_OK) OLE.error(OLE.ERROR_INTERFACE_NOT_FOUND);
-		objIDispatch = new IDispatch(ppvObject[0]);
+		this.objIDispatch = new IDispatch(ppvObject[0]);
 
 		ppvObject[0] = 0;
-		result = objIDispatch.GetTypeInfo(0, COM.LOCALE_USER_DEFAULT, ppvObject);
+		result = this.objIDispatch.GetTypeInfo(0, COM.LOCALE_USER_DEFAULT, ppvObject);
 		if (result == OLE.S_OK) {
-			objITypeInfo = new ITypeInfo(ppvObject[0]);
+			this.objITypeInfo = new ITypeInfo(ppvObject[0]);
 		}
 	} catch (SWTException e) {
 		dispose();
@@ -183,21 +183,21 @@ public OleAutomation(String progId) {
  */
 public void dispose() {
 
-	if (objIDispatch != null){
-		objIDispatch.Release();
+	if (this.objIDispatch != null){
+		this.objIDispatch.Release();
 	}
-	objIDispatch = null;
+	this.objIDispatch = null;
 	
-	if (objITypeInfo != null){
-		objITypeInfo.Release();
+	if (this.objITypeInfo != null){
+		this.objITypeInfo.Release();
 	}
-	objITypeInfo = null;
+	this.objITypeInfo = null;
 	
-	if (objIUnknown != null){
-		objIUnknown.Release();
+	if (this.objIUnknown != null){
+		this.objIUnknown.Release();
 		OS.OleUninitialize();
 	}
-	objIUnknown = null;
+	this.objIUnknown = null;
 }
 long /*int*/ getAddress() {	
 	return objIDispatch.getAddress();
@@ -227,9 +227,9 @@ GUID getClassID(String clientName) {
  * file or null.
  */
 public String getHelpFile(int dispId) {
-	if (objITypeInfo == null) return null;
+	if (this.objITypeInfo == null) return null;
 	String[] file = new String[1];
-	int rc = objITypeInfo.GetDocumentation(dispId, null, null, null, file );
+	int rc = this.objITypeInfo.GetDocumentation(dispId, null, null, null, file );
 	if (rc == OLE.S_OK) return file[0];
 	return null;	
 }
@@ -240,9 +240,9 @@ public String getHelpFile(int dispId) {
  * @return the documentation string if it exists; otherwise return null.
  */
 public String getDocumentation(int dispId) {
-	if (objITypeInfo == null) return null;
+	if (this.objITypeInfo == null) return null;
 	String[] doc = new String[1];
-	int rc = objITypeInfo.GetDocumentation(dispId, null, doc, null, null );
+	int rc = this.objITypeInfo.GetDocumentation(dispId, null, doc, null, null );
 	if (rc == OLE.S_OK) return doc[0];
 	return null;
 }
@@ -253,9 +253,9 @@ public String getDocumentation(int dispId) {
  * @return an OlePropertyDescription for a variable at the given index.
  */
 public OlePropertyDescription getPropertyDescription(int index) {
-	if (objITypeInfo == null) return null;
+	if (this.objITypeInfo == null) return null;
 	long /*int*/[] ppVarDesc = new long /*int*/[1];
-	int rc = objITypeInfo.GetVarDesc(index, ppVarDesc);
+	int rc = this.objITypeInfo.GetVarDesc(index, ppVarDesc);
 	if (rc != OLE.S_OK) return null;
 	VARDESC vardesc = new VARDESC();
 	COM.MoveMemory(vardesc, ppVarDesc[0], VARDESC.sizeof);
@@ -274,7 +274,7 @@ public OlePropertyDescription getPropertyDescription(int index) {
 	data.description = getDocumentation(vardesc.memid);
 	data.helpFile = getHelpFile(vardesc.memid);
 	
-	objITypeInfo.ReleaseVarDesc(ppVarDesc[0]);
+	this.objITypeInfo.ReleaseVarDesc(ppVarDesc[0]);
 	return data;
 }
 /**
@@ -284,9 +284,9 @@ public OlePropertyDescription getPropertyDescription(int index) {
  * @return an OleFunctionDescription for a function at the given index.
  */
 public OleFunctionDescription getFunctionDescription(int index) {
-	if (objITypeInfo == null) return null;
+	if (this.objITypeInfo == null) return null;
 	long /*int*/[] ppFuncDesc = new long /*int*/[1];
-	int rc = objITypeInfo.GetFuncDesc(index, ppFuncDesc);
+	int rc = this.objITypeInfo.GetFuncDesc(index, ppFuncDesc);
 	if (rc != OLE.S_OK) return null;
 	FUNCDESC funcdesc = new FUNCDESC();
 	COM.MoveMemory(funcdesc, ppFuncDesc[0], FUNCDESC.sizeof);
@@ -335,7 +335,7 @@ public OleFunctionDescription getFunctionDescription(int index) {
 		data.returnType = vt[0];
 	}
 
-	objITypeInfo.ReleaseFuncDesc(ppFuncDesc[0]);
+	this.objITypeInfo.ReleaseFuncDesc(ppFuncDesc[0]);
 	return data;
 }
 /**
@@ -346,13 +346,13 @@ public OleFunctionDescription getFunctionDescription(int index) {
  * @return the type info of the receiver
  */
 public TYPEATTR getTypeInfoAttributes() {
-	if (objITypeInfo == null) return null;
+	if (this.objITypeInfo == null) return null;
 	long /*int*/ [] ppTypeAttr = new long /*int*/ [1];
-	int rc = objITypeInfo.GetTypeAttr(ppTypeAttr);
+	int rc = this.objITypeInfo.GetTypeAttr(ppTypeAttr);
 	if (rc != OLE.S_OK) return null;
 	TYPEATTR typeattr = new TYPEATTR();
 	COM.MoveMemory(typeattr, ppTypeAttr[0], TYPEATTR.sizeof);
-	objITypeInfo.ReleaseTypeAttr(ppTypeAttr[0]);
+	this.objITypeInfo.ReleaseTypeAttr(ppTypeAttr[0]);
 	return typeattr;
 }
 /**
@@ -362,9 +362,9 @@ public TYPEATTR getTypeInfoAttributes() {
  * @return the name if it exists; otherwise return null.
  */
 public String getName(int dispId) {
-	if (objITypeInfo == null) return null;
+	if (this.objITypeInfo == null) return null;
 	String[] name = new String[1];
-	int rc = objITypeInfo.GetDocumentation(dispId, name, null, null, null );
+	int rc = this.objITypeInfo.GetDocumentation(dispId, name, null, null, null );
 	if (rc == OLE.S_OK) return name[0];
 	return null;
 }
@@ -376,10 +376,10 @@ public String getName(int dispId) {
  * @return an array of name containing the function name and the parameter names
  */
 public String[] getNames(int dispId, int maxSize) {
-	if (objITypeInfo == null) return new String[0];
+	if (this.objITypeInfo == null) return new String[0];
 	String[] names = new String[maxSize];
 	int[] count = new int[1];
-	int rc = objITypeInfo.GetNames(dispId, names, maxSize, count);
+	int rc = this.objITypeInfo.GetNames(dispId, names, maxSize, count);
 	if (rc == OLE.S_OK) {
 		String[] newNames = new String[count[0]];
 		System.arraycopy(names, 0, newNames, 0, count[0]);
@@ -400,7 +400,7 @@ public String[] getNames(int dispId, int maxSize) {
 public int[] getIDsOfNames(String[] names) {
 
 	int[] rgdispid = new int[names.length];
-	int result = objIDispatch.GetIDsOfNames(new GUID(), names, names.length, COM.LOCALE_USER_DEFAULT, rgdispid);
+	int result = this.objIDispatch.GetIDsOfNames(new GUID(), names, names.length, COM.LOCALE_USER_DEFAULT, rgdispid);
 	if (result != COM.S_OK) return null;
 	
 	return rgdispid;
@@ -473,10 +473,10 @@ public Variant getProperty(int dispIdMember, Variant[] rgvarg, int[] rgdispidNam
 public boolean equals(Object object) {
 	if (object == this) return true;
 	if (object instanceof OleAutomation) {
-		if (objIDispatch == null) return false;
+		if (this.objIDispatch == null) return false;
 		OleAutomation oleAutomation = ((OleAutomation) object); 
 		if (oleAutomation.objIDispatch == null) return false;
-		long /*int*/ address1 = objIDispatch.getAddress();
+		long /*int*/ address1 = this.objIDispatch.getAddress();
 		long /*int*/ address2 = oleAutomation.objIDispatch.getAddress();
 		return address1 == address2;
 	}
@@ -537,7 +537,7 @@ public Variant invoke(int dispIdMember, Variant[] rgvarg, int[] rgdispidNamedArg
 private int invoke(int dispIdMember, int wFlags, Variant[] rgvarg, int[] rgdispidNamedArgs, Variant pVarResult) {
 
 	// get the IDispatch interface for the control
-	if (objIDispatch == null) return COM.E_FAIL;
+	if (this.objIDispatch == null) return COM.E_FAIL;
 	
 	// create a DISPPARAMS structure for the input parameters
 	DISPPARAMS pDispParams = new DISPPARAMS();
@@ -568,7 +568,7 @@ private int invoke(int dispIdMember, int wFlags, Variant[] rgvarg, int[] rgdispi
 	int[] pArgErr = new int[1];
 	long /*int*/ pVarResultAddress = 0;
 	if (pVarResult != null)	pVarResultAddress = OS.GlobalAlloc(OS.GMEM_FIXED | OS.GMEM_ZEROINIT, VARIANT.sizeof);
-	int result = objIDispatch.Invoke(dispIdMember, new GUID(), COM.LOCALE_USER_DEFAULT, wFlags, pDispParams, pVarResultAddress, excepInfo, pArgErr);
+	int result = this.objIDispatch.Invoke(dispIdMember, new GUID(), COM.LOCALE_USER_DEFAULT, wFlags, pDispParams, pVarResultAddress, excepInfo, pArgErr);
 
 	if (pVarResultAddress != 0){
 		pVarResult.setData(pVarResultAddress);
@@ -674,7 +674,7 @@ private void manageExcepinfo(int hResult, EXCEPINFO excepInfo) {
 			int size = COM.SysStringByteLen(excepInfo.bstrDescription);
 			char[] buffer = new char[(size + 1) /2];
 			COM.MoveMemory(buffer, excepInfo.bstrDescription, size);
-			exceptionDescription = new String(buffer);
+			this.exceptionDescription = new String(buffer);
 		} else {
 			this.exceptionDescription = "OLE Automation Error Exception "; //$NON-NLS-1$
 			if (excepInfo.wCode != 0){

@@ -228,8 +228,8 @@ public Rectangle computeTrim (int x, int y, int width, int height) {
 void createItem (TabItem item, int index) {
 	int count = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETITEMCOUNT, 0, 0);
 	if (!(0 <= index && index <= count)) error (SWT.ERROR_INVALID_RANGE);
-	if (count == items.length) {
-		TabItem [] newItems = new TabItem [items.length + 4];
+	if (count == this.items.length) {
+		TabItem [] newItems = new TabItem [this.items.length + 4];
 		System.arraycopy (items, 0, newItems, 0, items.length);
 		items = newItems;
 	}
@@ -272,19 +272,19 @@ void createHandle () {
 	long /*int*/ hwndToolTip = OS.SendMessage (handle, OS.TCM_GETTOOLTIPS, 0, 0);
 	OS.SendMessage (hwndToolTip, OS.TTM_SETMAXTIPWIDTH, 0, 0x7FFF);	
 	
-	createdAsRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
+	this.createdAsRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
 }
 
 void createWidget () {
 	super.createWidget ();
-	items = new TabItem [4];
+	this.items = new TabItem [4];
 }
 
 void destroyItem (TabItem item) {
 	int count = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETITEMCOUNT, 0, 0);
 	int index = 0;
 	while (index < count) {
-		if (items [index] == item) break;
+		if (this.items [index] == item) break;
 		index++;
 	}
 	if (index == count) return;
@@ -295,11 +295,11 @@ void destroyItem (TabItem item) {
 	System.arraycopy (items, index + 1, items, index, --count - index);
 	items [count] = null;
 	if (count == 0) {
-		if (imageList != null) {
+		if (this.imageList != null) {
 			OS.SendMessage (handle, OS.TCM_SETIMAGELIST, 0, 0);
-			display.releaseImageList (imageList);
+			display.releaseImageList (this.imageList);
 		}
-		imageList = null;
+		this.imageList = null;
 		items = new TabItem [4];
 	}
 	if (count > 0 && index == selectionIndex) {
@@ -418,7 +418,7 @@ public TabItem [] getItems () {
 	checkWidget ();
 	int count = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETITEMCOUNT, 0, 0);
 	TabItem [] result = new TabItem [count];
-	System.arraycopy (items, 0, result, 0, count);
+	System.arraycopy (this.items, 0, result, 0, count);
 	return result;
 }
 
@@ -442,7 +442,7 @@ public TabItem [] getSelection () {
 	checkWidget ();
 	int index = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETCURSEL, 0, 0);
 	if (index == -1) return new TabItem [0];
-	return new TabItem [] {items [index]};
+	return new TabItem [] {this.items [index]};
 }
 
 /**
@@ -463,19 +463,19 @@ public int getSelectionIndex () {
 
 int imageIndex (Image image) {
 	if (image == null) return OS.I_IMAGENONE;
-	if (imageList == null) {
+	if (this.imageList == null) {
 		Rectangle bounds = image.getBounds ();
-		imageList = display.getImageList (style & SWT.RIGHT_TO_LEFT, bounds.width, bounds.height);
-		int index = imageList.add (image);
-		long /*int*/ hImageList = imageList.getHandle ();
+		this.imageList = display.getImageList (style & SWT.RIGHT_TO_LEFT, bounds.width, bounds.height);
+		int index = this.imageList.add (image);
+		long /*int*/ hImageList = this.imageList.getHandle ();
 		OS.SendMessage (handle, OS.TCM_SETIMAGELIST, 0, hImageList);
 		return index;
 	}
-	int index = imageList.indexOf (image);
+	int index = this.imageList.indexOf (image);
 	if (index == -1) {
-		index = imageList.add (image);
+		index = this.imageList.add (image);
 	} else {
-		imageList.put (index, image);
+		this.imageList.put (index, image);
 	}
 	return index;
 }
@@ -502,7 +502,7 @@ public int indexOf (TabItem item) {
 	if (item == null) error (SWT.ERROR_NULL_ARGUMENT);
 	int count = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETITEMCOUNT, 0, 0);
 	for (int i=0; i<count; i++) {
-		if (items [i] == item) return i;
+		if (this.items [i] == item) return i;
 	}
 	return -1;
 }
@@ -515,7 +515,7 @@ Point minimumSize (int wHint, int hHint, boolean flushCache) {
 		int index = 0;	
 		int count = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETITEMCOUNT, 0, 0);
 		while (index < count) {
-			if (items [index].control == child) break;
+			if (this.items [index].control == child) break;
 			index++;
 		}
 		if (index == count) {
@@ -532,8 +532,8 @@ Point minimumSize (int wHint, int hHint, boolean flushCache) {
 }
 
 boolean mnemonicHit (char key) {
-	for (int i=0; i<items.length; i++) {
-		TabItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		TabItem item = this.items [i];
 		if (item != null) {
 			char ch = findMnemonic (item.getText ());
 			if (Character.toUpperCase (key) == Character.toUpperCase (ch)) {
@@ -548,8 +548,8 @@ boolean mnemonicHit (char key) {
 }
 
 boolean mnemonicMatch (char key) {
-	for (int i=0; i<items.length; i++) {
-		TabItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		TabItem item = this.items [i];
 		if (item != null) {
 			char ch = findMnemonic (item.getText ());
 			if (Character.toUpperCase (key) == Character.toUpperCase (ch)) {		
@@ -561,33 +561,33 @@ boolean mnemonicMatch (char key) {
 }
 
 void releaseChildren (boolean destroy) {
-	if (items != null) {
+	if (this.items != null) {
 		int count = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETITEMCOUNT, 0, 0);
 		for (int i=0; i<count; i++) {
-			TabItem item = items [i];
+			TabItem item = this.items [i];
 			if (item != null && !item.isDisposed ()) {
 				item.release (false);
 			}
 		}
-		items = null;
+		this.items = null;
 	}
 	super.releaseChildren (destroy);
 }
 
 void releaseWidget () {
 	super.releaseWidget ();
-	if (imageList != null) {
+	if (this.imageList != null) {
 		OS.SendMessage (handle, OS.TCM_SETIMAGELIST, 0, 0);
-		display.releaseImageList (imageList);
+		display.releaseImageList (this.imageList);
 	}
-	imageList = null;
+	this.imageList = null;
 }
 
 void removeControl (Control control) {
 	super.removeControl (control);
 	int count = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETITEMCOUNT, 0, 0);
 	for (int i=0; i<count; i++) {
-		TabItem item = items [i];
+		TabItem item = this.items [i];
 		if (item.control == control) item.setControl (null);
 	}
 }
@@ -619,10 +619,10 @@ public void removeSelectionListener (SelectionListener listener) {
 
 
 void reskinChildren (int flags) {
-	if (items != null) {
+	if (this.items != null) {
 		int count = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETITEMCOUNT, 0, 0);
 		for (int i=0; i<count; i++) {
-			TabItem item = items [i];
+			TabItem item = this.items [i];
 			if (item != null) item.reskin (flags);
 		}
 	}
@@ -689,7 +689,7 @@ public void setFont (Font font) {
 		sendResize ();
 		int index = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETCURSEL, 0, 0);
 		if (index != -1) {
-			TabItem item = items [index];
+			TabItem item = this.items [index];
 			Control control = item.control;
 			if (control != null && !control.isDisposed ()) {
 				control.setBounds (getClientArea ());
@@ -722,7 +722,7 @@ void setSelection (int index, boolean notify) {
 	int oldIndex = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETCURSEL, 0, 0);
 	if (oldIndex == index) return;
 	if (oldIndex != -1) {
-		TabItem item = items [oldIndex];
+		TabItem item = this.items [oldIndex];
 		Control control = item.control;
 		if (control != null && !control.isDisposed ()) {
 			control.setVisible (false);
@@ -731,7 +731,7 @@ void setSelection (int index, boolean notify) {
 	OS.SendMessage (handle, OS.TCM_SETCURSEL, index, 0);
 	int newIndex = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETCURSEL, 0, 0);
 	if (newIndex != -1) {
-		TabItem item = items [newIndex];
+		TabItem item = this.items [newIndex];
 		Control control = item.control;
 		if (control != null && !control.isDisposed ()) {
 			control.setBounds (getClientArea ());
@@ -747,8 +747,8 @@ void setSelection (int index, boolean notify) {
 
 boolean updateTextDirection(int textDirection) {
 	if (super.updateTextDirection(textDirection)) {
-		for (int i = 0, n = items.length; i < n && items[i] != null; i++) {
-			items[i].updateTextDirection (textDirection);
+		for (int i = 0, n = this.items.length; i < n && this.items[i] != null; i++) {
+			this.items[i].updateTextDirection (textDirection);
 		}
 		return true;
 	}
@@ -776,8 +776,8 @@ String toolTipText (NMTTDISPINFO hdr) {
 			hdr.uFlags &= ~OS.TTF_RTLREADING;
 		}
 		if (toolTipText != null) return "";
-		if (0 <= index && index < items.length) {
-			TabItem item = items [index];
+		if (0 <= index && index < this.items.length) {
+			TabItem item = this.items [index];
 			if (item != null) return item.toolTipText;
 		}
 	}
@@ -828,16 +828,16 @@ void updateOrientation () {
 	int width = rect.right - rect.left, height = rect.bottom - rect.top;
 	OS.SetWindowPos (handle, 0, 0, 0, width - 1, height - 1, OS.SWP_NOMOVE | OS.SWP_NOZORDER);
 	OS.SetWindowPos (handle, 0, 0, 0, width, height, OS.SWP_NOMOVE | OS.SWP_NOZORDER);
-	if (imageList != null) {
-		Point size = imageList.getImageSize ();
-		display.releaseImageList (imageList);
-		imageList = display.getImageList (style & SWT.RIGHT_TO_LEFT, size.x, size.y);
-		long /*int*/ hImageList = imageList.getHandle ();
+	if (this.imageList != null) {
+		Point size = this.imageList.getImageSize ();
+		display.releaseImageList (this.imageList);
+		this.imageList = display.getImageList (style & SWT.RIGHT_TO_LEFT, size.x, size.y);
+		long /*int*/ hImageList = this.imageList.getHandle ();
 		OS.SendMessage (handle, OS.TCM_SETIMAGELIST, 0, hImageList);
 		TCITEM tcItem = new TCITEM ();
 		tcItem.mask = OS.TCIF_IMAGE;
-		for (int i = 0; i < items.length; i++) {
-			TabItem item = items [i];
+		for (int i = 0; i < this.items.length; i++) {
+			TabItem item = this.items [i];
 			if (item == null) break;
 			Image image = item.image;
 			if (image != null) {
@@ -905,7 +905,7 @@ LRESULT WM_KEYDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 			* create the control.
 		    */
 			boolean isRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
-			if (isRTL != createdAsRTL) {
+			if (isRTL != this.createdAsRTL) {
 				long /*int*/ code = callWindowProc (handle, OS.WM_KEYDOWN, wParam == OS.VK_RIGHT ? OS.VK_LEFT : OS.VK_RIGHT, lParam);
 				return new LRESULT (code);
 			}
@@ -1028,7 +1028,7 @@ LRESULT WM_SIZE (long /*int*/ wParam, long /*int*/ lParam) {
 	if (isDisposed ()) return result;
 	int index = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETCURSEL, 0, 0);
 	if (index != -1) {
-		TabItem item = items [index];
+		TabItem item = this.items [index];
 		Control control = item.control;
 		if (control != null && !control.isDisposed ()) {
 			control.setBounds (getClientArea ());
@@ -1093,7 +1093,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 		case OS.TCN_SELCHANGING:
 			TabItem item = null;
 			int index = (int)/*64*/OS.SendMessage (handle, OS.TCM_GETCURSEL, 0, 0);
-			if (index != -1) item = items [index];
+			if (index != -1) item = this.items [index];
 			if (item != null) {
 				Control control = item.control;
 				if (control != null && !control.isDisposed ()) {

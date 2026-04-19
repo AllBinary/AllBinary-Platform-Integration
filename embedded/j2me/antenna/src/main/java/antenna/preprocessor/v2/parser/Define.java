@@ -40,8 +40,8 @@ public class Define
 		if (obj instanceof Define)
 		{
 			Define d = (Define) obj;
-			if (!m_key.equals(d.m_key)) return false;
-			Literal l1 = m_value;
+			if (!this.m_key.equals(d.m_key)) return false;
+			Literal l1 = this.m_value;
 			Literal l2 = d.m_value;
 			return (l1.equals(l2)); 
 		}

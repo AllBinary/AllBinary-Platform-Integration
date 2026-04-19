@@ -175,8 +175,8 @@ TableTreeItem(TableTree parent, TableTreeItem parentItem, int style, int index) 
 		
 		/* Root items are visible immediately */
 		int tableIndex = parent.addItem(this, index);
-		tableItem = new TableItem(parent.getTable(), style, tableIndex);
-		tableItem.setData(TableTree.ITEMID, this);
+		this.tableItem = new TableItem(parent.getTable(), style, tableIndex);
+		this.tableItem.setData(TableTree.ITEMID, this);
 		addCheck();
 		/*
 		* Feature in the Table.  The table uses the first image that
@@ -192,7 +192,7 @@ TableTreeItem(TableTree parent, TableTreeItem parentItem, int style, int index) 
 			gc.setBackground(parent.getBackground());
 			gc.fillRectangle(0, 0, itemHeight, itemHeight);
 			gc.dispose();
-			tableItem.setImage(0, parent.sizeImage);
+			this.tableItem.setImage(0, parent.sizeImage);
 		}
 	} else {
 		parentItem.addItem(this, index);
@@ -201,28 +201,28 @@ TableTreeItem(TableTree parent, TableTreeItem parentItem, int style, int index) 
 void addCheck() {
 	Table table = parent.getTable();
 	if ((table.getStyle() & SWT.CHECK) == 0) return;
-	tableItem.setChecked(checked);
-	tableItem.setGrayed(grayed);
+	this.tableItem.setChecked(this.checked);
+	this.tableItem.setGrayed(this.grayed);
 }
 void addItem(TableTreeItem item, int index) {
 	if (item == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (index < 0 || index > items.length) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (index < 0 || index > this.items.length) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 		
 	/* Now that item has a sub-node it must indicate that it can be expanded */
-	if (items.length == 0 && index == 0) {
-		if (tableItem != null) {
-			Image image = expanded ? parent.getMinusImage() : parent.getPlusImage();
-			tableItem.setImage(0, image);
+	if (this.items.length == 0 && index == 0) {
+		if (this.tableItem != null) {
+			Image image = this.expanded ? this.parent.getMinusImage() : this.parent.getPlusImage();
+			this.tableItem.setImage(0, image);
 		}
 	}
 	
 	/* Put the item in the items list */
-	TableTreeItem[] newItems = new TableTreeItem[items.length + 1];
-	System.arraycopy(items, 0, newItems, 0, index);
+	TableTreeItem[] newItems = new TableTreeItem[this.items.length + 1];
+	System.arraycopy(this.items, 0, newItems, 0, index);
 	newItems[index] = item;
 	System.arraycopy(items, index, newItems, index + 1, items.length - index);
 	items = newItems;
-	if (expanded) item.setVisible(true);
+	if (this.expanded) item.setVisible(true);
 }
 
 /**
@@ -240,7 +240,7 @@ void addItem(TableTreeItem item, int index) {
  */
 public Color getBackground () {
 	checkWidget ();
-	return (background == null) ? parent.getBackground() : background;
+	return (this.background == null) ? this.parent.getBackground() : this.background;
 }
 
 /**
@@ -256,7 +256,7 @@ public Color getBackground () {
  */
 public Rectangle getBounds (int index) {
 	checkWidget();
-	if (tableItem != null) {
+	if (this.tableItem != null) {
 		return tableItem.getBounds(index);
 	} else {
 		return new Rectangle(0, 0, 0, 0);
@@ -276,7 +276,7 @@ public Rectangle getBounds (int index) {
  */
 public boolean getChecked () {
 	checkWidget();
-	if (tableItem == null) return checked;
+	if (this.tableItem == null) return checked;
 	return tableItem.getChecked();
 }
 
@@ -296,7 +296,7 @@ public boolean getChecked () {
  */
 public boolean getGrayed () {
 	checkWidget();
-	if (tableItem == null) return grayed;
+	if (this.tableItem == null) return grayed;
 	return tableItem.getGrayed();
 }
 
@@ -326,7 +326,7 @@ public boolean getExpanded () {
  */
 public Font getFont () {
 	checkWidget ();
-	return (font == null) ? parent.getFont() : font;
+	return (this.font == null) ? this.parent.getFont() : this.font;
 }
 /**
  * Returns the foreground color that the receiver will use to draw.
@@ -343,7 +343,7 @@ public Font getFont () {
  */
 public Color getForeground () {
 	checkWidget ();
-	return (foreground == null) ? parent.getForeground() : foreground;
+	return (this.foreground == null) ? this.parent.getForeground() : this.foreground;
 }
 /**
  * Gets the first image.
@@ -382,7 +382,7 @@ public Image getImage (int index) {
 }
 
 int getIndent() {
-	if (parentItem == null) return 0;
+	if (this.parentItem == null) return 0;
 	return parentItem.getIndent() + 1;
 }
 
@@ -405,7 +405,7 @@ int getIndent() {
  */
 public TableTreeItem getItem (int index) {
 	checkWidget();
-	int count = items.length;
+	int count = this.items.length;
 	if (!(0 <= index && index < count)) SWT.error (SWT.ERROR_INVALID_RANGE);
 	return items [index];
 }
@@ -442,8 +442,8 @@ public TableTreeItem[] getItems () {
 TableTreeItem getItem(TableItem tableItem) {
 	if (tableItem == null) return null;
 	if (this.tableItem == tableItem) return this;
-	for (int i = 0; i < items.length; i++) {
-		TableTreeItem item =  items[i].getItem(tableItem);
+	for (int i = 0; i < this.items.length; i++) {
+		TableTreeItem item =  this.items[i].getItem(tableItem);
 	    	if (item != null) return item;
 	}
 	return null;
@@ -512,31 +512,31 @@ boolean getVisible () {
  */
 public int indexOf (TableTreeItem item) {
 	//checkWidget();	
-	for (int i = 0; i < items.length; i++) {
-		if (items[i] == item) return i;
+	for (int i = 0; i < this.items.length; i++) {
+		if (this.items[i] == item) return i;
 	}
 	return -1;
 }
 
 void expandAll(boolean notify) {
-	if (items.length == 0) return;
-	if (!expanded) {
+	if (this.items.length == 0) return;
+	if (!this.expanded) {
 		setExpanded(true);
 		if (notify) {
 			Event event = new Event();
 			event.item = this;
-			parent.notifyListeners(SWT.Expand, event);
+			this.parent.notifyListeners(SWT.Expand, event);
 		}
 	}
-	for (int i = 0; i < items.length; i++) {
-		items[i].expandAll(notify);
+	for (int i = 0; i < this.items.length; i++) {
+		this.items[i].expandAll(notify);
 	}
 }
 int expandedIndexOf (TableTreeItem item) {	
 	int index = 0;
-	for (int i = 0; i < items.length; i++) {
-		if (items[i] == item) return index;
-		if (items[i].expanded) index += items[i].visibleChildrenCount ();
+	for (int i = 0; i < this.items.length; i++) {
+		if (this.items[i] == item) return index;
+		if (this.items[i].expanded) index += this.items[i].visibleChildrenCount ();
 		index++;
 	}
 	return -1;
@@ -544,9 +544,9 @@ int expandedIndexOf (TableTreeItem item) {
 
 int visibleChildrenCount () {
 	int count = 0;
-	for (int i = 0; i < items.length; i++) {
-		if (items[i].getVisible ()) {
-			count += 1 + items[i].visibleChildrenCount ();
+	for (int i = 0; i < this.items.length; i++) {
+		if (this.items[i].getVisible ()) {
+			count += 1 + this.items[i].visibleChildrenCount ();
 		}
 	}
 	return count;
@@ -555,39 +555,39 @@ int visibleChildrenCount () {
 @Override
 public void dispose () {
 	if (isDisposed()) return;
-	for (int i = items.length - 1; i >= 0; i--) {
-		items[i].dispose();
+	for (int i = this.items.length - 1; i >= 0; i--) {
+		this.items[i].dispose();
 	}
 	super.dispose();
-	if (!parent.inDispose) {
-		if (parentItem != null) {
-			parentItem.removeItem(this);
+	if (!this.parent.inDispose) {
+		if (this.parentItem != null) {
+			this.parentItem.removeItem(this);
 		} else {
-			parent.removeItem(this);
+			this.parent.removeItem(this);
 		}
-		if (tableItem != null) tableItem.dispose();
+		if (this.tableItem != null) this.tableItem.dispose();
 	}
-	items = null;
-	parentItem = null;
-	parent = null;
-	images = null;
-	texts = null;
-	tableItem = null;
-	foreground = null;
-	background = null;
-	font = null;
+	this.items = null;
+	this.parentItem = null;
+	this.parent = null;
+	this.images = null;
+	this.texts = null;
+	this.tableItem = null;
+	this.foreground = null;
+	this.background = null;
+	this.font = null;
 }
 
 void removeItem(TableTreeItem item) {
 	int index = 0;
-	while (index < items.length && items[index] != item) index++;
-	if (index == items.length) return;
-	TableTreeItem[] newItems = new TableTreeItem[items.length - 1];
-	System.arraycopy(items, 0, newItems, 0, index);
+	while (index < this.items.length && this.items[index] != item) index++;
+	if (index == this.items.length) return;
+	TableTreeItem[] newItems = new TableTreeItem[this.items.length - 1];
+	System.arraycopy(this.items, 0, newItems, 0, index);
 	System.arraycopy(items, index + 1, newItems, index, items.length - index - 1);
 	items = newItems;
 	if (items.length == 0) {
-		if (tableItem != null) tableItem.setImage(0, null);
+		if (this.tableItem != null) this.tableItem.setImage(0, null);
 	}
 }
 
@@ -614,10 +614,10 @@ public void setBackground (Color color) {
 	if (color != null && color.isDisposed ()) {
 		SWT.error (SWT.ERROR_INVALID_ARGUMENT);
 	}
-	if (tableItem != null) {
-		tableItem.setBackground(color);
+	if (this.tableItem != null) {
+		this.tableItem.setBackground(color);
 	}
-	background = color;
+	this.background = color;
 }
 
 /**
@@ -633,10 +633,10 @@ public void setBackground (Color color) {
  */
 public void setChecked (boolean checked) {
 	checkWidget();
-	Table table = parent.getTable();
+	Table table = this.parent.getTable();
 	if ((table.getStyle() & SWT.CHECK) == 0) return;
-	if (tableItem != null) {
-		tableItem.setChecked(checked);
+	if (this.tableItem != null) {
+		this.tableItem.setChecked(checked);
 	}
 	this.checked = checked;
 }
@@ -656,10 +656,10 @@ public void setChecked (boolean checked) {
  */
 public void setGrayed (boolean grayed) {
 	checkWidget();
-	Table table = parent.getTable();
+	Table table = this.parent.getTable();
 	if ((table.getStyle() & SWT.CHECK) == 0) return;
-	if (tableItem != null) {
-		tableItem.setGrayed(grayed);
+	if (this.tableItem != null) {
+		this.tableItem.setGrayed(grayed);
 	}
 	this.grayed = grayed;
 }
@@ -676,17 +676,17 @@ public void setGrayed (boolean grayed) {
  */
 public void setExpanded (boolean expanded) {
 	checkWidget();
-	if (items.length == 0) return;
+	if (this.items.length == 0) return;
 	if (this.expanded == expanded) return;
 	this.expanded = expanded;
-	if (tableItem == null) return;
-	parent.setRedraw(false);
-	for (int i = 0; i < items.length; i++) {
-		items[i].setVisible(expanded);
+	if (this.tableItem == null) return;
+	this.parent.setRedraw(false);
+	for (int i = 0; i < this.items.length; i++) {
+		this.items[i].setVisible(expanded);
 	}
-	Image image = expanded ? parent.getMinusImage() : parent.getPlusImage();
-	tableItem.setImage(0, image);
-	parent.setRedraw(true);
+	Image image = expanded ? this.parent.getMinusImage() : this.parent.getPlusImage();
+	this.tableItem.setImage(0, image);
+	this.parent.setRedraw(true);
 }
 
 /**
@@ -711,8 +711,8 @@ public void setFont (Font font){
 	if (font != null && font.isDisposed ()) {
 		SWT.error (SWT.ERROR_INVALID_ARGUMENT);
 	}
-	if (tableItem != null) {
-		tableItem.setFont(font);
+	if (this.tableItem != null) {
+		this.tableItem.setFont(font);
 	}
 	this.font = font;
 }
@@ -741,10 +741,10 @@ public void setForeground (Color color) {
 	if (color != null && color.isDisposed ()) {
 		SWT.error (SWT.ERROR_INVALID_ARGUMENT);
 	}
-	if (tableItem != null) {
-		tableItem.setForeground(color);
+	if (this.tableItem != null) {
+		this.tableItem.setForeground(color);
 	}
-	foreground = color;
+	this.foreground = color;
 }
 
 /**
@@ -763,15 +763,15 @@ public void setForeground (Color color) {
  */
 public void setImage (int index, Image image) {
 	checkWidget();
-	int columnCount = Math.max(parent.getTable().getColumnCount(), 1);
+	int columnCount = Math.max(this.parent.getTable().getColumnCount(), 1);
 	if (index <= 0 || index >= columnCount) return;
-	if (images.length < columnCount) {
+	if (this.images.length < columnCount) {
 		Image[] newImages = new Image[columnCount];
 		System.arraycopy(images, 0, newImages, 0, images.length);
 		images = newImages;
 	}
 	images[index] = image;
-	if (tableItem != null) tableItem.setImage(index, image);
+	if (this.tableItem != null) this.tableItem.setImage(index, image);
 }
 
 /**
@@ -815,15 +815,15 @@ public void setImage (Image image) {
 public void setText(int index, String text) {
 	checkWidget();
 	if (text == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	int columnCount = Math.max(parent.getTable().getColumnCount(), 1);
+	int columnCount = Math.max(this.parent.getTable().getColumnCount(), 1);
 	if (index < 0 || index >= columnCount) return;
-	if (texts.length < columnCount) {
+	if (this.texts.length < columnCount) {
 		String[] newTexts = new String[columnCount];
 		System.arraycopy(texts, 0, newTexts, 0, texts.length);
 		texts = newTexts;
 	}
 	texts[index] = text;
-	if (tableItem != null) tableItem.setText(index, text);
+	if (this.tableItem != null) this.tableItem.setText(index, text);
 }
 @Override
 public void setText (String string) {
@@ -831,22 +831,22 @@ public void setText (String string) {
 }
 
 void setVisible (boolean show) {
-	if (parentItem == null) return; // this is a root and can not be toggled between visible and hidden
+	if (this.parentItem == null) return; // this is a root and can not be toggled between visible and hidden
 	if (getVisible() == show) return;
 
 	if (show) {
-		if (!parentItem.getVisible()) return; // parentItem must already be visible
+		if (!this.parentItem.getVisible()) return; // parentItem must already be visible
 		// create underlying table item and set data in table item to stored data
-		Table table = parent.getTable();
-		int parentIndex = table.indexOf(parentItem.tableItem);
-		int index = parentItem.expandedIndexOf(this) + parentIndex + 1;
+		Table table = this.parent.getTable();
+		int parentIndex = table.indexOf(this.parentItem.tableItem);
+		int index = this.parentItem.expandedIndexOf(this) + parentIndex + 1;
 		if (index < 0) return;
-		tableItem = new TableItem(table, getStyle(), index);
-		tableItem.setData(TableTree.ITEMID, this);
-		tableItem.setImageIndent(getIndent());
-		if (background != null) tableItem.setBackground(background);
-		if (foreground != null) tableItem.setForeground(foreground);
-		if (font != null) tableItem.setFont(font);
+		this.tableItem = new TableItem(table, getStyle(), index);
+		this.tableItem.setData(TableTree.ITEMID, this);
+		this.tableItem.setImageIndent(getIndent());
+		if (this.background != null) this.tableItem.setBackground(this.background);
+		if (this.foreground != null) this.tableItem.setForeground(this.foreground);
+		if (this.font != null) this.tableItem.setFont(this.font);
 		addCheck();
 
 		// restore fields to item
@@ -858,25 +858,25 @@ void setVisible (boolean show) {
 		}
 
 		// display the children and the appropriate [+]/[-] symbol as required
-		if (items.length != 0) {
-			if (expanded) {
-				tableItem.setImage(0, parent.getMinusImage());
-				for (int i = 0, length = items.length; i < length; i++) {
-					items[i].setVisible(true);
+		if (this.items.length != 0) {
+			if (this.expanded) {
+				this.tableItem.setImage(0, parent.getMinusImage());
+				for (int i = 0, length = this.items.length; i < length; i++) {
+					this.items[i].setVisible(true);
 				}
 			} else {
-				tableItem.setImage(0, parent.getPlusImage());
+				this.tableItem.setImage(0, parent.getPlusImage());
 			}
 		}
 		
 	} else {
 
-		for (int i = 0, length = items.length; i < length; i++) {
-			items[i].setVisible(false);
+		for (int i = 0, length = this.items.length; i < length; i++) {
+			this.items[i].setVisible(false);
 		}
 		// remove row from table
-		tableItem.dispose();
-		tableItem = null;
+		this.tableItem.dispose();
+		this.tableItem = null;
 	}
 }
 }

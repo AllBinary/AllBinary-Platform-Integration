@@ -85,7 +85,7 @@ public class WtkPreverify extends PostProcessor {
 	}
 
 	public void setJarfile(File srcFile) {
-		if (srcDir != null) {
+		if (this.srcDir != null) {
 			throw new BuildException("Can only preverify JAR or directory, not both.");
 		}
 
@@ -93,7 +93,7 @@ public class WtkPreverify extends PostProcessor {
 	}
 
 	public void setTojarfile(File destFile) {
-		if (srcDir != null) {
+		if (this.srcDir != null) {
 			throw new BuildException("Please use \"destdir\" to specify preverified directory");
 		}
 
@@ -104,7 +104,7 @@ public class WtkPreverify extends PostProcessor {
 		if (!isActive())
 			return;
 
-		if ((getJarFile() == null) && (srcDir == null)) {
+		if ((getJarFile() == null) && (this.srcDir == null)) {
 			throw new BuildException("Need a JAR file or a source directory");
 		}
 
@@ -112,8 +112,8 @@ public class WtkPreverify extends PostProcessor {
 
 		try {
 			try {
-				if (srcDir != null) {
-					getUtility().preverify(srcDir, destDir, getFullClasspath(), cldc, flags);
+				if (this.srcDir != null) {
+					getUtility().preverify(this.srcDir, destDir, getFullClasspath(), cldc, flags);
 				}
 				else {
 					getUtility().preverify(getJarFile(), tmpDir, getFullClasspath(), cldc, flags);

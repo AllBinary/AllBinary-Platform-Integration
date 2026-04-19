@@ -89,12 +89,12 @@ public AccessibleTextAttributeEvent(Object source) {
 @Override
 public String toString () {
 	return "AccessibleAttributeEvent {" //$NON-NLS-1$
-		+ " offset=" + offset   //$NON-NLS-1$
+		+ " offset=" + this.offset   //$NON-NLS-1$
 		+ " start=" + start   //$NON-NLS-1$
 		+ " end=" + end   //$NON-NLS-1$
-		+ " textStyle=" + textStyle   //$NON-NLS-1$
-		+ " attributes=" + toAttributeString(attributes)   //$NON-NLS-1$
-		+ " result=" + result   //$NON-NLS-1$
+		+ " textStyle=" + this.textStyle   //$NON-NLS-1$
+		+ " attributes=" + toAttributeString(this.attributes)   //$NON-NLS-1$
+		+ " result=" + this.result   //$NON-NLS-1$
 		+ "}";  //$NON-NLS-1$
 }
 

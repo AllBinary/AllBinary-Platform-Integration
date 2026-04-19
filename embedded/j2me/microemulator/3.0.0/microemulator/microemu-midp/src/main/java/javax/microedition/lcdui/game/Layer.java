@@ -71,8 +71,8 @@ public class Layer {
     
     public void move(int dx, int dy) {
     	synchronized (this) {
-	        x += dx;
-	        y += dy;
+	        this.x += dx;
+	        this.y += dy;
     	}
     }
     

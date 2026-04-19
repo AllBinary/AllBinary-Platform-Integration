@@ -152,7 +152,7 @@ public class RecordStoreManagerDialog extends JFrame {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.weighty = 0.0;
-		headerPanel.add(recordStoreTypeLabel, c);
+		headerPanel.add(this.recordStoreTypeLabel, c);
 
 		c.gridx = 2;
 		c.gridy = 0;
@@ -179,12 +179,12 @@ public class RecordStoreManagerDialog extends JFrame {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.weighty = 0.0;
-		headerPanel.add(suiteNameLabel, c);
+		headerPanel.add(this.suiteNameLabel, c);
 
-		modelTable.addColumn("Timestamp");
-		modelTable.addColumn("Action type");
-		modelTable.addColumn("Record store name");
-		modelTable.addColumn("Details");
+		this.modelTable.addColumn("Timestamp");
+		this.modelTable.addColumn("Action type");
+		this.modelTable.addColumn("Record store name");
+		this.modelTable.addColumn("Details");
 		logTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
 			private Color SUPER_LIGHT_GRAY = new Color(240, 240, 240);
@@ -203,8 +203,8 @@ public class RecordStoreManagerDialog extends JFrame {
 			private static final long serialVersionUID = 1L;
 
 		});
-		logTable.setShowGrid(false);
-		logScrollPane.setAutoscrolls(true);
+		this.logTable.setShowGrid(false);
+		this.logScrollPane.setAutoscrolls(true);
 
 		JTabbedPane viewPanel = new JTabbedPane();
 		// viewPanel.addTab("Records view", new JLabel("Records view"));
@@ -217,7 +217,7 @@ public class RecordStoreManagerDialog extends JFrame {
 	public void refresh() {
 		recordStoreTypeLabel.setText(common.getRecordStoreManager().getName());
 
-		suiteNameLabel.setText(common.getSuiteName());
+		this.suiteNameLabel.setText(this.common.getSuiteName());
 
 		common.getRecordStoreManager().setRecordListener(new ExtendedRecordListener() {
 

@@ -96,15 +96,15 @@ public class RecordEnumerationImpl implements RecordEnumeration
     public byte[] nextRecord() 
     		throws InvalidRecordIDException, RecordStoreNotOpenException, RecordStoreException
     {
-        if (!recordStoreImpl.isOpen()) {
+        if (!this.recordStoreImpl.isOpen()) {
             throw new RecordStoreNotOpenException();
         }
 
-        if (currentRecord >= numRecords()) {
+        if (this.currentRecord >= numRecords()) {
             throw new InvalidRecordIDException();
         }
 
-        byte[] result = ((EnumerationRecord) enumerationRecords.elementAt(currentRecord)).value;
+        byte[] result = ((EnumerationRecord) this.enumerationRecords.elementAt(this.currentRecord)).value;
         currentRecord++;
 
         return result;
@@ -115,11 +115,11 @@ public class RecordEnumerationImpl implements RecordEnumeration
     public int nextRecordId() 
     		throws InvalidRecordIDException
     {
-        if (currentRecord >= numRecords()) {
+        if (this.currentRecord >= numRecords()) {
             throw new InvalidRecordIDException();
         }
 
-        int result = ((EnumerationRecord) enumerationRecords.elementAt(currentRecord)).recordId;
+        int result = ((EnumerationRecord) this.enumerationRecords.elementAt(this.currentRecord)).recordId;
         currentRecord++;
 
         return result;
@@ -130,15 +130,15 @@ public class RecordEnumerationImpl implements RecordEnumeration
     public byte[] previousRecord() 
     		throws InvalidRecordIDException, RecordStoreNotOpenException, RecordStoreException
     {
-        if (!recordStoreImpl.isOpen()) {
+        if (!this.recordStoreImpl.isOpen()) {
             throw new RecordStoreNotOpenException();
         }
-        if (currentRecord < 0) {
+        if (this.currentRecord < 0) {
             throw new InvalidRecordIDException();
         }
 
         currentRecord--;
-        byte[] result = ((EnumerationRecord) enumerationRecords .elementAt(currentRecord)).value;
+        byte[] result = ((EnumerationRecord) this.enumerationRecords .elementAt(this.currentRecord)).value;
 
         return result;
     }
@@ -148,12 +148,12 @@ public class RecordEnumerationImpl implements RecordEnumeration
     public int previousRecordId() 
     		throws InvalidRecordIDException
     {
-        if (currentRecord < 0) {
+        if (this.currentRecord < 0) {
             throw new InvalidRecordIDException();
         }
 
         currentRecord--;
-        int result = ((EnumerationRecord) enumerationRecords.elementAt(currentRecord)).recordId;
+        int result = ((EnumerationRecord) this.enumerationRecords.elementAt(this.currentRecord)).recordId;
 
         return result;
     }
@@ -161,7 +161,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
     @Override
     public boolean hasNextElement()
     {
-        if (currentRecord == numRecords()) {
+        if (this.currentRecord == numRecords()) {
             return false;
         } else {
             return true;
@@ -171,7 +171,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
     @Override
     public boolean hasPreviousElement()
     {
-        if (currentRecord == 0) {
+        if (this.currentRecord == 0) {
             return false;
         } else {
             return true;
@@ -187,24 +187,24 @@ public class RecordEnumerationImpl implements RecordEnumeration
     @Override
     public void rebuild()
     {
-        enumerationRecords.removeAllElements();
+        this.enumerationRecords.removeAllElements();
 
         //
         // filter
         //
-        synchronized (recordStoreImpl) {
+        synchronized (this.recordStoreImpl) {
 			try {
 				int recordId = 1;
 				int i = 0;
-				while (i < recordStoreImpl.getNumRecords()) {
+				while (i < this.recordStoreImpl.getNumRecords()) {
 					try {
-			            byte[] data = recordStoreImpl.getRecord(recordId);
+			            byte[] data = this.recordStoreImpl.getRecord(recordId);
 			            i++;
-			            if (filter != null && !filter.matches(data)) {
+			            if (this.filter != null && !this.filter.matches(data)) {
 			            	recordId++;
 			                continue;
 			            }
-			            enumerationRecords.add(new EnumerationRecord(recordId, data));
+			            this.enumerationRecords.add(new EnumerationRecord(recordId, data));
 					} catch (InvalidRecordIDException e) {
 					}
 					recordId++;
@@ -218,7 +218,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
         // 
         // sort
         //
-		if (comparator != null) {
+		if (this.comparator != null) {
 			Collections.sort(enumerationRecords, new Comparator() {
 
 				public int compare(Object lhs, Object rhs) {
@@ -244,10 +244,10 @@ public class RecordEnumerationImpl implements RecordEnumeration
         if (keepUpdated) {
             if (!this.keepUpdated) {
                 rebuild();
-                recordStoreImpl.addRecordListener(recordListener);
+                this.recordStoreImpl.addRecordListener(recordListener);
             }
         } else {
-        	recordStoreImpl.removeRecordListener(recordListener);
+        	this.recordStoreImpl.removeRecordListener(recordListener);
         }
 
         this.keepUpdated = keepUpdated;

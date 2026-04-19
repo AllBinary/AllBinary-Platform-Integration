@@ -480,8 +480,8 @@ long /*int*/ callWindowProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, lo
 	if (hwndMDIClient != 0) {
 		return OS.DefFrameProc (hwnd, hwndMDIClient, msg, wParam, lParam);
 	}
-	if (windowProc != 0) {
-		return OS.CallWindowProc (windowProc, hwnd, msg, wParam, lParam);
+	if (this.windowProc != 0) {
+		return OS.CallWindowProc (this.windowProc, hwnd, msg, wParam, lParam);
 	}
 	if ((style & SWT.TOOL) != 0) {
 		int trim = SWT.TITLE | SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.BORDER | SWT.RESIZE;
@@ -587,7 +587,7 @@ void createHandle () {
 		if ((style & (SWT.H_SCROLL | SWT.V_SCROLL)) == 0) {
 			state |= THEME_BACKGROUND;
 		}
-		windowProc = OS.GetWindowLongPtr (handle, OS.GWL_WNDPROC);
+		this.windowProc = OS.GetWindowLongPtr (handle, OS.GWL_WNDPROC);
 	}
 	
 	/*
@@ -615,8 +615,8 @@ void createHandle () {
 		SetWindowPos (handle, 0, 0, 0, 0, 0, flags);
 		if (OS.IsWinCE) _setMaximized (true);
 		if (OS.IsPPC) {
-			psai = new SHACTIVATEINFO ();
-			psai.cbSize = SHACTIVATEINFO.sizeof;
+			this.psai = new SHACTIVATEINFO ();
+			this.psai.cbSize = SHACTIVATEINFO.sizeof;
 		}
 	}
 	if (OS.IsDBLocale) {
@@ -627,10 +627,10 @@ void createHandle () {
 
 void createToolTip (ToolTip toolTip) {
 	int id = 0;
-	if (toolTips == null) toolTips = new ToolTip [4];
-	while (id < toolTips.length && toolTips [id] != null) id++;
-	if (id == toolTips.length) {
-		ToolTip [] newToolTips = new ToolTip [toolTips.length + 4];
+	if (this.toolTips == null) this.toolTips = new ToolTip [4];
+	while (id < this.toolTips.length && this.toolTips [id] != null) id++;
+	if (id == this.toolTips.length) {
+		ToolTip [] newToolTips = new ToolTip [this.toolTips.length + 4];
 		System.arraycopy (toolTips, 0, newToolTips, 0, toolTips.length);
 		toolTips = newToolTips;
 	}
@@ -680,8 +680,8 @@ void deregister () {
 }
 
 void destroyToolTip (ToolTip toolTip) {
-	if (toolTips == null) return;
-	toolTips [toolTip.id - Display.ID_START] = null;
+	if (this.toolTips == null) return;
+	this.toolTips [toolTip.id - Display.ID_START] = null;
 	if (OS.IsWinCE) return;
 	if (balloonTipHandle != 0) {
 		TOOLINFO lpti = new TOOLINFO ();
@@ -738,10 +738,10 @@ long /*int*/ findBrush (long /*int*/ value, int lbStyle) {
 			}
 		}
 	}
-	if (brushes == null) brushes = new long /*int*/ [BRUSHES_SIZE];
+	if (this.brushes == null) this.brushes = new long /*int*/ [BRUSHES_SIZE];
 	LOGBRUSH logBrush = new LOGBRUSH ();
-	for (int i=0; i<brushes.length; i++) {
-		long /*int*/ hBrush = brushes [i];
+	for (int i=0; i<this.brushes.length; i++) {
+		long /*int*/ hBrush = this.brushes [i];
 		if (hBrush == 0) break;
 		OS.GetObject (hBrush, LOGBRUSH.sizeof, logBrush);
 		switch (logBrush.lbStyle) {
@@ -757,8 +757,8 @@ long /*int*/ findBrush (long /*int*/ value, int lbStyle) {
 				break;
 		}
 	}
-	int length = brushes.length;
-	long /*int*/ hBrush = brushes [--length];
+	int length = this.brushes.length;
+	long /*int*/ hBrush = this.brushes [--length];
 	if (hBrush != 0) OS.DeleteObject (hBrush);
 	System.arraycopy (brushes, 0, brushes, 1, length);
 	switch (lbStyle) {
@@ -785,9 +785,9 @@ Control findThemeControl () {
 }
 
 ToolTip findToolTip (int id) {
-	if (toolTips == null) return null;
+	if (this.toolTips == null) return null;
 	id = id - Display.ID_START;
-	return 0 <= id && id < toolTips.length ? toolTips [id] : null;
+	return 0 <= id && id < this.toolTips.length ? this.toolTips [id] : null;
 }
 
 void fixActiveShell () {
@@ -810,7 +810,7 @@ void fixActiveShell () {
 
 void fixShell (Shell newShell, Control control) {
 	if (this == newShell) return;
-	if (control == lastActive) setActiveControl (null);
+	if (control == this.lastActive) setActiveControl (null);
 	String toolTipText = control.toolTipText;
 	if (toolTipText != null) {
 		control.setToolTipText (this, null);
@@ -1262,12 +1262,12 @@ void register () {
 }
 
 void releaseBrushes () {
-	if (brushes != null) {
-		for (int i=0; i<brushes.length; i++) {
-			if (brushes [i] != 0) OS.DeleteObject (brushes [i]);
+	if (this.brushes != null) {
+		for (int i=0; i<this.brushes.length; i++) {
+			if (this.brushes [i] != 0) OS.DeleteObject (this.brushes [i]);
 		}
 	}
-	brushes = null;
+	this.brushes = null;
 }
 
 void releaseChildren (boolean destroy) {
@@ -1278,15 +1278,15 @@ void releaseChildren (boolean destroy) {
 			shell.release (false);
 		}
 	}
-	if (toolTips != null) {
-		for (int i=0; i<toolTips.length; i++) {
-			ToolTip toolTip = toolTips [i];
+	if (this.toolTips != null) {
+		for (int i=0; i<this.toolTips.length; i++) {
+			ToolTip toolTip = this.toolTips [i];
 			if (toolTip != null && !toolTip.isDisposed ()) {
 				toolTip.release (false);
 			}
 		}
 	}
-	toolTips = null;
+	this.toolTips = null;
 	super.releaseChildren (destroy);
 }
 
@@ -1302,7 +1302,7 @@ void releaseParent () {
 void releaseWidget () {
 	super.releaseWidget ();
 	releaseBrushes ();
-	activeMenu = null;
+	this.activeMenu = null;
 	display.clearModal (this);
 	if (lpstrTip != 0) {
 		long /*int*/ hHeap = OS.GetProcessHeap ();
@@ -1313,13 +1313,13 @@ void releaseWidget () {
 	if (OS.IsDBLocale) {
 		if (hIMC != 0) OS.ImmDestroyContext (hIMC);
 	}
-	lastActive = null;
+	this.lastActive = null;
 	toolTitle = balloonTitle = null;
 }
 
 void removeMenu (Menu menu) {
 	super.removeMenu (menu);
-	if (menu == activeMenu) activeMenu = null;
+	if (menu == this.activeMenu) this.activeMenu = null;
 }
 
 /**
@@ -1356,9 +1356,9 @@ void reskinChildren (int flags) {
 		Shell shell = shells [i];
 		if (shell != null) shell.reskin (flags);
 	}
-	if (toolTips != null) {
-		for (int i=0; i<toolTips.length; i++) {
-			ToolTip toolTip = toolTips [i];
+	if (this.toolTips != null) {
+		for (int i=0; i<this.toolTips.length; i++) {
+			ToolTip toolTip = this.toolTips [i];
 			if (toolTip != null) toolTip.reskin (flags);
 		}
 	}
@@ -1418,8 +1418,8 @@ void setActiveControl (Control control) {
 
 void setActiveControl (Control control, int type) {
 	if (control != null && control.isDisposed ()) control = null;
-	if (lastActive != null && lastActive.isDisposed ()) lastActive = null;
-	if (lastActive == control) return;
+	if (this.lastActive != null && this.lastActive.isDisposed ()) this.lastActive = null;
+	if (this.lastActive == control) return;
 	
 	/*
 	* Compute the list of controls to be activated and
@@ -1427,8 +1427,8 @@ void setActiveControl (Control control, int type) {
 	* control.
 	*/
 	Control [] activate = (control == null) ? new Control [0] : control.getPath ();
-	Control [] deactivate = (lastActive == null) ? new Control [0] : lastActive.getPath ();
-	lastActive = control;
+	Control [] deactivate = (this.lastActive == null) ? new Control [0] : this.lastActive.getPath ();
+	this.lastActive = control;
 	int index = 0, length = Math.min (activate.length, deactivate.length);
 	while (index < length) {
 		if (activate [index] != deactivate [index]) break;
@@ -1657,7 +1657,7 @@ public void setMinimumSize (int width, int height) {
 			heightLimit = rect.bottom - rect.top;
 		}
 	} 
-	minWidth = Math.max (widthLimit, width);
+	this.minWidth = Math.max (widthLimit, width);
 	minHeight = Math.max (heightLimit, height);
 	Point size = getSize ();
 	int newWidth = Math.max (size.x, minWidth);
@@ -2244,10 +2244,10 @@ LRESULT WM_ENTERIDLE (long /*int*/ wParam, long /*int*/ lParam) {
 LRESULT WM_GETMINMAXINFO (long /*int*/ wParam, long /*int*/ lParam) {
 	LRESULT result = super.WM_GETMINMAXINFO (wParam, lParam);
 	if (result != null) return result;
-	if (minWidth != SWT.DEFAULT || minHeight != SWT.DEFAULT) {
+	if (this.minWidth != SWT.DEFAULT || minHeight != SWT.DEFAULT) {
 		MINMAXINFO info = new MINMAXINFO ();
 		OS.MoveMemory (info, lParam, MINMAXINFO.sizeof);
-		if (minWidth != SWT.DEFAULT) info.ptMinTrackSize_x = minWidth;
+		if (this.minWidth != SWT.DEFAULT) info.ptMinTrackSize_x = this.minWidth;
 		if (minHeight != SWT.DEFAULT) info.ptMinTrackSize_y = minHeight;
 		OS.MoveMemory (lParam, info, MINMAXINFO.sizeof);
 		return LRESULT.ZERO;

@@ -62,61 +62,61 @@ public void Parse(String aIDStr) {
 	for (; i < 8; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m0 = (m0 << 4) + digit;
+		this.m0 = (this.m0 << 4) + digit;
 	}
 	if (aIDStr.charAt (i++) != '-') throw new Error ();
 	for (; i < 13; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m1 = (short)((m1 << 4) + digit);
+		this.m1 = (short)((this.m1 << 4) + digit);
 	}
 	if (aIDStr.charAt (i++) != '-') throw new Error ();
 	for (; i < 18; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m2 = (short)((m2 << 4) + digit);
+		this.m2 = (short)((this.m2 << 4) + digit);
 	}
 	if (aIDStr.charAt (i++) != '-') throw new Error ();
 	for (; i < 21; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m3[0] = (byte)((m3[0] << 4) + digit);
+		this.m3[0] = (byte)((this.m3[0] << 4) + digit);
 	}
 	for (; i < 23; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m3[1] = (byte)((m3[1] << 4) + digit);
+		this.m3[1] = (byte)((this.m3[1] << 4) + digit);
 	}
 	if (aIDStr.charAt (i++) != '-') throw new Error ();
 	for (; i < 26; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m3[2] = (byte)((m3[2] << 4) + digit);
+		this.m3[2] = (byte)((this.m3[2] << 4) + digit);
 	}
 	for (; i < 28; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m3[3] = (byte)((m3[3] << 4) + digit);
+		this.m3[3] = (byte)((this.m3[3] << 4) + digit);
 	}
 	for (; i < 30; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m3[4] = (byte)((m3[4] << 4) + digit);
+		this.m3[4] = (byte)((this.m3[4] << 4) + digit);
 	}
 	for (; i < 32; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m3[5] = (byte)((m3[5] << 4) + digit);
+		this.m3[5] = (byte)((this.m3[5] << 4) + digit);
 	}
 	for (; i < 34; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m3[6] = (byte)((m3[6] << 4) + digit);
+		this.m3[6] = (byte)((this.m3[6] << 4) + digit);
 	}
 	for (; i < 36; i++) {
 		int digit = Character.digit (aIDStr.charAt (i), 16);
 		if (digit == -1) throw new Error ();
-		m3[7] = (byte)((m3[7] << 4) + digit);
+		this.m3[7] = (byte)((this.m3[7] << 4) + digit);
 	}
 }
 
@@ -131,7 +131,7 @@ static String toHex (int v, int length) {
 
 @Override
 public String toString () {
-	return '{' + toHex (m0, 8) + '-' + 
+	return '{' + toHex (this.m0, 8) + '-' + 
     	toHex (m1, 4) + '-' + 
     	toHex (m2, 4) + '-' + 
     	toHex (m3[0], 2) + toHex (m3[1], 2) + '-' + 

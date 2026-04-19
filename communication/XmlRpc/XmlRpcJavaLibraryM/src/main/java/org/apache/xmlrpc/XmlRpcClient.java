@@ -144,11 +144,11 @@ public class XmlRpcClient implements XmlRpcHandler
     {
         if (user == null || password == null)
         {
-            auth = null;
+            this.auth = null;
         }
         else
         {
-            auth = new String(Base64.encode((user + ':' + password)
+            this.auth = new String(Base64.encode((user + ':' + password)
                     .getBytes())).trim();
         }
     }
@@ -202,7 +202,7 @@ public class XmlRpcClient implements XmlRpcHandler
     {
         // if at least 4 threads are running, don't create any new ones,
         // just enqueue the request.
-        if (asyncWorkers >= 4)
+        if (this.asyncWorkers >= 4)
         {
             enqueue(method, params, callback);
             return;
@@ -231,7 +231,7 @@ public class XmlRpcClient implements XmlRpcHandler
     {
         try
         {
-            final int size = pool.size();
+            final int size = this.pool.size();
             //System.out.println("XmlRpcClient - pool size: " + size);
             if(size <= 0) {
                 Worker w = this.addWorker(async);
@@ -241,7 +241,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 return w;
             }
 
-            Worker w = (Worker) pool.pop();
+            Worker w = (Worker) this.pool.pop();
             if (async)
             {
                 this.asyncWorkers += 1;
@@ -263,7 +263,7 @@ public class XmlRpcClient implements XmlRpcHandler
     }
 
     public Worker addWorker(final boolean async) {
-        if (workers < XmlRpc.getMaxThreads()) {
+        if (this.workers < XmlRpc.getMaxThreads()) {
             if (async) {
                 this.asyncWorkers += 1;
             } else {
@@ -282,9 +282,9 @@ public class XmlRpcClient implements XmlRpcHandler
     {
         w.result = null;
         w.call = null;
-        if (pool.size() < 20 && !w.fault)
+        if (this.pool.size() < 20 && !w.fault)
         {
-            pool.push(w);
+            this.pool.push(w);
         }
         if (async)
         {

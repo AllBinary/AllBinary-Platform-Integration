@@ -148,7 +148,7 @@ protected void checkSubclass () {
 void createWidget () {
 	NOTIFYICONDATA iconData = OS.IsUnicode ? (NOTIFYICONDATA) new NOTIFYICONDATAW () : new NOTIFYICONDATAA ();
 	iconData.cbSize = NOTIFYICONDATA.sizeof;
-	iconData.uID = id = display.nextTrayId++;
+	iconData.uID = this.id = display.nextTrayId++;
 	iconData.hWnd = display.hwndMessage;
 	iconData.uFlags = OS.NIF_MESSAGE;
 	iconData.uCallbackMessage = Display.SWT_TRAYICONMSG;
@@ -281,11 +281,11 @@ long /*int*/ messageProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long 
 			break;
 		}
 		case OS.NIN_BALLOONSHOW:
-			if (toolTip != null && !toolTip.visible) {
-				toolTip.visible = true;
-				if (toolTip.hooks (SWT.Show)) {
+			if (this.toolTip != null && !this.toolTip.visible) {
+				this.toolTip.visible = true;
+				if (this.toolTip.hooks (SWT.Show)) {
 					OS.SetForegroundWindow (hwnd);
-					toolTip.sendEvent (SWT.Show);
+					this.toolTip.sendEvent (SWT.Show);
 					// widget could be disposed at this point
 					if (isDisposed()) return 0;
 				}
@@ -294,20 +294,20 @@ long /*int*/ messageProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long 
 		case OS.NIN_BALLOONHIDE:
 		case OS.NIN_BALLOONTIMEOUT:
 		case OS.NIN_BALLOONUSERCLICK:
-			if (toolTip != null) {
-				if (toolTip.visible) {
-					toolTip.visible = false;
-					if (toolTip.hooks (SWT.Hide)) {
+			if (this.toolTip != null) {
+				if (this.toolTip.visible) {
+					this.toolTip.visible = false;
+					if (this.toolTip.hooks (SWT.Hide)) {
 						OS.SetForegroundWindow (hwnd);
-						toolTip.sendEvent (SWT.Hide);
+						this.toolTip.sendEvent (SWT.Hide);
 						// widget could be disposed at this point
 						if (isDisposed()) return 0;
 					}
 				}
 				if (lParam == OS.NIN_BALLOONUSERCLICK) {
-					if (toolTip.hooks (SWT.Selection)) {
+					if (this.toolTip.hooks (SWT.Selection)) {
 						OS.SetForegroundWindow (hwnd);
-						toolTip.sendSelectionEvent (SWT.Selection);
+						this.toolTip.sendSelectionEvent (SWT.Selection);
 						// widget could be disposed at this point
 						if (isDisposed()) return 0;
 					}
@@ -321,28 +321,28 @@ long /*int*/ messageProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long 
 
 void recreate () {
 	createWidget ();
-	if (!visible) setVisible (false);
+	if (!this.visible) setVisible (false);
 	if (text.length () != 0) setText (text);
 	if (image != null) setImage (image);
-	if (toolTipText != null) setToolTipText (toolTipText);
+	if (this.toolTipText != null) setToolTipText (this.toolTipText);
 }
 
 void releaseHandle () {
 	super.releaseHandle ();
-	parent = null;
+	this.parent = null;
 }
 
 void releaseWidget () {
 	super.releaseWidget ();
-	if (toolTip != null) toolTip.item = null;
-	toolTip = null;
+	if (this.toolTip != null) this.toolTip.item = null;
+	this.toolTip = null;
 	if (image2 != null) image2.dispose ();
 	image2 = null;
 	highlightImage = null;
-	toolTipText = null;
+	this.toolTipText = null;
 	NOTIFYICONDATA iconData = OS.IsUnicode ? (NOTIFYICONDATA) new NOTIFYICONDATAW () : new NOTIFYICONDATAA ();
 	iconData.cbSize = NOTIFYICONDATA.sizeof;
-	iconData.uID = id;
+	iconData.uID = this.id;
 	iconData.hWnd = display.hwndMessage;
 	OS.Shell_NotifyIcon (OS.NIM_DELETE, iconData);
 }
@@ -454,7 +454,7 @@ public void setImage (Image image) {
 	}
 	NOTIFYICONDATA iconData = OS.IsUnicode ? (NOTIFYICONDATA) new NOTIFYICONDATAW () : new NOTIFYICONDATAA ();
 	iconData.cbSize = NOTIFYICONDATA.sizeof;
-	iconData.uID = id;
+	iconData.uID = this.id;
 	iconData.hWnd = display.hwndMessage;
 	iconData.hIcon = hIcon;
 	iconData.uFlags = OS.NIF_ICON;
@@ -504,7 +504,7 @@ public void setToolTip (ToolTip toolTip) {
  */
 public void setToolTipText (String string) {
 	checkWidget ();
-	toolTipText = string;
+	this.toolTipText = string;
 	NOTIFYICONDATA iconData = OS.IsUnicode ? (NOTIFYICONDATA) new NOTIFYICONDATAW () : new NOTIFYICONDATAA ();
 	TCHAR buffer = new TCHAR (0, toolTipText == null ? "" : toolTipText, true);
 	/*
@@ -521,7 +521,7 @@ public void setToolTipText (String string) {
 		System.arraycopy (buffer.bytes, 0, szTip, 0, length);
 	}
 	iconData.cbSize = NOTIFYICONDATA.sizeof;
-	iconData.uID = id;
+	iconData.uID = this.id;
 	iconData.hWnd = display.hwndMessage;
 	iconData.uFlags = OS.NIF_TIP;
 	OS.Shell_NotifyIcon (OS.NIM_MODIFY, iconData);
@@ -553,7 +553,7 @@ public void setVisible (boolean visible) {
 	this.visible = visible;
 	NOTIFYICONDATA iconData = OS.IsUnicode ? (NOTIFYICONDATA) new NOTIFYICONDATAW () : new NOTIFYICONDATAA ();
 	iconData.cbSize = NOTIFYICONDATA.sizeof;
-	iconData.uID = id;
+	iconData.uID = this.id;
 	iconData.hWnd = display.hwndMessage;
 	if (OS.SHELL32_MAJOR < 5) {
 		if (visible) {
@@ -561,7 +561,7 @@ public void setVisible (boolean visible) {
 			iconData.uCallbackMessage = Display.SWT_TRAYICONMSG;
 			OS.Shell_NotifyIcon (OS.NIM_ADD, iconData);
 			setImage (image);
-			setToolTipText (toolTipText);
+			setToolTipText (this.toolTipText);
 		} else {
 			OS.Shell_NotifyIcon (OS.NIM_DELETE, iconData);
 		}

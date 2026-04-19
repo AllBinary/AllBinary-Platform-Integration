@@ -105,7 +105,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 	}
 
 	protected File getSuiteFolder() {
-		return new File(Config.getConfigPath(), "suite-" + emulator.getSuiteName());
+		return new File(Config.getConfigPath(), "suite-" + this.emulator.getSuiteName());
 	}
 
 	private static String escapeCharacter(String charcter) {
@@ -141,7 +141,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 			RecordStoreException {
 		final File storeFile = new File(getSuiteFolder(), recordStoreName2FileName(recordStoreName));
 
-		RecordStoreImpl recordStoreImpl = (RecordStoreImpl) testOpenRecordStores.get(storeFile.getName());
+		RecordStoreImpl recordStoreImpl = (RecordStoreImpl) this.testOpenRecordStores.get(storeFile.getName());
 		if (recordStoreImpl != null && recordStoreImpl.isOpen()) {
 			throw new RecordStoreException();
 		}
@@ -181,11 +181,11 @@ public class FileRecordStoreManager implements RecordStoreManager {
 			recordStoreImpl.setOpen(true);
 			saveToDisk(storeFile, recordStoreImpl);
 		}
-		if (recordListener != null) {
-			recordStoreImpl.addRecordListener(recordListener);
+		if (this.recordListener != null) {
+			recordStoreImpl.addRecordListener(this.recordListener);
 		}
 
-		testOpenRecordStores.put(storeFile.getName(), recordStoreImpl);
+		this.testOpenRecordStores.put(storeFile.getName(), recordStoreImpl);
 
 		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
 
@@ -331,8 +331,8 @@ public class FileRecordStoreManager implements RecordStoreManager {
 	}
 
 	public void fireRecordStoreListener(int type, String recordStoreName) {
-		if (recordListener != null) {
-			recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
+		if (this.recordListener != null) {
+			this.recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
 		}
 	}
 }

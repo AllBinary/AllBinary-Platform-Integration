@@ -49,11 +49,11 @@ public class Conditional {
     }
 
     public boolean isActive() {
-        if (ifExpr != null && project.getProperty(ifExpr) == null) {
+        if (this.ifExpr != null && this.project.getProperty(this.ifExpr) == null) {
             return false;
         }
 
-        if (unlessExpr != null && project.getProperty(unlessExpr) != null) {
+        if (this.unlessExpr != null && this.project.getProperty(this.unlessExpr) != null) {
             return false;
         }
         

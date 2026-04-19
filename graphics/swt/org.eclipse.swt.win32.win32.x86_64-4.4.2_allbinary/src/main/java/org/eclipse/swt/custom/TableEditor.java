@@ -111,15 +111,15 @@ public TableEditor (Table table) {
 }
 @Override
 Rectangle computeBounds () {
-	if (item == null || column == -1 || item.isDisposed()) return new Rectangle(0, 0, 0, 0);
-	Rectangle cell = item.getBounds(column);
-	Rectangle rect = item.getImageBounds(column);
+	if (this.item == null || this.column == -1 || this.item.isDisposed()) return new Rectangle(0, 0, 0, 0);
+	Rectangle cell = this.item.getBounds(this.column);
+	Rectangle rect = this.item.getImageBounds(this.column);
 	if (rect.width != 0) {
 		int imageGap = Math.max(rect.x - cell.x, 0);
 		cell.x = rect.x + rect.width;
 		cell.width -= (imageGap + rect.width);
 	}
-	Rectangle area = table.getClientArea();
+	Rectangle area = this.table.getClientArea();
 	if (cell.x < area.x + area.width) {
 		if (cell.x + cell.width > area.x + area.width) {
 			cell.width = area.x + area.width - cell.x;
@@ -158,17 +158,17 @@ Rectangle computeBounds () {
  */
 @Override
 public void dispose () {
-	if (table != null && !table.isDisposed()) {
-		if (this.column > -1 && this.column < table.getColumnCount()){
-			TableColumn tableColumn = table.getColumn(this.column);
-			tableColumn.removeControlListener(columnListener);
+	if (this.table != null && !this.table.isDisposed()) {
+		if (this.column > -1 && this.column < this.table.getColumnCount()){
+			TableColumn tableColumn = this.table.getColumn(this.column);
+			tableColumn.removeControlListener(this.columnListener);
 		}
 	}
-	columnListener = null;
-	table = null;
-	item = null;
-	column = -1;
-	timer = null;
+	this.columnListener = null;
+	this.table = null;
+	this.item = null;
+	this.column = -1;
+	this.timer = null;
 	super.dispose();
 }
 /**
@@ -195,8 +195,8 @@ void resize () {
 	 * selected.  Ensure that the correct row is edited by
 	 * laying out one more time in a timerExec().
 	 */
-	if (table != null) {
-		Display display = table.getDisplay();
+	if (this.table != null) {
+		Display display = this.table.getDisplay();
 		display.timerExec(-1, timer);
 		display.timerExec(TIMEOUT, timer);
 	}
@@ -216,16 +216,16 @@ public void setColumn(int column) {
 		return;
 	}
 	if (this.column > -1 && this.column < columnCount){
-		TableColumn tableColumn = table.getColumn(this.column);
-		tableColumn.removeControlListener(columnListener);
+		TableColumn tableColumn = this.table.getColumn(this.column);
+		tableColumn.removeControlListener(this.columnListener);
 		this.column = -1;
 	}
 
-	if (column < 0  || column >= table.getColumnCount()) return;	
+	if (column < 0  || column >= this.table.getColumnCount()) return;	
 		
 	this.column = column;
-	TableColumn tableColumn = table.getColumn(this.column);
-	tableColumn.addControlListener(columnListener);
+	TableColumn tableColumn = this.table.getColumn(this.column);
+	tableColumn.addControlListener(this.columnListener);
 	resize();
 }
 /**
@@ -259,11 +259,11 @@ public void setEditor (Control editor, TableItem item, int column) {
 }
 @Override
 public void layout () {
-	if (table == null || table.isDisposed()) return;
-	if (item == null || item.isDisposed()) return;
-	int columnCount = table.getColumnCount();
-	if (columnCount == 0 && column != 0) return;
-	if (columnCount > 0 && (column < 0 || column >= columnCount)) return;
+	if (this.table == null || this.table.isDisposed()) return;
+	if (this.item == null || this.item.isDisposed()) return;
+	int columnCount = this.table.getColumnCount();
+	if (columnCount == 0 && this.column != 0) return;
+	if (columnCount > 0 && (this.column < 0 || this.column >= columnCount)) return;
 	super.layout();
 }
 }

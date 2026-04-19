@@ -104,16 +104,16 @@ public class LineStyleEvent extends TypedEvent {
  */
 public LineStyleEvent(StyledTextEvent e) {
 	super(e);
-	styles = e.styles;
-	ranges = e.ranges;
-	lineOffset = e.detail;
-	lineText = e.text;
-	alignment = e.alignment;
-	justify = e.justify;
-	indent = e.indent;
-	wrapIndent = e.wrapIndent;
-	bullet = e.bullet;
-	bulletIndex = e.bulletIndex;
-	tabStops = e.tabStops;
+	this.styles = e.styles;
+	this.ranges = e.ranges;
+	this.lineOffset = e.detail;
+	this.lineText = e.text;
+	this.alignment = e.alignment;
+	this.justify = e.justify;
+	this.indent = e.indent;
+	this.wrapIndent = e.wrapIndent;
+	this.bullet = e.bullet;
+	this.bulletIndex = e.bulletIndex;
+	this.tabStops = e.tabStops;
 }
 }

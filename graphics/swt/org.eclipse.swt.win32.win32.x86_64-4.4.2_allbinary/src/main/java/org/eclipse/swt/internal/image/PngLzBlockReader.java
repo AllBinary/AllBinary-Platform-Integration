@@ -66,26 +66,26 @@ void setWindowSize(int windowSize) {
 
 void readNextBlockHeader() throws IOException {
 	isLastBlock = stream.getNextIdatBit() != 0;
-	compressionType = (byte) stream.getNextIdatBits(2);
-	if (compressionType > 2) stream.error();	
+	this.compressionType = (byte) this.stream.getNextIdatBits(2);
+	if (this.compressionType > 2) this.stream.error();	
 	
-	if (compressionType == UNCOMPRESSED) {
-		byte b1 = stream.getNextIdatByte();
-		byte b2 = stream.getNextIdatByte();
-		byte b3 = stream.getNextIdatByte();
-		byte b4 = stream.getNextIdatByte();
-		if (b1 != ~b3 || b2 != ~b4) stream.error();
-		uncompressedBytesRemaining = (b1 & 0xFF) | ((b2 & 0xFF) << 8);
+	if (this.compressionType == UNCOMPRESSED) {
+		byte b1 = this.stream.getNextIdatByte();
+		byte b2 = this.stream.getNextIdatByte();
+		byte b3 = this.stream.getNextIdatByte();
+		byte b4 = this.stream.getNextIdatByte();
+		if (b1 != ~b3 || b2 != ~b4) this.stream.error();
+		this.uncompressedBytesRemaining = (b1 & 0xFF) | ((b2 & 0xFF) << 8);
 	} else if (compressionType == COMPRESSED_DYNAMIC) {
 		huffmanTables = PngHuffmanTables.getDynamicTables(stream);
 	} else {
-		huffmanTables = PngHuffmanTables.getFixedTables();
+		this.huffmanTables = PngHuffmanTables.getFixedTables();
 	}
 }
 
 byte getNextByte() throws IOException {
-	if (compressionType == UNCOMPRESSED) {
-		if (uncompressedBytesRemaining == 0) {
+	if (this.compressionType == UNCOMPRESSED) {
+		if (this.uncompressedBytesRemaining == 0) {
 			readNextBlockHeader();
 			return getNextByte();
 		}
@@ -97,41 +97,41 @@ byte getNextByte() throws IOException {
 }
 
 private void assertBlockAtEnd() throws IOException {
-	if (compressionType == UNCOMPRESSED) {
-		if (uncompressedBytesRemaining > 0) stream.error();
+	if (this.compressionType == UNCOMPRESSED) {
+		if (this.uncompressedBytesRemaining > 0) this.stream.error();
 	} else if (copyBytesRemaining > 0 ||
 		(huffmanTables.getNextLiteralValue(stream) != END_OF_COMPRESSED_BLOCK)) 
 	{
-		stream.error();		
+		this.stream.error();		
 	}
 }
 void assertCompressedDataAtEnd() throws IOException {
 	assertBlockAtEnd();		
-	while (!isLastBlock) {
+	while (!this.isLastBlock) {
 		readNextBlockHeader();
 		assertBlockAtEnd();
 	}	
 }
 
 private byte getNextCompressedByte() throws IOException {
-	if (copyBytesRemaining > 0) {
+	if (this.copyBytesRemaining > 0) {
 		byte value = this.window[this.copyIndex];
 		this.window[this.windowIndex] = value;
 		copyBytesRemaining--;
 		
 		copyIndex++;
 		windowIndex++;		
-		if (copyIndex == window.length) copyIndex = 0;
-		if (windowIndex == window.length) windowIndex = 0;
+		if (this.copyIndex == this.window.length) this.copyIndex = 0;
+		if (this.windowIndex == this.window.length) this.windowIndex = 0;
 
 		return value;		
 	}
 	
-	int value = huffmanTables.getNextLiteralValue(stream);
+	int value = this.huffmanTables.getNextLiteralValue(this.stream);
 	if (value < END_OF_COMPRESSED_BLOCK) {
-		window[windowIndex] = (byte) value;
+		this.window[this.windowIndex] = (byte) value;
 		windowIndex++;
-		if (windowIndex >= window.length) windowIndex = 0;
+		if (this.windowIndex >= this.window.length) this.windowIndex = 0;
 		return (byte) value;		
 	} else if (value == END_OF_COMPRESSED_BLOCK) {
 		readNextBlockHeader();
@@ -140,24 +140,24 @@ private byte getNextCompressedByte() throws IOException {
 		int extraBits = extraLengthBits[value - FIRST_LENGTH_CODE];
 		int length = lengthBases[value - FIRST_LENGTH_CODE];
 		if (extraBits > 0) {
-			length += stream.getNextIdatBits(extraBits);
+			length += this.stream.getNextIdatBits(extraBits);
 		}
 		
-		value = huffmanTables.getNextDistanceValue(stream);
-		if (value > LAST_DISTANCE_CODE) stream.error();
+		value = this.huffmanTables.getNextDistanceValue(this.stream);
+		if (value > LAST_DISTANCE_CODE) this.stream.error();
 		extraBits = extraDistanceBits[value];
 		int distance = distanceBases[value];
 		if (extraBits > 0) {
-			distance += stream.getNextIdatBits(extraBits);
+			distance += this.stream.getNextIdatBits(extraBits);
 		}
 		
-		copyIndex = windowIndex - distance;
-		if (copyIndex < 0) copyIndex += window.length;
+		this.copyIndex = this.windowIndex - distance;
+		if (this.copyIndex < 0) this.copyIndex += this.window.length;
 
-		copyBytesRemaining = length;
+		this.copyBytesRemaining = length;
 		return getNextCompressedByte();
 	} else {
-		stream.error();
+		this.stream.error();
 		return 0;
 	}
 }

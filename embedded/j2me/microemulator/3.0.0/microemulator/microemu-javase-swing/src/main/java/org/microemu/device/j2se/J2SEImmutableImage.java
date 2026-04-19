@@ -92,7 +92,7 @@ public class J2SEImmutableImage extends javax.microedition.lcdui.Image {
 
     @Override
     public int getWidth2() {
-        if (width == -1) {
+        if (this.width == -1) {
             ImageObserver observer = new ImageObserver() {
                 public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
                     if ((infoflags & ImageObserver.HEIGHT) != 0) {
@@ -129,7 +129,7 @@ public class J2SEImmutableImage extends javax.microedition.lcdui.Image {
 
     @Override
     public int getHeight2() {
-        if (height == -1) {
+        if (this.height == -1) {
             ImageObserver observer = new ImageObserver() {
                 public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
                     if ((infoflags & ImageObserver.WIDTH) != 0) {
@@ -189,7 +189,7 @@ public class J2SEImmutableImage extends javax.microedition.lcdui.Image {
         }
 
         try {
-            (new java.awt.image.PixelGrabber(img, x, y, width, height, argb, offset, scanlength)).grabPixels();
+            (new java.awt.image.PixelGrabber(this.img, x, y, width, height, argb, offset, scanlength)).grabPixels();
         } catch (InterruptedException e) {
             Logger.error(e);
         }

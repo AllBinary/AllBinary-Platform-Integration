@@ -218,22 +218,22 @@ public Cursor(Device device, int style) {
 		default:
 			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	handle = OS.LoadCursor(0, lpCursorName);
+	this.handle = OS.LoadCursor(0, lpCursorName);
 	/*
 	* IDC_HAND is supported only on Windows 2000 and Windows 98.
 	* Create a hand cursor if running in other Windows platforms.
 	*/
-	if (handle == 0 && style == SWT.CURSOR_HAND) {
+	if (this.handle == 0 && style == SWT.CURSOR_HAND) {
 		int width = OS.GetSystemMetrics(OS.SM_CXCURSOR);
 		int height = OS.GetSystemMetrics(OS.SM_CYCURSOR);
 		if (width == 32 && height == 32) {
 			long /*int*/ hInst = OS.GetModuleHandle(null);
 			if (OS.IsWinCE) SWT.error(SWT.ERROR_NOT_IMPLEMENTED);
-			handle = OS.CreateCursor(hInst, 5, 0, 32, 32, HAND_SOURCE, HAND_MASK);
+			this.handle = OS.CreateCursor(hInst, 5, 0, 32, 32, HAND_SOURCE, HAND_MASK);
 
 		}
 	}
-	if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+	if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 	init();
 }
 
@@ -297,8 +297,8 @@ public Cursor(Device device, ImageData source, ImageData mask, int hotspotX, int
 	/* Create the cursor */
 	long /*int*/ hInst = OS.GetModuleHandle(null);
 	if (OS.IsWinCE) SWT.error (SWT.ERROR_NOT_IMPLEMENTED);
-	handle = OS.CreateCursor(hInst, hotspotX, hotspotY, source.width, source.height, sourceData, maskData);
-	if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+	this.handle = OS.CreateCursor(hInst, hotspotX, hotspotY, source.width, source.height, sourceData, maskData);
+	if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 	init();
 }
 
@@ -398,11 +398,11 @@ public Cursor(Device device, ImageData source, int hotspotX, int hotspotY) {
 	info.hbmMask = hMask;
 	info.xHotspot = hotspotX;
 	info.yHotspot = hotspotY;
-	handle = OS.CreateIconIndirect(info);
+	this.handle = OS.CreateIconIndirect(info);
 	OS.DeleteObject(hBitmap);
 	OS.DeleteObject(hMask);
-	if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
-	isIcon = true;
+	if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+	this.isIcon = true;
 	init();
 }
 
@@ -420,8 +420,8 @@ void destroy () {
 //		OS.SetCursor(OS.LoadCursor(0, OS.IDC_ARROW));
 //	}
 	
-	if (isIcon) {
-		OS.DestroyIcon(handle);
+	if (this.isIcon) {
+		OS.DestroyIcon(this.handle);
 	} else {
 		/*
 	 	* The MSDN states that one should not destroy a shared
@@ -431,9 +431,9 @@ void destroy () {
 	 	* destroy them all. If this causes problems in the future,
 	 	* put the flag back in.
 		*/
-		if (!OS.IsWinCE) OS.DestroyCursor(handle);
+		if (!OS.IsWinCE) OS.DestroyCursor(this.handle);
 	}
-	handle = 0;
+	this.handle = 0;
 }
 
 /**
@@ -450,7 +450,7 @@ public boolean equals (Object object) {
 	if (object == this) return true;
 	if (!(object instanceof Cursor)) return false;
 	Cursor cursor = (Cursor) object;
-	return device == cursor.device && handle == cursor.handle;
+	return device == cursor.device && this.handle == cursor.handle;
 }
 
 /**
@@ -464,7 +464,7 @@ public boolean equals (Object object) {
  * @see #equals
  */
 public int hashCode () {
-	return (int)/*64*/handle;
+	return (int)/*64*/this.handle;
 }
 
 /**
@@ -489,7 +489,7 @@ public boolean isDisposed() {
  */
 public String toString () {
 	if (isDisposed()) return "Cursor {*DISPOSED*}";
-	return "Cursor {" + handle + "}";
+	return "Cursor {" + this.handle + "}";
 }
 
 /**	 

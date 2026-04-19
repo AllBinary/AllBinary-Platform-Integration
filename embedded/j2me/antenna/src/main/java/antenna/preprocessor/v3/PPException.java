@@ -108,8 +108,8 @@ public class PPException extends Exception {
     public PPException(String message, File file, Throwable cause,
             int lineNumber) {
         super(message, cause);
-        m_lineNumber = lineNumber;
-        m_file = file;
+        this.m_lineNumber = lineNumber;
+        this.m_file = file;
     }
 
     /**
@@ -136,12 +136,12 @@ public class PPException extends Exception {
      * @see java.lang.Throwable#getMessage()
      */
     public String getMessage() {
-        if (m_file != null) {
+        if (this.m_file != null) {
             String ln = this.m_lineNumber != UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
             return m_file + ln + " : " + super.getMessage();
         } else {
-            if (m_lineNumber != UNKNOWN_LINE) {
-                return "Line #" + m_lineNumber + " : " + super.getMessage();
+            if (this.m_lineNumber != UNKNOWN_LINE) {
+                return "Line #" + this.m_lineNumber + " : " + super.getMessage();
             } else {
                 return super.getMessage();
             }

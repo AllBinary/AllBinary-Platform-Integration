@@ -114,7 +114,7 @@ public class DeviceEntry {
 	}
 
 	public String toString() {
-		if (defaultDevice) {
+		if (this.defaultDevice) {
 			return name + " (default)";
 		} else {
 			return name;

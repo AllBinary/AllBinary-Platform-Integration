@@ -58,14 +58,14 @@ public AccessibleTableEvent(Object source) {
 @Override
 public String toString () {
 	return "AccessibleTableEvent {" //$NON-NLS-1$
-		+ "accessible=" + accessible   //$NON-NLS-1$
-		+ " accessibles=" + accessibles   //$NON-NLS-1$
+		+ "accessible=" + this.accessible   //$NON-NLS-1$
+		+ " accessibles=" + this.accessibles   //$NON-NLS-1$
 		+ " string=" + this.result   //$NON-NLS-1$
-		+ " isSelected=" + isSelected   //$NON-NLS-1$
-		+ " column=" + column   //$NON-NLS-1$
-		+ " count=" + count   //$NON-NLS-1$
-		+ " row=" + row   //$NON-NLS-1$
-		+ " selected=" + selected   //$NON-NLS-1$
+		+ " isSelected=" + this.isSelected   //$NON-NLS-1$
+		+ " column=" + this.column   //$NON-NLS-1$
+		+ " count=" + this.count   //$NON-NLS-1$
+		+ " row=" + this.row   //$NON-NLS-1$
+		+ " selected=" + this.selected   //$NON-NLS-1$
 		+ "}";  //$NON-NLS-1$
 }
 }

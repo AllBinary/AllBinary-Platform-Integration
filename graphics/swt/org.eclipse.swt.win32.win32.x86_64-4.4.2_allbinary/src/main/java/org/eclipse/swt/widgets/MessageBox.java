@@ -258,7 +258,7 @@ public int open () {
  */
 public void setMessage (String string) {
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
-	message = string;
+	this.message = string;
 }
 
 }

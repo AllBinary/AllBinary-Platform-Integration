@@ -113,9 +113,9 @@ public class CLabel extends Canvas {
 public CLabel(Composite parent, int style) {
 	super(parent, checkStyle(style));
 	if ((style & (SWT.CENTER | SWT.RIGHT)) == 0) style |= SWT.LEFT;
-	if ((style & SWT.CENTER) != 0) align = SWT.CENTER;
-	if ((style & SWT.RIGHT) != 0)  align = SWT.RIGHT;
-	if ((style & SWT.LEFT) != 0)   align = SWT.LEFT;
+	if ((style & SWT.CENTER) != 0) this.align = SWT.CENTER;
+	if ((style & SWT.RIGHT) != 0)  this.align = SWT.RIGHT;
+	if ((style & SWT.LEFT) != 0)   this.align = SWT.LEFT;
 	
 	addPaintListener(new PaintListener() {
 		public void paintControl(PaintEvent event) {
@@ -153,14 +153,14 @@ private static int checkStyle (int style) {
 @Override
 public Point computeSize(int wHint, int hHint, boolean changed) {
 	checkWidget();
-	Point e = getTotalSize(image, text);
+	Point e = getTotalSize(this.image, text);
 	if (wHint == SWT.DEFAULT){
-		e.x += leftMargin + rightMargin;
+		e.x += this.leftMargin + this.rightMargin;
 	} else {
 		e.x = wHint;
 	}
 	if (hHint == SWT.DEFAULT) {
-		e.y += topMargin + bottomMargin;
+		e.y += this.topMargin + this.bottomMargin;
 	} else {
 		e.y = hHint;
 	}
@@ -275,7 +275,7 @@ private Point getTotalSize(Image image, String text) {
 @Override
 public int getStyle () {
 	int style = super.getStyle();
-	switch (align) {
+	switch (this.align) {
 		case SWT.RIGHT: style |= SWT.RIGHT; break;
 		case SWT.CENTER: style |= SWT.CENTER; break;
 		case SWT.LEFT: style |= SWT.LEFT; break;
@@ -363,20 +363,20 @@ private void initAccessible() {
 }
 void onDispose(Event event) {
 	/* make this handler run after other dispose listeners */
-	if (ignoreDispose) {
-		ignoreDispose = false;
+	if (this.ignoreDispose) {
+		this.ignoreDispose = false;
 		return;
 	}
-	ignoreDispose = true;
+	this.ignoreDispose = true;
 	notifyListeners (event.type, event);
 	event.type = SWT.NONE;
 
-	gradientColors = null;
-	gradientPercents = null;
-	backgroundImage = null;
-	text = null;
-	image = null;
-	appToolTipText = null;
+	this.gradientColors = null;
+	this.gradientPercents = null;
+	this.backgroundImage = null;
+	this.text = null;
+	this.image = null;
+	this.appToolTipText = null;
 }
 void onMnemonic(TraverseEvent event) {
 	char mnemonic = _findMnemonic(text);
@@ -406,9 +406,9 @@ void onPaint(PaintEvent event) {
 	if (rect.width == 0 || rect.height == 0) return;
 	
 	boolean shortenText = false;
-	String t = text;
-	Image img = image;
-	int availableWidth = Math.max(0, rect.width - (leftMargin + rightMargin));
+	String t = this.text;
+	Image img = this.image;
+	int availableWidth = Math.max(0, rect.width - (this.leftMargin + this.rightMargin));
 	Point extent = getTotalSize(img, t);
 	if (extent.x > availableWidth) {
 		img = null;
@@ -419,7 +419,7 @@ void onPaint(PaintEvent event) {
 	}
 	
 	GC gc = event.gc;
-	String[] lines = text == null ? null : splitString(text); 
+	String[] lines = this.text == null ? null : splitString(this.text); 
 	
 	// shorten the text
 	if (shortenText) {
@@ -433,27 +433,27 @@ void onPaint(PaintEvent event) {
 	    		extent.x = Math.max(extent.x, e.x);
 	    	}
 	    }
-		if (appToolTipText == null) {
-			super.setToolTipText(text);
+		if (this.appToolTipText == null) {
+			super.setToolTipText(this.text);
 		}
 	} else {
-		super.setToolTipText(appToolTipText);
+		super.setToolTipText(this.appToolTipText);
 	}
 		
 	// determine horizontal position
-	int x = rect.x + leftMargin;
-	if (align == SWT.CENTER) {
+	int x = rect.x + this.leftMargin;
+	if (this.align == SWT.CENTER) {
 		x = (rect.width - extent.x)/2;
 	}
-	if (align == SWT.RIGHT) {
-		x = rect.width - rightMargin - extent.x;
+	if (this.align == SWT.RIGHT) {
+		x = rect.width - this.rightMargin - extent.x;
 	}
 	
 	// draw a background image behind the text
 	try {
-		if (backgroundImage != null) {
+		if (this.backgroundImage != null) {
 			// draw a background image behind the text
-			Rectangle imageRect = backgroundImage.getBounds();
+			Rectangle imageRect = this.backgroundImage.getBounds();
 			// tile image to fill space
 			gc.setBackground(getBackground());
 			gc.fillRectangle(rect);
@@ -461,7 +461,7 @@ void onPaint(PaintEvent event) {
 			while (xPos < rect.width) {
 				int yPos = 0;
 				while (yPos < rect.height) {
-					gc.drawImage(backgroundImage, xPos, yPos);
+					gc.drawImage(this.backgroundImage, xPos, yPos);
 					yPos += imageRect.height;
 				}
 				xPos += imageRect.width;
@@ -469,20 +469,20 @@ void onPaint(PaintEvent event) {
 		} else if (gradientColors != null) {
 			// draw a gradient behind the text
 			final Color oldBackground = gc.getBackground();
-			if (gradientColors.length == 1) {
-				if (gradientColors[0] != null) gc.setBackground(gradientColors[0]);
+			if (this.gradientColors.length == 1) {
+				if (this.gradientColors[0] != null) gc.setBackground(this.gradientColors[0]);
 				gc.fillRectangle(0, 0, rect.width, rect.height);
 			} else {
 				final Color oldForeground = gc.getForeground();
-				Color lastColor = gradientColors[0];
+				Color lastColor = this.gradientColors[0];
 				if (lastColor == null) lastColor = oldBackground;
 				int pos = 0;
-				for (int i = 0; i < gradientPercents.length; ++i) {
+				for (int i = 0; i < this.gradientPercents.length; ++i) {
 					gc.setForeground(lastColor);
-					lastColor = gradientColors[i + 1];
+					lastColor = this.gradientColors[i + 1];
 					if (lastColor == null) lastColor = oldBackground;
 					gc.setBackground(lastColor);
-					if (gradientVertical) {
+					if (this.gradientVertical) {
 						final int gradientHeight = (gradientPercents[i] * rect.height / 100) - pos;
 						gc.fillGradientRectangle(0, pos, rect.width, gradientHeight, true);
 						pos += gradientHeight;
@@ -492,11 +492,11 @@ void onPaint(PaintEvent event) {
 						pos += gradientWidth;
 					}
 				}
-				if (gradientVertical && pos < rect.height) {
+				if (this.gradientVertical && pos < rect.height) {
 					gc.setBackground(getBackground());
 					gc.fillRectangle(0, pos, rect.width, rect.height - pos);
 				}
-				if (!gradientVertical && pos < rect.width) {
+				if (!this.gradientVertical && pos < rect.width) {
 					gc.setBackground(getBackground());
 					gc.fillRectangle(pos, 0, rect.width - pos, rect.height);
 				}
@@ -504,7 +504,7 @@ void onPaint(PaintEvent event) {
 			}
 			gc.setBackground(oldBackground);
 		} else {
-			if (background != null || (getStyle() & SWT.DOUBLE_BUFFERED) == 0) {
+			if (this.background != null || (getStyle() & SWT.DOUBLE_BUFFERED) == 0) {
 				gc.setBackground(getBackground());
 				gc.fillRectangle(rect);
 			}
@@ -542,14 +542,14 @@ void onPaint(PaintEvent event) {
 	
 	int imageY = 0, midPoint = 0, lineY = 0;
 	if (imageHeight > textHeight ) {
-	    if (topMargin == DEFAULT_MARGIN && bottomMargin == DEFAULT_MARGIN) imageY = rect.y + (rect.height - imageHeight) / 2;
-	    else imageY = topMargin;
+	    if (this.topMargin == DEFAULT_MARGIN && this.bottomMargin == DEFAULT_MARGIN) imageY = rect.y + (rect.height - imageHeight) / 2;
+	    else imageY = this.topMargin;
 	    midPoint = imageY + imageHeight/2;
 	    lineY = midPoint - textHeight / 2;
 	}
 	else {
-	    if (topMargin == DEFAULT_MARGIN && bottomMargin == DEFAULT_MARGIN) lineY = rect.y + (rect.height - textHeight) / 2;
-	    else lineY = topMargin;
+	    if (this.topMargin == DEFAULT_MARGIN && this.bottomMargin == DEFAULT_MARGIN) lineY = rect.y + (rect.height - textHeight) / 2;
+	    else lineY = this.topMargin;
 	    midPoint = lineY + textHeight/2;
 	    imageY = midPoint - imageHeight / 2;
 	}
@@ -568,13 +568,13 @@ void onPaint(PaintEvent event) {
 		for (int i = 0; i < lines.length; i++) {
 			int lineX = x;
 			if (lines.length > 1) {
-				if (align == SWT.CENTER) {
+				if (this.align == SWT.CENTER) {
 					int lineWidth = gc.textExtent(lines[i], DRAW_FLAGS).x;
 					lineX = x + Math.max(0, (extent.x - lineWidth) / 2);
 				}
-				if (align == SWT.RIGHT) {
+				if (this.align == SWT.RIGHT) {
 					int lineWidth = gc.textExtent(lines[i], DRAW_FLAGS).x;
-					lineX = Math.max(x, rect.x + rect.width - rightMargin - lineWidth);
+					lineX = Math.max(x, rect.x + rect.width - this.rightMargin - lineWidth);
 				}
 			}
 			gc.drawText(lines[i], lineX, lineY, DRAW_FLAGS);
@@ -633,19 +633,19 @@ public void setAlignment(int align) {
 public void setBackground (Color color) {
 	super.setBackground (color);
 	// Are these settings the same as before?
-	if (backgroundImage == null && 
-		gradientColors == null && 
-		gradientPercents == null) {
+	if (this.backgroundImage == null && 
+		this.gradientColors == null && 
+		this.gradientPercents == null) {
 		if (color == null) {
-			if (background == null) return;
+			if (this.background == null) return;
 		} else {
-			if (color.equals(background)) return;
+			if (color.equals(this.background)) return;
 		}		
 	}
-	background = color;
-	backgroundImage = null;
-	gradientColors = null;
-	gradientPercents = null;
+	this.background = color;
+	this.backgroundImage = null;
+	this.gradientColors = null;
+	this.gradientPercents = null;
 	redraw ();
 }
 
@@ -730,18 +730,18 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
 	
 	// Are these settings the same as before?
 	final Color background = getBackground();
-	if (backgroundImage == null) {
-		if ((gradientColors != null) && (colors != null) && 
+	if (this.backgroundImage == null) {
+		if ((this.gradientColors != null) && (colors != null) && 
 			(gradientColors.length == colors.length)) {
 			boolean same = false;
-			for (int i = 0; i < gradientColors.length; i++) {
-				same = (gradientColors[i] == colors[i]) ||
+			for (int i = 0; i < this.gradientColors.length; i++) {
+				same = (this.gradientColors[i] == colors[i]) ||
 					((gradientColors[i] == null) && (colors[i] == background)) ||
 					((gradientColors[i] == background) && (colors[i] == null));
 				if (!same) break;
 			}
 			if (same) {
-				for (int i = 0; i < gradientPercents.length; i++) {
+				for (int i = 0; i < this.gradientPercents.length; i++) {
 					same = this.gradientPercents[i] == percents[i];
 					if (!same) break;
 				}
@@ -749,21 +749,21 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
 			if (same && this.gradientVertical == vertical) return;
 		}
 	} else {
-		backgroundImage = null;
+		this.backgroundImage = null;
 	}
 	// Store the new settings
 	if (colors == null) {
 		this.gradientColors = null;
 		this.gradientPercents = null;
-		gradientVertical = false;
+		this.gradientVertical = false;
 	} else {
 		this.gradientColors = new Color[colors.length];
 		for (int i = 0; i < colors.length; ++i)
-			gradientColors[i] = (colors[i] != null) ? colors[i] : background;
-		gradientPercents = new int[percents.length];
+			this.gradientColors[i] = (colors[i] != null) ? colors[i] : background;
+		this.gradientPercents = new int[percents.length];
 		for (int i = 0; i < percents.length; ++i)
-			gradientPercents[i] = percents[i];
-		gradientVertical = vertical;
+			this.gradientPercents[i] = percents[i];
+		this.gradientVertical = vertical;
 	}
 	// Refresh with the new settings
 	redraw();
@@ -780,12 +780,12 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
  */
 public void setBackground(Image image) {
 	checkWidget();
-	if (image == backgroundImage) return;
+	if (image == this.backgroundImage) return;
 	if (image != null) {
 		this.gradientColors = null;
 		this.gradientPercents = null;
 	}
-	backgroundImage = image;
+	this.backgroundImage = image;
 	redraw();
 	
 }
@@ -920,7 +920,7 @@ public void setText(String text) {
 @Override
 public void setToolTipText (String string) {
 	super.setToolTipText (string);
-	appToolTipText = super.getToolTipText();
+	this.appToolTipText = super.getToolTipText();
 }
 /**
  * Set the label's top margin, in pixels.

@@ -105,17 +105,17 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (directoryServiceProvider != null) {
-		directoryServiceProvider.dispose ();
-		directoryServiceProvider = null;	
+	if (this.directoryServiceProvider != null) {
+		this.directoryServiceProvider.dispose ();
+		this.directoryServiceProvider = null;	
 	}
-	if (directoryServiceProvider2 != null) {
-		directoryServiceProvider2.dispose ();
-		directoryServiceProvider2 = null;	
+	if (this.directoryServiceProvider2 != null) {
+		this.directoryServiceProvider2.dispose ();
+		this.directoryServiceProvider2 = null;	
 	}	
 }
 
@@ -129,17 +129,17 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 	
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IDIRECTORYSERVICEPROVIDER_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {directoryServiceProvider.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.directoryServiceProvider.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IDIRECTORYSERVICEPROVIDER2_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {directoryServiceProvider2.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.directoryServiceProvider2.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
@@ -150,7 +150,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 
@@ -164,7 +164,7 @@ int getFiles (long /*int*/ prop, long /*int*/ _retval) {
 	String[] propertyValues = null;
 
 	if (propertyName.equals (XPCOM.NS_APP_PLUGINS_DIR_LIST)) {
-		if (pluginDirs == null) {
+		if (this.pluginDirs == null) {
 			int index = 0;
 			/* set the first value(s) to the MOZ_PLUGIN_PATH environment variable value if it's defined */
 			long /*int*/ ptr = C.getenv (MozillaDelegate.wcsToMbcs (null, MOZILLA_PLUGIN_PATH, true));
@@ -189,13 +189,13 @@ int getFiles (long /*int*/ prop, long /*int*/ _retval) {
 						if (segment.length () > 0) segments.addElement (segment);
 					} while (end != -1);
 					int segmentsSize = segments.size ();
-					pluginDirs = new String [segmentsSize + (IsSparc ? 1 : 2)];
+					this.pluginDirs = new String [segmentsSize + (IsSparc ? 1 : 2)];
 					for (index = 0; index < segmentsSize; index++) {
-						pluginDirs[index] = segments.elementAt (index);
+						this.pluginDirs[index] = segments.elementAt (index);
 					}
 				}
 			}
-			if (pluginDirs == null) {
+			if (this.pluginDirs == null) {
 				this.pluginDirs = new String[IsSparc ? 1 : 2];
 			}
 
@@ -213,9 +213,9 @@ int getFiles (long /*int*/ prop, long /*int*/ _retval) {
 			}
 
 			/* set the next value to the home directory + "/.mozilla/plugins" */
-			pluginDirs[index++] = System.getProperty("user.home") + SEPARATOR_OS + USER_PLUGINS_DIR;
+			this.pluginDirs[index++] = System.getProperty("user.home") + SEPARATOR_OS + USER_PLUGINS_DIR;
 		}
-		propertyValues = pluginDirs;
+		propertyValues = this.pluginDirs;
 	}
 
 	XPCOM.memmove(_retval, new long /*int*/[] {0}, C.PTR_SIZEOF);
@@ -313,7 +313,7 @@ int getFile(long /*int*/ prop, long /*int*/ persistent, long /*int*/ _retval) {
 		* If the range of Mozilla versions supported by the Browser is changed
 		* in the future to be >= 1.7 then this value can always be answered.  
 		*/
-		if (isXULRunner) propertyValue = profilePath;
+		if (this.isXULRunner) propertyValue = profilePath;
 	}
 
 	XPCOM.memmove (persistent, new boolean[] {true});

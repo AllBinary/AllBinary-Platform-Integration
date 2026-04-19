@@ -28,7 +28,7 @@ public void handleEvent (Event e) {
 	switch (e.type) {
 		case DND.DragStart: {
 			DragSourceEvent event = new DragSourceEvent((DNDEvent)e);
-			DragSourceEffect sourceEffect = ((DragSource) dndWidget).getDragSourceEffect();
+			DragSourceEffect sourceEffect = ((DragSource) this.dndWidget).getDragSourceEffect();
 			if (sourceEffect != null) {
 				sourceEffect.dragStart (event);
 			}
@@ -38,7 +38,7 @@ public void handleEvent (Event e) {
 		}
 		case DND.DragEnd: {
 			DragSourceEvent event = new DragSourceEvent((DNDEvent)e);
-			DragSourceEffect sourceEffect = ((DragSource) dndWidget).getDragSourceEffect();
+			DragSourceEffect sourceEffect = ((DragSource) this.dndWidget).getDragSourceEffect();
 			if (sourceEffect != null) {
 				sourceEffect.dragFinished (event);
 			}
@@ -48,7 +48,7 @@ public void handleEvent (Event e) {
 		}
 		case DND.DragSetData: {
 			DragSourceEvent event = new DragSourceEvent((DNDEvent)e);
-			DragSourceEffect sourceEffect = ((DragSource) dndWidget).getDragSourceEffect();
+			DragSourceEffect sourceEffect = ((DragSource) this.dndWidget).getDragSourceEffect();
 			if (sourceEffect != null) {
 				sourceEffect.dragSetData (event);
 			}
@@ -59,7 +59,7 @@ public void handleEvent (Event e) {
 		case DND.DragEnter: {
 			DropTargetEvent event = new DropTargetEvent((DNDEvent)e);
 			((DropTargetListener) eventListener).dragEnter (event);
-			DropTargetEffect dropEffect = ((DropTarget) dndWidget).getDropTargetEffect();
+			DropTargetEffect dropEffect = ((DropTarget) this.dndWidget).getDropTargetEffect();
 			if (dropEffect != null) {
 				dropEffect.dragEnter (event);
 			}
@@ -69,7 +69,7 @@ public void handleEvent (Event e) {
 		case DND.DragLeave: {
 			DropTargetEvent event = new DropTargetEvent((DNDEvent)e);
 			((DropTargetListener) eventListener).dragLeave (event);
-			DropTargetEffect dropEffect = ((DropTarget) dndWidget).getDropTargetEffect();
+			DropTargetEffect dropEffect = ((DropTarget) this.dndWidget).getDropTargetEffect();
 			if (dropEffect != null) {
 				dropEffect.dragLeave (event);
 			}
@@ -79,7 +79,7 @@ public void handleEvent (Event e) {
 		case DND.DragOver: {
 			DropTargetEvent event = new DropTargetEvent((DNDEvent)e);
 			((DropTargetListener) eventListener).dragOver (event);
-			DropTargetEffect dropEffect = ((DropTarget) dndWidget).getDropTargetEffect();
+			DropTargetEffect dropEffect = ((DropTarget) this.dndWidget).getDropTargetEffect();
 			if (dropEffect != null) {
 				dropEffect.dragOver (event);
 			}
@@ -89,7 +89,7 @@ public void handleEvent (Event e) {
 		case DND.Drop: {
 			DropTargetEvent event = new DropTargetEvent((DNDEvent)e);
 			((DropTargetListener) eventListener).drop (event);
-			DropTargetEffect dropEffect = ((DropTarget) dndWidget).getDropTargetEffect();
+			DropTargetEffect dropEffect = ((DropTarget) this.dndWidget).getDropTargetEffect();
 			if (dropEffect != null) {
 				dropEffect.drop (event);
 			}
@@ -99,7 +99,7 @@ public void handleEvent (Event e) {
 		case DND.DropAccept: {
 			DropTargetEvent event = new DropTargetEvent((DNDEvent)e);
 			((DropTargetListener) eventListener).dropAccept (event);
-			DropTargetEffect dropEffect = ((DropTarget) dndWidget).getDropTargetEffect();
+			DropTargetEffect dropEffect = ((DropTarget) this.dndWidget).getDropTargetEffect();
 			if (dropEffect != null) {
 				dropEffect.dropAccept (event);
 			}
@@ -109,7 +109,7 @@ public void handleEvent (Event e) {
 		case DND.DragOperationChanged: {
 			DropTargetEvent event = new DropTargetEvent((DNDEvent)e);
 			((DropTargetListener) eventListener).dragOperationChanged (event);
-			DropTargetEffect dropEffect = ((DropTarget) dndWidget).getDropTargetEffect();
+			DropTargetEffect dropEffect = ((DropTarget) this.dndWidget).getDropTargetEffect();
 			if (dropEffect != null) {
 				dropEffect.dragOperationChanged (event);
 			}

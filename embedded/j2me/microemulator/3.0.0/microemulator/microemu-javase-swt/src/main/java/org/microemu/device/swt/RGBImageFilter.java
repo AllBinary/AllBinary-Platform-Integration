@@ -52,17 +52,17 @@ public final class RGBImageFilter implements ImageFilter
 
   private RGBImageFilter()
 	{
-    backgroundColor = SwtDeviceComponent.getColor(new RGBA(
+    this.backgroundColor = SwtDeviceComponent.getColor(new RGBA(
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getBackgroundColor().getRed(),
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getBackgroundColor().getGreen(),
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getBackgroundColor().getBlue(), 255));
-    foregroundColor = SwtDeviceComponent.getColor(new RGBA(
+    this.foregroundColor = SwtDeviceComponent.getColor(new RGBA(
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getForegroundColor().getRed(),
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getForegroundColor().getGreen(),
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getForegroundColor().getBlue(), 255));
-    Rr = foregroundColor.getRed() - backgroundColor.getRed();
-    Rg = foregroundColor.getGreen() - backgroundColor.getGreen();
-    Rb = foregroundColor.getBlue() - backgroundColor.getBlue();
+    Rr = this.foregroundColor.getRed() - this.backgroundColor.getRed();
+    Rg = this.foregroundColor.getGreen() - this.backgroundColor.getGreen();
+    Rb = this.foregroundColor.getBlue() - this.backgroundColor.getBlue();
   }
 
 
@@ -95,19 +95,19 @@ public final class RGBImageFilter implements ImageFilter
     int r, g, b;
 
     if (Rr > 0) {
-      r = (int) (rgb.rgb.red * Rr) / 255 + backgroundColor.getRed();
+      r = (int) (rgb.rgb.red * Rr) / 255 + this.backgroundColor.getRed();
     } else {
-      r = (int) (rgb.rgb.red * -Rr) / 255 + foregroundColor.getRed();
+      r = (int) (rgb.rgb.red * -Rr) / 255 + this.foregroundColor.getRed();
     }
     if (Rr > 0) {
-      g = (int) (rgb.rgb.green * Rg) / 255 + backgroundColor.getGreen();
+      g = (int) (rgb.rgb.green * Rg) / 255 + this.backgroundColor.getGreen();
     } else {
-      g = (int) (rgb.rgb.green * -Rg) / 255 + foregroundColor.getGreen();
+      g = (int) (rgb.rgb.green * -Rg) / 255 + this.foregroundColor.getGreen();
     }
     if (Rr > 0) {
-      b = (int) (rgb.rgb.blue * Rb) / 255 + backgroundColor.getBlue();
+      b = (int) (rgb.rgb.blue * Rb) / 255 + this.backgroundColor.getBlue();
     } else {
-      b = (int) (rgb.rgb.blue * -Rb) / 255 + foregroundColor.getBlue();
+      b = (int) (rgb.rgb.blue * -Rb) / 255 + this.foregroundColor.getBlue();
     }
 
     return new RGBA(r, g, b, rgb.alpha);

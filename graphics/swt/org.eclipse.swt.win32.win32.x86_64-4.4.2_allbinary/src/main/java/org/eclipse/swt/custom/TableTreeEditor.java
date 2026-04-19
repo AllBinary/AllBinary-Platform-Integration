@@ -119,7 +119,7 @@ public TableTreeEditor (TableTree tableTree) {
 			e.display.asyncExec(runnable);
 		}
 	};
-	tableTree.addTreeListener(treeListener);
+	tableTree.addTreeListener(this.treeListener);
 	
 	columnListener = new ControlListener() {
 		public void controlMoved(ControlEvent e){
@@ -135,9 +135,9 @@ public TableTreeEditor (TableTree tableTree) {
 }
 @Override
 Rectangle computeBounds () {
-	if (item == null || column == -1 || item.isDisposed() || item.tableItem == null) return new Rectangle(0, 0, 0, 0);
-	Rectangle cell = item.getBounds(column);
-	Rectangle area = tableTree.getClientArea();
+	if (this.item == null || this.column == -1 || this.item.isDisposed() || this.item.tableItem == null) return new Rectangle(0, 0, 0, 0);
+	Rectangle cell = this.item.getBounds(this.column);
+	Rectangle area = this.tableTree.getClientArea();
 	if (cell.x < area.x + area.width) {
 		if (cell.x + cell.width > area.x + area.width) {
 			cell.width = area.x + area.width - cell.x;
@@ -176,21 +176,21 @@ Rectangle computeBounds () {
  */
 @Override
 public void dispose () {
-	if (tableTree != null && !tableTree.isDisposed()) {
-		Table table = tableTree.getTable();
+	if (this.tableTree != null && !this.tableTree.isDisposed()) {
+		Table table = this.tableTree.getTable();
 		if (table != null && !table.isDisposed()) {
 			if (this.column > -1 && this.column < table.getColumnCount()){
 				TableColumn tableColumn = table.getColumn(this.column);
-				tableColumn.removeControlListener(columnListener);
+				tableColumn.removeControlListener(this.columnListener);
 			}
 		}
-		if (treeListener != null) tableTree.removeTreeListener(treeListener);
+		if (this.treeListener != null) this.tableTree.removeTreeListener(this.treeListener);
 	}
-	treeListener = null;
-	columnListener = null;
-	tableTree = null;
-	item = null;
-	column = -1;
+	this.treeListener = null;
+	this.columnListener = null;
+	this.tableTree = null;
+	this.item = null;
+	this.column = -1;
 	super.dispose();
 }
 /**
@@ -221,7 +221,7 @@ public void setColumn(int column) {
 	}
 	if (this.column > -1 && this.column < columnCount){
 		TableColumn tableColumn = table.getColumn(this.column);
-		tableColumn.removeControlListener(columnListener);
+		tableColumn.removeControlListener(this.columnListener);
 		this.column = -1;
 	}
 
@@ -229,7 +229,7 @@ public void setColumn(int column) {
 		
 	this.column = column;
 	TableColumn tableColumn = table.getColumn(this.column);
-	tableColumn.addControlListener(columnListener);
+	tableColumn.addControlListener(this.columnListener);
 	layout();
 }
 public void setItem (TableTreeItem item) {	
@@ -254,12 +254,12 @@ public void setEditor (Control editor, TableTreeItem item, int column) {
 }
 @Override
 public void layout () {
-	if (tableTree == null || tableTree.isDisposed()) return;
-	if (item == null || item.isDisposed()) return;
-	Table table = tableTree.getTable();
+	if (this.tableTree == null || this.tableTree.isDisposed()) return;
+	if (this.item == null || this.item.isDisposed()) return;
+	Table table = this.tableTree.getTable();
 	int columnCount = table.getColumnCount();
-	if (columnCount == 0 && column != 0) return;
-	if (columnCount > 0 && (column < 0 || column >= columnCount)) return;
+	if (columnCount == 0 && this.column != 0) return;
+	if (columnCount > 0 && (this.column < 0 || this.column >= columnCount)) return;
 	super.layout();
 }
 }

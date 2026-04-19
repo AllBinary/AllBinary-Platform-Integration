@@ -82,10 +82,10 @@ public String toString() {
 	final String string2 = super.toString();
         final StringMaker stringBuilder = new StringMaker();
 	final String string = string2.substring (0, string2.length() - 1); // remove trailing '}'
-	stringBuilder.append(string).append(" stateMask=0x").append(Integer.toHexString(stateMask)).append(" x=").appendint(x).append(" y=").appendint(y).toString();
-	if (touches != null) {
-		for (int i = 0; i < touches.length; i++) {
-			stringBuilder.append("\n     ").append(touches[i].toString());
+	stringBuilder.append(string).append(" stateMask=0x").append(Integer.toHexString(stateMask)).append(" x=").appendint(this.x).append(" y=").appendint(this.y).toString();
+	if (this.touches != null) {
+		for (int i = 0; i < this.touches.length; i++) {
+			stringBuilder.append("\n     ").append(this.touches[i].toString());
 		}
 		stringBuilder.append(CommonSeps.getInstance().NEW_LINE);
 	}

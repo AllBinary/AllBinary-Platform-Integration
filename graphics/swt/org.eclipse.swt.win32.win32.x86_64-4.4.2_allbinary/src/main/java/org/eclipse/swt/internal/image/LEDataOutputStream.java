@@ -45,9 +45,9 @@ public void writeByte(byte b) throws IOException {
  */
 public void writeInt(int theInt) throws IOException {
 	out.write(theInt & 0xFF);
-	out.write((theInt >> 8) & 0xFF);
-	out.write((theInt >> 16) & 0xFF);
-	out.write((theInt >> 24) & 0xFF);
+	this.out.write((theInt >> 8) & 0xFF);
+	this.out.write((theInt >> 16) & 0xFF);
+	this.out.write((theInt >> 24) & 0xFF);
 }
 /**
  * Write the two bytes of the given short
@@ -55,6 +55,6 @@ public void writeInt(int theInt) throws IOException {
  */
 public void writeShort(int theShort) throws IOException {
 	out.write(theShort & 0xFF);
-	out.write((theShort >> 8) & 0xFF);
+	this.out.write((theShort >> 8) & 0xFF);
 }
 }

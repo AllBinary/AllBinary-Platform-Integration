@@ -54,8 +54,8 @@ public class Preprocessor implements IPreprocessor{
 	
 	public Preprocessor(Utility utility, String encoding) {
 		eval = new BooleanEvaluator("");
-		stack = new Stack();
-		mode = IPreprocessor.MODE_NORMAL;
+		this.stack = new Stack();
+		this.mode = IPreprocessor.MODE_NORMAL;
 
 		this.utility = utility;
 		this.encoding = encoding;
@@ -71,7 +71,7 @@ public class Preprocessor implements IPreprocessor{
 	}
 
 	public boolean isBlind() {
-		return ((state == STATE_CAN_BECOME_TRUE) || (state == STATE_HAS_BEEN_TRUE)) && (mode != IPreprocessor.MODE_CLEANUP);
+		return ((this.state == STATE_CAN_BECOME_TRUE) || (this.state == STATE_HAS_BEEN_TRUE)) && (this.mode != IPreprocessor.MODE_CLEANUP);
 	}
 
 	public String getPackageName() {
@@ -107,32 +107,32 @@ public class Preprocessor implements IPreprocessor{
 	}
 
 	private void handleElseIf(boolean condition) throws PreprocessorException {
-		if (state == STATE_NO_CONDITIONAL) {
+		if (this.state == STATE_NO_CONDITIONAL) {
 			throw new PreprocessorException("Unexpected #elif", file, currentLine);
 		}
-		else if (state == STATE_CAN_BECOME_TRUE) {
+		else if (this.state == STATE_CAN_BECOME_TRUE) {
 			if (condition)
-				state = STATE_IS_TRUE;
+				this.state = STATE_IS_TRUE;
 		}
-		else if (state == STATE_IS_TRUE) {
+		else if (this.state == STATE_IS_TRUE) {
 			this.state = STATE_HAS_BEEN_TRUE;
 		}
 	}
 
 	private void handleElse() throws PreprocessorException {
-		if (state == STATE_NO_CONDITIONAL) {
+		if (this.state == STATE_NO_CONDITIONAL) {
 			throw new PreprocessorException("Unexpected #else",file,  currentLine);
 		}
-		else if (state == STATE_CAN_BECOME_TRUE) {
+		else if (this.state == STATE_CAN_BECOME_TRUE) {
 			this.state = STATE_IS_TRUE;
 		}
-		else if (state == STATE_IS_TRUE) {
+		else if (this.state == STATE_IS_TRUE) {
 			this.state = STATE_HAS_BEEN_TRUE;
 		}
 	}
 
 	private void handleEndIf() throws PreprocessorException {
-		if (state == STATE_NO_CONDITIONAL) {
+		if (this.state == STATE_NO_CONDITIONAL) {
 			throw new PreprocessorException("Unexpected #endif",file,  currentLine);
 		}
 		else {
@@ -145,31 +145,31 @@ public class Preprocessor implements IPreprocessor{
 
 		if (type == PreprocessorLine.TYPE_DEFINE) {
 			if (!isBlind()) {
-				eval.define(l.getArgs());
+				this.eval.define(l.getArgs());
 			}
 		}
 		else if (type == PreprocessorLine.TYPE_UNDEF) {
 			if (!isBlind()) {
-				eval.undefine(l.getArgs());
+				this.eval.undefine(l.getArgs());
 			}
 		}
 		else if (type == PreprocessorLine.TYPE_IF) {
-			handleIf(eval.evaluate(l.getArgs()));
+			handleIf(this.eval.evaluate(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_IFDEF) {
-			handleIf(eval.isDefined(l.getArgs()));
+			handleIf(this.eval.isDefined(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_IFNDEF) {
-			handleIf(!eval.isDefined(l.getArgs()));
+			handleIf(!this.eval.isDefined(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_ELIF) {
-			handleElseIf(eval.evaluate(l.getArgs()));
+			handleElseIf(this.eval.evaluate(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_ELIFDEF) {
-			handleElseIf(eval.isDefined(l.getArgs()));
+			handleElseIf(this.eval.isDefined(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_ELIFNDEF) {
-			handleElseIf(!eval.isDefined(l.getArgs()));
+			handleElseIf(!this.eval.isDefined(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_ELSE) {
 			handleElse();
@@ -185,7 +185,7 @@ public class Preprocessor implements IPreprocessor{
 
 	public String filterLine(String s) throws PreprocessorException
 	{
-	    String t = utility.getProject().replaceProperties(s);
+	    String t = this.utility.getProject().replaceProperties(s);
 
 	    // Replacement of Foo.parseFoo() expressions, requested by Steve Oldmeadow.
 	    if (!t.equals(s)) {
@@ -236,18 +236,18 @@ public class Preprocessor implements IPreprocessor{
 	
 	public PreprocessorLine analyzeLine(String s) throws PreprocessorException {
 
-		if (pl == null) {
-			pl = new PreprocessorLine(s);
+		if (this.pl == null) {
+			this.pl = new PreprocessorLine(s);
 		}
 		else {
-			pl.processLine(s);
+			this.pl.processLine(s);
 		}
 		
 		return pl;
 	}
 
 	String commentLine(PreprocessorLine l) {
-		if ((mode & IPreprocessor.MODE_INDENT) == 0) {
+		if ((this.mode & IPreprocessor.MODE_INDENT) == 0) {
 			return "//# " + l.getSpace() + l.getText();
 		}
 		else {
@@ -264,14 +264,14 @@ public class Preprocessor implements IPreprocessor{
 		/**
 		 * Try to load include file
 		 */
-		String name = utility.interpret(l.getArgs());
+		String name = this.utility.interpret(l.getArgs());
 		File file = new File(name);
 		if (!file.isAbsolute()) {
 			name = this.file.getParent() + File.separatorChar + name;
 		}
 
 		try {
-			if (encoding != null && encoding.length() != 0) {
+			if (this.encoding != null && this.encoding.length() != 0) {
 				include.loadFromFile(new File(name), encoding);
 			}
 			else {
@@ -290,8 +290,8 @@ public class Preprocessor implements IPreprocessor{
 
 	public boolean preprocess(Strings lines, String encoding) throws PreprocessorException, IOException
 	{
-		stack.clear();
-		state = STATE_NO_CONDITIONAL;
+		this.stack.clear();
+		this.state = STATE_NO_CONDITIONAL;
 		//this.mode = mode;
 
 		Strings oldLines = new Strings();
@@ -299,7 +299,7 @@ public class Preprocessor implements IPreprocessor{
 
 		int i = 0;
 		while (i < lines.size()) {
-			currentLine = i;
+			this.currentLine = i;
 			
 			// System.out.println("(" + i + ") " + lines.get(i));
 
@@ -334,14 +334,14 @@ public class Preprocessor implements IPreprocessor{
 						throw new PreprocessorException("Missing #endinclude", file, currentLine);
 					}
 
-					if (include != null && (mode & IPreprocessor.MODE_CLEANUP) == 0) {
+					if (include != null && (this.mode & IPreprocessor.MODE_CLEANUP) == 0) {
 						/**
 						 * Insert new include lines.
 						 */
-						Preprocessor subfilter = new Preprocessor(utility, encoding);
+						Preprocessor subfilter = new Preprocessor(this.utility, encoding);
 						subfilter.eval = this.eval; // Ugly stuff.
 						subfilter.setFile(file);
-						subfilter.setMode(mode);
+						subfilter.setMode(this.mode);
 						subfilter.preprocess(include, encoding);
 
 						for (int k = 0; k < include.size(); k++) {
@@ -366,13 +366,13 @@ public class Preprocessor implements IPreprocessor{
 					if (l.getType() == PreprocessorLine.TYPE_VISIBLE || l.getType() == PreprocessorLine.TYPE_HIDDEN) {
 						if (isBlind()) {
 							lines.set(i, commentLine(l));
-							if ((mode & IPreprocessor.MODE_VERBOSE) != 0) {
+							if ((this.mode & IPreprocessor.MODE_VERBOSE) != 0) {
 								System.out.println("Comment: " + l);
 							}
 						}
 					    else {
 							lines.set(i, uncommentLine(l));
-							if ((mode & IPreprocessor.MODE_VERBOSE) != 0) {
+							if ((this.mode & IPreprocessor.MODE_VERBOSE) != 0) {
 								System.out.println("Uncomment: " + l);
 							}
 						}
@@ -387,11 +387,11 @@ public class Preprocessor implements IPreprocessor{
 				throw new PreprocessorException(error.getMessage() + " in line " + (i + 1) + " : " + line, file, currentLine);
 			}
 		}
-		if (state != STATE_NO_CONDITIONAL) {
+		if (this.state != STATE_NO_CONDITIONAL) {
 			throw new PreprocessorException("Missing #endif", file, currentLine);
 		}
 
-		if ((mode & IPreprocessor.MODE_FILTER) != 0) {
+		if ((this.mode & IPreprocessor.MODE_FILTER) != 0) {
 		    // Cleanup all directives and uncommented stuff.
 		    
 		    for (int j = lines.size() - 1; j >= 0; j--) {
@@ -418,7 +418,7 @@ public class Preprocessor implements IPreprocessor{
 
 	public void setSymbols(String symbols) throws PreprocessorException
 	{
-		eval = new BooleanEvaluator(symbols);
+		this.eval = new BooleanEvaluator(symbols);
 	}
 	
 
@@ -443,7 +443,7 @@ public class Preprocessor implements IPreprocessor{
 
 	public void clearSymbols() throws PreprocessorException
 	{
-		eval = new BooleanEvaluator("");
+		this.eval = new BooleanEvaluator("");
 	}
 
 
@@ -455,7 +455,7 @@ public class Preprocessor implements IPreprocessor{
 
 	public void printSymbols() throws PreprocessorException
 	{
-		utility.getProject().log("Symbols: " + eval.getDefines());
+		this.utility.getProject().log("Symbols: " + this.eval.getDefines());
 	}
 
 

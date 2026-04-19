@@ -38,14 +38,14 @@ OleEventSink(OleControlSite widget, long /*int*/ iUnknown, GUID riid) {
 
 void connect () {
 	long /*int*/[] ppvObject = new long /*int*/[1];
-	if (objIUnknown.QueryInterface(COM.IIDIConnectionPointContainer, ppvObject) == COM.S_OK) {
+	if (this.objIUnknown.QueryInterface(COM.IIDIConnectionPointContainer, ppvObject) == COM.S_OK) {
 		IConnectionPointContainer cpc = new IConnectionPointContainer(ppvObject[0]);
 		long /*int*/[] ppCP = new long /*int*/[1];
-		if (cpc.FindConnectionPoint(eventGuid, ppCP) == COM.S_OK) {
+		if (cpc.FindConnectionPoint(this.eventGuid, ppCP) == COM.S_OK) {
 			IConnectionPoint cp = new IConnectionPoint(ppCP[0]);
 			int[] pCookie = new int[1];
-			if (cp.Advise(iDispatch.getAddress(), pCookie) == COM.S_OK)
-				eventCookie = pCookie[0];
+			if (cp.Advise(this.iDispatch.getAddress(), pCookie) == COM.S_OK)
+				this.eventCookie = pCookie[0];
 			cp.Release();
 		}
 		cpc.Release();
@@ -53,8 +53,8 @@ void connect () {
 }
 void addListener(int eventID, OleListener listener) {
 	if (listener == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
-	if (eventTable == null) eventTable = new OleEventTable ();
-	eventTable.hook(eventID, listener);
+	if (this.eventTable == null) this.eventTable = new OleEventTable ();
+	this.eventTable.hook(eventID, listener);
 }
 int AddRef() {
 	refCount++;
@@ -73,13 +73,13 @@ private void createCOMInterfaces() {
 }
 void disconnect() {
 	// disconnect event sink
-	if (eventCookie != 0 && objIUnknown != null) {
+	if (this.eventCookie != 0 && this.objIUnknown != null) {
 		long /*int*/[] ppvObject = new long /*int*/[1];
-		if (objIUnknown.QueryInterface(COM.IIDIConnectionPointContainer, ppvObject) == COM.S_OK) {
+		if (this.objIUnknown.QueryInterface(COM.IIDIConnectionPointContainer, ppvObject) == COM.S_OK) {
 			IConnectionPointContainer cpc = new IConnectionPointContainer(ppvObject[0]);
-			if (cpc.FindConnectionPoint(eventGuid, ppvObject) == COM.S_OK) {
+			if (cpc.FindConnectionPoint(this.eventGuid, ppvObject) == COM.S_OK) {
 				IConnectionPoint cp = new IConnectionPoint(ppvObject[0]);
-				if (cp.Unadvise(eventCookie) == COM.S_OK) {
+				if (cp.Unadvise(this.eventCookie) == COM.S_OK) {
 					this.eventCookie = 0;
 				}
 				cp.Release();
@@ -89,14 +89,14 @@ void disconnect() {
 	}
 }
 private void disposeCOMInterfaces() {
-	if (iDispatch != null)
-		iDispatch.dispose();
-	iDispatch = null;
+	if (this.iDispatch != null)
+		this.iDispatch.dispose();
+	this.iDispatch = null;
 	
 }
 private int Invoke(int dispIdMember, long /*int*/ riid, int lcid, int dwFlags, long /*int*/ pDispParams, long /*int*/ pVarResult, long /*int*/ pExcepInfo, long /*int*/ pArgErr)
 {
-	if (eventTable == null || !eventTable.hooks(dispIdMember)) return COM.S_OK;
+	if (this.eventTable == null || !this.eventTable.hooks(dispIdMember)) return COM.S_OK;
 	
 	// Construct an array of the parameters that are passed in
 	// Note: parameters are passed in reverse order - here we will correct the order
@@ -146,10 +146,10 @@ private int Invoke(int dispIdMember, long /*int*/ riid, int lcid, int dwFlags, l
 */
 private void notifyListener (int eventType, OleEvent event) {
 	if (event == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
-	if (eventTable == null) return;
+	if (this.eventTable == null) return;
 	event.type = eventType;
-	event.widget = widget;
-	eventTable.sendEvent (event);
+	event.widget = this.widget;
+	this.eventTable.sendEvent (event);
 }
 private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 
@@ -170,7 +170,7 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 }
 int Release() {
 	refCount--;
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		disposeCOMInterfaces();
 	}
 	
@@ -178,8 +178,8 @@ int Release() {
 }
 void removeListener(int eventID, OleListener listener) {
 	if (listener == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
-	if (eventTable == null) return;
-	eventTable.unhook (eventID, listener);
+	if (this.eventTable == null) return;
+	this.eventTable.unhook (eventID, listener);
 }
 boolean hasListeners() {
 	return eventTable.hasEntries();

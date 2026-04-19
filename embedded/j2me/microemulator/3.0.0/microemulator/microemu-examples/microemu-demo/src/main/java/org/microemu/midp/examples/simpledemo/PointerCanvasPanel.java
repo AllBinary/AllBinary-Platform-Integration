@@ -69,16 +69,16 @@ public class PointerCanvasPanel extends BaseExamplesCanvas {
 				writeln(g, line++, "Do not have PointerMotionEvents");	
 			}
 			
-			if (lastPointerEvent != null) {
-				writeln(g, line++, ppX +"x"+ ppY + " " + lastPointerEvent);
+			if (this.lastPointerEvent != null) {
+				writeln(g, line++, ppX +"x"+ this.ppY + " " + this.lastPointerEvent);
 				
-				if (pointerPressed) {
+				if (this.pointerPressed) {
 					g.setColor(0xFFEE99);
 					g.setStrokeStyle(Graphics.DOTTED);
 				} else {
 					g.setColor(0x5691F0);
 				}
-				g.drawRect(poX, poY, ppX - poX, ppY - poY);
+				g.drawRect(this.poX, poY, ppX - this.poX, ppY - poY);
 				g.setStrokeStyle(Graphics.SOLID);
 				
 				g.setColor(0xBB5500);
@@ -96,7 +96,7 @@ public class PointerCanvasPanel extends BaseExamplesCanvas {
 		this.ppY = y;
 		this.poX = x;
 		this.poY = y;
-		pointerPressed = true;
+		this.pointerPressed = true;
 		repaint();
 	}
 
@@ -104,7 +104,7 @@ public class PointerCanvasPanel extends BaseExamplesCanvas {
 		lastPointerEvent = "Released " + Utils.when();
 		this.ppX = x;
 		this.ppY = y;
-		pointerPressed = false;
+		this.pointerPressed = false;
 		repaint();
 	}
 

@@ -116,9 +116,9 @@ String getName () {
 @Override
 public String toString () {
 	String string = getName ()+" {";
-	if (width != SWT.DEFAULT) string += "width="+width+" ";
-	if (height != SWT.DEFAULT) string += "height="+height+" ";
-	if (exclude) string += "exclude="+exclude+" ";
+	if (this.width != SWT.DEFAULT) string += "width="+this.width+" ";
+	if (this.height != SWT.DEFAULT) string += "height="+this.height+" ";
+	if (this.exclude) string += "exclude="+this.exclude+" ";
 	string = string.trim();
 	string += "}";
 	return string;

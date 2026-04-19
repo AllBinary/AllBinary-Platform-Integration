@@ -53,7 +53,7 @@ public class MIDletResourceInputStream extends InputStream {
 		int result = 0;
 		int count = 0;
 		do {
-			count = is.read(b, result, b.length - result);
+			count = this.is.read(b, result, b.length - result);
 			if (count != -1) {
 				result += count;
 				if (result == b.length) {

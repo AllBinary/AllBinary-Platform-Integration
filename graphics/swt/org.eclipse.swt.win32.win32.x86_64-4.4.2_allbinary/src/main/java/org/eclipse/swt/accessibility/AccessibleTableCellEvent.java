@@ -49,10 +49,10 @@ public AccessibleTableCellEvent(Object source) {
 @Override
 public String toString () {
 	return "AccessibleTableCellEvent {" //$NON-NLS-1$
-		+ " accessibles=" + accessibles   //$NON-NLS-1$
-		+ " isSelected=" + isSelected   //$NON-NLS-1$
-		+ " count=" + count   //$NON-NLS-1$
-		+ " index=" + index   //$NON-NLS-1$
+		+ " accessibles=" + this.accessibles   //$NON-NLS-1$
+		+ " isSelected=" + this.isSelected   //$NON-NLS-1$
+		+ " count=" + this.count   //$NON-NLS-1$
+		+ " index=" + this.index   //$NON-NLS-1$
 		+ "}";  //$NON-NLS-1$
 }
 }

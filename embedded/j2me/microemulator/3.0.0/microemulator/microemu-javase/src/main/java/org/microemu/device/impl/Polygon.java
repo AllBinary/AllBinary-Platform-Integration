@@ -74,7 +74,7 @@ public class Polygon extends Shape {
 		System.arraycopy(ypoints, 0, this.ypoints, 0, npoints);
 
 		for (int i = 0; i < npoints; i++) {
-			bounds.add(xpoints[i], ypoints[i]);
+			this.bounds.add(xpoints[i], ypoints[i]);
 		}
 	}
 
@@ -94,16 +94,16 @@ public class Polygon extends Shape {
 	 * @param y Y-coordinate of point to add.
 	 */
 	public void addPoint(int x, int y) {
-		if (npoints > 0) {
+		if (this.npoints > 0) {
 			int xtemp[];
 			int ytemp[];
 			xtemp = xpoints;
-			ytemp = ypoints;
-			xpoints = new int[npoints + 1];
+			ytemp = this.ypoints;
+			xpoints = new int[this.npoints + 1];
 
 			System.arraycopy(xtemp, 0, xpoints, 0, npoints);
 			xtemp = null;
-			ypoints = new int[npoints + 1];
+			this.ypoints = new int[npoints + 1];
 			System.arraycopy(ytemp, 0, ypoints, 0, npoints);
 			ytemp = null;
 		} else {
@@ -114,7 +114,7 @@ public class Polygon extends Shape {
 		xpoints[npoints - 1] = x;//-1 to account for 0 array indexing
 		ypoints[npoints - 1] = y;
 
-		bounds.add(x, y);
+		this.bounds.add(x, y);
 	}
 
 	public Rectangle getBounds() {
@@ -138,8 +138,8 @@ public class Polygon extends Shape {
 
 //          Tested and work just fine
 			boolean c = false;
-			for (int i = 0, j = npoints - 1; i < npoints; j = i++) {
-				if ((((ypoints[i] <= y) && (y < ypoints[j])) || ((ypoints[j] <= y) && (y < ypoints[i])))
+			for (int i = 0, j = this.npoints - 1; i < this.npoints; j = i++) {
+				if ((((this.ypoints[i] <= y) && (y < this.ypoints[j])) || ((this.ypoints[j] <= y) && (y < this.ypoints[i])))
 						&& (x < ((double)(xpoints[j] - xpoints[i]) * (y - ypoints[i])) / (ypoints[j] - ypoints[i]) + xpoints[i])) {
 					c = !c;
 				}

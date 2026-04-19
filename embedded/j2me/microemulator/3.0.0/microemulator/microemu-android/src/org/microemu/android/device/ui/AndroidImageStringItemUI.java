@@ -68,20 +68,20 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 		setFocusable(false);
 		setFocusableInTouchMode(false);
 
-		labelView = new TextView(activity);
-		labelView.setFocusable(false);
-		labelView.setFocusableInTouchMode(false);
+		this.labelView = new TextView(activity);
+		this.labelView.setFocusable(false);
+		this.labelView.setFocusableInTouchMode(false);
 		labelView.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.FILL_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT));
 		labelView.setTextAppearance(labelView.getContext(),
 				android.R.style.TextAppearance_Large);
-		labelView.setVisibility(GONE);
-		addView(labelView);
+		this.labelView.setVisibility(GONE);
+		addView(this.labelView);
 
-		textView = new TextView(activity);
+		this.textView = new TextView(activity);
 		if (item instanceof StringItem && ((StringItem) item).getAppearanceMode() == Item.BUTTON) {
-			textView.setClickable(true);
+			this.textView.setClickable(true);
 			textView.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
@@ -95,11 +95,11 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 		textView.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.FILL_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT));
-		addView(textView);
+		addView(this.textView);
 
 		if (item instanceof ImageItem && ((ImageItem) item).getAppearanceMode() == Item.BUTTON) {
-			imageView = new ImageButton(activity);
-			imageView.setClickable(true);
+			this.imageView = new ImageButton(activity);
+			this.imageView.setClickable(true);
 			imageView.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
@@ -110,10 +110,10 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 
 			});
 		} else {
-			imageView = new ImageView(activity);
+			this.imageView = new ImageView(activity);
 		}
-		imageView.setVisibility(GONE);
-		addView(imageView);
+		this.imageView.setVisibility(GONE);
+		addView(this.imageView);
 
 		setLabel(item.getLabel());
 	}

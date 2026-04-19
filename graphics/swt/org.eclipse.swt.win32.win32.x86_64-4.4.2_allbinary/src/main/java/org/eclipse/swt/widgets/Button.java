@@ -117,25 +117,25 @@ public Button (Composite parent, int style) {
 void _setImage (Image image) {
 	if ((style & SWT.COMMAND) != 0) return;
 	if (OS.COMCTL32_MAJOR >= 6) {
-		if (imageList != null) imageList.dispose ();
-		imageList = null;
+		if (this.imageList != null) this.imageList.dispose ();
+		this.imageList = null;
 		if (image != null) {
-			imageList = new ImageList (style & SWT.RIGHT_TO_LEFT);
+			this.imageList = new ImageList (style & SWT.RIGHT_TO_LEFT);
 			if (OS.IsWindowEnabled (handle)) {
-				imageList.add (image);
+				this.imageList.add (image);
 			} else {
 				if (disabledImage != null) disabledImage.dispose ();
 				disabledImage = new Image (display, image, SWT.IMAGE_DISABLE);
-				imageList.add (disabledImage);
+				this.imageList.add (disabledImage);
 			}
 			BUTTON_IMAGELIST buttonImageList = new BUTTON_IMAGELIST ();
-			buttonImageList.himl = imageList.getHandle ();
+			buttonImageList.himl = this.imageList.getHandle ();
 			int oldBits = OS.GetWindowLong (handle, OS.GWL_STYLE), newBits = oldBits;
 			newBits &= ~(OS.BS_LEFT | OS.BS_CENTER | OS.BS_RIGHT);
 			if ((style & SWT.LEFT) != 0) newBits |= OS.BS_LEFT;
 			if ((style & SWT.CENTER) != 0) newBits |= OS.BS_CENTER;
 			if ((style & SWT.RIGHT) != 0) newBits |= OS.BS_RIGHT;
-			if (text.length () == 0) {
+			if (this.text.length () == 0) {
 				if ((style & SWT.LEFT) != 0) buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_LEFT;
 				if ((style & SWT.CENTER) != 0) buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_CENTER;
 				if ((style & SWT.RIGHT) != 0) buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_RIGHT;
@@ -262,9 +262,9 @@ void _setText (String text) {
 		if ((style & SWT.LEFT) != 0) newBits |= OS.BS_LEFT;
 		if ((style & SWT.CENTER) != 0) newBits |= OS.BS_CENTER;
 		if ((style & SWT.RIGHT) != 0) newBits |= OS.BS_RIGHT;
-		if (imageList != null) {
+		if (this.imageList != null) {
 			BUTTON_IMAGELIST buttonImageList = new BUTTON_IMAGELIST ();
-			buttonImageList.himl = imageList.getHandle ();
+			buttonImageList.himl = this.imageList.getHandle ();
 			if (text.length () == 0) {
 				if ((style & SWT.LEFT) != 0) buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_LEFT;
 				if ((style & SWT.CENTER) != 0) buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_CENTER;
@@ -373,7 +373,7 @@ int computeLeftMargin () {
 	if (OS.COMCTL32_MAJOR < 6) return MARGIN;
 	if ((style & (SWT.PUSH | SWT.TOGGLE)) == 0) return MARGIN;
 	int margin = 0;
-	if (image != null && text.length () != 0) {
+	if (image != null && this.text.length () != 0) {
 		Rectangle bounds = image.getBounds ();
 		margin += bounds.width + MARGIN * 2;
 		long /*int*/ oldFont = 0;
@@ -437,7 +437,7 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 				if (image != null) {
 					Rectangle rect = image.getBounds ();
 					width = rect.width;
-					if (hasText && text.length () != 0) {
+					if (hasText && this.text.length () != 0) {
 						width += MARGIN * 2;
 					}
 					height = rect.height;
@@ -451,7 +451,7 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 				if (newFont != 0) oldFont = OS.SelectObject (hDC, newFont);
 				TEXTMETRIC lptm = OS.IsUnicode ? (TEXTMETRIC) new TEXTMETRICW () : new TEXTMETRICA ();
 				OS.GetTextMetrics (hDC, lptm);
-				int length = text.length ();
+				int length = this.text.length ();
 				if (length == 0) {
 					height = Math.max (height, lptm.tmHeight);
 				} else {
@@ -585,7 +585,7 @@ void enableWidget (boolean enabled) {
 			int bits = OS.GetWindowLong (handle, OS.GWL_STYLE);
 			boolean hasImage = (bits & (OS.BS_BITMAP | OS.BS_ICON)) != 0;
 			if (!hasImage) {
-				String string = enabled ? text : text + " ";
+				String string = enabled ? this.text : this.text + " ";
 				TCHAR buffer = new TCHAR (getCodePage (), string, true);
 				OS.SetWindowText (handle, buffer);
 			}
@@ -766,13 +766,13 @@ boolean mnemonicMatch (char key) {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	if (imageList != null) imageList.dispose ();
-	imageList = null;
+	if (this.imageList != null) this.imageList.dispose ();
+	this.imageList = null;
 	if (disabledImage != null) disabledImage.dispose ();
 	disabledImage = null;
 	if (image2 != null) image2.dispose ();
 	image2 = null;
-	text = null;
+	this.text = null;
 	image = null;
 }
 
@@ -860,10 +860,10 @@ public void setAlignment (int alignment) {
 	if ((style & SWT.CENTER) != 0) newBits |= OS.BS_CENTER;
 	if ((style & SWT.RIGHT) != 0) newBits |= OS.BS_RIGHT;
 	if (OS.COMCTL32_MAJOR >= 6) {
-		if (imageList != null) {
+		if (this.imageList != null) {
 			BUTTON_IMAGELIST buttonImageList = new BUTTON_IMAGELIST ();
-			buttonImageList.himl = imageList.getHandle ();
-			if (text.length () == 0) {
+			buttonImageList.himl = this.imageList.getHandle ();
+			if (this.text.length () == 0) {
 				if ((style & SWT.LEFT) != 0) buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_LEFT;
 				if ((style & SWT.CENTER) != 0) buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_CENTER;
 				if ((style & SWT.RIGHT) != 0) buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_RIGHT;
@@ -1087,7 +1087,7 @@ public void setText (String string) {
 	checkWidget ();
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if ((style & SWT.ARROW) != 0) return;
-	text = string;
+	this.text = string;
 	/* This code is intentionally commented */
 //	if (OS.COMCTL32_MAJOR < 6) {
 //		if (text.length () == 0 && image != null) {
@@ -1100,19 +1100,19 @@ public void setText (String string) {
 
 void updateImageList () {
 	if (OS.COMCTL32_MAJOR >= 6) {
-		if (imageList != null) {
+		if (this.imageList != null) {
 			BUTTON_IMAGELIST buttonImageList = new BUTTON_IMAGELIST ();
 			OS.SendMessage (handle, OS.BCM_GETIMAGELIST, 0, buttonImageList);
-			if (imageList != null) imageList.dispose ();
-			imageList = new ImageList (style & SWT.RIGHT_TO_LEFT);
+			if (this.imageList != null) this.imageList.dispose ();
+			this.imageList = new ImageList (style & SWT.RIGHT_TO_LEFT);
 			if (OS.IsWindowEnabled (handle)) {
-				imageList.add (image);
+				this.imageList.add (image);
 			} else {
 				if (disabledImage != null) disabledImage.dispose ();
 				disabledImage = new Image (display, image, SWT.IMAGE_DISABLE);
-				imageList.add (disabledImage);
+				this.imageList.add (disabledImage);
 			}
-			buttonImageList.himl = imageList.getHandle ();
+			buttonImageList.himl = this.imageList.getHandle ();
 			OS.SendMessage (handle, OS.BCM_SETIMAGELIST, 0, buttonImageList);
 			/*
 			* Bug in Windows.  Under certain cirumstances yet to be
@@ -1270,7 +1270,7 @@ LRESULT WM_SIZE (long /*int*/ wParam, long /*int*/ lParam) {
 	if (result != null) return result;
 	if (OS.COMCTL32_MAJOR >= 6) {
 		if ((style & (SWT.PUSH | SWT.TOGGLE)) != 0) {
-			if (imageList != null && text.length () != 0) {
+			if (this.imageList != null && this.text.length () != 0) {
 				BUTTON_IMAGELIST buttonImageList = new BUTTON_IMAGELIST ();
 				OS.SendMessage (handle, OS.BCM_GETIMAGELIST, 0, buttonImageList);
 				buttonImageList.uAlign = OS.BUTTON_IMAGELIST_ALIGN_LEFT;

@@ -73,8 +73,8 @@ public class ObjectGroupData
      */
     
     public BasicArrayList getObjects() {
-        if (objects == null) {
-            objects = new BasicArrayList();
+        if (this.objects == null) {
+            this.objects = new BasicArrayList();
         }
         return this.objects;
     }

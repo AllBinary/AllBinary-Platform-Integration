@@ -104,14 +104,14 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
             if(RGB >= 0x01000000)
                 awtColor = new Color(RGB, true);
             else            
-            if (filter != null) {
-                awtColor = new Color(filter.filterRGB(0, 0, color));
+            if (this.filter != null) {
+                awtColor = new Color(this.filter.filterRGB(0, 0, color));
             } else {
                 awtColor = new Color(RGB);
             }
             colorCache.put(new Integer(RGB), awtColor);
         }
-        g.setColor(awtColor);
+        this.g.setColor(awtColor);
     }
 
     public javax.microedition.lcdui.Font getFont() {
@@ -121,8 +121,8 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
     public void setFont(javax.microedition.lcdui.Font font) {
         currentFont = font;
         J2SEFont tmpFont = (J2SEFont) ((J2SEFontManager) DeviceFactory.getDevice().getFontManager())
-                .getFont(currentFont);
-        g.setFont(tmpFont.getFont());
+                .getFont(this.currentFont);
+        this.g.setFont(tmpFont.getFont());
     }
     
 	
@@ -140,15 +140,15 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
     public void clipRect(int x, int y, int width, int height) {
         g.clipRect(x, y, width, height);
-        clip = g.getClipBounds();
+        this.clip = this.g.getClipBounds();
     }
 
     public void setClip(int x, int y, int width, int height) {
         g.setClip(x, y, width, height);
-        clip.x = x;
-        clip.y = y;
-        clip.width = width;
-        clip.height = height;
+        this.clip.x = x;
+        this.clip.y = y;
+        this.clip.width = width;
+        this.clip.height = height;
     }
 
     public int getClipX() {
@@ -201,20 +201,20 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
         }
 
         if ((anchor & javax.microedition.lcdui.Graphics.TOP) != 0) {
-            newy += g.getFontMetrics().getAscent();
+            newy += this.g.getFontMetrics().getAscent();
         } else if ((anchor & javax.microedition.lcdui.Graphics.BOTTOM) != 0) {
             newy -= g.getFontMetrics().getDescent();
         }
         if ((anchor & javax.microedition.lcdui.Graphics.HCENTER) != 0) {
-            newx -= g.getFontMetrics().stringWidth(str) / 2;
+            newx -= this.g.getFontMetrics().stringWidth(str) / 2;
         } else if ((anchor & javax.microedition.lcdui.Graphics.RIGHT) != 0) {
             newx -= g.getFontMetrics().stringWidth(str);
         }
 
-        g.drawString(str, newx, newy);
+        this.g.drawString(str, newx, newy);
 
-        if ((currentFont.getStyle() & javax.microedition.lcdui.Font.STYLE_UNDERLINED) != 0) {
-            g.drawLine(newx, newy + 1, newx + g.getFontMetrics().stringWidth(str), newy + 1);
+        if ((this.currentFont.getStyle() & javax.microedition.lcdui.Font.STYLE_UNDERLINED) != 0) {
+            this.g.drawLine(newx, newy + 1, newx + this.g.getFontMetrics().stringWidth(str), newy + 1);
         }
     }
 
@@ -236,9 +236,9 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
     public void translate(int x, int y) {
         super.translate(x, y);
-        g.translate(x, y);
-        clip.x -= x;
-        clip.y -= y;
+        this.g.translate(x, y);
+        this.clip.x -= x;
+        this.clip.y -= y;
     }
 
     // Andres Navarro
@@ -266,17 +266,17 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
         
         // make sure that the coordinates are within the clipping rect
         Rectangle targetRect = new Rectangle(x, y, width, height);
-        Rectangle finalRect = clip.intersection(targetRect);
+        Rectangle finalRect = this.clip.intersection(targetRect);
 
-        int[] imageData = graphicsSurface.getImageData();
+        int[] imageData = this.graphicsSurface.getImageData();
         
-        int surfaceWidth = graphicsSurface.getImage().getWidth();
+        int surfaceWidth = this.graphicsSurface.getImage().getWidth();
         
         int imageDataStart = y * surfaceWidth;
         int rgbStart = offset;
         for (int row = finalRect.y - y; row < finalRect.getMaxY() - y; ++row) {
             if (processAlpha) {
-                for (int col = finalRect.x - x; col < (finalRect.getMaxX() - x) && (y + row) < clip.getMaxY(); ++col) {
+                for (int col = finalRect.x - x; col < (finalRect.getMaxX() - x) && (y + row) < this.clip.getMaxY(); ++col) {
                     // if exceeding surface width, go to next line
                     if (col + x > surfaceWidth - 1)
                         break;
@@ -304,7 +304,7 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
         yPoints[1] = y2;
         yPoints[2] = y3;
 
-        g.fillPolygon(xPoints, yPoints, 3);
+        this.g.fillPolygon(xPoints, yPoints, 3);
     }
 
     public void copyArea(int x_src, int y_src, int width, int height, int x_dest, int y_dest, int anchor) {
@@ -356,7 +356,7 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
         if (badAnchor)
             throw new IllegalArgumentException("Bad Anchor");
 
-        g.copyArea(x_src, y_src, width, height, x_dest - x_src, y_dest - y_src);
+        this.g.copyArea(x_src, y_src, width, height, x_dest - x_src, y_dest - y_src);
     }
 
     public J2SEGraphicsSurface getGraphicsSurface() {

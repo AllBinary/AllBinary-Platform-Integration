@@ -58,14 +58,14 @@ public AccessibleControlEvent(Object source) {
  */
 @Override
 public String toString () {
-	return "AccessibleControlEvent {childID=" + childID +  //$NON-NLS-1$
-		" accessible=" + accessible +  //$NON-NLS-1$
+	return "AccessibleControlEvent {childID=" + this.childID +  //$NON-NLS-1$
+		" accessible=" + this.accessible +  //$NON-NLS-1$
 		" x=" + x +  //$NON-NLS-1$
 		" y=" + y +  //$NON-NLS-1$
 		" width=" + width +  //$NON-NLS-1$
 		" height=" + height +  //$NON-NLS-1$
-		" detail=" + detail +  //$NON-NLS-1$
-		" result=" + result +  //$NON-NLS-1$
+		" detail=" + this.detail +  //$NON-NLS-1$
+		" result=" + this.result +  //$NON-NLS-1$
 		"}"; //$NON-NLS-1$
 }	
 }

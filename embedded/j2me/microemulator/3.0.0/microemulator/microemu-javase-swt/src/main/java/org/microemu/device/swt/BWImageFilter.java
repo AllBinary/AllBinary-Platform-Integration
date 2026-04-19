@@ -60,11 +60,11 @@ public final class BWImageFilter implements ImageFilter
     this.Yr = Yr;
     this.Yg = Yg;
     this.Yb = Yb;
-    backgroundColor = SwtDeviceComponent.getColor(new RGBA(
+    this.backgroundColor = SwtDeviceComponent.getColor(new RGBA(
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getBackgroundColor().getRed(),
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getBackgroundColor().getGreen(),
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getBackgroundColor().getBlue(), 255));
-    foregroundColor = SwtDeviceComponent.getColor(new RGBA(
+    this.foregroundColor = SwtDeviceComponent.getColor(new RGBA(
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getForegroundColor().getRed(),
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getForegroundColor().getGreen(),
     		((SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getForegroundColor().getBlue(), 255));
@@ -87,10 +87,10 @@ public final class BWImageFilter implements ImageFilter
     int Y = (int)(Yr * rgb.rgb.red + Yg * rgb.rgb.green + Yb * rgb.rgb.blue);
     if (Y > 127) 
     {        
-        final RGBA rgbB = backgroundColor.getRGBA();
+        final RGBA rgbB = this.backgroundColor.getRGBA();
     	return new RGBA(rgbB.rgb.red, rgbB.rgb.green, rgbB.rgb.blue, rgb.alpha);
 		} else {
-        final RGBA rgbB = foregroundColor.getRGBA();
+        final RGBA rgbB = this.foregroundColor.getRGBA();
         return new RGBA(rgbB.rgb.red, rgbB.rgb.green, rgbB.rgb.blue, rgb.alpha);
 		}
   }

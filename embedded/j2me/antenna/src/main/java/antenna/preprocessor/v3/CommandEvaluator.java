@@ -94,7 +94,7 @@ public class CommandEvaluator {
 
         case APPLexer.SYMBOL: {
 
-            Define define = m_defines.getDefine(ast.getText());
+            Define define = this.m_defines.getDefine(ast.getText());
 
             if (define == null) {
                 return false; // if not defined, assume false.
@@ -158,13 +158,13 @@ public class CommandEvaluator {
         }
 
         case APPLexer.DEFINE: {
-            m_defines.define(ast.getNextSibling().ast);
+            this.m_defines.define(ast.getNextSibling().ast);
             return true;
         }
 
         case APPLexer.UNDEFINE: {
             String def = ast.getNextSibling().getText();
-            boolean removed = m_defines.undefine(def);
+            boolean removed = this.m_defines.undefine(def);
 
             if (!removed) {
                 System.err.println("Warning: attempting to undefine \"" + def
@@ -208,7 +208,7 @@ public class CommandEvaluator {
         if (nextSibling == null) {
             return debugDefined; // always true here
         } else {
-            Define define = m_defines.getDefine(DEBUG_KEY);
+            Define define = this.m_defines.getDefine(DEBUG_KEY);
             String currentValue = define.getLiteral().getValue();
             int currentLevel = getDebugLevelNumber(currentValue);
             if (currentLevel == -1) {
@@ -364,7 +364,7 @@ public class CommandEvaluator {
         switch (type) {
 
         case APPLexer.SYMBOL: {
-            Define v = m_defines.getDefine(text);
+            Define v = this.m_defines.getDefine(text);
             
             if (v != null) {
                 Literal lit = v.getLiteral();
@@ -424,7 +424,7 @@ public class CommandEvaluator {
 
         case APPLexer.SYMBOL: {
 
-            Define v = m_defines.getDefine(text);
+            Define v = this.m_defines.getDefine(text);
 
             if (v != null) {
                 return v.getLiteral();
@@ -529,8 +529,8 @@ public class CommandEvaluator {
          * @param message
          */
         public void warning(String message) {
-            if (listener != null) {
-                int ln = ppl.getLineNumber() + 1; // use 1 based line number
+            if (this.listener != null) {
+                int ln = this.ppl.getLineNumber() + 1; // use 1 based line number
                 // system for the external world
                 listener.warning(message, ln, ast.getCharPositionInLine(),
                         getText().length());
@@ -555,15 +555,15 @@ public class CommandEvaluator {
          * @return
          */
         public Eval getFirstChild() {
-            return new Eval(ppl, (PPLineAST) ast.getChild(0), listener);
+            return new Eval(this.ppl, (PPLineAST) this.ast.getChild(0), listener);
         }
 
         /**
          * @return
          */
         public Eval getNextSibling() {
-            return new Eval(ppl, (PPLineAST) ast.getParent().getChild(
-                    ast.getIndex() + 1), listener);
+            return new Eval(this.ppl, (PPLineAST) this.ast.getParent().getChild(
+                    this.ast.getIndex() + 1), listener);
         }
 
         /*

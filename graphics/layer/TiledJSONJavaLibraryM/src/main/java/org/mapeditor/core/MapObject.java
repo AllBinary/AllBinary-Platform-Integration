@@ -168,14 +168,14 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @param source a {@link java.lang.String} object.
      */
     public void setImageSource(String source) {
-        if (imageSource.equals(source)) {
+        if (this.imageSource.equals(source)) {
             return;
         }
 
         this.imageSource = source;
 
         // Attempt to read the image
-        if (imageSource.length() > 0) {
+        if (this.imageSource.length() > 0) {
             try {
                 throw new RuntimeException();
                 //image = ImageIO.read(new File(imageSource));
@@ -224,14 +224,14 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @return the image to be used when drawing this object
      */
     public Image getImage(double zoom) {
-        if (image == null) {
+        if (this.image == null) {
             return null;
         }
 
         final int zoomedWidth = (int) (getWidth() * zoom);
         final int zoomedHeight = (int) (getHeight() * zoom);
 
-        if (scaledImage == null || scaledImage.getWidth() != zoomedWidth
+        if (this.scaledImage == null || this.scaledImage.getWidth() != zoomedWidth
                 || scaledImage.getHeight() != zoomedHeight) {
             //scaledImage = image.getScaledInstance(zoomedWidth, zoomedHeight, Image.SCALE_SMOOTH);
             throw new RuntimeException();

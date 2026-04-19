@@ -62,9 +62,9 @@ public AuthenticationEvent(Widget widget) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " name=" + user
-		+ " password=" + password
-		+ " location=" + location
+		+ " name=" + this.user
+		+ " password=" + this.password
+		+ " location=" + this.location
 		+ "}";
 }
 }

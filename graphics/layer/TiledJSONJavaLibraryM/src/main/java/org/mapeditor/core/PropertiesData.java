@@ -59,8 +59,8 @@ public class PropertiesData {
      */
     
     public BasicArrayList getProperties() {
-        if (properties == null) {
-            properties = new BasicArrayList();
+        if (this.properties == null) {
+            this.properties = new BasicArrayList();
         }
         return this.properties;
     }

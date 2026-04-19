@@ -272,7 +272,7 @@ public class Event {
  * @return a rectangle that is the bounds.
  */
 public Rectangle getBounds () {
-	return new Rectangle (x, y, width, height);
+	return new Rectangle (this.x, y, width, height);
 }
 
 /**
@@ -295,6 +295,6 @@ public void setBounds (Rectangle rect) {
  */
 @Override
 public String toString () {
-	return "Event {type=" + type + " " + this.widget + " time=" + time + " data=" + data + " x=" + x + " y=" + y + " width=" + width + " height=" + height + " detail=" + detail + "}";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+	return "Event {type=" + this.type + " " + this.widget + " time=" + this.time + " data=" + this.data + " x=" + this.x + " y=" + this.y + " width=" + this.width + " height=" + this.height + " detail=" + this.detail + "}";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 }
 }

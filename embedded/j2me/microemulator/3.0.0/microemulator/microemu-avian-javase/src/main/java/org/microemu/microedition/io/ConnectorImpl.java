@@ -71,7 +71,7 @@ public class ConnectorImpl extends ConnectorAdapter {
 		try {
 //			return (Connection) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 //				public Object run() throws IOException {
-					if (debugConnectionInvocations || needPrivilegedCalls) {
+					if (debugConnectionInvocations || this.needPrivilegedCalls) {
 						return openSecureProxy(name, mode, timeouts, needPrivilegedCalls);
 					} else {
 						return openSecure(name, mode, timeouts);

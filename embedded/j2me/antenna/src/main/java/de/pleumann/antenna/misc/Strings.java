@@ -95,7 +95,7 @@ public class Strings {
 	}
 
 	public String get(int index) {
-		return (String) strings.get(index);
+		return (String) this.strings.get(index);
 	}
 
 	public int indexOf(String s) {
@@ -268,8 +268,8 @@ public class Strings {
 	public String toString()
 	{
 		StringBuffer sb  = new StringBuffer();
-		for(int i = 0;i<strings.size();i++)
-			sb.append(strings.get(i)).append("\n");
+		for(int i = 0;i<this.strings.size();i++)
+			sb.append(this.strings.get(i)).append("\n");
 		
 		return sb.toString();
 	}

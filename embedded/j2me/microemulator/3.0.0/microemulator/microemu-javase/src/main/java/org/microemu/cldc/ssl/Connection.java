@@ -98,7 +98,7 @@ public class Connection extends org.microemu.cldc.socket.SocketConnection implem
 	}
 
 	public SecurityInfo getSecurityInfo() throws IOException {
-		if (securityInfo == null) {
+		if (this.securityInfo == null) {
 			SSLSession session = ((SSLSocket) socket).getSession();
 			
 			Certificate[] certs = session.getPeerCertificates();
@@ -106,7 +106,7 @@ public class Connection extends org.microemu.cldc.socket.SocketConnection implem
 				throw new IOException();
 			}
 			
-			securityInfo = new SecurityInfoImpl(
+			this.securityInfo = new SecurityInfoImpl(
 					session.getCipherSuite(),
 					session.getProtocol(),
 					new CertificateImpl((X509Certificate) certs[0]));

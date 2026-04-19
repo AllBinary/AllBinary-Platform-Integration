@@ -76,8 +76,8 @@ public class SwtInputMethod extends InputMethodImpl {
 		// TODO When InputMethod will be removed from EmulatorContext add:
 		// if (DeviceFactory.getDevice().hasRepeatEvents()) {
 //		keyRepeatTimer = new Timer();
-		repeatModeKeyCode = Integer.MIN_VALUE;
-		clearRepeatFlag = false;
+		this.repeatModeKeyCode = Integer.MIN_VALUE;
+		this.clearRepeatFlag = false;
 	}
 
 	public int getGameAction(int keyCode) {
@@ -313,8 +313,8 @@ public class SwtInputMethod extends InputMethodImpl {
             //System.out.println("keyPressed: " + ev.keyCode);
             
 		if (DeviceFactory.getDevice().hasRepeatEvents() && inputMethodListener == null) {
-			clearRepeatFlag = false;
-			if (repeatModeKeyCode == ev.keyCode) {
+			this.clearRepeatFlag = false;
+			if (this.repeatModeKeyCode == ev.keyCode) {
 				MIDletAccess ma = MIDletBridge.getMIDletAccess();
 				if (ma == null) {
 					return;
@@ -330,7 +330,7 @@ public class SwtInputMethod extends InputMethodImpl {
 				return;
 			}
 
-			repeatModeKeyCode = ev.keyCode;
+			this.repeatModeKeyCode = ev.keyCode;
 		}
 
 		// invoke any associated commands, but send the raw key codes instead
@@ -369,7 +369,7 @@ public class SwtInputMethod extends InputMethodImpl {
 
 	public void keyReleased(KeyEvent ev) {
 		if (DeviceFactory.getDevice().hasRepeatEvents() && inputMethodListener == null) {
-			clearRepeatFlag = true;
+			this.clearRepeatFlag = true;
 //			keyRepeatTimer.schedule(new KeyRepeatTask(), 50);
 		} else {
 			final MIDletAccess ma = MIDletBridge.getMIDletAccess();

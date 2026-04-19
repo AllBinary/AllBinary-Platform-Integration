@@ -323,12 +323,12 @@ public PrinterData open() {
 	pd.hwndOwner = hwndOwner;
 	
 	boolean success = false;
-	if (printerData.name != null) {
+	if (this.printerData.name != null) {
 		/* Ensure that the printer name is in the current list of printers. */
 		PrinterData printerList[] = Printer.getPrinterList();
 		if (printerList.length > 0) {
 			for (int p = 0; p < printerList.length; p++) {
-				if (printerList[p].name.equals(printerData.name)) {
+				if (printerList[p].name.equals(this.printerData.name)) {
 					success = true;
 					break;
 				}

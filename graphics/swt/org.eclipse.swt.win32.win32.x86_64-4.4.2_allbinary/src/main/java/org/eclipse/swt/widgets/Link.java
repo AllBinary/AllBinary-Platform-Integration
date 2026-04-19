@@ -183,8 +183,8 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 		long /*int*/ hDC = OS.GetDC (handle);
 		long /*int*/ newFont = OS.SendMessage (handle, OS.WM_GETFONT, 0, 0);
 		long /*int*/ oldFont = OS.SelectObject (hDC, newFont);
-		if (text.length () > 0) {
-			TCHAR buffer = new TCHAR (getCodePage (), parse (text), false);
+		if (this.text.length () > 0) {
+			TCHAR buffer = new TCHAR (getCodePage (), parse (this.text), false);
 			RECT rect = new RECT ();
 			int flags = OS.DT_CALCRECT | OS.DT_NOPREFIX;
 			if (wHint != SWT.DEFAULT) {
@@ -203,20 +203,20 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 		if (newFont != 0) OS.SelectObject (hDC, oldFont);
 		OS.ReleaseDC (handle, hDC);
 	} else {
-		int layoutWidth = layout.getWidth ();
+		int layoutWidth = this.layout.getWidth ();
 		//TEMPORARY CODE
 		if (wHint == 0) {
-			layout.setWidth (1);
-			Rectangle rect = layout.getBounds ();
+			this.layout.setWidth (1);
+			Rectangle rect = this.layout.getBounds ();
 			width = 0;
 			height = rect.height;
 		} else {
-			layout.setWidth (wHint);
-			Rectangle rect = layout.getBounds ();
+			this.layout.setWidth (wHint);
+			Rectangle rect = this.layout.getBounds ();
 			width = rect.width;
 			height = rect.height;
 		}
-		layout.setWidth (layoutWidth);
+		this.layout.setWidth (layoutWidth);
 	}
 	if (wHint != SWT.DEFAULT) width = wHint;
 	if (hHint != SWT.DEFAULT) height = hHint;
@@ -230,27 +230,27 @@ void createHandle () {
 	super.createHandle ();
 	state |= THEME_BACKGROUND;
 	if (OS.COMCTL32_MAJOR < 6) {
-		layout = new TextLayout (display);
+		this.layout = new TextLayout (display);
 		if (!OS.IsWinCE && OS.WIN32_VERSION >= OS.VERSION (4, 10)) {
 			linkColor = Color.win32_new (display, OS.GetSysColor (OS.COLOR_HOTLIGHT));
 		} else {
 			linkColor = new Color (display, LINK_FOREGROUND);
 		}
 		disabledColor = Color.win32_new (display, OS.GetSysColor (OS.COLOR_GRAYTEXT));
-		offsets = new Point [0];
-		ids = new String [0];
-		mnemonics = new int [0];
-		selection = new Point (-1, -1);
+		this.offsets = new Point [0];
+		this.ids = new String [0];
+		this.mnemonics = new int [0];
+		this.selection = new Point (-1, -1);
 		focusIndex = mouseDownIndex = -1;
 	}
 }
 
 void createWidget () {
 	super.createWidget ();
-	text = "";
+	this.text = "";
 	if (OS.COMCTL32_MAJOR < 6) {
 		if ((style & SWT.MIRRORED) != 0) {
-			layout.setOrientation (SWT.RIGHT_TO_LEFT);
+			this.layout.setOrientation (SWT.RIGHT_TO_LEFT);
 		}
 		initAccessible ();
 	}
@@ -258,16 +258,16 @@ void createWidget () {
 
 void drawWidget (GC gc, RECT rect) {
 	drawBackground (gc.handle, rect);
-	int selStart = selection.x;
-	int selEnd = selection.y;
+	int selStart = this.selection.x;
+	int selEnd = this.selection.y;
 	if (selStart > selEnd) {
-		selStart = selection.y;
-		selEnd = selection.x;
+		selStart = this.selection.y;
+		selEnd = this.selection.x;
 	}
 	// temporary code to disable text selection
 	selStart = selEnd = -1;
 	if (!OS.IsWindowEnabled (handle)) gc.setForeground (disabledColor);
-	layout.draw (gc, 0, 0, selStart, selEnd, null, null);
+	this.layout.draw (gc, 0, 0, selStart, selEnd, null, null);
 	if (hasFocus () && focusIndex != -1) {
 		Rectangle [] rects = getRectangles (focusIndex);
 		for (int i = 0; i < rects.length; i++) {
@@ -299,9 +299,9 @@ void enableWidget (boolean enabled) {
 	} else {
 		TextStyle linkStyle = new TextStyle (null, enabled ? linkColor : disabledColor, null);
 		linkStyle.underline = true;
-		for (int i = 0; i < offsets.length; i++) {
-			Point point = offsets [i];
-			layout.setStyle (linkStyle, point.x, point.y);
+		for (int i = 0; i < this.offsets.length; i++) {
+			Point point = this.offsets [i];
+			this.layout.setStyle (linkStyle, point.x, point.y);
 		}
 	}
 	redraw ();
@@ -370,21 +370,21 @@ String getNameText () {
 Rectangle [] getRectangles (int linkIndex) {
 	int lineCount = layout.getLineCount ();
 	Rectangle [] rects = new Rectangle [lineCount];
-	int [] lineOffsets = layout.getLineOffsets ();
-	Point point = offsets [linkIndex];
+	int [] lineOffsets = this.layout.getLineOffsets ();
+	Point point = this.offsets [linkIndex];
 	int lineStart = 1;
 	while (point.x > lineOffsets [lineStart]) lineStart++;
 	int lineEnd = 1;
 	while (point.y > lineOffsets [lineEnd]) lineEnd++;
 	int index = 0;
 	if (lineStart == lineEnd) {
-		rects [index++] = layout.getBounds (point.x, point.y);
+		rects [index++] = this.layout.getBounds (point.x, point.y);
 	} else {
-		rects [index++] = layout.getBounds (point.x, lineOffsets [lineStart]-1);
-		rects [index++] = layout.getBounds (lineOffsets [lineEnd-1], point.y);
+		rects [index++] = this.layout.getBounds (point.x, lineOffsets [lineStart]-1);
+		rects [index++] = this.layout.getBounds (lineOffsets [lineEnd-1], point.y);
 		if (lineEnd - lineStart > 1) {
 			for (int i = lineStart; i < lineEnd - 1; i++) {
-				rects [index++] = layout.getLineBounds (i);
+				rects [index++] = this.layout.getLineBounds (i);
 			}
 		}
 	}
@@ -413,12 +413,12 @@ public String getText () {
 }
 
 boolean mnemonicHit (char key) {
-	if (mnemonics != null) {
+	if (this.mnemonics != null) {
 		char uckey = Character.toUpperCase (key);
-		String parsedText = parse(text);
-		for (int i = 0; i < mnemonics.length - 1; i++) {
-			if (mnemonics[i] != -1) {
-				char mnemonic = parsedText.charAt(mnemonics[i]);
+		String parsedText = parse(this.text);
+		for (int i = 0; i < this.mnemonics.length - 1; i++) {
+			if (this.mnemonics[i] != -1) {
+				char mnemonic = parsedText.charAt(this.mnemonics[i]);
 				if (uckey == Character.toUpperCase (mnemonic)) {
 					if (!setFocus ()) return false;
 					if (OS.COMCTL32_MAJOR >= 6) {
@@ -426,7 +426,7 @@ boolean mnemonicHit (char key) {
 						LITEM item = new LITEM ();
 						item.mask = OS.LIF_ITEMINDEX | OS.LIF_STATE;
 						item.stateMask = OS.LIS_FOCUSED;
-						while (item.iLink < mnemonics.length) {
+						while (item.iLink < this.mnemonics.length) {
 							if (item.iLink != i) OS.SendMessage (handle, OS.LM_SETITEM, 0, item);
 							item.iLink++;
 						}
@@ -452,12 +452,12 @@ boolean mnemonicHit (char key) {
 }
 
 boolean mnemonicMatch (char key) {
-	if (mnemonics != null) {
+	if (this.mnemonics != null) {
 		char uckey = Character.toUpperCase (key);
-		String parsedText = parse(text);
-		for (int i = 0; i < mnemonics.length - 1; i++) {
-			if (mnemonics[i] != -1) {
-				char mnemonic = parsedText.charAt(mnemonics[i]);
+		String parsedText = parse(this.text);
+		for (int i = 0; i < this.mnemonics.length - 1; i++) {
+			if (this.mnemonics[i] != -1) {
+				char mnemonic = parsedText.charAt(this.mnemonics[i]);
 				if (uckey == Character.toUpperCase (mnemonic)) { 
 					return true;
 				}
@@ -469,9 +469,9 @@ boolean mnemonicMatch (char key) {
 
 String parse (String string) {
 	int length = string.length ();
-	offsets = new Point [length / 4];
-	ids = new String [length / 4];
-	mnemonics = new int [length / 4 + 1];
+	this.offsets = new Point [length / 4];
+	this.ids = new String [length / 4];
+	this.mnemonics = new int [length / 4 + 1];
 	StringBuffer result = new StringBuffer ();
 	char [] buffer = new char [length];
 	string.getChars (0, string.length (), buffer, 0);
@@ -517,12 +517,12 @@ String parse (String string) {
 				break;
 			case 6:
 				if (c == '>') {
-					mnemonics [linkIndex] = parseMnemonics (buffer, start, tagStart, result);
+					this.mnemonics [linkIndex] = parseMnemonics (buffer, start, tagStart, result);
 					int offset = result.length ();
 					parseMnemonics (buffer, linkStart, endtagStart, result);
-					offsets [linkIndex] = new Point (offset, result.length () - 1);
-					if (ids [linkIndex] == null) {
-						ids [linkIndex] = new String (buffer, linkStart, endtagStart - linkStart);
+					this.offsets [linkIndex] = new Point (offset, result.length () - 1);
+					if (this.ids [linkIndex] == null) {
+						this.ids [linkIndex] = new String (buffer, linkStart, endtagStart - linkStart);
 					}
 					linkIndex++;
 					start = tagStart = linkStart = endtagStart = refStart = index + 1;
@@ -553,7 +553,7 @@ String parse (String string) {
 				break;
 			case 12:
 				if (c == '"') {
-					ids[linkIndex] = new String (buffer, refStart, index - refStart);
+					this.ids[linkIndex] = new String (buffer, refStart, index - refStart);
 					state = 2;
 				}
 				break;
@@ -580,20 +580,20 @@ String parse (String string) {
 		int tmp = parseMnemonics (buffer, start, tagStart, result);
 		int mnemonic = parseMnemonics (buffer, Math.max (tagStart, linkStart), length, result);
 		if (mnemonic == -1) mnemonic = tmp;
-		mnemonics [linkIndex] = mnemonic;
+		this.mnemonics [linkIndex] = mnemonic;
 	} else {
-		mnemonics [linkIndex] = -1;
+		this.mnemonics [linkIndex] = -1;
 	}
-	if (offsets.length != linkIndex) {
+	if (this.offsets.length != linkIndex) {
 		Point [] newOffsets = new Point [linkIndex];
-		System.arraycopy (offsets, 0, newOffsets, 0, linkIndex);
-		offsets = newOffsets;
+		System.arraycopy (this.offsets, 0, newOffsets, 0, linkIndex);
+		this.offsets = newOffsets;
 		String [] newIDs = new String [linkIndex];
-		System.arraycopy (ids, 0, newIDs, 0, linkIndex);
-		ids = newIDs;
+		System.arraycopy (this.ids, 0, newIDs, 0, linkIndex);
+		this.ids = newIDs;
 		int [] newMnemonics = new int [linkIndex + 1];
-		System.arraycopy (mnemonics, 0, newMnemonics, 0, linkIndex + 1);
-		mnemonics = newMnemonics;		
+		System.arraycopy (this.mnemonics, 0, newMnemonics, 0, linkIndex + 1);
+		this.mnemonics = newMnemonics;		
 	}
 	return result.toString ();
 }
@@ -618,15 +618,15 @@ int parseMnemonics (char[] buffer, int start, int end, StringBuffer result) {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	if (layout != null) layout.dispose ();
-	layout = null;
+	if (this.layout != null) this.layout.dispose ();
+	this.layout = null;
 	if (linkColor != null) linkColor.dispose ();
 	linkColor = null;
 	disabledColor = null;
-	offsets = null;
-	ids = null;
-	mnemonics = null;
-	text = null;
+	this.offsets = null;
+	this.ids = null;
+	this.mnemonics = null;
+	this.text = null;
 }
 
 /**
@@ -693,8 +693,8 @@ public void removeSelectionListener (SelectionListener listener) {
 public void setText (String string) {
 	checkWidget ();
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
-	if (string.equals (text)) return;
-	text = string;	
+	if (string.equals (this.text)) return;
+	this.text = string;	
 	if (OS.COMCTL32_MAJOR >= 6) {
 		boolean enabled = OS.IsWindowEnabled (handle);
 		/*
@@ -706,14 +706,14 @@ public void setText (String string) {
 		if (string.length () == 0) string = " ";  //$NON-NLS-1$
 		TCHAR buffer = new TCHAR (getCodePage (), string, true);
 		OS.SetWindowText (handle, buffer);
-		parse (text);
+		parse (this.text);
 		enableWidget (enabled);
 	} else {
-		layout.setText (parse (text));	
-		focusIndex = offsets.length > 0 ? 0 : -1;
-		selection.x = selection.y = -1;
+		this.layout.setText (parse (this.text));	
+		focusIndex = this.offsets.length > 0 ? 0 : -1;
+		this.selection.x = this.selection.y = -1;
 		int bits = OS.GetWindowLong (handle, OS.GWL_STYLE);
-		if (offsets.length > 0) {
+		if (this.offsets.length > 0) {
 			bits |= OS.WS_TABSTOP;
 		} else {
 			bits &= ~OS.WS_TABSTOP;
@@ -722,16 +722,16 @@ public void setText (String string) {
 		boolean enabled = OS.IsWindowEnabled (handle);
 		TextStyle linkStyle = new TextStyle (null, enabled ? linkColor : disabledColor, null);
 		linkStyle.underline = true;
-		for (int i = 0; i < offsets.length; i++) {
-			Point point = offsets [i];
-			layout.setStyle (linkStyle, point.x, point.y);
+		for (int i = 0; i < this.offsets.length; i++) {
+			Point point = this.offsets [i];
+			this.layout.setStyle (linkStyle, point.x, point.y);
 		}
 		TextStyle mnemonicStyle = new TextStyle (null, null, null);
 		mnemonicStyle.underline = true;
-		for (int i = 0; i < mnemonics.length; i++) {
-			int mnemonic  = mnemonics [i];
+		for (int i = 0; i < this.mnemonics.length; i++) {
+			int mnemonic  = this.mnemonics [i];
 			if (mnemonic != -1) {
-				layout.setStyle (mnemonicStyle, mnemonic, mnemonic);
+				this.layout.setStyle (mnemonicStyle, mnemonic, mnemonic);
 			}
 		}
 		redraw ();
@@ -773,13 +773,13 @@ LRESULT WM_CHAR (long /*int*/ wParam, long /*int*/ lParam) {
 			case ' ':
 			case SWT.CR:
 				Event event = new Event ();
-				event.text = ids [focusIndex];
+				event.text = this.ids [focusIndex];
 				sendSelectionEvent (SWT.Selection, event, true);
 				break;
 			case SWT.TAB:
 				boolean next = OS.GetKeyState (OS.VK_SHIFT) >= 0;
 				if (next) {
-					if (focusIndex < offsets.length - 1) {
+					if (focusIndex < this.offsets.length - 1) {
 						focusIndex++;
 						redraw ();
 					}
@@ -830,7 +830,7 @@ LRESULT WM_GETDLGCODE (long /*int*/ wParam, long /*int*/ lParam) {
 		code = callWindowProc (handle, OS.WM_GETDLGCODE, wParam, lParam);
 	} else {
 		index = focusIndex;
-		count = offsets.length; 
+		count = this.offsets.length; 
 	}
 	if (count == 0) {
 		return new LRESULT (code | OS.DLGC_STATIC);
@@ -850,8 +850,8 @@ LRESULT WM_GETFONT (long /*int*/ wParam, long /*int*/ lParam) {
 	if (result != null) return result;
 	long /*int*/ code = callWindowProc (handle, OS.WM_GETFONT, wParam, lParam);
 	if (code != 0) return new LRESULT (code);
-	if (font == 0) font = defaultFont ();
-	return new LRESULT (font);
+	if (this.font == 0) this.font = defaultFont ();
+	return new LRESULT (this.font);
 }
 
 LRESULT WM_KEYDOWN (long /*int*/ wParam, long /*int*/ lParam) {
@@ -887,21 +887,21 @@ LRESULT WM_LBUTTONDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 		if (focusIndex != -1) setFocus ();
 		int x = OS.GET_X_LPARAM (lParam);
 		int y = OS.GET_Y_LPARAM (lParam);
-		int offset = layout.getOffset (x, y, null);
-		int oldSelectionX = selection.x;
-		int oldSelectionY = selection.y;
-		selection.x = offset;
-		selection.y = -1;
+		int offset = this.layout.getOffset (x, y, null);
+		int oldSelectionX = this.selection.x;
+		int oldSelectionY = this.selection.y;
+		this.selection.x = offset;
+		this.selection.y = -1;
 		if (oldSelectionX != -1 && oldSelectionY != -1) {
 			if (oldSelectionX > oldSelectionY) {
 				int temp = oldSelectionX;
 				oldSelectionX = oldSelectionY;
 				oldSelectionY = temp;
 			}
-			Rectangle rect = layout.getBounds (oldSelectionX, oldSelectionY);
+			Rectangle rect = this.layout.getBounds (oldSelectionX, oldSelectionY);
 			redraw (rect.x, rect.y, rect.width, rect.height, false);
 		}
-		for (int j = 0; j < offsets.length; j++) {
+		for (int j = 0; j < this.offsets.length; j++) {
 			Rectangle [] rects = getRectangles (j);
 			for (int i = 0; i < rects.length; i++) {
 				Rectangle rect = rects [i];
@@ -930,7 +930,7 @@ LRESULT WM_LBUTTONUP (long /*int*/ wParam, long /*int*/ lParam) {
 			Rectangle rect = rects [i];
 			if (rect.contains (x, y)) {
 				Event event = new Event ();
-				event.text = ids [mouseDownIndex];
+				event.text = this.ids [mouseDownIndex];
 				sendSelectionEvent (SWT.Selection, event, true);
 				break;
 			}
@@ -960,20 +960,20 @@ LRESULT WM_MOUSEMOVE (long /*int*/ wParam, long /*int*/ lParam) {
 		int x = OS.GET_X_LPARAM (lParam);
 		int y = OS.GET_Y_LPARAM (lParam);
 		if (OS.GetKeyState (OS.VK_LBUTTON) < 0) {
-			int oldSelection = selection.y;
-			selection.y = layout.getOffset (x, y, null);
-			if (selection.y != oldSelection) {
-				int newSelection = selection.y;
+			int oldSelection = this.selection.y;
+			this.selection.y = this.layout.getOffset (x, y, null);
+			if (this.selection.y != oldSelection) {
+				int newSelection = this.selection.y;
 				if (oldSelection > newSelection) {
 					int temp = oldSelection;
 					oldSelection = newSelection;
 					newSelection = temp;
 				}
-				Rectangle rect = layout.getBounds (oldSelection, newSelection);
+				Rectangle rect = this.layout.getBounds (oldSelection, newSelection);
 				redraw (rect.x, rect.y, rect.width, rect.height, false);
 			}
 		} else {
-			for (int j = 0; j < offsets.length; j++) {
+			for (int j = 0; j < this.offsets.length; j++) {
 				Rectangle [] rects = getRectangles (j);
 				for (int i = 0; i < rects.length; i++) {
 					Rectangle rect = rects [i];
@@ -1036,10 +1036,10 @@ LRESULT WM_SETFOCUS (long /*int*/ wParam, long /*int*/ lParam) {
 
 LRESULT WM_SETFONT (long /*int*/ wParam, long /*int*/ lParam) {
 	if (OS.COMCTL32_MAJOR < 6) {
-		layout.setFont (Font.win32_new (display, wParam));
+		this.layout.setFont (Font.win32_new (display, wParam));
 	}
 	if (lParam != 0) OS.InvalidateRect (handle, null, true);
-	return super.WM_SETFONT (font = wParam, lParam);
+	return super.WM_SETFONT (this.font = wParam, lParam);
 }
 
 LRESULT WM_SIZE (long /*int*/ wParam, long /*int*/ lParam) {
@@ -1047,7 +1047,7 @@ LRESULT WM_SIZE (long /*int*/ wParam, long /*int*/ lParam) {
 	if (OS.COMCTL32_MAJOR < 6) {
 		RECT rect = new RECT ();
 		OS.GetClientRect (handle, rect);
-		layout.setWidth (rect.right > 0 ? rect.right : -1);
+		this.layout.setWidth (rect.right > 0 ? rect.right : -1);
 		redraw ();
 	}
 	return result;
@@ -1082,7 +1082,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 				NMLINK item = new NMLINK ();
 				OS.MoveMemory (item, lParam, NMLINK.sizeof);
 				Event event = new Event ();
-				event.text = ids [item.iLink];
+				event.text = this.ids [item.iLink];
 				sendSelectionEvent (SWT.Selection, event, true);
 				break;
 		}

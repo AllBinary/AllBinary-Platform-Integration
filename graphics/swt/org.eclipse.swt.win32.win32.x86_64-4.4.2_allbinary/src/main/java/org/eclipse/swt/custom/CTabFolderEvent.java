@@ -82,12 +82,12 @@ CTabFolderEvent(Widget w) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " item=" + item
-		+ " doit=" + doit
-		+ " x=" + x
-		+ " y=" + y
-		+ " width=" + width
-		+ " height=" + height
+		+ " item=" + this.item
+		+ " doit=" + this.doit
+		+ " x=" + this.x
+		+ " y=" + this.y
+		+ " width=" + this.width
+		+ " height=" + this.height
 		+ "}";
 }
 }

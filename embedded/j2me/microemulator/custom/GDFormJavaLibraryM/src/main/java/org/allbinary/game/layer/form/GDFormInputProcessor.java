@@ -67,8 +67,8 @@ public class GDFormInputProcessor
         this.basicMotionGesturesHandler.addListener(gdFormInput);
         this.movedMotionGesturesHandler.addListener(gdFormInput);
         
-        if(!sceneFormInputListenerList.contains(gdFormInput)) {
-            sceneFormInputListenerList.add(gdFormInput);
+        if(!this.sceneFormInputListenerList.contains(gdFormInput)) {
+            this.sceneFormInputListenerList.add(gdFormInput);
         }
         
     }
@@ -100,13 +100,13 @@ public class GDFormInputProcessor
             virtualKeyboardEventHandler.close();
         } catch(Exception e) {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            logUtil.put(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e);
+            this.logUtil.put(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e);
         }
         
-        final int size = sceneFormInputListenerList.size();
+        final int size = this.sceneFormInputListenerList.size();
         GDFormInput gdFormInput;
         for(int index = 0; index < size; index++) {
-            gdFormInput = (GDFormInput) sceneFormInputListenerList.get(index);
+            gdFormInput = (GDFormInput) this.sceneFormInputListenerList.get(index);
 
             this.movedMotionGesturesHandler.removeListener(gdFormInput);
             this.basicMotionGesturesHandler.removeListener(gdFormInput);
@@ -115,7 +115,7 @@ public class GDFormInputProcessor
             gdFormInput.reset();
         }
         
-        sceneFormInputListenerList.clear();
+        this.sceneFormInputListenerList.clear();
     }
     
 }

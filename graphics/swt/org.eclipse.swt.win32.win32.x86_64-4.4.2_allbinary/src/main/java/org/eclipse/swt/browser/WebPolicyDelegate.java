@@ -69,7 +69,7 @@ int decidePolicyForNavigationAction (long /*int*/ webView, long /*int*/ actionIn
 	String url = WebKit.extractBSTR (result[0]);
 	COM.SysFreeString (result[0]);
 	IWebPolicyDecisionListener pdListener = new IWebPolicyDecisionListener (listener);
-	WebKit webKit = (WebKit)browser.webBrowser;
+	WebKit webKit = (WebKit)this.browser.webBrowser;
 	if (webKit.loadingText) {
 		/* 
 		 * WebKit is auto-navigating to about:blank in response to a loadHTMLString()
@@ -100,9 +100,9 @@ int decidePolicyForNavigationAction (long /*int*/ webView, long /*int*/ actionIn
 			url = WebKit.ABOUT_BLANK + url.substring (length);
 		}
 	}
-	LocationEvent newEvent = new LocationEvent (browser);
-	newEvent.display = browser.getDisplay ();
-	newEvent.widget = browser;
+	LocationEvent newEvent = new LocationEvent (this.browser);
+	newEvent.display = this.browser.getDisplay ();
+	newEvent.widget = this.browser;
 	newEvent.location = url;
 	newEvent.doit = true;
 	LocationListener[] locationListeners = webKit.locationListeners;
@@ -139,9 +139,9 @@ int decidePolicyForNewWindowAction (long /*int*/ webView, long /*int*/ actionInf
 }
 
 protected void disposeCOMInterfaces () {
-	if (iWebPolicyDelegate != null) {
-		iWebPolicyDelegate.dispose ();
-		iWebPolicyDelegate = null;
+	if (this.iWebPolicyDelegate != null) {
+		this.iWebPolicyDelegate.dispose ();
+		this.iWebPolicyDelegate = null;
 	}	
 }
 
@@ -155,13 +155,13 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	COM.MoveMemory (guid, riid, GUID.sizeof);
 
 	if (COM.IsEqualGUID (guid, COM.IIDIUnknown)) {
-		COM.MoveMemory (ppvObject, new long /*int*/[] {iWebPolicyDelegate.getAddress ()}, OS.PTR_SIZEOF);
-		new IUnknown (iWebPolicyDelegate.getAddress ()).AddRef ();
+		COM.MoveMemory (ppvObject, new long /*int*/[] {this.iWebPolicyDelegate.getAddress ()}, OS.PTR_SIZEOF);
+		new IUnknown (this.iWebPolicyDelegate.getAddress ()).AddRef ();
 		return COM.S_OK;
 	}
 	if (COM.IsEqualGUID (guid, WebKit_win32.IID_IWebPolicyDelegate)) {
-		COM.MoveMemory (ppvObject, new long /*int*/[] {iWebPolicyDelegate.getAddress ()}, OS.PTR_SIZEOF);
-		new IUnknown (iWebPolicyDelegate.getAddress ()).AddRef ();
+		COM.MoveMemory (ppvObject, new long /*int*/[] {this.iWebPolicyDelegate.getAddress ()}, OS.PTR_SIZEOF);
+		new IUnknown (this.iWebPolicyDelegate.getAddress ()).AddRef ();
 		return COM.S_OK;
 	}
 
@@ -171,14 +171,14 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		disposeCOMInterfaces ();
 	}
 	return refCount;
 }
 
 int unableToImplementPolicyWithError (long /*int*/ webView, long /*int*/ error, long /*int*/ frame) {
-	if (browser.isDisposed ()) return COM.S_OK;
+	if (this.browser.isDisposed ()) return COM.S_OK;
 
 	IWebError iweberror = new IWebError (error);
 	String failingURL = null;
@@ -198,7 +198,7 @@ int unableToImplementPolicyWithError (long /*int*/ webView, long /*int*/ error, 
 
 	String message = failingURL != null ? failingURL + "\n\n" : ""; //$NON-NLS-1$ //$NON-NLS-2$
 	message += Compatibility.getMessage ("SWT_Page_Load_Failed", new Object[] {description}); //$NON-NLS-1$
-	MessageBox messageBox = new MessageBox (browser.getShell (), SWT.OK | SWT.ICON_ERROR);
+	MessageBox messageBox = new MessageBox (this.browser.getShell (), SWT.OK | SWT.ICON_ERROR);
 	messageBox.setMessage (message);
 	messageBox.open ();
 	return COM.S_OK;

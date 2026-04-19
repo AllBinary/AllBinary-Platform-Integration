@@ -17,12 +17,12 @@ class JadSelector extends JDialog
 
 	public JadSelector(File dir)
 	{
-		m_dir = dir;
+		this.m_dir = dir;
 	}
 	
 	public File selectJad()
 	{
-		JFileChooser chooser = new JFileChooser(m_dir);
+		JFileChooser chooser = new JFileChooser(this.m_dir);
 		chooser.setFileFilter(new FileFilter()
 		{
 			public String getDescription()

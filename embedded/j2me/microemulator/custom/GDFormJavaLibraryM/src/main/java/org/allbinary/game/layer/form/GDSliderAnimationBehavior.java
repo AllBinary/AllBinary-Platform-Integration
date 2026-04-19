@@ -85,15 +85,15 @@ implements GDGameLayerItemStateListener {
         if(motionGestureInput == touchMotionGestureFactory.PRESSED) {
             final SliderAnimation sliderAnimation = ((SliderAnimation) this.animationArray[0]);
             
-            if (rectangleCollisionUtil.isInside(gameLayer.getXP() + sliderAnimation.getThumbDx(), gameLayer.getYP() - 2, 
+            if (this.rectangleCollisionUtil.isInside(this.gameLayer.getXP() + sliderAnimation.getThumbDx(), this.gameLayer.getYP() - 2, 
                 gameLayer.getXP() + sliderAnimation.getThumbDx() + sliderAnimation.getThumbWidth(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
                 this.point = point;
-                this.deltaFromPointToStartOfThumb = this.point.getX() - (gameLayer.getXP() + sliderAnimation.getThumbDx());
+                this.deltaFromPointToStartOfThumb = this.point.getX() - (this.gameLayer.getXP() + sliderAnimation.getThumbDx());
                 //logUtil.putF("deltaFromPointToStartOfThumb: " + deltaFromPointToStartOfThumb, this, "onMotionGestureEvent");
-                draggingThumb = true;
+                this.draggingThumb = true;
             } else if (rectangleCollisionUtil.isInside(gameLayer.getXP(), gameLayer.getYP() - 2, 
                 gameLayer.getX2(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
-                final int value2 = point.getX() - gameLayer.getXP() - (sliderAnimation.getThumbWidth() / 2);
+                final int value2 = point.getX() - this.gameLayer.getXP() - (sliderAnimation.getThumbWidth() / 2);
                 //logUtil.putF("moveThumbTo: " + value2, this, "onMotionGestureEvent");
                 this.setValue2(value2);
             }

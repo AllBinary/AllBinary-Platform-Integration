@@ -55,8 +55,8 @@ public class TreeDragSourceEffect extends DragSourceEffect {
 	 * @param event the information associated with the drag finished event
 	 */
 	public void dragFinished(DragSourceEvent event) {
-		if (dragSourceImage != null) dragSourceImage.dispose();
-		dragSourceImage = null;
+		if (this.dragSourceImage != null) this.dragSourceImage.dispose();
+		this.dragSourceImage = null;
 	}
 
 	/**
@@ -75,8 +75,8 @@ public class TreeDragSourceEffect extends DragSourceEffect {
 	}
 
 	Image getDragSourceImage(DragSourceEvent event) {
-		if (dragSourceImage != null) dragSourceImage.dispose();
-		dragSourceImage = null;
+		if (this.dragSourceImage != null) this.dragSourceImage.dispose();
+		this.dragSourceImage = null;
 		if (!OS.IsWinCE && OS.WIN32_VERSION >= OS.VERSION (5, 1)) {
 			SHDRAGIMAGE shdi = new SHDRAGIMAGE();
 			int DI_GETDRAGIMAGE = OS.RegisterWindowMessage (new TCHAR (0, "ShellGetDragImage", true)); //$NON-NLS-1$
@@ -139,7 +139,7 @@ public class TreeDragSourceEffect extends DragSourceEffect {
 					} else {
 						data.transparentPixel = shdi.crColorKey << 8;
 					}
-					dragSourceImage = new Image (control.getDisplay (), data);
+					this.dragSourceImage = new Image (control.getDisplay (), data);
 					OS.SelectObject (memHdc, oldMemBitmap);
 					OS.DeleteDC (memHdc);
 					OS.DeleteObject (memDib);

@@ -90,7 +90,7 @@ public class BluetoothConnectionException extends IOException {
 		if(error < 1 || error > 6) {
 			throw new java.lang.IllegalArgumentException();
 		}
-		errorCode = error;			
+		this.errorCode = error;			
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class BluetoothConnectionException extends IOException {
 		if (error < 1 || error > 6) {
 			throw new java.lang.IllegalArgumentException();
 		}
-		errorCode = error;
+		this.errorCode = error;
 	}
 	/**
 	 * Gets the status set in the constructor that will indicate the 

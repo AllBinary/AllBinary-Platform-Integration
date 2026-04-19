@@ -58,8 +58,8 @@ public class StringComponent
         this.setBackgroundBasicColor(backgroundBasicColor);
         this.setForegroundBasicColor(foregroundBasicColor);
 
-        stringComponentProperties.width = -1;
-        stringComponentProperties.widthDecreaser = 0;
+        this.stringComponentProperties.width = -1;
+        this.stringComponentProperties.widthDecreaser = 0;
         setText(text);
     }
 
@@ -72,26 +72,26 @@ public class StringComponent
     {
         //synchronize (this)
         //{
-            if (stringComponentProperties.numOfBreaks == -1)
+            if (this.stringComponentProperties.numOfBreaks == -1)
             {
                 updateBreaks();
             }
 
             int i, prevIndex = 0;
 
-            final int size = stringComponentProperties.numOfBreaks;
+            final int size = this.stringComponentProperties.numOfBreaks;
             for (i = 0; i < size; i++)
             {
-                if (num < stringComponentProperties.breaks[i])
+                if (num < this.stringComponentProperties.breaks[i])
                 {
                     break;
                 }
-                prevIndex = stringComponentProperties.breaks[i];
+                prevIndex = this.stringComponentProperties.breaks[i];
             }
 
-            if (!stringComponentProperties.hasNotChanged[num]) {
-                stringComponentProperties.lastWidth[num] = this.font.substringWidth(stringComponentProperties.text, prevIndex, num - prevIndex);
-                stringComponentProperties.hasNotChanged[num] = true;
+            if (!this.stringComponentProperties.hasNotChanged[num]) {
+                this.stringComponentProperties.lastWidth[num] = this.font.substringWidth(this.stringComponentProperties.text, prevIndex, num - prevIndex);
+                this.stringComponentProperties.hasNotChanged[num] = true;
             }
 
             return stringComponentProperties.lastWidth[num];
@@ -103,14 +103,14 @@ public class StringComponent
         int y = 0;
         //synchronize (this)
         //{
-            if (stringComponentProperties.numOfBreaks == -1)
+            if (this.stringComponentProperties.numOfBreaks == -1)
             {
                 updateBreaks();
             }
 
-            for (int i = 0; i < stringComponentProperties.numOfBreaks; i++)
+            for (int i = 0; i < this.stringComponentProperties.numOfBreaks; i++)
             {
-                if (num < stringComponentProperties.breaks[i])
+                if (num < this.stringComponentProperties.breaks[i])
                 {
                     break;
                 }
@@ -126,24 +126,24 @@ public class StringComponent
         int height;
         //synchronize (this)
         //{
-            if (stringComponentProperties.numOfBreaks == -1)
+            if (this.stringComponentProperties.numOfBreaks == -1)
             {
                 updateBreaks();
             }
 
-            if (stringComponentProperties.text == null)
+            if (this.stringComponentProperties.text == null)
             {
                 return 0;
             }
 
-            if (stringComponentProperties.numOfBreaks == 0)
+            if (this.stringComponentProperties.numOfBreaks == 0)
             {
                 return this.font.getHeight();
             }
 
-            height = stringComponentProperties.numOfBreaks * this.font.getHeight();
+            height = this.stringComponentProperties.numOfBreaks * this.font.getHeight();
 
-            if (stringComponentProperties.breaks[stringComponentProperties.numOfBreaks - 1] == stringComponentProperties.text.length() - 1
+            if (this.stringComponentProperties.breaks[this.stringComponentProperties.numOfBreaks - 1] == this.stringComponentProperties.text.length() - 1
                     && stringComponentProperties.text.charAt(stringComponentProperties.text.length() - 1) == '\n')
             {
             }
@@ -175,7 +175,7 @@ public class StringComponent
 
     public int paint(Graphics g)
     {
-        this.paintComponentProperties.copy(stringComponentProperties);
+        this.paintComponentProperties.copy(this.stringComponentProperties);
 
         if (this.paintComponentProperties.text == null)
         {

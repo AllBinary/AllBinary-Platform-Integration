@@ -38,11 +38,11 @@ public class AndroidMutableImage extends MutableImage implements AndroidImageInt
 	
 	public AndroidMutableImage(int width, int height, boolean withAlpha, int fillColor) {
 	    if (withAlpha) {
-	        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-		    bitmap.eraseColor(fillColor);
+	        this.bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+		    this.bitmap.eraseColor(fillColor);
 	    } else {
-	        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-		    bitmap.eraseColor(0xff000000 | fillColor);
+	        this.bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+		    this.bitmap.eraseColor(0xff000000 | fillColor);
 	    }
 	}
 
@@ -106,7 +106,7 @@ public class AndroidMutableImage extends MutableImage implements AndroidImageInt
                 throw new ArrayIndexOutOfBoundsException();
         }
 
-        bitmap.getPixels(argb, offset, scanlength, x, y, width, height);
+        this.bitmap.getPixels(argb, offset, scanlength, x, y, width, height);
 
 /*        for (int i = 0; i < argb.length; i++) {
 		    int a = (argb[i] & 0xFF000000);

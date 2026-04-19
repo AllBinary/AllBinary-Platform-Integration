@@ -132,7 +132,7 @@ public class JadFile {
         
         for (int i = 0; i < jad.size(); i++) {
         	String key = getName(jad.get(i));
-			if (!(manifest && excludeFromManifest != null && excludeFromManifest.containsKey(key)))
+			if (!(manifest && this.excludeFromManifest != null && this.excludeFromManifest.containsKey(key)))
         	{
         		add(jad.get(i));
         	}
@@ -157,7 +157,7 @@ public class JadFile {
      * Returns a line from the JAD file.
      */
     public String get(int index) {
-        return (String) strings.elementAt(index);
+        return (String) this.strings.elementAt(index);
     }
 
     /**

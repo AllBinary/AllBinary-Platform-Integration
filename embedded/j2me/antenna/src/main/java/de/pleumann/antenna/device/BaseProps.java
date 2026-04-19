@@ -26,12 +26,12 @@ public class BaseProps implements Cloneable
 	
 	public BaseProps(Element dev)
 	{
-		m_features = new TreeSet();
-		m_soundFormats = new TreeSet();
-		m_javaPackage = new TreeSet();
-		m_videoFormats = new TreeSet();
-		m_bugs = new TreeSet();
-		m_capabilities = new Properties();
+		this.m_features = new TreeSet();
+		this.m_soundFormats = new TreeSet();
+		this.m_javaPackage = new TreeSet();
+		this.m_videoFormats = new TreeSet();
+		this.m_bugs = new TreeSet();
+		this.m_capabilities = new Properties();
 		
 		parseBase(dev);
 	}
@@ -55,7 +55,7 @@ public class BaseProps implements Cloneable
 				{
 					String name = e.getAttribute("name");
 					String value = e.getAttribute("value");
-					m_capabilities.setProperty(name.trim(), value.trim());
+					this.m_capabilities.setProperty(name.trim(), value.trim());
 				}
 			}
 		}

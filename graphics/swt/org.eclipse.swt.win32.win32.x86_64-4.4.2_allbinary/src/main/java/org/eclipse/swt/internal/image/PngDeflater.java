@@ -206,11 +206,11 @@ void writeInt(ByteArrayOutputStream baos, int theInt) {
 void updateAdler(byte value) {
 
 	int low = adler32 & 0xffff;
-	int high = (adler32 >> 16) & 0xffff;
+	int high = (this.adler32 >> 16) & 0xffff;
 	int valueInt = value & 0xff;
 	low = (low + valueInt) % BASE;
 	high = (low + high) % BASE;
-	adler32 = (high << 16) | low;
+	this.adler32 = (high << 16) | low;
 
 }
 
@@ -229,8 +229,8 @@ void writeBits(int value, int count) {
 	buffer |= value << bitCount;
 	bitCount += count;
 	if (bitCount >= 16) {
-		bytes.write((byte) buffer);
-		bytes.write((byte) (buffer >>> 8));
+		this.bytes.write((byte) buffer);
+		this.bytes.write((byte) (buffer >>> 8));
 		buffer >>>= 16;
 		bitCount -= 16;
 	}
@@ -240,8 +240,8 @@ void writeBits(int value, int count) {
 void alignToByte() {
 
 	if (bitCount > 0) {
-		bytes.write((byte) buffer);
-		if (bitCount > 8) bytes.write((byte) (buffer >>> 8));
+		this.bytes.write((byte) buffer);
+		if (bitCount > 8) this.bytes.write((byte) (buffer >>> 8));
 	}
 	buffer = 0;
 	bitCount = 0;
@@ -355,8 +355,8 @@ Match findLongestMatch(int position, Link firstPosition) {
 
 			int i;
 			
-			for (i = 1; position + i < inLength; i++) {
-				if (in[position + i] != in[matchPosition + i]) {
+			for (i = 1; position + i < this.inLength; i++) {
+				if (this.in[position + i] != this.in[matchPosition + i]) {
 					break;
 				}
 			}
@@ -401,21 +401,21 @@ void updateHashtable(int to, int from) {
 	
 	for (int i = to; i < from; i++) {
 		
-		if (i + MIN_LENGTH > inLength) {
+		if (i + MIN_LENGTH > this.inLength) {
 			break;
 		}
 		
-		data[0] = in[i];
-		data[1] = in[i + 1];
-		data[2] = in[i + 2];
+		data[0] = this.in[i];
+		data[1] = this.in[i + 1];
+		data[2] = this.in[i + 2];
 		
 		hash = hash(data);
 		
-		if (window[nextWindow].previous != null) {
+		if (this.window[this.nextWindow].previous != null) {
 			this.window[this.nextWindow].previous.next = null;
 		}
-		else if (window[nextWindow].hash != 0) {
-			this.hashtable[window[this.nextWindow].hash].next = null;
+		else if (this.window[this.nextWindow].hash != 0) {
+			this.hashtable[this.window[this.nextWindow].hash].next = null;
 		}
 		
 		this.window[this.nextWindow].hash = hash;
@@ -428,7 +428,7 @@ void updateHashtable(int to, int from) {
 		}
 		
 		this.nextWindow = this.nextWindow + 1;
-		if (nextWindow == WINDOW) {
+		if (this.nextWindow == WINDOW) {
 			this.nextWindow = 0;
 		}
 			
@@ -442,12 +442,12 @@ void compress() {
 	byte[] data = new byte[3];
 	int hash;
 	for (int i = 0; i < HASH; i++) {
-		hashtable[i] = new Link();
+		this.hashtable[i] = new Link();
 	}
 	for (int i = 0; i < WINDOW; i++) {
-		window[i] = new Link();
+		this.window[i] = new Link();
 	}
-	nextWindow = 0;
+	this.nextWindow = 0;
 	Link firstPosition;
 	Match match;
 	int deferredPosition = -1;
@@ -460,20 +460,20 @@ void compress() {
 	outputLiteral(in[0]);
 	position = 1;
 	
-	while (position < inLength) {
+	while (position < this.inLength) {
 	
-		if (inLength - position < MIN_LENGTH) {
-			outputLiteral(in[position]);
+		if (this.inLength - position < MIN_LENGTH) {
+			outputLiteral(this.in[position]);
 			position = position + 1;
 			continue;
 		}
 		
-		data[0] = in[position];
-		data[1] = in[position + 1];
-		data[2] = in[position + 2];
+		data[0] = this.in[position];
+		data[1] = this.in[position + 1];
+		data[2] = this.in[position + 2];
 		
 		hash = hash(data);
-		firstPosition = hashtable[hash];
+		firstPosition = this.hashtable[hash];
 		
 		match = findLongestMatch(position, firstPosition);
 		
@@ -484,7 +484,7 @@ void compress() {
 			if (deferredMatch != null) {
 				if (match.length > deferredMatch.length + 1) {
 					// output literal at deferredPosition
-					outputLiteral(in[deferredPosition]);
+					outputLiteral(this.in[deferredPosition]);
 					// defer this match
 					deferredPosition = position;
 					deferredMatch = match;
@@ -521,7 +521,7 @@ void compress() {
 				position = newPosition;
 			}
 			else {
-				outputLiteral(in[position]);
+				outputLiteral(this.in[position]);
 				position = position + 1;
 			}
 		
@@ -541,9 +541,9 @@ void compressHuffmanOnly() {
 	writeBits(0x01, 1); // BFINAL = 0x01 (final block)
 	writeBits(0x01, 2); // BTYPE = 0x01 (compression with fixed Huffman codes)
 	
-	for (position = 0; position < inLength;) {
+	for (position = 0; position < this.inLength;) {
 	
-		outputLiteral(in[position]);
+		outputLiteral(this.in[position]);
 		position = position + 1;
 	
 	}
@@ -558,7 +558,7 @@ void store() {
 	// stored blocks are limited to 0xffff bytes
 	
 	int start = 0;
-	int length = inLength;
+	int length = this.inLength;
 	int blockLength;
 	int BFINAL = 0x00; // BFINAL = 0x00 or 0x01 (if final block), BTYPE = 0x00 (no compression)
 	
@@ -574,7 +574,7 @@ void store() {
 		}
 		
 		// write data header
-		bytes.write((byte) BFINAL);
+		this.bytes.write((byte) BFINAL);
 		writeShortLSB(bytes, blockLength); // LEN
 		writeShortLSB(bytes, blockLength ^ 0xffff); // NLEN (one's complement of LEN)
 	
@@ -591,15 +591,15 @@ void store() {
 public byte[] deflate(byte[] input) {
 
 	in = input;
-	inLength = input.length;
+	this.inLength = input.length;
 	
 	// write zlib header
 	bytes.write((byte) 0x78); // window size = 0x70 (32768), compression method = 0x08
 	bytes.write((byte) 0x9C); // compression level = 0x80 (default), check bits = 0x1C
 	
 	// compute checksum
-	for (int i = 0; i < inLength; i++) {
-		updateAdler(in[i]);
+	for (int i = 0; i < this.inLength; i++) {
+		updateAdler(this.in[i]);
 	}
 	
 	//store();
@@ -609,7 +609,7 @@ public byte[] deflate(byte[] input) {
 	compress();
 	
 	// write checksum
-	writeInt(bytes, adler32);
+	writeInt(this.bytes, adler32);
 	
 	return bytes.toByteArray();
 

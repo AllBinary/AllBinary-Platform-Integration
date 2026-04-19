@@ -91,8 +91,8 @@ public class Gauge extends Item
 				if (value < 0) {
 					value = 0;
 				}
-				if (value > maxValue) {
-					value = maxValue;
+				if (value > this.maxValue) {
+					value = this.maxValue;
 				}
 	
 				this.value = value;
@@ -162,10 +162,10 @@ public class Gauge extends Item
 	  if (hasIndefiniteRange() && 
 			  ((getValue() == Gauge.CONTINUOUS_RUNNING) ||
 			  (getValue() == Gauge.INCREMENTAL_UPDATING))) {
-		  if (indefiniteFrame+1 < Gauge.IDEFINITE_FRAMES)
+		  if (this.indefiniteFrame+1 < Gauge.IDEFINITE_FRAMES)
 			  indefiniteFrame++;
 		  else 
-			  indefiniteFrame = 0;
+			  this.indefiniteFrame = 0;
 		  repaint();
 	  }
   }
@@ -189,7 +189,7 @@ public class Gauge extends Item
   @Override
   public void keyPressed(int keyCode)
   {
-    if (Display.getGameAction(keyCode) == Canvas.LEFT && value > 0) {
+    if (Display.getGameAction(keyCode) == Canvas.LEFT && this.value > 0) {
       value--;
       repaint();
     } else if (Display.getGameAction(keyCode) == Canvas.RIGHT && value < maxValue) {
@@ -216,7 +216,7 @@ public class Gauge extends Item
     		g.drawRect(4, 4, width, HEIGHT - 9);
     	} else {
     		int width = ((owner.getWidth() - 8) << 1) / Gauge.IDEFINITE_FRAMES;
-    		int offset = (width >>> 1) * indefiniteFrame;
+    		int offset = (width >>> 1) * this.indefiniteFrame;
     		int width2 = 0;
     		if (offset + width > (owner.getWidth() - 8)) {
     			width2 = offset + width - (owner.getWidth() - 8);
@@ -229,7 +229,7 @@ public class Gauge extends Item
     		}
     	}
     } else {
-	    int width = (owner.getWidth() - 8) * value / maxValue; 
+	    int width = (owner.getWidth() - 8) * this.value / this.maxValue; 
 	    g.fillRect(4, 4, width, HEIGHT - 8);
     }
     

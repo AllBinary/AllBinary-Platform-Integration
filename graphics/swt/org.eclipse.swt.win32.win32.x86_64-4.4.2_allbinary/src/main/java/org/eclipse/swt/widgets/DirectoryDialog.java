@@ -104,7 +104,7 @@ long /*int*/ BrowseCallbackProc (long /*int*/ hwnd, long /*int*/ uMsg, long /*in
 			TCHAR buffer = new TCHAR (0, length);
 			int byteCount = buffer.length () * TCHAR.sizeof;
 			OS.MoveMemory (buffer, lParam, byteCount);
-			directoryPath = buffer.toString (0, length);
+			this.directoryPath = buffer.toString (0, length);
 			break;
 	}
 	return 0;
@@ -156,7 +156,7 @@ public String open () {
 
 	/* Copy the message to OS memory */
 	long /*int*/ lpszTitle = 0;
-	if (message.length () != 0) {
+	if (this.message.length () != 0) {
 		String string = this.message;
 		if (string.indexOf ('&') != -1) {
 			int length = string.length ();
@@ -189,7 +189,7 @@ public String open () {
 		display.setModalDialog (this);
 	}
 	
-	directoryPath = null;
+	this.directoryPath = null;
 	BROWSEINFO lpbi = new BROWSEINFO ();
 	lpbi.hwndOwner = hwndOwner;
 	lpbi.lpszTitle = lpszTitle;
@@ -241,8 +241,8 @@ public String open () {
 		/* Use the character encoding for the default locale */
 		TCHAR buffer = new TCHAR (0, OS.MAX_PATH);
 		if (OS.SHGetPathFromIDList (lpItemIdList, buffer)) {
-			directoryPath = buffer.toString (0, buffer.strlen ());
-			filterPath = directoryPath;
+			this.directoryPath = buffer.toString (0, buffer.strlen ());
+			filterPath = this.directoryPath;
 		}
 	}
 
@@ -302,7 +302,7 @@ public void setFilterPath (String string) {
  */
 public void setMessage (String string) {
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
-	message = string;
+	this.message = string;
 }
 
 }

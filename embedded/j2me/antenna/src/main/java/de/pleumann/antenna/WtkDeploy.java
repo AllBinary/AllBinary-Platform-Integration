@@ -51,7 +51,7 @@ public class WtkDeploy extends Task {
 
     public void init() throws BuildException {
         super.init();
-        condition = new Conditional(getProject());
+        this.condition = new Conditional(getProject());
     }
 
 	public void setJarfile(File file) {
@@ -98,33 +98,33 @@ public class WtkDeploy extends Task {
         if (!isActive()) return;
 
 		try {
-			if (jarFile == null || !jarFile.exists()) {
+			if (this.jarFile == null || !this.jarFile.exists()) {
 				throw new IllegalArgumentException("Need a JAR file.");
 			}
 
-			if (jadFile == null || !jadFile.exists()) {
+			if (this.jadFile == null || !this.jadFile.exists()) {
 				throw new IllegalArgumentException("Need a JAD file.");
 			}
 
-			if (target == null) {
+			if (this.target == null) {
                 JadFile jad = new JadFile();
-                jad.load(jadFile.getAbsolutePath(), encoding);
+                jad.load(this.jadFile.getAbsolutePath(), encoding);
                 
                 String s = jad.getValue("MIDlet-Jar-URL");
                 if (s != null && s.startsWith("http://")) {
                     int p = s.lastIndexOf('/');
-                    target = s.substring(0, p);
+                    this.target = s.substring(0, p);
                 }
             }
             
-            if (target == null) {
+            if (this.target == null) {
 				throw new IllegalArgumentException("Need a deployment target.");
 			}
 
-            log("Deploying to " + target + "...");
+            log("Deploying to " + this.target + "...");
 
-			upload(jarFile);
-			upload(jadFile);
+			upload(this.jarFile);
+			upload(this.jadFile);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);
@@ -134,11 +134,11 @@ public class WtkDeploy extends Task {
 	private void upload(File file) throws IOException {
 		log((delete ? "Deleting" : "Uploading") + " file " + file.getName());
 
-		String s = target + "/" + file.getName() + "?delete=" + delete;
-        if (login != null) {
+		String s = this.target + "/" + file.getName() + "?delete=" + this.delete;
+        if (this.login != null) {
             s = s + "&login=" + this.login;
         }
-        if (password != null) {
+        if (this.password != null) {
             s = s + "&password=" + this.password;
         }
         
@@ -149,7 +149,7 @@ public class WtkDeploy extends Task {
 		connection.setRequestMethod("PUT");
 		connection.connect();
 
-		if (!delete) {
+		if (!this.delete) {
 			InputStream input = new FileInputStream(file);
 			OutputStream output = connection.getOutputStream();
 			Utility.copyStreams(input, output);

@@ -73,19 +73,19 @@ public class SwingErrorMessageDialogPanel extends SwingDialogPanel implements Me
 		c.ipady = 10;
 		c.gridx = 0;
 		c.gridy = 0;
-		iconLabel = new JLabel();
-		add(iconLabel, c);
+		this.iconLabel = new JLabel();
+		add(this.iconLabel, c);
 		
 		c.gridx = 1;
 		c.gridy = 0;
 		c.weightx = 1;
-		textLabel = new JLabel();
-		add(textLabel, c);
+		this.textLabel = new JLabel();
+		add(this.textLabel, c);
 		
-		stackTraceArea = new JTextArea();
-		stackTraceArea.setEditable(false);
-		stackTracePane = new JScrollPane(stackTraceArea);
-		stackTracePane.setPreferredSize(new Dimension(250, 250));
+		this.stackTraceArea = new JTextArea();
+		this.stackTraceArea.setEditable(false);
+		this.stackTracePane = new JScrollPane(this.stackTraceArea);
+		this.stackTracePane.setPreferredSize(new Dimension(250, 250));
 		
 	}
 	
@@ -95,22 +95,22 @@ public class SwingErrorMessageDialogPanel extends SwingDialogPanel implements Me
 	public void showMessage(int level, String title, String text, Throwable throwable) {
 		switch (level) {
 		case Message.ERROR:
-			iconLabel.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
+			this.iconLabel.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
 			break;
 		case Message.WARN:
-			iconLabel.setIcon(UIManager.getIcon("OptionPane.warningIcon"));
+			this.iconLabel.setIcon(UIManager.getIcon("OptionPane.warningIcon"));
 			break;
 		default:
-			iconLabel.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
+			this.iconLabel.setIcon(UIManager.getIcon("OptionPane.informationIcon"));
 		}
 
-		textLabel.setText(text);
+		this.textLabel.setText(text);
 		
 		if (throwable != null) {
 			StringWriter writer = new StringWriter();
 			throwable.printStackTrace(new PrintWriter(writer));
-			stackTraceArea.setText(writer.toString());
-			stackTraceArea.setCaretPosition(0);
+			this.stackTraceArea.setText(writer.toString());
+			this.stackTraceArea.setCaretPosition(0);
 			GridBagConstraints c = new GridBagConstraints();
 			c.fill = GridBagConstraints.BOTH;
 			c.gridx = 0;
@@ -118,13 +118,13 @@ public class SwingErrorMessageDialogPanel extends SwingDialogPanel implements Me
 			c.gridwidth = 2;
 			c.weightx = 1;
 			c.weighty = 1;
-			add(stackTracePane, c);
+			add(this.stackTracePane, c);
 		}
 		
-		SwingDialogWindow.show(parent, title, this, false);
+		SwingDialogWindow.show(this.parent, title, this, false);
 		
 		if (throwable != null) {
-			remove(stackTracePane);
+			remove(this.stackTracePane);
 		}
 	}
 

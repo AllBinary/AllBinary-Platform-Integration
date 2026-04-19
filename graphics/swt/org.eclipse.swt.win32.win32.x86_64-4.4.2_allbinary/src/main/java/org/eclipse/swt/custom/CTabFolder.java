@@ -252,23 +252,23 @@ public CTabFolder(Composite parent, int style) {
 void init(int style) {
 	super.setLayout(new CTabFolderLayout());
 	int style2 = super.getStyle();
-	oldFont = getFont();
-	onBottom = (style2 & SWT.BOTTOM) != 0;
-	showClose = (style2 & SWT.CLOSE) != 0;
+	this.oldFont = getFont();
+	this.onBottom = (style2 & SWT.BOTTOM) != 0;
+	this.showClose = (style2 & SWT.CLOSE) != 0;
 //	showMin = (style2 & SWT.MIN) != 0; - conflicts with SWT.TOP
 //	showMax = (style2 & SWT.MAX) != 0; - conflicts with SWT.BOTTOM
-	single = (style2 & SWT.SINGLE) != 0;
-	borderVisible = (style & SWT.BORDER) != 0;
+	this.single = (style2 & SWT.SINGLE) != 0;
+	this.borderVisible = (style & SWT.BORDER) != 0;
 	//set up default colors
 	Display display = getDisplay();
-	selectionForeground = display.getSystemColor(SELECTION_FOREGROUND);
-	selectionBackground = display.getSystemColor(SELECTION_BACKGROUND);
-	renderer = new CTabFolderRenderer(this);
-	useDefaultRenderer = true;
-	controls = new Control[0];
-	controlAlignments = new int[0];
-	controlRects = new Rectangle[0];
-	controlBkImages = new Image[0];
+	this.selectionForeground = display.getSystemColor(SELECTION_FOREGROUND);
+	this.selectionBackground = display.getSystemColor(SELECTION_BACKGROUND);
+	this.renderer = new CTabFolderRenderer(this);
+	this.useDefaultRenderer = true;
+	this.controls = new Control[0];
+	this.controlAlignments = new int[0];
+	this.controlRects = new Rectangle[0];
+	this.controlBkImages = new Image[0];
 	updateTabHeight(false);
 	
 	// Add all listeners
@@ -372,7 +372,7 @@ public void addCTabFolder2Listener(CTabFolder2Listener listener) {
 	checkWidget();
 	if (listener == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	// add to array
-	CTabFolder2Listener[] newListeners = new CTabFolder2Listener[folderListeners.length + 1];
+	CTabFolder2Listener[] newListeners = new CTabFolder2Listener[this.folderListeners.length + 1];
 	System.arraycopy(folderListeners, 0, newListeners, 0, folderListeners.length);
 	folderListeners = newListeners;
 	folderListeners[folderListeners.length - 1] = listener;
@@ -401,13 +401,13 @@ public void addCTabFolderListener(CTabFolderListener listener) {
 	checkWidget();
 	if (listener == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	// add to array
-	CTabFolderListener[] newTabListeners = new CTabFolderListener[tabListeners.length + 1];
+	CTabFolderListener[] newTabListeners = new CTabFolderListener[this.tabListeners.length + 1];
 	System.arraycopy(tabListeners, 0, newTabListeners, 0, tabListeners.length);
 	tabListeners = newTabListeners;
 	tabListeners[tabListeners.length - 1] = listener;
 	// display close button to be backwards compatible
-	if (!showClose) {
-		showClose = true;
+	if (!this.showClose) {
+		this.showClose = true;
 		updateFolder(REDRAW);
 	}
 }
@@ -446,27 +446,27 @@ public void addSelectionListener(SelectionListener listener) {
 }
 
 Rectangle[] computeControlBounds (Point size, boolean[][] position) {
-	if (controls == null || controls.length == 0) return new Rectangle[0];
-	Rectangle[] rects = new Rectangle[controls.length];
+	if (this.controls == null || this.controls.length == 0) return new Rectangle[0];
+	Rectangle[] rects = new Rectangle[this.controls.length];
 	for (int i = 0; i < rects.length; i++) {
 		rects[i] = new Rectangle(0, 0, 0, 0);
 	}
-	Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
+	Rectangle trim = this.renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
 	int borderRight = trim.width + trim.x;
 	int borderLeft = -trim.x;
 	int borderBottom = trim.height + trim.y;
 	int borderTop = -trim.y;
 
-	Point[] tabControlSize = new Point[controls.length];
-	boolean[] overflow = new boolean [controls.length];
+	Point[] tabControlSize = new Point[this.controls.length];
+	boolean[] overflow = new boolean [this.controls.length];
 	//Left Control
 	int leftWidth = 0;
 	int x = borderLeft + SPACING;
 	int rightWidth = 0;
 	int allWidth = 0;
-	for (int i = 0; i < controls.length; i++) {
-		Point ctrlSize = tabControlSize[i] = !controls[i].isDisposed() && controls[i].getVisible() ? controls[i].computeSize(SWT.DEFAULT, SWT.DEFAULT) : new Point(0,0);
-		int alignment = controlAlignments[i];
+	for (int i = 0; i < this.controls.length; i++) {
+		Point ctrlSize = tabControlSize[i] = !this.controls[i].isDisposed() && this.controls[i].getVisible() ? this.controls[i].computeSize(SWT.DEFAULT, SWT.DEFAULT) : new Point(0,0);
+		int alignment = this.controlAlignments[i];
 		if ((alignment & SWT.LEAD) != 0) {
 			rects[i].width = ctrlSize.x;
 			rects[i].height = getControlHeight(ctrlSize);
@@ -494,8 +494,8 @@ Rectangle[] computeControlBounds (Point size, boolean[][] position) {
 	x =  size.x  - borderRight - SPACING;
 	if (itemWidth + allWidth <= maxWidth) {
 		//Everything fits
-		for (int i = 0; i < controls.length; i++) {
-			int alignment = controlAlignments[i];
+		for (int i = 0; i < this.controls.length; i++) {
+			int alignment = this.controlAlignments[i];
 			if ((alignment & SWT.TRAIL) != 0) {
 				Point ctrlSize = tabControlSize[i];
 				x -= ctrlSize.x;
@@ -507,8 +507,8 @@ Rectangle[] computeControlBounds (Point size, boolean[][] position) {
 			}
 		}
 	} else {
-		for (int i = 0; i < controls.length; i++) {
-			int alignment = controlAlignments[i];
+		for (int i = 0; i < this.controls.length; i++) {
+			int alignment = this.controlAlignments[i];
 			Point ctrlSize = tabControlSize[i];
 			if ((alignment & SWT.TRAIL) != 0) { 
 				if ((alignment & (SWT.FILL | SWT.WRAP)) == 0) {
@@ -541,8 +541,8 @@ Rectangle[] computeControlBounds (Point size, boolean[][] position) {
 	//Any space, distribute amongst FILL
 	if (availableWidth > 0) {
 		int fillCount = 0;
-		for (int i = 0; i < controls.length; i++) {
-			int alignment = controlAlignments[i];
+		for (int i = 0; i < this.controls.length; i++) {
+			int alignment = this.controlAlignments[i];
 			if ((alignment & SWT.TRAIL) != 0 && (alignment & SWT.FILL) != 0 && !overflow[i]) {
 				 fillCount++;
 			}
@@ -550,8 +550,8 @@ Rectangle[] computeControlBounds (Point size, boolean[][] position) {
 		if (fillCount != 0) {
 			int extraSpace = availableWidth/fillCount;
 			int addedSpace = 0;
-			for (int i = 0; i < controls.length; i++) {
-				int alignment = controlAlignments[i];
+			for (int i = 0; i < this.controls.length; i++) {
+				int alignment = this.controlAlignments[i];
 				if ((alignment & SWT.TRAIL) != 0) {
 					if ((alignment & SWT.FILL) != 0 && !overflow[i]) {
 						rects[i].width += extraSpace;
@@ -566,21 +566,21 @@ Rectangle[] computeControlBounds (Point size, boolean[][] position) {
 	}
 	
 	//Go through overflow laying out all wrapped controls
-	Rectangle bodyTrim = renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, 0, 0, 0, 0);
+	Rectangle bodyTrim = this.renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, 0, 0, 0, 0);
 	int bodyRight = bodyTrim.width + bodyTrim.x;
 	int bodyLeft = -bodyTrim.x;
 	int bodyWidth = size.x - bodyLeft - bodyRight;
 	x = size.x - bodyRight;
-	int y = onBottom ? this.getSize().y - getTabHeight() + 2*bodyTrim.y : -bodyTrim.y;
+	int y = this.onBottom ? this.getSize().y - getTabHeight() + 2*bodyTrim.y : -bodyTrim.y;
 	availableWidth = bodyWidth;
 	int maxHeight = 0;
-	for (int i = 0; i < controls.length; i++) {
+	for (int i = 0; i < this.controls.length; i++) {
 		Point ctrlSize = tabControlSize[i];
 		if (overflow[i]) {
 			if (availableWidth > ctrlSize.x) {
 				x -= ctrlSize.x;
 				rects[i].width = ctrlSize.x;
-				rects[i].y = onBottom ? y - ctrlSize.y : y;
+				rects[i].y = this.onBottom ? y - ctrlSize.y : y;
 				rects[i].height = ctrlSize.y;
 				rects[i].x = x;
 				availableWidth -= ctrlSize.x;
@@ -594,9 +594,9 @@ Rectangle[] computeControlBounds (Point size, boolean[][] position) {
 					//Relayout this control in the next line
 					i--;
 				} else {
-					ctrlSize = controls[i].isDisposed() ? new Point(0,0) : controls[i].computeSize(bodyWidth, SWT.DEFAULT);
+					ctrlSize = this.controls[i].isDisposed() ? new Point(0,0) : this.controls[i].computeSize(bodyWidth, SWT.DEFAULT);
 					rects[i].width = bodyWidth;
-					rects[i].y = onBottom ? y - ctrlSize.y : y;
+					rects[i].y = this.onBottom ? y - ctrlSize.y : y;
 					rects[i].height = ctrlSize.y;
 					rects[i].x = size.x - ctrlSize.x - bodyRight;
 					y += ctrlSize.y;
@@ -605,17 +605,17 @@ Rectangle[] computeControlBounds (Point size, boolean[][] position) {
 		}
 	}
 	
-	if (showChevron) {
+	if (this.showChevron) {
 		int i = 0, lastIndex = -1;
-		while (i < priority.length && items[priority[i]].showing) {
+		while (i < this.priority.length && items[this.priority[i]].showing) {
 			lastIndex = Math.max(lastIndex, priority[i++]);
 		}
-		if (lastIndex == -1) lastIndex = selectedIndex;
+		if (lastIndex == -1) lastIndex = this.selectedIndex;
 		if (lastIndex != -1) {
 			CTabItem lastItem = items[lastIndex];
 			int w = lastItem.x + lastItem.width + SPACING;
-			if (!simple && lastIndex == selectedIndex) w -= (renderer.curveIndent - 7);
-			rects[controls.length - 1].x = w;
+			if (!this.simple && lastIndex == this.selectedIndex) w -= (this.renderer.curveIndent - 7);
+			rects[this.controls.length - 1].x = w;
 		}
 	}
 	
@@ -624,7 +624,7 @@ Rectangle[] computeControlBounds (Point size, boolean[][] position) {
 }
 
 int getControlHeight(Point ctrlSize) {
-	return fixedTabHeight == SWT.DEFAULT ?  Math.max(tabHeight - 1, ctrlSize.y) : ctrlSize.y;
+	return fixedTabHeight == SWT.DEFAULT ?  Math.max(this.tabHeight - 1, ctrlSize.y) : ctrlSize.y;
 }
 /*
 * This class was not intended to be subclassed but this restriction
@@ -640,10 +640,10 @@ int getControlHeight(Point ctrlSize) {
 @Override
 public Rectangle computeTrim (int x, int y, int width, int height) {
 	checkWidget();
-	Rectangle trim =  renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, x, y, width, height);
+	Rectangle trim =  this.renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, x, y, width, height);
 	Point size = new Point(width, height);
 	int wrapHeight = getWrappedHeight(size);
-	if (onBottom) {
+	if (this.onBottom) {
 		trim.height += wrapHeight;
 	} else {
 		trim.y -= wrapHeight;
@@ -653,9 +653,9 @@ public Rectangle computeTrim (int x, int y, int width, int height) {
 }
 Image createButtonImage(Display display, int button) {
 	GC tempGC = new GC (this);
-	Point size = renderer.computeSize(button, SWT.NONE, tempGC, SWT.DEFAULT, SWT.DEFAULT);
+	Point size = this.renderer.computeSize(button, SWT.NONE, tempGC, SWT.DEFAULT, SWT.DEFAULT);
 	tempGC.dispose();
-	Rectangle trim = renderer.computeTrim(button, SWT.NONE, 0, 0, 0, 0);
+	Rectangle trim = this.renderer.computeTrim(button, SWT.NONE, 0, 0, 0, 0);
 	Image image = new Image (display, size.x - trim.width, size.y - trim.height);
 	GC gc = new GC (image);
 	RGB transparent;
@@ -667,7 +667,7 @@ Image createButtonImage(Display display, int button) {
 	Color transColor = new Color(display, transparent);
 	gc.setBackground(transColor);
 	gc.fillRectangle(image.getBounds());
-	renderer.draw(button, SWT.NONE, new Rectangle(trim.x, trim.y, size.x, size.y), gc);
+	this.renderer.draw(button, SWT.NONE, new Rectangle(trim.x, trim.y, size.x, size.y), gc);
 	gc.dispose ();
 	transColor.dispose();
 	ImageData imageData = image.getImageData();
@@ -684,17 +684,17 @@ void createItem (CTabItem item, int index) {
 	newItems[index] = item;
 	System.arraycopy(items, index, newItems, index + 1, items.length - index);
 	items = newItems;
-	if (selectedIndex >= index) selectedIndex ++;	
-	int[] newPriority = new int[priority.length + 1];
-	int next = 0,  priorityIndex = priority.length;
-	for (int i = 0; i < priority.length; i++) {
-		if (!mru && (priority[i] == index || (priority[i] == 0 && index+1 == items.length))) {
+	if (this.selectedIndex >= index) this.selectedIndex ++;	
+	int[] newPriority = new int[this.priority.length + 1];
+	int next = 0,  priorityIndex = this.priority.length;
+	for (int i = 0; i < this.priority.length; i++) {
+		if (!this.mru && (this.priority[i] == index || (this.priority[i] == 0 && index+1 == items.length))) {
 			priorityIndex = next++;
 		}
-		newPriority[next++] = priority[i] >= index ? priority[i] + 1 : priority[i];
+		newPriority[next++] = this.priority[i] >= index ? this.priority[i] + 1 : this.priority[i];
 	}
 	newPriority[priorityIndex] = index;
-	priority = newPriority;
+	this.priority = newPriority;
 	
 	if (items.length == 1) {
 		updateFolder(UPDATE_TAB_HEIGHT | REDRAW);
@@ -703,15 +703,15 @@ void createItem (CTabItem item, int index) {
 	}
 }
 void destroyItem (CTabItem item) {
-	if (inDispose) return;
+	if (this.inDispose) return;
 	int index = indexOf(item);
 	if (index == -1) return;
 	
 	if (items.length == 1) {
 		items = new CTabItem[0];
-		priority = new int[0];
-		firstIndex = -1;
-		selectedIndex = -1;
+		this.priority = new int[0];
+		this.firstIndex = -1;
+		this.selectedIndex = -1;
 		
 		Control control = item.control;
 		if (control != null && !control.isDisposed()) {
@@ -730,19 +730,19 @@ void destroyItem (CTabItem item) {
 	System.arraycopy(items, index + 1, newItems, index, items.length - index - 1);
 	items = newItems;
 	
-	int[] newPriority = new int[priority.length - 1];
+	int[] newPriority = new int[this.priority.length - 1];
 	int next = 0;
-	for (int i = 0; i < priority.length; i++) {
-		if (priority [i] == index) continue; 
-		newPriority[next++] = priority[i] > index ? priority[i] - 1 : priority [i];
+	for (int i = 0; i < this.priority.length; i++) {
+		if (this.priority [i] == index) continue; 
+		newPriority[next++] = this.priority[i] > index ? this.priority[i] - 1 : this.priority [i];
 	}
-	priority = newPriority;
+	this.priority = newPriority;
 	
 	// move the selection if this item is selected
-	if (selectedIndex == index) {
+	if (this.selectedIndex == index) {
 		Control control = item.getControl();
-		selectedIndex = -1;
-		int nextSelection = mru ? priority[0] : Math.max(0, index - 1);
+		this.selectedIndex = -1;
+		int nextSelection = this.mru ? this.priority[0] : Math.max(0, index - 1);
 		setSelection(nextSelection, true);
 		if (control != null && !control.isDisposed()) {
 			control.setVisible(false);
@@ -771,15 +771,15 @@ public boolean getBorderVisible() {
 	return borderVisible;
 }
 ToolBar getChevron() {
-	if (chevronTb == null) {
-		chevronTb = new ToolBar(this, SWT.FLAT);
+	if (this.chevronTb == null) {
+		this.chevronTb = new ToolBar(this, SWT.FLAT);
 		initAccessibleChevronTb();
-		addTabControl(chevronTb, SWT.TRAIL, -1, false);
+		addTabControl(this.chevronTb, SWT.TRAIL, -1, false);
 	}
-	if (chevronItem == null) {
-		chevronItem = new ToolItem(chevronTb, SWT.PUSH);
-		chevronItem.setToolTipText(SWT.getMessage("SWT_ShowList"));
-		chevronItem.addListener(SWT.Selection, listener);
+	if (this.chevronItem == null) {
+		this.chevronItem = new ToolItem(this.chevronTb, SWT.PUSH);
+		this.chevronItem.setToolTipText(SWT.getMessage("SWT_ShowList"));
+		this.chevronItem.addListener(SWT.Selection, listener);
 	}
 	return chevronTb;
 }
@@ -803,16 +803,16 @@ ToolBar getChevron() {
 public Rectangle getClientArea() {
 	checkWidget();
 	//TODO: HACK - find a better way to get padding
-	Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.FILL, 0, 0, 0, 0);
+	Rectangle trim = this.renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.FILL, 0, 0, 0, 0);
 	Point size = getSize();
 	int wrapHeight = getWrappedHeight(size);
-	if (onBottom) {
+	if (this.onBottom) {
 		trim.height += wrapHeight;
 	} else {
 		trim.y -= wrapHeight;
 		trim.height += wrapHeight;
 	}
-	if (minimized) return new Rectangle(-trim.x, -trim.y, 0, 0);
+	if (this.minimized) return new Rectangle(-trim.x, -trim.y, 0, 0);
 	int width = size.x - trim.width;
 	int height = size.y - trim.height;
 	return new Rectangle(-trim.x, -trim.y, width, height);
@@ -854,10 +854,10 @@ public CTabItem getItem (Point pt) {
 	if (items.length == 0) return null;
 	runUpdate();
 	Point size = getSize();
-	Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
+	Rectangle trim = this.renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
 	if (size.x <= trim.width) return null;
-	for (int i = 0; i < priority.length; i++) {
-		CTabItem item = items[priority[i]];
+	for (int i = 0; i < this.priority.length; i++) {
+		CTabItem item = items[this.priority[i]];
 		Rectangle rect = item.getBounds();
 		if (rect.contains(pt)) return item;
 	}
@@ -897,9 +897,9 @@ int getLeftItemEdge (GC gc, int part){
 	Rectangle trim = renderer.computeTrim(part, SWT.NONE, 0, 0, 0, 0);
 	int x = -trim.x; 
 	int width = 0;
-	for (int i = 0; i < controls.length; i++) {
-		if ((controlAlignments[i] & SWT.LEAD) != 0 && !controls[i].isDisposed() && controls[i].getVisible()) {
-			width += controls[i].computeSize(SWT.DEFAULT, SWT.DEFAULT).x;	
+	for (int i = 0; i < this.controls.length; i++) {
+		if ((this.controlAlignments[i] & SWT.LEAD) != 0 && !this.controls[i].isDisposed() && this.controls[i].getVisible()) {
+			width += this.controls[i].computeSize(SWT.DEFAULT, SWT.DEFAULT).x;	
 		}
 	}
 	if (width != 0) width += SPACING * 2;
@@ -1072,10 +1072,10 @@ int getRightItemEdge (GC gc){
 	Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
 	int x = getSize().x - (trim.width + trim.x);
 	int width = 0;
-	for (int i = 0; i < controls.length; i++) {
-		int align = controlAlignments[i];
-		if ((align & SWT.WRAP) == 0 && (align & SWT.LEAD) == 0 && !controls[i].isDisposed() && controls[i].getVisible()) {
-			Point rightSize = controls[i].computeSize(SWT.DEFAULT, SWT.DEFAULT);
+	for (int i = 0; i < this.controls.length; i++) {
+		int align = this.controlAlignments[i];
+		if ((align & SWT.WRAP) == 0 && (align & SWT.LEAD) == 0 && !this.controls[i].isDisposed() && this.controls[i].getVisible()) {
+			Point rightSize = this.controls[i].computeSize(SWT.DEFAULT, SWT.DEFAULT);
 			width += rightSize.x;
 		}
 	}
@@ -1095,8 +1095,8 @@ int getRightItemEdge (GC gc){
  */
 public CTabItem getSelection() {
 	//checkWidget();
-	if (selectedIndex == -1) return null;
-	return items[selectedIndex];
+	if (this.selectedIndex == -1) return null;
+	return items[this.selectedIndex];
 }
 /**
  * Returns the receiver's selection background color.
@@ -1174,12 +1174,12 @@ public boolean getSingle() {
 public int getStyle() {
 	int style = super.getStyle();
 	style &= ~(SWT.TOP | SWT.BOTTOM);
-	style |= onBottom ? SWT.BOTTOM : SWT.TOP;
+	style |= this.onBottom ? SWT.BOTTOM : SWT.TOP;
 	style &= ~(SWT.SINGLE | SWT.MULTI);
-	style |= single ? SWT.SINGLE : SWT.MULTI;
-	if (borderVisible) style |= SWT.BORDER;
+	style |= this.single ? SWT.SINGLE : SWT.MULTI;
+	if (this.borderVisible) style |= SWT.BORDER;
 	style &= ~SWT.CLOSE;
-	if (showClose) style |= SWT.CLOSE;
+	if (this.showClose) style |= SWT.CLOSE;
 	return style;
 }
 /**
@@ -1523,28 +1523,28 @@ void onKeyDown (Event event) {
 		case SWT.ARROW_RIGHT:
 			int count = items.length;
 			if (count == 0) return;
-			if (selectedIndex  == -1) return;
+			if (this.selectedIndex  == -1) return;
 			int leadKey = (getStyle() & SWT.RIGHT_TO_LEFT) != 0 ? SWT.ARROW_RIGHT : SWT.ARROW_LEFT;
 			int offset =  event.keyCode == leadKey ? -1 : 1;
 			int index;
-			if (!mru) {
-				index = selectedIndex + offset;
+			if (!this.mru) {
+				index = this.selectedIndex + offset;
 			} else {
 				int[] visible = new int[items.length];
 				int idx = 0;
 				int current = -1;
 				for (int i = 0; i < items.length; i++) {
 					if (items[i].showing) {
-						if (i == selectedIndex) current = idx;
+						if (i == this.selectedIndex) current = idx;
 						visible [idx++] = i;
 					}
 				}
 				if (current + offset >= 0 && current + offset < idx){
 					index = visible [current + offset];
 				} else {
-					if (showChevron) {
-						Rectangle chevronRect = chevronItem.getBounds();
-						chevronRect = event.display.map(chevronTb, this, chevronRect);
+					if (this.showChevron) {
+						Rectangle chevronRect = this.chevronItem.getBounds();
+						chevronRect = event.display.map(this.chevronTb, this, chevronRect);
 						CTabFolderEvent e = new CTabFolderEvent(this);
 						e.widget = this;
 						e.time = event.time;
@@ -1553,8 +1553,8 @@ void onKeyDown (Event event) {
 						e.width = chevronRect.width;
 						e.height = chevronRect.height;
 						e.doit = true;
-						for (int i = 0; i < folderListeners.length; i++) {
-							folderListeners[i].showList(e);
+						for (int i = 0; i < this.folderListeners.length; i++) {
+							this.folderListeners[i].showList(e);
 						}
 						if (e.doit && !isDisposed()) {
 							showList(chevronRect);
@@ -1578,11 +1578,11 @@ void onDispose(Event event) {
 	 * Since the whole folder is being disposed, this is not necessary.  For speed
 	 * the inDispose flag is used to skip over this part of the item dispose.
 	 */
-	inDispose = true;
+	this.inDispose = true;
 
-	if (showMenu != null && !showMenu.isDisposed()) {
-		showMenu.dispose();
-		showMenu = null;
+	if (this.showMenu != null && !this.showMenu.isDisposed()) {
+		this.showMenu.dispose();
+		this.showMenu = null;
 	}
 	int length = items.length;
 	for (int i = 0; i < length; i++) {				
@@ -1591,49 +1591,49 @@ void onDispose(Event event) {
 		}
 	}
 
-	gradientColors = null;
+	this.gradientColors = null;
 	
-	selectionGradientColors = null;
-	selectionGradientPercents = null;
-	selectionBgImage = null;
+	this.selectionGradientColors = null;
+	this.selectionGradientPercents = null;
+	this.selectionBgImage = null;
 
-	selectionBackground = null;
-	selectionForeground = null;
+	this.selectionBackground = null;
+	this.selectionForeground = null;
 	
-	if (controlBkImages != null) {
-		for (int i = 0; i < controlBkImages.length; i++) {
-			if (controlBkImages[i] != null) {
-				controlBkImages[i].dispose();
-				controlBkImages[i] = null;
+	if (this.controlBkImages != null) {
+		for (int i = 0; i < this.controlBkImages.length; i++) {
+			if (this.controlBkImages[i] != null) {
+				this.controlBkImages[i].dispose();
+				this.controlBkImages[i] = null;
 			}
 		}
-		controlBkImages = null;
+		this.controlBkImages = null;
 	}
-	controls = null;
-	controlAlignments = null;
-	controlRects = null;
+	this.controls = null;
+	this.controlAlignments = null;
+	this.controlRects = null;
 	
-	if (maxImage != null) maxImage.dispose();
-	maxImage = null;
+	if (this.maxImage != null) this.maxImage.dispose();
+	this.maxImage = null;
 	
-	if (minImage != null) minImage.dispose();
-	minImage = null;
+	if (this.minImage != null) this.minImage.dispose();
+	this.minImage = null;
 	
-	if (chevronImage != null) chevronImage.dispose();
-	chevronImage = null;
+	if (this.chevronImage != null) this.chevronImage.dispose();
+	this.chevronImage = null;
 	
-	if (renderer != null) renderer.dispose();
-	renderer = null;
+	if (this.renderer != null) this.renderer.dispose();
+	this.renderer = null;
 
-	minItem = null;
-	maxItem = null;
-	minMaxTb = null;
+	this.minItem = null;
+	this.maxItem = null;
+	this.minMaxTb = null;
 	
-	chevronItem = null;
-	chevronTb = null;
+	this.chevronItem = null;
+	this.chevronTb = null;
 	
-	if (folderListeners.length != 0) folderListeners = new CTabFolder2Listener[0];
-	if (tabListeners.length != 0) tabListeners = new CTabFolderListener[0];
+	if (this.folderListeners.length != 0) this.folderListeners = new CTabFolder2Listener[0];
+	if (this.tabListeners.length != 0) this.tabListeners = new CTabFolderListener[0];
 }
 void onDragDetect(Event event) {
 	boolean consume = false;
@@ -1649,7 +1649,7 @@ void onDragDetect(Event event) {
 }
 void onFocus(Event event) {
 	checkWidget();
-	if (selectedIndex >= 0) {
+	if (this.selectedIndex >= 0) {
 		redraw();
 	} else {
 		setSelection(0, true);
@@ -1675,15 +1675,15 @@ boolean onMnemonic (Event event, boolean doit) {
 }
 void onMenuDetect(Event event) {
 	if (event.detail == SWT.MENU_KEYBOARD) {
-		if (selectedIndex != -1) {
-			CTabItem item = items[selectedIndex];
+		if (this.selectedIndex != -1) {
+			CTabItem item = items[this.selectedIndex];
 			Rectangle rect = getDisplay().map(this, null, item.getBounds());
 			if (!rect.contains(event.x, event.y)) {
 				/* If the mouse is not in the currently-selected tab,
 				 * then pop up the menu near the top-right corner of the current tab.
 				 */
-				Rectangle itemTrim = renderer.computeTrim(selectedIndex, SWT.NONE, 0, 0, 0, 0);
-				Rectangle closeTrim = renderer.computeTrim(CTabFolderRenderer.PART_CLOSE_BUTTON, SWT.NONE, 0, 0, 0, 0);
+				Rectangle itemTrim = this.renderer.computeTrim(this.selectedIndex, SWT.NONE, 0, 0, 0, 0);
+				Rectangle closeTrim = this.renderer.computeTrim(CTabFolderRenderer.PART_CLOSE_BUTTON, SWT.NONE, 0, 0, 0, 0);
 				event.x = rect.x + rect.width - item.closeRect.width + itemTrim.x - closeTrim.width;
 				event.y = rect.y - itemTrim.y - closeTrim.y;
 			}
@@ -1713,7 +1713,7 @@ void onMouse(Event event) {
 		case SWT.MouseExit: {
 			for (int i=0; i<items.length; i++) {
 				CTabItem item = items[i];
-				if (i != selectedIndex && item.closeImageState != SWT.BACKGROUND) {
+				if (i != this.selectedIndex && item.closeImageState != SWT.BACKGROUND) {
 					item.closeImageState = SWT.BACKGROUND;
 					redraw(item.closeRect.x, item.closeRect.y, item.closeRect.width, item.closeRect.height, false);
 				}
@@ -1721,7 +1721,7 @@ void onMouse(Event event) {
 					item.state &= ~SWT.HOT;
 					redraw(item.x, item.y, item.width, item.height, false);
 				}
-				if (i == selectedIndex && item.closeImageState != SWT.NONE) {
+				if (i == this.selectedIndex && item.closeImageState != SWT.NONE) {
 					item.closeImageState = SWT.NONE;
 					redraw(item.closeRect.x, item.closeRect.y, item.closeRect.width, item.closeRect.height, false);
 				}
@@ -1730,10 +1730,10 @@ void onMouse(Event event) {
 		}
 		case SWT.MouseHover:
 		case SWT.MouseDown: {
-			if (hoverTb && hoverRect.contains(x, y) && !hovering) {
-				hovering = true;
+			if (this.hoverTb && this.hoverRect.contains(x, y) && !this.hovering) {
+				this.hovering = true;
 				updateItems();
-				hoverTimerRunning = true;
+				this.hoverTimerRunning = true;
 				event.display.timerExec(2000, new ARunnable() {
 					public void run() {
 						if (isDisposed()) return;
@@ -1768,11 +1768,11 @@ void onMouse(Event event) {
 			}
 			if (event.button != 1) return;
 			CTabItem item = null;
-			if (single) {
-				if (selectedIndex != -1) {
-					Rectangle bounds = items[selectedIndex].getBounds();
+			if (this.single) {
+				if (this.selectedIndex != -1) {
+					Rectangle bounds = items[this.selectedIndex].getBounds();
 					if (bounds.contains(x, y)){
-						item = items[selectedIndex];
+						item = items[this.selectedIndex];
 					}
 				}
 			} else {
@@ -1792,9 +1792,9 @@ void onMouse(Event event) {
 				}
 				int index = indexOf(item);
 				if (item.showing){
-				    	int oldSelectedIndex = selectedIndex;
+				    	int oldSelectedIndex = this.selectedIndex;
 				    	setSelection(index, true);
-				    	if (oldSelectedIndex == selectedIndex) {
+				    	if (oldSelectedIndex == this.selectedIndex) {
 				    	    /* If the click is on the selected tabitem, then set focus to the tabfolder */
 				    	    forceFocus();
 				    	}
@@ -1827,7 +1827,7 @@ void onMouse(Event event) {
 						redraw(item.x, item.y, item.width, item.height, false);
 					}
 				}
-				if (i != selectedIndex && item.closeImageState != SWT.BACKGROUND && !close) {
+				if (i != this.selectedIndex && item.closeImageState != SWT.BACKGROUND && !close) {
 					item.closeImageState = SWT.BACKGROUND;
 					redraw(item.closeRect.x, item.closeRect.y, item.closeRect.width, item.closeRect.height, false);
 				}
@@ -1835,7 +1835,7 @@ void onMouse(Event event) {
 					item.state &= ~SWT.HOT;
 					redraw(item.x, item.y, item.width, item.height, false);
 				}
-				if (i == selectedIndex && item.closeImageState != SWT.NONE && !close) {
+				if (i == this.selectedIndex && item.closeImageState != SWT.NONE && !close) {
 					item.closeImageState = SWT.NONE;
 					redraw(item.closeRect.x, item.closeRect.y, item.closeRect.width, item.closeRect.height, false);
 				}
@@ -1845,11 +1845,11 @@ void onMouse(Event event) {
 		case SWT.MouseUp: {
 			if (event.button != 1) return;
 			CTabItem item = null;
-			if (single) {
-				if (selectedIndex != -1) {
-					Rectangle bounds = items[selectedIndex].getBounds();
+			if (this.single) {
+				if (this.selectedIndex != -1) {
+					Rectangle bounds = items[this.selectedIndex].getBounds();
 					if (bounds.contains(x, y)){
-						item = items[selectedIndex];
+						item = items[this.selectedIndex];
 					}
 				}
 			} else {
@@ -1871,12 +1871,12 @@ void onMouse(Event event) {
 					e.time = event.time;
 					e.item = item;
 					e.doit = true;
-					for (int j = 0; j < folderListeners.length; j++) {
-						CTabFolder2Listener listener = folderListeners[j];
+					for (int j = 0; j < this.folderListeners.length; j++) {
+						CTabFolder2Listener listener = this.folderListeners[j];
 						listener.close(e);
 					}
-					for (int j = 0; j < tabListeners.length; j++) {
-						CTabFolderListener listener = tabListeners[j];
+					for (int j = 0; j < this.tabListeners.length; j++) {
+						CTabFolderListener listener = this.tabListeners[j];
 						listener.itemClosed(e);
 					}
 					if (e.doit) item.dispose();
@@ -1908,29 +1908,29 @@ void onMouse(Event event) {
 void onPageTraversal(Event event) {
 	int count = items.length;
 	if (count == 0) return;
-	int index = selectedIndex; 
+	int index = this.selectedIndex; 
 	if (index  == -1) {
 		index = 0;
 	} else {
 		int offset = (event.detail == SWT.TRAVERSE_PAGE_NEXT) ? 1 : -1;
-		if (!mru) {
-			index = (selectedIndex + offset + count) % count;
+		if (!this.mru) {
+			index = (this.selectedIndex + offset + count) % count;
 		} else {
 			int[] visible = new int[items.length];
 			int idx = 0;
 			int current = -1;
 			for (int i = 0; i < items.length; i++) {
 				if (items[i].showing) {
-					if (i == selectedIndex) current = idx;
+					if (i == this.selectedIndex) current = idx;
 					visible [idx++] = i;
 				}
 			}
 			if (current + offset >= 0 && current + offset < idx){
 				index = visible [current + offset];
 			} else {
-				if (showChevron) {
-					Rectangle chevronRect = chevronItem.getBounds();
-					chevronRect = event.display.map(chevronTb, this, chevronRect);
+				if (this.showChevron) {
+					Rectangle chevronRect = this.chevronItem.getBounds();
+					chevronRect = event.display.map(this.chevronTb, this, chevronRect);
 					CTabFolderEvent e = new CTabFolderEvent(this);
 					e.widget = this;
 					e.time = event.time;
@@ -1939,8 +1939,8 @@ void onPageTraversal(Event event) {
 					e.width = chevronRect.width;
 					e.height = chevronRect.height;
 					e.doit = true;
-					for (int i = 0; i < folderListeners.length; i++) {
-						folderListeners[i].showList(e);
+					for (int i = 0; i < this.folderListeners.length; i++) {
+						this.folderListeners[i].showList(e);
 					}
 					if (e.doit && !isDisposed()) {
 						showList(chevronRect);
@@ -1952,9 +1952,9 @@ void onPageTraversal(Event event) {
 	setSelection (index, true);
 }
 void onPaint(Event event) {
-	if (inDispose) return;
+	if (this.inDispose) return;
 	Font font = getFont();
-	if (oldFont == null || !oldFont.equals(font)) {
+	if (this.oldFont == null || !this.oldFont.equals(font)) {
 		// handle case where  default font changes
 		this.oldFont = font;
 		if (!updateTabHeight(false)) {
@@ -1978,23 +1978,23 @@ void onPaint(Event event) {
 
 	Point size = getSize();
 	Rectangle bodyRect = new Rectangle(0, 0, size.x, size.y); 
-	renderer.draw(CTabFolderRenderer.PART_BODY, SWT.BACKGROUND | SWT.FOREGROUND, bodyRect, gc); 
+	this.renderer.draw(CTabFolderRenderer.PART_BODY, SWT.BACKGROUND | SWT.FOREGROUND, bodyRect, gc); 
 
 	gc.setFont(gcFont);
 	gc.setForeground(gcForeground);
 	gc.setBackground(gcBackground);
 	
-	renderer.draw(CTabFolderRenderer.PART_HEADER, SWT.BACKGROUND | SWT.FOREGROUND, bodyRect, gc);
+	this.renderer.draw(CTabFolderRenderer.PART_HEADER, SWT.BACKGROUND | SWT.FOREGROUND, bodyRect, gc);
 	
 	gc.setFont(gcFont);
 	gc.setForeground(gcForeground);
 	gc.setBackground(gcBackground);	
 	
-	if (!single) {
+	if (!this.single) {
 		for (int i=0; i < items.length; i++) {
 			Rectangle itemBounds = items[i].getBounds();
-			if (i != selectedIndex && event.getBounds().intersects(itemBounds)) {
-				renderer.draw(i, SWT.BACKGROUND | SWT.FOREGROUND | items[i].state , itemBounds, gc);
+			if (i != this.selectedIndex && event.getBounds().intersects(itemBounds)) {
+				this.renderer.draw(i, SWT.BACKGROUND | SWT.FOREGROUND | items[i].state , itemBounds, gc);
 			}
 		}
 	}
@@ -2003,25 +2003,25 @@ void onPaint(Event event) {
 	gc.setForeground(gcForeground);
 	gc.setBackground(gcBackground);	
 	
-	if (selectedIndex != -1) { 
-		renderer.draw(selectedIndex, items[selectedIndex].state | SWT.BACKGROUND | SWT.FOREGROUND, items[selectedIndex].getBounds(), gc);
+	if (this.selectedIndex != -1) { 
+		this.renderer.draw(this.selectedIndex, items[this.selectedIndex].state | SWT.BACKGROUND | SWT.FOREGROUND, items[this.selectedIndex].getBounds(), gc);
 	}
 	
 	gc.setFont(gcFont);
 	gc.setForeground(gcForeground);
 	gc.setBackground(gcBackground);	
 	
-	if (hoverTb) {
-		Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
+	if (this.hoverTb) {
+		Rectangle trim = this.renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
 		int x = getSize().x - (trim.width + trim.x);
-		hoverRect = new Rectangle(x - 16 - SPACING, 2, 16, getTabHeight() - 2);
+		this.hoverRect = new Rectangle(x - 16 - SPACING, 2, 16, getTabHeight() - 2);
 		gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_WIDGET_NORMAL_SHADOW));
-		x = hoverRect.x;
-		int y = hoverRect.y;
+		x = this.hoverRect.x;
+		int y = this.hoverRect.y;
 		gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
-		gc.fillRectangle(x + hoverRect.width - 6, y, 5, 5);
-		gc.drawRectangle(x + hoverRect.width - 6, y, 5, 5);
-		gc.drawLine(x + hoverRect.width - 6, y+2, x + hoverRect.width - 6 + 5, y + 2);
+		gc.fillRectangle(x + this.hoverRect.width - 6, y, 5, 5);
+		gc.drawRectangle(x + this.hoverRect.width - 6, y, 5, 5);
+		gc.drawLine(x + this.hoverRect.width - 6, y+2, x + this.hoverRect.width - 6 + 5, y + 2);
 		gc.fillRectangle(x, y, 5 , 2);
 		gc.drawRectangle(x, y, 5 , 2);
 	}
@@ -2031,29 +2031,29 @@ void onPaint(Event event) {
 }
 
 void onResize(Event event) {
-	if (inDispose) return;
-	if (ignoreResize) return;
+	if (this.inDispose) return;
+	if (this.ignoreResize) return;
 	if (updateItems()) {
 		redrawTabs();
 	}
 	Point size = getSize();
-	if (oldSize == null) {
+	if (this.oldSize == null) {
 		redraw();
 	} else {
-		if (onBottom && size.y != oldSize.y) {
+		if (this.onBottom && size.y != this.oldSize.y) {
 			redraw();
 		} else {
 			int x1 = Math.min(size.x, oldSize.x);
-			Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, 0, 0, 0, 0);
-			if (size.x != oldSize.x) x1 -= trim.width + trim.x - marginWidth + 2;
-			if (!simple) x1 -= 5; // rounded top right corner
+			Rectangle trim = this.renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, 0, 0, 0, 0);
+			if (size.x != oldSize.x) x1 -= trim.width + trim.x - this.marginWidth + 2;
+			if (!this.simple) x1 -= 5; // rounded top right corner
 			int y1 = Math.min(size.y, oldSize.y);
-			if (size.y != oldSize.y) y1 -= trim.height + trim.y - marginHeight;
+			if (size.y != oldSize.y) y1 -= trim.height + trim.y - this.marginHeight;
 			int x2 = Math.max(size.x, oldSize.x);
 			int y2 = Math.max(size.y, oldSize.y);	
 			redraw(0, y1, x2, y2 - y1, false);
 			redraw(x1, 0, x2 - x1, y2, false);
-			if (hoverTb) {
+			if (this.hoverTb) {
 				redraw(hoverRect.x, hoverRect.y, hoverRect.width, hoverRect.height, false);
 			} 
 		}
@@ -2061,35 +2061,35 @@ void onResize(Event event) {
 	oldSize = size;
 }
 void onSelection(Event event) {
-	if (hovering) {
-		hovering = false;
+	if (this.hovering) {
+		this.hovering = false;
 		updateItems();
 	}
-	if (event.widget == maxItem) {
+	if (event.widget == this.maxItem) {
 		CTabFolderEvent e = new CTabFolderEvent(this);
 		e.widget = CTabFolder.this;
 		e.time = event.time;
-		for (int i = 0; i < folderListeners.length; i++) {
-			if (maximized) {
-				folderListeners[i].restore(e);
+		for (int i = 0; i < this.folderListeners.length; i++) {
+			if (this.maximized) {
+				this.folderListeners[i].restore(e);
 			} else {
-				folderListeners[i].maximize(e);
+				this.folderListeners[i].maximize(e);
 			}
 		}
 	} else if (event.widget == minItem) {
 		CTabFolderEvent e = new CTabFolderEvent(this);
 		e.widget = CTabFolder.this;
 		e.time = event.time;
-		for (int i = 0; i < folderListeners.length; i++) {
-			if (minimized) {
-				folderListeners[i].restore(e);
+		for (int i = 0; i < this.folderListeners.length; i++) {
+			if (this.minimized) {
+				this.folderListeners[i].restore(e);
 			} else {
-				folderListeners[i].minimize(e);
+				this.folderListeners[i].minimize(e);
 			}
 		}
 	} else if (event.widget == chevronItem) {
 		Rectangle chevronRect = chevronItem.getBounds();
-		chevronRect = event.display.map(chevronTb, this, chevronRect);
+		chevronRect = event.display.map(this.chevronTb, this, chevronRect);
 		CTabFolderEvent e = new CTabFolderEvent(this);
 		e.widget = this;
 		e.time = event.time;
@@ -2098,8 +2098,8 @@ void onSelection(Event event) {
 		e.width = chevronRect.width;
 		e.height = chevronRect.height;
 		e.doit = true;
-		for (int i = 0; i < folderListeners.length; i++) {
-			folderListeners[i].showList(e);
+		for (int i = 0; i < this.folderListeners.length; i++) {
+			this.folderListeners[i].showList(e);
 		}
 		if (e.doit && !isDisposed()) {
 			showList(chevronRect);
@@ -2107,7 +2107,7 @@ void onSelection(Event event) {
 	}
 }
 void onTraverse (Event event) {
-	if (ignoreTraverse) return;
+	if (this.ignoreTraverse) return;
 	runUpdate();
 	switch (event.detail) {
 		case SWT.TRAVERSE_ESCAPE:
@@ -2125,9 +2125,9 @@ void onTraverse (Event event) {
 			event.doit = items.length > 0;
 			break;
 	}
-	ignoreTraverse = true;
+	this.ignoreTraverse = true;
 	notifyListeners(SWT.Traverse, event);
-	ignoreTraverse = false;
+	this.ignoreTraverse = false;
 	event.type = SWT.None;
 	if (isDisposed()) return;
 	if (!event.doit) return;
@@ -2145,12 +2145,12 @@ void onTraverse (Event event) {
 }
 void redrawTabs() {
 	Point size = getSize();
-	Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, 0, 0, 0, 0);
-	if (onBottom) {
+	Rectangle trim = this.renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, 0, 0, 0, 0);
+	if (this.onBottom) {
 		int h = trim.height + trim.y - this.marginHeight;
 		redraw(0, size.y - h - 1, size.x, h + 1, false);
 	} else {
-		redraw(0, 0, size.x, -trim.y - marginHeight + 1, false);
+		redraw(0, 0, size.x, -trim.y - this.marginHeight + 1, false);
 	}
 }
 /**	 
@@ -2174,21 +2174,21 @@ void redrawTabs() {
 public void removeCTabFolder2Listener(CTabFolder2Listener listener) {
 	checkWidget();
 	if (listener == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	if (folderListeners.length == 0) return;
+	if (this.folderListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < folderListeners.length; i++) {
-		if (listener == folderListeners[i]){
+	for (int i = 0; i < this.folderListeners.length; i++) {
+		if (listener == this.folderListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (folderListeners.length == 1) {
-		folderListeners = new CTabFolder2Listener[0];
+	if (this.folderListeners.length == 1) {
+		this.folderListeners = new CTabFolder2Listener[0];
 		return;
 	}
-	CTabFolder2Listener[] newTabListeners = new CTabFolder2Listener[folderListeners.length - 1];
-	System.arraycopy(folderListeners, 0, newTabListeners, 0, index);
+	CTabFolder2Listener[] newTabListeners = new CTabFolder2Listener[this.folderListeners.length - 1];
+	System.arraycopy(this.folderListeners, 0, newTabListeners, 0, index);
 	System.arraycopy(folderListeners, index + 1, newTabListeners, index, folderListeners.length - index - 1);
 	folderListeners = newTabListeners;
 }
@@ -2212,21 +2212,21 @@ public void removeCTabFolder2Listener(CTabFolder2Listener listener) {
 public void removeCTabFolderListener(CTabFolderListener listener) {
 	checkWidget();
 	if (listener == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	if (tabListeners.length == 0) return;
+	if (this.tabListeners.length == 0) return;
 	int index = -1;
-	for (int i = 0; i < tabListeners.length; i++) {
-		if (listener == tabListeners[i]){
+	for (int i = 0; i < this.tabListeners.length; i++) {
+		if (listener == this.tabListeners[i]){
 			index = i;
 			break;
 		}
 	}
 	if (index == -1) return;
-	if (tabListeners.length == 1) {
-		tabListeners = new CTabFolderListener[0];
+	if (this.tabListeners.length == 1) {
+		this.tabListeners = new CTabFolderListener[0];
 		return;
 	}
-	CTabFolderListener[] newTabListeners = new CTabFolderListener[tabListeners.length - 1];
-	System.arraycopy(tabListeners, 0, newTabListeners, 0, index);
+	CTabFolderListener[] newTabListeners = new CTabFolderListener[this.tabListeners.length - 1];
+	System.arraycopy(this.tabListeners, 0, newTabListeners, 0, index);
 	System.arraycopy(tabListeners, index + 1, newTabListeners, index, tabListeners.length - index - 1);
 	tabListeners = newTabListeners;
 }
@@ -2352,19 +2352,19 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
 	}
 	
 	// Are these settings the same as before?
-	if ((gradientColors != null) && (colors != null) && 
+	if ((this.gradientColors != null) && (colors != null) && 
 		(gradientColors.length == colors.length)) {
 		boolean same = false;
-		for (int i = 0; i < gradientColors.length; i++) {
-		    if (gradientColors[i] == null) {
+		for (int i = 0; i < this.gradientColors.length; i++) {
+		    if (this.gradientColors[i] == null) {
 			same = colors[i] == null;
 		    } else {
-			same = gradientColors[i].equals(colors[i]);
+			same = this.gradientColors[i].equals(colors[i]);
 		    }
 		    if (!same) break;
 		}
 		if (same) {
-		    for (int i = 0; i < gradientPercents.length; i++) {
+		    for (int i = 0; i < this.gradientPercents.length; i++) {
 			same = this.gradientPercents[i] == percents[i];
 			if (!same) break;
 		    }
@@ -2387,7 +2387,7 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
 			this.gradientPercents[i] = percents[i];
 		}
 		this.gradientVertical = vertical;
-		setBackground(gradientColors[gradientColors.length-1]);
+		setBackground(this.gradientColors[this.gradientColors.length-1]);
 	}
 
 	// Refresh with the new settings
@@ -2411,7 +2411,7 @@ public void setBackgroundImage(Image image) {
  */
 public void setBorderVisible(boolean show) {
 	checkWidget();
-	if (borderVisible == show) return;
+	if (this.borderVisible == show) return;
 	this.borderVisible = show;
 	updateFolder(REDRAW);
 }
@@ -2419,92 +2419,92 @@ void setButtonBounds(GC gc) {
 	Point size = getSize();
 	// max button
 	Display display = getDisplay();
-	if (showMax) {
-		if (minMaxTb == null) {
-			minMaxTb = new ToolBar(this, SWT.FLAT);
+	if (this.showMax) {
+		if (this.minMaxTb == null) {
+			this.minMaxTb = new ToolBar(this, SWT.FLAT);
 			initAccessibleMinMaxTb();
-			addTabControl(minMaxTb, SWT.TRAIL, 0, false);
+			addTabControl(this.minMaxTb, SWT.TRAIL, 0, false);
 		}
-		if (maxItem == null) {
-			maxItem = new ToolItem(minMaxTb, SWT.PUSH);
-			if (maxImage == null) {
-				maxImage = createButtonImage(display, CTabFolderRenderer.PART_MAX_BUTTON);
+		if (this.maxItem == null) {
+			this.maxItem = new ToolItem(this.minMaxTb, SWT.PUSH);
+			if (this.maxImage == null) {
+				this.maxImage = createButtonImage(display, CTabFolderRenderer.PART_MAX_BUTTON);
 			}
-			maxItem.setImage(maxImage);
+			this.maxItem.setImage(this.maxImage);
 			maxItem.setToolTipText(maximized ? SWT.getMessage("SWT_Restore") : SWT.getMessage("SWT_Maximize")); //$NON-NLS-1$ //$NON-NLS-2$
 			maxItem.addListener(SWT.Selection, listener);
 		}
 	} else {
 		//might need to remove it if already there
-		if (maxItem != null) {
-			maxItem.dispose();
-			maxItem = null;
+		if (this.maxItem != null) {
+			this.maxItem.dispose();
+			this.maxItem = null;
 		}
 	}
 	// min button
-	if (showMin) {
-		if (minMaxTb == null) {
-			minMaxTb = new ToolBar(this, SWT.FLAT);
+	if (this.showMin) {
+		if (this.minMaxTb == null) {
+			this.minMaxTb = new ToolBar(this, SWT.FLAT);
 			initAccessibleMinMaxTb();
-			addTabControl(minMaxTb, SWT.TRAIL, 0, false);
+			addTabControl(this.minMaxTb, SWT.TRAIL, 0, false);
 		}
-		if (minItem == null) {
-			minItem = new ToolItem(minMaxTb, SWT.PUSH, 0);
-			if (minImage == null) {
-				minImage = createButtonImage(display, CTabFolderRenderer.PART_MIN_BUTTON);
+		if (this.minItem == null) {
+			this.minItem = new ToolItem(this.minMaxTb, SWT.PUSH, 0);
+			if (this.minImage == null) {
+				this.minImage = createButtonImage(display, CTabFolderRenderer.PART_MIN_BUTTON);
 			}
-			minItem.setImage(minImage);
+			this.minItem.setImage(this.minImage);
 			minItem.setToolTipText(minimized ? SWT.getMessage("SWT_Restore") : SWT.getMessage("SWT_Minimize")); //$NON-NLS-1$ //$NON-NLS-2$
 			minItem.addListener(SWT.Selection, listener);
 		}
 	} else {
 		//might need to remove it if already there
-		if (minItem != null) {
-			minItem.dispose();
-			minItem = null;
+		if (this.minItem != null) {
+			this.minItem.dispose();
+			this.minItem = null;
 		}
 	}
-	if (minMaxTb != null && minMaxTb.getItemCount() == 0) {
-		removeTabControl(minMaxTb, false);
-		minMaxTb.dispose();
-		minMaxTb = null;
+	if (this.minMaxTb != null && this.minMaxTb.getItemCount() == 0) {
+		removeTabControl(this.minMaxTb, false);
+		this.minMaxTb.dispose();
+		this.minMaxTb = null;
 	}
-	if (showChevron) {
+	if (this.showChevron) {
 		int itemCount = items.length;
 		int count;
-		if (single) {
-			count = selectedIndex == -1 ? itemCount : itemCount - 1;
+		if (this.single) {
+			count = this.selectedIndex == -1 ? itemCount : itemCount - 1;
 		} else {
 			int showCount = 0;
-			while (showCount < priority.length && items[priority[showCount]].showing) {
+			while (showCount < this.priority.length && items[this.priority[showCount]].showing) {
 				showCount++;
 			}
 			count = itemCount - showCount;
 		}
-		if (count != chevronCount) {
-			chevronCount = count;
-			if (chevronImage != null) chevronImage.dispose();
-			chevronImage = createButtonImage(display, CTabFolderRenderer.PART_CHEVRON_BUTTON);
-			chevronItem.setImage(chevronImage);
+		if (count != this.chevronCount) {
+			this.chevronCount = count;
+			if (this.chevronImage != null) this.chevronImage.dispose();
+			this.chevronImage = createButtonImage(display, CTabFolderRenderer.PART_CHEVRON_BUTTON);
+			this.chevronItem.setImage(this.chevronImage);
 		} 
     }
 
 	boolean[][] overflow = new boolean[1][0];
 	Rectangle[] rects = computeControlBounds(size, overflow);
-	if (fixedTabHeight != SWT.DEFAULT) {
+	if (this.fixedTabHeight != SWT.DEFAULT) {
 		int height = this.fixedTabHeight;
-		if (!hovering) {
-			hoverTb = false;
+		if (!this.hovering) {
+			this.hoverTb = false;
 			Rectangle tabBounds = this.getBounds();
 			for (int i = 0; i < rects.length; i++) {
 				if (!(overflow[0][i])) {
 					if (rects[i].height > height) {
-						hoverTb = true;
+						this.hoverTb = true;
 						break;
 					}
 				}
 			}
-			if (hoverTb) {
+			if (this.hoverTb) {
 				for (int i = 0; i < rects.length; i++) {
 					if (!(overflow[0][i])) {
 						if (rects[i].height > height) {
@@ -2520,21 +2520,21 @@ void setButtonBounds(GC gc) {
 		if (!overflow[0][i]) headerHeight = Math.max(rects[i].height, headerHeight);
 	}
 	boolean changed = false;
-	ignoreResize = true;
-	for (int i = 0; i < controls.length; i++) {
-		if (!controls[i].isDisposed()) {
+	this.ignoreResize = true;
+	for (int i = 0; i < this.controls.length; i++) {
+		if (!this.controls[i].isDisposed()) {
 			if (overflow[0][i]) {
-				controls[i].setBounds(rects[i]);
+				this.controls[i].setBounds(rects[i]);
 			} else {
-				controls[i].moveAbove(null);
-				controls[i].setBounds(rects[i].x, rects[i].y, rects[i].width, headerHeight);
+				this.controls[i].moveAbove(null);
+				this.controls[i].setBounds(rects[i].x, rects[i].y, rects[i].width, headerHeight);
 			}
 		}
-		if (!changed && !rects[i].equals(controlRects[i])) changed = true;
+		if (!changed && !rects[i].equals(this.controlRects[i])) changed = true;
 	}
-	ignoreResize = false;
-	controlRects = rects;
-	if (changed || hovering) updateBkImages();
+	this.ignoreResize = false;
+	this.controlRects = rects;
+	if (changed || this.hovering) updateBkImages();
 }
 @Override
 public boolean setFocus () {
@@ -2571,7 +2571,7 @@ public void setFont(Font font) {
 	checkWidget();
 	if (font != null && font.equals(getFont())) return;
 	super.setFont(font);
-	oldFont = getFont();
+	this.oldFont = getFont();
 	updateFolder(REDRAW);
 }
 @Override
@@ -2622,26 +2622,26 @@ public void setInsertMark(int index, boolean after) {
 boolean setItemLocation(GC gc) {
 	boolean changed = false;
 	if (items.length == 0) return false;
-	Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
+	Rectangle trim = this.renderer.computeTrim(CTabFolderRenderer.PART_BORDER, SWT.NONE, 0, 0, 0, 0);
 	int borderBottom = trim.height + trim.y;
 	int borderTop = -trim.y;
 	Point size = getSize();
-	int y = onBottom ? Math.max(borderBottom, size.y - borderBottom - tabHeight) : borderTop;
-	Point closeButtonSize = renderer.computeSize(CTabFolderRenderer.PART_CLOSE_BUTTON, 0, gc, SWT.DEFAULT, SWT.DEFAULT);
+	int y = this.onBottom ? Math.max(borderBottom, size.y - borderBottom - this.tabHeight) : borderTop;
+	Point closeButtonSize = this.renderer.computeSize(CTabFolderRenderer.PART_CLOSE_BUTTON, 0, gc, SWT.DEFAULT, SWT.DEFAULT);
 	int leftItemEdge = getLeftItemEdge(gc, CTabFolderRenderer.PART_BORDER);
-	if (single) {
+	if (this.single) {
 		int defaultX = getDisplay().getBounds().width + 10; // off screen
 		for (int i = 0; i < items.length; i++) {
 			CTabItem item = items[i];
-			if (i == selectedIndex) {
-				firstIndex = selectedIndex;
+			if (i == this.selectedIndex) {
+				this.firstIndex = this.selectedIndex;
 				int oldX = item.x, oldY = item.y;
 				item.x = leftItemEdge;
 				item.y = y;
 				item.showing = true;
-				if (showClose || item.showClose) {
-					item.closeRect.x = leftItemEdge - renderer.computeTrim(i, SWT.NONE, 0, 0, 0, 0).x;
-					item.closeRect.y = onBottom ? size.y - borderBottom - tabHeight + (tabHeight - closeButtonSize.y)/2: borderTop + (tabHeight - closeButtonSize.y)/2;
+				if (this.showClose || item.showClose) {
+					item.closeRect.x = leftItemEdge - this.renderer.computeTrim(i, SWT.NONE, 0, 0, 0, 0).x;
+					item.closeRect.y = this.onBottom ? size.y - borderBottom - this.tabHeight + (this.tabHeight - closeButtonSize.y)/2: borderTop + (this.tabHeight - closeButtonSize.y)/2;
 				}
 				if (item.x != oldX || item.y != oldY) changed = true;
 			} else {
@@ -2653,31 +2653,31 @@ boolean setItemLocation(GC gc) {
 		int rightItemEdge = getRightItemEdge(gc);
 		int maxWidth = rightItemEdge - leftItemEdge;
 		int width = 0;
-		for (int i = 0; i < priority.length; i++) {
-			CTabItem item = items[priority[i]];
+		for (int i = 0; i < this.priority.length; i++) {
+			CTabItem item = items[this.priority[i]];
 			width += item.width;
 			item.showing = i == 0 ? true : item.width > 0 && width <= maxWidth;
 		}
 		int x = getLeftItemEdge(gc, CTabFolderRenderer.PART_HEADER);
 		int defaultX = getDisplay().getBounds().width + 10; // off screen
-		firstIndex = items.length - 1;
+		this.firstIndex = items.length - 1;
 		for (int i = 0; i < items.length; i++) {
 			CTabItem item = items[i];
 			if (!item.showing) {
 				if (item.x != defaultX) changed = true;
 				item.x = defaultX;
 			} else {
-				firstIndex = Math.min(firstIndex, i);
+				this.firstIndex = Math.min(this.firstIndex, i);
 				if (item.x != x || item.y != y) changed = true;
 				item.x = x;
 				item.y = y;
 				int state = SWT.NONE;
-				if (i == selectedIndex) state |= SWT.SELECTED;
-				Rectangle edgeTrim = renderer.computeTrim(i, state, 0, 0, 0, 0);
+				if (i == this.selectedIndex) state |= SWT.SELECTED;
+				Rectangle edgeTrim = this.renderer.computeTrim(i, state, 0, 0, 0, 0);
 				item.closeRect.x = item.x + item.width  - (edgeTrim.width + edgeTrim.x) - closeButtonSize.x;
-				item.closeRect.y = onBottom ? size.y - borderBottom - tabHeight + (tabHeight - closeButtonSize.y)/2: borderTop + (tabHeight - closeButtonSize.y)/2;
+				item.closeRect.y = this.onBottom ? size.y - borderBottom - this.tabHeight + (this.tabHeight - closeButtonSize.y)/2: borderTop + (this.tabHeight - closeButtonSize.y)/2;
 				x = x + item.width;
-				if (!simple && i == selectedIndex) x -= renderer.curveIndent; //TODO: fix next item position 
+				if (!this.simple && i == this.selectedIndex) x -= this.renderer.curveIndent; //TODO: fix next item position 
 			}
 		}
 	}
@@ -2710,11 +2710,11 @@ boolean setItemLocation(GC gc) {
 		if (!(0 <= index && index < items.length)) SWT.error (SWT.ERROR_INVALID_ARGUMENT);
 		if (seen[index]) SWT.error (SWT.ERROR_INVALID_ARGUMENT);
 		seen[index] = true;
-		if (index == selectedIndex) newSelectedIndex = i;
+		if (index == this.selectedIndex) newSelectedIndex = i;
 		temp[i] = items[index];
 	}
 	items = temp;
-	selectedIndex = newSelectedIndex;
+	this.selectedIndex = newSelectedIndex;
 	updateFolder(REDRAW);
 }
 boolean setItemSize(GC gc) {
@@ -2724,25 +2724,25 @@ boolean setItemSize(GC gc) {
 	if (size.x <= 0 || size.y <= 0) return changed;
 	ToolBar chevron = getChevron();
 	if (chevron != null) chevron.setVisible(false);
-	showChevron = false;
-	if (single) {
-		showChevron = this.chevronVisible && items.length > 1;
-		if (showChevron) {
+	this.showChevron = false;
+	if (this.single) {
+		this.showChevron = this.chevronVisible && items.length > 1;
+		if (this.showChevron) {
 			chevron.setVisible(true);
 		}
-		if (selectedIndex != -1) {
-			CTabItem tab = items[selectedIndex];
-			int width = renderer.computeSize(selectedIndex, SWT.SELECTED, gc, SWT.DEFAULT, SWT.DEFAULT).x;
+		if (this.selectedIndex != -1) {
+			CTabItem tab = items[this.selectedIndex];
+			int width = this.renderer.computeSize(this.selectedIndex, SWT.SELECTED, gc, SWT.DEFAULT, SWT.DEFAULT).x;
 			width = Math.min(width, getRightItemEdge(gc) - getLeftItemEdge(gc, CTabFolderRenderer.PART_BORDER));
-			if (tab.height != tabHeight || tab.width != width) {
+			if (tab.height != this.tabHeight || tab.width != width) {
 				changed = true;
 				tab.shortenedText = null;
 				tab.shortenedTextWidth = 0;
-				tab.height = tabHeight;
+				tab.height = this.tabHeight;
 				tab.width = width;
 				tab.closeRect.width = tab.closeRect.height = 0;
-				if (showClose || tab.showClose) {
-					Point closeSize = renderer.computeSize(CTabFolderRenderer.PART_CLOSE_BUTTON, SWT.SELECTED, gc, SWT.DEFAULT, SWT.DEFAULT);
+				if (this.showClose || tab.showClose) {
+					Point closeSize = this.renderer.computeSize(CTabFolderRenderer.PART_CLOSE_BUTTON, SWT.SELECTED, gc, SWT.DEFAULT, SWT.DEFAULT);
 					tab.closeRect.width = closeSize.x;
 					tab.closeRect.height = closeSize.y;
 				}
@@ -2757,23 +2757,23 @@ boolean setItemSize(GC gc) {
 	// First, try the minimum tab size at full compression.
 	int minWidth = 0;
 	int[] minWidths = new int[items.length];	
-	for (int i = 0; i < priority.length; i++) {
-		int index = priority[i];
+	for (int i = 0; i < this.priority.length; i++) {
+		int index = this.priority[i];
 		int state = CTabFolderRenderer.MINIMUM_SIZE;
-		if (index == selectedIndex) state |= SWT.SELECTED;
-		minWidths[index] = renderer.computeSize(index, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
+		if (index == this.selectedIndex) state |= SWT.SELECTED;
+		minWidths[index] = this.renderer.computeSize(index, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
 		minWidth += minWidths[index];
 		if (minWidth > tabAreaWidth) break;
 	}
 	if (minWidth > tabAreaWidth) {
 		// full compression required and a chevron
-		showChevron = this.chevronVisible && items.length > 1;
-		if (showChevron) {
+		this.showChevron = this.chevronVisible && items.length > 1;
+		if (this.showChevron) {
 			tabAreaWidth -= chevron.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 			chevron.setVisible(true);
 		}
 		widths = minWidths;
-		int index = selectedIndex != -1 ? selectedIndex : 0;
+		int index = this.selectedIndex != -1 ? this.selectedIndex : 0;
 		if (tabAreaWidth < widths[index]) {
 			widths[index] = Math.max(0, tabAreaWidth);
 		}
@@ -2782,8 +2782,8 @@ boolean setItemSize(GC gc) {
 		int[] maxWidths = new int[items.length];
 		for (int i = 0; i < items.length; i++) {
 			int state = 0;
-			if (i == selectedIndex) state |= SWT.SELECTED;
-			maxWidths[i] = renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
+			if (i == this.selectedIndex) state |= SWT.SELECTED;
+			maxWidths[i] = this.renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
 			maxWidth += maxWidths[i];
 		}
 		if (maxWidth <= tabAreaWidth) {
@@ -2819,16 +2819,16 @@ boolean setItemSize(GC gc) {
 	for (int i = 0; i < items.length; i++) {
 		CTabItem tab = items[i];
 		int width = widths[i];
-		if (tab.height != tabHeight || tab.width != width) {
+		if (tab.height != this.tabHeight || tab.width != width) {
 			changed = true;
 			tab.shortenedText = null;
 			tab.shortenedTextWidth = 0;
-			tab.height = tabHeight;
+			tab.height = this.tabHeight;
 			tab.width = width;
 			tab.closeRect.width = tab.closeRect.height = 0;
-			if (showClose || tab.showClose) {
-				if (i == selectedIndex || showUnselectedClose) {
-					Point closeSize = renderer.computeSize(CTabFolderRenderer.PART_CLOSE_BUTTON, SWT.NONE, gc, SWT.DEFAULT, SWT.DEFAULT);
+			if (this.showClose || tab.showClose) {
+				if (i == this.selectedIndex || this.showUnselectedClose) {
+					Point closeSize = this.renderer.computeSize(CTabFolderRenderer.PART_CLOSE_BUTTON, SWT.NONE, gc, SWT.DEFAULT, SWT.DEFAULT);
 					tab.closeRect.width = closeSize.x;
 					tab.closeRect.height = closeSize.y;
 				}
@@ -2852,9 +2852,9 @@ boolean setItemSize(GC gc) {
  */
 public void setMaximizeVisible(boolean visible) {
 	checkWidget();
-	if (showMax == visible) return;
+	if (this.showMax == visible) return;
 	// display maximize button
-	showMax = visible;
+	this.showMax = visible;
 	updateFolder(UPDATE_TAB_HEIGHT | REDRAW);
 }
 /**
@@ -2894,10 +2894,10 @@ public void setMaximized(boolean maximize) {
 	if (this.maximized == maximize) return;
 	if (maximize && this.minimized) setMinimized(false);
 	this.maximized = maximize;
-	if (minMaxTb != null && maxItem != null) {
-		if (maxImage != null) maxImage.dispose();
-		maxImage = createButtonImage(getDisplay(), CTabFolderRenderer.PART_MAX_BUTTON);
-		maxItem.setImage(maxImage);
+	if (this.minMaxTb != null && this.maxItem != null) {
+		if (this.maxImage != null) this.maxImage.dispose();
+		this.maxImage = createButtonImage(getDisplay(), CTabFolderRenderer.PART_MAX_BUTTON);
+		this.maxItem.setImage(this.maxImage);
 		maxItem.setToolTipText(maximized ? SWT.getMessage("SWT_Restore") : SWT.getMessage("SWT_Maximize")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }
@@ -2916,9 +2916,9 @@ public void setMaximized(boolean maximize) {
  */
 public void setMinimizeVisible(boolean visible) {
 	checkWidget();
-	if (showMin == visible) return;
+	if (this.showMin == visible) return;
 	// display minimize button
-	showMin = visible;
+	this.showMin = visible;
 	updateFolder(UPDATE_TAB_HEIGHT | REDRAW);
 }
 /**
@@ -2938,10 +2938,10 @@ public void setMinimized(boolean minimize) {
 	if (this.minimized == minimize) return;
 	if (minimize && this.maximized) setMaximized(false);
 	this.minimized = minimize;
-	if (minMaxTb != null && minItem != null) {
-		if (minImage != null) minImage.dispose();
-		minImage = createButtonImage(getDisplay(), CTabFolderRenderer.PART_MIN_BUTTON);
-		minItem.setImage(minImage);
+	if (this.minMaxTb != null && this.minItem != null) {
+		if (this.minImage != null) this.minImage.dispose();
+		this.minImage = createButtonImage(getDisplay(), CTabFolderRenderer.PART_MIN_BUTTON);
+		this.minItem.setImage(this.minImage);
 		minItem.setToolTipText(minimized ? SWT.getMessage("SWT_Restore") : SWT.getMessage("SWT_Minimize")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }
@@ -2963,8 +2963,8 @@ public void setMinimized(boolean minimize) {
 public void setMinimumCharacters(int count) {
 	checkWidget ();
 	if (count < 0) SWT.error(SWT.ERROR_INVALID_RANGE);
-	if (minChars == count) return;
-	minChars = count;
+	if (this.minChars == count) return;
+	this.minChars = count;
 	updateFolder(REDRAW_TABS);
 }
 
@@ -2996,17 +2996,17 @@ public void setMinimumCharacters(int count) {
  */
 public void setMRUVisible(boolean show) {
 	checkWidget();
-	if (mru == show) return;
-	mru = show;
-	if (!mru) {
-		if (firstIndex == -1) return;
-		int idx = firstIndex;
+	if (this.mru == show) return;
+	this.mru = show;
+	if (!this.mru) {
+		if (this.firstIndex == -1) return;
+		int idx = this.firstIndex;
 		int next = 0;
-		for (int i = firstIndex; i < items.length; i++) {
-			priority[next++] = i;
+		for (int i = this.firstIndex; i < items.length; i++) {
+			this.priority[next++] = i;
 		}
 		for (int i = 0; i < idx; i++) {
-			priority[next++] = i;
+			this.priority[next++] = i;
 		}
 		updateFolder(REDRAW_TABS);
 	}
@@ -3029,10 +3029,10 @@ public void setMRUVisible(boolean show) {
  */
 public void setRenderer(CTabFolderRenderer renderer) {
 	checkWidget();
-	if (this.renderer == renderer || (useDefaultRenderer && renderer == null)) return;
+	if (this.renderer == renderer || (this.useDefaultRenderer && renderer == null)) return;
 	if (this.renderer != null) this.renderer.dispose();
-	useDefaultRenderer = renderer == null;
-	if (useDefaultRenderer) renderer = new CTabFolderRenderer(this);
+	this.useDefaultRenderer = renderer == null;
+	if (this.useDefaultRenderer) renderer = new CTabFolderRenderer(this);
 	this.renderer = renderer;
 	updateFolder(REDRAW);
 }
@@ -3070,13 +3070,13 @@ public void setSelection(int index) {
 	checkWidget();
 	if (index < 0 || index >= items.length) return;
 	CTabItem selection = items[index];
-	if (selectedIndex == index) {
+	if (this.selectedIndex == index) {
 		showItem(selection);
 		return;
 	}
 	
-	int oldIndex = selectedIndex;
-	selectedIndex = index;
+	int oldIndex = this.selectedIndex;
+	this.selectedIndex = index;
 	if (oldIndex != -1) {
 		items[oldIndex].closeImageState = SWT.BACKGROUND;
 		items[oldIndex].state &= ~SWT.SELECTED;
@@ -3106,9 +3106,9 @@ public void setSelection(int index) {
 void setSelection(int index, boolean notify) {	
 	int oldSelectedIndex = selectedIndex;
 	setSelection(index);
-	if (notify && selectedIndex != oldSelectedIndex && selectedIndex != -1) {
+	if (notify && this.selectedIndex != oldSelectedIndex && this.selectedIndex != -1) {
 		Event event = new Event();
-		event.item = getItem(selectedIndex);
+		event.item = getItem(this.selectedIndex);
 		notifyListeners(SWT.Selection, event);
 	}
 }
@@ -3130,14 +3130,14 @@ void setSelection(int index, boolean notify) {
  * @since 3.0
  */
 public void setSelectionBackground (Color color) {
-	if (inDispose) return;
+	if (this.inDispose) return;
 	checkWidget();
 	setSelectionHighlightGradientColor(null);
-	if (selectionBackground == color) return;
+	if (this.selectionBackground == color) return;
 	if (color == null) color = getDisplay().getSystemColor(SELECTION_BACKGROUND);
-	selectionBackground = color;
+	this.selectionBackground = color;
 	renderer.createAntialiasColors(); //TODO:  need better caching strategy
-	if (selectedIndex > -1) redraw();
+	if (this.selectedIndex > -1) redraw();
 }
 /**
  * Specify a gradient of colours to be draw in the background of the selected tab.
@@ -3235,20 +3235,20 @@ public void setSelectionBackground(Color[] colors, int[] percents, boolean verti
 	}
 	
 	// Are these settings the same as before?
-	if (selectionBgImage == null) {
-		if ((selectionGradientColors != null) && (colors != null) && 
+	if (this.selectionBgImage == null) {
+		if ((this.selectionGradientColors != null) && (colors != null) && 
 			(selectionGradientColors.length == colorsLength)) {
 			boolean same = false;
-			for (int i = 0; i < selectionGradientColors.length; i++) {
-				if (selectionGradientColors[i] == null) {
+			for (int i = 0; i < this.selectionGradientColors.length; i++) {
+				if (this.selectionGradientColors[i] == null) {
 					same = colors[i] == null;
 				} else {
-					same = selectionGradientColors[i].equals(colors[i]);
+					same = this.selectionGradientColors[i].equals(colors[i]);
 				}
 				if (!same) break;
 			}
 			if (same) {
-				for (int i = 0; i < selectionGradientPercents.length; i++) {
+				for (int i = 0; i < this.selectionGradientPercents.length; i++) {
 					same = this.selectionGradientPercents[i] == percents[i];
 					if (!same) break;
 				}
@@ -3256,7 +3256,7 @@ public void setSelectionBackground(Color[] colors, int[] percents, boolean verti
 			if (same && this.selectionGradientVertical == vertical) return;
 		}
 	} else {
-		selectionBgImage = null;
+		this.selectionBgImage = null;
 	}
 	// Store the new settings
 	if (colors == null) {
@@ -3275,12 +3275,12 @@ public void setSelectionBackground(Color[] colors, int[] percents, boolean verti
 			this.selectionGradientPercents[i] = percents[i];
 		}
 		this.selectionGradientVertical = vertical;
-		setSelectionBackground(selectionGradientColors[selectionGradientColors.length-1]);
+		setSelectionBackground(this.selectionGradientColors[this.selectionGradientColors.length-1]);
 		setSelectionHighlightGradientColor(highlightBeginColor);
 	}
 
 	// Refresh with the new settings
-	if (selectedIndex > -1) redraw();
+	if (this.selectedIndex > -1) redraw();
 }
 
 /*
@@ -3288,7 +3288,7 @@ public void setSelectionBackground(Color[] colors, int[] percents, boolean verti
  * Update the cache of highlight gradient colors if required.
  */
 void setSelectionHighlightGradientColor(Color start) {
-	if (inDispose) return;
+	if (this.inDispose) return;
 	renderer.setSelectionHighlightGradientColor(start);  //TODO: need better caching strategy
 }
 
@@ -3306,7 +3306,7 @@ void setSelectionHighlightGradientColor(Color start) {
 public void setSelectionBackground(Image image) {
 	checkWidget();
 	setSelectionHighlightGradientColor(null);
-	if (image == selectionBgImage) return;
+	if (image == this.selectionBgImage) return;
 	if (image != null) {
 		this.selectionGradientColors = null;
 		this.selectionGradientPercents = null;
@@ -3314,7 +3314,7 @@ public void setSelectionBackground(Image image) {
 	}
 	selectionBgImage = image;
 	renderer.createAntialiasColors(); //TODO:  need better caching strategy
-	if (selectedIndex > -1) redraw();
+	if (this.selectedIndex > -1) redraw();
 }
 /**
  * Set the foreground color of the selected tab.
@@ -3328,10 +3328,10 @@ public void setSelectionBackground(Image image) {
  */
 public void setSelectionForeground (Color color) {
 	checkWidget();
-	if (selectionForeground == color) return;
+	if (this.selectionForeground == color) return;
 	if (color == null) color = getDisplay().getSystemColor(SELECTION_FOREGROUND);
-	selectionForeground = color;
-	if (selectedIndex > -1) redraw();
+	this.selectionForeground = color;
+	if (this.selectedIndex > -1) redraw();
 }
 
 /**
@@ -3371,7 +3371,7 @@ public void setSingle(boolean single) {
 		this.single = single;
 		if (!single) {
 			for (int i = 0; i < items.length; i++) {
-				if (i != selectedIndex && items[i].closeImageState == SWT.NONE) {
+				if (i != this.selectedIndex && items[i].closeImageState == SWT.NONE) {
 					items[i].closeImageState = SWT.BACKGROUND;
 				}
 			}
@@ -3382,7 +3382,7 @@ public void setSingle(boolean single) {
 
 int getControlY(Point size, Rectangle[] rects, int borderBottom, int borderTop, int i) {
 	int center = fixedTabHeight != SWT.DEFAULT ? 0 : (tabHeight - rects[i].height)/2;
-	return onBottom ? size.y - borderBottom - tabHeight + center : 1 + borderTop + center;
+	return onBottom ? size.y - borderBottom - this.tabHeight + center : 1 + borderTop + center;
 }
 
 /**
@@ -3403,7 +3403,7 @@ public void setTabHeight(int height) {
 	if (height < -1) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	fixedTabHeight = height;
+	this.fixedTabHeight = height;
 	updateFolder(UPDATE_TAB_HEIGHT);
 }
 /**
@@ -3425,8 +3425,8 @@ public void setTabPosition(int position) {
 	if (position != SWT.TOP && position != SWT.BOTTOM) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	if (onBottom != (position == SWT.BOTTOM)) {
-		onBottom = position == SWT.BOTTOM;
+	if (this.onBottom != (position == SWT.BOTTOM)) {
+		this.onBottom = position == SWT.BOTTOM;
 		updateFolder(REDRAW);
 	}
 }
@@ -3483,10 +3483,10 @@ public void setTopRight(Control control, int alignment) {
 	if (control != null && (control.isDisposed() || control.getParent() != this)) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	if (topRight == control && topRightAlignment == alignment) return;
-	if (topRight != null && !topRight.isDisposed()) removeTabControl(topRight, false);
-	topRight = control;
-	topRightAlignment = alignment;
+	if (this.topRight == control && this.topRightAlignment == alignment) return;
+	if (this.topRight != null && !this.topRight.isDisposed()) removeTabControl(this.topRight, false);
+	this.topRight = control;
+	this.topRightAlignment = alignment;
 	alignment &= ~SWT.RIGHT;
 	if (control != null) addTabControl(control, SWT.TRAIL | alignment, -1, false);
 	updateFolder(UPDATE_TAB_HEIGHT | REDRAW);
@@ -3508,9 +3508,9 @@ public void setTopRight(Control control, int alignment) {
  */
 public void setUnselectedCloseVisible(boolean visible) {
 	checkWidget();
-	if (showUnselectedClose == visible) return;
+	if (this.showUnselectedClose == visible) return;
 	// display close button when mouse hovers
-	showUnselectedClose = visible;
+	this.showUnselectedClose = visible;
 	updateFolder(REDRAW);
 }
 /**
@@ -3527,9 +3527,9 @@ public void setUnselectedCloseVisible(boolean visible) {
  */
 public void setUnselectedImageVisible(boolean visible) {
 	checkWidget();
-	if (showUnselectedImage == visible) return;
+	if (this.showUnselectedImage == visible) return;
 	// display image on unselected items
-	showUnselectedImage = visible;
+	this.showUnselectedImage = visible;
 	updateFolder(REDRAW);
 }
 /**
@@ -3559,16 +3559,16 @@ public void showItem (CTabItem item) {
 	int index = indexOf(item);
 	if (index == -1) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	int idx = -1;
-	for (int i = 0; i < priority.length; i++) {
-		if (priority[i] == index) {
+	for (int i = 0; i < this.priority.length; i++) {
+		if (this.priority[i] == index) {
 			idx = i;
 			break;
 		}
 	}
-	if (mru) {
+	if (this.mru) {
 		// move to front of mru order
-		int[] newPriority = new int[priority.length];
-		System.arraycopy(priority, 0, newPriority, 1, idx);
+		int[] newPriority = new int[this.priority.length];
+		System.arraycopy(this.priority, 0, newPriority, 1, idx);
 		System.arraycopy(priority, idx+1, newPriority, idx+1, priority.length - idx - 1);
 		newPriority[0] = index;
 		priority = newPriority;
@@ -3577,11 +3577,11 @@ public void showItem (CTabItem item) {
 	updateFolder(REDRAW_TABS);
 }
 void showList (Rectangle rect) {
-	if (items.length == 0 || !showChevron) return;
-	if (showMenu == null || showMenu.isDisposed()) {
-		showMenu = new Menu(getShell(), getStyle() & (SWT.LEFT_TO_RIGHT | SWT.RIGHT_TO_LEFT));
+	if (items.length == 0 || !this.showChevron) return;
+	if (this.showMenu == null || this.showMenu.isDisposed()) {
+		this.showMenu = new Menu(getShell(), getStyle() & (SWT.LEFT_TO_RIGHT | SWT.RIGHT_TO_LEFT));
 	} else {
-		MenuItem[] items = showMenu.getItems();
+		MenuItem[] items = this.showMenu.getItems();
 		for (int i = 0; i < items.length; i++) {
 			items[i].dispose();
 		}
@@ -3590,7 +3590,7 @@ void showList (Rectangle rect) {
 	for (int i = 0; i < items.length; i++) {
 		CTabItem tab = items[i];
 		if (tab.showing) continue;
-		MenuItem item = new MenuItem(showMenu, SWT.NONE);
+		MenuItem item = new MenuItem(this.showMenu, SWT.NONE);
 		item.setText(tab.getText());
 		item.setImage(tab.getImage());
 		item.setData(id, tab);
@@ -3606,8 +3606,8 @@ void showList (Rectangle rect) {
 	int x = rect.x;
 	int y = rect.y + rect.height;
 	Point location = getDisplay().map(this, null, x, y);
-	showMenu.setLocation(location.x, location.y);
-	showMenu.setVisible(true);
+	this.showMenu.setLocation(location.x, location.y);
+	this.showMenu.setVisible(true);
 }
 /**
  * Shows the selection.  If the selection is already showing in the receiver,
@@ -3625,7 +3625,7 @@ void showList (Rectangle rect) {
  */
 public void showSelection () {
 	checkWidget (); 
-	if (selectedIndex != -1) {
+	if (this.selectedIndex != -1) {
 		showItem(getSelection());
 	}
 }
@@ -3639,22 +3639,22 @@ void _setToolTipText (int x, int y) {
 }
 
 boolean updateItems() {
-	return updateItems(selectedIndex);
+	return updateItems(this.selectedIndex);
 }
 
 boolean updateItems (int showIndex) {
 	GC gc = new GC(this);
-	if (!single && !mru && showIndex != -1) {
+	if (!this.single && !this.mru && showIndex != -1) {
 		// make sure selected item will be showing
 		int firstIndex = showIndex;
-		if (priority[0] < showIndex) {
+		if (this.priority[0] < showIndex) {
 			int maxWidth = getRightItemEdge(gc) - getLeftItemEdge(gc, CTabFolderRenderer.PART_BORDER);
 			int width = 0;
 			int[] widths = new int[items.length];
-			for (int i = priority[0]; i <= showIndex; i++) {
+			for (int i = this.priority[0]; i <= showIndex; i++) {
 				int state = CTabFolderRenderer.MINIMUM_SIZE;
-				if (i == selectedIndex) state |= SWT.SELECTED;
-				widths[i] = renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
+				if (i == this.selectedIndex) state |= SWT.SELECTED;
+				widths[i] = this.renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
 				width += widths[i];
 				if (width > maxWidth) break;
 			}
@@ -3662,26 +3662,26 @@ boolean updateItems (int showIndex) {
 				width = 0;
 				for (int i = showIndex; i >= 0; i--) {
 					int state = CTabFolderRenderer.MINIMUM_SIZE;
-					if (i == selectedIndex) state |= SWT.SELECTED;
-					if (widths[i] == 0) widths[i] = renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
+					if (i == this.selectedIndex) state |= SWT.SELECTED;
+					if (widths[i] == 0) widths[i] = this.renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
 					width += widths[i];
 					if (width > maxWidth) break;
 					firstIndex = i;
 				}
 			} else {
-				firstIndex = priority[0];
+				firstIndex = this.priority[0];
 				for (int i = showIndex + 1; i < items.length; i++) {
 					int state = CTabFolderRenderer.MINIMUM_SIZE;
-					if (i == selectedIndex) state |= SWT.SELECTED;
-					widths[i] = renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
+					if (i == this.selectedIndex) state |= SWT.SELECTED;
+					widths[i] = this.renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
 					width += widths[i];
 					if (width >= maxWidth) break;
 				}
 				if (width < maxWidth) {
-					for (int i = priority[0] - 1; i >= 0; i--) {
+					for (int i = this.priority[0] - 1; i >= 0; i--) {
 						int state = CTabFolderRenderer.MINIMUM_SIZE;
-						if (i == selectedIndex) state |= SWT.SELECTED;
-						if (widths[i] == 0) widths[i] = renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
+						if (i == this.selectedIndex) state |= SWT.SELECTED;
+						if (widths[i] == 0) widths[i] = this.renderer.computeSize(i, state, gc, SWT.DEFAULT, SWT.DEFAULT).x;
 						width += widths[i];
 						if (width > maxWidth) break;
 						firstIndex = i;
@@ -3690,22 +3690,22 @@ boolean updateItems (int showIndex) {
 			}
 		
 		}
-		if (firstIndex != priority[0]) {
+		if (firstIndex != this.priority[0]) {
 			int index = 0;
 			for (int i = firstIndex; i < items.length; i++) {
-				priority[index++] = i;
+				this.priority[index++] = i;
 			}
 			for (int i = 0; i < firstIndex; i++) {
-				priority[index++] = i;
+				this.priority[index++] = i;
 			}
 		}
 	}
 	
-	boolean oldShowChevron = showChevron;
+	boolean oldShowChevron = this.showChevron;
 	boolean changed = setItemSize(gc);
 	changed |= setItemLocation(gc);
 	setButtonBounds(gc);
-	changed |= showChevron != oldShowChevron;
+	changed |= this.showChevron != oldShowChevron;
 	if (changed && getToolTipText() != null) {
 		Point pt = getDisplay().getCursorLocation();
 		pt = toControl(pt);
@@ -3717,25 +3717,25 @@ boolean updateItems (int showIndex) {
 boolean updateTabHeight(boolean force){
 	int oldHeight = tabHeight;
 	GC gc = new GC(this);
-	tabHeight = renderer.computeSize(CTabFolderRenderer.PART_HEADER, SWT.NONE, gc, SWT.DEFAULT, SWT.DEFAULT).y;
+	this.tabHeight = this.renderer.computeSize(CTabFolderRenderer.PART_HEADER, SWT.NONE, gc, SWT.DEFAULT, SWT.DEFAULT).y;
 	gc.dispose();
-	if (fixedTabHeight == SWT.DEFAULT && controls != null && controls.length > 0) {
-		for (int i = 0; i < controls.length; i++) {		
-			if ((controlAlignments[i] & SWT.WRAP) == 0 && !controls[i].isDisposed() && (controls[i].getVisible() || controls[i] == chevronTb)) {
-				int topHeight = controls[i].computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
-				topHeight +=  renderer.computeTrim(CTabFolderRenderer.PART_HEADER, SWT.NONE, 0,0,0,0).height + 1;
+	if (this.fixedTabHeight == SWT.DEFAULT && this.controls != null && this.controls.length > 0) {
+		for (int i = 0; i < this.controls.length; i++) {		
+			if ((this.controlAlignments[i] & SWT.WRAP) == 0 && !this.controls[i].isDisposed() && (this.controls[i].getVisible() || this.controls[i] == this.chevronTb)) {
+				int topHeight = this.controls[i].computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+				topHeight +=  this.renderer.computeTrim(CTabFolderRenderer.PART_HEADER, SWT.NONE, 0,0,0,0).height + 1;
 				tabHeight = Math.max(topHeight, tabHeight);
 			}
 		}
 	}
 	if (!force && tabHeight == oldHeight) return false;
-	oldSize = null;
+	this.oldSize = null;
 	return true;
 }
 
 void updateFolder (int flags) {
 	this.updateFlags |= flags;
-	if (updateRun != null) return;
+	if (this.updateRun != null) return;
 	updateRun = new ARunnable() {
 		public void run() {
 			updateRun = null;
@@ -3743,16 +3743,16 @@ void updateFolder (int flags) {
 			runUpdate();
 		}
 	};
-	getDisplay().asyncExec(updateRun);
+	getDisplay().asyncExec(this.updateRun);
 }
 
 void runUpdate() {
-	if (updateFlags == 0) return; 
-	int flags = updateFlags;
-	updateFlags = 0;
+	if (this.updateFlags == 0) return; 
+	int flags = this.updateFlags;
+	this.updateFlags = 0;
 	Rectangle rectBefore = getClientArea();
 	boolean updated = updateTabHeight(false);
-	updated |= updateItems(selectedIndex);
+	updated |= updateItems(this.selectedIndex);
 	if (updated && getParent() != null) {
 		getParent().layout(true, true);
 	}
@@ -3769,11 +3769,11 @@ void runUpdate() {
 }
 
 void updateBkImages() {
-	if (controls != null && controls.length > 0) {
-		for (int i = 0; i < controls.length; i++) {
-			Control control = controls[i];
+	if (this.controls != null && this.controls.length > 0) {
+		for (int i = 0; i < this.controls.length; i++) {
+			Control control = this.controls[i];
 			if (!control.isDisposed()) {
-				if (hovering) {
+				if (this.hovering) {
 					if (control instanceof Composite) ((Composite) control).setBackgroundMode(SWT.INHERIT_NONE);
 					control.setBackgroundImage(null);
 					control.setBackground(getBackground());
@@ -3782,13 +3782,13 @@ void updateBkImages() {
 					Rectangle bounds = control.getBounds();
 					int tabHeight = getTabHeight();
 					int height = this.getSize().y;
-					boolean wrapped = onBottom ? bounds.y + bounds.height < height - tabHeight : bounds.y > tabHeight; 
-					if (wrapped || gradientColors == null) {
+					boolean wrapped = this.onBottom ? bounds.y + bounds.height < height - tabHeight : bounds.y > tabHeight; 
+					if (wrapped || this.gradientColors == null) {
 						control.setBackgroundImage(null);
 						control.setBackground(getBackground());
 					} else {
 						bounds.width = 10;
-						if (!onBottom) {
+						if (!this.onBottom) {
 							bounds.y = -bounds.y;
 							bounds.height -= 2*bounds.y - 1;
 						} else {
@@ -3796,13 +3796,13 @@ void updateBkImages() {
 							bounds.y = -1; 
 						}
 						bounds.x = 0;
-						if (controlBkImages[i] != null) controlBkImages[i].dispose();
-						controlBkImages[i] = new Image(control.getDisplay(), bounds);
-						GC gc = new GC(controlBkImages[i]);
-						renderer.drawBackground(gc, bounds, 0);
+						if (this.controlBkImages[i] != null) this.controlBkImages[i].dispose();
+						this.controlBkImages[i] = new Image(control.getDisplay(), bounds);
+						GC gc = new GC(this.controlBkImages[i]);
+						this.renderer.drawBackground(gc, bounds, 0);
 						gc.dispose();
 						control.setBackground(null);
-						control.setBackgroundImage(controlBkImages[i]);
+						control.setBackgroundImage(this.controlBkImages[i]);
 					}
 				}
 			}
@@ -3814,7 +3814,7 @@ String _getToolTip(int x, int y) {
 	CTabItem item = getItem(new Point (x, y));
 	if (item == null) return null;
 	if (!item.showing) return null;
-	if ((showClose || item.showClose) && item.closeRect.contains(x, y)) {
+	if ((this.showClose || item.showClose) && item.closeRect.contains(x, y)) {
 		return SWT.getMessage("SWT_Close"); //$NON-NLS-1$
 	}
 	return item.getToolTipText();
@@ -3866,31 +3866,31 @@ void addTabControl(Control control, int flags, int index, boolean update) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
 	//check for duplicates
-	for (int i = 0; i < controls.length; i++) {
-		if (controls[i] == control) {
+	for (int i = 0; i < this.controls.length; i++) {
+		if (this.controls[i] == control) {
 			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 		}
 	}
-	int length = controls.length;
+	int length = this.controls.length;
 	
 	control.addListener(SWT.Resize, listener);
 	
 	//Grow all 4 arrays
 	Control[] newControls = new Control [length + 1];
-	System.arraycopy(controls, 0, newControls, 0, length);
-	controls = newControls;
+	System.arraycopy(this.controls, 0, newControls, 0, length);
+	this.controls = newControls;
 	int[] newAlignment = new int [length + 1];
-	System.arraycopy(controlAlignments, 0, newAlignment, 0, length);
-	controlAlignments = newAlignment;
+	System.arraycopy(this.controlAlignments, 0, newAlignment, 0, length);
+	this.controlAlignments = newAlignment;
 	Rectangle[] newRect = new Rectangle [length + 1];
-	System.arraycopy(controlRects, 0, newRect, 0, length);
-	controlRects = newRect;
+	System.arraycopy(this.controlRects, 0, newRect, 0, length);
+	this.controlRects = newRect;
 	Image[] newImage = new Image [length + 1];
-	System.arraycopy(controlBkImages, 0, newImage, 0, length);
-	controlBkImages = newImage;
+	System.arraycopy(this.controlBkImages, 0, newImage, 0, length);
+	this.controlBkImages = newImage;
 	if (index == -1) {
 		index = length;
-		if (chevronTb != null && control != chevronTb) index--;
+		if (this.chevronTb != null && control != this.chevronTb) index--;
 	} 
 	System.arraycopy (controls, index, controls, index + 1, length - index);
 	System.arraycopy (controlAlignments, index, controlAlignments, index + 1, length - index);
@@ -3925,8 +3925,8 @@ void removeTabControl (Control control, boolean update) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
 	int index = -1;
-	for (int i = 0; i < controls.length; i++) {
-		if (controls[i] == control){
+	for (int i = 0; i < this.controls.length; i++) {
+		if (this.controls[i] == control){
 			index = i;
 			break;
 		}
@@ -3940,32 +3940,32 @@ void removeTabControl (Control control, boolean update) {
 		if (control instanceof Composite) ((Composite) control).setBackgroundMode(SWT.INHERIT_NONE);
 	}
 	
-	if (controlBkImages[index] != null && !controlBkImages[index].isDisposed()) controlBkImages[index].dispose();
-	if (controls.length == 1) {
-		controls = new Control[0];
-		controlAlignments = new int[0];
-		controlRects = new Rectangle[0];
-		controlBkImages = new Image[0];
+	if (this.controlBkImages[index] != null && !this.controlBkImages[index].isDisposed()) this.controlBkImages[index].dispose();
+	if (this.controls.length == 1) {
+		this.controls = new Control[0];
+		this.controlAlignments = new int[0];
+		this.controlRects = new Rectangle[0];
+		this.controlBkImages = new Image[0];
 	} else {
-		Control[] newControls = new Control [controls.length - 1];
-		System.arraycopy(controls, 0, newControls, 0, index);
+		Control[] newControls = new Control [this.controls.length - 1];
+		System.arraycopy(this.controls, 0, newControls, 0, index);
 		System.arraycopy(controls, index + 1, newControls, index, controls.length - index - 1);
 		controls = newControls;
 		
 		int[] newAlignments = new int [controls.length];
-		System.arraycopy(controlAlignments, 0, newAlignments, 0, index);
-		System.arraycopy(controlAlignments, index + 1, newAlignments, index, controls.length - index);
-		controlAlignments = newAlignments;
+		System.arraycopy(this.controlAlignments, 0, newAlignments, 0, index);
+		System.arraycopy(this.controlAlignments, index + 1, newAlignments, index, controls.length - index);
+		this.controlAlignments = newAlignments;
 		
 		Rectangle[] newRects = new Rectangle [controls.length];
-		System.arraycopy(controlRects, 0, newRects, 0, index);
-		System.arraycopy(controlRects, index + 1, newRects, index, controls.length - index);
-		controlRects = newRects;
+		System.arraycopy(this.controlRects, 0, newRects, 0, index);
+		System.arraycopy(this.controlRects, index + 1, newRects, index, controls.length - index);
+		this.controlRects = newRects;
 		
 		Image[] newBkImages = new Image [controls.length];
-		System.arraycopy(controlBkImages, 0, newBkImages, 0, index);
-		System.arraycopy(controlBkImages, index + 1, newBkImages, index, controls.length - index);
-		controlBkImages = newBkImages;
+		System.arraycopy(this.controlBkImages, 0, newBkImages, 0, index);
+		System.arraycopy(this.controlBkImages, index + 1, newBkImages, index, controls.length - index);
+		this.controlBkImages = newBkImages;
 	}
 	if (update) {
 		updateFolder(UPDATE_TAB_HEIGHT | REDRAW);
@@ -4000,8 +4000,8 @@ int getWrappedHeight (Point size) {
  */
 /*public*/ void setChevronVisible(boolean visible) {
 	checkWidget();
-	if (chevronVisible == visible) return;
-	chevronVisible = visible;
+	if (this.chevronVisible == visible) return;
+	this.chevronVisible = visible;
 	updateFolder(UPDATE_TAB_HEIGHT | REDRAW);
 }
 }

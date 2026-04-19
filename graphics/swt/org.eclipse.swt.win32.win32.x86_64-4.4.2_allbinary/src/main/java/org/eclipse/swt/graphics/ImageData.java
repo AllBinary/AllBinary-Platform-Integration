@@ -523,8 +523,8 @@ ImageData colorMaskImage(int pixel) {
 	ImageData mask = new ImageData(width, height, 1, bwPalette(),
 		2, null, 0, null, null, -1, -1, SWT.IMAGE_UNDEFINED,
 		0, 0, 0, 0);
-	int[] row = new int[width];
-	for (int y = 0; y < height; y++) {
+	int[] row = new int[this.width];
+	for (int y = 0; y < this.height; y++) {
 		getPixels(0, y, width, row, 0);
 		for (int i = 0; i < width; i++) {
 			if (pixel != -1 && row[i] == pixel) {
@@ -556,32 +556,32 @@ public Object clone() {
 	byte[] cloneData = new byte[data.length];
 	System.arraycopy(data, 0, cloneData, 0, data.length);
 	byte[] cloneMaskData = null;
-	if (maskData != null) {
-		cloneMaskData = new byte[maskData.length];
+	if (this.maskData != null) {
+		cloneMaskData = new byte[this.maskData.length];
 		System.arraycopy(maskData, 0, cloneMaskData, 0, maskData.length);
 	}
 	byte[] cloneAlphaData = null;
-	if (alphaData != null) {
-		cloneAlphaData = new byte[alphaData.length];
+	if (this.alphaData != null) {
+		cloneAlphaData = new byte[this.alphaData.length];
 		System.arraycopy(alphaData, 0, cloneAlphaData, 0, alphaData.length);
 	}
 	return new ImageData(
-		width,
-		height,
-		depth,
-		palette,
-		scanlinePad,
+		this.width,
+		this.height,
+		this.depth,
+		this.palette,
+		this.scanlinePad,
 		cloneData,
-		maskPad,
+		this.maskPad,
 		cloneMaskData,
 		cloneAlphaData,
-		alpha,
-		transparentPixel,
-		type,
-		x,
-		y,
-		disposalMethod,
-		delayTime);
+		this.alpha,
+		this.transparentPixel,
+		this.type,
+		this.x,
+		this.y,
+		this.disposalMethod,
+		this.delayTime);
 }
 
 /**
@@ -599,10 +599,10 @@ public Object clone() {
  * </ul>
  */
 public int getAlpha(int x, int y) {
-	if (x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 
-	if (alphaData == null) return 255;
-	return alphaData[y * width + x] & 0xFF;
+	if (this.alphaData == null) return 255;
+	return alphaData[y * this.width + x] & 0xFF;
 }
 
 /**
@@ -627,10 +627,10 @@ public int getAlpha(int x, int y) {
  */
 public void getAlphas(int x, int y, int getWidth, byte[] alphas, int startIndex) {
 	if (alphas == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (getWidth < 0 || x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (getWidth < 0 || x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	if (getWidth == 0) return;
 
-	if (alphaData == null) {
+	if (this.alphaData == null) {
 		int endIndex = startIndex + getWidth;
 		for (int i = startIndex; i < endIndex; i++) {
 			alphas[i] = (byte)255;
@@ -638,7 +638,7 @@ public void getAlphas(int x, int y, int getWidth, byte[] alphas, int startIndex)
 		return;
 	}
 	// may throw an IndexOutOfBoundsException
-	System.arraycopy(alphaData, y * width + x, alphas, startIndex, getWidth);
+	System.arraycopy(this.alphaData, y * this.width + x, alphas, startIndex, getWidth);
 }
 
 /**
@@ -657,27 +657,27 @@ public void getAlphas(int x, int y, int getWidth, byte[] alphas, int startIndex)
  * </ul>
  */
 public int getPixel(int x, int y) {
-	if (x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	int index;
 	int theByte;
 	int mask;
-	switch (depth) {
+	switch (this.depth) {
 		case 32:
-			index = (y * bytesPerLine) + (x * 4);
-			return ((data[index] & 0xFF) << 24) + ((data[index+1] & 0xFF) << 16) +
-					((data[index+2] & 0xFF) << 8) + (data[index+3] & 0xFF);
+			index = (y * this.bytesPerLine) + (x * 4);
+			return ((this.data[index] & 0xFF) << 24) + ((this.data[index+1] & 0xFF) << 16) +
+					((this.data[index+2] & 0xFF) << 8) + (this.data[index+3] & 0xFF);
 		case 24:
-			index = (y * bytesPerLine) + (x * 3);
-			return ((data[index] & 0xFF) << 16) + ((data[index+1] & 0xFF) << 8) +
-				(data[index+2] & 0xFF);
+			index = (y * this.bytesPerLine) + (x * 3);
+			return ((this.data[index] & 0xFF) << 16) + ((this.data[index+1] & 0xFF) << 8) +
+				(this.data[index+2] & 0xFF);
 		case 16:
-			index = (y * bytesPerLine) + (x * 2);
-			return ((data[index+1] & 0xFF) << 8) + (data[index] & 0xFF);
+			index = (y * this.bytesPerLine) + (x * 2);
+			return ((this.data[index+1] & 0xFF) << 8) + (this.data[index] & 0xFF);
 		case 8:
-			index = (y * bytesPerLine) + x ;
+			index = (y * this.bytesPerLine) + x ;
 			return data[index] & 0xFF;
 		case 4:
-			index = (y * bytesPerLine) + (x >> 1);
+			index = (y * this.bytesPerLine) + (x >> 1);
 			theByte = data[index] & 0xFF;
 			if ((x & 0x1) == 0) {
 				return theByte >> 4;
@@ -685,13 +685,13 @@ public int getPixel(int x, int y) {
 				return theByte & 0x0F;
 			}
 		case 2:
-			index = (y * bytesPerLine) + (x >> 2);
+			index = (y * this.bytesPerLine) + (x >> 2);
 			theByte = data[index] & 0xFF;
 			int offset = 3 - (x % 4);
 			mask = 3 << (offset * 2);
 			return (theByte & mask) >> (offset * 2);
 		case 1:
-			index = (y * bytesPerLine) + (x >> 3);
+			index = (y * this.bytesPerLine) + (x >> 3);
 			theByte = data[index] & 0xFF;
 			mask = 1 << (7 - (x & 0x7));
 			if ((theByte & mask) == 0) {
@@ -728,7 +728,7 @@ public int getPixel(int x, int y) {
  */
 public void getPixels(int x, int y, int getWidth, byte[] pixels, int startIndex) {
 	if (pixels == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (getWidth < 0 || x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (getWidth < 0 || x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	if (getWidth == 0) return;
 	int index;
 	int theByte;
@@ -736,16 +736,16 @@ public void getPixels(int x, int y, int getWidth, byte[] pixels, int startIndex)
 	int n = getWidth;
 	int i = startIndex;
 	int srcX = x, srcY = y;
-	switch (depth) {
+	switch (this.depth) {
 		case 8:
-			index = (y * bytesPerLine) + x;
+			index = (y * this.bytesPerLine) + x;
 			for (int j = 0; j < getWidth; j++) {
-				pixels[i] = data[index];
+				pixels[i] = this.data[index];
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index++;
@@ -753,39 +753,39 @@ public void getPixels(int x, int y, int getWidth, byte[] pixels, int startIndex)
 			}
 			return;
 		case 4:
-			index = (y * bytesPerLine) + (x >> 1);
+			index = (y * this.bytesPerLine) + (x >> 1);
 			if ((x & 0x1) == 1) {
-				theByte = data[index] & 0xFF;
+				theByte = this.data[index] & 0xFF;
 				pixels[i] = (byte)(theByte & 0x0F);
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index++;
 				}
 			}
 			while (n > 1) {
-				theByte = data[index] & 0xFF;
+				theByte = this.data[index] & 0xFF;
 				pixels[i] = (byte)(theByte >> 4);
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					pixels[i] = (byte)(theByte & 0x0F);
 					i++;
 					n--;
 					srcX++;
-					if (srcX >= width) {
+					if (srcX >= this.width) {
 						srcY++;
-						index = srcY * bytesPerLine;
+						index = srcY * this.bytesPerLine;
 						srcX = 0;
 					} else {
 						index++;
@@ -793,13 +793,13 @@ public void getPixels(int x, int y, int getWidth, byte[] pixels, int startIndex)
 				}
 			}
 			if (n > 0) {
-				theByte = data[index] & 0xFF;
+				theByte = this.data[index] & 0xFF;
 				pixels[i] = (byte)(theByte >> 4);
 			}
 			return;
 		case 2:
-			index = (y * bytesPerLine) + (x >> 2);
-			theByte = data[index] & 0xFF;
+			index = (y * this.bytesPerLine) + (x >> 2);
+			theByte = this.data[index] & 0xFF;
 			int offset;
 			while (n > 0) {
 				offset = 3 - (srcX % 4);
@@ -808,22 +808,22 @@ public void getPixels(int x, int y, int getWidth, byte[] pixels, int startIndex)
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
-					if (n > 0) theByte = data[index] & 0xFF;
+					index = srcY * this.bytesPerLine;
+					if (n > 0) theByte = this.data[index] & 0xFF;
 					srcX = 0;
 				} else {
 					if (offset == 0) {
 						index++;
-						theByte = data[index] & 0xFF;
+						theByte = this.data[index] & 0xFF;
 					}
 				}
 			}
 			return;
 		case 1:
-			index = (y * bytesPerLine) + (x >> 3);
-			theByte = data[index] & 0xFF;
+			index = (y * this.bytesPerLine) + (x >> 3);
+			theByte = this.data[index] & 0xFF;
 			while (n > 0) {
 				mask = 1 << (7 - (srcX & 0x7));
 				if ((theByte & mask) == 0) {
@@ -834,15 +834,15 @@ public void getPixels(int x, int y, int getWidth, byte[] pixels, int startIndex)
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
-					if (n > 0) theByte = data[index] & 0xFF;
+					index = srcY * this.bytesPerLine;
+					if (n > 0) theByte = this.data[index] & 0xFF;
 					srcX = 0;
 				} else {
 					if (mask == 1) {
 						index++;
-						if (n > 0) theByte = data[index] & 0xFF;
+						if (n > 0) theByte = this.data[index] & 0xFF;
 					}
 				}
 			}
@@ -874,7 +874,7 @@ public void getPixels(int x, int y, int getWidth, byte[] pixels, int startIndex)
  */
 public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) {
 	if (pixels == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (getWidth < 0 || x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (getWidth < 0 || x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	if (getWidth == 0) return;
 	int index;
 	int theByte;
@@ -882,17 +882,17 @@ public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) 
 	int n = getWidth;
 	int i = startIndex;
 	int srcX = x, srcY = y;
-	switch (depth) {
+	switch (this.depth) {
 		case 32:
-			index = (y * bytesPerLine) + (x * 4);
+			index = (y * this.bytesPerLine) + (x * 4);
 			i = startIndex;
 			for (int j = 0; j < getWidth; j++) {
-				pixels[i] = ((data[index] & 0xFF) << 24) | ((data[index+1] & 0xFF) << 16) | ((data[index+2] & 0xFF) << 8) | (data[index+3] & 0xFF);
+				pixels[i] = ((this.data[index] & 0xFF) << 24) | ((this.data[index+1] & 0xFF) << 16) | ((this.data[index+2] & 0xFF) << 8) | (this.data[index+3] & 0xFF);
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index += 4;
@@ -900,17 +900,17 @@ public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 24:
-			index = (y * bytesPerLine) + (x * 3);
+			index = (y * this.bytesPerLine) + (x * 3);
 			for (int j = 0; j < getWidth; j++) {
                             
-				pixels[i] = ((data[index] & 0xFF) << 16) | ((data[index+1] & 0xFF) << 8) | (data[index+2] & 0xFF);
+				pixels[i] = ((this.data[index] & 0xFF) << 16) | ((this.data[index+1] & 0xFF) << 8) | (this.data[index+2] & 0xFF);
                                 //TWB - Correct for my RGBA SWT hack for giving Alpha to Avian build
                                 //pixels[i] = ((data[index] & 0xFF) << 24) | ((data[index+1] & 0xFF) << 16) | ((data[index+2] & 0xFF) << 8);
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index += 3;
@@ -918,14 +918,14 @@ public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 16:
-			index = (y * bytesPerLine) + (x * 2);
+			index = (y * this.bytesPerLine) + (x * 2);
 			for (int j = 0; j < getWidth; j++) {
-				pixels[i] = ((data[index+1] & 0xFF) << 8) + (data[index] & 0xFF);
+				pixels[i] = ((this.data[index+1] & 0xFF) << 8) + (this.data[index] & 0xFF);
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index += 2;
@@ -933,14 +933,14 @@ public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 8:
-			index = (y * bytesPerLine) + x;
+			index = (y * this.bytesPerLine) + x;
 			for (int j = 0; j < getWidth; j++) {
-				pixels[i] = data[index] & 0xFF;
+				pixels[i] = this.data[index] & 0xFF;
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index++;
@@ -948,39 +948,39 @@ public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 4:
-			index = (y * bytesPerLine) + (x >> 1);
+			index = (y * this.bytesPerLine) + (x >> 1);
 			if ((x & 0x1) == 1) {
-				theByte = data[index] & 0xFF;
+				theByte = this.data[index] & 0xFF;
 				pixels[i] = theByte & 0x0F;
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index++;
 				}
 			}
 			while (n > 1) {
-				theByte = data[index] & 0xFF;
+				theByte = this.data[index] & 0xFF;
 				pixels[i] = theByte >> 4;
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					pixels[i] = theByte & 0x0F;
 					i++;
 					n--;
 					srcX++;
-					if (srcX >= width) {
+					if (srcX >= this.width) {
 						srcY++;
-						index = srcY * bytesPerLine;
+						index = srcY * this.bytesPerLine;
 						srcX = 0;
 					} else {
 						index++;
@@ -988,13 +988,13 @@ public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) 
 				}
 			}
 			if (n > 0) {
-				theByte = data[index] & 0xFF;
+				theByte = this.data[index] & 0xFF;
 				pixels[i] = theByte >> 4;
 			}
 			return;
 		case 2:
-			index = (y * bytesPerLine) + (x >> 2);
-			theByte = data[index] & 0xFF;
+			index = (y * this.bytesPerLine) + (x >> 2);
+			theByte = this.data[index] & 0xFF;
 			int offset;
 			while (n > 0) {
 				offset = 3 - (srcX % 4);
@@ -1003,22 +1003,22 @@ public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) 
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
-					if (n > 0) theByte = data[index] & 0xFF;
+					index = srcY * this.bytesPerLine;
+					if (n > 0) theByte = this.data[index] & 0xFF;
 					srcX = 0;
 				} else {
 					if (offset == 0) {
 						index++;
-						theByte = data[index] & 0xFF;
+						theByte = this.data[index] & 0xFF;
 					}
 				}
 			}
 			return;
 		case 1:
-			index = (y * bytesPerLine) + (x >> 3);
-			theByte = data[index] & 0xFF;
+			index = (y * this.bytesPerLine) + (x >> 3);
+			theByte = this.data[index] & 0xFF;
 			while (n > 0) {
 				mask = 1 << (7 - (srcX & 0x7));
 				if ((theByte & mask) == 0) {
@@ -1029,15 +1029,15 @@ public void getPixels(int x, int y, int getWidth, int[] pixels, int startIndex) 
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
-					if (n > 0) theByte = data[index] & 0xFF;
+					index = srcY * this.bytesPerLine;
+					if (n > 0) theByte = this.data[index] & 0xFF;
 					srcX = 0;
 				} else {
 					if (mask == 1) {
 						index++;
-						if (n > 0) theByte = data[index] & 0xFF;
+						if (n > 0) theByte = this.data[index] & 0xFF;
 					}
 				}
 			}
@@ -1069,9 +1069,9 @@ public RGB[] getRGBs() {
  */
 public ImageData getTransparencyMask() {
 	if (getTransparencyType() == SWT.TRANSPARENCY_MASK) {
-		return new ImageData(width, height, 1, bwPalette(), maskPad, maskData);
+		return new ImageData(this.width, height, 1, bwPalette(), maskPad, maskData);
 	} else {
-		return colorMaskImage(transparentPixel);
+		return colorMaskImage(this.transparentPixel);
 	}
 }
 
@@ -1083,9 +1083,9 @@ public ImageData getTransparencyMask() {
  * @return the receiver's transparency type
  */
 public int getTransparencyType() {
-	if (maskData != null) return SWT.TRANSPARENCY_MASK;
-	if (transparentPixel != -1) return SWT.TRANSPARENCY_PIXEL;
-	if (alphaData != null) return SWT.TRANSPARENCY_ALPHA;
+	if (this.maskData != null) return SWT.TRANSPARENCY_MASK;
+	if (this.transparentPixel != -1) return SWT.TRANSPARENCY_PIXEL;
+	if (this.alphaData != null) return SWT.TRANSPARENCY_ALPHA;
 	return SWT.TRANSPARENCY_NONE;
 }
 
@@ -1117,12 +1117,12 @@ public ImageData scaledTo(int width, int height) {
 
 	ImageData dest = new ImageData(
 		width, height, depth, palette,
-		scanlinePad, null, 0, null,
+		this.scanlinePad, null, 0, null,
 		null, -1, transparentPixel, type,
-		x, y, disposalMethod, delayTime);
+		this.x, y, disposalMethod, delayTime);
 
 	/* Scale the image contents */
-	if (palette.isDirect) blit(BLIT_SRC,
+	if (this.palette.isDirect) blit(BLIT_SRC,
 		this.data, this.depth, this.bytesPerLine, this.getByteOrder(), 0, 0, this.width, this.height, 0, 0, 0,
 		ALPHA_OPAQUE, null, 0, 0, 0,
 		dest.data, dest.depth, dest.bytesPerLine, dest.getByteOrder(), 0, 0, dest.width, dest.height, 0, 0, 0,
@@ -1134,7 +1134,7 @@ public ImageData scaledTo(int width, int height) {
 		flipX, flipY);
 	
 	/* Scale the image mask or alpha */
-	if (maskData != null) {
+	if (this.maskData != null) {
 		dest.maskPad = this.maskPad;
 		int destBpl = (dest.width + 7) / 8;
 		destBpl = (destBpl + (dest.maskPad - 1)) / dest.maskPad * dest.maskPad;
@@ -1174,11 +1174,11 @@ public ImageData scaledTo(int width, int height) {
  *  </ul>
  */
 public void setAlpha(int x, int y, int alpha) {
-	if (x >= width || y >= height || x < 0 || y < 0 || alpha < 0 || alpha > 255)
+	if (x >= this.width || y >= this.height || x < 0 || y < 0 || alpha < 0 || alpha > 255)
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	
-	if (alphaData == null) alphaData = new byte[width * height];
-	alphaData[y * width + x] = (byte)alpha;	
+	if (this.alphaData == null) this.alphaData = new byte[this.width * this.height];
+	this.alphaData[y * this.width + x] = (byte)alpha;	
 }
 
 /**
@@ -1203,12 +1203,12 @@ public void setAlpha(int x, int y, int alpha) {
  */
 public void setAlphas(int x, int y, int putWidth, byte[] alphas, int startIndex) {
 	if (alphas == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (putWidth < 0 || x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (putWidth < 0 || x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	if (putWidth == 0) return;
 	
-	if (alphaData == null) alphaData = new byte[width * height];
+	if (this.alphaData == null) this.alphaData = new byte[this.width * this.height];
 	// may throw an IndexOutOfBoundsException
-	System.arraycopy(alphas, startIndex, alphaData, y * width + x, putWidth);
+	System.arraycopy(alphas, startIndex, alphaData, y * this.width + x, putWidth);
 }
 
 /**
@@ -1227,56 +1227,56 @@ public void setAlphas(int x, int y, int putWidth, byte[] alphas, int startIndex)
  * </ul>
  */
 public void setPixel(int x, int y, int pixelValue) {
-	if (x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	int index;
 	byte theByte;
 	int mask;
-	switch (depth) {
+	switch (this.depth) {
 		case 32:
-			index = (y * bytesPerLine) + (x * 4);
-			data[index]  = (byte)((pixelValue >> 24) & 0xFF);
-			data[index + 1] = (byte)((pixelValue >> 16) & 0xFF);
-			data[index + 2] = (byte)((pixelValue >> 8) & 0xFF);
-			data[index + 3] = (byte)(pixelValue & 0xFF);
+			index = (y * this.bytesPerLine) + (x * 4);
+			this.data[index]  = (byte)((pixelValue >> 24) & 0xFF);
+			this.data[index + 1] = (byte)((pixelValue >> 16) & 0xFF);
+			this.data[index + 2] = (byte)((pixelValue >> 8) & 0xFF);
+			this.data[index + 3] = (byte)(pixelValue & 0xFF);
 			return;
 		case 24:
-			index = (y * bytesPerLine) + (x * 3);
-			data[index] = (byte)((pixelValue >> 16) & 0xFF);
-			data[index + 1] = (byte)((pixelValue >> 8) & 0xFF);
-			data[index + 2] = (byte)(pixelValue & 0xFF);
+			index = (y * this.bytesPerLine) + (x * 3);
+			this.data[index] = (byte)((pixelValue >> 16) & 0xFF);
+			this.data[index + 1] = (byte)((pixelValue >> 8) & 0xFF);
+			this.data[index + 2] = (byte)(pixelValue & 0xFF);
 			return;
 		case 16:
-			index = (y * bytesPerLine) + (x * 2);
-			data[index + 1] = (byte)((pixelValue >> 8) & 0xFF);
-			data[index] = (byte)(pixelValue & 0xFF);
+			index = (y * this.bytesPerLine) + (x * 2);
+			this.data[index + 1] = (byte)((pixelValue >> 8) & 0xFF);
+			this.data[index] = (byte)(pixelValue & 0xFF);
 			return;
 		case 8:
-			index = (y * bytesPerLine) + x ;
-			data[index] = (byte)(pixelValue & 0xFF);
+			index = (y * this.bytesPerLine) + x ;
+			this.data[index] = (byte)(pixelValue & 0xFF);
 			return;
 		case 4:
-			index = (y * bytesPerLine) + (x >> 1);
+			index = (y * this.bytesPerLine) + (x >> 1);
 			if ((x & 0x1) == 0) {
-				data[index] = (byte)((data[index] & 0x0F) | ((pixelValue & 0x0F) << 4));
+				this.data[index] = (byte)((this.data[index] & 0x0F) | ((pixelValue & 0x0F) << 4));
 			} else {
-				data[index] = (byte)((data[index] & 0xF0) | (pixelValue & 0x0F));
+				this.data[index] = (byte)((this.data[index] & 0xF0) | (pixelValue & 0x0F));
 			}
 			return;
 		case 2:
-			index = (y * bytesPerLine) + (x >> 2);
-			theByte = data[index];
+			index = (y * this.bytesPerLine) + (x >> 2);
+			theByte = this.data[index];
 			int offset = 3 - (x % 4);
 			mask = 0xFF ^ (3 << (offset * 2));
-			data[index] = (byte)((data[index] & mask) | (pixelValue << (offset * 2)));
+			this.data[index] = (byte)((this.data[index] & mask) | (pixelValue << (offset * 2)));
 			return;
 		case 1:
-			index = (y * bytesPerLine) + (x >> 3);
-			theByte = data[index];
+			index = (y * this.bytesPerLine) + (x >> 3);
+			theByte = this.data[index];
 			mask = 1 << (7 - (x & 0x7));
 			if ((pixelValue & 0x1) == 1) {
-				data[index] = (byte)(theByte | mask);
+				this.data[index] = (byte)(theByte | mask);
 			} else {
-				data[index] = (byte)(theByte & (mask ^ -1));
+				this.data[index] = (byte)(theByte & (mask ^ -1));
 			}
 			return;
 	}
@@ -1308,7 +1308,7 @@ public void setPixel(int x, int y, int pixelValue) {
  */
 public void setPixels(int x, int y, int putWidth, byte[] pixels, int startIndex) {
 	if (pixels == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (putWidth < 0 || x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (putWidth < 0 || x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	if (putWidth == 0) return;
 	int index;
 	int theByte;
@@ -1316,16 +1316,16 @@ public void setPixels(int x, int y, int putWidth, byte[] pixels, int startIndex)
 	int n = putWidth;
 	int i = startIndex;
 	int srcX = x, srcY = y;
-	switch (depth) {
+	switch (this.depth) {
 		case 8:
-			index = (y * bytesPerLine) + x;
+			index = (y * this.bytesPerLine) + x;
 			for (int j = 0; j < putWidth; j++) {
-				data[index] = (byte)(pixels[i] & 0xFF);
+				this.data[index] = (byte)(pixels[i] & 0xFF);
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index++;
@@ -1333,21 +1333,21 @@ public void setPixels(int x, int y, int putWidth, byte[] pixels, int startIndex)
 			}
 			return;
 		case 4:
-			index = (y * bytesPerLine) + (x >> 1);
+			index = (y * this.bytesPerLine) + (x >> 1);
 			boolean high = (x & 0x1) == 0;
 			while (n > 0) {
 				theByte = pixels[i] & 0x0F;
 				if (high) {
-					data[index] = (byte)((data[index] & 0x0F) | (theByte << 4));
+					this.data[index] = (byte)((this.data[index] & 0x0F) | (theByte << 4));
 				} else {
-					data[index] = (byte)((data[index] & 0xF0) | theByte);
+					this.data[index] = (byte)((this.data[index] & 0xF0) | theByte);
 				}
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					high = true;
 					srcX = 0;
 				} else {
@@ -1358,17 +1358,17 @@ public void setPixels(int x, int y, int putWidth, byte[] pixels, int startIndex)
 			return;
 		case 2:
 			byte [] masks = { (byte)0xFC, (byte)0xF3, (byte)0xCF, (byte)0x3F };
-			index = (y * bytesPerLine) + (x >> 2);
+			index = (y * this.bytesPerLine) + (x >> 2);
 			int offset = 3 - (x % 4);
 			while (n > 0) {
 				theByte = pixels[i] & 0x3;
-				data[index] = (byte)((data[index] & masks[offset]) | (theByte << (offset * 2)));
+				this.data[index] = (byte)((this.data[index] & masks[offset]) | (theByte << (offset * 2)));
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					offset = 0;
 					srcX = 0;
 				} else {
@@ -1382,20 +1382,20 @@ public void setPixels(int x, int y, int putWidth, byte[] pixels, int startIndex)
 			}
 			return;
 		case 1:
-			index = (y * bytesPerLine) + (x >> 3);
+			index = (y * this.bytesPerLine) + (x >> 3);
 			while (n > 0) {
 				mask = 1 << (7 - (srcX & 0x7));
 				if ((pixels[i] & 0x1) == 1) {
-					data[index] = (byte)((data[index] & 0xFF) | mask);
+					this.data[index] = (byte)((this.data[index] & 0xFF) | mask);
 				} else {
-					data[index] = (byte)((data[index] & 0xFF) & (mask ^ -1));
+					this.data[index] = (byte)((this.data[index] & 0xFF) & (mask ^ -1));
 				}
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					if (mask == 1) {
@@ -1432,7 +1432,7 @@ public void setPixels(int x, int y, int putWidth, byte[] pixels, int startIndex)
  */
 public void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex) {
 	if (pixels == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (putWidth < 0 || x >= width || y >= height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (putWidth < 0 || x >= this.width || y >= this.height || x < 0 || y < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	if (putWidth == 0) return;
 	int index;
 	int theByte;
@@ -1441,20 +1441,20 @@ public void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex) 
 	int i = startIndex;
 	int pixel;
 	int srcX = x, srcY = y;
-	switch (depth) {
+	switch (this.depth) {
 		case 32:
-			index = (y * bytesPerLine) + (x * 4);
+			index = (y * this.bytesPerLine) + (x * 4);
 			for (int j = 0; j < putWidth; j++) {
 				pixel = pixels[i];
-				data[index] = (byte)((pixel >> 24) & 0xFF);
-				data[index + 1] = (byte)((pixel >> 16) & 0xFF);
-				data[index + 2] = (byte)((pixel >> 8) & 0xFF);
-				data[index + 3] = (byte)(pixel & 0xFF);
+				this.data[index] = (byte)((pixel >> 24) & 0xFF);
+				this.data[index + 1] = (byte)((pixel >> 16) & 0xFF);
+				this.data[index + 2] = (byte)((pixel >> 8) & 0xFF);
+				this.data[index + 3] = (byte)(pixel & 0xFF);
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index += 4;
@@ -1462,17 +1462,17 @@ public void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 24:
-			index = (y * bytesPerLine) + (x * 3);
+			index = (y * this.bytesPerLine) + (x * 3);
 			for (int j = 0; j < putWidth; j++) {
 				pixel = pixels[i];
-				data[index] = (byte)((pixel >> 16) & 0xFF);
-				data[index + 1] = (byte)((pixel >> 8) & 0xFF);
-				data[index + 2] = (byte)(pixel & 0xFF);
+				this.data[index] = (byte)((pixel >> 16) & 0xFF);
+				this.data[index + 1] = (byte)((pixel >> 8) & 0xFF);
+				this.data[index + 2] = (byte)(pixel & 0xFF);
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index += 3;
@@ -1480,16 +1480,16 @@ public void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 16:
-			index = (y * bytesPerLine) + (x * 2);
+			index = (y * this.bytesPerLine) + (x * 2);
 			for (int j = 0; j < putWidth; j++) {
 				pixel = pixels[i];
-				data[index] = (byte)(pixel & 0xFF);
-				data[index + 1] = (byte)((pixel >> 8) & 0xFF);
+				this.data[index] = (byte)(pixel & 0xFF);
+				this.data[index + 1] = (byte)((pixel >> 8) & 0xFF);
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index += 2;
@@ -1497,14 +1497,14 @@ public void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 8:
-			index = (y * bytesPerLine) + x;
+			index = (y * this.bytesPerLine) + x;
 			for (int j = 0; j < putWidth; j++) {
-				data[index] = (byte)(pixels[i] & 0xFF);
+				this.data[index] = (byte)(pixels[i] & 0xFF);
 				i++;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					index++;
@@ -1512,21 +1512,21 @@ public void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 4:
-			index = (y * bytesPerLine) + (x >> 1);
+			index = (y * this.bytesPerLine) + (x >> 1);
 			boolean high = (x & 0x1) == 0;
 			while (n > 0) {
 				theByte = pixels[i] & 0x0F;
 				if (high) {
-					data[index] = (byte)((data[index] & 0x0F) | (theByte << 4));
+					this.data[index] = (byte)((this.data[index] & 0x0F) | (theByte << 4));
 				} else {
-					data[index] = (byte)((data[index] & 0xF0) | theByte);
+					this.data[index] = (byte)((this.data[index] & 0xF0) | theByte);
 				}
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					high = true;
 					srcX = 0;
 				} else {
@@ -1537,17 +1537,17 @@ public void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex) 
 			return;
 		case 2:
 			byte [] masks = { (byte)0xFC, (byte)0xF3, (byte)0xCF, (byte)0x3F };
-			index = (y * bytesPerLine) + (x >> 2);
+			index = (y * this.bytesPerLine) + (x >> 2);
 			int offset = 3 - (x % 4);
 			while (n > 0) {
 				theByte = pixels[i] & 0x3;
-				data[index] = (byte)((data[index] & masks[offset]) | (theByte << (offset * 2)));
+				this.data[index] = (byte)((this.data[index] & masks[offset]) | (theByte << (offset * 2)));
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					offset = 3;
 					srcX = 0;
 				} else {
@@ -1561,20 +1561,20 @@ public void setPixels(int x, int y, int putWidth, int[] pixels, int startIndex) 
 			}
 			return;
 		case 1:
-			index = (y * bytesPerLine) + (x >> 3);
+			index = (y * this.bytesPerLine) + (x >> 3);
 			while (n > 0) {
 				mask = 1 << (7 - (srcX & 0x7));
 				if ((pixels[i] & 0x1) == 1) {
-					data[index] = (byte)((data[index] & 0xFF) | mask);
+					this.data[index] = (byte)((this.data[index] & 0xFF) | mask);
 				} else {
-					data[index] = (byte)((data[index] & 0xFF) & (mask ^ -1));
+					this.data[index] = (byte)((this.data[index] & 0xFF) & (mask ^ -1));
 				}
 				i++;
 				n--;
 				srcX++;
-				if (srcX >= width) {
+				if (srcX >= this.width) {
 					srcY++;
-					index = srcY * bytesPerLine;
+					index = srcY * this.bytesPerLine;
 					srcX = 0;
 				} else {
 					if (mask == 1) {

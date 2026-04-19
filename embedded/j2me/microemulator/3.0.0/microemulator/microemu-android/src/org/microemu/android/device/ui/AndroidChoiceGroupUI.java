@@ -120,8 +120,8 @@ public class AndroidChoiceGroupUI extends LinearLayout implements ChoiceGroupUI 
 	}
 	
 	private View createView(String stringPart, Image imagePart) {
-		if (choiceType == Choice.EXCLUSIVE) {
-			final RadioButton radioButton = new RadioButton(activity);
+		if (this.choiceType == Choice.EXCLUSIVE) {
+			final RadioButton radioButton = new RadioButton(this.activity);
 			radioButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			radioButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -180,18 +180,18 @@ public class AndroidChoiceGroupUI extends LinearLayout implements ChoiceGroupUI 
 	
 	public void delete(int elementNum) {
 System.out.println("AndroidChoiceGroupUI.delete(..) not synced");
-		if (listView instanceof LinearLayout) {
-			listView.removeViewAt(elementNum);
+		if (this.listView instanceof LinearLayout) {
+			this.listView.removeViewAt(elementNum);
 		}
-		listAdapter.remove(elementNum);
+		this.listAdapter.remove(elementNum);
 	}
 	
 	public void deleteAll() {
 System.out.println("AndroidChoiceGroupUI.deleteAll() not synced");
-				if (listView instanceof LinearLayout) {
-					listView.removeAllViews();
+				if (this.listView instanceof LinearLayout) {
+					this.listView.removeAllViews();
 				}
-				listAdapter.clear();
+				this.listAdapter.clear();
 			}
 
 	public void setSelectedIndex(final int elementNum, final boolean selected) {
@@ -211,16 +211,16 @@ System.out.println("AndroidChoiceGroupUI.deleteAll() not synced");
 	}
 
 	public int getSelectedIndex() {
-		switch (choiceType) {
+		switch (this.choiceType) {
 			case Choice.EXCLUSIVE:
-				for (int i = 0; i < listAdapter.getCount(); ++i) {
-					if (((CompoundButton) listAdapter.getItem(i)).isChecked()) {
+				for (int i = 0; i < this.listAdapter.getCount(); ++i) {
+					if (((CompoundButton) this.listAdapter.getItem(i)).isChecked()) {
 						return i;
 					}
 				}
 				break;
 			case Choice.POPUP:
-				return ((AdapterView) listView).getSelectedItemPosition();
+				return ((AdapterView) this.listView).getSelectedItemPosition();
 			case Choice.IMPLICIT:
 System.out.println("Choice.IMPLICIT not implemented yet");
 				return -1;
@@ -245,15 +245,15 @@ System.out.println("Choice.IMPLICIT not implemented yet");
 	
 	public boolean isSelected(int elementNum) {
 System.out.println("AndroidChoiceGroupUI.isSelected(..) not synced");
-		if (choiceType == Choice.POPUP) {
-			return elementNum == ((AdapterView) listView).getSelectedItemPosition();
+		if (this.choiceType == Choice.POPUP) {
+			return elementNum == ((AdapterView) this.listView).getSelectedItemPosition();
 		} else {
-			return ((CompoundButton) listAdapter.getItem(elementNum)).isChecked();
+			return ((CompoundButton) this.listAdapter.getItem(elementNum)).isChecked();
 		}
 	}
 	
 	public void setSelectedFlags(boolean[] selectedArray) {
-		for (int i = 0; i < listAdapter.getCount(); ++i) {
+		for (int i = 0; i < this.listAdapter.getCount(); ++i) {
 			setSelectedIndex(i, selectedArray[i]);
 		}
 	}
@@ -263,7 +263,7 @@ System.out.println("AndroidChoiceGroupUI.getSelectedFlags(..) not synced");
 		int selectedItemsCount = 0;
 		
 		for (int i = 0; i < selectedArray.length; ++i) {
-			selectedArray[i] = (i < listAdapter.getCount()) ? isSelected(i) : false;
+			selectedArray[i] = (i < this.listAdapter.getCount()) ? isSelected(i) : false;
 			if (selectedArray[i]) {
 				++selectedItemsCount;
 			}
@@ -273,7 +273,7 @@ System.out.println("AndroidChoiceGroupUI.getSelectedFlags(..) not synced");
 	}
 	
 	public String getString(int elementNum) {
-		if (choiceType == Choice.POPUP) {
+		if (this.choiceType == Choice.POPUP) {
 			return listAdapter.getItem(elementNum).toString();
 		} else {
 			return (String) ((CompoundButton) listAdapter.getItem(elementNum)).getText();
@@ -283,11 +283,11 @@ System.out.println("AndroidChoiceGroupUI.getSelectedFlags(..) not synced");
 	public void set(int elementNum, String stringPart, Image imagePart) {
 System.out.println("AndroidChoiceGroupUI.set(..) not synced");
 		View view = createView(stringPart, imagePart);
-		if (listView instanceof LinearLayout) {
-			listView.removeViewAt(elementNum);
-			listView.addView(view, elementNum);
+		if (this.listView instanceof LinearLayout) {
+			this.listView.removeViewAt(elementNum);
+			this.listView.addView(view, elementNum);
 		}
-		listAdapter.set(elementNum, view);
+		this.listAdapter.set(elementNum, view);
 	}
 	
 	private int sizeTransfer;
@@ -305,7 +305,7 @@ System.out.println("AndroidChoiceGroupUI.set(..) not synced");
 		});
 
 		synchronized (AndroidChoiceGroupUI.this) {
-			if (sizeTransfer == Integer.MIN_VALUE) {
+			if (this.sizeTransfer == Integer.MIN_VALUE) {
 				try {
 					wait();
 				} catch (InterruptedException e) {

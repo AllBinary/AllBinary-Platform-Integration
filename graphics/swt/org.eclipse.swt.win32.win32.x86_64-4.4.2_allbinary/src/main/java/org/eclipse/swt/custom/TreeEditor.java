@@ -125,7 +125,7 @@ public TreeEditor (Tree tree) {
 			e.display.asyncExec(runnable);
 		}
 	};
-	tree.addTreeListener(treeListener);
+	tree.addTreeListener(this.treeListener);
 	
 	// To be consistent with older versions of SWT, grabVertical defaults to true
 	grabVertical = true;
@@ -133,12 +133,12 @@ public TreeEditor (Tree tree) {
 
 @Override
 Rectangle computeBounds () {
-	if (item == null || column == -1 || item.isDisposed()) return new Rectangle(0, 0, 0, 0);
-	Rectangle cell = item.getBounds(column);
-	Rectangle rect = item.getImageBounds(column);
+	if (this.item == null || this.column == -1 || this.item.isDisposed()) return new Rectangle(0, 0, 0, 0);
+	Rectangle cell = this.item.getBounds(this.column);
+	Rectangle rect = this.item.getImageBounds(this.column);
 	cell.x = rect.x + rect.width;
 	cell.width -= rect.width;
-	Rectangle area = tree.getClientArea();
+	Rectangle area = this.tree.getClientArea();
 	if (cell.x < area.x + area.width) {
 		if (cell.x + cell.width > area.x + area.width) {
 			cell.width = area.x + area.width - cell.x;
@@ -147,7 +147,7 @@ Rectangle computeBounds () {
 	Rectangle editorRect = new Rectangle(cell.x, cell.y, minimumWidth, minimumHeight);
 
 	if (grabHorizontal) {
-		if (tree.getColumnCount() == 0) {
+		if (this.tree.getColumnCount() == 0) {
 			// Bounds of tree item only include the text area - stretch out to include 
 			// entire client area
 			cell.width = area.x + area.width - cell.x;
@@ -185,19 +185,19 @@ Rectangle computeBounds () {
  */
 @Override
 public void dispose () {
-	if (tree != null && !tree.isDisposed()) {
-		if (this.column > -1 && this.column < tree.getColumnCount()){
-			TreeColumn treeColumn = tree.getColumn(this.column);
-			treeColumn.removeControlListener(columnListener);
+	if (this.tree != null && !this.tree.isDisposed()) {
+		if (this.column > -1 && this.column < this.tree.getColumnCount()){
+			TreeColumn treeColumn = this.tree.getColumn(this.column);
+			treeColumn.removeControlListener(this.columnListener);
 		}
-		if (treeListener != null) tree.removeTreeListener(treeListener);
+		if (this.treeListener != null) this.tree.removeTreeListener(this.treeListener);
 	}
-	columnListener = null;
-	treeListener = null;
-	tree = null;
-	item = null;
-	column = 0;
-	timer = null;
+	this.columnListener = null;
+	this.treeListener = null;
+	this.tree = null;
+	this.item = null;
+	this.column = 0;
+	this.timer = null;
 	super.dispose();
 }
 
@@ -229,8 +229,8 @@ void resize () {
 	 * selected.  Ensure that the correct row is edited by
 	 * laying out one more time in a timerExec().
 	 */
-	if (tree != null) {
-		Display display = tree.getDisplay();
+	if (this.tree != null) {
+		Display display = this.tree.getDisplay();
 		display.timerExec(-1, timer);
 		display.timerExec(TIMEOUT, timer);
 	}
@@ -253,16 +253,16 @@ public void setColumn(int column) {
 		return;
 	}
 	if (this.column > -1 && this.column < columnCount){
-		TreeColumn treeColumn = tree.getColumn(this.column);
-		treeColumn.removeControlListener(columnListener);
+		TreeColumn treeColumn = this.tree.getColumn(this.column);
+		treeColumn.removeControlListener(this.columnListener);
 		this.column = -1;
 	}
 
-	if (column < 0  || column >= tree.getColumnCount()) return;	
+	if (column < 0  || column >= this.tree.getColumnCount()) return;	
 		
 	this.column = column;
-	TreeColumn treeColumn = tree.getColumn(this.column);
-	treeColumn.addControlListener(columnListener);
+	TreeColumn treeColumn = this.tree.getColumn(this.column);
+	treeColumn.addControlListener(this.columnListener);
 	resize();
 }
 
@@ -315,11 +315,11 @@ public void setEditor (Control editor, TreeItem item) {
 
 @Override
 public void layout () {
-	if (tree == null || tree.isDisposed()) return;
-	if (item == null || item.isDisposed()) return;	
-	int columnCount = tree.getColumnCount();
-	if (columnCount == 0 && column != 0) return;
-	if (columnCount > 0 && (column < 0 || column >= columnCount)) return;
+	if (this.tree == null || this.tree.isDisposed()) return;
+	if (this.item == null || this.item.isDisposed()) return;	
+	int columnCount = this.tree.getColumnCount();
+	if (columnCount == 0 && this.column != 0) return;
+	if (columnCount > 0 && (this.column < 0 || this.column >= columnCount)) return;
 	super.layout();
 }
 }

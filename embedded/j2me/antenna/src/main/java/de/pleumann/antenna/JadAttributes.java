@@ -31,7 +31,7 @@ public class JadAttributes extends Task
 	 */
 	public void setFileName(String fileName)
 	{
-		m_fileName = fileName;
+		this.m_fileName = fileName;
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class JadAttributes extends Task
 	 */
 	public void setKey(String key)
 	{
-		m_key = key;
+		this.m_key = key;
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class JadAttributes extends Task
 	 */
 	public void setAttribName(String attribName)
 	{
-		m_attribName = attribName;
+		this.m_attribName = attribName;
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class JadAttributes extends Task
 	 */
 	public void setValue(String value)
 	{
-		m_value = value;
+		this.m_value = value;
 	}
 	
 	
@@ -73,32 +73,32 @@ public class JadAttributes extends Task
 	 */
 	public void execute() throws BuildException
 	{
-		if (m_attribName == null)
+		if (this.m_attribName == null)
 		{
 			throw new BuildException("Missing attrib name");
 		}
 
 		// if clear, clear the attribures.
-		if ("true".equalsIgnoreCase(m_clear))
+		if ("true".equalsIgnoreCase(this.m_clear))
 		{
-			log("Clearing attributes for " + m_attribName);
-			Object old = s_jad2attribMap.remove(m_attribName);
-			if (old == null && m_failOnError)
+			log("Clearing attributes for " + this.m_attribName);
+			Object old = s_jad2attribMap.remove(this.m_attribName);
+			if (old == null && this.m_failOnError)
 			{
-				throw new BuildException(m_attribName + " not found");
+				throw new BuildException(this.m_attribName + " not found");
 			}
 		}
 		else // add attributes.
 		{
 			// get attributes object, or create a new one.
-			AttributesSet attribues = (AttributesSet) s_jad2attribMap.get(m_attribName);
+			AttributesSet attribues = (AttributesSet) s_jad2attribMap.get(this.m_attribName);
 			if (attribues == null)
 			{
-				log("Creating a new attributes set : " + m_attribName);
-				s_jad2attribMap.put(m_attribName, attribues = new AttributesSet(m_attribName));
+				log("Creating a new attributes set : " + this.m_attribName);
+				s_jad2attribMap.put(this.m_attribName, attribues = new AttributesSet(this.m_attribName));
 			}
 			
-			if (m_fileName == null) // file is null, we need key and value
+			if (this.m_fileName == null) // file is null, we need key and value
 			{
 				if (this.m_key == null)
 				{
@@ -109,13 +109,13 @@ public class JadAttributes extends Task
 					throw new BuildException("Missing value name");
 				}
 				
-				attribues.addPair(m_key, m_value);
+				attribues.addPair(this.m_key, m_value);
 			}
 			else // we have a file, load it.
 			{
 				try
 				{
-					File file = new File(m_fileName);
+					File file = new File(this.m_fileName);
 					if (file.exists())
 					{
 						String pairs[][] = getPairs(file, "#", m_encoding);
@@ -130,7 +130,7 @@ public class JadAttributes extends Task
 					else
 					{
 						String msg = "Missing propertis file " + file + "( not found at " + file.getAbsolutePath() + ")";
-						if (m_failOnError)
+						if (this.m_failOnError)
 						{
 							throw new BuildException(msg);
 						}
@@ -142,13 +142,13 @@ public class JadAttributes extends Task
 				}
 				catch (IOException e)
 				{
-					if (m_failOnError)
+					if (this.m_failOnError)
 					{
 						throw new BuildException(e);	
 					}
 					else
 					{
-						log("IO Error reading " + m_fileName + ", " + e.getMessage());	
+						log("IO Error reading " + this.m_fileName + ", " + e.getMessage());	
 					}
 				}
 			}
@@ -234,7 +234,7 @@ public class JadAttributes extends Task
 	 */
 	public void setFailOnError(boolean failOnError)
 	{
-		m_failOnError = failOnError;
+		this.m_failOnError = failOnError;
 	}
     
     /**
@@ -398,6 +398,6 @@ public class JadAttributes extends Task
 	 */
 	public void setEncoding(String encoding)
 	{
-		m_encoding = encoding;
+		this.m_encoding = encoding;
 	}
 }

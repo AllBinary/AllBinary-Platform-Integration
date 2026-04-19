@@ -129,7 +129,7 @@ public final class Font
 
 	public boolean isPlain()
 	{
-		if (style == STYLE_PLAIN) {
+		if (this.style == STYLE_PLAIN) {
 			return true;
 		} else {
 			return false;
@@ -139,7 +139,7 @@ public final class Font
 
 	public boolean isBold()
 	{
-		if ((style & STYLE_BOLD) != 0) {
+		if ((this.style & STYLE_BOLD) != 0) {
 			return true;
 		} else {
 			return false;
@@ -149,7 +149,7 @@ public final class Font
 
 	public boolean isItalic()
 	{
-		if ((style & STYLE_ITALIC) != 0) {
+		if ((this.style & STYLE_ITALIC) != 0) {
 			return true;
 		} else {
 			return false;
@@ -159,7 +159,7 @@ public final class Font
 	
 	public boolean isUnderlined()
 	{
-		if ((style & STYLE_UNDERLINED) != 0) {
+		if ((this.style & STYLE_UNDERLINED) != 0) {
 			return true;
 		} else {
 			return false;
@@ -169,8 +169,8 @@ public final class Font
 	
 	public int getHeight()
 	{
-		if (height == -1 || height == 0) {
-			height = DeviceFactory.getDevice().getFontManager().getHeight(this);
+		if (this.height == -1 || this.height == 0) {
+			this.height = DeviceFactory.getDevice().getFontManager().getHeight(this);
 		}
 		
 		return height;
@@ -179,8 +179,8 @@ public final class Font
 	
 	public int getBaselinePosition()
 	{
-		if (baselinePosition == -1) { 
-			baselinePosition = DeviceFactory.getDevice().getFontManager().getBaselinePosition(this);
+		if (this.baselinePosition == -1) { 
+			this.baselinePosition = DeviceFactory.getDevice().getFontManager().getBaselinePosition(this);
 		}
 		
 		return baselinePosition;
@@ -212,7 +212,7 @@ public final class Font
 
 
 	public int hashCode() {
-		return style + size + face;
+		return style + this.size + this.face;
 	}	
 	
 }

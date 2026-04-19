@@ -54,7 +54,7 @@ public class ServerSocketConnection implements
 	}
 
 	public StreamConnection acceptAndOpen() throws IOException {
-		return new SocketConnection(serverSocket.accept());
+		return new SocketConnection(this.serverSocket.accept());
 	}
 
 	public void close() throws IOException {

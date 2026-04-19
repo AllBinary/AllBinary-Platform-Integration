@@ -99,15 +99,15 @@ public Rectangle (int x, int y, int width, int height) {
  */
 public void add (Rectangle rect) {
 	if (rect == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	int left = x < rect.x ? x : rect.x;
-	int top = y < rect.y ? y : rect.y;
-	int lhs = x + width;
+	int left = this.x < rect.x ? this.x : rect.x;
+	int top = this.y < rect.y ? this.y : rect.y;
+	int lhs = this.x + this.width;
 	int rhs = rect.x + rect.width;
 	int right = lhs > rhs ? lhs : rhs;
-	lhs = y + height;
+	lhs = this.y + this.height;
 	rhs = rect.y + rect.height;
 	int bottom = lhs > rhs ? lhs : rhs;
-	x = left;  y = top;  width = right - left;  height = bottom - top;
+	this.x = left;  this.y = top;  this.width = right - left;  this.height = bottom - top;
 }
 
 /**
@@ -120,7 +120,7 @@ public void add (Rectangle rect) {
  * @return <code>true</code> if the rectangle contains the point and <code>false</code> otherwise
  */
 public boolean contains (int x, int y) {
-	return (x >= this.x) && (y >= this.y) && x < (this.x + width) && y < (this.y + height);
+	return (x >= this.x) && (y >= this.y) && x < (this.x + this.width) && y < (this.y + this.height);
 }
 
 /**
@@ -170,7 +170,7 @@ public boolean equals (Object object) {
  */
 @Override
 public int hashCode () {
-	return x ^ y ^ width ^ height;
+	return x ^ this.y ^ this.width ^ this.height;
 }
 
 /**
@@ -189,18 +189,18 @@ public int hashCode () {
 public void intersect (Rectangle rect) {
 	if (rect == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (this == rect) return;
-	int left = x > rect.x ? x : rect.x;
-	int top = y > rect.y ? y : rect.y;
-	int lhs = x + width;
+	int left = this.x > rect.x ? this.x : rect.x;
+	int top = this.y > rect.y ? this.y : rect.y;
+	int lhs = this.x + this.width;
 	int rhs = rect.x + rect.width;
 	int right = lhs < rhs ? lhs : rhs;
-	lhs = y + height;
+	lhs = this.y + this.height;
 	rhs = rect.y + rect.height;
 	int bottom = lhs < rhs ? lhs : rhs;
-	x = right < left ? 0 : left;
-	y = bottom < top ? 0 : top;
-	width = right < left ? 0 : right - left;
-	height = bottom < top ? 0 : bottom - top;
+	this.x = right < left ? 0 : left;
+	this.y = bottom < top ? 0 : top;
+	this.width = right < left ? 0 : right - left;
+	this.height = bottom < top ? 0 : bottom - top;
 }
 
 /**
@@ -220,10 +220,10 @@ public void intersect (Rectangle rect) {
  */
 public Rectangle intersection (Rectangle rect) {
 	if (rect == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (this == rect) return new Rectangle (x, y, width, height);
-	int left = x > rect.x ? x : rect.x;
+	if (this == rect) return new Rectangle (this.x, y, width, height);
+	int left = this.x > rect.x ? this.x : rect.x;
 	int top = y > rect.y ? y : rect.y;
-	int lhs = x + width;
+	int lhs = this.x + width;
 	int rhs = rect.x + rect.width;
 	int right = lhs < rhs ? lhs : rhs;
 	lhs = y + height;
@@ -238,10 +238,10 @@ public Rectangle intersection (Rectangle rect) {
 
 public Rectangle intersectionExisting (Rectangle rect) {
 	if (rect == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (this == rect) return new Rectangle (x, y, width, height);
-	int left = x > rect.x ? x : rect.x;
+	if (this == rect) return new Rectangle (this.x, y, width, height);
+	int left = this.x > rect.x ? this.x : rect.x;
 	int top = y > rect.y ? y : rect.y;
-	int lhs = x + width;
+	int lhs = this.x + width;
 	int rhs = rect.x + rect.width;
 	int right = lhs < rhs ? lhs : rhs;
 	lhs = y + height;
@@ -321,7 +321,7 @@ public boolean intersects (Rectangle rect) {
  * @return <code>true</code> if the receiver is empty, and <code>false</code> otherwise
  */
 public boolean isEmpty () {
-	return (width <= 0) || (height <= 0);
+	return (this.width <= 0) || (this.height <= 0);
 }
 
 /**
@@ -332,7 +332,7 @@ public boolean isEmpty () {
  */
 @Override
 public String toString () {
-	return "Rectangle {" + x + ", " + y + ", " + width + ", " + height + "}"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+	return "Rectangle {" + this.x + ", " + this.y + ", " + this.width + ", " + this.height + "}"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 }
 
 /**
@@ -355,12 +355,12 @@ public String toString () {
  */
 public Rectangle union (Rectangle rect) {
 	if (rect == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	int left = x < rect.x ? x : rect.x;
-	int top = y < rect.y ? y : rect.y;
-	int lhs = x + width;
+	int left = this.x < rect.x ? this.x : rect.x;
+	int top = this.y < rect.y ? this.y : rect.y;
+	int lhs = this.x + this.width;
 	int rhs = rect.x + rect.width;
 	int right = lhs > rhs ? lhs : rhs;
-	lhs = y + height;
+	lhs = this.y + this.height;
 	rhs = rect.y + rect.height;
 	int bottom = lhs > rhs ? lhs : rhs;
 	return new Rectangle (left, top, right - left, bottom - top);

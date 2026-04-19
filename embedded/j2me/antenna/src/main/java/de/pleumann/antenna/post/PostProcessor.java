@@ -72,9 +72,9 @@ public abstract class PostProcessor extends Task {
 
 	public void init() {
 		super.init();
-		classpath = new Path(getProject(), "");
-		utility = Utility.getInstance(getProject(), this);
-        condition = new Conditional(getProject());
+		this.classpath = new Path(getProject(), "");
+		this.utility = Utility.getInstance(getProject(), this);
+        this.condition = new Conditional(getProject());
 	}
 
    public void setVerbose(boolean verbose) {
@@ -83,7 +83,7 @@ public abstract class PostProcessor extends Task {
 
 	public Object createPreserve() {
 		Preserve pre = new Preserve(getProject());
-		preserve.addElement(pre);
+		this.preserve.addElement(pre);
 		return pre;
 	}
 
@@ -106,15 +106,15 @@ public abstract class PostProcessor extends Task {
 	public String getFullClasspath() {
 		String cp;
 
-		if (bootclasspath == null) {
-			cp = utility.getMidpApi();  // was: getEmptyApi()
+		if (this.bootclasspath == null) {
+			cp = this.utility.getMidpApi();  // was: getEmptyApi()
 		}
 		else {
-			cp = bootclasspath.toString();
+			cp = this.bootclasspath.toString();
 		}
 
-		if ((classpath != null) && (classpath.size() > 0)) {
-			cp = cp + File.pathSeparatorChar + classpath;
+		if ((this.classpath != null) && (this.classpath.size() > 0)) {
+			cp = cp + File.pathSeparatorChar + this.classpath;
 		}
 		return cp;
 	}
@@ -137,8 +137,8 @@ public abstract class PostProcessor extends Task {
 	* Adds a path to the classpath.
 	*/
 	public Path createClasspath() {
-		if (classpath == null) {
-			classpath = new Path(getProject());
+		if (this.classpath == null) {
+			this.classpath = new Path(getProject());
 		}
 		return classpath.createPath();
 	}
@@ -168,8 +168,8 @@ public abstract class PostProcessor extends Task {
 	* Adds a path to the bootclasspath.
 	*/
 	public Path createBootclasspath() {
-		if (bootclasspath == null) {
-			bootclasspath = new Path(getProject());
+		if (this.bootclasspath == null) {
+			this.bootclasspath = new Path(getProject());
 		}
 		return bootclasspath.createPath();
 	}
@@ -187,8 +187,8 @@ public abstract class PostProcessor extends Task {
 
 	public Vector getPreserve() {
         Vector result = new Vector();
-        for (int i = 0; i < preserve.size(); i++) {
-            Preserve p = (Preserve)preserve.elementAt(i);
+        for (int i = 0; i < this.preserve.size(); i++) {
+            Preserve p = (Preserve)this.preserve.elementAt(i);
             if (p.isActive()) {
                 result.add(p);
             }
@@ -218,13 +218,13 @@ public abstract class PostProcessor extends Task {
 	}
 
 	public JadFile getJad() throws IOException {
-		if (jad != null) {
+		if (this.jad != null) {
 			return jad;
 		}
 		else {
-			if (jadFile != null) {
+			if (this.jadFile != null) {
 				jad = new JadFile();
-				jad.load("" + jadFile, encoding);
+				jad.load("" + this.jadFile, encoding);
 			}
 
 			return jad;
@@ -238,13 +238,13 @@ public abstract class PostProcessor extends Task {
 	public void updateJad() throws IOException {
 		JadFile jad = getJad();
 
-		if ((jad != null) && (jarFile != null)) {
-			if ((toJarFile == null) || (jarFile.equals(toJarFile))) {
-				jad.setValue("MIDlet-Jar-Size", "" + jarFile.length());
+		if ((jad != null) && (this.jarFile != null)) {
+			if ((this.toJarFile == null) || (this.jarFile.equals(this.toJarFile))) {
+				jad.setValue("MIDlet-Jar-Size", "" + this.jarFile.length());
 
-				log("Updating JAD file " + jadFile);
+				log("Updating JAD file " + this.jadFile);
 				try {
-					jad.save("" + jadFile, encoding);
+					jad.save("" + this.jadFile, encoding);
 				}
 				catch (IOException ex) {
 					throw new BuildException("Error processing JAD file", ex);

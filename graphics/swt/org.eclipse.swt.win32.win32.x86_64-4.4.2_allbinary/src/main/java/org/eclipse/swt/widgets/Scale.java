@@ -176,7 +176,7 @@ void createHandle () {
 	OS.SendMessage (handle, OS.TBM_SETRANGEMAX, 0, 100);
 	OS.SendMessage (handle, OS.TBM_SETPAGESIZE, 0, 10);
 	OS.SendMessage (handle, OS.TBM_SETTICFREQ, 10, 0);
-	createdAsRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
+	this.createdAsRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
 }
 
 int defaultForeground () {
@@ -471,7 +471,7 @@ LRESULT WM_KEYDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 			* create the control.
 		    */
 			boolean isRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
-			if (isRTL != createdAsRTL) {
+			if (isRTL != this.createdAsRTL) {
 				long /*int*/ code = callWindowProc (handle, OS.WM_KEYDOWN, wParam == OS.VK_RIGHT ? OS.VK_LEFT : OS.VK_RIGHT, lParam);
 				return new LRESULT (code);
 			}

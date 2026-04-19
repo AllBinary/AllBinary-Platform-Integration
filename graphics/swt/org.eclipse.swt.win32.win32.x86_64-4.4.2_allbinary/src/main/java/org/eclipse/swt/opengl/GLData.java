@@ -138,7 +138,7 @@ public class GLData {
  */
 @Override
 public String toString() {
-	return (doubleBuffer ? "doubleBuffer," : "") +
+	return (this.doubleBuffer ? "doubleBuffer," : "") +
 		(stereo ? "stereo," : "") +
 		"r:" + redSize + " g:" + greenSize + " b:" + blueSize + " a:" + alphaSize + "," +
 		"depth:" + depthSize + ",stencil:" + stencilSize +

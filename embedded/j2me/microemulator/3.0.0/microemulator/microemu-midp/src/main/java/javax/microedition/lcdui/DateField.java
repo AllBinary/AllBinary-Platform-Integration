@@ -94,15 +94,15 @@ public class DateField extends Item
 		// TODO this is ignoring TimeZone!!
 		setInputMode(mode);
 
-		dateCanvas = new DateCanvas();
-		dateCanvas.addCommand(saveCommand);
-		dateCanvas.addCommand(backCommand);
-		dateCanvas.setCommandListener(dateTimeListener);
+		this.dateCanvas = new DateCanvas();
+		this.dateCanvas.addCommand(saveCommand);
+		this.dateCanvas.addCommand(backCommand);
+		this.dateCanvas.setCommandListener(dateTimeListener);
 
-		timeCanvas = new TimeCanvas();
-		timeCanvas.addCommand(saveCommand);
-		timeCanvas.addCommand(backCommand);
-		timeCanvas.setCommandListener(dateTimeListener);
+		this.timeCanvas = new TimeCanvas();
+		this.timeCanvas.addCommand(saveCommand);
+		this.timeCanvas.addCommand(backCommand);
+		this.timeCanvas.setCommandListener(dateTimeListener);
 	}
 
 
@@ -142,12 +142,12 @@ public class DateField extends Item
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidDateFieldUI")) {
 			((DateFieldUI) ui).setInputMode(mode);
 		} else {
-			dateTime = new ChoiceGroup(label, Choice.IMPLICIT, false);
+			this.dateTime = new ChoiceGroup(this.label, Choice.IMPLICIT, false);
 			if ((mode & DATE) != 0) {
-				dateTime.append("[date]", null);
+				this.dateTime.append("[date]", null);
 			}
 			if ((mode & TIME) != 0) {
-				dateTime.append("[time]", null);
+				this.dateTime.append("[time]", null);
 			}
 		}
 	}
@@ -165,7 +165,7 @@ public class DateField extends Item
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidDateFieldUI")) {
 			return super.getHeight();
 		} else {
-			return super.getHeight() + dateTime.getHeight();
+			return super.getHeight() + this.dateTime.getHeight();
 		}
 	}
 
@@ -175,7 +175,7 @@ public class DateField extends Item
     super.paintContent(g);
     
     g.translate(0, super.getHeight());
-		dateTime.paint(g);
+		this.dateTime.paint(g);
 		g.translate(0, -super.getHeight());
 
     
@@ -189,7 +189,7 @@ public class DateField extends Item
 
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidDateFieldUI")) {
 		} else {
-			dateTime.setFocus(state);
+			this.dateTime.setFocus(state);
 		}
 	}
 
@@ -197,18 +197,18 @@ public class DateField extends Item
         @Override
   public boolean select()
   {
-    dateTime.select();
+    this.dateTime.select();
 
-    if (dateTime.getSelectedIndex() == 0 && (mode & DATE) != 0) {
-      if (date != null) {
-          dateCanvas.setTime(date);
+    if (this.dateTime.getSelectedIndex() == 0 && (this.mode & DATE) != 0) {
+      if (this.date != null) {
+          this.dateCanvas.setTime(this.date);
       } else {
-          dateCanvas.setTime(new Date());
+          this.dateCanvas.setTime(new Date());
       }
-      getOwner().currentDisplay.setCurrent(dateCanvas);
+      getOwner().currentDisplay.setCurrent(this.dateCanvas);
     } else {
-      if (time != null) {
-          timeCanvas.setTime(time);
+      if (this.time != null) {
+          this.timeCanvas.setTime(this.time);
       } else {
     	  Calendar cal = Calendar.getInstance();
     	  cal.set(Calendar.YEAR, 1970);
@@ -217,9 +217,9 @@ public class DateField extends Item
     	  cal.set(Calendar.HOUR_OF_DAY, 12);
     	  cal.set(Calendar.MINUTE, 0);
     	  cal.set(Calendar.SECOND, 0);
-          timeCanvas.setTime(cal.getTime());
+          this.timeCanvas.setTime(cal.getTime());
       }
-      getOwner().currentDisplay.setCurrent(timeCanvas);
+      getOwner().currentDisplay.setCurrent(this.timeCanvas);
     }
       
     return true;
@@ -233,10 +233,10 @@ public class DateField extends Item
 	}
   
   private String formatDate() {
-	  if (date == null)
+	  if (this.date == null)
 		  return "[date]";
 	  Calendar cal = Calendar.getInstance();
-	  cal.setTime(date);
+	  cal.setTime(this.date);
 	  
 	  int day =  cal.get(Calendar.DAY_OF_MONTH);
 	  int month =  cal.get(Calendar.MONTH) + 1;
@@ -246,10 +246,10 @@ public class DateField extends Item
   }
 
   private String formatTime() {
-	  if (time == null)
+	  if (this.time == null)
 		  return "[time]";
 	  Calendar cal = Calendar.getInstance();
-	  cal.setTime(time);
+	  cal.setTime(this.time);
 	  
 	  int hours =  cal.get(Calendar.HOUR_OF_DAY);
 	  int minutes =  cal.get(Calendar.MINUTE);
@@ -259,11 +259,11 @@ public class DateField extends Item
 
   void updateDateTimeString()
   {
-    if ((mode & DATE) != 0) {
-      dateTime.set(0, formatDate(), null);
+    if ((this.mode & DATE) != 0) {
+      this.dateTime.set(0, formatDate(), null);
     }
-    if ((mode & TIME) != 0) {
-        dateTime.set((((mode & DATE) != 0)? 1 : 0), formatTime(), null);
+    if ((this.mode & TIME) != 0) {
+        this.dateTime.set((((this.mode & DATE) != 0)? 1 : 0), formatTime(), null);
     }
   } 
   

@@ -63,6 +63,6 @@ public class ExtendedImage extends com.siemens.mp.misc.NativeMem {
     
     public void setPixels(byte[] pixels, int x, int y, int width, int height) {
         Image img=com.siemens.mp.ui.Image.createImageFromBitmap(pixels,width,height);
-        image.getGraphics().drawImage(img, x,y, 0);
+        this.image.getGraphics().drawImage(img, x,y, 0);
     }
 }

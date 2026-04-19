@@ -131,7 +131,7 @@ public class SimpleTiledLayer extends Layer
 
         int originalColor = graphics.getColor();
         
-        graphics.setColor(color);
+        graphics.setColor(this.color);
         
         int cell;
         for (int rowIndex = row0; rowIndex < maxRow; rowIndex++)

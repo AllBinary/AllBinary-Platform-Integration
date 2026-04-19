@@ -45,13 +45,13 @@ void draw(Theme theme, GC gc, Rectangle bounds) {
 		int[] part = getPartId(DrawData.WIDGET_WHOLE);
 		OS.DrawThemeBackground (hTheme, gc.handle, part[0], part[1], rect, null);
 		OS.CloseThemeData(hTheme);
-		if (tabsArea != null) {
-			tabsArea.x = bounds.x;
-			tabsArea.y = bounds.y;
-			tabsArea.width = bounds.width;
-			tabsArea.height = this.tabsHeight;
+		if (this.tabsArea != null) {
+			this.tabsArea.x = bounds.x;
+			this.tabsArea.y = bounds.y;
+			this.tabsArea.width = bounds.width;
+			this.tabsArea.height = this.tabsHeight;
 			if ((style & SWT.BOTTOM) != 0) {
-				tabsArea.y += bounds.height - this.tabsHeight;
+				this.tabsArea.y += bounds.height - this.tabsHeight;
 			}
 		}
 	}

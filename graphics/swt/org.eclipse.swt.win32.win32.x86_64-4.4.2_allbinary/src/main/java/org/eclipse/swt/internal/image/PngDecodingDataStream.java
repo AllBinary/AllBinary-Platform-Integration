@@ -29,11 +29,11 @@ public class PngDecodingDataStream extends InputStream {
 PngDecodingDataStream(InputStream stream) throws IOException {
 	super();
 	this.stream = stream;
-	nextBitIndex = MAX_BIT + 1;
-	adlerValue = 1;
-	lzBlockReader = new PngLzBlockReader(this);
+	this.nextBitIndex = MAX_BIT + 1;
+	this.adlerValue = 1;
+	this.lzBlockReader = new PngLzBlockReader(this);
 	readCompressedDataHeader();
-	lzBlockReader.readNextBlockHeader();
+	this.lzBlockReader.readNextBlockHeader();
 }
 
 /**
@@ -62,26 +62,26 @@ int getNextIdatBits(int length) throws IOException {
 }
 
 int getNextIdatBit() throws IOException {
-	if (nextBitIndex > MAX_BIT) {
-		currentByte = getNextIdatByte();
-		nextBitIndex = 0;
+	if (this.nextBitIndex > MAX_BIT) {
+		this.currentByte = getNextIdatByte();
+		this.nextBitIndex = 0;
 	}
-	return (currentByte & (1 << nextBitIndex)) >> nextBitIndex++;
+	return (this.currentByte & (1 << this.nextBitIndex)) >> nextBitIndex++;
 }
 
 byte getNextIdatByte() throws IOException {	
 	byte nextByte = (byte)stream.read();
-	nextBitIndex = MAX_BIT + 1;
+	this.nextBitIndex = MAX_BIT + 1;
 	return nextByte;
 }
 
 void updateAdler(byte value) {
 	int low = adlerValue & 0xFFFF;
-	int high = (adlerValue >> 16) & 0xFFFF;
+	int high = (this.adlerValue >> 16) & 0xFFFF;
 	int valueInt = value & 0xFF;
 	low = (low + valueInt) % PRIME;
 	high = (low + high) % PRIME;
-	adlerValue = (high << 16) | low;
+	this.adlerValue = (high << 16) | low;
 }
 
 @Override
@@ -118,7 +118,7 @@ private void readCompressedDataHeader() throws IOException {
 	int windowSizeHint = (headerByte1 & 0xF0) >> 4;
 	if (windowSizeHint > 7) error();
 	int windowSize = (1 << (windowSizeHint + 8));
-	lzBlockReader.setWindowSize(windowSize);
+	this.lzBlockReader.setWindowSize(windowSize);
 	
 	int dictionary = (headerByte2 & (1 << 5));
 	if (dictionary != 0) error();
@@ -131,7 +131,7 @@ void checkAdler() throws IOException {
 		| ((getNextIdatByte() & 0xFF) << 16)
 		| ((getNextIdatByte() & 0xFF) << 8)
 		| (getNextIdatByte() & 0xFF);
-	if (storedAdler != adlerValue) error();
+	if (storedAdler != this.adlerValue) error();
 }
 
 }

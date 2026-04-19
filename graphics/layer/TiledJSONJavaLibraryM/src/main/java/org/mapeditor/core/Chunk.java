@@ -82,8 +82,8 @@ public class Chunk {
      */
     
     public BasicArrayList getTile() {
-        if (tile == null) {
-            tile = new BasicArrayList();
+        if (this.tile == null) {
+            this.tile = new BasicArrayList();
         }
         return this.tile;
     }

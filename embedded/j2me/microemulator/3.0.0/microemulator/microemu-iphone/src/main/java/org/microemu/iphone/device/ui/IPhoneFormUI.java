@@ -160,33 +160,33 @@ public class IPhoneFormUI extends AbstractUI<Form> implements FormUI {
 	public void showNotify() {
 		System.out.println("showNotify");
 
-		if (view == null) {
-			view = new UIView().initWithFrame$(microEmulator.getWindow().bounds());
+		if (this.view == null) {
+			this.view = new UIView().initWithFrame$(microEmulator.getWindow().bounds());
 
-			navigtionBar = new UINavigationBar().initWithFrame$(new CGRect(0, 0,
+			this.navigtionBar = new UINavigationBar().initWithFrame$(new CGRect(0, 0,
 					microEmulator.getWindow().bounds().size.width, NAVIGATION_HEIGHT));
 			UINavigationItem title = new UINavigationItem().initWithTitle$(displayable.getTitle());
 			title.setBackButtonTitle$("Back");
-			navigtionBar.pushNavigationItem$(title);
-			view.addSubview$(navigtionBar);
+			this.navigtionBar.pushNavigationItem$(title);
+			this.view.addSubview$(this.navigtionBar);
 
-			tableView = new UITableView().initWithFrame$style$(new CGRect(0, NAVIGATION_HEIGHT, microEmulator
+			this.tableView = new UITableView().initWithFrame$style$(new CGRect(0, NAVIGATION_HEIGHT, microEmulator
 					.getWindow().bounds().size.width, microEmulator.getWindow().bounds().size.height
 					- NAVIGATION_HEIGHT - TOOLBAR_HEIGHT), 0);
 
-			view.addSubview$(tableView);
+			this.view.addSubview$(this.tableView);
 			toolbar = (UIToolbar) new UIToolbar().initWithFrame$(new CGRect(0,
 					microEmulator.getWindow().bounds().size.height - TOOLBAR_HEIGHT,
 					microEmulator.getWindow().bounds().size.width, TOOLBAR_HEIGHT));
-			view.addSubview$(toolbar);
+			this.view.addSubview$(toolbar);
 			updateToolbar();
 		}
-		tableView.setDataSource$(this);
-		tableView.setDelegate$(this);
-		tableView.reloadData();
+		this.tableView.setDataSource$(this);
+		this.tableView.setDelegate$(this);
+		this.tableView.reloadData();
 
-		view.retain();
-		microEmulator.getWindow().addSubview$(view);
+		this.view.retain();
+		microEmulator.getWindow().addSubview$(this.view);
 	}
 
 	public int append(Image img) {
@@ -226,7 +226,7 @@ public class IPhoneFormUI extends AbstractUI<Form> implements FormUI {
 
 	public void updateLayout() {
 		System.out.println("IPhoneFormUI.updateLayout()");
-		if (tableView != null)
+		if (this.tableView != null)
 			ThreadDispatcher.dispatchOnMainThread(new ARunnable() {
 				public void run() {
 					tableView.reloadData();

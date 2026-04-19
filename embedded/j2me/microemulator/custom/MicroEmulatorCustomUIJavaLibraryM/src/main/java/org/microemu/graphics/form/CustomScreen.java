@@ -33,7 +33,7 @@ public class CustomScreen extends CustomDisplayable
 	int traverse(int gameKeyCode, int top, int bottom)
 	{
         //abstract
-        ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);
+        ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
 	    return 0;
 	}
 
@@ -42,7 +42,7 @@ public class CustomScreen extends CustomDisplayable
 	{
 		try
 		{
-		    logUtil.putF(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
+		    logUtil.putF(this.commonStrings.START, this, gameInputStrings.KEY_PRESSED);
 
 		//int key = AndroidNumberKeyToJ2MECanvasNumberKey.getKey(keyCode);
 		
@@ -57,7 +57,7 @@ public class CustomScreen extends CustomDisplayable
 	    }
 		catch(Exception e)
 		{
-		    logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
+		    logUtil.put(this.commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
 		}
 	}
 	*/
@@ -128,7 +128,7 @@ public class CustomScreen extends CustomDisplayable
 	int paintContent(Graphics g)
 	{
         //abstract
-	    ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);
+	    ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
 
 	    return 0;
 	}

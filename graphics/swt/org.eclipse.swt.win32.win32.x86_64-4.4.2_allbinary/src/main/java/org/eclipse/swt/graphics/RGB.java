@@ -144,9 +144,9 @@ public RGB(float hue, float saturation, float brightness) {
 				break;
 		}
 	}
-	red = (int)(r * 255 + 0.5);
-	green = (int)(g * 255 + 0.5);
-	blue = (int)(b * 255 + 0.5);	
+	this.red = (int)(r * 255 + 0.5);
+	this.green = (int)(g * 255 + 0.5);
+	this.blue = (int)(b * 255 + 0.5);	
 }
 
 /**
@@ -163,8 +163,8 @@ public RGB(float hue, float saturation, float brightness) {
  */
 public float[] getHSB() {	
 	float r = red / 255f;
-	float g = green / 255f;
-	float b = blue / 255f;
+	float g = this.green / 255f;
+	float b = this.blue / 255f;
 	float max = Math.max(Math.max(r, g), b);
 	float min = Math.min(Math.min(r, g), b);
 	float delta = max - min;
@@ -217,7 +217,7 @@ public boolean equals(Object object) {
  */
 @Override
 public int hashCode() {
-	return (blue << 16) | (green << 8) | red;
+	return (this.blue << 16) | (this.green << 8) | this.red;
 }
 
 /**
@@ -228,7 +228,7 @@ public int hashCode() {
  */
 @Override
 public String toString() {
-	return "RGB {" + red + ", " + green + ", " + blue + "}"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	return "RGB {" + this.red + ", " + this.green + ", " + this.blue + "}"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 }
 
 }

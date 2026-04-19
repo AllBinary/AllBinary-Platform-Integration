@@ -87,7 +87,7 @@ public class AndroidImmutableImage extends javax.microedition.lcdui.Image implem
                 throw new ArrayIndexOutOfBoundsException();
         }
 
-        bitmap.getPixels(argb, offset, scanlength, x, y, width, height);
+        this.bitmap.getPixels(argb, offset, scanlength, x, y, width, height);
 
 /*        for (int i = 0; i < argb.length; i++) {
 		    int a = (argb[i] & 0xFF000000);

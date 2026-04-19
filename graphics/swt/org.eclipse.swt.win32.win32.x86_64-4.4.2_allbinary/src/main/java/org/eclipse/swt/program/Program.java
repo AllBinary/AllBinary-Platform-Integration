@@ -332,12 +332,12 @@ public boolean execute (String fileName) {
 	if (fileName == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	int index = 0;
 	boolean append = true;
-	String prefix = command, suffix = ""; //$NON-NLS-1$
+	String prefix = this.command, suffix = ""; //$NON-NLS-1$
 	while (index < ARGUMENTS.length) {
-		int i = command.indexOf (ARGUMENTS [index]);
+		int i = this.command.indexOf (ARGUMENTS [index]);
 		if (i != -1) {
 			append = false;
-			prefix = command.substring (0, i);
+			prefix = this.command.substring (0, i);
 			suffix = command.substring (i + ARGUMENTS [index].length (), command.length ());
 			break;
 		}
@@ -369,7 +369,7 @@ public boolean execute (String fileName) {
  * @return the image data for the program, may be null
  */
 public ImageData getImageData () {
-	if (extension != null) {
+	if (this.extension != null) {
 		SHFILEINFO shfi = OS.IsUnicode ? (SHFILEINFO) new SHFILEINFOW () : new SHFILEINFOA ();
 		int flags = OS.SHGFI_ICON | OS.SHGFI_SMALLICON | OS.SHGFI_USEFILEATTRIBUTES;
 		TCHAR pszPath = new TCHAR (0, extension, true);
@@ -382,10 +382,10 @@ public ImageData getImageData () {
 		}
 	}
 	int nIconIndex = 0;
-	String fileName = iconName;
-	int index = iconName.indexOf (',');
+	String fileName = this.iconName;
+	int index = this.iconName.indexOf (',');
 	if (index != -1) {
-		fileName = iconName.substring (0, index);
+		fileName = this.iconName.substring (0, index);
 		String iconIndex = iconName.substring (index + 1, iconName.length ()).trim ();
 		try {
 			nIconIndex = Integer.parseInt (iconIndex);
@@ -434,8 +434,8 @@ public boolean equals(Object other) {
 	if (this == other) return true;
 	if (other instanceof Program) {
 		final Program program = (Program) other;
-		return name.equals(program.name) && command.equals(program.command)
-			&& iconName.equals(program.iconName);
+		return name.equals(program.name) && this.command.equals(program.command)
+			&& this.iconName.equals(program.iconName);
 	}
 	return false;
 }
@@ -451,7 +451,7 @@ public boolean equals(Object other) {
  * @see #equals(Object)
  */
 public int hashCode() {
-	return name.hashCode() ^ command.hashCode() ^ iconName.hashCode();
+	return name.hashCode() ^ this.command.hashCode() ^ this.iconName.hashCode();
 }
 
 /**
@@ -461,7 +461,7 @@ public int hashCode() {
  * @return a string representation of the program
  */
 public String toString () {
-	return "Program {" + name + "}"; //$NON-NLS-1$ //$NON-NLS-2$
+	return "Program {" + this.name + "}"; //$NON-NLS-1$ //$NON-NLS-2$
 }
 
 }

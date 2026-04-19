@@ -21,17 +21,17 @@ public class PngChunkReader {
 	
 PngChunkReader(LEDataInputStream inputStream) {
 	this.inputStream = inputStream;
-	readState = new PngFileReadState();
-	headerChunk = null;
+	this.readState = new PngFileReadState();
+	this.headerChunk = null;
 }
 
 PngIhdrChunk getIhdrChunk() {
-	if (headerChunk == null) {
+	if (this.headerChunk == null) {
 		try { 
-			PngChunk chunk = PngChunk.readNextFromStream(inputStream);
+			PngChunk chunk = PngChunk.readNextFromStream(this.inputStream);
 			if (chunk == null) SWT.error(SWT.ERROR_INVALID_IMAGE);
-			headerChunk = (PngIhdrChunk) chunk;
-			headerChunk.validate(readState, null);
+			this.headerChunk = (PngIhdrChunk) chunk;
+			this.headerChunk.validate(this.readState, null);
 		} catch (ClassCastException e) {
 			SWT.error(SWT.ERROR_INVALID_IMAGE);
 		}
@@ -40,23 +40,23 @@ PngIhdrChunk getIhdrChunk() {
 }
 
 PngChunk readNextChunk() {
-	if (headerChunk == null) return getIhdrChunk();
+	if (this.headerChunk == null) return getIhdrChunk();
 	
-	PngChunk chunk = PngChunk.readNextFromStream(inputStream);
+	PngChunk chunk = PngChunk.readNextFromStream(this.inputStream);
 	if (chunk == null) SWT.error(SWT.ERROR_INVALID_IMAGE);
 	switch (chunk.getChunkType()) {
 		case PngChunk.CHUNK_tRNS:
-			((PngTrnsChunk) chunk).validate(readState, headerChunk, paletteChunk);
+			((PngTrnsChunk) chunk).validate(this.readState, headerChunk, paletteChunk);
 			break;
 		case PngChunk.CHUNK_PLTE:
-			chunk.validate(readState, headerChunk);
+			chunk.validate(this.readState, headerChunk);
 			paletteChunk = (PngPlteChunk) chunk;
 			break;
 		default:
-			chunk.validate(readState, headerChunk);
+			chunk.validate(this.readState, headerChunk);
 	}
-	if (readState.readIDAT && !(chunk.getChunkType() == PngChunk.CHUNK_IDAT)) {
-		readState.readPixelData = true;
+	if (this.readState.readIDAT && !(chunk.getChunkType() == PngChunk.CHUNK_IDAT)) {
+		this.readState.readPixelData = true;
 	}
 	return chunk;
 }
@@ -66,7 +66,7 @@ boolean readPixelData() {
 }
 
 boolean hasMoreChunks() {
-	return !readState.readIEND;
+	return !this.readState.readIEND;
 }
 
 }

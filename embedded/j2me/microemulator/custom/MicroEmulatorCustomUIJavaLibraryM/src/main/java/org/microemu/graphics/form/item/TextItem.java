@@ -99,12 +99,12 @@ implements org.allbinary.graphics.form.item.CustomItemInterface
     public void paint(Graphics graphics, int x, int y)
     {
         graphics.setColor(this.getLabelStringComponent().getForegroundBasicColor().intValue());
-        graphics.drawString(this.getLabel(), x + offsetX, y, 0);
+        graphics.drawString(this.getLabel(), x + this.offsetX, y, 0);
     }
 
     @Override
     public void paintUnselected(Graphics graphics, int x, int y)
     {
-        graphics.drawString(this.getLabel(), x + offsetX, y, 0);
+        graphics.drawString(this.getLabel(), x + this.offsetX, y, 0);
     }
 }

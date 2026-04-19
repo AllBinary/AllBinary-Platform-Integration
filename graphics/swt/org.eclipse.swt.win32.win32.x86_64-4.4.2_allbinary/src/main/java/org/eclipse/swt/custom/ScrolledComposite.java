@@ -327,11 +327,11 @@ public boolean getShowFocusedControl() {
 }
 
 void hScroll() {
-	if (content == null) return;
-	Point location = content.getLocation ();
+	if (this.content == null) return;
+	Point location = this.content.getLocation ();
 	ScrollBar hBar = getHorizontalBar ();
 	int hSelection = hBar.getSelection ();
-	content.setLocation (-hSelection, location.y);
+	this.content.setLocation (-hSelection, location.y);
 }
 boolean needHScroll(Rectangle contentRect, boolean vVisible) {
 	ScrollBar hBar = getHorizontalBar();
@@ -343,8 +343,8 @@ boolean needHScroll(Rectangle contentRect, boolean vVisible) {
 	ScrollBar vBar = getVerticalBar();
 	if (vVisible && vBar != null) hostRect.width -= vBar.getSize().x;
 	
-	if (!expandHorizontal && contentRect.width > hostRect.width) return true;
-	if (expandHorizontal && minWidth > hostRect.width) return true;
+	if (!this.expandHorizontal && contentRect.width > hostRect.width) return true;
+	if (this.expandHorizontal && this.minWidth > hostRect.width) return true;
 	return false;
 }
 
@@ -358,8 +358,8 @@ boolean needVScroll(Rectangle contentRect, boolean hVisible) {
 	ScrollBar hBar = getHorizontalBar();
 	if (hVisible && hBar != null) hostRect.height -= hBar.getSize().y;
 	
-	if (!expandVertical && contentRect.height > hostRect.height) return true;
-	if (expandVertical && minHeight > hostRect.height) return true;
+	if (!this.expandVertical && contentRect.height > hostRect.height) return true;
+	if (this.expandVertical && this.minHeight > hostRect.height) return true;
 	return false;
 }
 
@@ -380,8 +380,8 @@ boolean needVScroll(Rectangle contentRect, boolean hVisible) {
  */
 public Point getOrigin() {
 	checkWidget();
-	if (content == null) return new Point(0, 0);
-	Point location = content.getLocation();
+	if (this.content == null) return new Point(0, 0);
+	Point location = this.content.getLocation();
 	return new Point(-location.x, -location.y);
 }
 /**
@@ -423,7 +423,7 @@ public void setOrigin(Point origin) {
  */
 public void setOrigin(int x, int y) {
 	checkWidget();
-	if (content == null) return;
+	if (this.content == null) return;
 	ScrollBar hBar = getHorizontalBar ();
 	if (hBar != null) {
 		hBar.setSelection(x);
@@ -438,7 +438,7 @@ public void setOrigin(int x, int y) {
 	} else {
 		y = 0;
 	}
-	content.setLocation(x, y);
+	this.content.setLocation(x, y);
 }
 /**
  * Set the Always Show Scrollbars flag.  True if the scrollbars are 
@@ -456,12 +456,12 @@ public void setOrigin(int x, int y) {
  */
 public void setAlwaysShowScrollBars(boolean show) {
 	checkWidget();
-	if (show == alwaysShowScroll) return;
-	alwaysShowScroll = show;
+	if (show == this.alwaysShowScroll) return;
+	this.alwaysShowScroll = show;
 	ScrollBar hBar = getHorizontalBar ();
-	if (hBar != null && alwaysShowScroll) hBar.setVisible(true);
+	if (hBar != null && this.alwaysShowScroll) hBar.setVisible(true);
 	ScrollBar vBar = getVerticalBar ();
-	if (vBar != null && alwaysShowScroll) vBar.setVisible(true);
+	if (vBar != null && this.alwaysShowScroll) vBar.setVisible(true);
 	layout(false);
 }
 
@@ -500,8 +500,8 @@ public void setContent(Control content) {
 		layout(false);
 		this.content.addListener(SWT.Resize, contentListener);
 	} else {
-		if (hBar != null) hBar.setVisible(alwaysShowScroll);
-		if (vBar != null) vBar.setVisible(alwaysShowScroll);
+		if (hBar != null) hBar.setVisible(this.alwaysShowScroll);
+		if (vBar != null) vBar.setVisible(this.alwaysShowScroll);
 	}
 }
 /**
@@ -521,8 +521,8 @@ public void setContent(Control content) {
  */
 public void setExpandHorizontal(boolean expand) {
 	checkWidget();
-	if (expand == expandHorizontal) return;
-	expandHorizontal = expand;
+	if (expand == this.expandHorizontal) return;
+	this.expandHorizontal = expand;
 	layout(false);
 }
 /**
@@ -542,8 +542,8 @@ public void setExpandHorizontal(boolean expand) {
  */
 public void setExpandVertical(boolean expand) {
 	checkWidget();
-	if (expand == expandVertical) return;
-	expandVertical = expand;
+	if (expand == this.expandVertical) return;
+	this.expandVertical = expand;
 	layout(false);
 }
 /**
@@ -615,9 +615,9 @@ public void setMinSize(Point size) {
  */
 public void setMinSize(int width, int height) {
 	checkWidget();
-	if (width == minWidth && height == minHeight) return;
-	minWidth = Math.max(0, width);
-	minHeight = Math.max(0, height);
+	if (width == this.minWidth && height == this.minHeight) return;
+	this.minWidth = Math.max(0, width);
+	this.minHeight = Math.max(0, height);
 	layout(false);
 }
 /**
@@ -654,12 +654,12 @@ public void setMinWidth(int width) {
  */
 public void setShowFocusedControl(boolean show) {
 	checkWidget();
-	if (showFocusedControl == show) return;
+	if (this.showFocusedControl == show) return;
 	Display display = getDisplay();
 	display.removeFilter(SWT.FocusIn, filter);
 	display.removeFilter(SWT.FocusOut, filter);
-	showFocusedControl = show;
-	if (!showFocusedControl) return;
+	this.showFocusedControl = show;
+	if (!this.showFocusedControl) return;
 	display.addFilter(SWT.FocusIn, filter);
 	display.addFilter(SWT.FocusOut, filter);
 	Control control = display.getFocusControl();
@@ -705,10 +705,10 @@ public void showControl(Control control) {
 }
 
 void vScroll() {
-	if (content == null) return;
-	Point location = content.getLocation ();
+	if (this.content == null) return;
+	Point location = this.content.getLocation ();
 	ScrollBar vBar = getVerticalBar ();
 	int vSelection = vBar.getSelection ();
-	content.setLocation (location.x, -vSelection);
+	this.content.setLocation (location.x, -vSelection);
 }
 }

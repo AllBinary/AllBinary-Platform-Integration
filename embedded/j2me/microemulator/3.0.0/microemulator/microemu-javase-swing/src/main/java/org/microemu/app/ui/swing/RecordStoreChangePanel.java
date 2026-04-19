@@ -47,7 +47,7 @@ public class RecordStoreChangePanel extends SwingDialogPanel {
 	}
 
 	protected void showNotify() {
-		if (common.getRecordStoreManager() instanceof FileRecordStoreManager) {
+		if (this.common.getRecordStoreManager() instanceof FileRecordStoreManager) {
 			selectStoreCombo.setSelectedIndex(0);
 		} else {
 			selectStoreCombo.setSelectedIndex(1);

@@ -51,12 +51,12 @@ public class VideoCapturePlayer implements Player {
 
 	public synchronized void close() {
 		deallocate();
-		m_state = CLOSED;
+		this.m_state = CLOSED;
 		notifyListeners(PlayerListener.CLOSED, null);
 	}
 
 	public synchronized void deallocate() {
-		if (m_state == STARTED) {
+		if (this.m_state == STARTED) {
 			try {
 				stop();
 			} catch (MediaException e) {
@@ -64,7 +64,7 @@ public class VideoCapturePlayer implements Player {
 				e.printStackTrace();
 			}
 		}
-		if (m_state == PREFETCHED) {
+		if (this.m_state == PREFETCHED) {
 			this.m_state = REALIZED;
 		} else if (m_state == REALIZED) {
 			this.m_state = UNREALIZED;
@@ -92,24 +92,24 @@ public class VideoCapturePlayer implements Player {
 
 	public synchronized void prefetch() throws MediaException {
 		ensureNotClosed();
-		if (m_state == UNREALIZED) {
+		if (this.m_state == UNREALIZED) {
 			realize();
 		}
-		if (m_state > PREFETCHED) {
+		if (this.m_state > PREFETCHED) {
 			return;
 		}
 		this.m_state = PREFETCHED;
 	}
 
 	private synchronized void ensureNotClosed() {
-		if (m_state == CLOSED) {
+		if (this.m_state == CLOSED) {
 			throw new IllegalStateException("Cannot call method on a closed player.");
 		}
 	}
 
 	public synchronized void realize() throws MediaException {
 		ensureNotClosed();
-		if (m_state >= REALIZED) {
+		if (this.m_state >= REALIZED) {
 			return;
 		}
 		this.m_state = REALIZED;
@@ -129,36 +129,36 @@ public class VideoCapturePlayer implements Player {
 
 	public synchronized void start() throws MediaException {
 		ensureNotClosed();
-		if (m_state > PREFETCHED) {
+		if (this.m_state > PREFETCHED) {
 			prefetch();
 		}
-		if (m_state == STARTED) {
+		if (this.m_state == STARTED) {
 			return;
 		}
 		this.m_state = STARTED;
 		notifyListeners(PlayerListener.STARTED, new Long(0));
-		if (m_videoControl != null) {
-			m_videoControl.startVideo();
+		if (this.m_videoControl != null) {
+			this.m_videoControl.startVideo();
 		}
 	}
 
 	private synchronized void notifyListeners(String event, Object eventData) {
-		for (int i = 0; i < m_listeners.size(); i++) {
-			((PlayerListener) m_listeners.get(i)).playerUpdate(this, event, eventData);
+		for (int i = 0; i < this.m_listeners.size(); i++) {
+			((PlayerListener) this.m_listeners.get(i)).playerUpdate(this, event, eventData);
 		}
 	}
 
 	public synchronized void stop() throws MediaException {
 		ensureNotClosed();
-		if (m_state <= REALIZED) {
+		if (this.m_state <= REALIZED) {
 			throw new IllegalStateException("Cannot stop an unrealized player.");
 		}
-		if (m_state == PREFETCHED) {
+		if (this.m_state == PREFETCHED) {
 			return;
 		}
 		this.m_state = PREFETCHED;
-		if (m_videoControl != null) {
-			m_videoControl.stopVideo();
+		if (this.m_videoControl != null) {
+			this.m_videoControl.stopVideo();
 		}
 		notifyListeners(PlayerListener.STOPPED, new Long(0));
 	}
@@ -172,8 +172,8 @@ public class VideoCapturePlayer implements Player {
 	}
 
 	private synchronized Control getVideoControl() {
-		if (m_videoControl == null) {
-			m_videoControl = new VideoCaptureControl(this, m_locator);
+		if (this.m_videoControl == null) {
+			this.m_videoControl = new VideoCaptureControl(this, m_locator);
 		}
 		return m_videoControl;
 	}

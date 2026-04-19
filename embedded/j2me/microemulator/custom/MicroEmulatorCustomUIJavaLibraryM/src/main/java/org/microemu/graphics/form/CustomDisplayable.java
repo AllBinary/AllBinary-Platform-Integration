@@ -30,10 +30,10 @@ public class CustomDisplayable extends Paintable
     public void addCommand(Command cmd)
     {
         Command command;
-        final int size = commands.size();
+        final int size = this.commands.size();
         for (int i = 0; i < size; i++)
         {
-            command = (Command) commands.elementAt(i);
+            command = (Command) this.commands.elementAt(i);
             if (cmd == command)
             {
                 return;
@@ -41,25 +41,25 @@ public class CustomDisplayable extends Paintable
         }
 
         boolean inserted = false;
-        for (int i = 0; i < commands.size(); i++)
+        for (int i = 0; i < this.commands.size(); i++)
         {
-            command = (Command) commands.elementAt(i);
+            command = (Command) this.commands.elementAt(i);
             if (cmd.getPriority() < command.getPriority())
             {
-                commands.insertElementAt(cmd, i);
+                this.commands.insertElementAt(cmd, i);
                 inserted = true;
                 break;
             }
         }
         if (inserted == false)
         {
-            commands.addElement(cmd);
+            this.commands.addElement(cmd);
         }
     }
 
     public void removeCommand(Command cmd)
     {
-        commands.removeElement(cmd);
+        this.commands.removeElement(cmd);
     }
 
     public int getWidth()
@@ -84,7 +84,7 @@ public class CustomDisplayable extends Paintable
 
     public void setTitle(String s)
     {
-        title.setText(s);
+        this.title.setText(s);
     }
 
     protected void sizeChanged(int w, int h)

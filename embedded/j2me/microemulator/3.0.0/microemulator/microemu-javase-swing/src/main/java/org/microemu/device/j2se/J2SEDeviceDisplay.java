@@ -151,7 +151,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	public void paintControls(Graphics g) {
 		Device device = DeviceFactory.getDevice();
 
-		g.setColor(backgroundColor);
+		g.setColor(this.backgroundColor);
 		g.fillRect(0, 0, displayRectangle.width, displayPaintable.y);
 		g.fillRect(0, displayPaintable.y, displayPaintable.x, displayPaintable.height);
 		g.fillRect(displayPaintable.x + displayPaintable.width, displayPaintable.y, displayRectangle.width
@@ -159,7 +159,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		g.fillRect(0, displayPaintable.y + displayPaintable.height, displayRectangle.width, displayRectangle.height
 				- displayPaintable.y - displayPaintable.height);
 
-		g.setColor(foregroundColor);
+		g.setColor(this.foregroundColor);
 		for (Enumeration s = device.getSoftButtons().elements(); s.hasMoreElements();) {
 			((J2SESoftButton) s.nextElement()).paint(g);
 		}
@@ -193,9 +193,9 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		}
 		
 		Graphics g = graphicsSurface.getGraphics();
-		g.setColor(foregroundColor);
+		g.setColor(this.foregroundColor);
 		java.awt.Shape oldclip = g.getClip();
-		if (!(current instanceof Canvas) || ((Canvas) current).getWidth() != displayRectangle.width
+		if (!(current instanceof Canvas) || ((Canvas) current).getWidth() != this.displayRectangle.width
 				|| ((Canvas) current).getHeight() != displayRectangle.height) {
 			g.translate(displayPaintable.x, displayPaintable.y);
 		}
@@ -203,7 +203,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		Font oldf = g.getFont();
 		ma.getDisplayAccess().paint(new J2SEDisplayGraphics(graphicsSurface));
 		g.setFont(oldf);
-		if (!(current instanceof Canvas) || ((Canvas) current).getWidth() != displayRectangle.width
+		if (!(current instanceof Canvas) || ((Canvas) current).getWidth() != this.displayRectangle.width
 				|| ((Canvas) current).getHeight() != displayRectangle.height) {
 			g.translate(-displayPaintable.x, -displayPaintable.y);
 		}
@@ -251,11 +251,11 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	}
 
 	public Color getBackgroundColor() {
-		return new Color(backgroundColor.getRGB());
+		return new Color(this.backgroundColor.getRGB());
 	}
 
 	public Color getForegroundColor() {
-		return new Color(foregroundColor.getRGB());
+		return new Color(this.foregroundColor.getRGB());
 	}
 
 	public Image createImage(int width, int height, boolean withAlpha, int fillColor) {
@@ -316,7 +316,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		// now apply the corresponding filter
 		ImageFilter filter = null;
 		if (isColor()) {
-			if (backgroundColor.getRed() != 255 || backgroundColor.getGreen() != 255
+			if (this.backgroundColor.getRed() != 255 || this.backgroundColor.getGreen() != 255
 					|| backgroundColor.getBlue() != 255 || foregroundColor.getRed() != 0
 					|| foregroundColor.getGreen() != 0 || foregroundColor.getBlue() != 0) {
 				filter = new RGBImageFilter();
@@ -445,16 +445,16 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 
     public javax.microedition.lcdui.Graphics getGraphics(GameCanvas gameCanvas)
     {
-        if (gameCanvasImage == null) {
-            gameCanvasImage = createImage(gameCanvas.getWidth(), gameCanvas.getHeight(), true, 0x00000000);
+        if (this.gameCanvasImage == null) {
+            this.gameCanvasImage = createImage(gameCanvas.getWidth(), gameCanvas.getHeight(), true, 0x00000000);
         }
         
         return gameCanvasImage.getGraphics();
     }
     
     public void flushGraphics(GameCanvas gameCanvas, int x, int y, int width, int height) {
-        if (gameCanvasImage != null) {
-            J2SEGraphicsSurface surface = ((SwingDisplayComponent) context.getDisplayComponent()).getGraphicsSurface();
+        if (this.gameCanvasImage != null) {
+            J2SEGraphicsSurface surface = ((SwingDisplayComponent) this.context.getDisplayComponent()).getGraphicsSurface();
             if (surface != null) {
                 surface.getGraphics().drawImage(
                         (java.awt.Image) gameCanvasImage.getImage(), 
@@ -505,7 +505,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	 * @see com.barteo.emulator.device.impl.DeviceDisplayImpl#setForegroundColor(java.awt.Color)
 	 */
 	public void setForegroundColor(Color color) {
-		foregroundColor = new java.awt.Color(color.getRGB());
+		this.foregroundColor = new java.awt.Color(color.getRGB());
 	}
 
 	/*
@@ -602,7 +602,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 
 		ImageFilter filter = null;
 		if (isColor()) {
-			if (backgroundColor.getRed() != 255 || backgroundColor.getGreen() != 255
+			if (this.backgroundColor.getRed() != 255 || this.backgroundColor.getGreen() != 255
 					|| backgroundColor.getBlue() != 255 || foregroundColor.getRed() != 0
 					|| foregroundColor.getGreen() != 0 || foregroundColor.getBlue() != 0) {
 				filter = new RGBImageFilter();

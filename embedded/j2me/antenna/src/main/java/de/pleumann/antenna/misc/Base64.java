@@ -1046,8 +1046,8 @@ public class Base64
             super( in );
             this.breakLines   = (options & DONT_BREAK_LINES) != DONT_BREAK_LINES;
             this.encode       = (options & ENCODE) == ENCODE;
-            this.bufferLength = encode ? 4 : 3;
-            this.buffer   = new byte[ bufferLength ];
+            this.bufferLength = this.encode ? 4 : 3;
+            this.buffer   = new byte[ this.bufferLength ];
             this.position = -1;
             this.lineLength = 0;
         }   // end constructor
@@ -1062,9 +1062,9 @@ public class Base64
         public int read() throws java.io.IOException 
         { 
             // Do we need to get data?
-            if( position < 0 )
+            if( this.position < 0 )
             {
-                if( encode )
+                if( this.encode )
                 {
                     byte[] b3 = new byte[3];
                     int numBinaryBytes = 0;
@@ -1094,8 +1094,8 @@ public class Base64
                     if( numBinaryBytes > 0 )
                     {
                         encode3to4( b3, 0, numBinaryBytes, buffer, 0 );
-                        position = 0;
-                        numSigBytes = 4;
+                        this.position = 0;
+                        this.numSigBytes = 4;
                     }   // end if: got data
                     else
                     {
@@ -1123,8 +1123,8 @@ public class Base64
                     
                     if( i == 4 )
                     {
-                        numSigBytes = decode4to3( b4, 0, buffer, 0 );
-                        position = 0;
+                        this.numSigBytes = decode4to3( b4, 0, buffer, 0 );
+                        this.position = 0;
                     }   // end if: got four characters
                     else if( i == 0 ){
                         return -1;
@@ -1139,15 +1139,15 @@ public class Base64
             }   // end else: get data
             
             // Got data?
-            if( position >= 0 )
+            if( this.position >= 0 )
             {
                 // End of relevant data?
-                if( /*!encode &&*/ position >= numSigBytes )
+                if( /*!this.encode &&*/ this.position >= this.numSigBytes )
                     return -1;
                 
-                if( encode && breakLines && lineLength >= MAX_LINE_LENGTH )
+                if( this.encode && this.breakLines && this.lineLength >= MAX_LINE_LENGTH )
                 {
-                    lineLength = 0;
+                    this.lineLength = 0;
                     return '\n';
                 }   // end if
                 else
@@ -1158,8 +1158,8 @@ public class Base64
                     
                     int b = buffer[ position++ ];
 
-                    if( position >= bufferLength )
-                        position = -1;
+                    if( this.position >= this.bufferLength )
+                        this.position = -1;
 
                     return b & 0xFF; // This is how you "cast" a byte that's
                                      // intended to be unsigned.
@@ -1275,8 +1275,8 @@ public class Base64
             super( out );
             this.breakLines   = (options & DONT_BREAK_LINES) != DONT_BREAK_LINES;
             this.encode       = (options & ENCODE) == ENCODE;
-            this.bufferLength = encode ? 3 : 4;
-            this.buffer       = new byte[ bufferLength ];
+            this.bufferLength = this.encode ? 3 : 4;
+            this.buffer       = new byte[ this.bufferLength ];
             this.position     = 0;
             this.lineLength   = 0;
             this.suspendEncoding = false;
@@ -1299,28 +1299,28 @@ public class Base64
         public void write(int theByte) throws java.io.IOException
         {
             // Encoding suspended?
-            if( suspendEncoding )
+            if( this.suspendEncoding )
             {
                 super.out.write( theByte );
                 return;
             }   // end if: supsended
             
             // Encode?
-            if( encode )
+            if( this.encode )
             {
-                buffer[ position++ ] = (byte)theByte;
-                if( position >= bufferLength )  // Enough to encode.
+                this.buffer[ position++ ] = (byte)theByte;
+                if( this.position >= this.bufferLength )  // Enough to encode.
                 {
-                    out.write( encode3to4( b4, buffer, bufferLength ) );
+                    out.write( encode3to4( this.b4, buffer, bufferLength ) );
 
-                    lineLength += 4;
-                    if( breakLines && lineLength >= MAX_LINE_LENGTH )
+                    this.lineLength += 4;
+                    if( this.breakLines && this.lineLength >= MAX_LINE_LENGTH )
                     {
                         out.write( NEW_LINE );
-                        lineLength = 0;
+                        this.lineLength = 0;
                     }   // end if: end of line
 
-                    position = 0;
+                    this.position = 0;
                 }   // end if: enough to output
             }   // end if: encoding
 
@@ -1331,12 +1331,12 @@ public class Base64
                 if( DECODABET[ theByte & 0x7f ] > WHITE_SPACE_ENC )
                 {
                     buffer[ position++ ] = (byte)theByte;
-                    if( position >= bufferLength )  // Enough to output.
+                    if( this.position >= bufferLength )  // Enough to output.
                     {
                         int len = Base64.decode4to3( buffer, 0, b4, 0 );
                         out.write( b4, 0, len );
                         //out.write( Base64.decode4to3( buffer ) );
-                        position = 0;
+                        this.position = 0;
                     }   // end if: enough to output
                 }   // end if: meaningful base64 character
                 else if( DECODABET[ theByte & 0x7f ] != WHITE_SPACE_ENC )
@@ -1360,7 +1360,7 @@ public class Base64
         public void write( byte[] theBytes, int off, int len ) throws java.io.IOException
         {
             // Encoding suspended?
-            if( suspendEncoding )
+            if( this.suspendEncoding )
             {
                 super.out.write( theBytes, off, len );
                 return;
@@ -1381,11 +1381,11 @@ public class Base64
          */
         public void flushBase64() throws java.io.IOException 
         {
-            if( position > 0 )
+            if( this.position > 0 )
             {
-                if( encode )
+                if( this.encode )
                 {
-                    out.write( encode3to4( b4, buffer, position ) );
+                    out.write( encode3to4( this.b4, buffer, position ) );
                     position = 0;
                 }   // end if: encoding
                 else
@@ -1411,7 +1411,7 @@ public class Base64
             // Base class both flushes and closes.
             super.close();
             
-            buffer = null;
+            this.buffer = null;
             out    = null;
         }   // end close
         

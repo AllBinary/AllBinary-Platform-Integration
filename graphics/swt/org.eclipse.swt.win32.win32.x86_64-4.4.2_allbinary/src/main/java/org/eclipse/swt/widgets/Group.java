@@ -151,7 +151,7 @@ protected void checkSubclass () {
 public Point computeSize (int wHint, int hHint, boolean changed) {
 	checkWidget ();
 	Point size = super.computeSize (wHint, hHint, changed);
-	int length = text.length ();
+	int length = this.text.length ();
 	if (length != 0) {
 		String string = fixText (false);
 
@@ -159,7 +159,7 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 		* If the group has text, and the text is wider than the
 		* client area, pad the width so the text is not clipped.
 		*/
-		TCHAR buffer = new TCHAR (getCodePage (), string == null ? text : string, true);
+		TCHAR buffer = new TCHAR (getCodePage (), string == null ? this.text : string, true);
 		long /*int*/ newFont, oldFont = 0;
 		long /*int*/ hDC = OS.GetDC (handle);
 		newFont = OS.SendMessage (handle, OS.WM_GETFONT, 0, 0);
@@ -231,13 +231,13 @@ String fixText (boolean enabled) {
 	* is disabled, the first pixel of the text is clipped.  The
 	* fix is to add a space to both sides of the text.
 	*/
-	if (text.length() == 0) return null;
+	if (this.text.length() == 0) return null;
 	if ((style & SWT.RIGHT_TO_LEFT) != 0) {
 		String string = null;
 		if (!enabled && (OS.COMCTL32_MAJOR < 6 || !OS.IsAppThemed ())) {
 			string = " " + this.text + " ";
 		}
-		return (style & SWT.FLIP_TEXT_DIRECTION) == 0 ? string : string != null ? LRE + string : LRE + text;
+		return (style & SWT.FLIP_TEXT_DIRECTION) == 0 ? string : string != null ? LRE + string : LRE + this.text;
 	} else if ((style & SWT.FLIP_TEXT_DIRECTION) != 0) {
 		return RLE + this.text;
 	}
@@ -360,7 +360,7 @@ void printWidget (long /*int*/ hwnd, long /*int*/ hdc, GC gc) {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	text = null;
+	this.text = null;
 }
 
 public void setFont (Font font) {
@@ -398,9 +398,9 @@ public void setFont (Font font) {
 public void setText (String string) {
 	checkWidget ();
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
-	text = string;
+	this.text = string;
 	string = fixText (OS.IsWindowEnabled (handle));
-	TCHAR buffer = new TCHAR (getCodePage (), string == null ? text : string, true);
+	TCHAR buffer = new TCHAR (getCodePage (), string == null ? this.text : string, true);
 	OS.SetWindowText (handle, buffer);
 }
 

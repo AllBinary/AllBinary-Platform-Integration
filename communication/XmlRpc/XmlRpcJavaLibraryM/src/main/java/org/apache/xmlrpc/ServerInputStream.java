@@ -94,12 +94,12 @@ class ServerInputStream extends InputStream
      */
     public int read() throws IOException
     {
-        if (available > 0)
+        if (this.available > 0)
         {
             available--;
             return in.read();
         }
-        else if (available == -1)
+        else if (this.available == -1)
         {
             return in.read ();
         }
@@ -127,25 +127,25 @@ class ServerInputStream extends InputStream
      */
     public int read(byte b[], int off, int len) throws IOException
     {
-        if (available > 0)
+        if (this.available > 0)
         {
-            if (len > available)
+            if (len > this.available)
             {
                 // shrink len
-                len = (int) available;
+                len = (int) this.available;
             }
-            int read = in.read(b, off, len);
+            int read = this.in.read(b, off, len);
             if (read != -1)
             {
-                available -= read;
+                this.available -= read;
             }
             else
             {
-                available = -1;
+                this.available = -1;
             }
             return read;
         }
-        else if (available == -1)
+        else if (this.available == -1)
         {
             return in.read(b, off, len);
         }
@@ -160,10 +160,10 @@ class ServerInputStream extends InputStream
      */
     public long skip(long n) throws IOException
     {
-        long skip = in.skip(n);
-        if (available > 0)
+        long skip = this.in.skip(n);
+        if (this.available > 0)
         {
-            available -= skip;
+            this.available -= skip;
         }
         return skip;
     }
@@ -174,8 +174,8 @@ class ServerInputStream extends InputStream
      */
     public void mark(int readlimit)
     {
-        in.mark(readlimit);
-        markedAvailable = available;
+        this.in.mark(readlimit);
+        this.markedAvailable = this.available;
     }
 
     /**
@@ -184,8 +184,8 @@ class ServerInputStream extends InputStream
      */
     public synchronized void reset() throws IOException
     {
-        in.reset();
-        available = markedAvailable;
+        this.in.reset();
+        this.available = this.markedAvailable;
     }
 
     /**

@@ -73,7 +73,7 @@ public class XYLayout implements LayoutManager2 {
 	}
 
 	public void removeLayoutComponent(Component component) {
-		info.remove(component);
+		this.info.remove(component);
 	}
 
 	public Dimension preferredLayoutSize(Container target) {
@@ -100,7 +100,7 @@ public class XYLayout implements LayoutManager2 {
 
 	public void addLayoutComponent(Component component, Object constraints) {
 		if (constraints instanceof XYConstraints)
-			info.put(component, constraints);
+			this.info.put(component, constraints);
 	}
 
 	public Dimension maximumLayoutSize(Container target) {

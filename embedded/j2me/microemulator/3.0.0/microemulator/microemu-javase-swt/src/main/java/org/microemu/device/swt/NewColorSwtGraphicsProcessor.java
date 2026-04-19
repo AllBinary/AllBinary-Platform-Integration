@@ -23,7 +23,7 @@ public class NewColorSwtGraphicsProcessor extends SwtGraphicsProcessor {
     
     public Color getColor(final SwtGraphics g, final RGBA rgba) {
         final Color color = g.getColor(rgba);
-        swtDeviceDisplay.foregroundGraphicsProcessor = new ExistingColorSwtGraphicsProcessor(color);
+        this.swtDeviceDisplay.foregroundGraphicsProcessor = new ExistingColorSwtGraphicsProcessor(color);
         return color;
     }
 

@@ -145,7 +145,7 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 		final ValueObject result = new ValueObject();
 		result.value = null;
 		
-                MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
+                MicroEmulatorActivity activity2 = (MicroEmulatorActivity) this.activity;
 		activity2.post(new ARunnable() {
 			public void run() {
 				GregorianCalendar cal = new GregorianCalendar();

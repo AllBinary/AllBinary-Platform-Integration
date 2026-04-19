@@ -62,7 +62,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	}
 
 	public Image createImage(String name) throws IOException {
-		return createImage(emulator.getResourceAsStream(name));
+		return createImage(this.emulator.getResourceAsStream(name));
 	}
 
 	public Image createImage(Image source) {

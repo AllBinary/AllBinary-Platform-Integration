@@ -65,7 +65,7 @@ public class CertificateImpl implements Certificate {
 	}
 
 	public String getVersion() {
-		return Integer.toString(cert.getVersion());
+		return Integer.toString(this.cert.getVersion());
 	}
 
 }

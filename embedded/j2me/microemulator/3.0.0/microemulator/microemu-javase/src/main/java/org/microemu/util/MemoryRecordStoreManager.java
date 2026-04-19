@@ -54,24 +54,24 @@ public class MemoryRecordStoreManager implements RecordStoreManager {
 		if (recordStoreImpl.isOpen()) {
 			throw new RecordStoreException();
 		}
-		recordStores.remove(recordStoreName);
+		this.recordStores.remove(recordStoreName);
 
 		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, recordStoreName);
 	}
 
 	public RecordStore openRecordStore(String recordStoreName, boolean createIfNecessary)
 			throws RecordStoreNotFoundException {
-		RecordStoreImpl recordStoreImpl = (RecordStoreImpl) recordStores.get(recordStoreName);
+		RecordStoreImpl recordStoreImpl = (RecordStoreImpl) this.recordStores.get(recordStoreName);
 		if (recordStoreImpl == null) {
 			if (!createIfNecessary) {
 				throw new RecordStoreNotFoundException(recordStoreName);
 			}
 			recordStoreImpl = new RecordStoreImpl(this, recordStoreName);
-			recordStores.put(recordStoreName, recordStoreImpl);
+			this.recordStores.put(recordStoreName, recordStoreImpl);
 		}
 		recordStoreImpl.setOpen(true);
-		if (recordListener != null) {
-			recordStoreImpl.addRecordListener(recordListener);
+		if (this.recordListener != null) {
+			recordStoreImpl.addRecordListener(this.recordListener);
 		}
 
 		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
@@ -83,9 +83,9 @@ public class MemoryRecordStoreManager implements RecordStoreManager {
 		String[] result = null;
 
 		int i = 0;
-		for (Enumeration e = recordStores.keys(); e.hasMoreElements();) {
+		for (Enumeration e = this.recordStores.keys(); e.hasMoreElements();) {
 			if (result == null) {
-				result = new String[recordStores.size()];
+				result = new String[this.recordStores.size()];
 			}
 			result[i] = (String) e.nextElement();
 			i++;
@@ -108,8 +108,8 @@ public class MemoryRecordStoreManager implements RecordStoreManager {
 	}
 
 	public void deleteStores() {
-		if (recordStores != null)
-			recordStores.clear();
+		if (this.recordStores != null)
+			this.recordStores.clear();
 	}
 
 	public int getSizeAvailable(RecordStoreImpl recordStoreImpl) {
@@ -122,8 +122,8 @@ public class MemoryRecordStoreManager implements RecordStoreManager {
 	}
 
 	public void fireRecordStoreListener(int type, String recordStoreName) {
-		if (recordListener != null) {
-			recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
+		if (this.recordListener != null) {
+			this.recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
 		}
 	}
 }

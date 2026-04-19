@@ -152,7 +152,7 @@ public Variant(double val) {
  */
 public Variant(long /*int*/ ptr, short byRefType) {
 	type = byRefType;
-	byRefPtr = ptr;
+	this.byRefPtr = ptr;
 }
 /**
  * Create a Variant object which represents an IDispatch interface as a VT_Dispatch.
@@ -162,7 +162,7 @@ public Variant(long /*int*/ ptr, short byRefType) {
  */
 public Variant(OleAutomation automation) {
 	type = COM.VT_DISPATCH;
-	dispatchData = new IDispatch(automation.getAddress());
+	this.dispatchData = new IDispatch(automation.getAddress());
 }
 /**
  * Create a Variant object which represents an IDispatch interface as a VT_Dispatch.
@@ -176,7 +176,7 @@ public Variant(OleAutomation automation) {
  */
 public Variant(IDispatch idispatch) {
 	type = COM.VT_DISPATCH;
-	dispatchData = idispatch;
+	this.dispatchData = idispatch;
 }
 /**
  * Create a Variant object which represents an IUnknown interface as a VT_UNKNOWN.
@@ -241,16 +241,16 @@ public Variant(boolean val) {
  * @since 2.1
  */
 public void dispose() {
-	if ((type & COM.VT_BYREF) == COM.VT_BYREF) {
+	if ((this.type & COM.VT_BYREF) == COM.VT_BYREF) {
 		return;
 	}
 		
-	switch (type) {
+	switch (this.type) {
 		case COM.VT_DISPATCH :
-			dispatchData.Release();
+			this.dispatchData.Release();
 			break;
 		case COM.VT_UNKNOWN :
-			unknownData.Release();
+			this.unknownData.Release();
 			break;
 	}
 	
@@ -270,11 +270,11 @@ public void dispose() {
  * </ul>
  */
 public OleAutomation getAutomation() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_DISPATCH) {
-		return new OleAutomation(dispatchData);
+	if (this.type == COM.VT_DISPATCH) {
+		return new OleAutomation(this.dispatchData);
 	}
 	// try to coerce the value to the desired type
 	long /*int*/ oldPtr = OS.GlobalAlloc(COM.GMEM_FIXED | COM.GMEM_ZEROINIT, sizeof);
@@ -313,10 +313,10 @@ public OleAutomation getAutomation() {
  * </ul>
  */
 public IDispatch getDispatch() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_DISPATCH) {
+	if (this.type == COM.VT_DISPATCH) {
 		return dispatchData;
 	}
 	// try to coerce the value to the desired type
@@ -354,10 +354,10 @@ public IDispatch getDispatch() {
  *
  */
 public boolean getBoolean() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_BOOL) {
+	if (this.type == COM.VT_BOOL) {
 		return booleanData;
 	}
 
@@ -388,10 +388,10 @@ public boolean getBoolean() {
  *
  */
 public long /*int*/ getByRef() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if ((type & COM.VT_BYREF)== COM.VT_BYREF) {
+	if ((this.type & COM.VT_BYREF)== COM.VT_BYREF) {
 		return byRefPtr;
 	}
 		
@@ -412,10 +412,10 @@ public long /*int*/ getByRef() {
  * @since 3.3
  */
 public byte getByte() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_I1) {
+	if (this.type == COM.VT_I1) {
 		return byteData;
 	}
 		
@@ -452,10 +452,10 @@ public byte getByte() {
  * @since 3.3
  */
 public char getChar() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_UI2) {
+	if (this.type == COM.VT_UI2) {
 		return charData;
 	}
 		
@@ -482,63 +482,63 @@ void getData(long /*int*/ pData){
 	
 	COM.VariantInit(pData);
 
-	if ((type & COM.VT_BYREF) == COM.VT_BYREF) {
+	if ((this.type & COM.VT_BYREF) == COM.VT_BYREF) {
 		//TODO - use VARIANT structure
-		COM.MoveMemory(pData, new short[] {type}, 2);
-		COM.MoveMemory(pData + 8, new long /*int*/[]{byRefPtr}, OS.PTR_SIZEOF);
+		COM.MoveMemory(pData, new short[] {this.type}, 2);
+		COM.MoveMemory(pData + 8, new long /*int*/[]{this.byRefPtr}, OS.PTR_SIZEOF);
 		return;
 	}
 
-	switch (type) {
+	switch (this.type) {
 		case COM.VT_EMPTY :
 		case COM.VT_NULL :
-            COM.MoveMemory(pData, new short[] {type}, 2);
+            COM.MoveMemory(pData, new short[] {this.type}, 2);
 			break;
 		case COM.VT_BOOL :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new short[]{(booleanData) ? COM.VARIANT_TRUE : COM.VARIANT_FALSE}, 2);
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new short[]{(this.booleanData) ? COM.VARIANT_TRUE : COM.VARIANT_FALSE}, 2);
 			break;
 		case COM.VT_I1 :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new byte[]{byteData}, 1);
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new byte[]{this.byteData}, 1);
 			break;
 		case COM.VT_I2 :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new short[]{shortData}, 2);
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new short[]{this.shortData}, 2);
 			break;
 		case COM.VT_UI2 :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new char[]{charData}, 2);
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new char[]{this.charData}, 2);
 			break;
 		case COM.VT_I4 :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new int[]{intData}, 4);
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new int[]{this.intData}, 4);
 			break;
 		case COM.VT_I8 :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new long[]{longData}, 8);
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new long[]{this.longData}, 8);
 			break;
 		case COM.VT_R4 :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new float[]{floatData}, 4);
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new float[]{this.floatData}, 4);
 			break;
 		case COM.VT_R8 :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new double[]{doubleData}, 8);
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new double[]{this.doubleData}, 8);
 			break;
 		case COM.VT_DISPATCH :
-			dispatchData.AddRef();
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new long /*int*/[]{dispatchData.getAddress()}, OS.PTR_SIZEOF);
+			this.dispatchData.AddRef();
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new long /*int*/[]{this.dispatchData.getAddress()}, OS.PTR_SIZEOF);
 			break;
 		case COM.VT_UNKNOWN :
-			unknownData.AddRef();
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			COM.MoveMemory(pData + 8, new long /*int*/[]{unknownData.getAddress()}, OS.PTR_SIZEOF);
+			this.unknownData.AddRef();
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			COM.MoveMemory(pData + 8, new long /*int*/[]{this.unknownData.getAddress()}, OS.PTR_SIZEOF);
 			break;
 		case COM.VT_BSTR :
-			COM.MoveMemory(pData, new short[] {type}, 2);
-			char[] data = (stringData+"\0").toCharArray();
+			COM.MoveMemory(pData, new short[] {this.type}, 2);
+			char[] data = (this.stringData+"\0").toCharArray();
 			long /*int*/ ptr = COM.SysAllocString(data);
 			COM.MoveMemory(pData + 8, new long /*int*/[] {ptr}, OS.PTR_SIZEOF);
 			break;
@@ -562,10 +562,10 @@ void getData(long /*int*/ pData){
  * @since 3.2
  */
 public double getDouble() {
-    if (type == COM.VT_EMPTY) {
+    if (this.type == COM.VT_EMPTY) {
         OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
     }
-    if (type == COM.VT_R8) {
+    if (this.type == COM.VT_R8) {
         return doubleData;
     }
     
@@ -601,10 +601,10 @@ public double getDouble() {
  * </ul>
  */
 public float getFloat() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_R4) {
+	if (this.type == COM.VT_R4) {
 		return floatData;
 	}
 
@@ -640,10 +640,10 @@ public float getFloat() {
  * </ul>
  */
 public int getInt() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_I4) {
+	if (this.type == COM.VT_I4) {
 		return intData;
 	}
 		
@@ -680,10 +680,10 @@ public int getInt() {
  * @since 3.2
  */
 public long getLong() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_I8) {
+	if (this.type == COM.VT_I8) {
 		return longData;
 	}
 		
@@ -718,10 +718,10 @@ public long getLong() {
  * </ul>
  */
 public short getShort() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_I2) {
+	if (this.type == COM.VT_I2) {
 		return shortData;
 	}
 		
@@ -757,10 +757,10 @@ public short getShort() {
  * </ul>
  */
 public String getString() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_BSTR) {
+	if (this.type == COM.VT_BSTR) {
 		return stringData;
 	}
 
@@ -811,10 +811,10 @@ public short getType() {
  * </ul>
  */
 public IUnknown getUnknown() {
-	if (type == COM.VT_EMPTY) {
+	if (this.type == COM.VT_EMPTY) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE, -1);
 	}
-	if (type == COM.VT_UNKNOWN) {
+	if (this.type == COM.VT_UNKNOWN) {
 		return unknownData;
 	}
 
@@ -852,10 +852,10 @@ public IUnknown getUnknown() {
  * @since 2.1
  */
 public void setByRef(boolean val) {
-	if ((type & COM.VT_BYREF) == 0 || (type & COM.VT_BOOL) == 0) {
+	if ((this.type & COM.VT_BYREF) == 0 || (this.type & COM.VT_BOOL) == 0) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE);
 	}
-	COM.MoveMemory(byRefPtr, new short[]{val ? COM.VARIANT_TRUE : COM.VARIANT_FALSE}, 2);
+	COM.MoveMemory(this.byRefPtr, new short[]{val ? COM.VARIANT_TRUE : COM.VARIANT_FALSE}, 2);
 }
 /**
  * Update the by reference value of this variant with a new float value.
@@ -870,10 +870,10 @@ public void setByRef(boolean val) {
  * @since 2.1
  */
 public void setByRef(float val) {
-	if ((type & COM.VT_BYREF) == 0 || (type & COM.VT_R4) == 0) {
+	if ((this.type & COM.VT_BYREF) == 0 || (this.type & COM.VT_R4) == 0) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE);
 	}
-	COM.MoveMemory(byRefPtr, new float[]{val}, 4);	
+	COM.MoveMemory(this.byRefPtr, new float[]{val}, 4);	
 }
 /**
  * Update the by reference value of this variant with a new integer value.
@@ -887,12 +887,12 @@ public void setByRef(float val) {
  * @since 2.1
  */
 public void setByRef(long /*int*/ val) {
-	if ((type & COM.VT_BYREF) == 0 
+	if ((this.type & COM.VT_BYREF) == 0 
 			|| (OS.PTR_SIZEOF == 4 && (type & COM.VT_I4) == 0) 
 			|| (OS.PTR_SIZEOF == 8 && (type & COM.VT_I8) == 0)) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE);
 	}
-	COM.MoveMemory(byRefPtr, new long /*int*/[]{val}, OS.PTR_SIZEOF);
+	COM.MoveMemory(this.byRefPtr, new long /*int*/[]{val}, OS.PTR_SIZEOF);
 }
 /**
  * Update the by reference value of this variant with a new short value.
@@ -906,10 +906,10 @@ public void setByRef(long /*int*/ val) {
  * @since 2.1
  */
 public void setByRef(short val) {
-	if ((type & COM.VT_BYREF) == 0 || (type & COM.VT_I2) == 0) {
+	if ((this.type & COM.VT_BYREF) == 0 || (this.type & COM.VT_I2) == 0) {
 		OLE.error(OLE.ERROR_CANNOT_CHANGE_VARIANT_TYPE);
 	}
-	COM.MoveMemory(byRefPtr, new short[]{val}, 2);
+	COM.MoveMemory(this.byRefPtr, new short[]{val}, 2);
 }
 void setData(long /*int*/ pData){
 	if (pData == 0) OLE.error(OLE.ERROR_INVALID_ARGUMENT);
@@ -917,79 +917,79 @@ void setData(long /*int*/ pData){
 	//TODO - use VARIANT structure
 	short[] dataType = new short[1];
 	COM.MoveMemory(dataType, pData, 2);
-	type = dataType[0];
+	this.type = dataType[0];
 
-	if ((type & COM.VT_BYREF) == COM.VT_BYREF) {
+	if ((this.type & COM.VT_BYREF) == COM.VT_BYREF) {
 		long /*int*/[] newByRefPtr = new long /*int*/[1];
 		OS.MoveMemory(newByRefPtr, pData + 8, OS.PTR_SIZEOF);
-		byRefPtr = newByRefPtr[0];
+		this.byRefPtr = newByRefPtr[0];
 		return;
 	}
 	
-	switch (type) {
+	switch (this.type) {
 		case COM.VT_EMPTY :
 		case COM.VT_NULL :
 			break;
 		case COM.VT_BOOL :
 			short[] newBooleanData = new short[1];
 			COM.MoveMemory(newBooleanData, pData + 8, 2);
-			booleanData = (newBooleanData[0] != COM.VARIANT_FALSE);
+			this.booleanData = (newBooleanData[0] != COM.VARIANT_FALSE);
 			break;
 		case COM.VT_I1 :
 			byte[] newByteData = new byte[1];
 			COM.MoveMemory(newByteData, pData + 8, 1);
-			byteData = newByteData[0];
+			this.byteData = newByteData[0];
 			break;
 		case COM.VT_I2 :
 			short[] newShortData = new short[1];
 			COM.MoveMemory(newShortData, pData + 8, 2);
-			shortData = newShortData[0];
+			this.shortData = newShortData[0];
 			break;
 		case COM.VT_UI2 :
 			char[] newCharData = new char[1];
 			COM.MoveMemory(newCharData, pData + 8, 2);
-			charData = newCharData[0];
+			this.charData = newCharData[0];
 			break;
 		case COM.VT_I4 :
 			int[] newIntData = new int[1];
 			OS.MoveMemory(newIntData, pData + 8, 4);
-			intData = newIntData[0];
+			this.intData = newIntData[0];
 			break;
 		case COM.VT_I8 :
 			long[] newLongData = new long[1];
 			OS.MoveMemory(newLongData, pData + 8, 8);
-			longData = newLongData[0];
+			this.longData = newLongData[0];
 			break;
 		case COM.VT_R4 :
 			float[] newFloatData = new float[1];
 			COM.MoveMemory(newFloatData, pData + 8, 4);
-			floatData = newFloatData[0];
+			this.floatData = newFloatData[0];
 			break;
 		case COM.VT_R8 :
 			double[] newDoubleData = new double[1];
 			COM.MoveMemory(newDoubleData, pData + 8, 8);
- 			doubleData = newDoubleData[0];
+ 			this.doubleData = newDoubleData[0];
 			break;
 		case COM.VT_DISPATCH : {
 			long /*int*/[] ppvObject = new long /*int*/[1];
 			OS.MoveMemory(ppvObject, pData + 8, OS.PTR_SIZEOF);
 			if (ppvObject[0] == 0) {
-				type = COM.VT_EMPTY;
+				this.type = COM.VT_EMPTY;
 				break;
 			}
-			dispatchData = new IDispatch(ppvObject[0]);
-			dispatchData.AddRef();
+			this.dispatchData = new IDispatch(ppvObject[0]);
+			this.dispatchData.AddRef();
 			break;
 		}
 		case COM.VT_UNKNOWN : {
 			long /*int*/[] ppvObject = new long /*int*/[1];
 			OS.MoveMemory(ppvObject, pData + 8, OS.PTR_SIZEOF);
 			if (ppvObject[0] == 0) {
-				type = COM.VT_EMPTY;
+				this.type = COM.VT_EMPTY;
 				break;
 			}
-			unknownData = new IUnknown(ppvObject[0]);
-			unknownData.AddRef();
+			this.unknownData = new IUnknown(ppvObject[0]);
+			this.unknownData.AddRef();
 			break;
 		}
 		case COM.VT_BSTR :
@@ -997,7 +997,7 @@ void setData(long /*int*/ pData){
 			long /*int*/[] hMem = new long /*int*/[1];
 			OS.MoveMemory(hMem, pData + 8, OS.PTR_SIZEOF);
 			if (hMem[0] == 0) {
-				type = COM.VT_EMPTY;
+				this.type = COM.VT_EMPTY;
 				break;
 			}
 			// Get the size of the string from the OS - the size is expressed in number
@@ -1007,7 +1007,7 @@ void setData(long /*int*/ pData){
 				// get the unicode character array from the global memory and create a String
 				char[] buffer = new char[(size + 1) /2]; // add one to avoid rounding errors
 				COM.MoveMemory(buffer, hMem[0], size);
-				stringData = new String(buffer);
+				this.stringData = new String(buffer);
 			} else {
 				this.stringData = ""; //$NON-NLS-1$
 			}
@@ -1035,37 +1035,37 @@ void setData(long /*int*/ pData){
  * @return a string representation of the Variant
  */
 public String toString () {
-    switch (type) {
+    switch (this.type) {
 	    case COM.VT_BOOL :
-	        return "VT_BOOL{"+booleanData+"}";
+	        return "VT_BOOL{"+this.booleanData+"}";
 	    case COM.VT_I1 :
-	        return "VT_I1{"+byteData+"}";
+	        return "VT_I1{"+this.byteData+"}";
 	    case COM.VT_I2 :
-	        return "VT_I2{"+shortData+"}";
+	        return "VT_I2{"+this.shortData+"}";
 	    case COM.VT_UI2 :
-	        return "VT_UI2{"+charData+"}";
+	        return "VT_UI2{"+this.charData+"}";
 	    case COM.VT_I4 :
-	        return "VT_I4{"+intData+"}";
+	        return "VT_I4{"+this.intData+"}";
 	    case COM.VT_I8 :
-	        return "VT_I8{"+longData+"}";
+	        return "VT_I8{"+this.longData+"}";
 	    case COM.VT_R4 :
-	        return "VT_R4{"+floatData+"}";
+	        return "VT_R4{"+this.floatData+"}";
    	    case COM.VT_R8 :
-	        return "VT_R8{"+doubleData+"}";
+	        return "VT_R8{"+this.doubleData+"}";
 	    case COM.VT_BSTR :
-	        return "VT_BSTR{"+stringData+"}";
+	        return "VT_BSTR{"+this.stringData+"}";
 	    case COM.VT_DISPATCH :
-	        return "VT_DISPATCH{"+(dispatchData == null ? 0 : dispatchData.getAddress())+"}";
+	        return "VT_DISPATCH{"+(this.dispatchData == null ? 0 : this.dispatchData.getAddress())+"}";
 	    case COM.VT_UNKNOWN :
-	        return "VT_UNKNOWN{"+(unknownData == null ? 0 : unknownData.getAddress())+"}";
+	        return "VT_UNKNOWN{"+(this.unknownData == null ? 0 : this.unknownData.getAddress())+"}";
 	    case COM.VT_EMPTY :
 	        return "VT_EMPTY";
 	    case COM.VT_NULL :
 	        return "VT_NULL";
 	 }
-    if ((type & COM.VT_BYREF) != 0) {
-        return "VT_BYREF|"+(type & ~COM.VT_BYREF)+"{"+byRefPtr+"}";
+    if ((this.type & COM.VT_BYREF) != 0) {
+        return "VT_BYREF|"+(this.type & ~COM.VT_BYREF)+"{"+this.byRefPtr+"}";
     }
-    return "Unsupported Type "+type;
+    return "Unsupported Type "+this.type;
 }
 }

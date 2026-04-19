@@ -101,14 +101,14 @@ void createHandle () {
 	long /*int*/[] ppv = new long /*int*/ [1];
 	int hr = OS.CoCreateInstance (CLSID_TaskbarList, 0, OS.CLSCTX_INPROC_SERVER, IID_ITaskbarList3, ppv);
 	if (hr != OS.S_OK) error (SWT.ERROR_NO_HANDLES);
-	mTaskbarList3 = ppv [0];
+	this.mTaskbarList3 = ppv [0];
 }
 
 void createItem (TaskItem item, int index) {
-	if (index == -1) index = itemCount;
-	if (!(0 <= index && index <= itemCount)) error (SWT.ERROR_INVALID_RANGE);
-	if (itemCount == items.length) {
-		TaskItem [] newItems = new TaskItem [items.length + 4];
+	if (index == -1) index = this.itemCount;
+	if (!(0 <= index && index <= this.itemCount)) error (SWT.ERROR_INVALID_RANGE);
+	if (this.itemCount == this.items.length) {
+		TaskItem [] newItems = new TaskItem [this.items.length + 4];
 		System.arraycopy (items, 0, newItems, 0, items.length);
 		items = newItems;
 	}
@@ -259,13 +259,13 @@ long /*int*/ createShellLinkArray (MenuItem [] items, String directory) {
 
 void destroyItem (TaskItem item) {
 	int index = 0;
-	while (index < itemCount) {
-		if (items [index] == item) break;
+	while (index < this.itemCount) {
+		if (this.items [index] == item) break;
 		index++;
 	}
-	if (index == itemCount) return;
-	System.arraycopy (items, index + 1, items, index, --itemCount - index);
-	items [itemCount] = null;
+	if (index == this.itemCount) return;
+	System.arraycopy (items, index + 1, items, index, --this.itemCount - index);
+	items [this.itemCount] = null;
 }
 
 String getDirectory (char[] appName) {
@@ -390,7 +390,7 @@ long /*int*/ getDirectory (long /*int*/ parent, long /*int*/ pfo, char [] name, 
 public TaskItem getItem (int index) {
 	checkWidget ();
 	createItems ();
-	if (!(0 <= index && index < itemCount)) error (SWT.ERROR_INVALID_RANGE);
+	if (!(0 <= index && index < this.itemCount)) error (SWT.ERROR_INVALID_RANGE);
 	return items [index];
 }
 
@@ -409,8 +409,8 @@ public TaskItem getItem (int index) {
  */
 public TaskItem getItem (Shell shell) {
 	checkWidget ();
-	for (int i = 0; i < items.length; i++) {
-		if (items [i] != null && items [i].shell == shell) {
+	for (int i = 0; i < this.items.length; i++) {
+		if (this.items [i] != null && this.items [i].shell == shell) {
 			return items [i];
 		}
 	}
@@ -454,20 +454,20 @@ public int getItemCount () {
 public TaskItem [] getItems () {
 	checkWidget ();
 	createItems ();
-	TaskItem [] result = new TaskItem [itemCount];
-	System.arraycopy (items, 0, result, 0, result.length);
+	TaskItem [] result = new TaskItem [this.itemCount];
+	System.arraycopy (this.items, 0, result, 0, result.length);
 	return result;
 }
 
 void releaseChildren (boolean destroy) {
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			TaskItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			TaskItem item = this.items [i];
 			if (item != null && !item.isDisposed ()) {
 				item.release (false);
 			}
 		}
-		items = null;
+		this.items = null;
 	}
 	super.releaseChildren (destroy);
 }
@@ -479,7 +479,7 @@ void releaseParent () {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	if (mTaskbarList3 != 0) {
+	if (this.mTaskbarList3 != 0) {
 		/* Release() */
 		OS.VtblCall (2, mTaskbarList3);
 		mTaskbarList3 = 0;
@@ -487,9 +487,9 @@ void releaseWidget () {
 }
 
 void reskinChildren (int flags) {	
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			TaskItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			TaskItem item = this.items [i];
 			if (item != null) item.reskin (flags);
 		}
 	}

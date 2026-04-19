@@ -78,8 +78,8 @@ public Caret (Canvas parent, int style) {
 
 void createWidget () {
 	isVisible = true;
-	if (parent.getCaret () == null) {
-		parent.setCaret (this);
+	if (this.parent.getCaret () == null) {
+		this.parent.setCaret (this);
 	}
 }
 
@@ -110,8 +110,8 @@ long /*int*/ defaultFont () {
  */
 public Rectangle getBounds () {
 	checkWidget();
-	if (image != null) {
-		Rectangle rect = image.getBounds ();
+	if (this.image != null) {
+		Rectangle rect = this.image.getBounds ();
 		return new Rectangle (x, y, rect.width, rect.height);
 	} else {
 		if (!OS.IsWinCE && width == 0) {
@@ -136,7 +136,7 @@ public Rectangle getBounds () {
  */
 public Font getFont () {
 	checkWidget();
-	if (font == null) {
+	if (this.font == null) {
 		long /*int*/ hFont = defaultFont ();
 		return Font.win32_new (display, hFont);
 	}
@@ -201,8 +201,8 @@ public Canvas getParent () {
  */
 public Point getSize () {
 	checkWidget();
-	if (image != null) {
-		Rectangle rect = image.getBounds ();
+	if (this.image != null) {
+		Rectangle rect = this.image.getBounds ();
 		return new Point (rect.width, rect.height);
 	} else {
 		if (!OS.IsWinCE && width == 0) {
@@ -261,7 +261,7 @@ boolean isFocusCaret () {
  */
 public boolean isVisible () {
 	checkWidget();
-	return isVisible && parent.isVisible () && hasFocus ();
+	return isVisible && this.parent.isVisible () && hasFocus ();
 }
 
 void killFocus () {
@@ -279,9 +279,9 @@ void resizeIME () {
 	if (!OS.IsDBLocale) return;
 	POINT ptCurrentPos = new POINT ();
 	if (!OS.GetCaretPos (ptCurrentPos)) return;
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	long /*int*/ hIMC = OS.ImmGetContext (hwnd);
-	IME ime = parent.getIME ();
+	IME ime = this.parent.getIME ();
 	if (ime != null && ime.isInlineEnabled ()) {
 		Point size = getSize ();
 		CANDIDATEFORM lpCandidate = new CANDIDATEFORM ();
@@ -308,24 +308,24 @@ void resizeIME () {
 
 void releaseParent () {
 	super.releaseParent ();
-	if (this == parent.getCaret ()) parent.setCaret (null);
+	if (this == this.parent.getCaret ()) this.parent.setCaret (null);
 }
 
 void releaseWidget () {
 	super.releaseWidget ();
-	parent = null;
-	image = null;
-	font = null;
-	oldFont = null;
+	this.parent = null;
+	this.image = null;
+	this.font = null;
+	this.oldFont = null;
 }
 
 void resize () {
 	resized = false;
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	OS.DestroyCaret ();		
-	long /*int*/ hBitmap = image != null ? image.handle : 0;
+	long /*int*/ hBitmap = this.image != null ? this.image.handle : 0;
 	int width = this.width;
-	if (!OS.IsWinCE && image == null && width == 0) {
+	if (!OS.IsWinCE && this.image == null && width == 0) {
 		int [] buffer = new int [1];
 		if (OS.SystemParametersInfo (OS.SPI_GETCARETWIDTH, 0, buffer, 0)) {
 			width = buffer [0];
@@ -339,8 +339,8 @@ void resize () {
 
 void restoreIMEFont () {
 	if (!OS.IsDBLocale) return;
-	if (oldFont == null) return;
-	long /*int*/ hwnd = parent.handle;
+	if (this.oldFont == null) return;
+	long /*int*/ hwnd = this.parent.handle;
 	long /*int*/ hIMC = OS.ImmGetContext (hwnd);
 	OS.ImmSetCompositionFont (hIMC, oldFont);
 	OS.ImmReleaseContext (hwnd, hIMC);
@@ -374,10 +374,10 @@ public void setBounds (int x, int y, int width, int height) {
 	this.height = height;
 	if (sameExtent) {
 		moved = true;
-		if (isVisible && hasFocus ()) move ();
+		if (this.isVisible && hasFocus ()) move ();
 	} else {
 		resized = true;
-		if (isVisible && hasFocus ()) resize ();
+		if (this.isVisible && hasFocus ()) resize ();
 	}
 }
 
@@ -402,9 +402,9 @@ public void setBounds (Rectangle rect) {
 void setFocus () {
 	long /*int*/ hwnd = parent.handle;
 	long /*int*/ hBitmap = 0;
-	if (image != null) hBitmap = image.handle;
+	if (this.image != null) hBitmap = this.image.handle;
 	int width = this.width;
-	if (!OS.IsWinCE && image == null && width == 0) {
+	if (!OS.IsWinCE && this.image == null && width == 0) {
 		int [] buffer = new int [1];
 		if (OS.SystemParametersInfo (OS.SPI_GETCARETWIDTH, 0, buffer, 0)) {
 			width = buffer [0];
@@ -413,7 +413,7 @@ void setFocus () {
 	OS.CreateCaret (hwnd, hBitmap, width, height);
 	move ();
 	setIMEFont ();
-	if (isVisible) OS.ShowCaret (hwnd);
+	if (this.isVisible) OS.ShowCaret (hwnd);
 }
 
 /**
@@ -461,19 +461,19 @@ public void setImage (Image image) {
 		error (SWT.ERROR_INVALID_ARGUMENT);
 	}
 	this.image = image;
-	if (isVisible && hasFocus ()) resize ();
+	if (this.isVisible && hasFocus ()) resize ();
 }
 
 void setIMEFont () {
 	if (!OS.IsDBLocale) return;
 	long /*int*/ hFont = 0;
-	if (font != null) hFont = font.handle;
+	if (this.font != null) hFont = this.font.handle;
 	if (hFont == 0) hFont = defaultFont ();
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	long /*int*/ hIMC = OS.ImmGetContext (hwnd);
 	/* Save the current IME font */
-	if (oldFont == null) {
-		oldFont = OS.IsUnicode ? (LOGFONT) new LOGFONTW () : new LOGFONTA ();
+	if (this.oldFont == null) {
+		this.oldFont = OS.IsUnicode ? (LOGFONT) new LOGFONTW () : new LOGFONTA ();
 		if (!OS.ImmGetCompositionFont (hIMC, oldFont)) oldFont = null;
 	}
 	/* Set new IME font */
@@ -502,7 +502,7 @@ public void setLocation (int x, int y) {
 	if (this.x == x && this.y == y) return;
 	this.x = x;  this.y = y;
 	moved = true;
-	if (isVisible && hasFocus ()) move ();
+	if (this.isVisible && hasFocus ()) move ();
 }
 
 /**
@@ -539,7 +539,7 @@ public void setSize (int width, int height) {
 	if (this.width == width && this.height == height) return;
 	this.width = width;  this.height = height;
 	resized = true;
-	if (isVisible && hasFocus ()) resize ();
+	if (this.isVisible && hasFocus ()) resize ();
 }
 
 /**
@@ -579,11 +579,11 @@ public void setSize (Point size) {
  */
 public void setVisible (boolean visible) {
 	checkWidget();
-	if (visible == isVisible) return;
-	isVisible = visible;
-	long /*int*/ hwnd = parent.handle;
+	if (visible == this.isVisible) return;
+	this.isVisible = visible;
+	long /*int*/ hwnd = this.parent.handle;
 	if (OS.GetFocus () != hwnd) return;
-	if (!isVisible) {
+	if (!this.isVisible) {
 		OS.HideCaret (hwnd);
 	} else {
 		if (resized) {

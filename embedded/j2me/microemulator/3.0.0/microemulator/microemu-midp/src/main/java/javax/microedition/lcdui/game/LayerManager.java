@@ -44,13 +44,13 @@ public class LayerManager {
     	synchronized (this) {
 	        if (layer == null)
 	            throw new NullPointerException();
-	        layers.add(layer);
+	        this.layers.add(layer);
     	}
     }
             
     public Layer getLayerAt(int i) {
         // needs not be synchronized
-        return (Layer) layers.get(i);
+        return (Layer) this.layers.get(i);
     }
     
     public int getSize() {
@@ -62,7 +62,7 @@ public class LayerManager {
     	synchronized (this) {
 	        if (layer == null)
 	            throw new NullPointerException();
-	        layers.insertElementAt(layer, i);
+	        this.layers.insertElementAt(layer, i);
     	}
     }
     
@@ -70,7 +70,7 @@ public class LayerManager {
     	synchronized (this) {
 	        if (layer == null)
 	            throw new NullPointerException();
-	        layers.remove(layer);
+	        this.layers.remove(layer);
     	}
     }
     

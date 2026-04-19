@@ -103,15 +103,15 @@ public class Sprite extends Layer {
             //throw new IllegalArgumentException(result);
         }
         this.img = img;
-        cols = img.getWidth() / frameWidth;
-        rows = img.getHeight() / frameHeight;
+        this.cols = img.getWidth() / frameWidth;
+        this.rows = img.getHeight() / frameHeight;
         
-        final int l = cols*rows;
+        final int l = this.cols*rows;
         if(l == 0) throw new IndexOutOfBoundsException(new StringMaker().append("Length: ").appendint(l).toString());
         
-        collX = collY = 0;
-        collWidth = frameWidth;
-        collHeight = frameHeight;
+        this.collX = this.collY = 0;
+        this.collWidth = frameWidth;
+        this.collHeight = frameHeight;
     }
     
     public Sprite(Sprite otherSprite) {
@@ -203,11 +203,11 @@ public class Sprite extends Layer {
     }
     
     public int getRefPixelX() {
-        return getX() + refX;
+        return getX() + this.refX;
     }
     
     public int getRefPixelY() {
-        return getY() + refY;
+        return getY() + this.refY;
     }
 
     public void setRefPixelPosition(int x, int y) {
@@ -215,7 +215,7 @@ public class Sprite extends Layer {
         int width = getWidth();
         int height = getHeight();
 
-        switch(transform) {
+        switch(this.transform) {
             case TRANS_NONE:
                 curRefX = this.refX;
                 curRefY = this.refY;
@@ -260,10 +260,10 @@ public class Sprite extends Layer {
     public void defineCollisionRectangle(int x, int y, int width, int height) {
         if (width < 0 || height < 0)
             throw new IllegalArgumentException();
-        collX = x;
-        collY = y;
-        collWidth = width;
-        collHeight = height;
+        this.collX = x;
+        this.collY = y;
+        this.collWidth = width;
+        this.collHeight = height;
     }
     
     public void setFrameSequence(int []sequence) {
@@ -273,7 +273,7 @@ public class Sprite extends Layer {
             return;
         }
 
-        int max = (rows*cols)-1;
+        int max = (this.rows*this.cols)-1;
 
         int l = sequence.length;
         
@@ -296,7 +296,7 @@ public class Sprite extends Layer {
     }
     
     public int getFrameSequenceLength() {
-    	return (sequence == null) ? rows*cols : sequence.length; 
+    	return (this.sequence == null) ? this.rows*this.cols : this.sequence.length; 
     }
     
     public void setFrame(int frame) {
@@ -308,15 +308,15 @@ public class Sprite extends Layer {
     }
     
     public void nextFrame() {
-        if (frame == ((sequence == null)? rows*cols : sequence.length) - 1)
-            frame = 0;
+        if (this.frame == ((this.sequence == null)? this.rows*this.cols : this.sequence.length) - 1)
+            this.frame = 0;
         else
             frame++;
     }
     
     public void prevFrame() {
-        if (frame == 0)
-            frame = ((sequence == null)? rows*cols : sequence.length) - 1;
+        if (this.frame == 0)
+            this.frame = ((this.sequence == null)? this.rows*this.cols : this.sequence.length) - 1;
         else
             frame--;
     }
@@ -336,15 +336,15 @@ public class Sprite extends Layer {
 	            throw new IllegalArgumentException();
 	        this.img = img;
 	        
-	        int oldFrames = cols*rows;
-	        cols = img.getWidth() / frameWidth;
-	        rows = img.getHeight() / frameHeight;
+	        int oldFrames = this.cols*this.rows;
+	        this.cols = img.getWidth() / frameWidth;
+	        this.rows = img.getHeight() / frameHeight;
 	        
-	        if (rows*cols < oldFrames) {
+	        if (this.rows*this.cols < oldFrames) {
 	            // there are fewer frames
 	            // reset frame number and sequence
-	            sequence = null;
-	            frame = 0;
+	            this.sequence = null;
+	            this.frame = 0;
 	        }
 	        
 	        if (frameWidth != getWidth() || frameHeight != getHeight()) {
@@ -355,9 +355,9 @@ public class Sprite extends Layer {
 	            
 	            // if necessary change position to keep the reference pixel in place
 	            
-	            if (transform != TRANS_NONE) {
+	            if (this.transform != TRANS_NONE) {
 	                int dx, dy;
-	                switch(transform) {
+	                switch(this.transform) {
 	                    case TRANS_MIRROR_ROT180:
 	                        dx = newW - oldW;
 	                        dy = newH - oldH;
@@ -403,17 +403,17 @@ public class Sprite extends Layer {
         if (!isVisible())
             return;
         
-        int f = (sequence == null)? frame : sequence[frame];
+        int f = (this.sequence == null)? this.frame : this.sequence[this.frame];
         int w = getWidth();
         int h = getHeight();
-        int fx = w * (f % cols);
-        int fy = h * (f / cols);        
+        int fx = w * (f % this.cols);
+        int fy = h * (f / this.cols);        
         
-        g.drawRegion(img, fx, fy, w, h, transform, getX(), getY(), Graphics.TOP | Graphics.LEFT);
+        g.drawRegion(this.img, fx, fy, w, h, transform, getX(), getY(), Graphics.TOP | Graphics.LEFT);
     }
     
     public int getRawFrameCount() {
-        return cols * rows;
+        return cols * this.rows;
     }
     
     public void setTransform (int transform) {

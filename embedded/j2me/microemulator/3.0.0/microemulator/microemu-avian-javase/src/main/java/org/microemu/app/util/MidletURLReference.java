@@ -65,14 +65,14 @@ public class MidletURLReference implements XMLItem {
 		 if (!(obj instanceof MidletURLReference)) {
 			 return false;
 		 }
-		 return ((MidletURLReference)obj).url.equals(url); 
+		 return ((MidletURLReference)obj).url.equals(this.url); 
 	}
 	 
 	public String toString() {
 		// make the text presentation shorter.
 		URL u;
 		try {
-			u = new URL(url);
+			u = new URL(this.url);
 		} catch (MalformedURLException e) {
 			Logger.error(e);
 			return url;
@@ -105,16 +105,16 @@ public class MidletURLReference implements XMLItem {
 		} else {
 			b.append(url);
 		}
-		if (name != null) {
+		if (this.name != null) {
 			b.append(" - ");
-			b.append(name);
+			b.append(this.name);
 		}
 		return b.toString();
 	}
 	
 	public void read(XMLElement xml) {
 		name = xml.getChildString("name", "");
-		url = xml.getChildString("url", "");
+		this.url = xml.getChildString("url", "");
 	}
 
 	public void save(XMLElement xml) {

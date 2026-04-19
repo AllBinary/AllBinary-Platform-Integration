@@ -63,11 +63,11 @@ public class MovementEvent extends TypedEvent {
  */
 public MovementEvent(StyledTextEvent e) {
 	super(e);
-	lineOffset = e.detail;
-	lineText = e.text;
-	movement = e.count;
-	offset = e.start;
-	newOffset = e.end;
+	this.lineOffset = e.detail;
+	this.lineText = e.text;
+	this.movement = e.count;
+	this.offset = e.start;
+	this.newOffset = e.end;
 }
 }
 

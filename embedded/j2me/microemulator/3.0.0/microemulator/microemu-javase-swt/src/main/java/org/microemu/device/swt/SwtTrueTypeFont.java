@@ -68,18 +68,18 @@ public class SwtTrueTypeFont implements SwtFont {
 	}
 
 	private synchronized void checkInitialized() {
-		if (!initialized) {
+		if (!this.initialized) {
 			int swtStyle = 0;
-			if (style.indexOf("plain") != -1) {
+			if (this.style.indexOf("plain") != -1) {
 				swtStyle |= SWT.NORMAL;
 			}
-			if (style.indexOf("bold") != -1) {
+			if (this.style.indexOf("bold") != -1) {
 				swtStyle |= SWT.BOLD;
 			}
-			if (style.indexOf("italic") != -1) {
+			if (this.style.indexOf("italic") != -1) {
 				swtStyle |= SWT.ITALIC;
 			}
-			if (style.indexOf("underlined") != -1) {
+			if (this.style.indexOf("underlined") != -1) {
 				// TODO underlined style not implemented
 			}
 

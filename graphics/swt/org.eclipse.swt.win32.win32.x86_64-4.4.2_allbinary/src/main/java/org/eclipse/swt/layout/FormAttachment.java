@@ -242,7 +242,7 @@ public FormAttachment (Control control, int offset, int alignment) {
 }
 
 FormAttachment divide (int value) {
-	return new FormAttachment (numerator, denominator * value, offset / value);
+	return new FormAttachment (this.numerator, denominator * value, offset / value);
 }
 
 int gcd (int m, int n) {
@@ -264,42 +264,42 @@ int gcd (int m, int n) {
 
 FormAttachment minus (FormAttachment attachment) {
 	FormAttachment solution = new FormAttachment ();
-	solution.numerator = numerator * attachment.denominator - denominator * attachment.numerator;
-	solution.denominator = denominator * attachment.denominator;
+	solution.numerator = this.numerator * attachment.denominator - this.denominator * attachment.numerator;
+	solution.denominator = this.denominator * attachment.denominator;
 	int gcd = gcd (solution.denominator, solution.numerator);
 	solution.numerator = solution.numerator / gcd;
 	solution.denominator = solution.denominator / gcd;
-	solution.offset = offset - attachment.offset;
+	solution.offset = this.offset - attachment.offset;
 	return solution;
 }
 
 FormAttachment minus (int value) {
-	return new FormAttachment (numerator, denominator, offset - value);
+	return new FormAttachment (this.numerator, denominator, offset - value);
 }
 
 FormAttachment plus (FormAttachment attachment) {
 	FormAttachment solution = new FormAttachment ();
-	solution.numerator = numerator * attachment.denominator + denominator * attachment.numerator;
-	solution.denominator = denominator * attachment.denominator;
+	solution.numerator = this.numerator * attachment.denominator + this.denominator * attachment.numerator;
+	solution.denominator = this.denominator * attachment.denominator;
 	int gcd = gcd (solution.denominator, solution.numerator);
 	solution.numerator = solution.numerator / gcd;
 	solution.denominator = solution.denominator / gcd;
-	solution.offset = offset + attachment.offset;
+	solution.offset = this.offset + attachment.offset;
 	return solution;
 }
 
 FormAttachment plus (int value) {
-	return new FormAttachment (numerator, denominator, offset + value);
+	return new FormAttachment (this.numerator, denominator, offset + value);
 }
 
 int solveX (int value) {
-	if (denominator == 0) SWT.error (SWT.ERROR_CANNOT_BE_ZERO);
-	return ((numerator * value) / denominator) + offset;
+	if (this.denominator == 0) SWT.error (SWT.ERROR_CANNOT_BE_ZERO);
+	return ((this.numerator * value) / this.denominator) + this.offset;
 }
 
 int solveY (int value) {
-	if (numerator == 0) SWT.error (SWT.ERROR_CANNOT_BE_ZERO);
-	return (value - offset) * denominator / numerator;
+	if (this.numerator == 0) SWT.error (SWT.ERROR_CANNOT_BE_ZERO);
+	return (value - this.offset) * this.denominator / this.numerator;
 }
 	
 /**
@@ -311,7 +311,7 @@ int solveY (int value) {
 @Override
 public String toString () {
  	String string = control != null ? control.toString () : numerator + "/" + denominator;
-	return "{y = (" + string + (offset >= 0 ? ")x + " + offset: ")x - " + (-offset))+"}";
+	return "{y = (" + string + (this.offset >= 0 ? ")x + " + this.offset: ")x - " + (-this.offset))+"}";
 }
 
 }

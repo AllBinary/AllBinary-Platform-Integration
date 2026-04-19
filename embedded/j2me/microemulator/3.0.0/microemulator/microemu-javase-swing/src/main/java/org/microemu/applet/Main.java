@@ -125,11 +125,11 @@ public class Main extends Applet implements MicroEmulator {
 
 	public Main() {
 		devicePanel = new SwingDeviceComponent();
-		devicePanel.addKeyListener(devicePanel);
+		this.devicePanel.addKeyListener(this.devicePanel);
 	}
 
 	public void init() {
-		if (midlet != null) {
+		if (this.midlet != null) {
 			return;
 		}
 
@@ -138,13 +138,13 @@ public class Main extends Applet implements MicroEmulator {
 
 		URL baseURL = getCodeBase();
 		if (baseURL != null) {
-			accessibleHost = baseURL.getHost();
+			this.accessibleHost = baseURL.getHost();
 		}
 
-		recordStoreManager = new MemoryRecordStoreManager();
+		this.recordStoreManager = new MemoryRecordStoreManager();
 
 		setLayout(new BorderLayout());
-		add(devicePanel, "Center");
+		add(this.devicePanel, "Center");
 
 		DeviceImpl device;
 		String deviceParameter = getParameter("device");
@@ -176,15 +176,15 @@ public class Main extends Applet implements MicroEmulator {
 			}
 		}
 
-		devicePanel.init();
+		this.devicePanel.init();
 
-		manifest.clear();
+		this.manifest.clear();
 		try {
 			URL url = getClass().getClassLoader().getResource("META-INF/MANIFEST.MF");
 			if (url != null) {
-				manifest.read(url.openStream());
-				if (manifest.getProperty("MIDlet-Name") == null) {
-					manifest.clear();
+				this.manifest.read(url.openStream());
+				if (this.manifest.getProperty("MIDlet-Name") == null) {
+					this.manifest.clear();
 				}
 			}
 		} catch (IOException e) {
@@ -199,8 +199,8 @@ public class Main extends Applet implements MicroEmulator {
 			try {
 				URL jad = new URL(getCodeBase(), jadFile);
 				jadInputStream = jad.openStream();
-				manifest.read(jadInputStream);
-				Vector entries = manifest.getMidletEntries();
+				this.manifest.read(jadInputStream);
+				Vector entries = this.manifest.getMidletEntries();
 				// only load the first (no midlet suite support anyway)
 				if (entries.size() > 0) {
 					JadMidletEntry entry = (JadMidletEntry) entries.elementAt(0);
@@ -244,7 +244,7 @@ public class Main extends Applet implements MicroEmulator {
 		}
 
 		try {
-			midlet = (MIDlet) midletClass.newInstance();
+			this.midlet = (MIDlet) midletClass.newInstance();
 		} catch (Exception ex) {
 			Logger.error("Cannot initialize " + midletClass + " MIDlet class", ex);
 			return;
@@ -287,7 +287,7 @@ public class Main extends Applet implements MicroEmulator {
 
 	public void destroy() {
 		try {
-			MIDletBridge.getMIDletAccess(midlet).destroyApp(true);
+			MIDletBridge.getMIDletAccess(this.midlet).destroyApp(true);
 		} catch (MIDletStateChangeException ex) {
 			System.err.println(ex);
 		}
@@ -328,7 +328,7 @@ public class Main extends Applet implements MicroEmulator {
 		} else if (getParameter(key) != null) {
 			value = getParameter(key);
 		} else {
-			value = manifest.getProperty(key);
+			value = this.manifest.getProperty(key);
 		}
 
 		return value;

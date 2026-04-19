@@ -282,7 +282,7 @@ public class Swt2 extends Common {
 
 		shell.addKeyListener(keyListener);
 
-		selectDeviceDialog = new SwtSelectDeviceDialog(shell, emulatorContext);
+		this.selectDeviceDialog = new SwtSelectDeviceDialog(shell, emulatorContext);
 
 		setStatusBarListener(statusBarListener);
 		setResponseInterfaceListener(responseInterfaceListener);
@@ -304,13 +304,13 @@ public class Swt2 extends Common {
 		Menu fileSubmenu = new Menu(shell, SWT.DROP_DOWN);
 		menuFile.setMenu(fileSubmenu);
 
-		menuOpenJADFile = new MenuItem(fileSubmenu, SWT.PUSH);
-		menuOpenJADFile.setText("Open MIDlet File...");
-		menuOpenJADFile.addListener(SWT.Selection, menuOpenMIDletFileListener);
+		this.menuOpenJADFile = new MenuItem(fileSubmenu, SWT.PUSH);
+		this.menuOpenJADFile.setText("Open MIDlet File...");
+		this.menuOpenJADFile.addListener(SWT.Selection, menuOpenMIDletFileListener);
 
-		menuOpenJADURL = new MenuItem(fileSubmenu, 0);
-		menuOpenJADURL.setText("Open MIDlet URL...");
-		menuOpenJADURL.addListener(SWT.Selection, menuOpenMIDletURLListener);
+		this.menuOpenJADURL = new MenuItem(fileSubmenu, 0);
+		this.menuOpenJADURL.setText("Open MIDlet URL...");
+		this.menuOpenJADURL.addListener(SWT.Selection, menuOpenMIDletURLListener);
 
 		new MenuItem(fileSubmenu, SWT.SEPARATOR);
 
@@ -324,18 +324,18 @@ public class Swt2 extends Common {
 		Menu optionsSubmenu = new Menu(shell, SWT.DROP_DOWN);
 		menuOptions.setMenu(optionsSubmenu);
 
-		menuSelectDevice = new MenuItem(optionsSubmenu, SWT.PUSH);
-		menuSelectDevice.setText("Select device...");
-		menuSelectDevice.addListener(SWT.Selection, menuSelectDeviceListener);
+		this.menuSelectDevice = new MenuItem(optionsSubmenu, SWT.PUSH);
+		this.menuSelectDevice.setText("Select device...");
+		this.menuSelectDevice.addListener(SWT.Selection, menuSelectDeviceListener);
 
 		shell.setText("MicroEmulator");
 
 		devicePanel = new SwtDeviceComponent(shell);
 		devicePanel.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		statusBar = new Label(shell, SWT.HORIZONTAL);
-		statusBar.setText("Status");
-		statusBar.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		this.statusBar = new Label(shell, SWT.HORIZONTAL);
+		this.statusBar.setText("Status");
+		this.statusBar.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 
 	public void setDevice(DeviceEntry entry) {

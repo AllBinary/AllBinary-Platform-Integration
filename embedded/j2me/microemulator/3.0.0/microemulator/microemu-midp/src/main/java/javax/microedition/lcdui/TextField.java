@@ -122,13 +122,13 @@ public class TextField extends Item
 			throw new IllegalArgumentException();
 		}
         this.maxSize = maxSize;
-		stringComponent = new StringComponent();
+		this.stringComponent = new StringComponent();
 		if (text != null) {
 			setString(text);
 		} else {
 			setString("");
 		}
-		stringComponent.setWidthDecreaser(8);
+		this.stringComponent.setWidthDecreaser(8);
 	}
 
 	
@@ -155,26 +155,26 @@ public class TextField extends Item
     
     void setString(String text, int caret)
     {
-        if (!InputMethod.validate(text, constraints)) {
+        if (!InputMethod.validate(text, this.constraints)) {
             throw new IllegalArgumentException("text  is illegal for the current input constraints");
         }
         if (text == null) {
             this.field = "";
-            stringComponent.setText("");
+            this.stringComponent.setText("");
         } else {
-            if (text.length() > maxSize) {
+            if (text.length() > this.maxSize) {
                 throw new IllegalArgumentException("text exceeds the current maximum capacity");
             }
-            field = text;
+            this.field = text;
             if ((constraints & PASSWORD) == 0) {
-                stringComponent.setText(text);
+                this.stringComponent.setText(text);
             } else {
                 final StringMaker sb = new StringMaker();
                 final CommonPhoneStrings commonPhoneStrings = CommonPhoneStrings.getInstance();
                 for (int i = 0; i < text.length(); i++) {
                     sb.append(commonPhoneStrings.STAR);
                 }
-                stringComponent.setText(sb.toString());
+                this.stringComponent.setText(sb.toString());
             }
         }
         setCaretPosition(caret);
@@ -185,7 +185,7 @@ public class TextField extends Item
 	
 	public int getChars(char[] data) 
 	{
-		if (data.length < field.length()) {
+		if (data.length < this.field.length()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 		getString().getChars(0, field.length(), data, 0);
@@ -199,11 +199,11 @@ public class TextField extends Item
 		if (data == null) {
 			setString("");
 		} else {
-			if (length > maxSize) {
+			if (length > this.maxSize) {
 				throw new IllegalArgumentException();
 			}
 			String newtext = new String(data, offset, length);
-			if (!InputMethod.validate(newtext, constraints)) {
+			if (!InputMethod.validate(newtext, this.constraints)) {
                 throw new IllegalArgumentException();
             }
 			setString(newtext);
@@ -214,10 +214,10 @@ public class TextField extends Item
 	
 	public void insert(String src, int position) 
 	{
-		if (!InputMethod.validate(src, constraints)) {
+		if (!InputMethod.validate(src, this.constraints)) {
             throw new IllegalArgumentException();
         }
-		if (field.length() + src.length() > maxSize) {
+		if (this.field.length() + src.length() > this.maxSize) {
 			throw new IllegalArgumentException();
 		}
 		String newtext = "";
@@ -229,7 +229,7 @@ public class TextField extends Item
 			}
 		}
 		newtext += src;
-		if (position < field.length()) {
+		if (position < this.field.length()) {
 			if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextFieldUI")) {
 				newtext += ((TextFieldUI) ui).getString().substring(position + 1);
 			} else {
@@ -256,14 +256,14 @@ public class TextField extends Item
 	
 	public void delete(int offset, int length) 
 	{
-		if (offset + length > field.length()) {
+		if (offset + length > this.field.length()) {
 			throw new StringIndexOutOfBoundsException();
 		}
 		String newtext = "";
 		if (offset > 0) {
 			newtext = getString().substring(0, offset);
 		}
-		if (offset + length < field.length()) {
+		if (offset + length < this.field.length()) {
 			newtext += getString().substring(offset + length);
 		}
 		setString(newtext);
@@ -338,7 +338,7 @@ public class TextField extends Item
         @Override
 	public int getHeight() 
 	{
-		return super.getHeight() + stringComponent.getHeight() + 8;
+		return super.getHeight() + this.stringComponent.getHeight() + 8;
 	}
 
 	//TWB - made public
@@ -371,10 +371,10 @@ public class TextField extends Item
 	@Override
 	void paintContent(Graphics g) 
 	{
-		stringComponent.paint(g);
-		if (caretVisible) {
-			int x_pos = stringComponent.getCharPositionX(caret);
-			int y_pos = stringComponent.getCharPositionY(caret);
+		this.stringComponent.paint(g);
+		if (this.caretVisible) {
+			int x_pos = this.stringComponent.getCharPositionX(this.caret);
+			int y_pos = this.stringComponent.getCharPositionY(this.caret);
 			g.drawLine(x_pos, y_pos, x_pos, y_pos + Font.getDefaultFont().getHeight());
 		}
 	}
@@ -382,13 +382,13 @@ public class TextField extends Item
 	
 	void setCaretPosition(int position) 
 	{
-		caret = position;
+		this.caret = position;
 	}
 
 	
 	void setCaretVisible(boolean state) 
 	{
-		caretVisible = state;
+		this.caretVisible = state;
 	}
 
 	//TWB - made public

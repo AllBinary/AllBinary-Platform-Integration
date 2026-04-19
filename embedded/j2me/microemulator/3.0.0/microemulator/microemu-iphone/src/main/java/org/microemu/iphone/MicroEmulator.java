@@ -71,24 +71,24 @@ public class MicroEmulator extends UIApplication {
 		}
 
 		public void initMIDlet(boolean startMidlet) {
-			if (launcher == null)
-				launcher = new IPhoneLauncher(this);
+			if (this.launcher == null)
+				this.launcher = new IPhoneLauncher(this);
 
-			if (launcher.getSelectedMidletEntry() == null) {
+			if (this.launcher.getSelectedMidletEntry() == null) {
 				try {
-					MIDletBridge.getMIDletAccess(launcher).startApp();
-					launcher.setCurrentMIDlet(launcher);
+					MIDletBridge.getMIDletAccess(this.launcher).startApp();
+					this.launcher.setCurrentMIDlet(this.launcher);
 				} catch (MIDletStateChangeException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
 				try {
-					MIDletResourceLoader.classLoader=launcher.getSelectedMidletEntry().getMIDletClass().getClassLoader();
-					MIDlet midlet = (MIDlet) launcher.getSelectedMidletEntry().getMIDletClass().newInstance();
+					MIDletResourceLoader.classLoader=this.launcher.getSelectedMidletEntry().getMIDletClass().getClassLoader();
+					MIDlet midlet = (MIDlet) this.launcher.getSelectedMidletEntry().getMIDletClass().newInstance();
 					//set the classloader, so that resource loading works
 					MIDletBridge.getMIDletAccess(midlet).startApp();
-					launcher.setCurrentMIDlet(midlet);
+					this.launcher.setCurrentMIDlet(midlet);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -122,7 +122,7 @@ public class MicroEmulator extends UIApplication {
 
 		public void notifyDestroyed(MIDletContext midletContext) {
 			System.out.println("IPhoneCommon.notifyDestroyed()");
-			launcher = null;
+			this.launcher = null;
 			initMIDlet(true);
 		}
 
@@ -156,10 +156,10 @@ public class MicroEmulator extends UIApplication {
 	@Message
 	public void applicationDidFinishLaunching$(Object unused) throws Exception {
 		CGRect outer = UIHardware.$fullScreenApplicationContentRect();
-		window = new UIWindow().initWithContentRect$(outer);
+		this.window = new UIWindow().initWithContentRect$(outer);
 
-		window.orderFront$(this);
-		window.makeKeyAndVisible();
+		this.window.orderFront$(this);
+		this.window.makeKeyAndVisible();
 
 		init(Arrays.asList("--usesystemclassloader"));
 	}
@@ -198,9 +198,9 @@ public class MicroEmulator extends UIApplication {
 
 	public void init(List<String> params) {
 		common = new IPhoneCommon(new IPhoneDevice(this));
-		deviceDisplay = new IPhoneDeviceDisplay(common);
-		deviceDisplay.displayRectangleWidth = (int) getWindow().bounds().size.width;
-		deviceDisplay.displayRectangleHeight = (int) getWindow().bounds().size.height - AbstractUI.TOOLBAR_HEIGHT;
+		this.deviceDisplay = new IPhoneDeviceDisplay(common);
+		this.deviceDisplay.displayRectangleWidth = (int) getWindow().bounds().size.width;
+		this.deviceDisplay.displayRectangleHeight = (int) getWindow().bounds().size.height - AbstractUI.TOOLBAR_HEIGHT;
 
 		System.setProperty("microedition.platform", "microemulator-iphone");
 		System.setProperty("microedition.locale", Locale.getDefault().toString());

@@ -65,14 +65,14 @@ public class StdOutAppender implements LoggerAppender {
     		out = System.err;
     	}
         StringBuilder stringBuilder = new StringBuilder();
-    	String data = EMPTY;
+    	String data = this.EMPTY;
     	if (event.hasData()) {
-    		data = stringBuilder.append(OPEN).append(event.getFormatedData()).append(CLOSE).toString();
+    		data = stringBuilder.append(this.OPEN).append(event.getFormatedData()).append(this.CLOSE).toString();
     	}
     	String location = formatLocation(event.getLocation());
     	if (location.length() > 0) {
             stringBuilder.delete(0, stringBuilder.length());
-    		location = stringBuilder.append(LOCATION).append(location).toString();
+    		location = stringBuilder.append(this.LOCATION).append(location).toString();
     	}
         stringBuilder.delete(0, stringBuilder.length());
         String output = stringBuilder

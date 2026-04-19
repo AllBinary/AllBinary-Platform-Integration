@@ -65,10 +65,10 @@ int didReceiveAuthenticationChallenge (long /*int*/ webView, long /*int*/ identi
 	int hr = authenticationChallenge.previousFailureCount (count);
 	long /*int*/[] result = new long /*int*/[1];
 	if (hr == COM.S_OK && count[0] < 3) {
-		AuthenticationListener[] authenticationListeners = browser.webBrowser.authenticationListeners;
+		AuthenticationListener[] authenticationListeners = this.browser.webBrowser.authenticationListeners;
 		for (int i = 0; i < authenticationListeners.length; i++) {
-			AuthenticationEvent event = new AuthenticationEvent (browser);
-			event.location = ((WebKit)browser.webBrowser).lastNavigateURL;
+			AuthenticationEvent event = new AuthenticationEvent (this.browser);
+			event.location = ((WebKit)this.browser.webBrowser).lastNavigateURL;
 			authenticationListeners[i].authenticate (event);
 			if (!event.doit) {
 				hr = authenticationChallenge.sender (result);
@@ -178,9 +178,9 @@ int didReceiveAuthenticationChallenge (long /*int*/ webView, long /*int*/ identi
 }
 
 void disposeCOMInterfaces () {
-	if (iWebResourceLoadDelegate != null) {
-		iWebResourceLoadDelegate.dispose ();
-		iWebResourceLoadDelegate = null;
+	if (this.iWebResourceLoadDelegate != null) {
+		this.iWebResourceLoadDelegate.dispose ();
+		this.iWebResourceLoadDelegate = null;
 	}	
 }
 
@@ -189,7 +189,7 @@ long /*int*/ getAddress () {
 }
 
 int identifierForInitialRequest (long /*int*/ webView, long /*int*/ request, long /*int*/ dataSource, long /*int*/ identifier) {
-	if (browser.isDisposed ()) return COM.S_OK;
+	if (this.browser.isDisposed ()) return COM.S_OK;
 
 	/* send progress event iff request is for top-level frame */
 
@@ -215,12 +215,12 @@ int identifierForInitialRequest (long /*int*/ webView, long /*int*/ request, lon
 		OS.free (ptr);
 		int progress = (int)(estimate[0] * 100);
 
-		ProgressEvent progressEvent = new ProgressEvent (browser);
-		progressEvent.display = browser.getDisplay ();
-		progressEvent.widget = browser;
+		ProgressEvent progressEvent = new ProgressEvent (this.browser);
+		progressEvent.display = this.browser.getDisplay ();
+		progressEvent.widget = this.browser;
 		progressEvent.current = progress;
 		progressEvent.total = Math.max (progress, WebKit.MAX_PROGRESS);
-		ProgressListener[] progressListeners = browser.webBrowser.progressListeners;
+		ProgressListener[] progressListeners = this.browser.webBrowser.progressListeners;
 		for (int i = 0; i < progressListeners.length; i++) {
 			progressListeners[i].changed (progressEvent);
 		}
@@ -234,13 +234,13 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	COM.MoveMemory (guid, riid, GUID.sizeof);
 
 	if (COM.IsEqualGUID (guid, COM.IIDIUnknown)) {
-		COM.MoveMemory (ppvObject, new long /*int*/[] {iWebResourceLoadDelegate.getAddress ()}, OS.PTR_SIZEOF);
-		new IUnknown (iWebResourceLoadDelegate.getAddress ()).AddRef ();
+		COM.MoveMemory (ppvObject, new long /*int*/[] {this.iWebResourceLoadDelegate.getAddress ()}, OS.PTR_SIZEOF);
+		new IUnknown (this.iWebResourceLoadDelegate.getAddress ()).AddRef ();
 		return COM.S_OK;
 	}
 	if (COM.IsEqualGUID (guid, WebKit_win32.IID_IWebResourceLoadDelegate)) {
-		COM.MoveMemory (ppvObject, new long /*int*/[] {iWebResourceLoadDelegate.getAddress ()}, OS.PTR_SIZEOF);
-		new IUnknown (iWebResourceLoadDelegate.getAddress ()).AddRef ();
+		COM.MoveMemory (ppvObject, new long /*int*/[] {this.iWebResourceLoadDelegate.getAddress ()}, OS.PTR_SIZEOF);
+		new IUnknown (this.iWebResourceLoadDelegate.getAddress ()).AddRef ();
 		return COM.S_OK;
 	}
 
@@ -250,7 +250,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		disposeCOMInterfaces ();
 	}
 	return refCount;
@@ -266,7 +266,7 @@ boolean showAuthenticationDialog (final String[] user, final String[] password, 
 	label.setText (Compatibility.getMessage ("SWT_Enter_Username_and_Password", new String[] {realm, host})); //$NON-NLS-1$
 
 	GridData data = new GridData ();
-	Monitor monitor = browser.getMonitor ();
+	Monitor monitor = this.browser.getMonitor ();
 	int maxWidth = monitor.getBounds ().width * 2 / 3;
 	int width = label.computeSize (SWT.DEFAULT, SWT.DEFAULT).x;
 	data.widthHint = Math.min (width, maxWidth);
@@ -327,7 +327,7 @@ boolean showAuthenticationDialog (final String[] user, final String[] password, 
 	int y = parent.getLocation().y + (parentSize.height - shellSize.height) / 2;
 	shell.setLocation (x, y);
 	shell.open ();
-	Display display = browser.getDisplay ();
+	Display display = this.browser.getDisplay ();
 	while (!shell.isDisposed ()) {
 		if (!display.readAndDispatch ()) display.sleep ();
 	}

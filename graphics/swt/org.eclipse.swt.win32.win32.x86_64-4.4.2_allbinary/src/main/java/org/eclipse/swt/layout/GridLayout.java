@@ -198,8 +198,8 @@ protected void layout (Composite composite, boolean flushCache) {
 }
 
 Point layout (Composite composite, boolean move, int x, int y, int width, int height, boolean flushCache) {
-	if (numColumns < 1) {
-		return new Point (marginLeft + marginWidth * 2 + marginRight, marginTop + marginHeight * 2 + marginBottom);
+	if (this.numColumns < 1) {
+		return new Point (this.marginLeft + this.marginWidth * 2 + this.marginRight, marginTop + this.marginHeight * 2 + this.marginBottom);
 	}
 	Control [] children = composite.getChildren ();
 	int count = 0;
@@ -211,7 +211,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 		} 
 	}
 	if (count == 0) {
-		return new Point (marginLeft + marginWidth * 2 + marginRight, marginTop + marginHeight * 2 + marginBottom);
+		return new Point (this.marginLeft + this.marginWidth * 2 + this.marginRight, marginTop + this.marginHeight * 2 + this.marginBottom);
 	}
 	for (int i=0; i<count; i++) {
 		Control child = children [i];
@@ -239,7 +239,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 	}
 
 	/* Build the grid */
-	int row = 0, column = 0, rowCount = 0, columnCount = numColumns;
+	int row = 0, column = 0, rowCount = 0, columnCount = this.numColumns;
 	Control [][] grid = new Control [4] [columnCount];
 	for (int i=0; i<count; i++) {	
 		Control child = children [i];
@@ -286,7 +286,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 	}
 
 	/* Column widths */
-	int availableWidth = width - horizontalSpacing * (columnCount - 1) - (marginLeft + marginWidth * 2 + marginRight);
+	int availableWidth = width - this.horizontalSpacing * (columnCount - 1) - (this.marginLeft + this.marginWidth * 2 + this.marginRight);
 	int expandCount = 0;
 	int [] widths = new int [columnCount];
 	int [] minWidths = new int [columnCount];
@@ -326,9 +326,9 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 						expandCount++;
 						expandColumn [j] = true;
 					}
-					int w = data.cacheWidth + data.horizontalIndent - spanWidth - (hSpan - 1) * horizontalSpacing;
+					int w = data.cacheWidth + data.horizontalIndent - spanWidth - (hSpan - 1) * this.horizontalSpacing;
 					if (w > 0) {
-						if (makeColumnsEqualWidth) {
+						if (this.makeColumnsEqualWidth) {
 							int equalWidth = (w + spanWidth) / hSpan;
 							int remainder = (w + spanWidth) % hSpan, last = -1;
 							for (int k = 0; k < hSpan; k++) {
@@ -352,7 +352,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 					}
 					if (!data.grabExcessHorizontalSpace || data.minimumWidth != 0) {
 						w = !data.grabExcessHorizontalSpace || data.minimumWidth == SWT.DEFAULT ? data.cacheWidth : data.minimumWidth;
-						w += data.horizontalIndent - spanMinWidth - (hSpan - 1) * horizontalSpacing;
+						w += data.horizontalIndent - spanMinWidth - (hSpan - 1) * this.horizontalSpacing;
 						if (w > 0) {
 							if (spanExpandCount == 0) {
 								minWidths [j] += w;
@@ -372,7 +372,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 			}
 		}
 	}
-	if (makeColumnsEqualWidth) {
+	if (this.makeColumnsEqualWidth) {
 		int minColumnWidth = 0;
 		int columnWidth = 0;
 		for (int i=0; i<columnCount; i++) {
@@ -421,7 +421,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 										if (expandColumn [j-k]) spanExpandCount++;
 									}
 									int w = !data.grabExcessHorizontalSpace || data.minimumWidth == SWT.DEFAULT ? data.cacheWidth : data.minimumWidth;
-									w += data.horizontalIndent - spanWidth - (hSpan - 1) * horizontalSpacing;
+									w += data.horizontalIndent - spanWidth - (hSpan - 1) * this.horizontalSpacing;
 									if (w > 0) {
 										if (spanExpandCount == 0) {
 											widths [j] += w;
@@ -469,7 +469,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 						for (int k=0; k<hSpan; k++) {
 							currentWidth += widths [j-k];
 						}
-						currentWidth += (hSpan - 1) * horizontalSpacing - data.horizontalIndent;
+						currentWidth += (hSpan - 1) * this.horizontalSpacing - data.horizontalIndent;
 						if ((currentWidth != data.cacheWidth && data.horizontalAlignment == SWT.FILL) || (data.cacheWidth > currentWidth)) {
 							int trim = 0;
 							if (child instanceof Scrollable) {
@@ -493,7 +493,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 	}
 
 	/* Row heights */
-	int availableHeight = height - verticalSpacing * (rowCount - 1) - (marginTop + marginHeight * 2 + marginBottom);
+	int availableHeight = height - this.verticalSpacing * (rowCount - 1) - (marginTop + this.marginHeight * 2 + this.marginBottom);
 	expandCount = 0;
 	int [] heights = new int [rowCount];
 	int [] minHeights = new int [rowCount];
@@ -533,7 +533,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 						expandCount++;
 						expandRow [i] = true;
 					}
-					int h = data.cacheHeight + data.verticalIndent - spanHeight - (vSpan - 1) * verticalSpacing;
+					int h = data.cacheHeight + data.verticalIndent - spanHeight - (vSpan - 1) * this.verticalSpacing;
 					if (h > 0) {
 						if (spanExpandCount == 0) {
 							heights [i] += h;
@@ -550,7 +550,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 					}
 					if (!data.grabExcessVerticalSpace || data.minimumHeight != 0) {
 						h = !data.grabExcessVerticalSpace || data.minimumHeight == SWT.DEFAULT ? data.cacheHeight : data.minimumHeight;
-						h += data.verticalIndent - spanMinHeight - (vSpan - 1) * verticalSpacing;
+						h += data.verticalIndent - spanMinHeight - (vSpan - 1) * this.verticalSpacing;
 						if (h > 0) {
 							if (spanExpandCount == 0) {
 								minHeights [i] += h;
@@ -606,7 +606,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 									if (expandRow [i-k]) spanExpandCount++;
 								}
 								int h = !data.grabExcessVerticalSpace || data.minimumHeight == SWT.DEFAULT ? data.cacheHeight : data.minimumHeight;
-								h += data.verticalIndent - spanHeight - (vSpan - 1) * verticalSpacing;
+								h += data.verticalIndent - spanHeight - (vSpan - 1) * this.verticalSpacing;
 								if (h > 0) {
 									if (spanExpandCount == 0) {
 										heights [i] += h;
@@ -654,7 +654,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 					for (int k=0; k<vSpan; k++) {
 						cellHeight += heights [i+k];
 					}
-					cellWidth += horizontalSpacing * (hSpan - 1);
+					cellWidth += this.horizontalSpacing * (hSpan - 1);
 					int childX = gridX + data.horizontalIndent;
 					int childWidth = Math.min (data.cacheWidth, cellWidth);
 					switch (data.horizontalAlignment) {
@@ -671,7 +671,7 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 							childWidth = cellWidth - data.horizontalIndent;
 							break;
 					}
-					cellHeight += verticalSpacing * (vSpan - 1);
+					cellHeight += this.verticalSpacing * (vSpan - 1);
 					int childY = gridY + data.verticalIndent;
 					int childHeight = Math.min (data.cacheHeight, cellHeight);
 					switch (data.verticalAlignment) {
@@ -693,9 +693,9 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 						child.setBounds (childX, childY, childWidth, childHeight);
 					}
 				}
-				gridX += widths [j] + horizontalSpacing;
+				gridX += widths [j] + this.horizontalSpacing;
 			}
-			gridY += heights [i] + verticalSpacing;
+			gridY += heights [i] + this.verticalSpacing;
 		}
 	}
 
@@ -712,8 +712,8 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 	for (int i=0; i<rowCount; i++) {
 		totalDefaultHeight += heights [i];
 	}
-	totalDefaultWidth += horizontalSpacing * (columnCount - 1) + marginLeft + marginWidth * 2 + marginRight;
-	totalDefaultHeight += verticalSpacing * (rowCount - 1) + marginTop + marginHeight * 2 + marginBottom;
+	totalDefaultWidth += this.horizontalSpacing * (columnCount - 1) + this.marginLeft + this.marginWidth * 2 + this.marginRight;
+	totalDefaultHeight += this.verticalSpacing * (rowCount - 1) + marginTop + this.marginHeight * 2 + this.marginBottom;
 	return new Point (totalDefaultWidth, totalDefaultHeight);
 }
 
@@ -733,16 +733,16 @@ String getName () {
 @Override
 public String toString () {
  	String string = getName ()+" {";
- 	if (numColumns != 1) string += "numColumns="+numColumns+" ";
- 	if (makeColumnsEqualWidth) string += "makeColumnsEqualWidth="+makeColumnsEqualWidth+" ";
- 	if (marginWidth != 0) string += "marginWidth="+marginWidth+" ";
- 	if (marginHeight != 0) string += "marginHeight="+marginHeight+" ";
- 	if (marginLeft != 0) string += "marginLeft="+marginLeft+" ";
- 	if (marginRight != 0) string += "marginRight="+marginRight+" ";
- 	if (marginTop != 0) string += "marginTop="+marginTop+" ";
- 	if (marginBottom != 0) string += "marginBottom="+marginBottom+" ";
- 	if (horizontalSpacing != 0) string += "horizontalSpacing="+horizontalSpacing+" ";
- 	if (verticalSpacing != 0) string += "verticalSpacing="+verticalSpacing+" ";
+ 	if (this.numColumns != 1) string += "numColumns="+this.numColumns+" ";
+ 	if (this.makeColumnsEqualWidth) string += "makeColumnsEqualWidth="+this.makeColumnsEqualWidth+" ";
+ 	if (this.marginWidth != 0) string += "marginWidth="+this.marginWidth+" ";
+ 	if (this.marginHeight != 0) string += "marginHeight="+this.marginHeight+" ";
+ 	if (this.marginLeft != 0) string += "marginLeft="+this.marginLeft+" ";
+ 	if (this.marginRight != 0) string += "marginRight="+this.marginRight+" ";
+ 	if (this.marginTop != 0) string += "marginTop="+this.marginTop+" ";
+ 	if (this.marginBottom != 0) string += "marginBottom="+this.marginBottom+" ";
+ 	if (this.horizontalSpacing != 0) string += "horizontalSpacing="+this.horizontalSpacing+" ";
+ 	if (this.verticalSpacing != 0) string += "verticalSpacing="+this.verticalSpacing+" ";
  	string = string.trim();
  	string += "}";
  	return string;

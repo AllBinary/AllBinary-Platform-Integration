@@ -28,7 +28,7 @@ PngHuffmanTable (int[] lengths) {
 
 private void initialize(int[] lengths) {
 	this.codeValues = new int[lengths.length];
-	for (int i = 0; i < codeValues.length; i++) {
+	for (int i = 0; i < this.codeValues.length; i++) {
 		this.codeValues[i] = i;
 	}
 	
@@ -37,11 +37,11 @@ private void initialize(int[] lengths) {
 	// indexesByLength[n] : Index into the values array. First value with a code of length n + 1.
 	this.codeLengthInfo = new CodeLengthInfo[MAX_CODE_LENGTH];
 	for (int i = 0; i < MAX_CODE_LENGTH; i++) {
-		codeLengthInfo[i] = new CodeLengthInfo();
-		codeLengthInfo[i].length = i;
-		codeLengthInfo[i].baseIndex = 0;
-		codeLengthInfo[i].min = BAD_CODE;
-		codeLengthInfo[i].max = -1;
+		this.codeLengthInfo[i] = new CodeLengthInfo();
+		this.codeLengthInfo[i].length = i;
+		this.codeLengthInfo[i].baseIndex = 0;
+		this.codeLengthInfo[i].min = BAD_CODE;
+		this.codeLengthInfo[i].max = -1;
 	}
 }
 	
@@ -53,7 +53,7 @@ private void generateTable(int[] lengths) {
 			int v = lengths[i];
 			codeValuesTemp = this.codeValues[i];
 			int j = i;
-			while (j >= h && (lengths[j - h] > v || (lengths[j - h] == v && codeValues[j - h] > codeValuesTemp))) {
+			while (j >= h && (lengths[j - h] > v || (lengths[j - h] == v && this.codeValues[j - h] > codeValuesTemp))) {
 				lengths[j] = lengths[j - h];
 				this.codeValues[j] = this.codeValues[j - h];
 				j -= h;
@@ -87,7 +87,7 @@ private void generateTable(int[] lengths) {
 			this.codeLengthInfo[last - 1].baseIndex = i;
 			this.codeLengthInfo[last - 1].min = codes[i];
 		}
-		if (last != 0) codeLengthInfo[last - 1].max = codes[i];
+		if (last != 0) this.codeLengthInfo[last - 1].max = codes[i];
 	}
 }
 
@@ -97,7 +97,7 @@ int getNextValue(PngDecodingDataStream stream) throws IOException {
 
 	// Here we are taking advantage of the fact that 1 bits are used as
 	// a prefix to the longer codeValues.
-	while (codelength < MAX_CODE_LENGTH && code > codeLengthInfo[codelength].max) {
+	while (codelength < MAX_CODE_LENGTH && code > this.codeLengthInfo[codelength].max) {
 		code = ((code << 1) | stream.getNextIdatBit());
         codelength++;
 	}
@@ -107,11 +107,11 @@ int getNextValue(PngDecodingDataStream stream) throws IOException {
 	// is somewhere in the range
 	// minCodesByLength[codelength]..maxCodesByLength[codelength].
 	// This code is the (offset + 1)'th code of (codelength + 1);
-	int offset = code - codeLengthInfo[codelength].min;
+	int offset = code - this.codeLengthInfo[codelength].min;
 
 	// indexesByLength[codelength] is the first code of length (codelength + 1)
 	// so now we can look up the value for the Huffman code in the table.
-	int index = codeLengthInfo[codelength].baseIndex + offset;
+	int index = this.codeLengthInfo[codelength].baseIndex + offset;
 	return codeValues[index];
 }	
 	

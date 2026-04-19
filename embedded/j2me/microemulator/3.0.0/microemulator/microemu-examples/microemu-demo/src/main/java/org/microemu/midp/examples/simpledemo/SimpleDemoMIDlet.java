@@ -63,7 +63,7 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 	}
 
 	public void startApp() {
-		if (menuList == null) {
+		if (this.menuList == null) {
 			screenPanels = new Displayable[] {
 					new AlertPanel(),
 					new CanvasPanel(),
@@ -80,16 +80,16 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 
 			Ticker ticker = new Ticker("This is SimpleDemo ticker");
 
-			menuList = new List("SimpleDemo", List.IMPLICIT);
+			this.menuList = new List("SimpleDemo", List.IMPLICIT);
 
 			for (int i = 0; i < screenPanels.length; i++) {
-				menuList.append(screenPanels[i].getTitle(), null);
+				this.menuList.append(screenPanels[i].getTitle(), null);
 				if ((screenPanels[i] instanceof Screen) && (i < 4)) {
 					((Screen)screenPanels[i]).setTicker(ticker);
 				}
 			}
-			menuList.addCommand(exitCommand);
-			menuList.setCommandListener(this);
+			this.menuList.addCommand(exitCommand);
+			this.menuList.setCommandListener(this);
 		}
 
 		showMenu();
@@ -116,9 +116,9 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 	}
 	
 	public void commandAction(Command c, Displayable d) {
-		if (d == menuList) {
+		if (d == this.menuList) {
 			if (c == List.SELECT_COMMAND) {
-				setCurrentDisplayable(screenPanels[menuList.getSelectedIndex()]);
+				setCurrentDisplayable(screenPanels[this.menuList.getSelectedIndex()]);
 			} else if (c == exitCommand) {
 				destroyApp(true);
 				notifyDestroyed();

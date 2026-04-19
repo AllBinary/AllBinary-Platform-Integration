@@ -77,16 +77,16 @@ void destroy() {
  * This method does nothing if the resource is already disposed.
  */
 public void dispose() {
-	if (device == null) return;
-	if (device.isDisposed()) return;
+	if (this.device == null) return;
+	if (this.device.isDisposed()) return;
 
 //        ForcedLogUtil.log("dispose: " + this.id, this);
 //        //System.out.println("dispose: " + this.id);
 //
 //        list.add(Long.valueOf(this.id));
 	destroy();
-	if (device.tracking) device.dispose_Object(this);
-	device = null;
+	if (this.device.tracking) this.device.dispose_Object(this);
+	this.device = null;
 }
 
 /**
@@ -104,7 +104,7 @@ public Device getDevice() {
 }
 
 void init() {
-	if (device.tracking) device.new_Object(this);
+	if (this.device.tracking) this.device.new_Object(this);
 }
 
 /**

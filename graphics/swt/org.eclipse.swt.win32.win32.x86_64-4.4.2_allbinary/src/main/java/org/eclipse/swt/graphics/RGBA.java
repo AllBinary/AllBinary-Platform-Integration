@@ -89,7 +89,7 @@ public RGBA(int red, int green, int blue, int alpha) {
 */
 public RGBA(float hue, float saturation, float brightness, float alpha) {
 	if ((alpha > 255) || (alpha < 0)) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-	rgb = new RGB(hue, saturation, brightness);
+	this.rgb = new RGB(hue, saturation, brightness);
 	this.alpha = (int)(alpha + 0.5);
 }
 
@@ -140,7 +140,7 @@ public boolean equals(Object object) {
  */
 @Override
 public int hashCode() {
-	return (alpha << 32) | (rgb.blue << 16) | (rgb.green << 8) | rgb.red;
+	return (this.alpha << 32) | (this.rgb.blue << 16) | (this.rgb.green << 8) | this.rgb.red;
 }
 
 /**
@@ -151,7 +151,7 @@ public int hashCode() {
  */
 @Override
 public String toString() {
-	return "RGBA {" + rgb.red + ", " + rgb.green + ", " + rgb.blue + ", " + alpha + "}"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	return "RGBA {" + this.rgb.red + ", " + this.rgb.green + ", " + this.rgb.blue + ", " + this.alpha + "}"; //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 }
 
 }

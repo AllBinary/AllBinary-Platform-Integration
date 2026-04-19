@@ -50,7 +50,7 @@ public class StringWriter extends Writer {
      */
     public StringWriter() {
         buf = new StringBuffer();
-        lock = buf;
+        lock = this.buf;
     }
 
     /**
@@ -68,8 +68,8 @@ public class StringWriter extends Writer {
         if (initialSize < 0) {
             throw new IllegalArgumentException("Negative buffer size");
         }
-        buf = new StringBuffer(initialSize);
-        lock = buf;
+        this.buf = new StringBuffer(initialSize);
+        lock = this.buf;
     }
 
     /**
@@ -93,7 +93,7 @@ public class StringWriter extends Writer {
         } else if (len == 0) {
             return;
         }
-        buf.append(cbuf, off, len);
+        this.buf.append(cbuf, off, len);
     }
 
     /**

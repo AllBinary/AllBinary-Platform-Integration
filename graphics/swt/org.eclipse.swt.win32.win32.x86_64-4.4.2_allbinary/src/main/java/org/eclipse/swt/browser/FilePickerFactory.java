@@ -53,13 +53,13 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (factory != null) {
-		factory.dispose ();
-		factory = null;	
+	if (this.factory != null) {
+		this.factory.dispose ();
+		this.factory = null;	
 	}
 }
 
@@ -73,12 +73,12 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 	
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IFACTORY_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {factory.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.factory.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
@@ -89,7 +89,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 	

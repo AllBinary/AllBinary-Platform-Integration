@@ -78,7 +78,7 @@ public abstract class MicroEmulatorActivity extends Activity {
     }
 
 	public boolean post(Runnable r) {
-		if (activityThread == Thread.currentThread()) {
+		if (this.activityThread == Thread.currentThread()) {
 			r.run();
 			return true;
 		} else {
@@ -87,7 +87,7 @@ public abstract class MicroEmulatorActivity extends Activity {
 	}
 	
 	public boolean postDelayed(Runnable r, long delayMillis) {
-		if (activityThread == Thread.currentThread()) {
+		if (this.activityThread == Thread.currentThread()) {
 			r.run();
 			return true;
 		} else {
@@ -96,7 +96,7 @@ public abstract class MicroEmulatorActivity extends Activity {
 	}
 	
 	public boolean isActivityThread() {
-		return (activityThread == Thread.currentThread());
+		return (this.activityThread == Thread.currentThread());
 	}
 
 	@Override
@@ -105,11 +105,11 @@ public abstract class MicroEmulatorActivity extends Activity {
 		
 		// Query the activity property android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 		TypedArray ta = getTheme().obtainStyledAttributes(new int[] { android.R.attr.windowFullscreen });
-		windowFullscreen = ta.getBoolean(0, false);
+		this.windowFullscreen = ta.getBoolean(0, false);
 		
 		Drawable phoneCallIcon = getResources().getDrawable(android.R.drawable.stat_sys_phone_call);
 		int statusBarHeight = 0;
-		if (!windowFullscreen) {
+		if (!this.windowFullscreen) {
 			statusBarHeight = phoneCallIcon.getIntrinsicHeight();
 		}
 		
@@ -117,9 +117,9 @@ public abstract class MicroEmulatorActivity extends Activity {
         final int width = display.getWidth();
         final int height = display.getHeight() - statusBarHeight;
 
-        emulatorContext = new AndroidEmulatorContext();
+        this.emulatorContext = new AndroidEmulatorContext();
 		
-		activityThread = Thread.currentThread();
+		this.activityThread = Thread.currentThread();
 	}
 	
 	public View getContentView() {
@@ -131,7 +131,7 @@ public abstract class MicroEmulatorActivity extends Activity {
 Log.d("AndroidCanvasUI", "set content view: " + view);                			
 		super.setContentView(view);
 		
-		contentView = view;
+		this.contentView = view;
 	}
 		
 	@Override
@@ -140,7 +140,7 @@ Log.d("AndroidCanvasUI", "set content view: " + view);
 		
 		Drawable phoneCallIcon = getResources().getDrawable(android.R.drawable.stat_sys_phone_call);
 		int statusBarHeight = 0;
-		if (!windowFullscreen) {
+		if (!this.windowFullscreen) {
 			statusBarHeight = phoneCallIcon.getIntrinsicHeight();
 		}
 		
@@ -168,7 +168,7 @@ Log.d("AndroidCanvasUI", "set content view: " + view);
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		for (Iterator<ActivityResultListener> it = activityResultListeners.iterator(); it.hasNext(); ) {
+		for (Iterator<ActivityResultListener> it = this.activityResultListeners.iterator(); it.hasNext(); ) {
 			if (it.next().onActivityResult(requestCode, resultCode, data)) {
 				return;
 			}

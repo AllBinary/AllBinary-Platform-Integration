@@ -41,7 +41,7 @@ public class StringItem extends Item {
 		this.appearanceMode = appearanceMode;
 		super.setUI(DeviceFactory.getDevice().getUIFactory().createImageStringItemUI(this));
 		
-		stringComponent = new StringComponent();
+		this.stringComponent = new StringComponent();
 		setText(text);
 	}
 	
@@ -72,14 +72,14 @@ public class StringItem extends Item {
 			((ImageStringItemUI) ui).setText(text);
 		}
 
-		stringComponent.setText(text);
+		this.stringComponent.setText(text);
 		repaint();
 	}
 
         //TWB - made public
         @Override
 	public int getHeight() {
-		return super.getHeight() + stringComponent.getHeight();
+		return super.getHeight() + this.stringComponent.getHeight();
 	}
 
         //TWB - made public
@@ -88,7 +88,7 @@ public class StringItem extends Item {
 		super.paintContent(g);
 
 		g.translate(0, super.getHeight());
-		stringComponent.paint(g);
+		this.stringComponent.paint(g);
 		g.translate(0, -super.getHeight());
 
 		return getHeight();

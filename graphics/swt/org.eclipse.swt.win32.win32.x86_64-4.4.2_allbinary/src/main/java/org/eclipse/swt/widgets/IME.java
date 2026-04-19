@@ -105,8 +105,8 @@ public IME (Canvas parent, int style) {
 void createWidget () {
 	this.text = ""; //$NON-NLS-1$
 	this.startOffset = -1;
-	if (parent.getIME () == null) {
-		parent.setIME (this);
+	if (this.parent.getIME () == null) {
+		this.parent.setIME (this);
 	}
 }
 
@@ -123,7 +123,7 @@ void createWidget () {
  */
 public int getCaretOffset () {
 	checkWidget ();
-	return startOffset + caretOffset;
+	return startOffset + this.caretOffset;
 }
 
 /**
@@ -240,8 +240,8 @@ TF_DISPLAYATTRIBUTE getDisplayAttribute (short langid, int attInfo) {
  */
 public int [] getRanges () {
 	checkWidget ();
-	if (ranges == null) return new int [0];
-	int [] result = new int [ranges.length];
+	if (this.ranges == null) return new int [0];
+	int [] result = new int [this.ranges.length];
 	for (int i = 0; i < result.length; i++) {
 		result [i] = this.ranges [i] + this.startOffset; 
 	}
@@ -268,8 +268,8 @@ public int [] getRanges () {
  */
 public TextStyle [] getStyles () {
 	checkWidget ();
-	if (styles == null) return new TextStyle [0];
-	TextStyle [] result = new TextStyle [styles.length];
+	if (this.styles == null) return new TextStyle [0];
+	TextStyle [] result = new TextStyle [this.styles.length];
 	System.arraycopy (styles, 0, result, 0, styles.length);
 	return result;
 }
@@ -322,15 +322,15 @@ boolean isInlineEnabled () {
 
 void releaseParent () {
 	super.releaseParent ();
-	if (this == parent.getIME ()) parent.setIME (null);
+	if (this == this.parent.getIME ()) this.parent.setIME (null);
 }
 
 void releaseWidget () {
 	super.releaseWidget ();
-	parent = null;
-	text = null;
-	styles = null;
-	ranges = null;
+	this.parent = null;
+	this.text = null;
+	this.styles = null;
+	this.ranges = null;
 }
 
 /**
@@ -352,19 +352,19 @@ void releaseWidget () {
 public void setCompositionOffset (int offset) {
 	checkWidget ();
 	if (offset < 0) return;
-	if (startOffset != -1) {
+	if (this.startOffset != -1) {
 		this.startOffset = offset;
 	}
 }
 
 LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 	if (!isInlineEnabled ()) return null;
-	ranges = null;
-	styles = null;
-	caretOffset = commitCount = 0;
-	long /*int*/ hwnd = parent.handle;
+	this.ranges = null;
+	this.styles = null;
+	this.caretOffset = this.commitCount = 0;
+	long /*int*/ hwnd = this.parent.handle;
 	long /*int*/ hIMC = OS.ImmGetContext (hwnd);
-	int codePage = parent.getCodePage ();
+	int codePage = this.parent.getCodePage ();
 	if (hIMC != 0) {
 		TCHAR buffer = null;
 		if ((lParam & OS.GCS_RESULTSTR) != 0) {
@@ -372,23 +372,23 @@ LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 			if (length > 0) {
 				buffer = new TCHAR (codePage, length / TCHAR.sizeof);
 				OS.ImmGetCompositionString (hIMC, OS.GCS_RESULTSTR, buffer, length);
-				if (startOffset == -1) {
+				if (this.startOffset == -1) {
 					Event event = new Event ();
 					event.detail = SWT.COMPOSITION_SELECTION;
 					sendEvent (SWT.ImeComposition, event);
-					startOffset = event.start;
+					this.startOffset = event.start;
 				}
 				Event event = new Event ();
 				event.detail = SWT.COMPOSITION_CHANGED;
-				event.start = startOffset;
-				event.end = startOffset + text.length();
-				event.text = text = buffer != null ? buffer.toString () : ""; //$NON-NLS-1$
-				commitCount = text.length ();
+				event.start = this.startOffset;
+				event.end = this.startOffset + this.text.length();
+				event.text = this.text = buffer != null ? buffer.toString () : ""; //$NON-NLS-1$
+				this.commitCount = this.text.length ();
 				sendEvent (SWT.ImeComposition, event);
-				String chars = text;
-				text = ""; //$NON-NLS-1$
-				startOffset = -1;
-				commitCount = 0;
+				String chars = this.text;
+				this.text = ""; //$NON-NLS-1$
+				this.startOffset = -1;
+				this.commitCount = 0;
 				if (event.doit) {
 					Display display = this.display;
 					display.lastKey = 0;
@@ -399,7 +399,7 @@ LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 						display.lastAscii = c;
 						event = new Event ();
 						event.character = c;
-						parent.sendEvent (SWT.KeyDown, event);
+						this.parent.sendEvent (SWT.KeyDown, event);
 					}
 				}
 			}
@@ -412,7 +412,7 @@ LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 				buffer = new TCHAR (codePage, length / TCHAR.sizeof);
 				OS.ImmGetCompositionString (hIMC, OS.GCS_COMPSTR, buffer, length);
 				if ((lParam & OS.GCS_CURSORPOS) != 0) {
-					caretOffset = OS.ImmGetCompositionString (hIMC, OS.GCS_CURSORPOS, (TCHAR) null, 0);
+					this.caretOffset = OS.ImmGetCompositionString (hIMC, OS.GCS_CURSORPOS, (TCHAR) null, 0);
 				}
 				int [] clauses = null;
 				if ((lParam & OS.GCS_COMPCLAUSE) != 0) {
@@ -428,8 +428,8 @@ LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 						byte [] attrs = new byte [length];
 						OS.ImmGetCompositionString (hIMC, OS.GCS_COMPATTR, attrs, length);
 						length = clauses.length - 1;
-						ranges = new int [length * 2];
-						styles = new TextStyle [length];
+						this.ranges = new int [length * 2];
+						this.styles = new TextStyle [length];
 						long /*int*/ layout = OS.GetKeyboardLayout (0);
 						short langID = (short)OS.LOWORD (layout);
 						TF_DISPLAYATTRIBUTE attr = null; 
@@ -437,7 +437,7 @@ LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 						for (int i = 0; i < length; i++) {
 							this.ranges [i * 2] = clauses [i];
 							this.ranges [i * 2 + 1] = clauses [i + 1] - 1;
-							styles [i] = style = new TextStyle ();
+							this.styles [i] = style = new TextStyle ();
 							attr = getDisplayAttribute (langID, attrs [clauses [i]]);
 							if (attr != null) {
 								switch (attr.crText.type) {
@@ -489,24 +489,24 @@ LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 			}
 			OS.ImmReleaseContext (hwnd, hIMC);
 		}
-		int end = startOffset + text.length();
-		if (startOffset == -1) {
+		int end = this.startOffset + this.text.length();
+		if (this.startOffset == -1) {
 			Event event = new Event ();
 			event.detail = SWT.COMPOSITION_SELECTION;
 			sendEvent (SWT.ImeComposition, event);
-			startOffset = event.start;
+			this.startOffset = event.start;
 			end = event.end;
 		}
 		Event event = new Event ();
 		event.detail = SWT.COMPOSITION_CHANGED;
-		event.start = startOffset;
+		event.start = this.startOffset;
 		event.end = end;
-		event.text = text = buffer != null ? buffer.toString () : ""; //$NON-NLS-1$
+		event.text = this.text = buffer != null ? buffer.toString () : ""; //$NON-NLS-1$
 		sendEvent (SWT.ImeComposition, event);
-		if (text.length() == 0) {
+		if (this.text.length() == 0) {
 			this.startOffset = -1;
 			this.ranges = null;
-			styles = null;
+			this.styles = null;
 		}
 	}
 	return LRESULT.ONE;
@@ -538,7 +538,7 @@ LRESULT WM_KEYDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 	            if (length > 1) {
 	            	event.end = event.start + 1;
 	            }
-				long /*int*/ hwnd = parent.handle;
+				long /*int*/ hwnd = this.parent.handle;
 				long /*int*/ hIMC = OS.ImmGetContext (hwnd);
 				TCHAR buffer = new TCHAR (0, event.text, true);
 				long /*int*/ rc = OS.ImmEscape(hKL, hIMC, OS.IME_ESC_HANJA_MODE, buffer); 
@@ -553,7 +553,7 @@ LRESULT WM_KEYDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 
 LRESULT WM_KILLFOCUS (long /*int*/ wParam, long /*int*/ lParam) {
 	if (!isInlineEnabled ()) return null;
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	long /*int*/ hIMC = OS.ImmGetContext (hwnd);
 	if (hIMC != 0) {
 		if (OS.ImmGetOpenStatus (hIMC)) {
@@ -566,7 +566,7 @@ LRESULT WM_KILLFOCUS (long /*int*/ wParam, long /*int*/ lParam) {
 
 LRESULT WM_LBUTTONDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 	if (!isInlineEnabled ()) return null;
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	long /*int*/ hIMC = OS.ImmGetContext (hwnd);
 	if (hIMC != 0) {
 		if (OS.ImmGetOpenStatus (hIMC)) {
@@ -577,10 +577,10 @@ LRESULT WM_LBUTTONDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 				event.y = OS.GET_Y_LPARAM (lParam);
 				sendEvent (SWT.ImeComposition, event);
 				int offset = event.index;
-				int length = text.length();
-				if (offset != -1 && startOffset != -1 && startOffset <= offset && offset < startOffset + length) {
+				int length = this.text.length();
+				if (offset != -1 && this.startOffset != -1 && this.startOffset <= offset && offset < this.startOffset + length) {
 					long /*int*/ imeWnd = OS.ImmGetDefaultIMEWnd (hwnd);
-					offset = event.index + event.count - startOffset;
+					offset = event.index + event.count - this.startOffset;
 					int trailing = event.count > 0 ? 1 : 2;
 					long /*int*/ param = OS.MAKEWPARAM (OS.MAKEWORD (OS.IMEMOUSE_LDOWN, trailing), offset);
 					OS.SendMessage (imeWnd, WM_MSIME_MOUSE, param, hIMC);

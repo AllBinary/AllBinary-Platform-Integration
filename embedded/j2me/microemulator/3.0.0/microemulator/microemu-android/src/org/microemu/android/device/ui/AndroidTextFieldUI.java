@@ -164,9 +164,9 @@ public class AndroidTextFieldUI extends LinearLayout implements TextFieldUI {
 	public String getString() {
             final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		if (activity2.isActivityThread()) {
-			getStringTransfer = editView.getText().toString();
+			this.getStringTransfer = this.editView.getText().toString();
 		} else {
-			getStringTransfer = null;
+			this.getStringTransfer = null;
 			activity2.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidTextFieldUI.this) {
@@ -177,7 +177,7 @@ public class AndroidTextFieldUI extends LinearLayout implements TextFieldUI {
 			});
 
 			synchronized (AndroidTextFieldUI.this) {
-				if (getStringTransfer == null) {
+				if (this.getStringTransfer == null) {
 					try {
 						wait();
 					} catch (InterruptedException e) {

@@ -810,7 +810,7 @@ public void create (Composite parent, int style) {
 		browser.dispose ();
 		error (XPCOM.NS_NOINTERFACE);	
 	}
-	webBrowser = new nsIWebBrowser (result[0]);
+	this.webBrowser = new nsIWebBrowser (result[0]);
 	result[0] = 0;
 
 	/* create the instance-based callback interfaces */
@@ -847,7 +847,7 @@ public void create (Composite parent, int style) {
 		* various mozilla releases to determine more precisely which version is being used.
 		*/
 		if (!MozillaVersion.CheckVersion (MozillaVersion.VERSION_XR10)) {
-			rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIInterfaceRequestor.class), result);
+			rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIInterfaceRequestor.class), result);
 			if (rc != XPCOM.NS_OK) {
 				browser.dispose ();
 				error (XPCOM.NS_ERROR_FAILURE);
@@ -926,22 +926,22 @@ public void create (Composite parent, int style) {
 	 * This subclass should be removed once content has been set into the browser.
 	 */
 	if (MozillaVersion.CheckVersion (MozillaVersion.VERSION_XR1_9)) {
-		delegate.addWindowSubclass ();
+		this.delegate.addWindowSubclass ();
 	}
 
 	/* add listeners for progress and content */
-	rc = webBrowser.AddWebBrowserListener (weakReference.getAddress (), IIDStore.GetIID (nsIWebProgressListener.class));
+	rc = this.webBrowser.AddWebBrowserListener (this.weakReference.getAddress (), IIDStore.GetIID (nsIWebProgressListener.class));
 	if (rc != XPCOM.NS_OK) {
 		browser.dispose ();
 		error (rc);
 	}
-	rc = webBrowser.SetParentURIContentListener (uriContentListener.getAddress ());
+	rc = this.webBrowser.SetParentURIContentListener (this.uriContentListener.getAddress ());
 	if (rc != XPCOM.NS_OK) {
 		browser.dispose ();
 		error (rc);
 	}
 
-	delegate.init ();
+	this.delegate.init ();
 
 	listener = new Listener () {
 		public void handleEvent (Event event) {
@@ -1052,7 +1052,7 @@ public boolean back () {
 	htmlBytes = null;
 
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 	
@@ -1335,65 +1335,65 @@ void deregisterFunction (BrowserFunction function) {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (weakReference != null) {
-		weakReference.dispose ();
-		weakReference = null;	
+	if (this.weakReference != null) {
+		this.weakReference.dispose ();
+		this.weakReference = null;	
 	}
-	if (webProgressListener != null) {
-		webProgressListener.dispose ();
-		webProgressListener = null;
+	if (this.webProgressListener != null) {
+		this.webProgressListener.dispose ();
+		this.webProgressListener = null;
 	}
-	if (webProgressListener_24 != null) {
-		webProgressListener_24.dispose ();
-		webProgressListener_24 = null;
+	if (this.webProgressListener_24 != null) {
+		this.webProgressListener_24.dispose ();
+		this.webProgressListener_24 = null;
 	}
-	if (webBrowserChrome != null) {
-		webBrowserChrome.dispose ();
-		webBrowserChrome = null;
+	if (this.webBrowserChrome != null) {
+		this.webBrowserChrome.dispose ();
+		this.webBrowserChrome = null;
 	}
-	if (webBrowserChromeFocus != null) {
-		webBrowserChromeFocus.dispose ();
-		webBrowserChromeFocus = null;
+	if (this.webBrowserChromeFocus != null) {
+		this.webBrowserChromeFocus.dispose ();
+		this.webBrowserChromeFocus = null;
 	}
-	if (embeddingSiteWindow != null) {
-		embeddingSiteWindow.dispose ();
-		embeddingSiteWindow = null;
+	if (this.embeddingSiteWindow != null) {
+		this.embeddingSiteWindow.dispose ();
+		this.embeddingSiteWindow = null;
 	}
-	if (embeddingSiteWindow_24 != null) {
-		embeddingSiteWindow_24.dispose ();
-		embeddingSiteWindow_24 = null;
+	if (this.embeddingSiteWindow_24 != null) {
+		this.embeddingSiteWindow_24.dispose ();
+		this.embeddingSiteWindow_24 = null;
 	}
-	if (interfaceRequestor != null) {
-		interfaceRequestor.dispose ();
-		interfaceRequestor = null;
+	if (this.interfaceRequestor != null) {
+		this.interfaceRequestor.dispose ();
+		this.interfaceRequestor = null;
 	}		
-	if (supportsWeakReference != null) {
-		supportsWeakReference.dispose ();
-		supportsWeakReference = null;
+	if (this.supportsWeakReference != null) {
+		this.supportsWeakReference.dispose ();
+		this.supportsWeakReference = null;
 	}	
-	if (contextMenuListener != null) {
-		contextMenuListener.dispose ();
-		contextMenuListener = null;
+	if (this.contextMenuListener != null) {
+		this.contextMenuListener.dispose ();
+		this.contextMenuListener = null;
 	}
-	if (uriContentListener != null) {
-		uriContentListener.dispose ();
-		uriContentListener = null;
+	if (this.uriContentListener != null) {
+		this.uriContentListener.dispose ();
+		this.uriContentListener = null;
 	}
-	if (tooltipListener != null) {
-		tooltipListener.dispose ();
-		tooltipListener = null;
+	if (this.tooltipListener != null) {
+		this.tooltipListener.dispose ();
+		this.tooltipListener = null;
 	}
-	if (domEventListener != null) {
-		domEventListener.dispose ();
-		domEventListener = null;
+	if (this.domEventListener != null) {
+		this.domEventListener.dispose ();
+		this.domEventListener = null;
 	}
-	if (badCertListener != null) {
-		badCertListener.dispose ();
-		badCertListener = null;
+	if (this.badCertListener != null) {
+		this.badCertListener.dispose ();
+		this.badCertListener = null;
 	}
 }
 
@@ -1433,7 +1433,7 @@ public boolean execute (String script) {
 			if (rc == XPCOM.NS_OK && result[0] != 0) {
 				nsIPrincipal principal = new nsIPrincipal (result[0]);
 				result[0] = 0;
-				rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIInterfaceRequestor.class), result);
+				rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIInterfaceRequestor.class), result);
 				if (rc != XPCOM.NS_OK) error (rc);
 				if (result[0] == 0) error (XPCOM.NS_NOINTERFACE);
 
@@ -1543,7 +1543,7 @@ public boolean execute (String script) {
 	/* fall back to the pre-1.9 approach */
 
 	String url = PREFIX_JAVASCRIPT + script + ";void(0);";	//$NON-NLS-1$
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 
@@ -1613,7 +1613,7 @@ public boolean forward () {
 	htmlBytes = null;
 
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 	
@@ -1704,7 +1704,7 @@ int getNextFunctionIndex () {
 @Override
 public String getText () {
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.GetContentDOMWindow (result);
+	int rc = this.webBrowser.GetContentDOMWindow (result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_NOINTERFACE);
 
@@ -1759,7 +1759,7 @@ public String getText () {
 @Override
 public String getUrl () {
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 
@@ -1819,7 +1819,7 @@ public Object getWebBrowser () {
 		 * The following AddRef() is needed to offset the automatic Release() that
 		 * will be performed by JavaXPCOM when webBrowserObject is finalized.
 		 */
-		webBrowser.AddRef ();
+		this.webBrowser.AddRef ();
 		return webBrowserObject;
 	} catch (ClassNotFoundException e) {
             final String message = ExceptionUtil.getInstance().getStackTrace(e); System.out.println("Exception in SWT: " + message);
@@ -2695,7 +2695,7 @@ void initWebBrowserWindows () {
 	}
 
 	long /*int*/[] result = new long /*int*/[1];
-	rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIBaseWindow.class), result);
+	rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIBaseWindow.class), result);
 	if (rc != XPCOM.NS_OK) {
 		browser.dispose ();
 		error (rc);
@@ -2713,14 +2713,14 @@ void initWebBrowserWindows () {
 		rect.height = 1;
 	}
 
-	embedHandle = delegate.getHandle ();
+	this.embedHandle = this.delegate.getHandle ();
 
-	rc = baseWindow.InitWindow (embedHandle, 0, 0, 0, rect.width, rect.height);
+	rc = baseWindow.InitWindow (this.embedHandle, 0, 0, 0, rect.width, rect.height);
 	if (rc != XPCOM.NS_OK) {
 		browser.dispose ();
 		error (XPCOM.NS_ERROR_FAILURE);
 	}
-	rc = delegate.createBaseWindow (baseWindow);
+	rc = this.delegate.createBaseWindow (baseWindow);
 	if (rc != XPCOM.NS_OK) {
 		browser.dispose ();
 		error (XPCOM.NS_ERROR_FAILURE);
@@ -2787,7 +2787,7 @@ String initXULRunner (String mozillaPath) {
 @Override
 public boolean isBackEnabled () {
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 	
@@ -2801,7 +2801,7 @@ public boolean isBackEnabled () {
 @Override
 public boolean isForwardEnabled () {
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 	
@@ -2831,19 +2831,19 @@ void onDispose (Display display) {
 		new nsISupports (badCertRequest).Release ();
 	}
 
-	int rc = webBrowser.RemoveWebBrowserListener (weakReference.getAddress (), IIDStore.GetIID (nsIWebProgressListener.class));
+	int rc = this.webBrowser.RemoveWebBrowserListener (this.weakReference.getAddress (), IIDStore.GetIID (nsIWebProgressListener.class));
 	if (rc != XPCOM.NS_OK) error (rc);
 
-	rc = webBrowser.SetParentURIContentListener (0);
+	rc = this.webBrowser.SetParentURIContentListener (0);
 	if (rc != XPCOM.NS_OK) error (rc);
 	
-	rc = webBrowser.SetContainerWindow (0);
+	rc = this.webBrowser.SetContainerWindow (0);
 	if (rc != XPCOM.NS_OK) error (rc);
 
 	unhookDOMListeners ();
 
 	long /*int*/[] result = new long /*int*/[1];
-	rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIBaseWindow.class), result);
+	rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIBaseWindow.class), result);
 	if (rc != XPCOM.NS_OK) {
 		browser.dispose ();
 		error (rc);
@@ -2856,23 +2856,23 @@ void onDispose (Display display) {
 	baseWindow.Release ();
 
 	Release ();
-	webBrowser.Release ();
-	webBrowser = null;
-	webBrowserObject = null;
-	lastNavigateURL = null;
-	htmlBytes = null;
-	listener = null;
+	this.webBrowser.Release ();
+	this.webBrowser = null;
+	this.webBrowserObject = null;
+	this.lastNavigateURL = null;
+	this.htmlBytes = null;
+	this.listener = null;
 
-	if (tip != null && !tip.isDisposed ()) tip.dispose ();
-	tip = null;
+	if (this.tip != null && !this.tip.isDisposed ()) this.tip.dispose ();
+	this.tip = null;
 	location = size = null;
 
-	Enumeration elements = unhookedDOMWindows.elements ();
+	Enumeration elements = this.unhookedDOMWindows.elements ();
 	while (elements.hasMoreElements ()) {
 		LONG ptrObject = (LONG)elements.nextElement ();
 		new nsISupports (ptrObject.value).Release ();
 	}
-	unhookedDOMWindows = null;
+	this.unhookedDOMWindows = null;
 
 	elements = functions.elements ();
 	while (elements.hasMoreElements ()) {
@@ -2882,17 +2882,17 @@ void onDispose (Display display) {
 	}
 	functions = null;
 
-	delegate.onDispose (embedHandle);
-	delegate = null;
+	this.delegate.onDispose (this.embedHandle);
+	this.delegate = null;
 
-	embedHandle = 0;
+	this.embedHandle = 0;
 	BrowserCount--;
 }
 
 void Activate () {
 	isActive = true;
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserFocus.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserFocus.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 	
@@ -2905,7 +2905,7 @@ void Activate () {
 void Deactivate () {
 	isActive = false;
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserFocus.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserFocus.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 	
@@ -3077,15 +3077,15 @@ void onResize () {
 	int height = Math.max (1, rect.height);
 
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIBaseWindow.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIBaseWindow.class), result);
 	if (rc != XPCOM.NS_OK) {
 		browser.dispose ();
 		error (rc);
 	}
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 
-	Point size = delegate.getNativeSize (width, height);
-	delegate.setSize (embedHandle, size.x, size.y);
+	Point size = this.delegate.getNativeSize (width, height);
+	this.delegate.setSize (this.embedHandle, size.x, size.y);
 	nsIBaseWindow baseWindow = new nsIBaseWindow (result[0]);
 	rc = baseWindow.SetPositionAndSize (0, 0, size.x, size.y, 1);
 	if (rc != XPCOM.NS_OK) error (rc);
@@ -3097,7 +3097,7 @@ public void refresh () {
 	htmlBytes = null;
 
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 	
@@ -3170,7 +3170,7 @@ boolean sendChangingEvent (String url) {
 				if (jsEnabled != jsEnabledOnNextPage) {
 					jsEnabled = jsEnabledOnNextPage;
 					long /*int*/[] result = new long /*int*/[1];
-					int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserSetup.class), result);
+					int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserSetup.class), result);
 					if (rc != XPCOM.NS_OK) error (rc);
 					if (result[0] == 0) error (XPCOM.NS_NOINTERFACE);
 	
@@ -3180,7 +3180,7 @@ boolean sendChangingEvent (String url) {
 					if (rc != XPCOM.NS_OK) error (rc);
 					setup.Release ();
 				}
-				if (!isViewingErrorPage) lastNavigateURL = url;
+				if (!isViewingErrorPage) this.lastNavigateURL = url;
 			}
 		}
 	}
@@ -3222,10 +3222,10 @@ public boolean setText (String html, boolean trusted) {
 	 * ensure that the custom subclass that works around Mozilla bug
 	 * https://bugzilla.mozilla.org/show_bug.cgi?id=453523 is removed.
 	 */
-	delegate.removeWindowSubclass ();
+	this.delegate.removeWindowSubclass ();
 
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserStream.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserStream.class), result);
 	if (rc == XPCOM.NS_OK && result[0] != 0) {
 		/*
 		* Setting mozilla's content through nsIWebBrowserStream does not cause a page
@@ -3240,13 +3240,13 @@ public boolean setText (String html, boolean trusted) {
 		* If htmlBytes is not null then the about:blank page is already being loaded,
 		* so no Navigate is required.  Just set the html that is to be shown.
 		*/
-		boolean blankLoading = htmlBytes != null;
-		htmlBytes = data;
+		boolean blankLoading = this.htmlBytes != null;
+		this.htmlBytes = data;
 		untrustedText = !trusted;
 		if (blankLoading) return true;
 
 		/* navigate to about:blank */
-		rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+		rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 		if (rc != XPCOM.NS_OK) error (rc);
 		if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 		nsIWebNavigation webNavigation = new nsIWebNavigation (result[0]);
@@ -3290,7 +3290,7 @@ public boolean setText (String html, boolean trusted) {
 		nsIURI uri = new nsIURI (result[0]);
 		result[0] = 0;
 
-		rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIInterfaceRequestor.class), result);
+		rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIInterfaceRequestor.class), result);
 		if (rc != XPCOM.NS_OK) error (rc);
 		if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 		nsIInterfaceRequestor interfaceRequestor = new nsIInterfaceRequestor (result[0]);
@@ -3335,7 +3335,7 @@ boolean setUrl (String url, byte[] postData, String[] headers) {
 	htmlBytes = null;
 
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 
@@ -3344,7 +3344,7 @@ boolean setUrl (String url, byte[] postData, String[] headers) {
 	 * ensure that the custom subclass that works around Mozilla bug
 	 * https://bugzilla.mozilla.org/show_bug.cgi?id=453523 is removed.
 	 */
-	delegate.removeWindowSubclass ();
+	this.delegate.removeWindowSubclass ();
 
 	nsIWebNavigation webNavigation = new nsIWebNavigation (result[0]);
 	result[0] = 0;
@@ -3438,7 +3438,7 @@ public void stop () {
 	htmlBytes = null;
 
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebNavigation.class), result);
 	if (rc != XPCOM.NS_OK) error (rc);
 	if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 	
@@ -3475,7 +3475,7 @@ void hookDOMListeners (nsIDOMEventTarget target, boolean isTop) {
 	* Only hook mouseover and mouseout if the target is a top-level frame, so that mouse moves
 	* between frames will not generate events.
 	*/
-	if (isTop && delegate.hookEnterExit ()) {
+	if (isTop && this.delegate.hookEnterExit ()) {
 		string = new nsEmbedString (XPCOM.DOMEVENT_MOUSEOVER);
 		target.AddEventListener (string.getAddress (), domEventListener.getAddress (), 0, 1, 0);
 		string.dispose ();
@@ -3497,7 +3497,7 @@ void hookDOMListeners (nsIDOMEventTarget target, boolean isTop) {
 
 void unhookDOMListeners () {
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.GetContentDOMWindow (result);
+	int rc = this.webBrowser.GetContentDOMWindow (result);
 	if (rc != XPCOM.NS_OK || result[0] == 0) return;
 
 	nsIDOMWindow window = new nsIDOMWindow (result[0]);
@@ -3592,72 +3592,72 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IWEAKREFERENCE_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {weakReference.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.weakReference.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIWebProgressListener.class, MozillaVersion.VERSION_XR24, true))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {webProgressListener_24.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.webProgressListener_24.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIWebProgressListener.class, MozillaVersion.VERSION_XR10))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {webProgressListener.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.webProgressListener.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIWebBrowserChrome.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {webBrowserChrome.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.webBrowserChrome.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IWEBBROWSERCHROMEFOCUS_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {webBrowserChromeFocus.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.webBrowserChromeFocus.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIEmbeddingSiteWindow.class, MozillaVersion.VERSION_XR24, true))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {embeddingSiteWindow_24.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.embeddingSiteWindow_24.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIEmbeddingSiteWindow.class, MozillaVersion.VERSION_XR10))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {embeddingSiteWindow.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.embeddingSiteWindow.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIInterfaceRequestor.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {interfaceRequestor.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.interfaceRequestor.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_ISUPPORTSWEAKREFERENCE_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supportsWeakReference.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supportsWeakReference.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_ICONTEXTMENULISTENER_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {contextMenuListener.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.contextMenuListener.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IURICONTENTLISTENER_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {uriContentListener.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.uriContentListener.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_ITOOLTIPLISTENER_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {tooltipListener.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.tooltipListener.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IBADCERTLISTENER2_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {badCertListener.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.badCertListener.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
@@ -3690,7 +3690,7 @@ int GetInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 	if (guid.Equals (IIDStore.GetIID (nsIDOMWindow.class))) {
 		long /*int*/[] aContentDOMWindow = new long /*int*/[1];
-		int rc = webBrowser.GetContentDOMWindow (aContentDOMWindow);
+		int rc = this.webBrowser.GetContentDOMWindow (aContentDOMWindow);
 		if (rc != XPCOM.NS_OK) error (rc);
 		if (aContentDOMWindow[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 		XPCOM.memmove (ppvObject, aContentDOMWindow, C.PTR_SIZEOF);
@@ -3708,8 +3708,8 @@ int GetWeakReference (long /*int*/ ppvObject) {
 /* nsIWebProgressListener */
 
 int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateFlags, int aStatus) {
-	if (registerFunctionsOnState != 0 && ((aStateFlags & registerFunctionsOnState) == registerFunctionsOnState)) {
-		registerFunctionsOnState = 0;
+	if (this.registerFunctionsOnState != 0 && ((aStateFlags & this.registerFunctionsOnState) == this.registerFunctionsOnState)) {
+		this.registerFunctionsOnState = 0;
 		Enumeration elements = functions.elements ();
 		while (elements.hasMoreElements ()) {
 			BrowserFunction function = (BrowserFunction)elements.nextElement ();
@@ -3735,7 +3735,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 	* certificate, the updated site will be retrieved from the channel (this
 	* is more proper) on the next STATE_TRANSFERRING | STATE_IS_DOCUMENT transition.
 	*/
-	if (updateLastNavigateUrl && aStateFlags == (nsIWebProgressListener.STATE_IS_REQUEST | nsIWebProgressListener.STATE_START)) {
+	if (this.updateLastNavigateUrl && aStateFlags == (nsIWebProgressListener.STATE_IS_REQUEST | nsIWebProgressListener.STATE_START)) {
 		nsIRequest request = new nsIRequest (aRequest);
 		long /*int*/ name = XPCOM.nsEmbedCString_new ();
 		int rc = request.GetName (name);
@@ -3748,7 +3748,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 			if (value.indexOf (":/") != -1) { //$NON-NLS-1$
 				boolean doit = sendChangingEvent (value);
 				if (doit) {
-					lastNavigateURL = value;
+					this.lastNavigateURL = value;
 				} else {
 					stop ();
 				}
@@ -3773,14 +3773,14 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 
 			nsIChannel channel = new nsIChannel (result[0]);
 			result[0] = 0;
-			rc = channel.SetNotificationCallbacks (interfaceRequestor.getAddress ());
+			rc = channel.SetNotificationCallbacks (this.interfaceRequestor.getAddress ());
 			if (rc != XPCOM.NS_OK) error (rc);
 			channel.Release ();
 			return XPCOM.NS_OK;
 		}
 
 		if (request == 0) request = aRequest;
-		registerFunctionsOnState = nsIWebProgressListener.STATE_IS_REQUEST | nsIWebProgressListener.STATE_START;
+		this.registerFunctionsOnState = nsIWebProgressListener.STATE_IS_REQUEST | nsIWebProgressListener.STATE_START;
 		/*
 		 * Add the page's nsIDOMWindow to the collection of windows that will
 		 * have DOM listeners added to them later on in the page loading
@@ -3791,11 +3791,11 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 		int rc = progress.GetDOMWindow (result);
 		if (rc != XPCOM.NS_OK) error (rc);
 		if (result[0] == 0) error (XPCOM.NS_NOINTERFACE);
-		unhookedDOMWindows.addElement (new LONG (result[0]));
+		this.unhookedDOMWindows.addElement (new LONG (result[0]));
 	} else if ((aStateFlags & nsIWebProgressListener.STATE_REDIRECTING) != 0) {
 		if (request == aRequest) request = 0;
-		registerFunctionsOnState = nsIWebProgressListener.STATE_TRANSFERRING;
-		updateLastNavigateUrl = true;
+		this.registerFunctionsOnState = nsIWebProgressListener.STATE_TRANSFERRING;
+		this.updateLastNavigateUrl = true;
 	} else if ((aStateFlags & nsIWebProgressListener.STATE_STOP) != 0) {
 		if (isRetrievingBadCert) {
 			return XPCOM.NS_OK;
@@ -3839,7 +3839,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 		int rc;
 		LONG ptrObject = new LONG (result[0]);
 		result[0] = 0;
-		int index = unhookedDOMWindows.indexOf (ptrObject);
+		int index = this.unhookedDOMWindows.indexOf (ptrObject);
 		if (index != -1) {
 			long /*int*/[] window = new long /*int*/[1];
 			nsIWebProgress progress = new nsIWebProgress (aWebProgress);
@@ -3847,7 +3847,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 			if (rc != XPCOM.NS_OK) error (rc);
 			if (window[0] == 0) error (XPCOM.NS_NOINTERFACE);
 			
-			rc = webBrowser.GetContentDOMWindow (result);
+			rc = this.webBrowser.GetContentDOMWindow (result);
 			if (rc != XPCOM.NS_OK) error (rc);
 			if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 			boolean isTop = result[0] == window[0];
@@ -3869,7 +3869,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 			* Remove and unreference the nsIDOMWindow from the collection of windows
 			* that are waiting to have DOM listeners hooked on them. 
 			*/
-			unhookedDOMWindows.remove (ptrObject);
+			this.unhookedDOMWindows.remove (ptrObject);
 			new nsISupports (ptrObject.value).Release ();
 		}
 
@@ -3878,7 +3878,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 		 * If htmlBytes is not null then there is html from a previous setText() call
 		 * waiting to be set into the about:blank page once it has completed loading. 
 		 */
-		if (htmlBytes != null) {
+		if (this.htmlBytes != null) {
 			nsIRequest req = new nsIRequest (aRequest);
 			long /*int*/ name = XPCOM.nsEmbedCString_new ();
 			rc = req.GetName (name);
@@ -3927,7 +3927,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 				nsIURI uri = new nsIURI (result[0]);
 				result[0] = 0;
 
-				rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserStream.class), result);
+				rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIWebBrowserStream.class), result);
 				if (rc != XPCOM.NS_OK) error (rc);
 				if (result[0] == 0) error (XPCOM.NS_NOINTERFACE);
 
@@ -3957,9 +3957,9 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 				* registered functions must be re-installed in the subsequent Start Request
 				* in order to be invokable at load time by JS contained in the text.
 				*/
-				registerFunctionsOnState = nsIWebProgressListener.STATE_IS_REQUEST | nsIWebProgressListener.STATE_START;
+				this.registerFunctionsOnState = nsIWebProgressListener.STATE_IS_REQUEST | nsIWebProgressListener.STATE_START;
 
-				long /*int*/ ptr = C.malloc (htmlBytes.length);
+				long /*int*/ ptr = C.malloc (this.htmlBytes.length);
 				XPCOM.memmove (ptr, htmlBytes, htmlBytes.length);
 				int pageSize = 8192;
 				int pageCount = htmlBytes.length / pageSize + 1;
@@ -3993,7 +3993,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 				if (rc != XPCOM.NS_OK) error (rc);
 				if (window[0] == 0) error (XPCOM.NS_NOINTERFACE);
 				
-				rc = webBrowser.GetContentDOMWindow (result);
+				rc = this.webBrowser.GetContentDOMWindow (result);
 				if (rc != XPCOM.NS_OK) error (rc);
 				if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 				boolean isTop = result[0] == window[0];
@@ -4011,7 +4011,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 				target.Release ();
 				result[0] = 0;
 			} else {
-				registerFunctionsOnState = 0;
+				this.registerFunctionsOnState = 0;
 			}
 		}
 
@@ -4054,11 +4054,11 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 		}
 	} else if ((aStateFlags & nsIWebProgressListener.STATE_TRANSFERRING) != 0) {
 		if (MozillaVersion.CheckVersion (MozillaVersion.VERSION_XR10)) {
-			registerFunctionsOnState = nsIWebProgressListener.STATE_IS_REQUEST | nsIWebProgressListener.STATE_STOP;
+			this.registerFunctionsOnState = nsIWebProgressListener.STATE_IS_REQUEST | nsIWebProgressListener.STATE_STOP;
 		}
 
-		if (updateLastNavigateUrl) {
-			updateLastNavigateUrl = false;
+		if (this.updateLastNavigateUrl) {
+			this.updateLastNavigateUrl = false;
 			nsIRequest request = new nsIRequest (aRequest);
 
 			long /*int*/[] result = new long /*int*/[1];
@@ -4080,7 +4080,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 				long /*int*/ buffer = XPCOM.nsEmbedCString_get (aSpec);
 				byte[] bytes = new byte[length];
 				XPCOM.memmove (bytes, buffer, length);
-				lastNavigateURL = new String (bytes);
+				this.lastNavigateURL = new String (bytes);
 				XPCOM.nsEmbedCString_delete (aSpec);
 				uri.Release ();
 			}
@@ -4099,9 +4099,9 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 
 		LONG ptrObject = new LONG (result[0]);
 		result[0] = 0;
-		int index = unhookedDOMWindows.indexOf (ptrObject);
+		int index = this.unhookedDOMWindows.indexOf (ptrObject);
 		if (index != -1) {
-			rc = webBrowser.GetContentDOMWindow (result);
+			rc = this.webBrowser.GetContentDOMWindow (result);
 			if (rc != XPCOM.NS_OK) error (rc);
 			if (result[0] == 0) error (XPCOM.NS_ERROR_NO_INTERFACE);
 			boolean isTop = result[0] == domWindow.getAddress ();
@@ -4121,7 +4121,7 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 			* Remove and unreference the nsIDOMWindow from the collection of windows
 			* that are waiting to have DOM listeners hooked on them. 
 			*/
-			unhookedDOMWindows.remove (ptrObject);
+			this.unhookedDOMWindows.remove (ptrObject);
 			new nsISupports (ptrObject.value).Release ();
 		}
 		domWindow.Release ();
@@ -4255,17 +4255,17 @@ int SetStatus (int statusType, long /*int*/ status) {
 
 int GetWebBrowser (long /*int*/ aWebBrowser) {
 	long /*int*/[] ret = new long /*int*/[1];	
-	if (webBrowser != null) {
-		webBrowser.AddRef ();
-		ret[0] = webBrowser.getAddress ();	
+	if (this.webBrowser != null) {
+		this.webBrowser.AddRef ();
+		ret[0] = this.webBrowser.getAddress ();	
 	}
 	XPCOM.memmove (aWebBrowser, ret, C.PTR_SIZEOF);
 	return XPCOM.NS_OK;
 }
 
 int SetWebBrowser (long /*int*/ aWebBrowser) {
-	if (webBrowser != null) webBrowser.Release ();
-	webBrowser = aWebBrowser != 0 ? new nsIWebBrowser (aWebBrowser) : null;  				
+	if (this.webBrowser != null) this.webBrowser.Release ();
+	this.webBrowser = aWebBrowser != 0 ? new nsIWebBrowser (aWebBrowser) : null;  				
 	return XPCOM.NS_OK;
 }
    
@@ -4300,7 +4300,7 @@ int DestroyBrowserWindow () {
 
 int SizeBrowserTo (int aCX, int aCY) {
 	size = new Point (aCX, aCY);
-	boolean isChrome = (chromeFlags & nsIWebBrowserChrome.CHROME_OPENAS_CHROME) != 0;
+	boolean isChrome = (this.chromeFlags & nsIWebBrowserChrome.CHROME_OPENAS_CHROME) != 0;
 	if (isChrome) {
 		Shell shell = browser.getShell ();
 		shell.setSize (shell.computeSize (size.x, size.y));
@@ -4394,7 +4394,7 @@ int GetDimensions (int flags, long /*int*/ x, long /*int*/ y, long /*int*/ cx, l
 
 int SetFocus () {
 	long /*int*/[] result = new long /*int*/[1];
-	int rc = webBrowser.QueryInterface (IIDStore.GetIID (nsIBaseWindow.class), result);
+	int rc = this.webBrowser.QueryInterface (IIDStore.GetIID (nsIBaseWindow.class), result);
 	if (rc != XPCOM.NS_OK) {
 		browser.dispose ();
 		error (rc);
@@ -4435,12 +4435,12 @@ int SetVisibility (int aVisibility) {
 				visible = true;
 				event.location = location;
 				event.size = size;
-				event.addressBar = (chromeFlags & nsIWebBrowserChrome.CHROME_LOCATIONBAR) != 0;
+				event.addressBar = (this.chromeFlags & nsIWebBrowserChrome.CHROME_LOCATIONBAR) != 0;
 				/* Feature of OSX.  The menu bar is always displayed. */
 				boolean isOSX = Platform.PLATFORM.equals ("cocoa") || Platform.PLATFORM.equals ("carbon");
-				event.menuBar = isOSX || (chromeFlags & nsIWebBrowserChrome.CHROME_MENUBAR) != 0;
-				event.statusBar = (chromeFlags & nsIWebBrowserChrome.CHROME_STATUSBAR) != 0;
-				event.toolBar = (chromeFlags & nsIWebBrowserChrome.CHROME_TOOLBAR) != 0;
+				event.menuBar = isOSX || (this.chromeFlags & nsIWebBrowserChrome.CHROME_MENUBAR) != 0;
+				event.statusBar = (this.chromeFlags & nsIWebBrowserChrome.CHROME_STATUSBAR) != 0;
+				event.toolBar = (this.chromeFlags & nsIWebBrowserChrome.CHROME_TOOLBAR) != 0;
 				for (int i = 0; i < visibilityWindowListeners.length; i++) {
 					visibilityWindowListeners[i].show (event);
 				}
@@ -4594,7 +4594,7 @@ int OnStartURIOpen (long /*int*/ aURI, long /*int*/ retval) {
 	if (value.indexOf ("aboutCertError.xhtml") != -1 || (isViewingErrorPage && value.indexOf ("javascript:showSecuritySection") != -1)) { //$NON-NLS-1$ //$NON-NLS-2$
 		XPCOM.memmove (retval, new boolean[] {true});
 		isRetrievingBadCert = true;
-		setUrl (lastNavigateURL, (byte[])null, null);
+		setUrl (this.lastNavigateURL, (byte[])null, null);
 		return XPCOM.NS_OK;
 	}
 	boolean doit = sendChangingEvent (value);
@@ -4691,12 +4691,12 @@ int OnShowTooltip (int aXCoords, int aYCoords, long /*int*/ aTipText) {
 	char[] dest = new char[length];
 	XPCOM.memmove (dest, aTipText, length * 2);
 	String text = new String (dest);
-	if (tip != null && !tip.isDisposed ()) tip.dispose ();
+	if (this.tip != null && !this.tip.isDisposed ()) this.tip.dispose ();
 	Display display = browser.getDisplay ();
 	Shell parent = browser.getShell ();
-	tip = new Shell (parent, SWT.ON_TOP);
-	tip.setLayout (new FillLayout());
-	Label label = new Label (tip, SWT.CENTER);
+	this.tip = new Shell (parent, SWT.ON_TOP);
+	this.tip.setLayout (new FillLayout());
+	Label label = new Label (this.tip, SWT.CENTER);
 	label.setForeground (display.getSystemColor (SWT.COLOR_INFO_FOREGROUND));
 	label.setBackground (display.getSystemColor (SWT.COLOR_INFO_BACKGROUND));
 	label.setText (text);
@@ -4710,15 +4710,15 @@ int OnShowTooltip (int aXCoords, int aYCoords, long /*int*/ aTipText) {
 	 * the arrow cursor on Windows
 	 */ 
 	point.y += 21;
-	tip.setLocation (point);
-	tip.pack ();
-	tip.setVisible (true);
+	this.tip.setLocation (point);
+	this.tip.pack ();
+	this.tip.setVisible (true);
 	return XPCOM.NS_OK;
 }
 
 int OnHideTooltip () {
-	if (tip != null && !tip.isDisposed ()) tip.dispose ();
-	tip = null;
+	if (this.tip != null && !this.tip.isDisposed ()) this.tip.dispose ();
+	this.tip = null;
 	return XPCOM.NS_OK;
 }
 
@@ -4747,7 +4747,7 @@ int HandleEvent (long /*int*/ event) {
 	}
 
 	if (XPCOM.DOMEVENT_FOCUS.equals (typeString)) {
-		delegate.handleFocus ();
+		this.delegate.handleFocus ();
 		return XPCOM.NS_OK;
 	}
 
@@ -4902,7 +4902,7 @@ int HandleEvent (long /*int*/ event) {
 		keyEvent.character = (char)lastCharCode;
 		keyEvent.stateMask = (aAltKey[0] != 0 ? SWT.ALT : 0) | (aCtrlKey[0] != 0 ? SWT.CTRL : 0) | (aShiftKey[0] != 0 ? SWT.SHIFT : 0) | (aMetaKey[0] != 0 ? SWT.COMMAND : 0);
 		boolean doit = true;
-		if (delegate.sendTraverse ()) {
+		if (this.delegate.sendTraverse ()) {
 			doit = sendKeyEvent (keyEvent);
 		} else {
 			browser.notifyListeners (keyEvent.type, keyEvent);
@@ -5034,7 +5034,7 @@ int HandleEvent (long /*int*/ event) {
 	mouseEvent.stateMask = (aAltKey[0] != 0 ? SWT.ALT : 0) | (aCtrlKey[0] != 0 ? SWT.CTRL : 0) | (aShiftKey[0] != 0 ? SWT.SHIFT : 0) | (aMetaKey[0] != 0 ? SWT.COMMAND : 0);
 
 	if (XPCOM.DOMEVENT_MOUSEDOWN.equals (typeString)) {
-		delegate.handleMouseDown ();
+		this.delegate.handleMouseDown ();
 		mouseEvent.type = SWT.MouseDown;
 		mouseEvent.button = aButton[0] + 1;
 		mouseEvent.count = aDetail[0];

@@ -76,7 +76,7 @@ public class TextFieldItemHelper
                 //      PlatformInputMappingFactory.getInstance()).getInstance(keyCode);
 
                 //logUtil.putF("GameKey: " + gameKey, this, gameInputStrings.KEY_PRESSED);
-                if (gameKey == gameKeyFactory.LEFT || platformKeyFactory.isLeft(input)) {
+                if (gameKey == this.gameKeyFactory.LEFT || platformKeyFactory.isLeft(input)) {
                     PreLogUtil.put("Position Change", this, gameInputStrings.KEY_PRESSED);
                     this.caretPositionChanged(this.textFieldItem.getCaretPosition() - 1);
                 } else if (gameKey == gameKeyFactory.RIGHT || platformKeyFactory.isRight(input)) {
@@ -107,7 +107,7 @@ public class TextFieldItemHelper
             
         } catch(Exception e) {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
+            this.logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
         }
         return true;
     }
@@ -116,7 +116,7 @@ public class TextFieldItemHelper
     {
         //logUtil.putF("Position: " + position, this, "setCaretPosition");
 
-        textFieldItem.setCaretPosition(position);
+        this.textFieldItem.setCaretPosition(position);
 
         /*
         if (tf.getCharPositionY(position) < viewPortY)
@@ -133,7 +133,7 @@ public class TextFieldItemHelper
     private void caretPositionChanged(int position)
     {
         this.setCaretPosition(position);
-        textFieldItem.setCaretVisible(true);
+        this.textFieldItem.setCaretVisible(true);
         this.canvas.repaint();
     }
 
@@ -145,9 +145,9 @@ public class TextFieldItemHelper
         final String start = textFieldValue.substring(0, this.textFieldItem.getCaretPosition());
         final String end = textFieldValue.substring(this.textFieldItem.getCaretPosition(), textFieldValue.length());
 
-        textFieldItem.setString(start + string + end);
+        this.textFieldItem.setString(start + string + end);
         //textFieldItem.setCaretPosition(string2.length());
-        textFieldItem.setCaretPosition(start.length() + string.length());
+        this.textFieldItem.setCaretPosition(start.length() + string.length());
         this.canvas.repaint();
     }
 
@@ -160,7 +160,7 @@ public class TextFieldItemHelper
             final String start = textFieldValue.substring(0, this.textFieldItem.getCaretPosition() - 1);
             final String end = textFieldValue.substring(this.textFieldItem.getCaretPosition(), size);
 
-            textFieldItem.setString(start + end);
+            this.textFieldItem.setString(start + end);
             
             this.setCaretPosition(this.textFieldItem.getCaretPosition() - 1);
             
@@ -177,7 +177,7 @@ public class TextFieldItemHelper
             final String start = textFieldValue.substring(0, this.textFieldItem.getCaretPosition());
             final String end = textFieldValue.substring(this.textFieldItem.getCaretPosition() + 1, size);
 
-            textFieldItem.setString(start + end);
+            this.textFieldItem.setString(start + end);
 
             this.setCaretPosition(this.textFieldItem.getCaretPosition() - 1);
 

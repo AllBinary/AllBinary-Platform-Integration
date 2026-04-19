@@ -118,9 +118,9 @@ public class AndroidGaugeUI extends LinearLayout implements GaugeUI {
 	public int getValue() {
             final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		if (activity2.isActivityThread()) {
-			getValueTransfer = seekBar.getProgress();
+			this.getValueTransfer = this.seekBar.getProgress();
 		} else {
-			getValueTransfer = Integer.MIN_VALUE;
+			this.getValueTransfer = Integer.MIN_VALUE;
 			activity2.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidGaugeUI.this) {
@@ -131,7 +131,7 @@ public class AndroidGaugeUI extends LinearLayout implements GaugeUI {
 			});
 
 			synchronized (AndroidGaugeUI.this) {
-				if (getValueTransfer == Integer.MIN_VALUE) {
+				if (this.getValueTransfer == Integer.MIN_VALUE) {
 					try {
 						wait();
 					} catch (InterruptedException e) {

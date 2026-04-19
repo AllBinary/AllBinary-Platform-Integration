@@ -199,39 +199,39 @@ public void addKeyListener (KeyListener listener) {
 }
 
 Point adjustMoveCursor () {
-	if (bounds == null) return null;
-	int newX = bounds.x + bounds.width / 2;
-	int newY = bounds.y;
+	if (this.bounds == null) return null;
+	int newX = this.bounds.x + this.bounds.width / 2;
+	int newY = this.bounds.y;
 	POINT pt = new POINT ();
 	pt.x = newX;  pt.y = newY;
 	/*
 	 * Convert to screen coordinates iff needed
  	 */
-	if (parent != null) {
-		OS.ClientToScreen (parent.handle, pt);
+	if (this.parent != null) {
+		OS.ClientToScreen (this.parent.handle, pt);
 	}
 	OS.SetCursorPos (pt.x, pt.y);
 	return new Point (pt.x, pt.y);
 }
 
 Point adjustResizeCursor () {
-	if (bounds == null) return null;
+	if (this.bounds == null) return null;
 	int newX, newY;
 
-	if ((cursorOrientation & SWT.LEFT) != 0) {
-		newX = bounds.x;
+	if ((this.cursorOrientation & SWT.LEFT) != 0) {
+		newX = this.bounds.x;
 	} else if ((cursorOrientation & SWT.RIGHT) != 0) {
 		newX = bounds.x + bounds.width;
 	} else {
-		newX = bounds.x + bounds.width / 2;
+		newX = this.bounds.x + this.bounds.width / 2;
 	}
 
-	if ((cursorOrientation & SWT.UP) != 0) {
-		newY = bounds.y;
+	if ((this.cursorOrientation & SWT.UP) != 0) {
+		newY = this.bounds.y;
 	} else if ((cursorOrientation & SWT.DOWN) != 0) {
 		newY = bounds.y + bounds.height;
 	} else {
-		newY = bounds.y + bounds.height / 2;
+		newY = this.bounds.y + this.bounds.height / 2;
 	}
 
 	POINT pt = new POINT ();
@@ -239,8 +239,8 @@ Point adjustResizeCursor () {
 	/*
 	 * Convert to screen coordinates iff needed
 	 */
-	if (parent != null) {
-		OS.ClientToScreen (parent.handle, pt);
+	if (this.parent != null) {
+		OS.ClientToScreen (this.parent.handle, pt);
 	}
 	OS.SetCursorPos (pt.x, pt.y);
 
@@ -248,9 +248,9 @@ Point adjustResizeCursor () {
 	* If the client has not provided a custom cursor then determine
 	* the appropriate resize cursor.
 	*/
-	if (clientCursor == null) {
+	if (this.clientCursor == null) {
 		long /*int*/ newCursor = 0;
-		switch (cursorOrientation) {
+		switch (this.cursorOrientation) {
 			case SWT.UP:
 				newCursor = OS.LoadCursor (0, OS.IDC_SIZENS);
 				break;
@@ -280,10 +280,10 @@ Point adjustResizeCursor () {
 				break;
 		}
 		OS.SetCursor (newCursor);
-		if (resizeCursor != 0) {
-			OS.DestroyCursor (resizeCursor);
+		if (this.resizeCursor != 0) {
+			OS.DestroyCursor (this.resizeCursor);
 		}
-		resizeCursor = newCursor;
+		this.resizeCursor = newCursor;
 	}
 		
 	return new Point (pt.x, pt.y);
@@ -311,18 +311,18 @@ public void close () {
 }
 
 Rectangle computeBounds () {
-	if (rectangles.length == 0) return null;
-	int xMin = rectangles [0].x;
-	int yMin = rectangles [0].y;
-	int xMax = rectangles [0].x + rectangles [0].width;
-	int yMax = rectangles [0].y + rectangles [0].height;
+	if (this.rectangles.length == 0) return null;
+	int xMin = this.rectangles [0].x;
+	int yMin = this.rectangles [0].y;
+	int xMax = this.rectangles [0].x + this.rectangles [0].width;
+	int yMax = this.rectangles [0].y + this.rectangles [0].height;
 	
-	for (int i = 1; i < rectangles.length; i++) {
-		if (rectangles [i].x < xMin) xMin = rectangles [i].x;
-		if (rectangles [i].y < yMin) yMin = rectangles [i].y;
-		int rectRight = rectangles [i].x + rectangles [i].width;
+	for (int i = 1; i < this.rectangles.length; i++) {
+		if (this.rectangles [i].x < xMin) xMin = this.rectangles [i].x;
+		if (this.rectangles [i].y < yMin) yMin = this.rectangles [i].y;
+		int rectRight = this.rectangles [i].x + this.rectangles [i].width;
 		if (rectRight > xMax) xMax = rectRight;		
-		int rectBottom = rectangles [i].y + rectangles [i].height;
+		int rectBottom = this.rectangles [i].y + this.rectangles [i].height;
 		if (rectBottom > yMax) yMax = rectBottom;
 	}
 	
@@ -331,19 +331,19 @@ Rectangle computeBounds () {
 
 Rectangle [] computeProportions (Rectangle [] rects) {
 	Rectangle [] result = new Rectangle [rects.length];
-	bounds = computeBounds ();
-	if (bounds != null) {
+	this.bounds = computeBounds ();
+	if (this.bounds != null) {
 		for (int i = 0; i < rects.length; i++) {
 			int x = 0, y = 0, width = 0, height = 0;
-			if (bounds.width != 0) {
-				x = (rects [i].x - bounds.x) * 100 / bounds.width;
-				width = rects [i].width * 100 / bounds.width;
+			if (this.bounds.width != 0) {
+				x = (rects [i].x - this.bounds.x) * 100 / this.bounds.width;
+				width = rects [i].width * 100 / this.bounds.width;
 			} else {
 				width = 100;
 			}
-			if (bounds.height != 0) {
-				y = (rects [i].y - bounds.y) * 100 / bounds.height;
-				height = rects [i].height * 100 / bounds.height;
+			if (this.bounds.height != 0) {
+				y = (rects [i].y - this.bounds.y) * 100 / this.bounds.height;
+				height = rects [i].height * 100 / this.bounds.height;
 			} else {
 				height = 100;
 			}
@@ -372,7 +372,7 @@ void drawRectangles (Rectangle [] rects, boolean stippled) {
 		return;
 	}
 	int bandWidth = 1;
-	long /*int*/ hwndTrack = parent == null ? OS.GetDesktopWindow () : parent.handle;
+	long /*int*/ hwndTrack = this.parent == null ? OS.GetDesktopWindow () : this.parent.handle;
 	long /*int*/ hDC = OS.GetDCEx (hwndTrack, 0, OS.DCX_CACHE);
 	long /*int*/ hBitmap = 0, hBrush = 0, oldBrush = 0;
 	if (stippled) {
@@ -411,9 +411,9 @@ void drawRectangles (Rectangle [] rects, boolean stippled) {
  */
 public Rectangle [] getRectangles () {
 	checkWidget();
-	Rectangle [] result = new Rectangle [rectangles.length];
-	for (int i = 0; i < rectangles.length; i++) {
-		Rectangle current = rectangles [i];
+	Rectangle [] result = new Rectangle [this.rectangles.length];
+	for (int i = 0; i < this.rectangles.length; i++) {
+		Rectangle current = this.rectangles [i];
 		result [i] = new Rectangle (current.x, current.y, current.width, current.height);
 	}
 	return result;
@@ -435,16 +435,16 @@ public boolean getStippled () {
 }
 
 void moveRectangles (int xChange, int yChange) {
-	if (bounds == null) return;
+	if (this.bounds == null) return;
 	if (xChange < 0 && ((style & SWT.LEFT) == 0)) xChange = 0;
 	if (xChange > 0 && ((style & SWT.RIGHT) == 0)) xChange = 0;
 	if (yChange < 0 && ((style & SWT.UP) == 0)) yChange = 0;
 	if (yChange > 0 && ((style & SWT.DOWN) == 0)) yChange = 0;
 	if (xChange == 0 && yChange == 0) return;
-	bounds.x += xChange; bounds.y += yChange;
-	for (int i = 0; i < rectangles.length; i++) {
-		rectangles [i].x += xChange;
-		rectangles [i].y += yChange;
+	this.bounds.x += xChange; this.bounds.y += yChange;
+	for (int i = 0; i < this.rectangles.length; i++) {
+		this.rectangles [i].x += xChange;
+		this.rectangles [i].y += yChange;
 	}
 }
 
@@ -471,11 +471,11 @@ public boolean open () {
 	*/
 	int vStyle = style & (SWT.UP | SWT.DOWN);
 	if (vStyle == SWT.UP || vStyle == SWT.DOWN) {
-		cursorOrientation |= vStyle;
+		this.cursorOrientation |= vStyle;
 	}
 	int hStyle = style & (SWT.LEFT | SWT.RIGHT);
 	if (hStyle == SWT.LEFT || hStyle == SWT.RIGHT) {
-		cursorOrientation |= hStyle;
+		this.cursorOrientation |= hStyle;
 	}
 
 	Callback newProc = null;
@@ -487,7 +487,7 @@ public boolean open () {
 	* Note that one window (almost opaque) is used for catching all events and a
 	* second window is used for drawing the rectangles. 
 	*/
-	if (IsVista && parent == null) {
+	if (IsVista && this.parent == null) {
 		Rectangle bounds = display.getBounds();
 		hwndTransparent = OS.CreateWindowEx (
 			OS.WS_EX_LAYERED | OS.WS_EX_NOACTIVATE | OS.WS_EX_TOOLWINDOW,
@@ -513,7 +513,7 @@ public boolean open () {
 			OS.GetModuleHandle (null),
 			null);
 		OS.SetLayeredWindowAttributes (hwndOpaque, 0xFFFFFF, (byte)0, OS.LWA_COLORKEY | OS.LWA_ALPHA);
-		drawn = false;
+		this.drawn = false;
 		newProc = new Callback (this, "transparentProc", 4); //$NON-NLS-1$
 		long /*int*/ newProcAddress = newProc.getAddress ();
 		if (newProcAddress == 0) error (SWT.ERROR_NO_MORE_CALLBACKS);
@@ -553,7 +553,7 @@ public boolean open () {
 	}
 
 	update ();
-	drawRectangles (rectangles, stippled);
+	drawRectangles (this.rectangles, stippled);
 	Point cursorPos = null;
 	if (mouseDown) {
 		POINT pt = new POINT ();
@@ -576,7 +576,7 @@ public boolean open () {
 		/* Tracker behaves like a Dialog with its own OS event loop. */
 		MSG msg = new MSG ();
 		while (tracking && !cancelled) {
-			if (parent != null && parent.isDisposed ()) break;
+			if (this.parent != null && this.parent.isDisposed ()) break;
 			display.runSkin ();
 			display.runDeferredLayouts ();
 			OS.GetMessage (msg, 0, 0, 0);
@@ -599,13 +599,13 @@ public boolean open () {
 			if (hwndOpaque == 0) {
 				if (msg.message == OS.WM_PAINT) {
 					update ();
-					drawRectangles (rectangles, stippled);
+					drawRectangles (this.rectangles, stippled);
 				}
 			}
 			OS.DispatchMessage (msg);
 			if (hwndOpaque == 0) {
 				if (msg.message == OS.WM_PAINT) {
-					drawRectangles (rectangles, stippled);
+					drawRectangles (this.rectangles, stippled);
 				}
 			}
 			display.runAsyncMessages (false);
@@ -613,7 +613,7 @@ public boolean open () {
 		if (mouseDown) OS.ReleaseCapture ();
 		if (!isDisposed()) {
 			update ();
-			drawRectangles (rectangles, stippled);
+			drawRectangles (this.rectangles, stippled);
 		}
 	} finally {
 		/*
@@ -633,9 +633,9 @@ public boolean open () {
 		* Cleanup: If this tracker was resizing then the last cursor that it created
 		* needs to be destroyed.
 		*/
-		if (resizeCursor != 0) {
-			OS.DestroyCursor (resizeCursor);
-			resizeCursor = 0;
+		if (this.resizeCursor != 0) {
+			OS.DestroyCursor (this.resizeCursor);
+			this.resizeCursor = 0;
 		}
 	}
 	tracking = false;
@@ -644,9 +644,9 @@ public boolean open () {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	parent = null;
-	rectangles = proportions = null;
-	bounds = null;
+	this.parent = null;
+	this.rectangles = proportions = null;
+	this.bounds = null;
 }
 
 /**
@@ -700,22 +700,22 @@ public void removeKeyListener(KeyListener listener) {
 }
 
 void resizeRectangles (int xChange, int yChange) {
-	if (bounds == null) return;
+	if (this.bounds == null) return;
 	/*
 	* If the cursor orientation has not been set in the orientation of
 	* this change then try to set it here.
 	*/
-	if (xChange < 0 && ((style & SWT.LEFT) != 0) && ((cursorOrientation & SWT.RIGHT) == 0)) {
-		cursorOrientation |= SWT.LEFT;
+	if (xChange < 0 && ((style & SWT.LEFT) != 0) && ((this.cursorOrientation & SWT.RIGHT) == 0)) {
+		this.cursorOrientation |= SWT.LEFT;
 	}
-	if (xChange > 0 && ((style & SWT.RIGHT) != 0) && ((cursorOrientation & SWT.LEFT) == 0)) {
-		cursorOrientation |= SWT.RIGHT;
+	if (xChange > 0 && ((style & SWT.RIGHT) != 0) && ((this.cursorOrientation & SWT.LEFT) == 0)) {
+		this.cursorOrientation |= SWT.RIGHT;
 	}
-	if (yChange < 0 && ((style & SWT.UP) != 0) && ((cursorOrientation & SWT.DOWN) == 0)) {
-		cursorOrientation |= SWT.UP;
+	if (yChange < 0 && ((style & SWT.UP) != 0) && ((this.cursorOrientation & SWT.DOWN) == 0)) {
+		this.cursorOrientation |= SWT.UP;
 	}
-	if (yChange > 0 && ((style & SWT.DOWN) != 0) && ((cursorOrientation & SWT.UP) == 0)) {
-		cursorOrientation |= SWT.DOWN;
+	if (yChange > 0 && ((style & SWT.DOWN) != 0) && ((this.cursorOrientation & SWT.UP) == 0)) {
+		this.cursorOrientation |= SWT.DOWN;
 	}
 	
 	/*
@@ -724,14 +724,14 @@ void resizeRectangles (int xChange, int yChange) {
 	 * cursor's orientation accordingly, and flip each Rectangle's origin (only
 	 * necessary for > 1 Rectangles) 
 	 */
-	if ((cursorOrientation & SWT.LEFT) != 0) {
-		if (xChange > bounds.width) {
+	if ((this.cursorOrientation & SWT.LEFT) != 0) {
+		if (xChange > this.bounds.width) {
 			if ((style & SWT.RIGHT) == 0) return;
-			cursorOrientation |= SWT.RIGHT;
-			cursorOrientation &= ~SWT.LEFT;
-			bounds.x += bounds.width;
-			xChange -= bounds.width;
-			bounds.width = 0;
+			this.cursorOrientation |= SWT.RIGHT;
+			this.cursorOrientation &= ~SWT.LEFT;
+			this.bounds.x += this.bounds.width;
+			xChange -= this.bounds.width;
+			this.bounds.width = 0;
 			if (proportions.length > 1) {
 				for (int i = 0; i < proportions.length; i++) {
 					Rectangle proportion = proportions [i];
@@ -740,12 +740,12 @@ void resizeRectangles (int xChange, int yChange) {
 			}
 		}
 	} else if ((cursorOrientation & SWT.RIGHT) != 0) {
-		if (bounds.width < -xChange) {
+		if (this.bounds.width < -xChange) {
 			if ((style & SWT.LEFT) == 0) return;
-			cursorOrientation |= SWT.LEFT;
-			cursorOrientation &= ~SWT.RIGHT;
-			xChange += bounds.width;
-			bounds.width = 0;
+			this.cursorOrientation |= SWT.LEFT;
+			this.cursorOrientation &= ~SWT.RIGHT;
+			xChange += this.bounds.width;
+			this.bounds.width = 0;
 			if (proportions.length > 1) {
 				for (int i = 0; i < proportions.length; i++) {
 					Rectangle proportion = proportions [i];
@@ -754,14 +754,14 @@ void resizeRectangles (int xChange, int yChange) {
 			}
 		}
 	}
-	if ((cursorOrientation & SWT.UP) != 0) {
-		if (yChange > bounds.height) {
+	if ((this.cursorOrientation & SWT.UP) != 0) {
+		if (yChange > this.bounds.height) {
 			if ((style & SWT.DOWN) == 0) return;
-			cursorOrientation |= SWT.DOWN;
-			cursorOrientation &= ~SWT.UP;
-			bounds.y += bounds.height;
-			yChange -= bounds.height;
-			bounds.height = 0;
+			this.cursorOrientation |= SWT.DOWN;
+			this.cursorOrientation &= ~SWT.UP;
+			this.bounds.y += this.bounds.height;
+			yChange -= this.bounds.height;
+			this.bounds.height = 0;
 			if (proportions.length > 1) {
 				for (int i = 0; i < proportions.length; i++) {
 					Rectangle proportion = proportions [i];
@@ -770,12 +770,12 @@ void resizeRectangles (int xChange, int yChange) {
 			}
 		}
 	} else if ((cursorOrientation & SWT.DOWN) != 0) {
-		if (bounds.height < -yChange) {
+		if (this.bounds.height < -yChange) {
 			if ((style & SWT.UP) == 0) return;
-			cursorOrientation |= SWT.UP;
-			cursorOrientation &= ~SWT.DOWN;
-			yChange += bounds.height;
-			bounds.height = 0;
+			this.cursorOrientation |= SWT.UP;
+			this.cursorOrientation &= ~SWT.DOWN;
+			yChange += this.bounds.height;
+			this.bounds.height = 0;
 			if (proportions.length > 1) {
 				for (int i = 0; i < proportions.length; i++) {
 					Rectangle proportion = proportions [i];
@@ -786,29 +786,29 @@ void resizeRectangles (int xChange, int yChange) {
 	}
 	
 	// apply the bounds adjustment
-	if ((cursorOrientation & SWT.LEFT) != 0) {
-		bounds.x += xChange;
-		bounds.width -= xChange;
+	if ((this.cursorOrientation & SWT.LEFT) != 0) {
+		this.bounds.x += xChange;
+		this.bounds.width -= xChange;
 	} else if ((cursorOrientation & SWT.RIGHT) != 0) {
 		bounds.width += xChange;
 	}
-	if ((cursorOrientation & SWT.UP) != 0) {
-		bounds.y += yChange;
-		bounds.height -= yChange;
+	if ((this.cursorOrientation & SWT.UP) != 0) {
+		this.bounds.y += yChange;
+		this.bounds.height -= yChange;
 	} else if ((cursorOrientation & SWT.DOWN) != 0) {
 		bounds.height += yChange;
 	}
 	
-	Rectangle [] newRects = new Rectangle [rectangles.length];
-	for (int i = 0; i < rectangles.length; i++) {
+	Rectangle [] newRects = new Rectangle [this.rectangles.length];
+	for (int i = 0; i < this.rectangles.length; i++) {
 		Rectangle proportion = proportions[i];
 		newRects[i] = new Rectangle (
-			proportion.x * bounds.width / 100 + bounds.x,
-			proportion.y * bounds.height / 100 + bounds.y,
-			proportion.width * bounds.width / 100,
-			proportion.height * bounds.height / 100);
+			proportion.x * this.bounds.width / 100 + this.bounds.x,
+			proportion.y * this.bounds.height / 100 + this.bounds.y,
+			proportion.width * this.bounds.width / 100,
+			proportion.height * this.bounds.height / 100);
 	}
-	rectangles = newRects;	
+	this.rectangles = newRects;	
 }
 
 /**
@@ -824,9 +824,9 @@ void resizeRectangles (int xChange, int yChange) {
  */
 public void setCursor(Cursor newCursor) {
 	checkWidget();
-	clientCursor = newCursor;
+	this.clientCursor = newCursor;
 	if (newCursor != null) {
-		if (inEvent) OS.SetCursor (clientCursor.handle);
+		if (this.inEvent) OS.SetCursor (this.clientCursor.handle);
 	}
 }
 
@@ -883,15 +883,15 @@ long /*int*/ transparentProc (long /*int*/ hwnd, long /*int*/ msg, long /*int*/ 
 		* the client.
 		*/
 		case OS.WM_NCHITTEST:
-			if (inEvent) return OS.HTTRANSPARENT;
+			if (this.inEvent) return OS.HTTRANSPARENT;
 			break;
 		case OS.WM_SETCURSOR:
-			if (clientCursor != null) {
-				OS.SetCursor (clientCursor.handle);
+			if (this.clientCursor != null) {
+				OS.SetCursor (this.clientCursor.handle);
 				return 1;
 			}
-			if (resizeCursor != 0) {
-				OS.SetCursor (resizeCursor);
+			if (this.resizeCursor != 0) {
+				OS.SetCursor (this.resizeCursor);
 				return 1;
 			}
 			break;
@@ -938,9 +938,9 @@ long /*int*/ transparentProc (long /*int*/ hwnd, long /*int*/ msg, long /*int*/ 
 					OS.DeleteObject (hBitmap);
 				}
 				OS.EndPaint (hwnd, ps);
-				if (!drawn) {
+				if (!this.drawn) {
 					OS.SetLayeredWindowAttributes (hwndOpaque, 0xFFFFFF, (byte)0xFF, OS.LWA_COLORKEY | OS.LWA_ALPHA);
-					drawn = true;
+					this.drawn = true;
 				}
 				return 0;
 			}
@@ -950,9 +950,9 @@ long /*int*/ transparentProc (long /*int*/ hwnd, long /*int*/ msg, long /*int*/ 
 
 void update () {
 	if (hwndOpaque != 0) return;
-	if (parent != null) {
-		if (parent.isDisposed ()) return;
-		Shell shell = parent.getShell ();
+	if (this.parent != null) {
+		if (this.parent.isDisposed ()) return;
+		Shell shell = this.parent.getShell ();
 		shell.update (true);
 	} else {
 		display.update ();
@@ -962,7 +962,7 @@ void update () {
 LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) {
 	LRESULT result = super.wmKeyDown (hwnd, wParam, lParam);
 	if (result != null) return result;
-	boolean isMirrored = parent != null && (parent.style & SWT.MIRRORED) != 0;
+	boolean isMirrored = this.parent != null && (this.parent.style & SWT.MIRRORED) != 0;
 	int stepSize = OS.GetKeyState (OS.VK_CONTROL) < 0 ? STEPSIZE_SMALL : STEPSIZE_LARGE;
 	int xChange = 0, yChange = 0;
 	switch ((int)/*64*/wParam) {
@@ -987,11 +987,11 @@ LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 			break;
 	}
 	if (xChange != 0 || yChange != 0) {
-		Rectangle [] oldRectangles = rectangles;
+		Rectangle [] oldRectangles = this.rectangles;
 		boolean oldStippled = stippled;
-		Rectangle [] rectsToErase = new Rectangle [rectangles.length];
-		for (int i = 0; i < rectangles.length; i++) {
-			Rectangle current = rectangles [i];
+		Rectangle [] rectsToErase = new Rectangle [this.rectangles.length];
+		for (int i = 0; i < this.rectangles.length; i++) {
+			Rectangle current = this.rectangles [i];
 			rectsToErase [i] = new Rectangle (current.x, current.y, current.width, current.height);
 		}
 		Event event = new Event ();
@@ -1000,9 +1000,9 @@ LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 		Point cursorPos;
 		if ((style & SWT.RESIZE) != 0) {
 			resizeRectangles (xChange, yChange);
-			inEvent = true;
+			this.inEvent = true;
 			sendEvent (SWT.Resize, event);
-			inEvent = false;
+			this.inEvent = false;
 			/*
 			* It is possible (but unlikely) that application
 			* code could have disposed the widget in the resize
@@ -1020,13 +1020,13 @@ LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 			 * happens then only redraw the tracker if the rectangle
 			 * values have changed.
 			 */
-			if (rectangles != oldRectangles) {
-				int length = rectangles.length;
+			if (this.rectangles != oldRectangles) {
+				int length = this.rectangles.length;
 				if (length != rectsToErase.length) {
 					draw = true;
 				} else {
 					for (int i = 0; i < length; i++) {
-						if (!rectangles [i].equals (rectsToErase [i])) {
+						if (!this.rectangles [i].equals (rectsToErase [i])) {
 							draw = true;
 							break;
 						}
@@ -1038,14 +1038,14 @@ LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 			if (draw) {
 				drawRectangles (rectsToErase, oldStippled);
 				update ();
-				drawRectangles (rectangles, stippled);
+				drawRectangles (this.rectangles, stippled);
 			}
 			cursorPos = adjustResizeCursor ();
 		} else {
 			moveRectangles (xChange, yChange);
-			inEvent = true;
+			this.inEvent = true;
 			sendEvent (SWT.Move, event);
-			inEvent = false;
+			this.inEvent = false;
 			/*
 			* It is possible (but unlikely) that application
 			* code could have disposed the widget in the move
@@ -1063,13 +1063,13 @@ LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 			 * happens then only redraw the tracker if the rectangle
 			 * values have changed.
 			 */
-			if (rectangles != oldRectangles) {
-				int length = rectangles.length;
+			if (this.rectangles != oldRectangles) {
+				int length = this.rectangles.length;
 				if (length != rectsToErase.length) {
 					draw = true;
 				} else {
 					for (int i = 0; i < length; i++) {
-						if (!rectangles [i].equals (rectsToErase [i])) {
+						if (!this.rectangles [i].equals (rectsToErase [i])) {
 							draw = true;
 							break;
 						}
@@ -1081,7 +1081,7 @@ LRESULT wmKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 			if (draw) {
 				drawRectangles (rectsToErase, oldStippled);
 				update ();
-				drawRectangles (rectangles, stippled);
+				drawRectangles (this.rectangles, stippled);
 			}
 			cursorPos = adjustMoveCursor ();
 		}
@@ -1107,11 +1107,11 @@ LRESULT wmMouse (int message, long /*int*/ wParam, long /*int*/ lParam) {
 	int newX = OS.GET_X_LPARAM (newPos);
 	int newY = OS.GET_Y_LPARAM (newPos);
 	if (newX != oldX || newY != oldY) {
-		Rectangle [] oldRectangles = rectangles;
+		Rectangle [] oldRectangles = this.rectangles;
 		boolean oldStippled = stippled;
-		Rectangle [] rectsToErase = new Rectangle [rectangles.length];
-		for (int i = 0; i < rectangles.length; i++) {
-			Rectangle current = rectangles [i];
+		Rectangle [] rectsToErase = new Rectangle [this.rectangles.length];
+		for (int i = 0; i < this.rectangles.length; i++) {
+			Rectangle current = this.rectangles [i];
 			rectsToErase [i] = new Rectangle (current.x, current.y, current.width, current.height);
 		}
 		Event event = new Event ();
@@ -1123,9 +1123,9 @@ LRESULT wmMouse (int message, long /*int*/ wParam, long /*int*/ lParam) {
 			} else {
 			   resizeRectangles (newX - oldX, newY - oldY);
 			}
-			inEvent = true;
+			this.inEvent = true;
 			sendEvent (SWT.Resize, event);
-			inEvent = false;
+			this.inEvent = false;
 			/*
 			* It is possible (but unlikely), that application
 			* code could have disposed the widget in the resize
@@ -1143,13 +1143,13 @@ LRESULT wmMouse (int message, long /*int*/ wParam, long /*int*/ lParam) {
 			 * happens then only redraw the tracker if the rectangle
 			 * values have changed.
 			 */
-			if (rectangles != oldRectangles) {
-				int length = rectangles.length;
+			if (this.rectangles != oldRectangles) {
+				int length = this.rectangles.length;
 				if (length != rectsToErase.length) {
 					draw = true;
 				} else {
 					for (int i = 0; i < length; i++) {
-						if (!rectangles [i].equals (rectsToErase [i])) {
+						if (!this.rectangles [i].equals (rectsToErase [i])) {
 							draw = true;
 							break;
 						}
@@ -1162,7 +1162,7 @@ LRESULT wmMouse (int message, long /*int*/ wParam, long /*int*/ lParam) {
 			if (draw) {
 				drawRectangles (rectsToErase, oldStippled);
 				update ();
-				drawRectangles (rectangles, stippled);
+				drawRectangles (this.rectangles, stippled);
 			}
 			Point cursorPos = adjustResizeCursor ();
 			if (cursorPos != null) {
@@ -1175,9 +1175,9 @@ LRESULT wmMouse (int message, long /*int*/ wParam, long /*int*/ lParam) {
 			} else { 
 				moveRectangles (newX - oldX, newY - oldY);
 			}
-			inEvent = true;
+			this.inEvent = true;
 			sendEvent (SWT.Move, event);
-			inEvent = false;
+			this.inEvent = false;
 			/*
 			* It is possible (but unlikely), that application
 			* code could have disposed the widget in the move
@@ -1195,13 +1195,13 @@ LRESULT wmMouse (int message, long /*int*/ wParam, long /*int*/ lParam) {
 			 * happens then only redraw the tracker if the rectangle
 			 * values have changed.
 			 */
-			if (rectangles != oldRectangles) {
-				int length = rectangles.length;
+			if (this.rectangles != oldRectangles) {
+				int length = this.rectangles.length;
 				if (length != rectsToErase.length) {
 					draw = true;
 				} else {
 					for (int i = 0; i < length; i++) {
-						if (!rectangles [i].equals (rectsToErase [i])) {
+						if (!this.rectangles [i].equals (rectsToErase [i])) {
 							draw = true;
 							break;
 						}
@@ -1213,7 +1213,7 @@ LRESULT wmMouse (int message, long /*int*/ wParam, long /*int*/ lParam) {
 			if (draw) {
 				drawRectangles (rectsToErase, oldStippled);
 				update ();
-				drawRectangles (rectangles, stippled);
+				drawRectangles (this.rectangles, stippled);
 			}
 		}
 		oldX = newX;

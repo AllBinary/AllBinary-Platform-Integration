@@ -89,26 +89,26 @@ public Bullet(int type, StyleRange style) {
 	this.style = style;
 }	
 void addIndices (int startLine, int lineCount) {
-	if (linesIndices == null) {
-		linesIndices = new int[lineCount];
-		count = lineCount;
-		for (int i = 0; i < lineCount; i++) linesIndices[i] = startLine + i;
+	if (this.linesIndices == null) {
+		this.linesIndices = new int[lineCount];
+		this.count = lineCount;
+		for (int i = 0; i < lineCount; i++) this.linesIndices[i] = startLine + i;
 	} else {
 		int modifyStart = 0;
-		while (modifyStart < count) {
-			if (startLine <= linesIndices[modifyStart]) break;
+		while (modifyStart < this.count) {
+			if (startLine <= this.linesIndices[modifyStart]) break;
 			modifyStart++;
 		}
 		int modifyEnd = modifyStart;
-		while (modifyEnd < count) {
-			if (startLine + lineCount <= linesIndices[modifyEnd]) break;
+		while (modifyEnd < this.count) {
+			if (startLine + lineCount <= this.linesIndices[modifyEnd]) break;
 			modifyEnd++;
 		}
-		int newSize = modifyStart + lineCount + count - modifyEnd;
-		if (newSize > linesIndices.length) {
+		int newSize = modifyStart + lineCount + this.count - modifyEnd;
+		if (newSize > this.linesIndices.length) {
 			int[] newLinesIndices = new int[newSize];
-			System.arraycopy(linesIndices, 0, newLinesIndices, 0, count);
-			linesIndices = newLinesIndices;
+			System.arraycopy(this.linesIndices, 0, newLinesIndices, 0, count);
+			this.linesIndices = newLinesIndices;
 		}
 		System.arraycopy(linesIndices, modifyEnd, linesIndices, modifyStart + lineCount, count - modifyEnd);
 		for (int i = 0; i < lineCount; i++) linesIndices[modifyStart + i] = startLine + i;
@@ -116,33 +116,33 @@ void addIndices (int startLine, int lineCount) {
 	}
 }
 int indexOf (int lineIndex) {
-	for (int i = 0; i < count; i++) {
-		if (linesIndices[i] == lineIndex) return i;
+	for (int i = 0; i < this.count; i++) {
+		if (this.linesIndices[i] == lineIndex) return i;
 	}
 	return -1;
 }
 @Override
 public int hashCode() {
-	return style.hashCode() ^ type;
+	return style.hashCode() ^ this.type;
 }
 int[] removeIndices (int startLine, int replaceLineCount, int newLineCount, boolean update) {
-	if (count == 0) return null;
-	if (startLine > linesIndices[count - 1]) return null;
+	if (this.count == 0) return null;
+	if (startLine > this.linesIndices[this.count - 1]) return null;
 	int endLine = startLine + replaceLineCount;
 	int delta = newLineCount - replaceLineCount;
-	for (int i = 0; i < count; i++) {
-		int index = linesIndices[i];
+	for (int i = 0; i < this.count; i++) {
+		int index = this.linesIndices[i];
 		if (startLine <= index) {
 			int j = i;
-			while (j < count) {
-				if (linesIndices[j] >= endLine) break;
+			while (j < this.count) {
+				if (this.linesIndices[j] >= endLine) break;
 				j++;
 			}
 			if (update) {
-				for (int k = j; k < count; k++) linesIndices[k] += delta;
+				for (int k = j; k < this.count; k++) this.linesIndices[k] += delta;
 			}
-			int[] redrawLines = new int[count - j];
-			System.arraycopy(linesIndices, j, redrawLines, 0, count - j);
+			int[] redrawLines = new int[this.count - j];
+			System.arraycopy(this.linesIndices, j, redrawLines, 0, count - j);
 			System.arraycopy(linesIndices, j, linesIndices, i, count - j);
 			count -= (j - i);
 			return redrawLines;

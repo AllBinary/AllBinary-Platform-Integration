@@ -122,7 +122,7 @@ public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
 			}
 			break;
 		case INVOKESPECIAL:
-			if  ((config.isEnhanceThreadCreation()) && (name.equals("<init>"))) {
+			if  ((this.config.isEnhanceThreadCreation()) && (name.equals("<init>"))) {
 				if (owner.equals("java/util/Timer")) {
 					owner = codeName(MIDletTimer.class);
 				} else if (owner.equals("java/util/TimerTask")) {
@@ -138,7 +138,7 @@ public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
 	}
 	
     public void visitTypeInsn(final int opcode, String desc) {
-    	if ((opcode == NEW) && (config.isEnhanceThreadCreation())) {
+    	if ((opcode == NEW) && (this.config.isEnhanceThreadCreation())) {
     		if ("java/util/Timer".equals(desc)) {
     			desc = codeName(MIDletTimer.class);
     		} else if ("java/util/TimerTask".equals(desc)) {
@@ -151,14 +151,14 @@ public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
     }
     
     public void visitTryCatchBlock(final Label start, final Label end, final Label handler, final String type) {
-    	if (config.isEnhanceCatchBlock() && type != null) {
-    		if (catchInfo == null) {
-    			catchInfo = new HashMap(); 
+    	if (this.config.isEnhanceCatchBlock() && type != null) {
+    		if (this.catchInfo == null) {
+    			this.catchInfo = new HashMap(); 
     		}
-    		CatchInformation newHandler = (CatchInformation)catchInfo.get(handler);
+    		CatchInformation newHandler = (CatchInformation)this.catchInfo.get(handler);
     		if (newHandler == null) {
     			newHandler = new CatchInformation(type);
-    			catchInfo.put(handler, newHandler);
+    			this.catchInfo.put(handler, newHandler);
     		}
     		mv.visitTryCatchBlock(start, end, newHandler.label, type);
     	} else {
@@ -168,8 +168,8 @@ public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
     
     //TODO make this work for gMaps case
     public void visitLabel(Label label) {
-    	if (config.isEnhanceCatchBlock() && catchInfo != null) {
-    		CatchInformation newHandler = (CatchInformation)catchInfo.get(label);
+    	if (this.config.isEnhanceCatchBlock() && this.catchInfo != null) {
+    		CatchInformation newHandler = (CatchInformation)this.catchInfo.get(label);
     		if (newHandler != null) {
     			mv.visitLabel(newHandler.label);
     			// no push, just use current Throwable in stack

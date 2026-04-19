@@ -263,37 +263,37 @@ public class SwingSelectDevicePanel extends SwingDialogPanel {
 		setLayout(new BorderLayout());
 		setBorder(new TitledBorder(new EtchedBorder(), "Installed devices"));
 
-		lsDevicesModel = new DefaultListModel();
-		lsDevices = new JList(lsDevicesModel);
-		lsDevices.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		lsDevices.addListSelectionListener(listSelectionListener);
-		spDevices = new JScrollPane(lsDevices);
-		add(spDevices, BorderLayout.CENTER);
+		this.lsDevicesModel = new DefaultListModel();
+		this.lsDevices = new JList(this.lsDevicesModel);
+		this.lsDevices.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.lsDevices.addListSelectionListener(listSelectionListener);
+		this.spDevices = new JScrollPane(this.lsDevices);
+		add(this.spDevices, BorderLayout.CENTER);
 
 		JPanel panel = new JPanel();
-		btAdd = new JButton("Add...");
-		btAdd.addActionListener(btAddListener);
-		btRemove = new JButton("Remove");
-		btRemove.addActionListener(btRemoveListener);
-		btDefault = new JButton("Set as default");
-		btDefault.addActionListener(btDefaultListener);
-		panel.add(btAdd);
-		panel.add(btRemove);
-		panel.add(btDefault);
+		this.btAdd = new JButton("Add...");
+		this.btAdd.addActionListener(btAddListener);
+		this.btRemove = new JButton("Remove");
+		this.btRemove.addActionListener(btRemoveListener);
+		this.btDefault = new JButton("Set as default");
+		this.btDefault.addActionListener(btDefaultListener);
+		panel.add(this.btAdd);
+		panel.add(this.btRemove);
+		panel.add(this.btDefault);
 
 		add(panel, BorderLayout.SOUTH);
 
 		for (Enumeration e = Config.getDeviceEntries().elements(); e.hasMoreElements();) {
 			DeviceEntry entry = (DeviceEntry) e.nextElement();
-			lsDevicesModel.addElement(entry);
+			this.lsDevicesModel.addElement(entry);
 			if (entry.isDefaultDevice()) {
-				lsDevices.setSelectedValue(entry, true);
+				this.lsDevices.setSelectedValue(entry, true);
 			}
 		}
 	}
 
 	public DeviceEntry getSelectedDeviceEntry() {
-		return (DeviceEntry) lsDevices.getSelectedValue();
+		return (DeviceEntry) this.lsDevices.getSelectedValue();
 	}
 
 }

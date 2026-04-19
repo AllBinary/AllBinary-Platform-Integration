@@ -151,18 +151,18 @@ public Widget (Widget parent, int style) {
 	checkSubclass ();
 	checkParent (parent);
 	this.style = style;
-	display = parent.display;
+	this.display = parent.display;
 	reskinWidget ();
 }
 
 void _addListener (int eventType, Listener listener) {
-	if (eventTable == null) eventTable = new EventTable ();
-	eventTable.hook (eventType, listener);
+	if (this.eventTable == null) this.eventTable = new EventTable ();
+	this.eventTable.hook (eventType, listener);
 }
 
 void _removeListener (int eventType, Listener listener) {
-	if (eventTable == null) return;
-	eventTable.unhook (eventType, listener);
+	if (this.eventTable == null) return;
+	this.eventTable.unhook (eventType, listener);
 }
 
 /**
@@ -531,7 +531,7 @@ char [] fixMnemonic (String string, boolean spaces) {
  */
 public Object getData () {
 	checkWidget();
-	return (state & KEYED_DATA) != 0 ? ((Object []) data) [0] : data;
+	return (state & KEYED_DATA) != 0 ? ((Object []) this.data) [0] : this.data;
 }
 
 /**
@@ -562,7 +562,7 @@ public Object getData (String key) {
 	checkWidget();
 	if (key == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if ((state & KEYED_DATA) != 0) {
-		Object [] table = (Object []) data;
+		Object [] table = (Object []) this.data;
 		for (int i=1; i<table.length; i+=2) {
 			if (key.equals (table [i])) return table [i+1];
 		}
@@ -614,7 +614,7 @@ public Display getDisplay () {
  */
 public Listener[] getListeners (int eventType) {
 	checkWidget();
-	if (eventTable == null) return new Listener[0];
+	if (this.eventTable == null) return new Listener[0];
 	return eventTable.getListeners(eventType);
 }
 
@@ -688,7 +688,7 @@ public int getStyle () {
  * @see #isListening
  */
 boolean hooks (int eventType) {
-	if (eventTable == null) return false;
+	if (this.eventTable == null) return false;
 	return eventTable.hooks (eventType);
 }
 
@@ -854,7 +854,7 @@ void releaseChildren (boolean destroy) {
  */
 void releaseHandle () {
 	state |= DISPOSED;
-	display = null;
+	this.display = null;
 }
 
 /*
@@ -900,7 +900,7 @@ void releaseParent () {
  */
 void releaseWidget () {
 	this.eventTable = null;
-	data = null;
+	this.data = null;
 }
 
 /**
@@ -961,8 +961,8 @@ public void removeListener (int eventType, Listener listener) {
 protected void removeListener (int eventType, SWTEventListener listener) {
 	checkWidget();
 	if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
-	if (eventTable == null) return;
-	eventTable.unhook (eventType, listener);
+	if (this.eventTable == null) return;
+	this.eventTable.unhook (eventType, listener);
 }
 
 /**
@@ -985,8 +985,8 @@ protected void removeListener (int eventType, SWTEventListener listener) {
 public void removeDisposeListener (DisposeListener listener) {
 	checkWidget();
 	if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
-	if (eventTable == null) return;
-	eventTable.unhook (SWT.Dispose, listener);
+	if (this.eventTable == null) return;
+	this.eventTable.unhook (SWT.Dispose, listener);
 }
 
 /**
@@ -1029,7 +1029,7 @@ void reskinChildren (int flags) {
 void reskinWidget() {
 	if ((state & SKIN_NEEDED) != SKIN_NEEDED) {
 		this.state |= SKIN_NEEDED;
-		display.addSkinnableWidget(this);
+		this.display.addSkinnableWidget(this);
 	}
 }
 
@@ -1058,7 +1058,7 @@ boolean sendDragEvent (int button, int stateMask, int x, int y) {
 void sendEvent (Event event) {
 	Display display = event.display;
 	if (!display.filterEvent (event)) {
-		if (eventTable != null) display.sendEvent(eventTable, event);
+		if (this.eventTable != null) display.sendEvent(this.eventTable, event);
 	}
 }
 
@@ -1071,20 +1071,20 @@ void sendEvent (int eventType, Event event) {
 }
 
 void sendEvent (int eventType, Event event, boolean send) {
-	if (eventTable == null && !display.filters (eventType)) {
+	if (this.eventTable == null && !this.display.filters (eventType)) {
 		return;
 	}
 	if (event == null) event = new Event ();
 	event.type = eventType;
-	event.display = display;
+	event.display = this.display;
 	event.widget = this;
 	if (event.time == 0) {
-		event.time = display.getLastEventTime ();
+		event.time = this.display.getLastEventTime ();
 	}
 	if (send) {
 		sendEvent (event);
 	} else {
-		display.postEvent (event);
+		this.display.postEvent (event);
 	}
 }
 
@@ -1094,7 +1094,7 @@ void sendSelectionEvent (int type) {
 }
 
 void sendSelectionEvent (int type, Event event, boolean send) {
-	if (eventTable == null && !display.filters (type)) {
+	if (this.eventTable == null && !this.display.filters (type)) {
 		return;
 	}
 	if (event == null) event = new Event ();
@@ -1150,12 +1150,12 @@ boolean sendMouseWheelEvent (int type, long /*int*/ hwnd, long /*int*/ wParam, l
 			delta *= linesToScroll [0];
 		}
 		/* Check if the delta and the remainder have the same direction (sign) */
-		if ((delta ^ display.scrollRemainder) >= 0) delta += display.scrollRemainder;
-		display.scrollRemainder = delta % OS.WHEEL_DELTA;
+		if ((delta ^ this.display.scrollRemainder) >= 0) delta += this.display.scrollRemainder;
+		this.display.scrollRemainder = delta % OS.WHEEL_DELTA;
 	} else {
 		/* Check if the delta and the remainder have the same direction (sign) */
-		if ((delta ^ display.scrollHRemainder) >= 0) delta += display.scrollHRemainder;
-		display.scrollHRemainder = delta % OS.WHEEL_DELTA;
+		if ((delta ^ this.display.scrollHRemainder) >= 0) delta += this.display.scrollHRemainder;
+		this.display.scrollHRemainder = delta % OS.WHEEL_DELTA;
 		
 		delta = -delta;
 	}
@@ -1230,7 +1230,7 @@ public void setData (String key, Object value) {
 	int index = 1;
 	Object [] table = null;
 	if ((state & KEYED_DATA) != 0) {
-		table = (Object []) data;
+		table = (Object []) this.data;
 		while (index < table.length) {
 			if (key.equals (table [index])) break;
 			index += 2;
@@ -1241,12 +1241,12 @@ public void setData (String key, Object value) {
 			if (index == table.length) {
 				Object [] newTable = new Object [table.length + 2];
 				System.arraycopy (table, 0, newTable, 0, table.length);
-				data = table = newTable;
+				this.data = table = newTable;
 			}
 		} else {
 			table = new Object [3];
-			table [0] = data;
-			data = table;
+			table [0] = this.data;
+			this.data = table;
 			state |= KEYED_DATA;
 		}
 		table [index] = key;
@@ -1256,13 +1256,13 @@ public void setData (String key, Object value) {
 			if (index != table.length) {
 				int length = table.length - 2;
 				if (length == 1) {
-					data = table [0];
+					this.data = table [0];
 					state &= ~KEYED_DATA;
 				} else {
 					Object [] newTable = new Object [length];
 					System.arraycopy (table, 0, newTable, 0, index);
 					System.arraycopy (table, index + 2, newTable, index, length - index);
-					data = newTable;
+					this.data = newTable;
 				}
 			}
 		}
@@ -1289,7 +1289,7 @@ boolean setInputState (Event event, int type) {
 	* causing mouse capture to become stuck.  The fix is to test
 	* for the extra buttons only when they exist.
 	*/
-	if (display.xMouse) {
+	if (this.display.xMouse) {
 		if (OS.GetKeyState (OS.VK_XBUTTON1) < 0) event.stateMask |= SWT.BUTTON4;
 		if (OS.GetKeyState (OS.VK_XBUTTON2) < 0) event.stateMask |= SWT.BUTTON5;
 	}
@@ -1333,12 +1333,12 @@ boolean setKeyState (Event event, int type, long /*int*/ wParam, long /*int*/ lP
 	* platform behavior but is not portable.  The fix is to detect
 	* these cases and convert the character.
 	*/
-	switch (display.lastAscii) {
+	switch (this.display.lastAscii) {
 		case SWT.DEL:
-			if (display.lastKey == SWT.BS) display.lastAscii = SWT.BS;
+			if (this.display.lastKey == SWT.BS) this.display.lastAscii = SWT.BS;
 			break;
 		case SWT.LF:
-			if (display.lastKey == SWT.CR) display.lastAscii = SWT.CR;
+			if (this.display.lastKey == SWT.CR) this.display.lastAscii = SWT.CR;
 			break;
 	}
 	
@@ -1349,13 +1349,13 @@ boolean setKeyState (Event event, int type, long /*int*/ wParam, long /*int*/ lP
 	* between the keys, the extended key bit is tested. If the bit
 	* is set, assume that the numeric keypad Enter was pressed. 
 	*/
-	if (display.lastKey == SWT.CR && display.lastAscii == SWT.CR) {
-		if ((lParam & 0x1000000) != 0) display.lastKey = SWT.KEYPAD_CR;
+	if (this.display.lastKey == SWT.CR && this.display.lastAscii == SWT.CR) {
+		if ((lParam & 0x1000000) != 0) this.display.lastKey = SWT.KEYPAD_CR;
 	}
 
 	setLocationMask(event, type, wParam, lParam);
 	
-	if (display.lastVirtual) {
+	if (this.display.lastVirtual) {
 		/*
 		* Feature in Windows.  The virtual key VK_DELETE is not
 		* treated as both a virtual key and an ASCII key by Windows.
@@ -1363,7 +1363,7 @@ boolean setKeyState (Event event, int type, long /*int*/ wParam, long /*int*/ lP
 		* The fix is to treat VK_DELETE as a special case and map
 		* the ASCII value explicitly (Delete is 0x7F).
 		*/
-		if (display.lastKey == OS.VK_DELETE) display.lastAscii = 0x7F;
+		if (this.display.lastKey == OS.VK_DELETE) this.display.lastAscii = 0x7F;
 		
 		/*
 		* Feature in Windows.  When the user presses Ctrl+Pause, the
@@ -1373,25 +1373,25 @@ boolean setKeyState (Event event, int type, long /*int*/ wParam, long /*int*/ lP
 		* unwanted.  The fix is to detect the case and set the character
 		* to zero. 
 		*/
-		if (display.lastKey == OS.VK_CANCEL) display.lastAscii = 0x0;
+		if (this.display.lastKey == OS.VK_CANCEL) this.display.lastAscii = 0x0;
 		
-		event.keyCode = Display.translateKey (display.lastKey);
+		event.keyCode = Display.translateKey (this.display.lastKey);
 	} else {
-		event.keyCode = display.lastKey;
+		event.keyCode = this.display.lastKey;
 	}
-	if (display.lastAscii != 0 || display.lastNull) {
-		event.character = Display.mbcsToWcs ((char) display.lastAscii);
+	if (this.display.lastAscii != 0 || this.display.lastNull) {
+		event.character = Display.mbcsToWcs ((char) this.display.lastAscii);
 	}
 	if (event.keyCode == 0 && event.character == 0) {
-		if (!display.lastNull) return false;
+		if (!this.display.lastNull) return false;
 	}
 	return setInputState (event, type);
 }
 
 int setLocationMask (Event event, int type, long /*int*/ wParam, long /*int*/ lParam) {
 	int location = SWT.NONE;
-	if (display.lastVirtual) {
-		switch (display.lastKey) {
+	if (this.display.lastVirtual) {
+		switch (this.display.lastKey) {
 			case OS.VK_SHIFT:
 				if (OS.GetKeyState(OS.VK_LSHIFT) < 0) location = SWT.LEFT;
 				if (OS.GetKeyState(OS.VK_RSHIFT) < 0) location = SWT.RIGHT;
@@ -1418,11 +1418,11 @@ int setLocationMask (Event event, int type, long /*int*/ wParam, long /*int*/ lP
 				}
 				break;
 		}
-		if (display.numpadKey(display.lastKey) != 0) {
+		if (this.display.numpadKey(this.display.lastKey) != 0) {
 			location = SWT.KEYPAD;
 		}
 	} else {
-		if (display.lastKey == SWT.KEYPAD_CR) {
+		if (this.display.lastKey == SWT.KEYPAD_CR) {
 			location = SWT.KEYPAD;
 		}
 	}
@@ -1512,7 +1512,7 @@ void updateMenuLocation (Event event) {
 }
 
 LRESULT wmCaptureChanged (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) {
-	display.captureChanged = true;
+	this.display.captureChanged = true;
 	return null;
 }
 
@@ -1524,8 +1524,8 @@ LRESULT wmChar (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) {
 		byte lead = (byte) (wParam & 0xFF);
 		if (OS.IsDBCSLeadByte (lead)) return null;
 	}
-	display.lastAscii = (int)/*64*/wParam;
-	display.lastNull = wParam == 0;
+	this.display.lastAscii = (int)/*64*/wParam;
+	this.display.lastNull = wParam == 0;
 	if (!sendKeyEvent (SWT.KeyDown, OS.WM_CHAR, wParam, lParam)) {
 		return LRESULT.ONE;
 	}
@@ -1598,7 +1598,7 @@ LRESULT wmIMEChar (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 
     private void addKeyState(long wParam) {
 
-        for (Display.KeyState s = display.keyStates; s != null; s = s.next) {
+        for (Display.KeyState s = this.display.keyStates; s != null; s = s.next) {
 
             if (s.wParam == wParam) {
 
@@ -1608,21 +1608,21 @@ LRESULT wmIMEChar (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
 
         }
 
-        if(display.keyStateList.size() > 0) {
+        if(this.display.keyStateList.size() > 0) {
             //System.out.println("using from cache");
-            final Display.KeyState keyState = (Display.KeyState) display.keyStateList.remove(0);
+            final Display.KeyState keyState = (Display.KeyState) this.display.keyStateList.remove(0);
             keyState.wParam = wParam;
-            keyState.lastKey = display.lastKey;
-            keyState.lastAscii = display.lastAscii;
-            keyState.lastVirtual = display.lastVirtual;
-            keyState.lastNull = display.lastNull;
-            keyState.lastDead = display.lastDead;
-            keyState.next = display.keyStates;
-            display.keyStates = keyState;
+            keyState.lastKey = this.display.lastKey;
+            keyState.lastAscii = this.display.lastAscii;
+            keyState.lastVirtual = this.display.lastVirtual;
+            keyState.lastNull = this.display.lastNull;
+            keyState.lastDead = this.display.lastDead;
+            keyState.next = this.display.keyStates;
+            this.display.keyStates = keyState;
         } else {
-            display.keyStates = new Display.KeyState(wParam, display.lastKey, display.lastAscii,
-                display.lastVirtual, display.lastNull, display.lastDead,
-                display.keyStates);
+            this.display.keyStates = new Display.KeyState(wParam, this.display.lastKey, this.display.lastAscii,
+                this.display.lastVirtual, this.display.lastNull, this.display.lastDead,
+                this.display.keyStates);
         }
 
     }
@@ -1630,12 +1630,12 @@ LRESULT wmIMEChar (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) 
     private Display.KeyState removeKeyState(long wParam) {
 
         Display.KeyState previous = null;
-        for (Display.KeyState s = display.keyStates; s != null; s = s.next) {
+        for (Display.KeyState s = this.display.keyStates; s != null; s = s.next) {
             if (s.wParam == wParam) {
                 if (previous != null) {
                     if(previous.next != null) {
                         //System.out.println("adding to cache");
-                        display.keyStateList.add(previous.next);
+                        this.display.keyStateList.add(previous.next);
                     }
                     previous.next = s.next;
                 }
@@ -1671,8 +1671,8 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 	}
 	
 	/* Clear last key and last ascii because a new key has been typed */
-	display.lastAscii = display.lastKey = 0;
-	display.lastVirtual = display.lastNull = display.lastDead = false;
+	this.display.lastAscii = this.display.lastKey = 0;
+	this.display.lastVirtual = this.display.lastNull = this.display.lastDead = false;
 	
 	/*
 	* Do not report a lead byte as a key pressed.
@@ -1744,9 +1744,9 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 	MSG msg = new MSG ();
 	int flags = OS.PM_NOREMOVE | OS.PM_NOYIELD | OS.PM_QS_INPUT | OS.PM_QS_POSTMESSAGE;
 	if (OS.PeekMessage (msg, hwnd, OS.WM_DEADCHAR, OS.WM_DEADCHAR, flags)) {
-		display.lastDead = true;
-		display.lastVirtual = mapKey == 0;
-		display.lastKey = display.lastVirtual ? (int)/*64*/wParam : mapKey;
+		this.display.lastDead = true;
+		this.display.lastVirtual = mapKey == 0;
+		this.display.lastKey = this.display.lastVirtual ? (int)/*64*/wParam : mapKey;
 		return null;
 	}
 	
@@ -1783,9 +1783,9 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 	* they are not virtual.  Therefore it is necessary to force
 	* numeric keypad keys to be virtual.
 	*/
-	display.lastVirtual = mapKey == 0 || display.numpadKey ((int)/*64*/wParam) != 0;
-	if (display.lastVirtual) {
-		display.lastKey = (int)/*64*/wParam;
+	this.display.lastVirtual = mapKey == 0 || this.display.numpadKey ((int)/*64*/wParam) != 0;
+	if (this.display.lastVirtual) {
+		this.display.lastKey = (int)/*64*/wParam;
 		/*
 		* Feature in Windows.  The virtual key VK_DELETE is not
 		* treated as both a virtual key and an ASCII key by Windows.
@@ -1793,7 +1793,7 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 		* The fix is to treat VK_DELETE as a special case and map
 		* the ASCII value explicitly (Delete is 0x7F).
 		*/
-		if (display.lastKey == OS.VK_DELETE) display.lastAscii = 0x7F;
+		if (this.display.lastKey == OS.VK_DELETE) this.display.lastAscii = 0x7F;
 
 		/*
 		* It is possible to get a WM_CHAR for a virtual key when
@@ -1804,7 +1804,7 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 		* that Ctrl+Home does not issue a WM_CHAR when Num Lock is
 		* down.
 		*/
-		if (OS.VK_NUMPAD0 <= display.lastKey && display.lastKey <= OS.VK_DIVIDE) {
+		if (OS.VK_NUMPAD0 <= this.display.lastKey && this.display.lastKey <= OS.VK_DIVIDE) {
 			/*
 			* Feature in Windows.  Calling to ToAscii() or ToUnicode(), clears
 			* the accented state such that the next WM_CHAR loses the accent.
@@ -1813,8 +1813,8 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 			* special Windows keypad sequence when NumLock is down (ie. typing 
 			* ALT+0231 should gives 'c' with a cedilla when NumLock is down).
 			*/
-			if (display.asciiKey (display.lastKey) != 0) return null;
-			display.lastAscii = display.numpadKey (display.lastKey);
+			if (this.display.asciiKey (this.display.lastKey) != 0) return null;
+			this.display.lastAscii = this.display.numpadKey (this.display.lastKey);
 		}
 	} else {
 		/*
@@ -1823,7 +1823,7 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 		* upper case values in WM_KEYDOWN despite the fact that the 
 		* Shift was not pressed.
 		*/
-	 	display.lastKey = (int)/*64*/OS.CharLower ((short) mapKey);
+	 	this.display.lastKey = (int)/*64*/OS.CharLower ((short) mapKey);
 
 		/*
 		* Feature in Windows. The virtual key VK_CANCEL is treated
@@ -1832,7 +1832,7 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 		* this key.  In order to distinguish between this key and
 		* Ctrl+C, mark the key as virtual.
 		*/
-		if (wParam == OS.VK_CANCEL) display.lastVirtual = true;
+		if (wParam == OS.VK_CANCEL) this.display.lastVirtual = true;
 		
 		/*
 		* Some key combinations map to Windows ASCII keys depending
@@ -1842,7 +1842,7 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 		* WM_CHAR.  If this is the case, issue the key down event from
 		* inside WM_CHAR.
 		*/
-		int asciiKey = display.asciiKey ((int)/*64*/wParam);
+		int asciiKey = this.display.asciiKey ((int)/*64*/wParam);
 		if (asciiKey != 0) {
 			/*
 			* When the user types Ctrl+Space, ToAscii () maps this to
@@ -1879,15 +1879,15 @@ LRESULT wmKeyDown2 (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam)
 		* depend on the international keyboard.
 		*/
 	 	if (OS.GetKeyState (OS.VK_SHIFT) < 0) {
-			display.lastAscii = display.shiftedKey ((int)/*64*/wParam);
-			if (display.lastAscii == 0) display.lastAscii = mapKey;
+			this.display.lastAscii = this.display.shiftedKey ((int)/*64*/wParam);
+			if (this.display.lastAscii == 0) this.display.lastAscii = mapKey;
 	 	} else {
-	 		display.lastAscii = (int)/*64*/OS.CharLower ((short) mapKey);
+	 		this.display.lastAscii = (int)/*64*/OS.CharLower ((short) mapKey);
 	 	}
 	 			
 		/* Note that Ctrl+'@' is ASCII NUL and is delivered in WM_CHAR */
-		if (display.lastAscii == '@') return null;
-		display.lastAscii = display.controlKey (display.lastAscii);
+		if (this.display.lastAscii == '@') return null;
+		this.display.lastAscii = this.display.controlKey (this.display.lastAscii);
 	}
 	if (!sendKeyEvent (SWT.KeyDown, OS.WM_KEYDOWN, wParam, lParam)) {
 		return LRESULT.ONE;
@@ -2441,7 +2441,7 @@ LRESULT wmPrint (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) {
 				rect.left = rect.top = 0;
 				int border = OS.GetSystemMetrics (OS.SM_CXEDGE);
 				OS.ExcludeClipRect (wParam, border, border, rect.right - border, rect.bottom - border);
-				OS.DrawThemeBackground (display.hEditTheme (), wParam, OS.EP_EDITTEXT, OS.ETS_NORMAL, rect, null);
+				OS.DrawThemeBackground (this.display.hEditTheme (), wParam, OS.EP_EDITTEXT, OS.ETS_NORMAL, rect, null);
 				return new LRESULT (code);
 			}
 		}
@@ -2597,8 +2597,8 @@ LRESULT wmSysKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lPara
 	}
 	
 	/* Clear last key and last ascii because a new key has been typed */
-	display.lastAscii = display.lastKey = 0;
-	display.lastVirtual = display.lastNull = display.lastDead = false;
+	this.display.lastAscii = this.display.lastKey = 0;
+	this.display.lastVirtual = this.display.lastNull = this.display.lastDead = false;
 
 	/* If are going to get a WM_SYSCHAR, ignore this message. */
 	/*
@@ -2622,9 +2622,9 @@ LRESULT wmSysKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lPara
 	} else {
 		mapKey = OS.MapVirtualKey ((int)/*64*/wParam, 2);
 	}
-	display.lastVirtual = mapKey == 0 || display.numpadKey ((int)/*64*/wParam) != 0;
-	if (display.lastVirtual) {
-	 	display.lastKey = (int)/*64*/wParam;
+	this.display.lastVirtual = mapKey == 0 || this.display.numpadKey ((int)/*64*/wParam) != 0;
+	if (this.display.lastVirtual) {
+	 	this.display.lastKey = (int)/*64*/wParam;
 		/*
 		* Feature in Windows.  The virtual key VK_DELETE is not
 		* treated as both a virtual key and an ASCII key by Windows.
@@ -2632,10 +2632,10 @@ LRESULT wmSysKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lPara
 		* The fix is to treat VK_DELETE as a special case and map
 		* the ASCII value explicitly (Delete is 0x7F).
 		*/
-		if (display.lastKey == OS.VK_DELETE) display.lastAscii = 0x7F;
+		if (this.display.lastKey == OS.VK_DELETE) this.display.lastAscii = 0x7F;
 
 		/* When a keypad key is typed, a WM_SYSCHAR is not issued */
-		if (OS.VK_NUMPAD0 <= display.lastKey && display.lastKey <= OS.VK_DIVIDE) {
+		if (OS.VK_NUMPAD0 <= this.display.lastKey && this.display.lastKey <= OS.VK_DIVIDE) {
 			/*
 			* A WM_SYSCHAR will be issued for '*', '+', '-', '.' and '/'
 			* on the numeric keypad.  Avoid issuing the key event twice
@@ -2645,14 +2645,14 @@ LRESULT wmSysKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lPara
 			* (ie. typing ALT+0231 should gives 'c' with a cedilla when
 			* NumLock is down).  Do not call either of these from here.
 			*/
-			switch (display.lastKey) {
+			switch (this.display.lastKey) {
 				case OS.VK_MULTIPLY:
 				case OS.VK_ADD:
 				case OS.VK_SUBTRACT:
 				case OS.VK_DECIMAL:
 				case OS.VK_DIVIDE: return null;
 			}
-			display.lastAscii = display.numpadKey (display.lastKey);
+			this.display.lastAscii = this.display.numpadKey (this.display.lastKey);
 		}
 	} else {
 		/*
@@ -2661,7 +2661,7 @@ LRESULT wmSysKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lPara
 		* upper case values in WM_SYSKEYDOWN despite the fact that the 
 		* Shift was not pressed.
 		*/
-	 	display.lastKey = (int)/*64*/OS.CharLower ((short) mapKey);
+	 	this.display.lastKey = (int)/*64*/OS.CharLower ((short) mapKey);
 
 		/*
 		* Feature in Windows 98.  MapVirtualKey() indicates that
@@ -2671,7 +2671,7 @@ LRESULT wmSysKeyDown (long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lPara
 		*/
 		if (OS.IsWinNT) return null;
 		if (wParam != OS.VK_RETURN) return null;
-		display.lastAscii = '\r';
+		this.display.lastAscii = '\r';
 	}
 
 	if (!sendKeyEvent (SWT.KeyDown, OS.WM_SYSKEYDOWN, wParam, lParam)) {

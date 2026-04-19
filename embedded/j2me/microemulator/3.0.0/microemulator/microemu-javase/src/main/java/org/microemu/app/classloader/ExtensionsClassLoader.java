@@ -55,7 +55,7 @@ public class ExtensionsClassLoader extends URLClassLoader {
     
 	public ExtensionsClassLoader(URL[] urls, ClassLoader parent) {
 		super(urls, parent);
-		acc = AccessController.getContext();
+		this.acc = AccessController.getContext();
 	}
 	
 	public void addURL(URL url) {

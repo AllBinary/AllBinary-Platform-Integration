@@ -118,12 +118,12 @@ public class StyledTextDropTargetEffect extends DropTargetEffect {
 	@Override
 	public void dragLeave(DropTargetEvent event) {
 		StyledText text = (StyledText) getControl();
-		if (currentOffset != -1) {
+		if (this.currentOffset != -1) {
 			refreshCaret(text, currentOffset, -1);
 		}
 		text.removeListener(SWT.Paint, paintListener);
-		scrollBeginTime = 0;
-		scrollX = -1;
+		this.scrollBeginTime = 0;
+		this.scrollX = -1;
 		scrollY = -1;
 	}
 
@@ -157,10 +157,10 @@ public class StyledTextDropTargetEffect extends DropTargetEffect {
 				this.scrollBeginTime = 0;
 				this.scrollX = scrollY = -1;
 			} else {
-				if (scrollX != -1 && scrollY != -1 && scrollBeginTime != 0 &&
+				if (this.scrollX != -1 && scrollY != -1 && this.scrollBeginTime != 0 &&
 					(pt.x >= scrollX && pt.x <= (scrollX + SCROLL_TOLERANCE) ||
 					 pt.y >= scrollY && pt.y <= (scrollY + SCROLL_TOLERANCE))) {
-					if (System.currentTimeMillis() >= scrollBeginTime) {
+					if (System.currentTimeMillis() >= this.scrollBeginTime) {
 						Rectangle area = text.getClientArea();
 						GC gc = new GC(text);
 						FontMetrics fm = gc.getFontMetrics();
@@ -184,12 +184,12 @@ public class StyledTextDropTargetEffect extends DropTargetEffect {
 							int topPixel = text.getTopPixel();
 							text.setTopPixel(topPixel + lineHeight);
 						}
-						scrollBeginTime = 0;
-						scrollX = scrollY = -1;
+						this.scrollBeginTime = 0;
+						this.scrollX = scrollY = -1;
 					}
 				} else {
-					scrollBeginTime = System.currentTimeMillis() + SCROLL_HYSTERESIS;
-					scrollX = pt.x;
+					this.scrollBeginTime = System.currentTimeMillis() + SCROLL_HYSTERESIS;
+					this.scrollX = pt.x;
 					scrollY = pt.y;
 				}
 			}
@@ -199,7 +199,7 @@ public class StyledTextDropTargetEffect extends DropTargetEffect {
 			int[] trailing = new int [1];
 			int newOffset = text.getOffsetAtPoint(pt.x, pt.y, trailing, false);
 			newOffset += trailing [0];
-			if (newOffset != currentOffset) {
+			if (newOffset != this.currentOffset) {
 				refreshCaret(text, currentOffset, newOffset);
 				currentOffset = newOffset;
 			}
@@ -237,10 +237,10 @@ public class StyledTextDropTargetEffect extends DropTargetEffect {
 	 */
 	@Override
 	public void dropAccept(DropTargetEvent event) {
-		if (currentOffset != -1) {
+		if (this.currentOffset != -1) {
 			StyledText text = (StyledText) getControl();
-			text.setSelection(currentOffset);
-			currentOffset = -1;
+			text.setSelection(this.currentOffset);
+			this.currentOffset = -1;
 		}
 	}
 }

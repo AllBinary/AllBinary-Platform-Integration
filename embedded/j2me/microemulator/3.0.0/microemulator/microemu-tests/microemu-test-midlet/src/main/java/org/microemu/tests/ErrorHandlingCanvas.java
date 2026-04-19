@@ -53,13 +53,13 @@ public class ErrorHandlingCanvas extends BaseTestsCanvas {
 		}
 		writeln(g, line++, "1 - Error in keyPressed");
 		writeln(g, line++, "2 - Error in pain");
-		if (makeErrorInPaint) {
-			makeErrorInPaint = false;
+		if (this.makeErrorInPaint) {
+			this.makeErrorInPaint = false;
 			writeln(g, line++, "Making error");
 			throw new IllegalArgumentException("Emulator Should still work");
 		}
-		if (lastKeyCode != 0) {
-			writeln(g, line++, "KeyCode: " + lastKeyCode);
+		if (this.lastKeyCode != 0) {
+			writeln(g, line++, "KeyCode: " + this.lastKeyCode);
 		}
 		
 	}
@@ -74,10 +74,10 @@ public class ErrorHandlingCanvas extends BaseTestsCanvas {
 		case '1':
 			throw new IllegalArgumentException("Emulator Should still work");
 		case '2':
-			makeErrorInPaint = true;
+			this.makeErrorInPaint = true;
 			break;
 		}
-		lastKeyCode = keyCode;
+		this.lastKeyCode = keyCode;
 		repaint();
 	}
 }

@@ -45,15 +45,15 @@ public class LogTextArea extends JTextArea {
 
 	public LogTextArea(int rows, int columns, int maxLines) {
 		super(rows, columns);
-		caret = new LogTextCaret();
-		setCaret(caret);
+		this.caret = new LogTextCaret();
+		setCaret(this.caret);
 		//this.maxLines = maxLines;
 		setEditable(false);
 	}
 
 	public void setText(String t) {
 		super.setText(t);
-		caret.setVisibilityAdjustment(true);
+		this.caret.setVisibilityAdjustment(true);
 	}
 
 	public void append(String str) {
@@ -63,7 +63,7 @@ public class LogTextArea extends JTextArea {
 		JViewport viewport = (JViewport) getParent();
 		boolean scrollToBottom = Math.abs(viewport.getViewPosition().getY() - (getHeight() - viewport.getHeight())) < 100;
 
-		caret.setVisibilityAdjustment(scrollToBottom);
+		this.caret.setVisibilityAdjustment(scrollToBottom);
 		
 		if (scrollToBottom) {
 			setCaretPosition(getText().length());

@@ -127,7 +127,7 @@ public Dialog (Shell parent, int style) {
 	checkParent (parent);
 	this.parent = parent;
 	this.style = style;
-	title = "";
+	this.title = "";
 }
 
 /**
@@ -266,7 +266,7 @@ public String getText () {
  */
 public void setText (String string) {
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
-	title = string;
+	this.title = string;
 }
 
 }

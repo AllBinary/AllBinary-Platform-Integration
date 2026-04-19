@@ -59,17 +59,17 @@ public Synchronizer (Display display) {
 
 void addLast (RunnableLock lock) {
 	boolean wake = false;
-	synchronized (messageLock) {
-		if (messages == null) messages = new RunnableLock [GROW_SIZE];
-		if (messageCount == messages.length) {
-			RunnableLock[] newMessages = new RunnableLock [messageCount + GROW_SIZE];
-			System.arraycopy (messages, 0, newMessages, 0, messageCount);
-			messages = newMessages;
+	synchronized (this.messageLock) {
+		if (this.messages == null) this.messages = new RunnableLock [GROW_SIZE];
+		if (this.messageCount == this.messages.length) {
+			RunnableLock[] newMessages = new RunnableLock [this.messageCount + GROW_SIZE];
+			System.arraycopy (this.messages, 0, newMessages, 0, messageCount);
+			this.messages = newMessages;
 		}
-		messages [messageCount++] = lock;
+		this.messages [messageCount++] = lock;
 		wake = messageCount == 1;
 	}
-	if (wake) display.wakeThread ();
+	if (wake) this.display.wakeThread ();
 }
 
 /**
@@ -87,7 +87,7 @@ protected void asyncExec (Runnable runnable) {
 	if (runnable == null) {
 		//TEMPORARY CODE
 		if (!(IS_CARBON || IS_GTK || IS_COCOA)) {
-			display.wake ();
+			this.display.wake ();
 			return;
 		}
 	}
@@ -95,25 +95,25 @@ protected void asyncExec (Runnable runnable) {
 }
 
 int getMessageCount () {
-	synchronized (messageLock) {
+	synchronized (this.messageLock) {
 		return messageCount;
 	}
 }
 
 void releaseSynchronizer () {
 	display = null;
-	messages = null;
-	messageLock = null;
+	this.messages = null;
+	this.messageLock = null;
 	this.syncThread = null;
 }
 
 RunnableLock removeFirst () {
-	synchronized (messageLock) {
-		if (messageCount == 0) return null;
-		RunnableLock lock = messages [0];
-		System.arraycopy (messages, 1, messages, 0, --messageCount);
-		messages [messageCount] = null;
-		if (messageCount == 0) {
+	synchronized (this.messageLock) {
+		if (this.messageCount == 0) return null;
+		RunnableLock lock = this.messages [0];
+		System.arraycopy (messages, 1, messages, 0, --this.messageCount);
+		messages [this.messageCount] = null;
+		if (this.messageCount == 0) {
 			if (messages.length > MESSAGE_LIMIT) messages = null;
 		}
 		return lock;
@@ -132,17 +132,17 @@ boolean runAsyncMessages (boolean all) {
 		run = true;
 		synchronized (lock) {
 			this.syncThread = lock.thread;
-			display.sendPreEvent(null);
+			this.display.sendPreEvent(null);
 			try {
 				lock.run();
 			} catch (Throwable t) {
 				lock.throwable = t;
 				SWT.error (SWT.ERROR_FAILED_EXEC, t);
 			} finally {
-				if (display != null && !display.isDisposed()) {
-					display.sendPostEvent(null);
+				if (this.display != null && !this.display.isDisposed()) {
+					this.display.sendPostEvent(null);
 				}
-				syncThread = null;
+				this.syncThread = null;
 				lock.notifyAll ();
 			}
 		}
@@ -167,10 +167,10 @@ boolean runAsyncMessages (boolean all) {
 protected void syncExec (Runnable runnable) {
 	RunnableLock lock = null;
 	synchronized (Device.class) {
-		if (display == null || display.isDisposed ()) SWT.error (SWT.ERROR_DEVICE_DISPOSED);
-		if (!display.isValidThread ()) {
+		if (this.display == null || this.display.isDisposed ()) SWT.error (SWT.ERROR_DEVICE_DISPOSED);
+		if (!this.display.isValidThread ()) {
 			if (runnable == null) {
-				display.wake ();
+				this.display.wake ();
 				return;
 			}
 			lock = new RunnableLock (runnable);
@@ -183,12 +183,12 @@ protected void syncExec (Runnable runnable) {
 	}
 	if (lock == null) {
 		if (runnable != null) {
-			display.sendPreEvent(null);
+			this.display.sendPreEvent(null);
 			try {
 				runnable.run();
 			} finally {
-				if (display != null && !display.isDisposed()) {
-					display.sendPostEvent(null);
+				if (this.display != null && !this.display.isDisposed()) {
+					this.display.sendPostEvent(null);
 				}
 			}
 		}

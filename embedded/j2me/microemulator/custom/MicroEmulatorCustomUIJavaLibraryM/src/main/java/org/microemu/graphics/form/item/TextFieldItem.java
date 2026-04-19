@@ -59,7 +59,7 @@ public class TextFieldItem extends TextItem
     {
         super(label, layout, altText, backgroundBasicColor, foregroundBasicColor);
 
-        logUtil.putF(commonStrings.START + font.getSize(), this, commonStrings.CONSTRUCTOR);
+        this.logUtil.putF(commonStrings.START + font.getSize(), this, commonStrings.CONSTRUCTOR);
         
         this.stringComponent = new StringComponent(StringUtil.getInstance().EMPTY_STRING, font, backgroundBasicColor, foregroundBasicColor);
         
@@ -95,7 +95,7 @@ public class TextFieldItem extends TextItem
 
     public void setCaretVisible(boolean caretVisible)
     {
-        logUtil.putF(commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible);
+        this.logUtil.putF(commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible);
         this.caretVisible = caretVisible;
     }
 
@@ -114,13 +114,13 @@ public class TextFieldItem extends TextItem
     @Override
     public int getHeight()
     {
-        return super.getHeight() + stringComponent.getHeight() + 4;
+        return super.getHeight() + this.stringComponent.getHeight() + 4;
     }
     
     @Override
     public void setFocus(boolean state)
     {
-        logUtil.putF(commonStrings.START, this, "setFocus: " + state);
+        this.logUtil.putF(commonStrings.START, this, "setFocus: " + state);
         
         this.caretVisible = state;
         
@@ -137,14 +137,14 @@ public class TextFieldItem extends TextItem
 
         final MyFont myFont = MyFont.getInstance();
         final Font existingFont = graphics.getFont();
-        fontDebugFactory.setFont(this.stringComponent.getFont(), graphics);
+        this.fontDebugFactory.setFont(this.stringComponent.getFont(), graphics);
         
         int height = 0;
         
         final String label = this.getLabel();
         if(label.length() > 0)
         {
-            height = stringComponent.getHeight() + 4;
+            height = this.stringComponent.getHeight() + 4;
         }
         
         super.paint(graphics, x, y);
@@ -159,7 +159,7 @@ public class TextFieldItem extends TextItem
         graphics.setColor(this.stringComponent.getForegroundBasicColor().intValue());
         graphics.drawString(this.stringComponent.getText(), x + 2, y + height, this.anchor);
 
-        if (caretVisible)
+        if (this.caretVisible)
         {
             final int x_pos = this.getCharPositionX(graphics);
             final int y_pos = this.getCharPositionY();
@@ -168,15 +168,15 @@ public class TextFieldItem extends TextItem
             final int dy = y + y_pos + height;
             final int caretWidth = (this.stringComponent.getFont().getSize() > 10) ? this.stringComponent.getFont().getSize() / 10 : 1;
             //final int caretHeight = y_pos + height + (AndroidUtil.isAndroid() ? stringComponent.getHeight() * 2 : stringComponent.getHeight());
-            final int caretHeight = stringComponent.getHeight();
+            final int caretHeight = this.stringComponent.getHeight();
             
-            if(timeDelayHelper.isTime()) {
+            if(this.timeDelayHelper.isTime()) {
                 this.hide = true;
                 this.timeDelayHelper2.setStartTime();
             }
 
             if(this.hide) { 
-                if(timeDelayHelper2.isTime()) {
+                if(this.timeDelayHelper2.isTime()) {
                     this.hide = false;
                 }
             } else {
@@ -185,7 +185,7 @@ public class TextFieldItem extends TextItem
 
         }
         
-        fontDebugFactory.setFont(existingFont, graphics);
+        this.fontDebugFactory.setFont(existingFont, graphics);
     }
 
     @Override

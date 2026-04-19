@@ -28,11 +28,11 @@ public PngInputStream(PngIdatChunk chunk, PngChunkReader reader) {
 
 private boolean checkChunk() throws IOException {
 	while (offset == length) {
-		chunk = reader.readNextChunk();
-		if (chunk == null) throw new IOException();
-		if (chunk.getChunkType() == PngChunk.CHUNK_IEND) return false;
-		if (chunk.getChunkType() != PngChunk.CHUNK_IDAT) throw new IOException();
-		length = chunk.getLength();
+		this.chunk = this.reader.readNextChunk();
+		if (this.chunk == null) throw new IOException();
+		if (this.chunk.getChunkType() == PngChunk.CHUNK_IEND) return false;
+		if (this.chunk.getChunkType() != PngChunk.CHUNK_IDAT) throw new IOException();
+		length = this.chunk.getLength();
 		offset = 0;
 	}
 	return true;
@@ -45,19 +45,19 @@ public void close() throws IOException {
 
 @Override
 public int read() throws IOException {
-	if (chunk == null) throw new IOException();
+	if (this.chunk == null) throw new IOException();
 	if (offset == length && !checkChunk()) return -1;
-	int b = chunk.reference[DATA_OFFSET + offset] & 0xFF;
+	int b = this.chunk.reference[DATA_OFFSET + offset] & 0xFF;
 	offset++;
 	return b;
 }
 
 @Override
 public int read(byte[] b, int off, int len) throws IOException {
-	if (chunk == null) throw new IOException();
+	if (this.chunk == null) throw new IOException();
 	if (offset == length && !checkChunk()) return -1;
 	len = Math.min(len, length - offset);
-	System.arraycopy(chunk.reference, DATA_OFFSET + offset, b, off, len);
+	System.arraycopy(this.chunk.reference, DATA_OFFSET + offset, b, off, len);
 	offset += len;
 	return len;
 }

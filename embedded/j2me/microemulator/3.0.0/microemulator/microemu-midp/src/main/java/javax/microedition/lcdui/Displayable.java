@@ -89,14 +89,14 @@ public class Displayable
 	public void removeCommand(Command cmd)
 	{
 		if (cmd != null) {
-			ui.removeCommandUI(cmd.ui);
+			this.ui.removeCommandUI(cmd.ui);
 		}
 	}
     
     
     public int getWidth()
     {
-    	if (width == -1) {
+    	if (this.width == -1) {
     		updateWidthAndHeight();
     	}
     	
@@ -106,7 +106,7 @@ public class Displayable
 
     public int getHeight()
     {
-    	if (height == -1) {
+    	if (this.height == -1) {
     		updateWidthAndHeight();
     	}
     	
@@ -116,7 +116,7 @@ public class Displayable
 
 	public boolean isShown()
 	{
-		if (currentDisplay == null) {
+		if (this.currentDisplay == null) {
 			return false;
 		}
 		return currentDisplay.isShown(this);
@@ -148,7 +148,7 @@ public class Displayable
         this.title = s;
         
         // TODO move to the native UI component
-        ui.invalidate();
+        this.ui.invalidate();
     }        
     
 
@@ -156,7 +156,7 @@ public class Displayable
 	{
 		this.listener = l;
 		
-		ui.setCommandListener(l);
+		this.ui.setCommandListener(l);
 	}
 	
 	
@@ -170,7 +170,7 @@ public class Displayable
 	{
 		// in Form this is overridden to allow for the inclusion of item contained commands 
 		Vector result = new Vector();
-		Vector commandsUI = ui.getCommandsUI();
+		Vector commandsUI = this.ui.getCommandsUI();
 		for (int i = 0; i < commandsUI.size(); i++) {
 			result.addElement(((CommandUI) commandsUI.elementAt(i)).getCommand());
 		}
@@ -186,7 +186,7 @@ public class Displayable
 
 	final void hideNotify(Display d)
 	{		
-		ui.hideNotify();
+		this.ui.hideNotify();
 
 		hideNotify();
 	}
@@ -234,15 +234,15 @@ public class Displayable
     {
         //PreLogUtil.put("AndroidToJ2ME", this, "draw");
         
-        openGLESGraphics.update(gl);
-        this.paint(openGLESGraphics);
-        openGLESGraphics.setCameraMode();
+        this.openGLESGraphics.update(gl);
+        this.paint(this.openGLESGraphics);
+        this.openGLESGraphics.setCameraMode();
     }
     
     public void drawThreed(GL gl)
     {
-        openGLESGraphics.set(gl);
-        this.paintThreed(openGLESGraphics);
+        this.openGLESGraphics.set(gl);
+        this.paintThreed(this.openGLESGraphics);
     }
      
     public void paintThreed(Graphics graphics)
@@ -293,7 +293,7 @@ public class Displayable
 	final void sizeChanged(Display d)
 	{
 		updateWidthAndHeight();
-		sizeChanged(width, height);
+		sizeChanged(this.width, height);
 	}
 	
 	
@@ -304,45 +304,45 @@ public class Displayable
 
 	final void showNotify(Display d)
 	{
-		currentDisplay = d;
+		this.currentDisplay = d;
         this.viewPortY = 0;
         // TODO remove this StringComponent object when native UI is completed
         StringComponent title = new StringComponent(getTitle());
-        viewPortHeight = getHeight() - title.getHeight() - 1;
-        if (ticker != null) {
-        		viewPortHeight -= this.ticker.getHeight();
+        this.viewPortHeight = getHeight() - title.getHeight() - 1;
+        if (this.ticker != null) {
+        		this.viewPortHeight -= this.ticker.getHeight();
         }
         
         int w;
     	int h;
-    	if (fullScreenMode) {
-    		w = device.getDeviceDisplay().getFullWidth();
+    	if (this.fullScreenMode) {
+    		w = this.device.getDeviceDisplay().getFullWidth();
     	} else {
-    		w = device.getDeviceDisplay().getWidth();
+    		w = this.device.getDeviceDisplay().getWidth();
     	}
-    	if (fullScreenMode) {
-    		h = device.getDeviceDisplay().getFullHeight();
+    	if (this.fullScreenMode) {
+    		h = this.device.getDeviceDisplay().getFullHeight();
     	} else {
-    		h = device.getDeviceDisplay().getHeight();
+    		h = this.device.getDeviceDisplay().getHeight();
     	}
    	
-        if (width != w || height != h) {
+        if (this.width != w || this.height != h) {
         	sizeChanged(d);
         }
 		
 		showNotify();
 
-		ui.showNotify();
+		this.ui.showNotify();
 	}
 
 	private void updateWidthAndHeight() 
 	{
-    	if (fullScreenMode) {
-    		width = device.getDeviceDisplay().getFullWidth();
-    		height = device.getDeviceDisplay().getFullHeight();
+    	if (this.fullScreenMode) {
+    		this.width = this.device.getDeviceDisplay().getFullWidth();
+    		this.height = this.device.getDeviceDisplay().getFullHeight();
     	} else {
-    		width = device.getDeviceDisplay().getWidth();
-    		height= device.getDeviceDisplay().getHeight();
+    		this.width = this.device.getDeviceDisplay().getWidth();
+    		this.height= this.device.getDeviceDisplay().getHeight();
     	}
 	}
 

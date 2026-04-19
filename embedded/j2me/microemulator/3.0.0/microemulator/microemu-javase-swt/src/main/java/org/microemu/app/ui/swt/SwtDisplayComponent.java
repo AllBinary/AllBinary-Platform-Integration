@@ -83,7 +83,7 @@ public class SwtDisplayComponent implements DisplayComponent
 
 	public void removeDisplayRepaintListener(DisplayRepaintListener l)
 	{
-		if (displayRepaintListener == l) {
+		if (this.displayRepaintListener == l) {
 			this.displayRepaintListener = null;
 		}
 	}
@@ -109,9 +109,9 @@ public class SwtDisplayComponent implements DisplayComponent
 	public void paint(SwtGraphics gc) 
 	{
 		synchronized (this) {
-			if (displayImage != null) {
+			if (this.displayImage != null) {
 
-                            final SwtMutableImage swtMutableImage = this.getScaledImage(displayImage);
+                            final SwtMutableImage swtMutableImage = this.getScaledImage(this.displayImage);
                             
                             //final SwtGraphics gc2 = ((SwtDisplayGraphics) swtMutableImage.getGraphics()).g;
                             //gc2.setForeground(gc2.getColor(new RGBA(0, 255, 0, 255)));
@@ -131,7 +131,7 @@ public class SwtDisplayComponent implements DisplayComponent
   
 	public void repaintRequest(int x, int y, int width, int height) 
 	{
-		if (!deviceCanvas.isDisposed()) {			
+		if (!this.deviceCanvas.isDisposed()) {			
 			final MIDletAccess ma = MIDletBridge.getMIDletAccess();
 			if (ma == null) {
 				return;
@@ -182,17 +182,17 @@ public class SwtDisplayComponent implements DisplayComponent
 			}
 
 			synchronized (this) {
-				if (displayImage != null) {
+				if (this.displayImage != null) {
                                     //System.out.println(DISPOSE_PREVIOUS + this);
-					displayImage.image.dispose();
+					this.displayImage.image.dispose();
 				}
                                                                 
-				displayImage = image;
+				this.displayImage = image;
 			}
 			
 			//fireDisplayRepaint(displayImage);
 	
-                        deviceCanvas.getDisplay().syncExec(redrawRunnable);
+                        this.deviceCanvas.getDisplay().syncExec(redrawRunnable);
 			//deviceCanvas.getDisplay().asyncExec(redrawRunnable);
 		}
 	}
@@ -200,8 +200,8 @@ public class SwtDisplayComponent implements DisplayComponent
 	
 	private void fireDisplayRepaint(MutableImage image)
 	{
-		if (displayRepaintListener != null) {
-			displayRepaintListener.repaintInvoked(image);
+		if (this.displayRepaintListener != null) {
+			this.displayRepaintListener.repaintInvoked(image);
 		}
 	}
   

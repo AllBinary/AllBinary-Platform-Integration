@@ -176,7 +176,7 @@ private void drawChevron (long /*int*/ hDC, RECT rect) {
 
 void drawItem (GC gc, long /*int*/ hTheme, RECT clipRect, boolean drawFocus) {
 	long /*int*/ hDC = gc.handle;
-	int headerHeight = parent.getBandHeight ();
+	int headerHeight = this.parent.getBandHeight ();
 	RECT rect = new RECT ();
 	OS.SetRect (rect, x, y, x + width, y + headerHeight);
 	if (hTheme != 0) {
@@ -199,15 +199,15 @@ void drawItem (GC gc, long /*int*/ hTheme, RECT clipRect, boolean drawFocus) {
 		rect.left += ExpandItem.TEXT_INSET;
 		TCHAR buffer;
 		if ((style & SWT.FLIP_TEXT_DIRECTION) != 0) {
-			int bits  = OS.GetWindowLong (parent.handle, OS.GWL_EXSTYLE);
+			int bits  = OS.GetWindowLong (this.parent.handle, OS.GWL_EXSTYLE);
 			if ((bits & OS.WS_EX_LAYOUTRTL) != 0) {
-				buffer = new TCHAR (parent.getCodePage (), LRE + text, false);
+				buffer = new TCHAR (this.parent.getCodePage (), LRE + text, false);
 			} else {
-				buffer = new TCHAR (parent.getCodePage (), RLE + text, false);
+				buffer = new TCHAR (this.parent.getCodePage (), RLE + text, false);
 			}
 		}
 		else
-			buffer = new TCHAR (parent.getCodePage (), text, false);
+			buffer = new TCHAR (this.parent.getCodePage (), text, false);
 		if (hTheme != 0) {
 			OS.DrawThemeText (hTheme, hDC, OS.EBP_NORMALGROUPHEAD, 0, buffer.chars, buffer.length(), OS.DT_VCENTER | OS.DT_SINGLELINE, 0, rect);
 		} else {
@@ -232,7 +232,7 @@ void drawItem (GC gc, long /*int*/ hTheme, RECT clipRect, boolean drawFocus) {
 		OS.DrawFocusRect (hDC, rect);
 	}
 	if (expanded) {
-		if (!parent.isAppThemed ()) {
+		if (!this.parent.isAppThemed ()) {
 			long /*int*/ pen = OS.CreatePen (OS.PS_SOLID, 1, OS.GetSysColor (OS.COLOR_BTNFACE));
 			long /*int*/ oldPen = OS.SelectObject (hDC, pen);
 			int [] points = {
@@ -296,7 +296,7 @@ public boolean getExpanded () {
  */
 public int getHeaderHeight () {
 	checkWidget ();
-	return Math.max (parent.getBandHeight (), imageHeight);
+	return Math.max (this.parent.getBandHeight (), imageHeight);
 }
 
 /**
@@ -336,7 +336,7 @@ int getPreferredWidth (long /*int*/ hTheme, long /*int*/ hDC) {
 	}
 	if (text.length() > 0) {
 		RECT rect = new RECT ();
-		TCHAR buffer = new TCHAR (parent.getCodePage (), text, false);			
+		TCHAR buffer = new TCHAR (this.parent.getCodePage (), text, false);			
 		if (hTheme != 0) {
 			OS.GetThemeTextExtent (hTheme, hDC, OS.EBP_NORMALGROUPHEAD, 0, buffer.chars, buffer.length(), OS.DT_SINGLELINE, null, rect);			
 		} else {
@@ -354,7 +354,7 @@ boolean isHover (int x, int y) {
 
 void redraw (boolean all) {
 	long /*int*/ parentHandle = parent.handle;
-	int headerHeight = parent.getBandHeight ();
+	int headerHeight = this.parent.getBandHeight ();
 	RECT rect = new RECT ();
 	int left = all ? x : x + width - headerHeight;
 	OS.SetRect (rect, left, y, x + width, y + headerHeight);
@@ -363,7 +363,7 @@ void redraw (boolean all) {
 		OS.SetRect (rect, x + ExpandItem.TEXT_INSET, y + headerHeight - imageHeight, x + ExpandItem.TEXT_INSET + imageWidth, y);
 		OS.InvalidateRect (parentHandle, rect, true);
 	}
-	if (!parent.isAppThemed ()) {
+	if (!this.parent.isAppThemed ()) {
 		OS.SetRect (rect, x, y + headerHeight, x + width, y + headerHeight + height + 1);
 		OS.InvalidateRect (parentHandle, rect, true);
 	}
@@ -371,17 +371,17 @@ void redraw (boolean all) {
 
 void releaseHandle () {
 	super.releaseHandle ();
-	parent = null;
+	this.parent = null;
 }
 
 void releaseWidget () {
 	super.releaseWidget ();
-	control = null;
+	this.control = null;
 }
 
 void setBounds (int x, int y, int width, int height, boolean move, boolean size) {	
 	redraw (true);
-	int headerHeight = parent.getBandHeight ();
+	int headerHeight = this.parent.getBandHeight ();
 	if (move) {
 		if (imageHeight > headerHeight) {
 			y += (imageHeight - headerHeight);
@@ -395,15 +395,15 @@ void setBounds (int x, int y, int width, int height, boolean move, boolean size)
 		this.height = height;
 		redraw (true);
 	}
-	if (control != null && !control.isDisposed ()) {
-		if (!parent.isAppThemed ()) {
+	if (this.control != null && !this.control.isDisposed ()) {
+		if (!this.parent.isAppThemed ()) {
 			x += BORDER;
 			width = Math.max (0, width - BORDER * 2);
 			height = Math.max (0, height - BORDER);
 		}
-		if (move && size) control.setBounds (x, y + headerHeight, width, height);
-		if (move && !size) control.setLocation (x, y + headerHeight);
-		if (!move && size) control.setSize (width, height);
+		if (move && size) this.control.setBounds (x, y + headerHeight, width, height);
+		if (move && !size) this.control.setLocation (x, y + headerHeight);
+		if (!move && size) this.control.setSize (width, height);
 	}
 }
 
@@ -425,13 +425,13 @@ public void setControl (Control control) {
 	checkWidget ();
 	if (control != null) {
 		if (control.isDisposed ()) error (SWT.ERROR_INVALID_ARGUMENT);
-		if (control.parent != parent) error (SWT.ERROR_INVALID_PARENT);
+		if (control.parent != this.parent) error (SWT.ERROR_INVALID_PARENT);
 	}
 	this.control = control;
 	if (control != null) {
-		int headerHeight = parent.getBandHeight ();
+		int headerHeight = this.parent.getBandHeight ();
 		control.setVisible (expanded);
-		if (!parent.isAppThemed ()) {
+		if (!this.parent.isAppThemed ()) {
 			int width = Math.max (0, this.width - BORDER * 2);
 			int height = Math.max (0, this.height - BORDER);
 			control.setBounds (x + BORDER, y + headerHeight, width, height);
@@ -454,7 +454,7 @@ public void setControl (Control control) {
 public void setExpanded (boolean expanded) {
 	checkWidget ();
 	this.expanded = expanded;
-	parent.showItem (this);
+	this.parent.showItem (this);
 }
 
 /**
@@ -472,7 +472,7 @@ public void setHeight (int height) {
 	checkWidget ();
 	if (height < 0) return;
 	setBounds (0, 0, width, height, false, true);
-	if (expanded) parent.layoutItems (parent.indexOf (this) + 1, true);
+	if (expanded) this.parent.layoutItems (this.parent.indexOf (this) + 1, true);
 }
 
 public void setImage (Image image) {
@@ -486,7 +486,7 @@ public void setImage (Image image) {
 		imageHeight = imageWidth = 0;
 	}
 	if (oldImageHeight != imageHeight) {
-		parent.layoutItems (parent.indexOf (this), true);
+		this.parent.layoutItems (this.parent.indexOf (this), true);
 	} else {
 		redraw (true);
 	}

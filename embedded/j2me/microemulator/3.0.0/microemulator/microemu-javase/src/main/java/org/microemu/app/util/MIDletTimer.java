@@ -114,11 +114,11 @@ public class MIDletTimer extends Timer implements Runnable {
 	}
 	
 	public void run() {
-		while (!cancelled) {
+		while (!this.cancelled) {
 			MIDletTimerTask task = null;
 			long nextTimeTask = Long.MAX_VALUE;
-			synchronized (tasks) {
-				Iterator it = tasks.iterator();
+			synchronized (this.tasks) {
+				Iterator it = this.tasks.iterator();
 				while (it.hasNext()) {
 					MIDletTimerTask candidate = (MIDletTimerTask) it.next();
 					if (candidate.time > System.currentTimeMillis()) {
@@ -142,7 +142,7 @@ public class MIDletTimer extends Timer implements Runnable {
 					if (task.period > 0) {
 						task.oneTimeTaskExcecuted = true;
 					}
-					tasks.remove(task);
+					this.tasks.remove(task);
 				}
 			}
 			
@@ -150,11 +150,11 @@ public class MIDletTimer extends Timer implements Runnable {
 				try {
 					task.run();
 
-					synchronized (tasks) {
+					synchronized (this.tasks) {
 						// TODO implement scheduling for fixed rate tasks	
 						if (task.period > 0) {
 							task.time = System.currentTimeMillis() + task.period;
-							tasks.add(task);
+							this.tasks.add(task);
 							if (task.time < nextTimeTask) {
 								nextTimeTask = task.time;
 							}
@@ -167,14 +167,14 @@ public class MIDletTimer extends Timer implements Runnable {
 				}
 			}
 			
-			synchronized (tasks) {
+			synchronized (this.tasks) {
 				try {
 					if (nextTimeTask == Long.MAX_VALUE) {
-						tasks.wait();
+						this.tasks.wait();
 					} else {
 						long timeout = nextTimeTask - System.currentTimeMillis();
 						if (timeout > 0) {
-							tasks.wait(timeout);
+							this.tasks.wait(timeout);
 						}
 					}
 				} catch (InterruptedException e) {
@@ -188,12 +188,12 @@ public class MIDletTimer extends Timer implements Runnable {
 	}
 	
 	private void schedule(TimerTask task, long time, long period, boolean fixedRate) {
-		synchronized (tasks) {
+		synchronized (this.tasks) {
 			((MIDletTimerTask) task).timer = this;
 			((MIDletTimerTask) task).time = time;
 			((MIDletTimerTask) task).period = period;
-			tasks.add(task);
-			tasks.notify();
+			this.tasks.add(task);
+			this.tasks.notify();
 		}
 	}
 

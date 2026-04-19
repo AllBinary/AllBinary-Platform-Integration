@@ -103,10 +103,10 @@ public class ImageItem extends Item {
        //TWB - made public
         @Override
 	public int getHeight() {
-		if (img == null) {
+		if (this.img == null) {
 			return super.getHeight();
 		} else {
-			return super.getHeight() + img.getHeight();
+			return super.getHeight() + this.img.getHeight();
 		}
 	}
 
@@ -115,16 +115,16 @@ public class ImageItem extends Item {
 	public int paint(Graphics g) {
 		super.paintContent(g);
 
-		if (img != null) {
+		if (this.img != null) {
 			g.translate(0, super.getHeight());
 			if (layout == LAYOUT_DEFAULT || layout == LAYOUT_LEFT) {
-				g.drawImage(img, 0, 0, Graphics.LEFT | Graphics.TOP);
+				g.drawImage(this.img, 0, 0, Graphics.LEFT | Graphics.TOP);
 			} else if (layout == LAYOUT_RIGHT) {
 				g.drawImage(img, owner.getWidth(), 0, Graphics.RIGHT | Graphics.TOP);
 			} else if (layout == LAYOUT_CENTER) {
 				g.drawImage(img, owner.getWidth() / 2, 0, Graphics.HCENTER | Graphics.TOP);
 			} else {
-				g.drawImage(img, 0, 0, Graphics.LEFT | Graphics.TOP);
+				g.drawImage(this.img, 0, 0, Graphics.LEFT | Graphics.TOP);
 			}
 			g.translate(0, -super.getHeight());
 		}

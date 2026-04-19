@@ -93,11 +93,11 @@ public class MIDletClassLoader extends ClassLoader {
 	public MIDletClassLoader(ClassLoader parent) {
 		super(parent);
 
-		noPreporcessingNames = new HashSet();
+		this.noPreporcessingNames = new HashSet();
 		//acc = AccessController.getContext();
-		config = new InstrumentationConfig();
-		config.setEnhanceCatchBlock(enhanceCatchBlock);
-		config.setEnhanceThreadCreation(true);
+		this.config = new InstrumentationConfig();
+		this.config.setEnhanceCatchBlock(enhanceCatchBlock);
+		this.config.setEnhanceThreadCreation(true);
 	}
 
 	// public MIDletClassLoader(URL[] urls, ClassLoader parent) {
@@ -292,7 +292,7 @@ public class MIDletClassLoader extends ClassLoader {
 //			return (URL) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 //				public Object run() {
 					URL url = findResource(name);
-					if ((url == null) && delegatingToParent && (getParent() != null)) {
+					if ((url == null) && this.delegatingToParent && (getParent() != null)) {
 						url = getParent().getResource(name);
 					}
 					return url;
@@ -343,13 +343,13 @@ public class MIDletClassLoader extends ClassLoader {
         
 	public boolean classLoadByParent(String className) {
 		/* This java standard */
-		if (className.startsWith(JAVA_PACKAGE)) {
+		if (className.startsWith(this.JAVA_PACKAGE)) {
 			return true;
 		}
 		/*
 		 * This is required when Class.forName().newInstance() used to create instances with inheritance
 		 */
-		if (className.startsWith(SUN_REFLECT_PACKAGE)) {
+		if (className.startsWith(this.SUN_REFLECT_PACKAGE)) {
 			return true;
 		}
 		/* No real device allow overloading this package */
@@ -359,7 +359,7 @@ public class MIDletClassLoader extends ClassLoader {
 		//if (className.startsWith(COM_NOKIA_MID_PACKAGE"com.nokia.mid.")) {
 		//	return true;
 		//}
-		if (className.startsWith(JAVAX_PACKAGE)) {
+		if (className.startsWith(this.JAVAX_PACKAGE)) {
 			return true;
 		}
                 //TWB - Allow other packages through
@@ -380,19 +380,19 @@ public class MIDletClassLoader extends ClassLoader {
 			return true;
 		}
                 */
-                if (className.startsWith(ORG_ALLBINARY_GRAPHICS_RESIZABLE_CLASS)) {
+                if (className.startsWith(this.ORG_ALLBINARY_GRAPHICS_RESIZABLE_CLASS)) {
 			return true;
                 }
-                if (className.startsWith(ORG_ALLBINARY_GRAPHICS_SCREEN_CLASS)) {
+                if (className.startsWith(this.ORG_ALLBINARY_GRAPHICS_SCREEN_CLASS)) {
 			return true;
                 }
-                if (className.startsWith(ORG_ALLBINARY_GRAPHICS_ITEMCOLORFACTORY_CLASS)) {
+                if (className.startsWith(this.ORG_ALLBINARY_GRAPHICS_ITEMCOLORFACTORY_CLASS)) {
 			return true;
                 }
-                if (className.startsWith(ORG_MICROEMU_DEVICE_J2SE_J2SEIMMUTABLEIMAGE_CLASS)) {
+                if (className.startsWith(this.ORG_MICROEMU_DEVICE_J2SE_J2SEIMMUTABLEIMAGE_CLASS)) {
 			return true;
                 }
-                if (className.startsWith(ORG_MICROEMU_DEVICE_J2SE_J2SEMUTABLEIMAGE_CLASS)) {
+                if (className.startsWith(this.ORG_MICROEMU_DEVICE_J2SE_J2SEMUTABLEIMAGE_CLASS)) {
 			return true;
                 }
                 
@@ -404,7 +404,7 @@ public class MIDletClassLoader extends ClassLoader {
 			return true;
 		}
                  */                
-		if (noPreporcessingNames.contains(className)) {
+		if (this.noPreporcessingNames.contains(className)) {
 			return true;
 		}
 		return false;
@@ -452,7 +452,7 @@ public class MIDletClassLoader extends ClassLoader {
 
                     if (is == null) {
                         try {
-                        String filePath = STATE2 + getClassResourceName(name);
+                        String filePath = this.STATE2 + getClassResourceName(name);
                         //System.out.println("findClass - file: " + filePath);
                         is = new FileInputStream(new File(filePath));
                         //System.out.println("findClass fis3: " + is);

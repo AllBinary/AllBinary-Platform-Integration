@@ -131,12 +131,12 @@ public String toString() {
 	sb.append(" y="); sb.append(y);
 	sb.append(" item="); sb.append(item);
 	sb.append(" operations="); sb.append(operations);
-	sb.append(" operation="); sb.append(detail);
+	sb.append(" operation="); sb.append(this.detail);
 	sb.append(" feedback="); sb.append(feedback);
 	sb.append(" dataTypes={ ");
-	if (dataTypes != null) {
-		for (int i = 0; i < dataTypes.length; i++) {
-			sb.append(dataTypes[i].type); sb.append(' ');
+	if (this.dataTypes != null) {
+		for (int i = 0; i < this.dataTypes.length; i++) {
+			sb.append(this.dataTypes[i].type); sb.append(' ');
 		}
 	}
 	sb.append('}');

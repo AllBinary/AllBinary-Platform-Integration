@@ -27,8 +27,8 @@ public class PostLoadSwtMutableImageProcessor extends PostLoadImageProcessor {
     public void process(final Image image) {
         
         final int width = originalMutableImage.getWidth();
-        final int height = originalMutableImage.getHeight();
-        final ImageData imageData = originalMutableImage.image.getImageData().scaledTo(width, height);
+        final int height = this.originalMutableImage.getHeight();
+        final ImageData imageData = this.originalMutableImage.image.getImageData().scaledTo(width, height);
         ((SwtMutableImage) image).init(SwtDeviceComponent.createImage(imageData));
         
     }

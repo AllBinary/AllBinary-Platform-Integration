@@ -42,15 +42,15 @@ public class DependencyChecker {
 
     public void destroy() {
         try {
-            for (int i = 0; i < classpath.size(); i++) {
-                Object o = classpath.elementAt(i);
+            for (int i = 0; i < this.classpath.size(); i++) {
+                Object o = this.classpath.elementAt(i);
                 if (o instanceof ZipFile) {
                     ((ZipFile)o).close();
                 }
             }
     
-            for (int i = 0; i < bootclasspath.size(); i++) {
-                Object o = bootclasspath.elementAt(i);
+            for (int i = 0; i < this.bootclasspath.size(); i++) {
+                Object o = this.bootclasspath.elementAt(i);
                 if (o instanceof ZipFile) {
                     ((ZipFile)o).close();
                 }
@@ -111,28 +111,28 @@ public class DependencyChecker {
     public ClassFile loadClass(String name) throws ClassNotFoundException {
         ClassFile c = null;
         
-        c = (ClassFile) classes.get(name);
+        c = (ClassFile) this.classes.get(name);
         if (c != null) {
             return c;
         }
 
-        c = (ClassFile) bootclasses.get(name);
+        c = (ClassFile) this.bootclasses.get(name);
         if (c != null) {
             return c;
         }
         
         // System.out.println("Loading class: " + name);
 
-        c = loadClass(classpath, name);
+        c = loadClass(this.classpath, name);
         if (c != null) {
-            classes.put(name, c);
+            this.classes.put(name, c);
             resolveClass(c);
             return c;
         }
         
-        c = loadClass(bootclasspath, name);
+        c = loadClass(this.bootclasspath, name);
         if (c != null) {
-            bootclasses.put(name, c);
+            this.bootclasses.put(name, c);
             resolveClass(c);
             return c;
         }
@@ -179,7 +179,7 @@ public class DependencyChecker {
     public Vector getClassNames() {
         Vector result = new Vector();
         
-        Enumeration e = classes.keys();
+        Enumeration e = this.classes.keys();
         while (e.hasMoreElements()) {
             result.addElement(e.nextElement());
         }

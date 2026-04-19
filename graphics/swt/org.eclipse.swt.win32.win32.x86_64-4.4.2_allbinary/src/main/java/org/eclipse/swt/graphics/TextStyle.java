@@ -185,19 +185,19 @@ public TextStyle (Font font, Color foreground, Color background) {
  */
 public TextStyle (TextStyle style) {
 	if (style == null) SWT.error (SWT.ERROR_INVALID_ARGUMENT);
-	font = style.font;
-	foreground = style.foreground;
-	background = style.background;
-	underline = style.underline;
-	underlineColor = style.underlineColor;
-	underlineStyle = style.underlineStyle;
-	strikeout = style.strikeout;
-	strikeoutColor = style.strikeoutColor;
-	borderStyle = style.borderStyle;
-	borderColor = style.borderColor;
-	metrics = style.metrics;
-	rise = style.rise;
-	data = style.data;
+	this.font = style.font;
+	this.foreground = style.foreground;
+	this.background = style.background;
+	this.underline = style.underline;
+	this.underlineColor = style.underlineColor;
+	this.underlineStyle = style.underlineStyle;
+	this.strikeout = style.strikeout;
+	this.strikeoutColor = style.strikeoutColor;
+	this.borderStyle = style.borderStyle;
+	this.borderColor = style.borderColor;
+	this.metrics = style.metrics;
+	this.rise = style.rise;
+	this.data = style.data;
 }
 
 /**
@@ -216,33 +216,33 @@ public boolean equals(Object object) {
 	if (object == null) return false;
 	if (!(object instanceof TextStyle)) return false;
 	TextStyle style = (TextStyle)object;	
-	if (foreground != null) {
-		if (!foreground.equals(style.foreground)) return false;
+	if (this.foreground != null) {
+		if (!this.foreground.equals(style.foreground)) return false;
 	} else if (style.foreground != null) return false;
-	if (background != null) {
-		if (!background.equals(style.background)) return false;
+	if (this.background != null) {
+		if (!this.background.equals(style.background)) return false;
 	} else if (style.background != null) return false;
-	if (font != null) {
-		if (!font.equals(style.font)) return false;
+	if (this.font != null) {
+		if (!this.font.equals(style.font)) return false;
 	} else if (style.font != null) return false;
-	if (metrics != null || style.metrics != null) return false;
-	if (underline != style.underline) return false;
-	if (underlineStyle != style.underlineStyle) return false;
-	if (borderStyle != style.borderStyle) return false;
-	if (strikeout != style.strikeout) return false;
-	if (rise != style.rise) return false;
-	if (underlineColor != null) {
-		if (!underlineColor.equals(style.underlineColor)) return false;
+	if (this.metrics != null || style.metrics != null) return false;
+	if (this.underline != style.underline) return false;
+	if (this.underlineStyle != style.underlineStyle) return false;
+	if (this.borderStyle != style.borderStyle) return false;
+	if (this.strikeout != style.strikeout) return false;
+	if (this.rise != style.rise) return false;
+	if (this.underlineColor != null) {
+		if (!this.underlineColor.equals(style.underlineColor)) return false;
 	} else if (style.underlineColor != null) return false;
-	if (strikeoutColor != null) {
-		if (!strikeoutColor.equals(style.strikeoutColor)) return false;
+	if (this.strikeoutColor != null) {
+		if (!this.strikeoutColor.equals(style.strikeoutColor)) return false;
 	} else if (style.strikeoutColor != null) return false;
-	if (underlineStyle != style.underlineStyle) return false;
-	if (borderColor != null) {
-		if (!borderColor.equals(style.borderColor)) return false;
+	if (this.underlineStyle != style.underlineStyle) return false;
+	if (this.borderColor != null) {
+		if (!this.borderColor.equals(style.borderColor)) return false;
 	} else if (style.borderColor != null) return false;
-	if (data != null) {
-		if (!data.equals(style.data)) return false;
+	if (this.data != null) {
+		if (!this.data.equals(style.data)) return false;
 	} else if (style.data != null) return false;
 	return true;
 }
@@ -260,30 +260,30 @@ public boolean equals(Object object) {
 @Override
 public int hashCode() {
 	int hash = 0;
-	if (foreground != null) hash ^= foreground.hashCode();
-	if (background != null) hash ^= background.hashCode();	
-	if (font != null) hash ^= font.hashCode();
-	if (metrics != null) hash ^= metrics.hashCode();
-	if (underline) hash ^= (hash << 1);
-	if (strikeout) hash ^= (hash << 2);
-	hash ^= rise;
-	if (underlineColor != null) hash ^= underlineColor.hashCode();
-	if (strikeoutColor != null) hash ^= strikeoutColor.hashCode();
-	if (borderColor != null) hash ^= borderColor.hashCode();
-	hash ^= underlineStyle;
+	if (this.foreground != null) hash ^= this.foreground.hashCode();
+	if (this.background != null) hash ^= this.background.hashCode();	
+	if (this.font != null) hash ^= this.font.hashCode();
+	if (this.metrics != null) hash ^= this.metrics.hashCode();
+	if (this.underline) hash ^= (hash << 1);
+	if (this.strikeout) hash ^= (hash << 2);
+	hash ^= this.rise;
+	if (this.underlineColor != null) hash ^= this.underlineColor.hashCode();
+	if (this.strikeoutColor != null) hash ^= this.strikeoutColor.hashCode();
+	if (this.borderColor != null) hash ^= this.borderColor.hashCode();
+	hash ^= this.underlineStyle;
 	return hash;
 }
 
 boolean isAdherentBorder(TextStyle style) {
 	if (this == style) return true;
 	if (style == null) return false;
-	if (borderStyle != style.borderStyle) return false;
-	if (borderColor != null) {
-		if (!borderColor.equals(style.borderColor)) return false;
+	if (this.borderStyle != style.borderStyle) return false;
+	if (this.borderColor != null) {
+		if (!this.borderColor.equals(style.borderColor)) return false;
 	} else {
 		if (style.borderColor != null) return false;
-		if (foreground != null) {
-			if (!foreground.equals(style.foreground)) return false;
+		if (this.foreground != null) {
+			if (!this.foreground.equals(style.foreground)) return false;
 		} else if (style.foreground != null) return false;
 	}
 	return true;
@@ -292,14 +292,14 @@ boolean isAdherentBorder(TextStyle style) {
 boolean isAdherentUnderline(TextStyle style) {
 	if (this == style) return true;
 	if (style == null) return false;
-	if (underline != style.underline) return false;
-	if (underlineStyle != style.underlineStyle) return false;
-	if (underlineColor != null) {
-		if (!underlineColor.equals(style.underlineColor)) return false;
+	if (this.underline != style.underline) return false;
+	if (this.underlineStyle != style.underlineStyle) return false;
+	if (this.underlineColor != null) {
+		if (!this.underlineColor.equals(style.underlineColor)) return false;
 	} else {
 		if (style.underlineColor != null) return false;
-		if (foreground != null) {
-			if (!foreground.equals(style.foreground)) return false;
+		if (this.foreground != null) {
+			if (!this.foreground.equals(style.foreground)) return false;
 		} else if (style.foreground != null) return false;
 	}
 	return true;
@@ -308,13 +308,13 @@ boolean isAdherentUnderline(TextStyle style) {
 boolean isAdherentStrikeout(TextStyle style) {
 	if (this == style) return true;
 	if (style == null) return false;
-	if (strikeout != style.strikeout) return false;
-	if (strikeoutColor != null) {
-		if (!strikeoutColor.equals(style.strikeoutColor)) return false;
+	if (this.strikeout != style.strikeout) return false;
+	if (this.strikeoutColor != null) {
+		if (!this.strikeoutColor.equals(style.strikeoutColor)) return false;
 	} else {
 		if (style.strikeoutColor != null) return false;
-		if (foreground != null) {
-			if (!foreground.equals(style.foreground)) return false;
+		if (this.foreground != null) {
+			if (!this.foreground.equals(style.foreground)) return false;
 		} else if (style.foreground != null) return false;
 	}
 	return true;
@@ -330,63 +330,63 @@ boolean isAdherentStrikeout(TextStyle style) {
 public String toString () {
 	StringBuffer buffer = new StringBuffer("TextStyle {"); //$NON-NLS-1$
 	int startLength = buffer.length();
-	if (font != null) {
+	if (this.font != null) {
 		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
 		buffer.append("font="); //$NON-NLS-1$
 		buffer.append(font);
 	}
-	if (foreground != null) {
+	if (this.foreground != null) {
 		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$ 
 		buffer.append("foreground="); //$NON-NLS-1$
 		buffer.append(foreground);
 	}
-	if (background != null) {
+	if (this.background != null) {
 		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
 		buffer.append("background="); //$NON-NLS-1$
 		buffer.append(background);
 	}
-	if (underline) {
+	if (this.underline) {
 		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
 		buffer.append("underline="); //$NON-NLS-1$
-		switch (underlineStyle) {
+		switch (this.underlineStyle) {
 			case SWT.UNDERLINE_SINGLE: buffer.append("single"); break; //$NON-NLS-1$ 
 			case SWT.UNDERLINE_DOUBLE: buffer.append("double"); break; //$NON-NLS-1$ 
 			case SWT.UNDERLINE_SQUIGGLE: buffer.append("squiggle"); break; //$NON-NLS-1$ 
 			case SWT.UNDERLINE_ERROR: buffer.append("error"); break; //$NON-NLS-1$ 
 			case SWT.UNDERLINE_LINK: buffer.append("link"); break; //$NON-NLS-1$ 
 		}
-		if (underlineColor != null) {
+		if (this.underlineColor != null) {
 			buffer.append(", underlineColor="); //$NON-NLS-1$
 			buffer.append(underlineColor);
 		}
 	}
-	if (strikeout) {
+	if (this.strikeout) {
 		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
 		buffer.append("striked out"); //$NON-NLS-1$
-		if (strikeoutColor != null) {
+		if (this.strikeoutColor != null) {
 			buffer.append(", strikeoutColor="); //$NON-NLS-1$
 			buffer.append(strikeoutColor);
 		}
 	}
-	if (borderStyle != SWT.NONE) {
+	if (this.borderStyle != SWT.NONE) {
 		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
 		buffer.append("border="); //$NON-NLS-1$
-		switch (borderStyle) {
+		switch (this.borderStyle) {
 			case SWT.BORDER_SOLID:	buffer.append("solid"); break; //$NON-NLS-1$
 			case SWT.BORDER_DOT:	buffer.append("dot"); break; //$NON-NLS-1$
 			case SWT.BORDER_DASH:	buffer.append("dash"); break; //$NON-NLS-1$
 		}
-		if (borderColor != null) {
+		if (this.borderColor != null) {
 			buffer.append(", borderColor="); //$NON-NLS-1$
 			buffer.append(borderColor);
 		}
 	}
-	if (rise != 0) {
+	if (this.rise != 0) {
 		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
 		buffer.append("rise="); //$NON-NLS-1$
 		buffer.append(rise);
 	}
-	if (metrics != null) {
+	if (this.metrics != null) {
 		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
 		buffer.append("metrics="); //$NON-NLS-1$
 		buffer.append(metrics);

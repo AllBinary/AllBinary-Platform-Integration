@@ -505,7 +505,7 @@ public int getYear () {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	lastSystemTime = null;
+	this.lastSystemTime = null;
 }
 
 /**
@@ -562,7 +562,7 @@ public void setDate (int year, int month, int day) {
 	systime.wMonth = (short)(month + 1);
 	systime.wDay = (short)day;
 	OS.SendMessage (handle, msg, 0, systime);
-	lastSystemTime = null;
+	this.lastSystemTime = null;
 }
 
 /**
@@ -589,7 +589,7 @@ public void setDay (int day) {
 	msg = (style & SWT.CALENDAR) != 0 ? OS.MCM_SETCURSEL : OS.DTM_SETSYSTEMTIME;
 	systime.wDay = (short)day;
 	OS.SendMessage (handle, msg, 0, systime);
-	lastSystemTime = null;
+	this.lastSystemTime = null;
 }
 
 /**
@@ -614,7 +614,7 @@ public void setHours (int hours) {
 	msg = (style & SWT.CALENDAR) != 0 ? OS.MCM_SETCURSEL : OS.DTM_SETSYSTEMTIME;
 	systime.wHour = (short)hours;
 	OS.SendMessage (handle, msg, 0, systime);
-	if ((style & SWT.CALENDAR) != 0 && hours >= 0 && hours <= 23) time.wHour = (short)hours;
+	if ((style & SWT.CALENDAR) != 0 && hours >= 0 && hours <= 23) this.time.wHour = (short)hours;
 }
 
 /**
@@ -639,7 +639,7 @@ public void setMinutes (int minutes) {
 	msg = (style & SWT.CALENDAR) != 0 ? OS.MCM_SETCURSEL : OS.DTM_SETSYSTEMTIME;
 	systime.wMinute = (short)minutes;
 	OS.SendMessage (handle, msg, 0, systime);
-	if ((style & SWT.CALENDAR) != 0 && minutes >= 0 && minutes <= 59) time.wMinute = (short)minutes;
+	if ((style & SWT.CALENDAR) != 0 && minutes >= 0 && minutes <= 59) this.time.wMinute = (short)minutes;
 }
 
 /**
@@ -666,7 +666,7 @@ public void setMonth (int month) {
 	msg = (style & SWT.CALENDAR) != 0 ? OS.MCM_SETCURSEL : OS.DTM_SETSYSTEMTIME;
 	systime.wMonth = (short)(month + 1);
 	OS.SendMessage (handle, msg, 0, systime);
-	lastSystemTime = null;
+	this.lastSystemTime = null;
 }
 
 public void setOrientation (int orientation) {
@@ -695,7 +695,7 @@ public void setSeconds (int seconds) {
 	msg = (style & SWT.CALENDAR) != 0 ? OS.MCM_SETCURSEL : OS.DTM_SETSYSTEMTIME;
 	systime.wSecond = (short)seconds;
 	OS.SendMessage (handle, msg, 0, systime);
-	if ((style & SWT.CALENDAR) != 0 && seconds >= 0 && seconds <= 59) time.wSecond = (short)seconds;
+	if ((style & SWT.CALENDAR) != 0 && seconds >= 0 && seconds <= 59) this.time.wSecond = (short)seconds;
 }
 
 /**
@@ -727,9 +727,9 @@ public void setTime (int hours, int minutes, int seconds) {
 			&& hours >= 0 && hours <= 23
 			&& minutes >= 0 && minutes <= 59
 			&& seconds >= 0 && seconds <= 59) {
-		time.wHour = (short)hours;
-		time.wMinute = (short)minutes;
-		time.wSecond = (short)seconds;
+		this.time.wHour = (short)hours;
+		this.time.wMinute = (short)minutes;
+		this.time.wSecond = (short)seconds;
 	}
 }
 
@@ -758,7 +758,7 @@ public void setYear (int year) {
 	msg = (style & SWT.CALENDAR) != 0 ? OS.MCM_SETCURSEL : OS.DTM_SETSYSTEMTIME;
 	systime.wYear = (short)year;
 	OS.SendMessage (handle, msg, 0, systime);
-	lastSystemTime = null;
+	this.lastSystemTime = null;
 }
 
 int widgetStyle () {
@@ -811,9 +811,9 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 		case OS.DTN_DATETIMECHANGE: {
 			SYSTEMTIME systime = new SYSTEMTIME ();
 			OS.SendMessage (handle, OS.DTM_GETSYSTEMTIME, 0, systime);
-			if (lastSystemTime == null || systime.wDay != lastSystemTime.wDay || systime.wMonth != lastSystemTime.wMonth || systime.wYear != lastSystemTime.wYear) {
+			if (this.lastSystemTime == null || systime.wDay != this.lastSystemTime.wDay || systime.wMonth != this.lastSystemTime.wMonth || systime.wYear != this.lastSystemTime.wYear) {
 				sendSelectionEvent (SWT.Selection);
-				if ((style & SWT.TIME) == 0) lastSystemTime = systime;
+				if ((style & SWT.TIME) == 0) this.lastSystemTime = systime;
 			}
 			break;
 		}

@@ -88,17 +88,17 @@ public class SwtButton implements Button
       char[] result = null;
       switch (inputMode) {
           case InputMethod.INPUT_123 : 
-              result = (char[]) inputToChars.get("123");
+              result = (char[]) this.inputToChars.get("123");
               break;
           case InputMethod.INPUT_ABC_LOWER : 
-              result = (char[]) inputToChars.get("abc");
+              result = (char[]) this.inputToChars.get("abc");
               break;
           case InputMethod.INPUT_ABC_UPPER : 
-              result = (char[]) inputToChars.get("ABC");
+              result = (char[]) this.inputToChars.get("ABC");
               break;
       }
       if (result == null) {
-          result = (char[]) inputToChars.get("common");
+          result = (char[]) this.inputToChars.get("common");
       }
       if (result == null) {
           result = new char[0];

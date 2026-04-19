@@ -117,23 +117,23 @@ public class TreeDropTargetEffect extends DropTargetEffect {
 	public void dragLeave(DropTargetEvent event) {
 		Tree tree = (Tree) control;
 		long /*int*/ handle = tree.handle;
-		if (dropIndex != -1) {
+		if (this.dropIndex != -1) {
 			TVITEM tvItem = new TVITEM ();
-			tvItem.hItem = dropIndex;
+			tvItem.hItem = this.dropIndex;
 			tvItem.mask = OS.TVIF_STATE;
 			tvItem.stateMask = OS.TVIS_DROPHILITED;
 			tvItem.state = 0;
 			OS.SendMessage (handle, OS.TVM_SETITEM, 0, tvItem);
-			dropIndex = -1;
+			this.dropIndex = -1;
 		}
-		if (insertItem != null) {
+		if (this.insertItem != null) {
 			tree.setInsertMark(null, false);
-			insertItem = null;
+			this.insertItem = null;
 		}
-		expandBeginTime = 0;
-		expandIndex = -1;	
-		scrollBeginTime = 0;
-		scrollIndex = -1;
+		this.expandBeginTime = 0;
+		this.expandIndex = -1;	
+		this.scrollBeginTime = 0;
+		this.scrollIndex = -1;
 	}
 
 	/**
@@ -169,8 +169,8 @@ public class TreeDropTargetEffect extends DropTargetEffect {
 			this.scrollBeginTime = 0;
 			this.scrollIndex = -1;
 		} else {
-			if (hItem != -1 && scrollIndex == hItem && scrollBeginTime != 0) {
-				if (System.currentTimeMillis() >= scrollBeginTime) {
+			if (hItem != -1 && this.scrollIndex == hItem && this.scrollBeginTime != 0) {
+				if (System.currentTimeMillis() >= this.scrollBeginTime) {
 					long /*int*/ topItem = OS.SendMessage(handle, OS.TVM_GETNEXTITEM, OS.TVGN_FIRSTVISIBLE, 0);
 					long /*int*/ nextItem = OS.SendMessage(handle, OS.TVM_GETNEXTITEM, hItem == topItem ? OS.TVGN_PREVIOUSVISIBLE : OS.TVGN_NEXTVISIBLE, hItem);
 					boolean scroll = true;
@@ -194,20 +194,20 @@ public class TreeDropTargetEffect extends DropTargetEffect {
 						OS.SendMessage (handle, OS.TVM_ENSUREVISIBLE, 0, nextItem);
 						tree.redraw();
 					}
-					scrollBeginTime = 0;
-					scrollIndex = -1;
+					this.scrollBeginTime = 0;
+					this.scrollIndex = -1;
 				}
 			} else {
-				scrollBeginTime = System.currentTimeMillis() + SCROLL_HYSTERESIS;
-				scrollIndex = hItem;
+				this.scrollBeginTime = System.currentTimeMillis() + SCROLL_HYSTERESIS;
+				this.scrollIndex = hItem;
 			}
 		}
 		if ((effect & DND.FEEDBACK_EXPAND) == 0) {
 			this.expandBeginTime = 0;
 			this.expandIndex = -1;
 		} else {
-			if (hItem != -1 && expandIndex == hItem && expandBeginTime != 0) {
-				if (System.currentTimeMillis() >= expandBeginTime) {
+			if (hItem != -1 && this.expandIndex == hItem && this.expandBeginTime != 0) {
+				if (System.currentTimeMillis() >= this.expandBeginTime) {
 					if (OS.SendMessage (handle, OS.TVM_GETNEXTITEM, OS.TVGN_CHILD, hItem) != 0) {
 						TreeItem item = (TreeItem)tree.getDisplay().findWidget(tree.handle, hItem);
 						if (item != null && !item.getExpanded()) {
@@ -218,31 +218,31 @@ public class TreeDropTargetEffect extends DropTargetEffect {
 							tree.notifyListeners(SWT.Expand, expandEvent);
 						}
 					}
-					expandBeginTime = 0;
-					expandIndex = -1;
+					this.expandBeginTime = 0;
+					this.expandIndex = -1;
 				}
 			} else {
-				expandBeginTime = System.currentTimeMillis() + EXPAND_HYSTERESIS;
-				expandIndex = hItem;
+				this.expandBeginTime = System.currentTimeMillis() + EXPAND_HYSTERESIS;
+				this.expandIndex = hItem;
 			}
 		}
-		if (dropIndex != -1 && (dropIndex != hItem || (effect & DND.FEEDBACK_SELECT) == 0)) {
+		if (this.dropIndex != -1 && (this.dropIndex != hItem || (effect & DND.FEEDBACK_SELECT) == 0)) {
 			TVITEM tvItem = new TVITEM ();
-			tvItem.hItem = dropIndex;
+			tvItem.hItem = this.dropIndex;
 			tvItem.mask = OS.TVIF_STATE;
 			tvItem.stateMask = OS.TVIS_DROPHILITED;
 			tvItem.state = 0;
 			OS.SendMessage (handle, OS.TVM_SETITEM, 0, tvItem);
-			dropIndex = -1;
+			this.dropIndex = -1;
 		}
-		if (hItem != -1 && hItem != dropIndex && (effect & DND.FEEDBACK_SELECT) != 0) {
+		if (hItem != -1 && hItem != this.dropIndex && (effect & DND.FEEDBACK_SELECT) != 0) {
 			TVITEM tvItem = new TVITEM ();
 			tvItem.hItem = hItem;
 			tvItem.mask = OS.TVIF_STATE;
 			tvItem.stateMask = OS.TVIS_DROPHILITED;
 			tvItem.state = OS.TVIS_DROPHILITED;
 			OS.SendMessage (handle, OS.TVM_SETITEM, 0, tvItem);
-			dropIndex = hItem;
+			this.dropIndex = hItem;
 		}
 		if ((effect & DND.FEEDBACK_INSERT_BEFORE) != 0 || (effect & DND.FEEDBACK_INSERT_AFTER) != 0) {
 			boolean before = (effect & DND.FEEDBACK_INSERT_BEFORE) != 0;
@@ -257,22 +257,22 @@ public class TreeDropTargetEffect extends DropTargetEffect {
 			*/
 			TreeItem item = (TreeItem)tree.getDisplay().findWidget(tree.handle, hItem);
 			if (item != null) {
-				if (item != insertItem || before != insertBefore) {
+				if (item != this.insertItem || before != this.insertBefore) {
 					tree.setInsertMark(item, before);
 				}
-				insertItem = item;
-				insertBefore = before;
+				this.insertItem = item;
+				this.insertBefore = before;
 			} else {
-				if (insertItem != null) {
+				if (this.insertItem != null) {
 					tree.setInsertMark(null, false);
 				}
-				insertItem = null;
+				this.insertItem = null;
 			}
 		} else {
-			if (insertItem != null) {
+			if (this.insertItem != null) {
 				tree.setInsertMark(null, false);
 			}
-			insertItem = null;
+			this.insertItem = null;
 		}
 	}
 }

@@ -52,9 +52,9 @@ int contextMenuItemsForElement (long /*int*/ sender, long /*int*/ element, long 
 	Event event = new Event ();
 	event.x = pt.x;
 	event.y = pt.y;
-	browser.notifyListeners (SWT.MenuDetect, event);
+	this.browser.notifyListeners (SWT.MenuDetect, event);
 	if (event.doit) {
-		Menu menu = browser.getMenu ();
+		Menu menu = this.browser.getMenu ();
 		if (menu != null && !menu.isDisposed ()) {
 			if (event.x != pt.x || event.y != pt.y) {
 				menu.setLocation (event.x, event.y);
@@ -142,10 +142,10 @@ void createCOMInterfaces () {
 
 int createWebViewWithRequest (long /*int*/ sender, long /*int*/ request, long /*int*/ webView) {
 	WindowEvent newEvent = new WindowEvent (browser);
-	newEvent.display = browser.getDisplay ();
-	newEvent.widget = browser;
+	newEvent.display = this.browser.getDisplay ();
+	newEvent.widget = this.browser;
 	newEvent.required = true;
-	OpenWindowListener[] openWindowListeners = browser.webBrowser.openWindowListeners;
+	OpenWindowListener[] openWindowListeners = this.browser.webBrowser.openWindowListeners;
 	for (int i = 0; i < openWindowListeners.length; i++) {
 		openWindowListeners[i].open (newEvent);
 	}
@@ -183,9 +183,9 @@ int createWebViewWithRequest (long /*int*/ sender, long /*int*/ request, long /*
 }
 
 protected void disposeCOMInterfaces () {
-	if (iWebUIDelegate != null) {
-		iWebUIDelegate.dispose ();
-		iWebUIDelegate = null;
+	if (this.iWebUIDelegate != null) {
+		this.iWebUIDelegate.dispose ();
+		this.iWebUIDelegate = null;
 	}	
 }
 
@@ -209,25 +209,25 @@ int mouseDidMoveOverElement (long /*int*/ sender, long /*int*/ elementInformatio
 	COM.MoveMemory (v, resultPtr, VARIANT.sizeof);
 	if (v.vt == COM.VT_BSTR) value = WebKit.extractBSTR (v.lVal);
 	OS.HeapFree (hHeap, 0, resultPtr);
-	StatusTextListener[] statusTextListeners = browser.webBrowser.statusTextListeners;
+	StatusTextListener[] statusTextListeners = this.browser.webBrowser.statusTextListeners;
 	if (value == null || value.length () == 0) {
 		/* not currently over a link */
-		if (lastHoveredLinkURL == null) return COM.S_OK;
-		lastHoveredLinkURL = null;
-		StatusTextEvent statusText = new StatusTextEvent (browser);
-		statusText.display = browser.getDisplay ();
-		statusText.widget = browser;
+		if (this.lastHoveredLinkURL == null) return COM.S_OK;
+		this.lastHoveredLinkURL = null;
+		StatusTextEvent statusText = new StatusTextEvent (this.browser);
+		statusText.display = this.browser.getDisplay ();
+		statusText.widget = this.browser;
 		statusText.text = "";	//$NON-NLS-1$
 		for (int i = 0; i < statusTextListeners.length; i++) {
 			statusTextListeners[i].changed (statusText);
 		}
 		return COM.S_OK;
 	}
-	if (value.equals (lastHoveredLinkURL)) return COM.S_OK;
-	lastHoveredLinkURL = value;
-	StatusTextEvent statusText = new StatusTextEvent (browser);
-	statusText.display = browser.getDisplay ();
-	statusText.widget = browser;
+	if (value.equals (this.lastHoveredLinkURL)) return COM.S_OK;
+	this.lastHoveredLinkURL = value;
+	StatusTextEvent statusText = new StatusTextEvent (this.browser);
+	statusText.display = this.browser.getDisplay ();
+	statusText.widget = this.browser;
 	statusText.text = value;
 	for (int i = 0; i < statusTextListeners.length; i++) {
 		statusTextListeners[i].changed (statusText);
@@ -303,13 +303,13 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	COM.MoveMemory (guid, riid, GUID.sizeof);
 
 	if (COM.IsEqualGUID (guid, COM.IIDIUnknown)) {
-		COM.MoveMemory (ppvObject, new long /*int*/[] {iWebUIDelegate.getAddress ()}, OS.PTR_SIZEOF);
-		new IUnknown (iWebUIDelegate.getAddress ()).AddRef ();
+		COM.MoveMemory (ppvObject, new long /*int*/[] {this.iWebUIDelegate.getAddress ()}, OS.PTR_SIZEOF);
+		new IUnknown (this.iWebUIDelegate.getAddress ()).AddRef ();
 		return COM.S_OK;
 	}
 	if (COM.IsEqualGUID (guid, WebKit_win32.IID_IWebUIDelegate)) {
-		COM.MoveMemory (ppvObject, new long /*int*/[] {iWebUIDelegate.getAddress ()}, OS.PTR_SIZEOF);
-		new IUnknown (iWebUIDelegate.getAddress ()).AddRef ();
+		COM.MoveMemory (ppvObject, new long /*int*/[] {this.iWebUIDelegate.getAddress ()}, OS.PTR_SIZEOF);
+		new IUnknown (this.iWebUIDelegate.getAddress ()).AddRef ();
 		return COM.S_OK;
 	}
 
@@ -319,16 +319,16 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		disposeCOMInterfaces ();
 	}
 	return refCount;
 }
 
 int runBeforeUnloadConfirmPanelWithMessage (long /*int*/ sender, long /*int*/ message, long /*int*/ initiatedByFrame, long /*int*/ result) {
-	if (!prompt) return COM.S_OK;
+	if (!this.prompt) return COM.S_OK;
 
-	Shell parent = browser.getShell ();
+	Shell parent = this.browser.getShell ();
 	String string = WebKit.extractBSTR (message);
 	StringBuffer text = new StringBuffer (Compatibility.getMessage ("SWT_OnBeforeUnload_Message1")); //$NON-NLS-1$
 	text.append ("\n\n"); //$NON-NLS-1$
@@ -386,11 +386,11 @@ int setFrame (long /*int*/ sender, long /*int*/ frame) {
 	RECT rect = new RECT ();
 	COM.MoveMemory (rect, frame, RECT.sizeof);
 	/* convert to SWT system coordinates */
-	location = browser.getDisplay ().map (browser, null, rect.left, rect.top);
+	this.location = this.browser.getDisplay ().map (this.browser, null, rect.left, rect.top);
 	int x = rect.right - rect.left;
 	int y = rect.bottom - rect.top;
 	if (y < 0 || x < 0 || (x == 0 && y == 0)) return COM.S_OK;
-	size = new Point (x, y);
+	this.size = new Point (x, y);
 	return COM.S_OK;
 }
 
@@ -409,11 +409,11 @@ int setStatusBarVisible (long /*int*/ sender, int visible) {
 int setStatusText (long /*int*/ sender, long /*int*/ text) {
 	String statusText = WebKit.extractBSTR (text);
 	if (statusText.length () == 0) return COM.S_OK;
-	StatusTextEvent statusTextEvent = new StatusTextEvent (browser);
-	statusTextEvent.display = browser.getDisplay ();
-	statusTextEvent.widget = browser;
+	StatusTextEvent statusTextEvent = new StatusTextEvent (this.browser);
+	statusTextEvent.display = this.browser.getDisplay ();
+	statusTextEvent.widget = this.browser;
 	statusTextEvent.text = statusText;
-	StatusTextListener[] statusTextListeners = browser.webBrowser.statusTextListeners;
+	StatusTextListener[] statusTextListeners = this.browser.webBrowser.statusTextListeners;
 	for (int i = 0; i < statusTextListeners.length; i++) {
 		statusTextListeners[i].changed (statusTextEvent);
 	}
@@ -473,7 +473,7 @@ void showAlertMessage (String title, String message) {
 	int y = parent.getLocation ().y + (parentSize.height - dialogSize.height) / 2;
 	dialog.setLocation (x, y);
 	dialog.open ();
-	Display display = browser.getDisplay ();
+	Display display = this.browser.getDisplay ();
 	while (!dialog.isDisposed ()) {
 		if (!display.readAndDispatch ()) display.sleep ();
 	}
@@ -543,7 +543,7 @@ int showConfirmPanel (String title, String message) {
 	int y = parent.getLocation ().y + (parentSize.height - dialogSize.height) / 2;
 	dialog.setLocation (x, y);
 	dialog.open ();
-	Display display = browser.getDisplay ();
+	Display display = this.browser.getDisplay ();
 	while (!dialog.isDisposed ()) {
 		if (!display.readAndDispatch ()) display.sleep ();
 	}
@@ -597,7 +597,7 @@ String showTextPrompter (String title, String message, String defaultText) {
 	int y = parent.getLocation ().y + (parentSize.height - dialogSize.height) / 2;
 	dialog.setLocation (x, y);
 	dialog.open ();
-	Display display = browser.getDisplay ();
+	Display display = this.browser.getDisplay ();
 	while (!dialog.isDisposed ()) {
 		if (!display.readAndDispatch ()) display.sleep ();
 	}
@@ -606,20 +606,20 @@ String showTextPrompter (String title, String message, String defaultText) {
 
 int takeFocus (long /*int*/ sender, int forward) {
 	int traveralCode = forward == 0 ? SWT.TRAVERSE_TAB_PREVIOUS : SWT.TRAVERSE_TAB_NEXT;
-	((WebKit)browser.webBrowser).traverseOut = true;
-	browser.traverse (traveralCode);
+	((WebKit)this.browser.webBrowser).traverseOut = true;
+	this.browser.traverse (traveralCode);
 	return COM.S_OK;
 }
 
 int webViewClose (long /*int*/ sender) {
 	WindowEvent newEvent = new WindowEvent (browser);
-	newEvent.display = browser.getDisplay ();
-	newEvent.widget = browser;
-	CloseWindowListener[] closeWindowListeners = browser.webBrowser.closeWindowListeners;
+	newEvent.display = this.browser.getDisplay ();
+	newEvent.widget = this.browser;
+	CloseWindowListener[] closeWindowListeners = this.browser.webBrowser.closeWindowListeners;
 	for (int i = 0; i < closeWindowListeners.length; i++) {
 		closeWindowListeners[i].close (newEvent);
 	}
-	browser.dispose ();
+	this.browser.dispose ();
 	return COM.S_OK;
 }
 
@@ -631,10 +631,10 @@ int webViewFrame (long /*int*/ sender, long /*int*/ frame) {
 
 int webViewShow (long /*int*/ sender) {
 	WindowEvent newEvent = new WindowEvent (browser);
-	newEvent.display = browser.getDisplay ();
-	newEvent.widget = browser;
-	if (location != null) newEvent.location = location;
-	if (size != null) newEvent.size = size;
+	newEvent.display = this.browser.getDisplay ();
+	newEvent.widget = this.browser;
+	if (this.location != null) newEvent.location = this.location;
+	if (this.size != null) newEvent.size = this.size;
 	/*
 	* Feature in WebKit.  WebKit's tool bar contains
 	* the address bar.  The address bar is displayed
@@ -642,15 +642,15 @@ int webViewShow (long /*int*/ sender) {
 	* notification for the address bar.
 	*/
 	newEvent.addressBar = toolBar;
-	newEvent.menuBar = menuBar;
+	newEvent.menuBar = this.menuBar;
 	newEvent.statusBar = statusBar;
 	newEvent.toolBar = toolBar;
-	VisibilityWindowListener[] visibilityWindowListeners = browser.webBrowser.visibilityWindowListeners;
+	VisibilityWindowListener[] visibilityWindowListeners = this.browser.webBrowser.visibilityWindowListeners;
 	for (int i = 0; i < visibilityWindowListeners.length; i++) {
 		visibilityWindowListeners[i].show (newEvent);
 	}
-	location = null;
-	size = null;
+	this.location = null;
+	this.size = null;
 	return COM.S_OK;
 }
 

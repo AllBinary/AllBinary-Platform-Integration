@@ -83,7 +83,7 @@ public Rectangle getClientArea () {
  */
 @Override
 public int hashCode () {
-	return (int)/*64*/handle;
+	return (int)/*64*/this.handle;
 }
 
 }

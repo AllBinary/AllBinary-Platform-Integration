@@ -65,7 +65,7 @@ PngChunk(byte[] reference) {
 	super();
 	setReference(reference);
 	if (reference.length < LENGTH_OFFSET + LENGTH_FIELD_LENGTH) SWT.error(SWT.ERROR_INVALID_IMAGE);
-	length = getInt32(LENGTH_OFFSET);
+	this.length = getInt32(LENGTH_OFFSET);
 }
 
 /**
@@ -97,8 +97,8 @@ void setReference(byte[] reference) {
  */	
 int getInt16(int offset) {
 	int answer = 0;
-	answer |= (reference[offset] & 0xFF) << 8;
-	answer |= (reference[offset + 1] & 0xFF);
+	answer |= (this.reference[offset] & 0xFF) << 8;
+	answer |= (this.reference[offset + 1] & 0xFF);
 	return answer;	
 }
 
@@ -108,7 +108,7 @@ int getInt16(int offset) {
  */	
 void setInt16(int offset, int value) {
 	reference[offset] = (byte) ((value >> 8) & 0xFF);
-	reference[offset + 1] = (byte) (value & 0xFF);
+	this.reference[offset + 1] = (byte) (value & 0xFF);
 }
 
 /**
@@ -117,10 +117,10 @@ void setInt16(int offset, int value) {
  */	
 int getInt32(int offset) {
 	int answer = 0;
-	answer |= (reference[offset] & 0xFF) << 24;
-	answer |= (reference[offset + 1] & 0xFF) << 16;
-	answer |= (reference[offset + 2] & 0xFF) << 8;
-	answer |= (reference[offset + 3] & 0xFF);
+	answer |= (this.reference[offset] & 0xFF) << 24;
+	answer |= (this.reference[offset + 1] & 0xFF) << 16;
+	answer |= (this.reference[offset + 2] & 0xFF) << 8;
+	answer |= (this.reference[offset + 3] & 0xFF);
 	return answer;	
 }
 
@@ -130,9 +130,9 @@ int getInt32(int offset) {
  */	
 void setInt32(int offset, int value) {
 	reference[offset] = (byte) ((value >> 24) & 0xFF);
-	reference[offset + 1] = (byte) ((value >> 16) & 0xFF);
-	reference[offset + 2] = (byte) ((value >> 8) & 0xFF);
-	reference[offset + 3] = (byte) (value & 0xFF);
+	this.reference[offset + 1] = (byte) ((value >> 16) & 0xFF);
+	this.reference[offset + 2] = (byte) ((value >> 8) & 0xFF);
+	this.reference[offset + 3] = (byte) (value & 0xFF);
 }
 
 /**
@@ -149,7 +149,7 @@ int getLength() {
  */	
 void setLength(int value) {
 	setInt32(LENGTH_OFFSET, value);
-	length = value;
+	this.length = value;
 }
 
 /**
@@ -163,7 +163,7 @@ void setLength(int value) {
  */	
 byte[] getTypeBytes() {
 	byte[] type = new byte[4];
-	System.arraycopy(reference, TYPE_OFFSET, type, 0, TYPE_FIELD_LENGTH);
+	System.arraycopy(this.reference, TYPE_OFFSET, type, 0, TYPE_FIELD_LENGTH);
 	return type;
 }	
 
@@ -188,11 +188,11 @@ void setType(byte[] value) {
  */
 byte[] getData() {
 	int dataLength = getLength();
-	if (reference.length < MIN_LENGTH + dataLength) {
+	if (this.reference.length < MIN_LENGTH + dataLength) {
 		SWT.error (SWT.ERROR_INVALID_RANGE);
 	}
 	byte[] data = new byte[dataLength];
-	System.arraycopy(reference, DATA_OFFSET, data, 0, dataLength);
+	System.arraycopy(this.reference, DATA_OFFSET, data, 0, dataLength);
 	return data;
 }
 
@@ -256,7 +256,7 @@ int computeCRC() {
 	int start = TYPE_OFFSET;
 	int stop = DATA_OFFSET + getLength();
 	for (int i = start; i < stop; i++) {
-		int index = (crc ^ reference[i]) & 0xFF;
+		int index = (crc ^ this.reference[i]) & 0xFF;
 		crc =  CRC_TABLE[index] ^ ((crc >> 8) & 0x00FFFFFF);
 	}
 	return ~crc;
@@ -264,7 +264,7 @@ int computeCRC() {
 
 boolean typeMatchesArray(byte[] array) {
 	for (int i = 0; i < TYPE_FIELD_LENGTH; i++) {
-		if (reference[TYPE_OFFSET + i] != array[i]){
+		if (this.reference[TYPE_OFFSET + i] != array[i]){
 			return false;
 		}
 	}	
@@ -327,7 +327,7 @@ static PngChunk readNextFromStream(LEDataInputStream stream) {
  * Answer whether the chunk is a valid PNG chunk.
  */
 void validate(PngFileReadState readState, PngIhdrChunk headerChunk) {
-	if (reference.length < MIN_LENGTH) SWT.error(SWT.ERROR_INVALID_IMAGE);
+	if (this.reference.length < MIN_LENGTH) SWT.error(SWT.ERROR_INVALID_IMAGE);
 	
 	byte[] type = getTypeBytes();
 	

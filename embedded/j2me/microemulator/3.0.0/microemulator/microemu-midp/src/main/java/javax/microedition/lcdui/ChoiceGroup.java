@@ -66,8 +66,8 @@ public class ChoiceGroup extends Item implements Choice
 		if (choiceType == Choice.POPUP) {
 			// POPUP has a hidden List to implement it's
 			// behaviour
-			popupList = new List(label, Choice.IMPLICIT);
-			popupList.setCommandListener(new ImplicitListener());
+			this.popupList = new List(label, Choice.IMPLICIT);
+			this.popupList.setCommandListener(new ImplicitListener());
 		}
 	}
 
@@ -99,40 +99,40 @@ public class ChoiceGroup extends Item implements Choice
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).delete(itemNum);
 		} else {
-			if (itemNum < 0 || itemNum >= numOfItems) {
+			if (itemNum < 0 || itemNum >= this.numOfItems) {
 				throw new IndexOutOfBoundsException();
 			}
 	
 			// Ensure that an item of an EXCLUSIVE list remains selected.
-			if ((Choice.EXCLUSIVE == choiceType || Choice.POPUP == choiceType)
+			if ((Choice.EXCLUSIVE == this.choiceType || Choice.POPUP == this.choiceType)
 					&& items[itemNum].isSelected()) {
-				if (numOfItems > 1) {
+				if (this.numOfItems > 1) {
 					items[itemNum != 0 ? 0 : 1].setSelectedState(true);
 				}
 			}
 	
 			// Delete item.
-			if (itemNum != numOfItems - 1) {
+			if (itemNum != this.numOfItems - 1) {
 				System.arraycopy(items, itemNum + 1, items, itemNum, numOfItems
 						- itemNum - 1);
 			}
 			numOfItems--;
 			// clear the slot to allow garbage collection
-			items[numOfItems] = null;
+			items[this.numOfItems] = null;
 	
 			// Ensure highlighted item remains highlighted (if it wasn't just
 			// deleted).
-			if (highlightedItemIndex > itemNum) {
-				--highlightedItemIndex;
+			if (this.highlightedItemIndex > itemNum) {
+				--this.highlightedItemIndex;
 			}
 	
 			// Ensure that an item remains highlighted.
-			if (highlightedItemIndex >= numOfItems) {
-				highlightedItemIndex = numOfItems - 1;
+			if (this.highlightedItemIndex >= this.numOfItems) {
+				this.highlightedItemIndex = this.numOfItems - 1;
 			}
 	
-			if (choiceType == Choice.POPUP)
-				popupList.delete(itemNum);
+			if (this.choiceType == Choice.POPUP)
+				this.popupList.delete(itemNum);
 			repaint();
 		}
 	}
@@ -143,12 +143,12 @@ public class ChoiceGroup extends Item implements Choice
 			((ChoiceGroupUI) ui).deleteAll();
 		} else {
 			// clear the array to allow garbage collection
-			for (int i = 0; i < numOfItems; i++)
+			for (int i = 0; i < this.numOfItems; i++)
 				items[i] = null;
-			numOfItems = 0;
-			highlightedItemIndex = -1;
-			if (choiceType == Choice.POPUP)
-				popupList.deleteAll();
+			this.numOfItems = 0;
+			this.highlightedItemIndex = -1;
+			if (this.choiceType == Choice.POPUP)
+				this.popupList.deleteAll();
 			repaint();
 		}
 	}
@@ -161,7 +161,7 @@ public class ChoiceGroup extends Item implements Choice
   
   @Override
   public Font getFont(int itemNum) {
-		if (itemNum < 0 || itemNum >= numOfItems) {
+		if (itemNum < 0 || itemNum >= this.numOfItems) {
 			throw new IndexOutOfBoundsException();
 		}
 		return items[itemNum].getFont();
@@ -170,7 +170,7 @@ public class ChoiceGroup extends Item implements Choice
   @Override
   public Image getImage(int elementNum)
   {
-		if (elementNum < 0 || elementNum >= numOfItems) {
+		if (elementNum < 0 || elementNum >= this.numOfItems) {
 			throw new IndexOutOfBoundsException();
 		}
 
@@ -198,7 +198,7 @@ public class ChoiceGroup extends Item implements Choice
 			if (selectedArray == null) {
 				throw new NullPointerException();
 			}
-			if (selectedArray.length < numOfItems) {
+			if (selectedArray.length < this.numOfItems) {
 				throw new IllegalArgumentException();
 			}
 
@@ -206,7 +206,7 @@ public class ChoiceGroup extends Item implements Choice
 			int selectedItemsCount = 0;
 
 			for (int i = 0; i < selectedArray.length; ++i) {
-				selectedArray[i] = (i < numOfItems) ? items[i].isSelected() : false;
+				selectedArray[i] = (i < this.numOfItems) ? items[i].isSelected() : false;
 				if (selectedArray[i]) {
 					++selectedItemsCount;
 				}
@@ -231,13 +231,13 @@ public class ChoiceGroup extends Item implements Choice
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).getSelectedIndex();
 		} else {
-			switch (choiceType) {
+			switch (this.choiceType) {
 			case Choice.EXCLUSIVE:
 			case Choice.POPUP:
 				// XXX It'd be nice if the selected item index was stored, so it
 				// isn't
 				// necessary to search for it.
-				for (int i = 0; i < numOfItems; ++i) {
+				for (int i = 0; i < this.numOfItems; ++i) {
 					if (items[i].isSelected())
 						return i;
 				}
@@ -261,7 +261,7 @@ public class ChoiceGroup extends Item implements Choice
 			return ((ChoiceGroupUI) ui).getString(elementNum);
 
 		} else {
-			if (elementNum < 0 || elementNum >= numOfItems) {
+			if (elementNum < 0 || elementNum >= this.numOfItems) {
 				throw new IndexOutOfBoundsException();
 			}
 
@@ -275,19 +275,19 @@ public class ChoiceGroup extends Item implements Choice
 		if (ui.getClass().getName().equals( "org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).insert(elementNum, stringPart, imagePart);
 		} else {
-			if (elementNum < 0 || elementNum > numOfItems) {
+			if (elementNum < 0 || elementNum > this.numOfItems) {
 				throw new IndexOutOfBoundsException();
 			}
 			if (stringPart == null) {
 				throw new NullPointerException();
 			}
 
-			if (choiceType == Choice.POPUP) {
-				popupList.insert(elementNum, stringPart, imagePart);
+			if (this.choiceType == Choice.POPUP) {
+				this.popupList.insert(elementNum, stringPart, imagePart);
 			}
 
-			if (numOfItems == items.length /* no space left in item array */) {
-				ChoiceItem newItems[] = new ChoiceItem[numOfItems + 4];
+			if (this.numOfItems == items.length /* no space left in item array */) {
+				ChoiceItem newItems[] = new ChoiceItem[this.numOfItems + 4];
 				System.arraycopy(items, 0, newItems, 0, numOfItems);
 				items = newItems;
 			}
@@ -299,8 +299,8 @@ public class ChoiceGroup extends Item implements Choice
 			++numOfItems;
 
 			if (numOfItems == 1) {
-				highlightedItemIndex = 0;
-				if (Choice.EXCLUSIVE == choiceType || Choice.POPUP == choiceType) {
+				this.highlightedItemIndex = 0;
+				if (Choice.EXCLUSIVE == this.choiceType || Choice.POPUP == this.choiceType) {
 					setSelectedIndex(0, true);
 				}
 			}
@@ -314,7 +314,7 @@ public class ChoiceGroup extends Item implements Choice
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).isSelected(elementNum);
 		} else {
-			if (elementNum < 0 || elementNum >= numOfItems) {
+			if (elementNum < 0 || elementNum >= this.numOfItems) {
 				throw new IndexOutOfBoundsException();
 			}
 	
@@ -327,7 +327,7 @@ public class ChoiceGroup extends Item implements Choice
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).set(elementNum, stringPart, imagePart);
 		} else {
-			if (elementNum < 0 || elementNum >= numOfItems) {
+			if (elementNum < 0 || elementNum >= this.numOfItems) {
 				throw new IndexOutOfBoundsException();
 			}
 			if (imagePart != null && imagePart.isMutable()) {
@@ -340,8 +340,8 @@ public class ChoiceGroup extends Item implements Choice
 			items[elementNum].setText(stringPart);
 			items[elementNum].setImage(imagePart);
 	
-			if (choiceType == Choice.POPUP) {
-				popupList.set(elementNum, stringPart, imagePart);
+			if (this.choiceType == Choice.POPUP) {
+				this.popupList.set(elementNum, stringPart, imagePart);
 			}
 	
 			repaint();
@@ -354,23 +354,23 @@ public class ChoiceGroup extends Item implements Choice
 			  	policy != Choice.TEXT_WRAP_ON &&
 			  	policy != Choice.TEXT_WRAP_OFF)
 		  throw new IllegalArgumentException("Bad Policy");
-	  fitPolicy = policy;
-		if (choiceType == Choice.POPUP) {
-			  popupList.setFitPolicy(policy);
+	  this.fitPolicy = policy;
+		if (this.choiceType == Choice.POPUP) {
+			  this.popupList.setFitPolicy(policy);
 		}
   }
   
   @Override
   public void setFont(int itemNum, Font font) {
-		if (itemNum < 0 || itemNum >= numOfItems) {
+		if (itemNum < 0 || itemNum >= this.numOfItems) {
 			throw new IndexOutOfBoundsException();
 		}
 		if (font == null) {
 			font = Font.getDefaultFont();
 		}
 		items[itemNum].setFont(font);
-		if (choiceType == Choice.POPUP) {
-			  popupList.setFont(itemNum, font);
+		if (this.choiceType == Choice.POPUP) {
+			  this.popupList.setFont(itemNum, font);
 		}
   }
 
@@ -383,20 +383,20 @@ public class ChoiceGroup extends Item implements Choice
 			if (selectedArray == null) {
 				throw new NullPointerException();
 			}
-			if (selectedArray.length < numOfItems) {
+			if (selectedArray.length < this.numOfItems) {
 				throw new NullPointerException();
 			}
 
-			if (numOfItems == 0) {
+			if (this.numOfItems == 0) {
 				return;
 			}
-			if (choiceType == Choice.MULTIPLE) {
-				for (int i = 0; i < numOfItems; i++) {
+			if (this.choiceType == Choice.MULTIPLE) {
+				for (int i = 0; i < this.numOfItems; i++) {
 					setSelectedIndex(i, selectedArray[i]);
 				}
 			} else {
 				int selectedItem = -1;
-				for (int i = 0; i < numOfItems; i++) {
+				for (int i = 0; i < this.numOfItems; i++) {
 					if (selectedArray[i]) {
 						setSelectedIndex(i, true);
 						selectedItem = i;
@@ -407,8 +407,8 @@ public class ChoiceGroup extends Item implements Choice
 					setSelectedIndex(0, true);
 				}
 
-				if (choiceType == Choice.POPUP) {
-					popupList.setSelectedFlags(selectedArray);
+				if (this.choiceType == Choice.POPUP) {
+					this.popupList.setSelectedFlags(selectedArray);
 				}
 			}
 		}
@@ -420,18 +420,18 @@ public class ChoiceGroup extends Item implements Choice
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).setSelectedIndex(elementNum, selected);
 		} else {
-			if (elementNum < 0 || elementNum >= numOfItems) {
+			if (elementNum < 0 || elementNum >= this.numOfItems) {
 				throw new IndexOutOfBoundsException();
 			}
 	
-	        highlightedItemIndex = elementNum;
-			if ((choiceType == Choice.EXCLUSIVE ||
-					choiceType == Choice.POPUP) && selected) {
-				for (int i = 0; i < numOfItems; i++) {
+	        this.highlightedItemIndex = elementNum;
+			if ((this.choiceType == Choice.EXCLUSIVE ||
+					this.choiceType == Choice.POPUP) && selected) {
+				for (int i = 0; i < this.numOfItems; i++) {
 					items[i].setSelectedState(elementNum == i);
 				}
-				if (choiceType == Choice.POPUP) {
-				        popupList.setSelectedIndex(elementNum, true);
+				if (this.choiceType == Choice.POPUP) {
+				        this.popupList.setSelectedIndex(elementNum, true);
 			    }
 				 repaint();
 			} else if (choiceType == Choice.MULTIPLE) {
@@ -469,12 +469,12 @@ public class ChoiceGroup extends Item implements Choice
 	public int getHeight()
 	{
 		int height = 0;
-		if (choiceType == Choice.POPUP) {
-			if (highlightedItemIndex != -1) {
-				height += items[highlightedItemIndex].getHeight();
+		if (this.choiceType == Choice.POPUP) {
+			if (this.highlightedItemIndex != -1) {
+				height += items[this.highlightedItemIndex].getHeight();
 			}
 		} else {
-			for (int i = 0; i < numOfItems; i++) {
+			for (int i = 0; i < this.numOfItems; i++) {
 				height += items[i].getHeight();
 			}
 		}
@@ -489,7 +489,7 @@ public class ChoiceGroup extends Item implements Choice
 	{
 		x -= super.getHeight();
 		int testY = 0;
-		for (int i = 0; i < numOfItems; i++) {
+		for (int i = 0; i < this.numOfItems; i++) {
 			testY += items[i].getHeight();
 			if (y < testY) {
 				return i;
@@ -527,7 +527,7 @@ public class ChoiceGroup extends Item implements Choice
 		g.translate(0, super.getHeight());
 		int translatedY = 0;
 		
-		if (choiceType == Choice.POPUP) {
+		if (this.choiceType == Choice.POPUP) {
 			int index = getSelectedIndex();
 			if (index != -1) {
 				items[index].invertPaint(hasFocus());
@@ -535,8 +535,8 @@ public class ChoiceGroup extends Item implements Choice
 			}
 			g.translate(0, -super.getHeight());
 		} else {
-			for (int i = 0; i < numOfItems; i++) {
-				items[i].invertPaint(i == highlightedItemIndex && hasFocus());
+			for (int i = 0; i < this.numOfItems; i++) {
+				items[i].invertPaint(i == this.highlightedItemIndex && hasFocus());
 				items[i].paint(g);
 				g.translate(0, items[i].getHeight());
 				translatedY += items[i].getHeight();
@@ -553,12 +553,12 @@ public class ChoiceGroup extends Item implements Choice
   @Override
   public boolean select()
   {
-    if (numOfItems == 0) {
+    if (this.numOfItems == 0) {
       return false;
     }
 
-    if (choiceType == Choice.POPUP) {
-        getOwner().currentDisplay.setCurrent(popupList);
+    if (this.choiceType == Choice.POPUP) {
+        getOwner().currentDisplay.setCurrent(this.popupList);
     } else {
 	    // XXX What does the following statement do?
     	
@@ -566,7 +566,7 @@ public class ChoiceGroup extends Item implements Choice
     	// state, in exclusive selects the highligthed
     	// and in implicit it does nothing
     	// Andres Navarro
-	    setSelectedIndex(highlightedItemIndex, !items[highlightedItemIndex].isSelected());
+	    setSelectedIndex(this.highlightedItemIndex, !items[this.highlightedItemIndex].isSelected());
     }
 
     return true;
@@ -605,12 +605,12 @@ public class ChoiceGroup extends Item implements Choice
 	    }
 	} else {
 	    if (gameKeyCode == Canvas.UP) {
-	      if (highlightedItemIndex > 0) {
+	      if (this.highlightedItemIndex > 0) {
 					if (action) {
 						highlightedItemIndex--;
 					}
 					int height = super.getHeight();
-					for (int i = 0; i < highlightedItemIndex; i++) {
+					for (int i = 0; i < this.highlightedItemIndex; i++) {
 						height += items[i].getHeight();
 					}
 					if (height < top) {
@@ -627,13 +627,13 @@ public class ChoiceGroup extends Item implements Choice
 				}
 	    }
 	    if (gameKeyCode == Canvas.DOWN) {
-	      if ((!action && highlightedItemIndex < numOfItems)
+	      if ((!action && this.highlightedItemIndex < this.numOfItems)
 	      		|| (action && highlightedItemIndex < (numOfItems - 1))) {
 					if (action) {
 						highlightedItemIndex++;
 					}
 					int height = super.getHeight();
-					for (int i = 0; i <= highlightedItemIndex; i++) {
+					for (int i = 0; i <= this.highlightedItemIndex; i++) {
 						height += items[i].getHeight();
 					}
 					if (height > bottom) {
@@ -654,8 +654,8 @@ public class ChoiceGroup extends Item implements Choice
   void repaint() {
 	  // the popup list should be repainted
 	  // in the case it is being shown
-	  if (choiceType == Choice.POPUP)
-		  popupList.repaint();
+	  if (this.choiceType == Choice.POPUP)
+		  this.popupList.repaint();
 	  super.repaint();
   }
 

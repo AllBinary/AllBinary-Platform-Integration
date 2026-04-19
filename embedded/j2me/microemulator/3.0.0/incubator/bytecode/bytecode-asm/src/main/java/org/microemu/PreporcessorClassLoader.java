@@ -31,13 +31,13 @@ public class PreporcessorClassLoader extends URLClassLoader {
     
 	public PreporcessorClassLoader(ClassLoader parent) {
 		super(new URL[]{}, parent);
-		notLoadableNames = new HashSet();
-		acc = AccessController.getContext();
+		this.notLoadableNames = new HashSet();
+		this.acc = AccessController.getContext();
 	}
 
 	public PreporcessorClassLoader(URL[] urls, ClassLoader parent) {
 		super(urls, parent);
-		notLoadableNames = new HashSet();
+		this.notLoadableNames = new HashSet();
 	}
 	
 	private void debug(String message) {
@@ -208,7 +208,7 @@ public class PreporcessorClassLoader extends URLClassLoader {
 //		if (loadedByParent != null) {
 //			return false;
 //		}
-		if (notLoadableNames.contains(className)) {
+		if (this.notLoadableNames.contains(className)) {
 			return false;
 		}
 		return true;

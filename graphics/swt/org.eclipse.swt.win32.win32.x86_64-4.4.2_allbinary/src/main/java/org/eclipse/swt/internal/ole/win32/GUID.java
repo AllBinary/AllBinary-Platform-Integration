@@ -29,7 +29,7 @@ static String toHex (int v, int length) {
 }
 
 public String toString () {
-	return '{' + toHex (Data1, 8) + '-' + 
+	return '{' + toHex (this.Data1, 8) + '-' + 
     	toHex (Data2, 4) + '-' + 
     	toHex (Data3, 4) + '-' + 
     	toHex (Data4[0], 2) + toHex (Data4[1], 2) + '-' + 

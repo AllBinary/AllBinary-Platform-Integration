@@ -229,11 +229,11 @@ public class DataElement {
 	public DataElement(int valueType) {
 		switch (valueType) {
 		case NULL:
-			value = null;
+			this.value = null;
 			break;
 		case DATALT:
 		case DATSEQ:
-			value = new Vector();
+			this.value = new Vector();
 			break;
 		default:
 			throw new IllegalArgumentException();
@@ -254,7 +254,7 @@ public class DataElement {
 
 	public DataElement(boolean bool) {
 		value = bool?Boolean.TRUE:Boolean.FALSE;
-		valueType = BOOL;
+		this.valueType = BOOL;
 	}
 
     /**
@@ -456,10 +456,10 @@ public class DataElement {
 		if (elem == null)
 			throw new NullPointerException();
 
-		switch (valueType) {
+		switch (this.valueType) {
 		case DATALT:
 		case DATSEQ:
-			((Vector) value).addElement(elem);
+			((Vector) this.value).addElement(elem);
 			break;
 		default:
 			throw new ClassCastException();
@@ -508,10 +508,10 @@ public class DataElement {
 		if (elem == null)
 			throw new NullPointerException();
 
-		switch (valueType) {
+		switch (this.valueType) {
 		case DATALT:
 		case DATSEQ:
-			((Vector) value).insertElementAt(elem, index);
+			((Vector) this.value).insertElementAt(elem, index);
 			break;
 		default:
 			throw new ClassCastException();
@@ -531,10 +531,10 @@ public class DataElement {
 	 */
 
 	public int getSize() {
-		switch (valueType) {
+		switch (this.valueType) {
 		case DATALT:
 		case DATSEQ:
-			return ((Vector) value).size();
+			return ((Vector) this.value).size();
 		default:
 			throw new ClassCastException();
 		}
@@ -551,7 +551,7 @@ public class DataElement {
      * integers.
      * Only the first object in the list that is equal to
      * <code>elem</code> will be removed. Other objects, if present,
-     * are not removed.  Since this class doesn’t override the
+     * are not removed.  Since this class doesnï¿½t override the
      * <code>equals()</code> method of the <code>Object</code> class,
      * the remove method compares only the
      * references of objects. If <code>elem</code> is
@@ -577,10 +577,10 @@ public class DataElement {
 		if (elem == null)
 			throw new NullPointerException();
 
-		switch (valueType) {
+		switch (this.valueType) {
 		case DATALT:
 		case DATSEQ:
-			return ((Vector) value).removeElement(elem);
+			return ((Vector) this.value).removeElement(elem);
 		default:
 			throw new ClassCastException();
 		}
@@ -641,7 +641,7 @@ public class DataElement {
 	 */
 
 	public long getLong() {
-		switch (valueType) {
+		switch (this.valueType) {
 		case U_INT_1:
 		case U_INT_2:
 		case U_INT_4:
@@ -649,7 +649,7 @@ public class DataElement {
 		case INT_2:
 		case INT_4:
 		case INT_8:
-			return ((Long) value).longValue();
+			return ((Long) this.value).longValue();
 		default:
 			throw new ClassCastException();
 		}
@@ -670,8 +670,8 @@ public class DataElement {
 	 */
 
 	public boolean getBoolean() {
-		if (valueType == BOOL)
-			return ((Boolean) value).booleanValue();
+		if (this.valueType == BOOL)
+			return ((Boolean) this.value).booleanValue();
 		else
 			throw new ClassCastException();
 	}

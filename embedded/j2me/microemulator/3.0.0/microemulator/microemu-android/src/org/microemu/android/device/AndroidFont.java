@@ -40,33 +40,33 @@ public class AndroidFont implements Font {
 	
 	public AndroidFont(Typeface typeface, float size, boolean underlined) {
 		paint.setTypeface(typeface);
-		paint.setTextSize(size);
-		paint.setUnderlineText(underlined);
-		metrics = paint.getFontMetricsInt();
+		this.paint.setTextSize(size);
+		this.paint.setUnderlineText(underlined);
+		this.metrics = this.paint.getFontMetricsInt();
 	}
 
 	public int charWidth(char ch) {
-		return (int) paint.measureText(new char[] { ch }, 0, 1);
+		return (int) this.paint.measureText(new char[] { ch }, 0, 1);
 	}
 
 	public int charsWidth(char[] ch, int offset, int length) {
-		return (int) paint.measureText(ch, offset, length);
+		return (int) this.paint.measureText(ch, offset, length);
 	}
 
 	public int getBaselinePosition() {
-		return -metrics.ascent;
+		return -this.metrics.ascent;
 	}
 
 	public int getHeight() {
-		return paint.getFontMetricsInt(metrics);
+		return paint.getFontMetricsInt(this.metrics);
 	}
 
 	public int stringWidth(String str) {
-		return (int) paint.measureText(str);
+		return (int) this.paint.measureText(str);
 	}
 
 	public int substringWidth(String str, int offset, int len) {
-		return (int) paint.measureText(str, offset, offset + len);
+		return (int) this.paint.measureText(str, offset, offset + len);
 	}
 
 }

@@ -45,9 +45,9 @@ public class LineBackgroundEvent extends TypedEvent {
  */
 public LineBackgroundEvent(StyledTextEvent e) {
 	super(e);
-	lineOffset = e.detail;
-	lineText = e.text;
-	lineBackground = e.lineBackground;
+	this.lineOffset = e.detail;
+	this.lineText = e.text;
+	this.lineBackground = e.lineBackground;
 }
 }
 

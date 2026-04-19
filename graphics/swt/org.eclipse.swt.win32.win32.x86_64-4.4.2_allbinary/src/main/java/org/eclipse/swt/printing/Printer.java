@@ -264,9 +264,9 @@ protected void create(DeviceData deviceData) {
 		}
 		OS.MoveMemory(lpInitData, devmode, DEVMODE.sizeof);
 	}
-	handle = OS.CreateDC(driver, device, 0, lpInitData);
+	this.handle = OS.CreateDC(driver, device, 0, lpInitData);
 	if (lpInitData != 0) OS.HeapFree(hHeap, 0, lpInitData);
-	if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+	if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 }
 
 /**	 
@@ -285,9 +285,9 @@ protected void create(DeviceData deviceData) {
  * @noreference This method is not intended to be referenced by clients.
  */
 public long /*int*/ internal_new_GC(GCData data) {
-	if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+	if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 	if (data != null) {
-		if (isGCCreated) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+		if (this.isGCCreated) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 		int mask = SWT.LEFT_TO_RIGHT | SWT.RIGHT_TO_LEFT;
 		if ((data.style & mask) != 0) {
 			data.layout = (data.style & SWT.RIGHT_TO_LEFT) != 0 ? OS.LAYOUT_RTL : 0;
@@ -295,8 +295,8 @@ public long /*int*/ internal_new_GC(GCData data) {
 			data.style |= SWT.LEFT_TO_RIGHT;
 		}
 		data.device = this;
-		data.font = Font.win32_new(this, OS.GetCurrentObject(handle, OS.OBJ_FONT));
-		isGCCreated = true;
+		data.font = Font.win32_new(this, OS.GetCurrentObject(this.handle, OS.OBJ_FONT));
+		this.isGCCreated = true;
 	}
 	return handle;
 }
@@ -317,7 +317,7 @@ public long /*int*/ internal_new_GC(GCData data) {
  * @noreference This method is not intended to be referenced by clients.
  */
 public void internal_dispose_GC(long /*int*/ hDC, GCData data) {
-	if (data != null) isGCCreated = false;
+	if (data != null) this.isGCCreated = false;
 }
 
 /**
@@ -356,10 +356,10 @@ public boolean startJob(String jobName) {
 		di.lpszDocName = lpszDocName;
 	}
 	long /*int*/ lpszOutput = 0;
-	if (data.printToFile) {
-		if (data.fileName == null) {
+	if (this.data.printToFile) {
+		if (this.data.fileName == null) {
 			/* Prompt the user for a file name. */
-			data.fileName = "FILE:"; //$NON-NLS-1$
+			this.data.fileName = "FILE:"; //$NON-NLS-1$
 		}
 		/* Use the character encoding for the default locale */
 		TCHAR buffer = new TCHAR(0, data.fileName, true);
@@ -368,7 +368,7 @@ public boolean startJob(String jobName) {
 		OS.MoveMemory(lpszOutput, buffer, byteCount);
 		di.lpszOutput = lpszOutput;
 	}
-	int rc = OS.StartDoc(handle, di);
+	int rc = OS.StartDoc(this.handle, di);
 	if (lpszDocName != 0) OS.HeapFree(hHeap, 0, lpszDocName);
 	if (lpszOutput != 0) OS.HeapFree(hHeap, 0, lpszOutput);
 	return rc > 0;
@@ -387,7 +387,7 @@ public boolean startJob(String jobName) {
  */
 public void endJob() {
 	checkDevice();
-	OS.EndDoc(handle);
+	OS.EndDoc(this.handle);
 }
 
 /**
@@ -399,7 +399,7 @@ public void endJob() {
  */
 public void cancelJob() {
 	checkDevice();
-	OS.AbortDoc(handle);
+	OS.AbortDoc(this.handle);
 }
 
 /**
@@ -422,8 +422,8 @@ public void cancelJob() {
  */
 public boolean startPage() {
 	checkDevice();
-	int rc = OS.StartPage(handle);
-	if (rc <= 0) OS.AbortDoc(handle);
+	int rc = OS.StartPage(this.handle);
+	if (rc <= 0) OS.AbortDoc(this.handle);
 	return rc > 0;
 }
 
@@ -440,7 +440,7 @@ public boolean startPage() {
  */
 public void endPage() {
 	checkDevice();
-	OS.EndPage(handle);
+	OS.EndPage(this.handle);
 }
 
 /**
@@ -456,8 +456,8 @@ public void endPage() {
  */
 public Point getDPI() {
 	checkDevice();
-	int dpiX = OS.GetDeviceCaps(handle, OS.LOGPIXELSX);
-	int dpiY = OS.GetDeviceCaps(handle, OS.LOGPIXELSY);
+	int dpiX = OS.GetDeviceCaps(this.handle, OS.LOGPIXELSX);
+	int dpiY = OS.GetDeviceCaps(this.handle, OS.LOGPIXELSY);
 	return new Point(dpiX, dpiY);
 }
 
@@ -478,8 +478,8 @@ public Point getDPI() {
  */
 public Rectangle getBounds() {
 	checkDevice();
-	int width = OS.GetDeviceCaps(handle, OS.PHYSICALWIDTH);
-	int height = OS.GetDeviceCaps(handle, OS.PHYSICALHEIGHT);
+	int width = OS.GetDeviceCaps(this.handle, OS.PHYSICALWIDTH);
+	int height = OS.GetDeviceCaps(this.handle, OS.PHYSICALHEIGHT);
 	return new Rectangle(0, 0, width, height);
 }
 
@@ -502,8 +502,8 @@ public Rectangle getBounds() {
  */
 public Rectangle getClientArea() {
 	checkDevice();
-	int width = OS.GetDeviceCaps(handle, OS.HORZRES);
-	int height = OS.GetDeviceCaps(handle, OS.VERTRES);
+	int width = OS.GetDeviceCaps(this.handle, OS.HORZRES);
+	int height = OS.GetDeviceCaps(this.handle, OS.VERTRES);
 	return new Rectangle(0, 0, width, height);
 }
 
@@ -544,12 +544,12 @@ public Rectangle getClientArea() {
  */
 public Rectangle computeTrim(int x, int y, int width, int height) {
 	checkDevice();
-	int printX = -OS.GetDeviceCaps(handle, OS.PHYSICALOFFSETX);
-	int printY = -OS.GetDeviceCaps(handle, OS.PHYSICALOFFSETY);
-	int printWidth = OS.GetDeviceCaps(handle, OS.HORZRES);
-	int printHeight = OS.GetDeviceCaps(handle, OS.VERTRES);
-	int paperWidth = OS.GetDeviceCaps(handle, OS.PHYSICALWIDTH);
-	int paperHeight = OS.GetDeviceCaps(handle, OS.PHYSICALHEIGHT);
+	int printX = -OS.GetDeviceCaps(this.handle, OS.PHYSICALOFFSETX);
+	int printY = -OS.GetDeviceCaps(this.handle, OS.PHYSICALOFFSETY);
+	int printWidth = OS.GetDeviceCaps(this.handle, OS.HORZRES);
+	int printHeight = OS.GetDeviceCaps(this.handle, OS.VERTRES);
+	int paperWidth = OS.GetDeviceCaps(this.handle, OS.PHYSICALWIDTH);
+	int paperHeight = OS.GetDeviceCaps(this.handle, OS.PHYSICALHEIGHT);
 	int hTrim = paperWidth - printWidth;
 	int vTrim = paperHeight - printHeight;
 	return new Rectangle(x + printX, y + printY, width + hTrim, height + vTrim);
@@ -573,7 +573,7 @@ public PrinterData getPrinterData() {
  * </ul>
  */
 protected void checkDevice() {
-	if (handle == 0) SWT.error(SWT.ERROR_DEVICE_DISPOSED);
+	if (this.handle == 0) SWT.error(SWT.ERROR_DEVICE_DISPOSED);
 }
 
 /**	 
@@ -583,7 +583,7 @@ protected void checkDevice() {
  */
 protected void release() {
 	super.release();
-	data = null;
+	this.data = null;
 }
 
 /**	 
@@ -592,8 +592,8 @@ protected void release() {
  * mechanism of the <code>Device</code> class.
  */
 protected void destroy() {
-	if (handle != 0) OS.DeleteDC(handle);
-	handle = 0;
+	if (this.handle != 0) OS.DeleteDC(this.handle);
+	this.handle = 0;
 }
 
 }

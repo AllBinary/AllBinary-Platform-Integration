@@ -155,9 +155,9 @@ Rectangle measureText(Theme theme, String text, int flags, GC gc, Rectangle boun
 	text.getChars(0, chars.length, chars, 0);
 	//TODO - constant for VCENTER and flags
 	int textFlags = 0;//OS.DT_VCENTER | OS.DT_SINGLELINE | OS.DT_CALCRECT;
-	if ((style & SWT.LEFT) != 0) textFlags |= OS.DT_LEFT;
-	if ((style & SWT.CENTER) != 0) textFlags |= OS.DT_CENTER;
-	if ((style & SWT.RIGHT) != 0) textFlags |= OS.DT_RIGHT;
+	if ((this.style & SWT.LEFT) != 0) textFlags |= OS.DT_LEFT;
+	if ((this.style & SWT.CENTER) != 0) textFlags |= OS.DT_CENTER;
+	if ((this.style & SWT.RIGHT) != 0) textFlags |= OS.DT_RIGHT;
 	RECT extent = new RECT();
 	RECT rect = null;
 	if (bounds != null) {

@@ -102,7 +102,7 @@ public class CBanner extends Composite {
 public CBanner(Composite parent, int style) {
 	super(parent, checkStyle(style));
 	super.setLayout(new CBannerLayout());
-	resizeCursor = getDisplay().getSystemCursor(SWT.CURSOR_SIZEWE);
+	this.resizeCursor = getDisplay().getSystemCursor(SWT.CURSOR_SIZEWE);
 	
 	listener = new Listener() {
 		public void handleEvent(Event e) {
@@ -227,7 +227,7 @@ public Control getRight() {
  */
 public Point getRightMinimumSize() {
 	checkWidget();
-	return new Point(rightMinWidth, rightMinHeight);
+	return new Point(this.rightMinWidth, rightMinHeight);
 }
 /**
  * Returns the width of the control that appears on the right of the banner.
@@ -238,9 +238,9 @@ public Point getRightMinimumSize() {
  */
 public int getRightWidth() {
 	checkWidget();
-	if (right == null) return 0;
-	if (rightWidth == SWT.DEFAULT) {
-		Point size = right.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
+	if (this.right == null) return 0;
+	if (this.rightWidth == SWT.DEFAULT) {
+		Point size = this.right.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
 		return size.x;
 	}
 	return rightWidth;
@@ -262,36 +262,36 @@ void onDispose(Event event) {
 	notifyListeners(SWT.Dispose, event);
 	event.type = SWT.None;
 
-	resizeCursor = null;
-	left = null;
-	right = null;
-	bottom = null;
+	this.resizeCursor = null;
+	this.left = null;
+	this.right = null;
+	this.bottom = null;
 }
 void onMouseDown (int x, int y) {
-	if (curveRect.contains(x, y)) {
-		dragging = true;
-		rightDragDisplacement = this.curveStart - x + this.curve_width - this.curve_indent;
+	if (this.curveRect.contains(x, y)) {
+		this.dragging = true;
+		this.rightDragDisplacement = this.curveStart - x + this.curve_width - this.curve_indent;
 	}
 }
 void onMouseExit() {
-	if (!dragging) setCursor(null);
+	if (!this.dragging) setCursor(null);
 }
 void onMouseMove(int x, int y) {
-	if (dragging) {
+	if (this.dragging) {
 		Point size = getSize();
 		if (!(0 < x && x < size.x)) return;
-		rightWidth = Math.max(0, size.x - x - rightDragDisplacement);
-		if (rightMinWidth == SWT.DEFAULT) {
-			Point minSize = right.computeSize(rightMinWidth, rightMinHeight);
+		this.rightWidth = Math.max(0, size.x - x - this.rightDragDisplacement);
+		if (this.rightMinWidth == SWT.DEFAULT) {
+			Point minSize = this.right.computeSize(this.rightMinWidth, rightMinHeight);
 			rightWidth = Math.max(minSize.x, rightWidth);
 		} else {
-			rightWidth = Math.max(rightMinWidth, rightWidth);
+			rightWidth = Math.max(this.rightMinWidth, rightWidth);
 		}
 		layout(false);
 		return;
 	}
-	if (curveRect.contains(x, y)) {
-		setCursor(resizeCursor); 
+	if (this.curveRect.contains(x, y)) {
+		setCursor(this.resizeCursor); 
 	} else {
 		setCursor(null);
 	}
@@ -306,21 +306,21 @@ void onPaint(GC gc) {
 //	gc.setBackground(getDisplay().getSystemColor(SWT.COLOR_GREEN));
 //	gc.fillRectangle(-10, -10, size.x+20, size.y+20);
 //	}
-	if (left == null && right == null) return;
+	if (this.left == null && this.right == null) return;
 	Point size = getSize();
 	Color border1 = getDisplay().getSystemColor(BORDER1);
-	if (bottom != null) {
-		int y = bottom.getBounds().y - BORDER_STRIPE - 1;
+	if (this.bottom != null) {
+		int y = this.bottom.getBounds().y - BORDER_STRIPE - 1;
 		gc.setForeground(border1);
 		gc.drawLine(0, y, size.x, y);
 	}
-	if (left == null || right == null) return;
-	int[] line1 = new int[curve.length+6];
+	if (this.left == null || this.right == null) return;
+	int[] line1 = new int[this.curve.length+6];
 	int index = 0;
-	int x = curveStart;
+	int x = this.curveStart;
 	line1[index++] = x + 1;
 	line1[index++] = size.y - BORDER_STRIPE;
-	for (int i = 0; i < curve.length/2; i++) {
+	for (int i = 0; i < this.curve.length/2; i++) {
 		line1[index++]=x+this.curve[2*i];
 		line1[index++]=this.curve[2*i+1];
 	}
@@ -396,11 +396,11 @@ public void setBottom(Control control) {
 	if (control != null && control.getParent() != this) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	if (bottom != null && !bottom.isDisposed()) {
-		Point size = bottom.getSize();
-		bottom.setLocation(OFFSCREEN - size.x, OFFSCREEN - size.y);
+	if (this.bottom != null && !this.bottom.isDisposed()) {
+		Point size = this.bottom.getSize();
+		this.bottom.setLocation(OFFSCREEN - size.x, OFFSCREEN - size.y);
 	}
-	bottom = control;
+	this.bottom = control;
 	layout(false);
 }
 /**
@@ -444,11 +444,11 @@ public void setLeft(Control control) {
 	if (control != null && control.getParent() != this) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	if (left != null && !left.isDisposed()) {
-		Point size = left.getSize();
-		left.setLocation(OFFSCREEN - size.x, OFFSCREEN - size.y);
+	if (this.left != null && !this.left.isDisposed()) {
+		Point size = this.left.getSize();
+		this.left.setLocation(OFFSCREEN - size.x, OFFSCREEN - size.y);
 	}
-	left = control;
+	this.left = control;
 	layout(false);
 }
 /**
@@ -471,11 +471,11 @@ public void setRight(Control control) {
 	if (control != null && control.getParent() != this) {
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	if (right != null && !right.isDisposed()) {
-		Point size = right.getSize();
-		right.setLocation(OFFSCREEN - size.x, OFFSCREEN - size.y);
+	if (this.right != null && !this.right.isDisposed()) {
+		Point size = this.right.getSize();
+		this.right.setLocation(OFFSCREEN - size.x, OFFSCREEN - size.y);
 	}
-	right = control;
+	this.right = control;
 	layout(false);
 }
 /**
@@ -494,8 +494,8 @@ public void setRight(Control control) {
 public void setRightMinimumSize(Point size) {
 	checkWidget();
 	if (size == null || size.x < SWT.DEFAULT || size.y < SWT.DEFAULT) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-	rightMinWidth = size.x;
-	rightMinHeight = size.y;
+	this.rightMinWidth = size.x;
+	this.rightMinHeight = size.y;
 	layout(false);
 }
 /**
@@ -514,7 +514,7 @@ public void setRightMinimumSize(Point size) {
 public void setRightWidth(int width) {
 	checkWidget();
 	if (width < SWT.DEFAULT) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-	rightWidth = width;
+	this.rightWidth = width;
 	layout(false);
 }
 /**
@@ -547,13 +547,13 @@ public void setSimple(boolean simple) {
 }
 void updateCurve(int height) {
 	int h = height - BORDER_STRIPE;
-	if (simple) {
+	if (this.simple) {
 		this.curve = new int[] {0,h, 1,h, 2,h-1, 3,h-2,
 			                       3,2, 4,1, 5,0,};
 	} else {
-		curve = bezier(0, h+1, BEZIER_LEFT, h+1,
-				             curve_width-BEZIER_RIGHT, 0, curve_width, 0,
-		                     curve_width);
+		this.curve = bezier(0, h+1, BEZIER_LEFT, h+1,
+				             this.curve_width-BEZIER_RIGHT, 0, this.curve_width, 0,
+		                     this.curve_width);
 	}
 }
 }

@@ -136,7 +136,7 @@ public class PCTonePlayer extends BasicPlayer
       {
          if(currentByte == ToneControl.SILENCE)
          {
-            Thread.sleep(toneInfo.getSleepDelay());
+            Thread.sleep(this.toneInfo.getSleepDelay());
          }
          else
             if(currentByte == ToneControl.PLAY_BLOCK)
@@ -152,7 +152,7 @@ public class PCTonePlayer extends BasicPlayer
             
             //logUtil.putF("Note: " + currentByte + " Power: " + power, this, "playBlock");
             
-            toneInfo.setFrequency((int) d_frequency);
+            this.toneInfo.setFrequency((int) d_frequency);
             
             //logUtil.put(toneInfo.toString(), this, "playBlock");
             
@@ -161,7 +161,7 @@ public class PCTonePlayer extends BasicPlayer
                toneInfo.getLengthOfTime(),
                toneInfo.getVolume());
             
-            Thread.sleep(toneInfo.getLengthOfTime() + 20);
+            Thread.sleep(this.toneInfo.getLengthOfTime() + 20);
             }
       }
       
@@ -198,7 +198,7 @@ public class PCTonePlayer extends BasicPlayer
             else
                if(currentControlCommand == ToneControl.SET_VOLUME)
                {
-               toneInfo.setVolume(this.getNext());
+               this.toneInfo.setVolume(this.getNext());
                //logUtil.putF("Volume: " + toneInfo.getVolume(), this, "run");
                }
                else
@@ -210,15 +210,15 @@ public class PCTonePlayer extends BasicPlayer
                //logUtil.putF("Tempo: " + tempo, this, "run");
                double resolutionDenominator = 64;
                double durationOfNote = 60 * 4 / (1/resolutionDenominator * tempo);
-               toneInfo.setLengthOfTime((int) durationOfNote/16);
+               this.toneInfo.setLengthOfTime((int) durationOfNote/16);
                //logUtil.putF("Length Of Time: " + toneInfo.getLengthOfTime(), this, "run");
                   }
                   else
                      if(currentControlCommand == ToneControl.SILENCE)
                      {
-               toneInfo.setSleepDelay(this.getNext());
+               this.toneInfo.setSleepDelay(this.getNext());
                //logUtil.putF("Silence: " + toneInfo.getSleepDelay(), this, "run");
-               Thread.sleep(toneInfo.getSleepDelay());
+               Thread.sleep(this.toneInfo.getSleepDelay());
                      }
                      else
                         if(currentControlCommand == ToneControl.PLAY_BLOCK ||

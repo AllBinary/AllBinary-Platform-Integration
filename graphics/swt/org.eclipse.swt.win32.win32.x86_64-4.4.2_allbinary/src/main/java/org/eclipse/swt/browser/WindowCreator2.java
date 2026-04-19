@@ -69,18 +69,18 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (windowCreator != null) {
-		windowCreator.dispose ();
-		windowCreator = null;	
+	if (this.windowCreator != null) {
+		this.windowCreator.dispose ();
+		this.windowCreator = null;	
 	}
 
-	if (windowCreator2 != null) {
-		windowCreator2.dispose ();
-		windowCreator2 = null;	
+	if (this.windowCreator2 != null) {
+		this.windowCreator2.dispose ();
+		this.windowCreator2 = null;	
 	}
 }
 
@@ -94,17 +94,17 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 	
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IWINDOWCREATOR_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {windowCreator.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.windowCreator.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IWINDOWCREATOR2_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {windowCreator2.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.windowCreator2.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
@@ -115,7 +115,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
         	
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 	

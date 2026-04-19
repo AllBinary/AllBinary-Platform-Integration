@@ -113,11 +113,11 @@ protected Point computeSize (Composite composite, int wHint, int hHint, boolean 
 		Control child = children [i];
 		int w = wHint, h = hHint;
 		if (count > 0) {
-			if (type == SWT.HORIZONTAL && wHint != SWT.DEFAULT) {
-				w = Math.max (0, (wHint - (count - 1) * spacing) / count);
+			if (this.type == SWT.HORIZONTAL && wHint != SWT.DEFAULT) {
+				w = Math.max (0, (wHint - (count - 1) * this.spacing) / count);
 			}
-			if (type == SWT.VERTICAL && hHint != SWT.DEFAULT) {
-				h = Math.max (0, (hHint - (count - 1) * spacing) / count);
+			if (this.type == SWT.VERTICAL && hHint != SWT.DEFAULT) {
+				h = Math.max (0, (hHint - (count - 1) * this.spacing) / count);
 			}
 		}
 		Point size = computeChildSize (child, w, h, flushCache);
@@ -125,17 +125,17 @@ protected Point computeSize (Composite composite, int wHint, int hHint, boolean 
 		maxHeight = Math.max (maxHeight, size.y);
 	}
 	int width = 0, height = 0;
-	if (type == SWT.HORIZONTAL) {
+	if (this.type == SWT.HORIZONTAL) {
 		width = count * maxWidth;
-		if (count != 0) width += (count - 1) * spacing;
+		if (count != 0) width += (count - 1) * this.spacing;
 		height = maxHeight;
 	} else {
 		width = maxWidth;
 		height = count * maxHeight;
-		if (count != 0) height += (count - 1) * spacing;
+		if (count != 0) height += (count - 1) * this.spacing;
 	}
-	width += marginWidth * 2;
-	height += marginHeight * 2;
+	width += this.marginWidth * 2;
+	height += this.marginHeight * 2;
 	if (wHint != SWT.DEFAULT) width = wHint;
 	if (hHint != SWT.DEFAULT) height = hHint;
 	return new Point (width, height);
@@ -187,12 +187,12 @@ protected void layout (Composite composite, boolean flushCache) {
 	Control [] children = composite.getChildren ();
 	int count = children.length;
 	if (count == 0) return;
-	int width = rect.width - marginWidth * 2;
-	int height = rect.height - marginHeight * 2;
-	if (type == SWT.HORIZONTAL) {
-		width -= (count - 1) * spacing;
-		int x = rect.x + marginWidth, extra = width % count;
-		int y = rect.y + marginHeight, cellWidth = width / count;
+	int width = rect.width - this.marginWidth * 2;
+	int height = rect.height - this.marginHeight * 2;
+	if (this.type == SWT.HORIZONTAL) {
+		width -= (count - 1) * this.spacing;
+		int x = rect.x + this.marginWidth, extra = width % count;
+		int y = rect.y + this.marginHeight, cellWidth = width / count;
 		for (int i=0; i<count; i++) {
 			Control child = children [i];
 			int childWidth = cellWidth;
@@ -202,12 +202,12 @@ protected void layout (Composite composite, boolean flushCache) {
 				if (i == count - 1) childWidth += (extra + 1) / 2;
 			}
 			child.setBounds (x, y, childWidth, height);
-			x += childWidth + spacing;
+			x += childWidth + this.spacing;
 		}
 	} else {
-		height -= (count - 1) * spacing;
-		int x = rect.x + marginWidth, cellHeight = height / count;
-		int y = rect.y + marginHeight, extra = height % count;
+		height -= (count - 1) * this.spacing;
+		int x = rect.x + this.marginWidth, cellHeight = height / count;
+		int y = rect.y + this.marginHeight, extra = height % count;
 		for (int i=0; i<count; i++) {
 			Control child = children [i];
 			int childHeight = cellHeight;
@@ -217,7 +217,7 @@ protected void layout (Composite composite, boolean flushCache) {
 				if (i == count - 1) childHeight += (extra + 1) / 2;
 			}
 			child.setBounds (x, y, width, childHeight);
-			y += childHeight + spacing;
+			y += childHeight + this.spacing;
 		}
 	}
 }
@@ -231,10 +231,10 @@ protected void layout (Composite composite, boolean flushCache) {
 @Override
 public String toString () {
  	String string = getName ()+" {";
- 	string += "type="+((type == SWT.VERTICAL) ? "SWT.VERTICAL" : "SWT.HORIZONTAL")+" ";
- 	if (marginWidth != 0) string += "marginWidth="+marginWidth+" ";
- 	if (marginHeight != 0) string += "marginHeight="+marginHeight+" ";
- 	if (spacing != 0) string += "spacing="+spacing+" ";
+ 	string += "type="+((this.type == SWT.VERTICAL) ? "SWT.VERTICAL" : "SWT.HORIZONTAL")+" ";
+ 	if (this.marginWidth != 0) string += "marginWidth="+this.marginWidth+" ";
+ 	if (this.marginHeight != 0) string += "marginHeight="+this.marginHeight+" ";
+ 	if (this.spacing != 0) string += "spacing="+this.spacing+" ";
  	string = string.trim();
  	string += "}";
  	return string;

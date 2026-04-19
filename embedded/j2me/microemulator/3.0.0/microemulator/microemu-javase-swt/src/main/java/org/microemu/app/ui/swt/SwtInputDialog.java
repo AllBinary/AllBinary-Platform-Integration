@@ -62,8 +62,8 @@ public class SwtInputDialog extends SwtDialog
 	{
 		super.configureShell(shell);
 		
-		if (title != null) {
-			shell.setText(title);
+		if (this.title != null) {
+			shell.setText(this.title);
 		}
 	}
 
@@ -75,7 +75,7 @@ public class SwtInputDialog extends SwtDialog
 		composite.setLayout(gridLayout);
 
 		Label lbMessage = new Label(composite, SWT.NONE);
-		lbMessage.setText(message);
+		lbMessage.setText(this.message);
 		lbMessage.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		final Text txInput = new Text(composite, SWT.SINGLE | SWT.BORDER);

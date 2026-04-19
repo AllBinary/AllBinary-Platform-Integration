@@ -101,17 +101,17 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (promptService != null) {
-		promptService.dispose ();
-		promptService = null;	
+	if (this.promptService != null) {
+		this.promptService.dispose ();
+		this.promptService = null;	
 	}
-	if (promptService2 != null) {
-		promptService2.dispose ();
-		promptService2 = null;	
+	if (this.promptService2 != null) {
+		this.promptService2.dispose ();
+		this.promptService2 = null;	
 	}
 }
 
@@ -125,17 +125,17 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 	
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIPromptService.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {promptService.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.promptService.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IPROMPTSERVICE2_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {promptService2.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.promptService2.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
@@ -146,7 +146,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
         	
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 

@@ -525,9 +525,9 @@ public class DisplayTest //extends TestCase
 
 		MockDisplayable disp = new MockDisplayable();
 
-		display.setCurrent(disp);
+		this.display.setCurrent(disp);
 
-		display.repaint(disp, 0, 0, 10, 10);
+		this.display.repaint(disp, 0, 0, 10, 10);
 
 		//assertPrePaintValue(1, disp, 1000);
 

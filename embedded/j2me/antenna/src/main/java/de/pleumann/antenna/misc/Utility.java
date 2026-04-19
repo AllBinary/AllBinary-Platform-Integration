@@ -186,16 +186,16 @@ public class Utility {
           */
          String cldc = project.getProperty("wtk.cldc.version");
          if (cldc != null)
-             cldcVersion = cldc;
-         String midp = project.getProperty("wtk.midp.version");
+             this.cldcVersion = cldc;
+         String midp = this.project.getProperty("wtk.midp.version");
          if (midp != null)
-             midpVersion = midp;
+             this.midpVersion = midp;
 
      
         BufferedReader input = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/toolkit/autodetect.txt")));
         String line = null;
         try {
-            while ((line = input.readLine()) != null && toolkit == null) {
+            while ((line = input.readLine()) != null && this.toolkit == null) {
                 // comments start with #
                 if (!line.startsWith("#")) {
                     String[] arr = line.split(";");
@@ -205,7 +205,7 @@ public class Utility {
                             match = new File(getWtkRelative(arr[i])).exists();
                         }
                         if (match) {
-                            toolkit = new Toolkit(arr[0]);
+                            this.toolkit = new Toolkit(arr[0]);
                         }
                     }
                 }
@@ -227,7 +227,7 @@ public class Utility {
          * Changes to support SMTK3 added by Fred Grott
          * 
          */
-        if (toolkit == null) {
+        if (this.toolkit == null) {
             if (new File(getWtkRelative("lib/api.jar")).exists()) {
                 toolkitType = TOOLKIT_SIEMENS;
                 toolkit = new Toolkit("Siemens Mobility Toolkit(MIDP1.0) ", "lib/api.jar");
@@ -268,18 +268,18 @@ public class Utility {
 
         }
 
-        StringBuffer s = new StringBuffer("Antenna " + ANTENNA_VERSION + " initialized for project \"" + project.getName()
+        StringBuffer s = new StringBuffer("Antenna " + ANTENNA_VERSION + " initialized for project \"" + this.project.getName()
                 + "\"");
         while (s.length() < 58)
             s.append(' ');
-        StringBuffer t = new StringBuffer("Using " + toolkit.name + " (CLDC-" + cldcVersion + "; MIDP-" + midpVersion + ")");
+        StringBuffer t = new StringBuffer("Using " + toolkit.name + " (CLDC-" + this.cldcVersion + "; MIDP-" + this.midpVersion + ")");
         while (t.length() < 58)
             t.append(' ');
 
-        parent.log("**************************************************************");
-        parent.log("* " + s + " *");
-        parent.log("* " + t + " *");
-        parent.log("**************************************************************");
+        this.parent.log("**************************************************************");
+        this.parent.log("* " + s + " *");
+        this.parent.log("* " + t + " *");
+        this.parent.log("**************************************************************");
     }
 
 
@@ -318,9 +318,9 @@ public class Utility {
          * If the user has specified wtk.midpapi, then let's break it up just in
          * case it's a reference to separate JAR/ZIP files.
          */
-        String midpapi = project.getProperty("wtk.midpapi");
+        String midpapi = this.project.getProperty("wtk.midpapi");
         if (midpapi != null) {
-            String[] items = new Path(project, midpapi).list();
+            String[] items = new Path(this.project, midpapi).list();
             for (int i = 0; i < items.length; i++) {
                 results.add(items[i]);
             }
@@ -335,16 +335,16 @@ public class Utility {
              *
              * (by Joerg)
              */
-            String midp = midpVersion.replaceAll("\\.", "");
-            String cldc = cldcVersion.replaceAll("\\.", "");
-            String wmaVersion = project.getProperty("wtk.wma.version");
+            String midp = this.midpVersion.replaceAll("\\.", "");
+            String cldc = this.cldcVersion.replaceAll("\\.", "");
+            String wmaVersion = this.project.getProperty("wtk.wma.version");
             if (wmaVersion == null) {
                 wmaVersion = "10";
             } else {
                 wmaVersion = wmaVersion.replaceAll("\\.", "");
             }
-            Enumeration e = toolkit.props.propertyNames();
-            boolean all = "true".equals(project.getProperty("wtk.all.enabled"));
+            Enumeration e = this.toolkit.props.propertyNames();
+            boolean all = "true".equals(this.project.getProperty("wtk.all.enabled"));
             while (e.hasMoreElements()) {
                 String name = (String) e.nextElement();
                 if (name.equals(Toolkit.NAME) || name.equals(Toolkit.PREVERIFYVERSION) ||
@@ -354,18 +354,18 @@ public class Utility {
                 }
                 if (name.startsWith("midp")) {
                     if (name.equals("midp" + midp)) {
-                        results.add(getWtkRelative(toolkit.props.getProperty(name)));
+                        results.add(getWtkRelative(this.toolkit.props.getProperty(name)));
                     }
                     continue;
                 }
                 if (name.startsWith("cldc")) {
                     if (name.equals("cldc" + cldc)) {
-                        results.add(getWtkRelative(toolkit.props.getProperty(name)));
+                        results.add(getWtkRelative(this.toolkit.props.getProperty(name)));
                     }
                     continue;
                 }
-                if (all || "true".equals(project.getProperty("wtk." + name + ".enabled"))) {
-                    String[] items = toolkit.props.getProperty(name).split(";");
+                if (all || "true".equals(this.project.getProperty("wtk." + name + ".enabled"))) {
+                    String[] items = this.toolkit.props.getProperty(name).split(";");
                     for (int i = 0; i < items.length; i++) {
                         results.add(getWtkRelative(items[i]));
                     }
@@ -376,8 +376,8 @@ public class Utility {
              * locations. Hence the changes added by Fred Grott
              * 
              */
-            if (toolkitType == TOOLKIT_SIEMENS) {
-                results.add(getWtkRelative(toolkit.props.getProperty("api")));
+            if (this.toolkitType == TOOLKIT_SIEMENS) {
+                results.add(getWtkRelative(this.toolkit.props.getProperty("api")));
             }
         }
 
@@ -477,7 +477,7 @@ public class Utility {
          */
         if ("3".equals(getToolkitProp(Toolkit.PREVERIFYVERSION))
                 || System.getProperty("os.name").startsWith("Mac")) {
-            if ("1.0".equals(cldcVersion)) {
+            if ("1.0".equals(this.cldcVersion)) {
                 arguments += " -cldc1.0";
             }
         }
@@ -504,14 +504,14 @@ public class Utility {
 
         arguments += " " + source;
 
-        String jdk = project.getProperty("java.home");
+        String jdk = this.project.getProperty("java.home");
         if (jdk.endsWith("/jre") || jdk.endsWith("\\jre")) {
             jdk = jdk.substring(0, jdk.length() - 4);
-            parent.log("Adjusted Java home to " + jdk, Project.MSG_VERBOSE);
+            this.parent.log("Adjusted Java home to " + jdk, Project.MSG_VERBOSE);
         }
 
-        parent.log("Executable: " + preverify/*, Project.MSG_VERBOSE*/);
-        parent.log("Arguments : " + arguments/*, Project.MSG_VERBOSE*/);
+        this.parent.log("Executable: " + preverify/*, Project.MSG_VERBOSE*/);
+        this.parent.log("Arguments : " + arguments/*, Project.MSG_VERBOSE*/);
 
         try {
             String java_bin = jdk + File.separator + "bin";
@@ -536,8 +536,8 @@ public class Utility {
         } catch (Exception ex) {
             File log = new File(destDir, "jarlog.txt");
             if (log.exists()) {
-                parent.log("Error preferifying, attempting to print " + log, Project.MSG_ERR);
-                parent.log("====" + log + "====", Project.MSG_ERR);
+                this.parent.log("Error preferifying, attempting to print " + log, Project.MSG_ERR);
+                this.parent.log("====" + log + "====", Project.MSG_ERR);
                 try {
                     FileInputStream fin = new FileInputStream(log);
                     copyStreams(fin, System.out);
@@ -546,7 +546,7 @@ public class Utility {
                     e.printStackTrace();
                 }
             } else {
-                parent.log("Error preferifying, log file not found:  " + log, Project.MSG_ERR);
+                this.parent.log("Error preferifying, log file not found:  " + log, Project.MSG_ERR);
             }
             throw new BuildException(ex);
         }
@@ -634,7 +634,7 @@ public class Utility {
                 delete(files[i]);
             }
 
-            if (file.equals(tmpDir)) {
+            if (file.equals(this.tmpDir)) {
                 this.tmpDir = null;
             }
         }
@@ -659,15 +659,15 @@ public class Utility {
      * is first called. Subsequent calls return the same result.
      */
     public File getTempDir() {
-        if (tmpDir == null) {
+        if (this.tmpDir == null) {
             Random rnd = new Random();
 
             do {
-                tmpDir = new File(project.getBaseDir() + "/" + Integer.toHexString(rnd.nextInt() % 0x7FFFFFFF) + ".tmp");
-            } while (tmpDir.exists());
+                this.tmpDir = new File(this.project.getBaseDir() + "/" + Integer.toHexString(rnd.nextInt() % 0x7FFFFFFF) + ".tmp");
+            } while (this.tmpDir.exists());
 
-            tmpDir.mkdir();
-            tmpDir.deleteOnExit();
+            this.tmpDir.mkdir();
+            this.tmpDir.deleteOnExit();
         }
 
         return tmpDir;
@@ -688,7 +688,7 @@ public class Utility {
                 version = (dot == -1) ? "" + num : version.substring(0, dot) + "." + num;
             }
 
-            parent.log("New version is " + version);
+            this.parent.log("New version is " + version);
         } catch (Exception ex) {
             parent.log("Unable to increase version number.");
         }
@@ -708,9 +708,9 @@ public class Utility {
                           Vector arguments, JadFile jad) throws BuildException {
 
         boolean pgFound = new File(getWtkRelative("bin/proguard.jar")).exists()
-                || project.getProperty("wtk.proguard.home") != null;
+                || this.project.getProperty("wtk.proguard.home") != null;
         boolean rgFound = new File(getWtkRelative("bin/retroguard.jar")).exists()
-                || project.getProperty("wtk.retroguard.home") != null;
+                || this.project.getProperty("wtk.retroguard.home") != null;
 
         if (!pgFound) {
             try {
@@ -765,7 +765,7 @@ public class Utility {
      */
     public void retroguard(File srcFile, File destFile, String classpath, boolean verbose, Vector preserve, Vector arguments,
                            JadFile jad) throws IOException {
-        parent.log("Obfuscating " + srcFile + " with RetroGuard");
+        this.parent.log("Obfuscating " + srcFile + " with RetroGuard");
 
         File script = new File(getTempDir(), "retroguard.rgs");
 
@@ -778,10 +778,10 @@ public class Utility {
         writer.close();
 
         Java java = new Java();
-        java.setProject(project);
-        java.setTaskName(parent.getTaskName());
+        java.setProject(this.project);
+        java.setTaskName(this.parent.getTaskName());
 
-        String home = project.getProperty("wtk.retroguard.home");
+        String home = this.project.getProperty("wtk.retroguard.home");
         java.createClasspath().setPath(
                 home != null ? new File(home, "retroguard.jar").getAbsolutePath() : getWtkRelative("bin/retroguard.jar"));
         /*
@@ -828,8 +828,8 @@ public class Utility {
                 output.close();
 
                 Jar task = new Jar();
-                task.setTaskName(parent.getTaskName());
-                task.setProject(project);
+                task.setTaskName(this.parent.getTaskName());
+                task.setProject(this.project);
                 task.setDestFile(destFile);
                 task.setUpdate(true);
                 task.setManifest(tmp);
@@ -847,7 +847,7 @@ public class Utility {
      */
     public void proguard(File srcFile, File destFile, String classpath, boolean verbose, Vector preserve, Vector arguments,
                          JadFile jad) throws IOException {
-        parent.log("Obfuscating " + srcFile + " with ProGuard");
+        this.parent.log("Obfuscating " + srcFile + " with ProGuard");
 
         File script = new File(getTempDir(), "proguard.pgs");
         PrintWriter writer = new PrintWriter(new FileOutputStream(script));
@@ -868,10 +868,10 @@ public class Utility {
         writer.close();
 
         Java java = new Java();
-        java.setProject(project);
-        java.setTaskName(parent.getTaskName());
+        java.setProject(this.project);
+        java.setTaskName(this.parent.getTaskName());
 
-        String home = project.getProperty("wtk.proguard.home");
+        String home = this.project.getProperty("wtk.proguard.home");
         java.createClasspath().setPath(
                 home != null ? new File(home + "/lib", "proguard.jar").getAbsolutePath() : getWtkRelative("bin/proguard.jar"));
         java.createClasspath().setPath(System.getProperty("java.class.path"));
@@ -941,9 +941,9 @@ public class Utility {
     public Hashtable getSiemensDevices() {
         Hashtable result = new Hashtable();
 
-        String smtk = project.getProperty("wtk.siemensemu");
+        String smtk = this.project.getProperty("wtk.siemensemu");
 
-        Path path = new Path(project, smtk);
+        Path path = new Path(this.project, smtk);
         String[] list = path.list();
 
         if (list != null) {
@@ -976,7 +976,7 @@ public class Utility {
      */
     public String interpret(String str) {
 
-        if (project == null) {
+        if (this.project == null) {
             throw new IllegalStateException("Ant project can not be null.");
         }
 

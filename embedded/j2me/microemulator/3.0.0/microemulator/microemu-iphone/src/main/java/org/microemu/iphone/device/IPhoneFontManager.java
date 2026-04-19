@@ -60,11 +60,11 @@ public class IPhoneFontManager implements FontManager {
 	}
 
 	public int getBaselinePosition(Font f) {
-		return (int)(uifont.capHeight());
+		return (int)(this.uifont.capHeight());
 	}
 
 	public int getHeight(Font f) {
-		return (int)(uifont.capHeight()+uifont.leading());
+		return (int)(this.uifont.capHeight()+this.uifont.leading());
 	}
 
 	public void init() {

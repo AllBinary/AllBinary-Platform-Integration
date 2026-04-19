@@ -42,7 +42,7 @@ public final class RecordStoreTest //extends TestCase
 		public void deleteRecordStore(String name)	throws RecordStoreNotFoundException,
 													RecordStoreException {
 
-			stores.remove(name);
+			this.stores.remove(name);
 			
 			fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, name);
 		}
@@ -63,9 +63,9 @@ public final class RecordStoreTest //extends TestCase
 
 		public String[] listRecordStores() {
 
-			String[] keys = new String[stores.size()];
+			String[] keys = new String[this.stores.size()];
 			int index = 0;
-			for (Enumeration names = stores.keys(); names.hasMoreElements();) {
+			for (Enumeration names = this.stores.keys(); names.hasMoreElements();) {
 
 				keys[index++] = (String) names.nextElement();
 			}
@@ -75,8 +75,8 @@ public final class RecordStoreTest //extends TestCase
 		public RecordStore openRecordStore(	String recordStoreName,
 											boolean createIfNecessary) throws RecordStoreException {
 
-			if (stores.contains(recordStoreName)) {
-				RecordStoreImpl store = (RecordStoreImpl) stores.get(recordStoreName);
+			if (this.stores.contains(recordStoreName)) {
+				RecordStoreImpl store = (RecordStoreImpl) this.stores.get(recordStoreName);
 				fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
 				return store;
 			}
@@ -84,10 +84,10 @@ public final class RecordStoreTest //extends TestCase
 			if (createIfNecessary) {
 
 				RecordStoreImpl store = new RecordStoreImpl(this, recordStoreName);
-				if (recordListener != null) {
-					store.addRecordListener(recordListener);
+				if (this.recordListener != null) {
+					store.addRecordListener(this.recordListener);
 				}
-				stores.put(recordStoreName, store);
+				this.stores.put(recordStoreName, store);
 				fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
 				return store;
 			}
@@ -116,8 +116,8 @@ public final class RecordStoreTest //extends TestCase
 		}
 
 		public void fireRecordStoreListener(int type, String recordStoreName) {
-			if (recordListener != null) {
-				recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
+			if (this.recordListener != null) {
+				this.recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
 			}
 		}
 
@@ -131,9 +131,9 @@ public final class RecordStoreTest //extends TestCase
 
 		super.setUp();
 
-		rsm = new MockRecordStoreManager();
-		rs = new RecordStoreImpl(rsm, "test");
-		rs.setOpen(true);
+		this.rsm = new MockRecordStoreManager();
+		this.rs = new RecordStoreImpl(this.rsm, "test");
+		this.rs.setOpen(true);
 	}
 */
 	/**
@@ -148,8 +148,8 @@ public final class RecordStoreTest //extends TestCase
 								RecordStoreFullException,
 								RecordStoreException {
 
-		rs.addRecord(new byte[100], 0, 100);
-		rs.addRecord(new byte[100], 50, 50);
+		this.rs.addRecord(new byte[100], 0, 100);
+		this.rs.addRecord(new byte[100], 50, 50);
 
 		assertEquals(150, rs.getSize());
 	}
@@ -211,13 +211,13 @@ public final class RecordStoreTest //extends TestCase
 		// increasing numeric order, not decreasing
 
 		addRecord(rs, 2);
-		addRecord(rs, 5);
-		addRecord(rs, 4);
-		addRecord(rs, 99);
-		addRecord(rs, 3);
-		addRecord(rs, 1);
+		addRecord(this.rs, 5);
+		addRecord(this.rs, 4);
+		addRecord(this.rs, 99);
+		addRecord(this.rs, 3);
+		addRecord(this.rs, 1);
 
-		RecordEnumeration re = rs.enumerateRecords(	null,
+		RecordEnumeration re = this.rs.enumerateRecords(	null,
 													recordComparator,
 													false);
 		assertEquals(1, extractFromByteArray(re.nextRecord()));
@@ -227,7 +227,7 @@ public final class RecordStoreTest //extends TestCase
 		assertEquals(5, extractFromByteArray(re.nextRecord()));
 		assertEquals(99, extractFromByteArray(re.nextRecord()));
 
-		rs.closeRecordStore();
+		this.rs.closeRecordStore();
 	}
 */
 }

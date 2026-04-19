@@ -302,7 +302,7 @@ public class SwtSelectDeviceDialog extends SwtDialog {
 		gpDevices.setLayout(gridLayout);
 		gpDevices.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		lsDevices = new List(gpDevices, SWT.SINGLE | SWT.V_SCROLL);
+		this.lsDevices = new List(gpDevices, SWT.SINGLE | SWT.V_SCROLL);
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan = 3;
 		gridData.grabExcessVerticalSpace = true;
@@ -317,26 +317,26 @@ public class SwtSelectDeviceDialog extends SwtDialog {
 		btDevices.setLayout(gridLayout);
 		btDevices.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
 
-		btAdd = new Button(btDevices, SWT.PUSH);
-		btAdd.setText("Add...");
-		btAdd.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
-		btAdd.addListener(SWT.Selection, btAddListener);
+		this.btAdd = new Button(btDevices, SWT.PUSH);
+		this.btAdd.setText("Add...");
+		this.btAdd.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
+		this.btAdd.addListener(SWT.Selection, btAddListener);
 
-		btRemove = new Button(btDevices, SWT.PUSH);
-		btRemove.setText("Remove");
-		btRemove.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
-		btRemove.addListener(SWT.Selection, btRemoveListener);
+		this.btRemove = new Button(btDevices, SWT.PUSH);
+		this.btRemove.setText("Remove");
+		this.btRemove.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
+		this.btRemove.addListener(SWT.Selection, btRemoveListener);
 
-		btDefault = new Button(btDevices, SWT.PUSH);
-		btDefault.setText("Set as default");
-		btDefault.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
-		btDefault.addListener(SWT.Selection, btDefaultListener);
+		this.btDefault = new Button(btDevices, SWT.PUSH);
+		this.btDefault.setText("Set as default");
+		this.btDefault.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_CENTER));
+		this.btDefault.addListener(SWT.Selection, btDefaultListener);
 
 		Vector devs = Config.getDeviceEntries();
-		deviceModel = new Vector();
+		this.deviceModel = new Vector();
 		for (int i = 0; i < devs.size(); i++) {
 			DeviceEntry entry = (DeviceEntry) devs.elementAt(i);
-			deviceModel.addElement(entry);
+			this.deviceModel.addElement(entry);
 			if (entry.isDefaultDevice()) {
 				lsDevices.add(entry.getName() + " (default)");
 				lsDevices.select(i);

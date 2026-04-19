@@ -38,10 +38,10 @@ public class NeuQuant {
 
 	/* Program Skeleton
 	   ----------------
-	   [select samplefac in range 1..30]
+	   [select this.samplefac in range 1..30]
 	   [read image from input file]
 	   pic = (unsigned char*) malloc(3*width*height);
-	   initnet(pic,3*width*height,samplefac);
+	   initnet(pic,3*width*height,this.samplefac);
 	   learn();
 	   unbiasnet();
 	   [write output image header, using writecolourmap(f)]
@@ -129,13 +129,13 @@ public class NeuQuant {
 		byte[] map = new byte[3 * netsize];
 		int[] index = new int[netsize];
 		for (int i = 0; i < netsize; i++)
-			index[network[i][3]] = i;
+			index[this.network[i][3]] = i;
 		int k = 0;
 		for (int i = 0; i < netsize; i++) {
 			int j = index[i];
-			map[k++] = (byte) (network[j][0]);
-			map[k++] = (byte) (network[j][1]);
-			map[k++] = (byte) (network[j][2]);
+			map[k++] = (byte) (this.network[j][0]);
+			map[k++] = (byte) (this.network[j][1]);
+			map[k++] = (byte) (this.network[j][2]);
 		}
 		return map;
 	}
@@ -181,16 +181,16 @@ public class NeuQuant {
 			}
 			/* smallval entry is now in position i */
 			if (smallval != previouscol) {
-				netindex[previouscol] = (startpos + i) >> 1;
+				this.netindex[previouscol] = (startpos + i) >> 1;
 				for (j = previouscol + 1; j < smallval; j++)
-					netindex[j] = i;
+					this.netindex[j] = i;
 				previouscol = smallval;
 				startpos = i;
 			}
 		}
-		netindex[previouscol] = (startpos + maxnetpos) >> 1;
+		this.netindex[previouscol] = (startpos + maxnetpos) >> 1;
 		for (j = previouscol + 1; j < 256; j++)
-			netindex[j] = maxnetpos; /* really 256 */
+			this.netindex[j] = maxnetpos; /* really 256 */
 	}
 	
 	/* Main Learning Loop
@@ -202,13 +202,13 @@ public class NeuQuant {
 		byte[] p;
 		int pix, lim;
 
-		if (lengthcount < minpicturebytes)
-			samplefac = 1;
-		alphadec = 30 + ((samplefac - 1) / 3);
-		p = thepicture;
+		if (this.lengthcount < minpicturebytes)
+			this.samplefac = 1;
+		this.alphadec = 30 + ((this.samplefac - 1) / 3);
+		p = this.thepicture;
 		pix = 0;
-		lim = lengthcount;
-		samplepixels = lengthcount / (3 * samplefac);
+		lim = this.lengthcount;
+		samplepixels = this.lengthcount / (3 * this.samplefac);
 		delta = samplepixels / ncycles;
 		alpha = initalpha;
 		radius = initradius;
@@ -217,20 +217,20 @@ public class NeuQuant {
 		if (rad <= 1)
 			rad = 0;
 		for (i = 0; i < rad; i++)
-			radpower[i] =
+			this.radpower[i] =
 				alpha * (((rad * rad - i * i) * radbias) / (rad * rad));
 
 		//fprintf(stderr,"beginning 1D learning: initial radius=%d\n", rad);
 
-		if (lengthcount < minpicturebytes)
+		if (this.lengthcount < minpicturebytes)
 			step = 3;
-		else if ((lengthcount % prime1) != 0)
+		else if ((this.lengthcount % prime1) != 0)
 			step = 3 * prime1;
 		else {
-			if ((lengthcount % prime2) != 0)
+			if ((this.lengthcount % prime2) != 0)
 				step = 3 * prime2;
 			else {
-				if ((lengthcount % prime3) != 0)
+				if ((this.lengthcount % prime3) != 0)
 					step = 3 * prime3;
 				else
 					step = 3 * prime4;
@@ -250,7 +250,7 @@ public class NeuQuant {
 
 			pix += step;
 			if (pix >= lim)
-				pix -= lengthcount;
+				pix -= this.lengthcount;
 
 			i++;
 			if (delta == 0)
@@ -262,7 +262,7 @@ public class NeuQuant {
 				if (rad <= 1)
 					rad = 0;
 				for (j = 0; j < rad; j++)
-					radpower[j] =
+					this.radpower[j] =
 						alpha * (((rad * rad - j * j) * radbias) / (rad * rad));
 			}
 		}
@@ -280,7 +280,7 @@ public class NeuQuant {
 		bestd = 1000; /* biggest possible dist is 256*3 */
 		best = -1;
 		i = this.netindex[g]; /* index on g */
-		j = i - 1; /* start at netindex[g] and work outwards */
+		j = i - 1; /* start at this.netindex[g] and work outwards */
 
 		while ((i < netsize) || (j >= 0)) {
 			if (i < netsize) {
@@ -353,7 +353,7 @@ public class NeuQuant {
 			this.network[i][0] >>= netbiasshift;
 			this.network[i][1] >>= netbiasshift;
 			this.network[i][2] >>= netbiasshift;
-			network[i][3] = i; /* record colour no */
+			this.network[i][3] = i; /* record colour no */
 		}
 	}
 	
@@ -443,17 +443,17 @@ public class NeuQuant {
 				bestd = dist;
 				bestpos = i;
 			}
-			biasdist = dist - ((bias[i]) >> (intbiasshift - netbiasshift));
+			biasdist = dist - ((this.bias[i]) >> (intbiasshift - netbiasshift));
 			if (biasdist < bestbiasd) {
 				bestbiasd = biasdist;
 				bestbiaspos = i;
 			}
-			betafreq = (freq[i] >> betashift);
-			freq[i] -= betafreq;
-			bias[i] += (betafreq << gammashift);
+			betafreq = (this.freq[i] >> betashift);
+			this.freq[i] -= betafreq;
+			this.bias[i] += (betafreq << gammashift);
 		}
-		freq[bestpos] += beta;
-		bias[bestpos] -= betagamma;
+		this.freq[bestpos] += beta;
+		this.bias[bestpos] -= betagamma;
 		return (bestbiaspos);
 	}
 }

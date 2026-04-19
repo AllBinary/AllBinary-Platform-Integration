@@ -96,8 +96,8 @@ public class DeviceImpl implements Device {
 	public DeviceImpl() {
 		// Permits null values.
 		systemProperties = new HashMap();
-		buttons = new Vector();
-		softButtons = new Vector();
+		this.buttons = new Vector();
+		this.softButtons = new Vector();
 	}
 
 	public static DeviceImpl create(EmulatorContext context, ClassLoader classLoader, String descriptorLocation,
@@ -290,9 +290,9 @@ public class DeviceImpl implements Device {
 
 		loadSkinVersion(doc);
 
-		hasPointerEvents = false;
-		hasPointerMotionEvents = false;
-		hasRepeatEvents = false;
+		this.hasPointerEvents = false;
+		this.hasPointerMotionEvents = false;
+		this.hasRepeatEvents = false;
 
 		((FontManagerImpl) getFontManager()).setAntialiasing(false);
 
@@ -310,7 +310,7 @@ public class DeviceImpl implements Device {
 			} else if (tmp.getName().equals("img") && !((DeviceDisplayImpl) getDeviceDisplay()).isResizable()) {
 				try {
 					if (tmp.getStringAttribute("name").equals("normal")) {
-						normalImage = loadImage(classLoader, base, tmp.getStringAttribute("src"));
+						this.normalImage = loadImage(classLoader, base, tmp.getStringAttribute("src"));
 					} else if (tmp.getStringAttribute("name").equals("over")) {
 						overImage = loadImage(classLoader, base, tmp.getStringAttribute("src"));
 					} else if (tmp.getStringAttribute("name").equals("pressed")) {
@@ -332,12 +332,12 @@ public class DeviceImpl implements Device {
 	private void loadSkinVersion(XMLElement doc) {
 		String xmlns = doc.getStringAttribute("xmlns");
 		if (xmlns == null) {
-			skinVersion = 20000;
+			this.skinVersion = 20000;
 		} else {
 			if (xmlns.endsWith("/2.0.2/")) {
-				skinVersion = 20002;
+				this.skinVersion = 20002;
 			} else {
-				skinVersion = 20000;
+				this.skinVersion = 20000;
 			}
 		}
 	}
@@ -378,7 +378,7 @@ public class DeviceImpl implements Device {
 		for (Enumeration e_display = tmp.enumerateChildren(); e_display.hasMoreElements();) {
 			XMLElement tmp_display = (XMLElement) e_display.nextElement();
 			if (tmp_display.getName().equals("img")) {
-				if (tmp_display.getStringAttribute("name").equals(commonStrings.UP)
+				if (tmp_display.getStringAttribute("name").equals(this.commonStrings.UP)
 						|| tmp_display.getStringAttribute("name").equals(commonStrings.DOWN)) {
 					// deprecated, moved to icon
 					SoftButton icon = deviceDisplay.createSoftButton(skinVersion, tmp_display
@@ -412,7 +412,7 @@ public class DeviceImpl implements Device {
 						}
 					}
 				}
-				SoftButton icon = deviceDisplay.createSoftButton(skinVersion, tmp_display.getStringAttribute("name"),
+				SoftButton icon = deviceDisplay.createSoftButton(this.skinVersion, tmp_display.getStringAttribute("name"),
 						getRectangle(tmp_display.getChild("paintable")), iconNormalImage, iconPressedImage);
 				getSoftButtons().addElement(icon);
 			} else if (tmp_display.getName().equals("status")) {
@@ -494,7 +494,7 @@ public class DeviceImpl implements Device {
 		for (Enumeration e_keyboard = tmp.enumerateChildren(); e_keyboard.hasMoreElements();) {
 			XMLElement tmp_keyboard = (XMLElement) e_keyboard.nextElement();
 			if (tmp_keyboard.getName().equals("haspointerevents")) {
-				hasPointerEvents = parseBoolean(tmp_keyboard.getContent());
+				this.hasPointerEvents = parseBoolean(tmp_keyboard.getContent());
 			} else if (tmp_keyboard.getName().equals("haspointermotionevents")) {
 				hasPointerMotionEvents = parseBoolean(tmp_keyboard.getContent());
 			} else if (tmp_keyboard.getName().equals("hasrepeatevents")) {
@@ -556,7 +556,7 @@ public class DeviceImpl implements Device {
 					}
 				}
 				int keyCode = tmp_keyboard.getIntAttribute("keyCode", Integer.MIN_VALUE);
-				SoftButton button = deviceDisplay.createSoftButton(skinVersion,
+				SoftButton button = deviceDisplay.createSoftButton(this.skinVersion,
 						tmp_keyboard.getStringAttribute("name"), shape, keyCode,
 						tmp_keyboard.getStringAttribute("key"), paintable,
 						tmp_keyboard.getStringAttribute("alignment"), commands, font);
@@ -570,7 +570,7 @@ public class DeviceImpl implements Device {
 		for (Enumeration e_prop = tmp.enumerateChildren(); e_prop.hasMoreElements();) {
 			XMLElement tmp_prop = (XMLElement) e_prop.nextElement();
 			if (tmp_prop.getName().equals("system-property")) {
-				systemProperties.put(tmp_prop.getStringAttribute("name"), tmp_prop.getStringAttribute("value"));
+				this.systemProperties.put(tmp_prop.getStringAttribute("name"), tmp_prop.getStringAttribute("value"));
 			}
 		}
 	}

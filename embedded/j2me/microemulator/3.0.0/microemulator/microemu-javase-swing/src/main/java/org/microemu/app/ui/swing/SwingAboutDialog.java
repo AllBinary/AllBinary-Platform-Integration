@@ -59,8 +59,8 @@ public class SwingAboutDialog extends SwingDialogPanel {
 		c.ipady = 10;
 		c.gridx = 0;
 		c.gridy = 0;
-		iconLabel = new JLabel();
-		add(iconLabel, c);
+		this.iconLabel = new JLabel();
+		add(this.iconLabel, c);
 
 		iconLabel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(
 				Main.class.getResource("/org/microemu/icon.png"))));
@@ -69,9 +69,9 @@ public class SwingAboutDialog extends SwingDialogPanel {
 		c.gridy = 0;
 		c.weightx = 1;
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		textLabel = new JLabel("MicroEmulator");
-		textLabel.setFont(new Font("Default", Font.BOLD, 18));
-		add(textLabel, c);
+		this.textLabel = new JLabel("MicroEmulator");
+		this.textLabel.setFont(new Font("Default", Font.BOLD, 18));
+		add(this.textLabel, c);
 
 		c.gridy = 1;
 		c.weightx = 0.0;

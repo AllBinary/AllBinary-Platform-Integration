@@ -67,9 +67,9 @@ public class CustomGaugeItem extends CustomItem
             value = 0.0f;
         }
 
-        if (value > maxValue)
+        if (value > this.maxValue)
         {
-            value = maxValue;
+            value = this.maxValue;
         }
 
         this.value = value;
@@ -154,7 +154,7 @@ public class CustomGaugeItem extends CustomItem
         if(height == 30)
         {
             //int width = (int) ((graphics.getClipWidth() - 8) * value / maxValue);
-            int width = (int) ((this.displayInfoSingleton.getLastWidth() - 8) * value / maxValue);
+            int width = (int) ((this.displayInfoSingleton.getLastWidth() - 8) * this.value / this.maxValue);
             //logUtil.put("Rect1: " + width + "," + 7, this, "paint");
             graphics.fillRect(4, 4 + myFont.DEFAULT_CHAR_HEIGHT, width, 7);
         }
@@ -165,7 +165,7 @@ public class CustomGaugeItem extends CustomItem
                 
                 final int ADJUST_X = 26;
                 //int width = (int) ((graphics.getClipWidth() - stringWidth - 8) * value / maxValue);
-                int width = (int) ((this.displayInfoSingleton.getLastWidth() - stringWidth - ADJUST_X) * value / maxValue);
+                int width = (int) ((this.displayInfoSingleton.getLastWidth() - stringWidth - ADJUST_X) * this.value / this.maxValue);
 
                 graphics.fillRect(ADJUST_X + stringWidth, 4, width, graphics.getFont().getHeight() / 2);
         }
@@ -173,6 +173,6 @@ public class CustomGaugeItem extends CustomItem
 
     private int getCurrentInnerColor()
     {
-        return (int) currentInnerColor;
+        return (int) this.currentInnerColor;
     }
 }

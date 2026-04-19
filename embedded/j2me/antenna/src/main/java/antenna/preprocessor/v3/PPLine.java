@@ -112,13 +112,13 @@ public class PPLine {
 
         String ws[] = getWhites(s);
         // Keep whitespace and strip it from the string
-        m_spaces = ws[0];
+        this.m_spaces = ws[0];
         s = ws[1];
 
         // Default to visible line, in case we can't match the type.
-        m_type = TYPE_VISIBLE;
-        m_text = s;
-        m_prefixChar = '?';
+        this.m_type = TYPE_VISIBLE;
+        this.m_text = s;
+        this.m_prefixChar = '?';
 
         // Check the prefix.
         if (s.startsWith("//")) {

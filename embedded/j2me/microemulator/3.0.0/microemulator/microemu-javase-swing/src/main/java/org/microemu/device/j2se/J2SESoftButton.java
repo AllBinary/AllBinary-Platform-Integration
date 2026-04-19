@@ -90,7 +90,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 
 		if (alignmentName != null) {
 			try {
-				alignment = J2SESoftButton.class.getField(alignmentName).getInt(null);
+				this.alignment = J2SESoftButton.class.getField(alignmentName).getInt(null);
 			} catch (Exception ex) {
 				System.err.println(ex);
 			}
@@ -165,35 +165,35 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 	}
 
 	public void paint(Graphics g) {
-		if (!visible || paintable == null) {
+		if (!this.visible || this.paintable == null) {
 			return;
 		}
 
 		java.awt.Shape clip = g.getClip();
 
 		g.setClip(paintable.x, paintable.y, paintable.width, paintable.height);
-		if (type == TYPE_COMMAND) {
+		if (this.type == TYPE_COMMAND) {
 			int xoffset = 0;
 			Device device = DeviceFactory.getDevice();
 			J2SEDeviceDisplay deviceDisplay = (J2SEDeviceDisplay) device.getDeviceDisplay();
-			if (pressed) {
+			if (this.pressed) {
 				g.setColor(deviceDisplay.foregroundColor);
 			} else {
 				g.setColor(deviceDisplay.backgroundColor);
 			}
 			g.fillRect(paintable.x, paintable.y, paintable.width, paintable.height);
 			synchronized (this) {
-				if (command != null) {
-					if (font != null) {
+				if (this.command != null) {
+					if (this.font != null) {
 						J2SEFontManager fontManager = (J2SEFontManager) device.getFontManager();
-						J2SEFont buttonFont = (J2SEFont) fontManager.getFont(font);
+						J2SEFont buttonFont = (J2SEFont) fontManager.getFont(this.font);
 						g.setFont(buttonFont.getFont());
 					}
 					FontMetrics metrics = g.getFontMetrics();
-					if (alignment == RIGHT) {
-						xoffset = paintable.width - metrics.stringWidth(command.getLabel()) - 1;
+					if (this.alignment == RIGHT) {
+						xoffset = paintable.width - metrics.stringWidth(this.command.getLabel()) - 1;
 					}
-					if (pressed) {
+					if (this.pressed) {
 						g.setColor(deviceDisplay.backgroundColor);
 					} else {
 						g.setColor(deviceDisplay.foregroundColor);
@@ -204,10 +204,10 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 			}
 		} else if (type == TYPE_ICON) {
                         //J2SEImmutableImage
-			if (pressed) {
-				g.drawImage((java.awt.Image) pressedImage.getImage(), paintable.x, paintable.y, null);
+			if (this.pressed) {
+				g.drawImage((java.awt.Image) this.pressedImage.getImage(), paintable.x, paintable.y, null);
 			} else {
-				g.drawImage((java.awt.Image) normalImage.getImage(), paintable.x, paintable.y, null);
+				g.drawImage((java.awt.Image) this.normalImage.getImage(), paintable.x, paintable.y, null);
 			}
 		}
 
@@ -215,7 +215,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 	}
 
 	public boolean preferredCommandType(Command cmd) {
-		for (Enumeration ct = commandTypes.elements(); ct.hasMoreElements();) {
+		for (Enumeration ct = this.commandTypes.elements(); ct.hasMoreElements();) {
 			if (cmd.getCommandType() == ((Integer) ct.nextElement()).intValue()) {
 				return true;
 			}

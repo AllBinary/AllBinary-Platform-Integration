@@ -37,13 +37,13 @@ public class Color
 
     public int getRed()
     {
-        return (value >> 16) & 0xff;
+        return (this.value >> 16) & 0xff;
     }
     
     
     public int getGreen()
     {
-        return (value >> 8) & 0xff;
+        return (this.value >> 8) & 0xff;
     }
 
     

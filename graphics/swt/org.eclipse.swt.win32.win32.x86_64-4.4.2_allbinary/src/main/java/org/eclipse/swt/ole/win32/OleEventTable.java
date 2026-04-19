@@ -23,52 +23,52 @@ class OleEventTable {
 	int [] types;
 	OleListener [] handlers;
 void hook (int eventType, OleListener handler) {
-	if (types == null) types = new int [4];
-	if (handlers == null) handlers = new OleListener [4];
-	for (int i=0; i<types.length; i++) {
-		if (types [i] == 0) {
-			types [i] = eventType;
-			handlers [i] = handler;
+	if (this.types == null) this.types = new int [4];
+	if (this.handlers == null) this.handlers = new OleListener [4];
+	for (int i=0; i<this.types.length; i++) {
+		if (this.types [i] == 0) {
+			this.types [i] = eventType;
+			this.handlers [i] = handler;
 			return;
 		}
 	}
-	int size = types.length;
+	int size = this.types.length;
 	int [] newTypes = new int [size + 4];
 	OleListener [] newHandlers = new OleListener [size + 4];
-	System.arraycopy (types, 0, newTypes, 0, size);
-	System.arraycopy (handlers, 0, newHandlers, 0, size);
-	types = newTypes;  handlers = newHandlers;
-	types [size] = eventType;  handlers [size] = handler;
+	System.arraycopy (this.types, 0, newTypes, 0, size);
+	System.arraycopy (this.handlers, 0, newHandlers, 0, size);
+	this.types = newTypes;  this.handlers = newHandlers;
+	this.types [size] = eventType;  this.handlers [size] = handler;
 }
 boolean hooks (int eventType) {
-	if (handlers == null) return false;
-	for (int i=0; i<types.length; i++) {
-		if (types [i] == eventType) return true;
+	if (this.handlers == null) return false;
+	for (int i=0; i<this.types.length; i++) {
+		if (this.types [i] == eventType) return true;
 	}
 	return false;
 }
 void sendEvent (OleEvent event) {
-	if (handlers == null) return;
-	for (int i=0; i<types.length; i++) {
-		if (types [i] == event.type) {
-			OleListener listener = handlers [i];
+	if (this.handlers == null) return;
+	for (int i=0; i<this.types.length; i++) {
+		if (this.types [i] == event.type) {
+			OleListener listener = this.handlers [i];
 			if (listener != null) listener.handleEvent (event);
 		}
 	}
 }
 void unhook (int eventType, OleListener handler) {
-	if (handlers == null) return;
-	for (int i=0; i<types.length; i++) {
-		if ((types [i] == eventType) && (handlers [i] == handler)) {
-			types [i] = 0;
-			handlers [i] = null;
+	if (this.handlers == null) return;
+	for (int i=0; i<this.types.length; i++) {
+		if ((this.types [i] == eventType) && (this.handlers [i] == handler)) {
+			this.types [i] = 0;
+			this.handlers [i] = null;
 			return;
 		}
 	}
 }
 boolean hasEntries() {
-	for (int i=0; i<types.length; i++) {
-		if (types[i] != 0) return true;
+	for (int i=0; i<this.types.length; i++) {
+		if (this.types[i] != 0) return true;
 	}
 	return false;
 }

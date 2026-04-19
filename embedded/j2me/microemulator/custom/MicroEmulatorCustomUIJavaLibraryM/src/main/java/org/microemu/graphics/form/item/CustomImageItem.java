@@ -50,10 +50,10 @@ public class CustomImageItem
         this.max = image.getWidth() / MyFont.getInstance().charWidth();
 
         final String labelSet = this.getLabel();
-        if (max > labelSet.length()) {
-            maxLabelLength = labelSet.length();
+        if (this.max > labelSet.length()) {
+            this.maxLabelLength = labelSet.length();
         } else {
-            maxLabelLength = this.max;
+            this.maxLabelLength = this.max;
         }
 
         this.labelViewable = labelSet.substring(0, maxLabelLength);
@@ -97,7 +97,7 @@ public class CustomImageItem
             graphics.drawImage(image, x, 0, anchor);
         }
 
-        graphics.drawString(labelViewable, x + 2, y - yOffset, 0);
+        graphics.drawString(this.labelViewable, x + 2, y - this.yOffset, 0);
     }
 
     @Override

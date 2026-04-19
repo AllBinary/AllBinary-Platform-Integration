@@ -125,12 +125,12 @@ public class VideoCaptureControl implements VideoControl {
 	 * @see javax.microedition.media.control.VideoControl#getSnapshot(java.lang.String)
 	 */
 	public byte[] getSnapshot(String s) throws MediaException {
-		BufferedImage image = new BufferedImage(m_sourceWidth, m_sourceHeight, BufferedImage.TYPE_INT_ARGB);
-		Image captureImage = Image.createImage(m_sourceWidth, m_sourceHeight);
+		BufferedImage image = new BufferedImage(this.m_sourceWidth, m_sourceHeight, BufferedImage.TYPE_INT_ARGB);
+		Image captureImage = Image.createImage(this.m_sourceWidth, m_sourceHeight);
 		// paint the simulated video frame onto a bitmap
 		doPaint(captureImage.getGraphics(), 0, 0, m_sourceWidth, 
 				m_sourceHeight);
-		int[] argb = new int[m_sourceWidth * m_sourceHeight];
+		int[] argb = new int[this.m_sourceWidth * m_sourceHeight];
 		// now read the RGB array
 		captureImage.getRGB(argb, 0, m_sourceWidth, 0, 0, m_sourceWidth, 
 				m_sourceHeight);
@@ -180,8 +180,8 @@ public class VideoCaptureControl implements VideoControl {
 					"only USE_DIRECT_VIDEO supported for now, requested: " + mode);
 		}
 		Canvas canvas = (Canvas) obj;
-		m_canvas = canvas;
-		if (m_player.getState() == Player.STARTED) {
+		this.m_canvas = canvas;
+		if (this.m_player.getState() == Player.STARTED) {
 			startVideo();
 		}
 		return null;
@@ -199,8 +199,8 @@ public class VideoCaptureControl implements VideoControl {
 	 * @see javax.microedition.media.control.VideoControl#setDisplayLocation(int, int)
 	 */
 	public void setDisplayLocation(int x, int y) {
-		m_displayX = x;
-		m_displayY = y;
+		this.m_displayX = x;
+		this.m_displayY = y;
 		repaintIfVisible();
 	}
 
@@ -208,14 +208,14 @@ public class VideoCaptureControl implements VideoControl {
 	 * @see javax.microedition.media.control.VideoControl#setDisplaySize(int, int)
 	 */
 	public void setDisplaySize(int width, int height) throws MediaException {
-		m_displayWidth = width;
-		m_displayHeight = height;
+		this.m_displayWidth = width;
+		this.m_displayHeight = height;
 		repaintIfVisible();
 	}
 
 	private void repaintIfVisible() {
-		if (m_visible && m_started && m_canvas != null) {
-			m_canvas.repaint();
+		if (this.m_visible && this.m_started && this.m_canvas != null) {
+			this.m_canvas.repaint();
 		}
 	}
 
@@ -223,8 +223,8 @@ public class VideoCaptureControl implements VideoControl {
 	 * @see javax.microedition.media.control.VideoControl#setVisible(boolean)
 	 */
 	public void setVisible(boolean flag) {
-		m_visible = flag;
-		if (m_repaintThread == null) {
+		this.m_visible = flag;
+		if (this.m_repaintThread == null) {
 			doStartVideo();
 		}
 	}
@@ -235,11 +235,11 @@ public class VideoCaptureControl implements VideoControl {
 	}
 
 	private synchronized void doStartVideo() {
-		if (m_started && m_visible && m_canvas != null) {
+		if (this.m_started && this.m_visible && this.m_canvas != null) {
 			final DisplayComponent dc = DeviceImpl.getEmulatorContext().getDisplayComponent();
 			dc.addDisplayRepaintListener(m_displayListener);
-			m_repaintThread = new RepaintThread();
-			m_repaintThread.start();
+			this.m_repaintThread = new RepaintThread();
+			this.m_repaintThread.start();
 		}
 	}
 
@@ -249,17 +249,17 @@ public class VideoCaptureControl implements VideoControl {
 	}
 
 	private synchronized void doStopVideo() {
-		if (m_repaintThread != null) {
-			m_repaintThread.stopRepaintThread();
-			m_repaintThread = null;
+		if (this.m_repaintThread != null) {
+			this.m_repaintThread.stopRepaintThread();
+			this.m_repaintThread = null;
 		}
-		if (m_started && m_visible) {
+		if (this.m_started && this.m_visible) {
 			return;
 		}
-		if (m_canvas != null) {
+		if (this.m_canvas != null) {
                         final DisplayComponent dc = DeviceImpl.getEmulatorContext().getDisplayComponent();
 			dc.removeDisplayRepaintListener(m_displayListener);
-			m_canvas.repaint();
+			this.m_canvas.repaint();
 		}
 	}
 
@@ -271,7 +271,7 @@ public class VideoCaptureControl implements VideoControl {
 		g.drawLine(x, y, x + width, y + height);
 		g.drawLine(x + width, y, x, y + height);
 		g.setColor(0xFFFFFF);
-		g.drawString("Video:" + m_displayX + "," + m_displayY + "," + m_displayWidth + "," + m_displayHeight, x, y, Graphics.LEFT | Graphics.TOP);
+		g.drawString("Video:" + this.m_displayX + "," + this.m_displayY + "," + this.m_displayWidth + "," + this.m_displayHeight, x, y, Graphics.LEFT | Graphics.TOP);
 	}
 
 	private class RepaintThread extends Thread {

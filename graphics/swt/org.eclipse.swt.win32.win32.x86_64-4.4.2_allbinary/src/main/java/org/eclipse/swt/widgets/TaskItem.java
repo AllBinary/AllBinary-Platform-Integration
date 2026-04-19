@@ -183,10 +183,10 @@ public int getProgressState () {
 }
 
 void recreate () {
-	if (showingText) {
-		if (overlayText.length () != 0) updateText ();
+	if (this.showingText) {
+		if (this.overlayText.length () != 0) updateText ();
 	} else {
-		if (overlayImage != null) updateImage ();
+		if (this.overlayImage != null) updateImage ();
 	}
 	if (progress != 0) updateProgress ();
 	if (progressState != SWT.DEFAULT) updateProgressState ();
@@ -194,13 +194,13 @@ void recreate () {
 
 void releaseHandle () {
 	super.releaseHandle ();
-	parent = null;
+	this.parent = null;
 }
 
 void releaseWidget () {
 	super.releaseWidget ();
-	overlayImage = null;
-	overlayText = null;
+	this.overlayImage = null;
+	this.overlayText = null;
 }
 
 /**
@@ -242,9 +242,9 @@ public void setMenu (Menu menu) {
 			error (SWT.ERROR_MENU_NOT_POP_UP);
 		}
 	}
-	if (shell != null) return;
+	if (this.shell != null) return;
 	this.menu = menu;
-	parent.setMenu (menu);
+	this.parent.setMenu (menu);
 }
 
 /**
@@ -277,16 +277,16 @@ public void setMenu (Menu menu) {
 public void setOverlayImage (Image overlayImage) {
 	checkWidget ();
 	if (overlayImage != null && overlayImage.isDisposed ()) error (SWT.ERROR_INVALID_ARGUMENT);
-	if (shell == null) return;
+	if (this.shell == null) return;
 	this.overlayImage = overlayImage;
 	if (overlayImage != null) {
 		updateImage ();
 	} else {
-		if (overlayText.length () != 0) {
+		if (this.overlayText.length () != 0) {
 			updateText ();
 		} else {
-			long /*int*/ mTaskbarList3 = parent.mTaskbarList3;
-			long /*int*/ hwnd = shell.handle;
+			long /*int*/ mTaskbarList3 = this.parent.mTaskbarList3;
+			long /*int*/ hwnd = this.shell.handle;
 			/* ITaskbarList3::SetOverlayIcon */
 			OS.VtblCall (18, mTaskbarList3, hwnd, 0, 0);
 		}
@@ -322,16 +322,16 @@ public void setOverlayImage (Image overlayImage) {
 public void setOverlayText (String overlayText) {
 	checkWidget ();
 	if (overlayText == null) error (SWT.ERROR_NULL_ARGUMENT);
-	if (shell == null) return;
+	if (this.shell == null) return;
 	this.overlayText = overlayText;
 	if (overlayText.length () != 0) {
 		updateText ();
 	} else {
-		if (overlayImage != null) {
+		if (this.overlayImage != null) {
 			updateImage ();
 		} else {
-			long /*int*/ mTaskbarList3 = parent.mTaskbarList3;
-			long /*int*/ hwnd = shell.handle;
+			long /*int*/ mTaskbarList3 = this.parent.mTaskbarList3;
+			long /*int*/ hwnd = this.shell.handle;
 			/* ITaskbarList3::SetOverlayIcon */
 			OS.VtblCall (18, mTaskbarList3, hwnd, 0, 0);
 		}
@@ -365,7 +365,7 @@ public void setOverlayText (String overlayText) {
  */
 public void setProgress (int progress) {
 	checkWidget ();
-	if (shell == null) return;
+	if (this.shell == null) return;
 	progress = Math.max (0, Math.min (progress, PROGRESS_MAX));
 	if (this.progress == progress) return;
 	this.progress = progress;
@@ -409,7 +409,7 @@ public void setProgress (int progress) {
  */
 public void setProgressState (int progressState) {
 	checkWidget ();
-	if (shell == null) return;
+	if (this.shell == null) return;
 	if (this.progressState == progressState) return;
 	this.progressState = progressState;
 	updateProgressState ();
@@ -429,17 +429,17 @@ void updateImage () {
 	showingText = false;
 	Image image2 = null;
 	long /*int*/ hIcon = 0;
-	switch (overlayImage.type) {
+	switch (this.overlayImage.type) {
 		case SWT.BITMAP:
-			image2 = Display.createIcon (overlayImage);
+			image2 = Display.createIcon (this.overlayImage);
 			hIcon = image2.handle;
 			break;
 		case SWT.ICON:
-			hIcon = overlayImage.handle;
+			hIcon = this.overlayImage.handle;
 			break;
 	}
-	long /*int*/ mTaskbarList3 = parent.mTaskbarList3;
-	long /*int*/ hwnd = shell.handle;
+	long /*int*/ mTaskbarList3 = this.parent.mTaskbarList3;
+	long /*int*/ hwnd = this.shell.handle;
 	/* ITaskbarList3::SetOverlayIcon */
 	OS.VtblCall (18, mTaskbarList3, hwnd, hIcon, 0);
 	if (image2 != null) image2.dispose ();
@@ -448,8 +448,8 @@ void updateImage () {
 void updateProgress () {
 	if (progressState == SWT.INDETERMINATE) return;
 	if (progressState == SWT.DEFAULT) return;
-	long /*int*/ mTaskbarList3 = parent.mTaskbarList3;
-	long /*int*/ hwnd = shell.handle;
+	long /*int*/ mTaskbarList3 = this.parent.mTaskbarList3;
+	long /*int*/ hwnd = this.shell.handle;
 	/* ITaskbarList3::SetProgressValue */
 	OS.VtblCall (9, mTaskbarList3, hwnd, (long)progress, (long)PROGRESS_MAX);
 }
@@ -462,8 +462,8 @@ void updateProgressState () {
 		case SWT.PAUSED: tbpFlags = OS.TBPF_PAUSED; break;
 		case SWT.INDETERMINATE: tbpFlags = OS.TBPF_INDETERMINATE; break;
 	}
-	long /*int*/ mTaskbarList3 = parent.mTaskbarList3;
-	long /*int*/ hwnd = shell.handle;
+	long /*int*/ mTaskbarList3 = this.parent.mTaskbarList3;
+	long /*int*/ hwnd = this.shell.handle;
 	/* ITaskbarList3::SetProgressValue */
 	OS.VtblCall (9, mTaskbarList3, hwnd, (long)progress, (long)PROGRESS_MAX);
 	/* ITaskbarList3::SetProgressState */
@@ -508,7 +508,7 @@ void updateText () {
 
 	int uFormat = OS.DT_LEFT | OS.DT_SINGLELINE | OS.DT_NOPREFIX;
 	RECT rect = new RECT ();
-	TCHAR buffer = new TCHAR (shell.getCodePage (), overlayText, false);
+	TCHAR buffer = new TCHAR (this.shell.getCodePage (), overlayText, false);
 	int length = buffer.length();
 	long /*int*/ hFont = 0, oldHFont = 0;
 	NONCLIENTMETRICS info = OS.IsUnicode ? (NONCLIENTMETRICS) new NONCLIENTMETRICSW () : new NONCLIENTMETRICSA ();
@@ -554,8 +554,8 @@ void updateText () {
 	OS.DeleteObject (hBitmap);
 	OS.DeleteObject (hMask);
 	
-	long /*int*/ mTaskbarList3 = parent.mTaskbarList3;
-	long /*int*/ hwnd = shell.handle;
+	long /*int*/ mTaskbarList3 = this.parent.mTaskbarList3;
+	long /*int*/ hwnd = this.shell.handle;
 	/* ITaskbarList3::SetOverlayIcon */
 	OS.VtblCall (18, mTaskbarList3, hwnd, hIcon, 0);
 	OS.DestroyIcon (hIcon);

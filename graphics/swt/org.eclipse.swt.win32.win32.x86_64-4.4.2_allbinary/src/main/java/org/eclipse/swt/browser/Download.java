@@ -155,21 +155,21 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (download != null) {
-		download.dispose ();
-		download = null;	
+	if (this.download != null) {
+		this.download.dispose ();
+		this.download = null;	
 	}
-	if (progressDialog != null) {
-		progressDialog.dispose ();
-		progressDialog = null;
+	if (this.progressDialog != null) {
+		this.progressDialog.dispose ();
+		this.progressDialog = null;
 	}
-	if (webProgressListener != null) {
-		webProgressListener.dispose ();
-		webProgressListener = null;
+	if (this.webProgressListener != null) {
+		this.webProgressListener.dispose ();
+		this.webProgressListener = null;
 	}
 }
 
@@ -183,22 +183,22 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IDOWNLOAD_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {download.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.download.getAddress ()}, C.PTR_SIZEOF);
 		AddRef();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_IPROGRESSDIALOG_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {progressDialog.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.progressDialog.getAddress ()}, C.PTR_SIZEOF);
 		AddRef();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIWebProgressListener.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {webProgressListener.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.webProgressListener.getAddress ()}, C.PTR_SIZEOF);
 		AddRef();
 		return XPCOM.NS_OK;
 	}
@@ -208,7 +208,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
         	
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 
@@ -277,33 +277,33 @@ int Init (long /*int*/ aSource, long /*int*/ aTarget, long /*int*/ aDisplayName,
 			helperAppLauncher = null;
 		}
 	};
-	shell = new Shell (SWT.DIALOG_TRIM);
+	this.shell = new Shell (SWT.DIALOG_TRIM);
 	String msg = Compatibility.getMessage ("SWT_Download_File", new Object[] {filename}); //$NON-NLS-1$
-	shell.setText (msg);
+	this.shell.setText (msg);
 	GridLayout gridLayout = new GridLayout ();
 	gridLayout.marginHeight = 15;
 	gridLayout.marginWidth = 15;
 	gridLayout.verticalSpacing = 20;
-	shell.setLayout(gridLayout);
+	this.shell.setLayout(gridLayout);
 	msg = Compatibility.getMessage ("SWT_Download_Location", new Object[] {filename, url}); //$NON-NLS-1$
-	new Label (shell, SWT.WRAP).setText (msg);
-	status = new Label (shell, SWT.WRAP);
+	new Label (this.shell, SWT.WRAP).setText (msg);
+	this.status = new Label (this.shell, SWT.WRAP);
 	msg = Compatibility.getMessage ("SWT_Download_Started"); //$NON-NLS-1$
-	status.setText (msg);
+	this.status.setText (msg);
 	GridData data = new GridData ();
 	data.grabExcessHorizontalSpace = true;
 	data.grabExcessVerticalSpace = true;
-	status.setLayoutData (data);
+	this.status.setLayoutData (data);
 
-	cancel = new Button (shell, SWT.PUSH);
+	this.cancel = new Button (this.shell, SWT.PUSH);
 	cancel.setText (SWT.getMessage ("SWT_Cancel")); //$NON-NLS-1$
 	data = new GridData ();
 	data.horizontalAlignment = GridData.CENTER;
-	cancel.setLayoutData (data);
-	cancel.addListener (SWT.Selection, listener);
-	shell.addListener (SWT.Close, listener);
-	shell.pack ();
-	shell.open ();
+	this.cancel.setLayoutData (data);
+	this.cancel.addListener (SWT.Selection, listener);
+	this.shell.addListener (SWT.Close, listener);
+	this.shell.pack ();
+	this.shell.open ();
 	return XPCOM.NS_OK;
 }
 
@@ -358,7 +358,7 @@ int SetObserver (long /*int*/ aObserver) {
 		int rc = supports.QueryInterface (IIDStore.GetIID (nsIHelperAppLauncher.class), result);
 		if (rc != XPCOM.NS_OK) Mozilla.error (rc);
 		if (result[0] == 0) Mozilla.error (XPCOM.NS_ERROR_NO_INTERFACE);
-		helperAppLauncher = new nsIHelperAppLauncher (result[0]);
+		this.helperAppLauncher = new nsIHelperAppLauncher (result[0]);
 	}
 	return XPCOM.NS_OK;
 }
@@ -388,10 +388,10 @@ int SetDialog (long /*int*/ aDialog) {
 
 int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateFlags, int aStatus) {
 	if ((aStateFlags & nsIWebProgressListener.STATE_STOP) != 0) {
-		if (helperAppLauncher != null) helperAppLauncher.Release ();
-		helperAppLauncher = null;
-		if (shell != null && !shell.isDisposed ()) shell.dispose ();
-		shell = null;
+		if (this.helperAppLauncher != null) this.helperAppLauncher.Release ();
+		this.helperAppLauncher = null;
+		if (this.shell != null && !this.shell.isDisposed ()) this.shell.dispose ();
+		this.shell = null;
 	}
 	return XPCOM.NS_OK;
 }
@@ -399,12 +399,12 @@ int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateF
 int OnProgressChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aCurSelfProgress, int aMaxSelfProgress, int aCurTotalProgress, int aMaxTotalProgress) {
 	int currentKBytes = aCurTotalProgress / 1024;
 	int totalKBytes = aMaxTotalProgress / 1024;
-	if (shell != null && !shell.isDisposed ()) {
+	if (this.shell != null && !this.shell.isDisposed ()) {
 		Object[] arguments = {new Integer (currentKBytes), new Integer (totalKBytes)};
 		String statusMsg = Compatibility.getMessage ("SWT_Download_Status", arguments); //$NON-NLS-1$
-		status.setText (statusMsg);
-		shell.layout (true);
-		shell.getDisplay ().update ();
+		this.status.setText (statusMsg);
+		this.shell.layout (true);
+		this.shell.getDisplay ().update ();
 	}
 	return XPCOM.NS_OK;
 }

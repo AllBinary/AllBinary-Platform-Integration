@@ -147,10 +147,10 @@ public class MicroEmulator extends MicroEmulatorActivity{
 			return;
 		}
 
-        common = new Common(emulatorContext, this);
-        common.setRecordStoreManager(new AndroidRecordStoreManager(this));
-        common.setDevice(new AndroidDevice(emulatorContext, this));        
-        common.initParams(params, null, AndroidDevice.class);
+        this.common = new Common(emulatorContext, this);
+        this.common.setRecordStoreManager(new AndroidRecordStoreManager(this));
+        this.common.setDevice(new AndroidDevice(emulatorContext, this));        
+        this.common.initParams(params, null, AndroidDevice.class);
                
         System.setProperty("microedition.platform", "microemu-android");
         System.setProperty("microedition.configuration", "CLDC-1.1");
@@ -169,8 +169,8 @@ public class MicroEmulator extends MicroEmulatorActivity{
         if (jadName != null) {
             try {
     	        InputStream is = getAssets().open(jadName);
-    	        common.jad = new JadProperties();
-    	        common.jad.read(is);
+    	        this.common.jad = new JadProperties();
+    	        this.common.jad.read(is);
             } catch (Exception e) {
             	Logger.error(e);
             }
@@ -178,8 +178,8 @@ public class MicroEmulator extends MicroEmulatorActivity{
         
         initializeExtensions();
         
-        common.setSuiteName(midletClassName);
-        midlet = common.initMIDlet(false);
+        this.common.setSuiteName(midletClassName);
+        this.midlet = this.common.initMIDlet(false);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
             }
         }
 
-        MIDletAccess ma = MIDletBridge.getMIDletAccess(midlet);
+        MIDletAccess ma = MIDletBridge.getMIDletAccess(this.midlet);
         if (ma != null) {
             ma.pauseApp();
             ma.getDisplayAccess().hideNotify();
@@ -257,7 +257,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
 			CommandUI cmd = getFirstCommandOfType(commands, Command.BACK);
 			if (cmd != null) {
 				if (ui.getCommandListener() != null) {
-					ignoreBackKeyUp = true;
+					this.ignoreBackKeyUp = true;
 					MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(cmd.getCommand(), da.getCurrent());
 				}
 				return true;
@@ -266,7 +266,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
 			cmd = getFirstCommandOfType(commands, Command.EXIT);
 			if (cmd != null) {
 				if (ui.getCommandListener() != null) {
-					ignoreBackKeyUp = true;
+					this.ignoreBackKeyUp = true;
 					MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(cmd.getCommand(), da.getCurrent());
 				}
 				return true;
@@ -275,7 +275,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
 			cmd = getFirstCommandOfType(commands, Command.CANCEL);
 			if (cmd != null) {
 				if (ui.getCommandListener() != null) {
-					ignoreBackKeyUp = true;
+					this.ignoreBackKeyUp = true;
 					MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(cmd.getCommand(), da.getCurrent());
 				}
 				return true;
@@ -298,8 +298,8 @@ public class MicroEmulator extends MicroEmulatorActivity{
 	
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && ignoreBackKeyUp) {
-			ignoreBackKeyUp = false;
+		if (keyCode == KeyEvent.KEYCODE_BACK && this.ignoreBackKeyUp) {
+			this.ignoreBackKeyUp = false;
 			return true;
 		}
 		

@@ -55,11 +55,11 @@ public class PCWavPlayer implements Player
 
       this.wavefile = WaveData.create(inputStream);
       
-      AL10.alBufferData(buffers.get(0), wavefile.format, wavefile.data, wavefile.samplerate);
+      AL10.alBufferData(this.buffers.get(0), wavefile.format, wavefile.data, wavefile.samplerate);
       wavefile.dispose();
       OpenALManager.log();
 
-      AL10.alSourcei(sources.get(0), AL10.AL_BUFFER, buffers.get(0));
+      AL10.alSourcei(this.sources.get(0), AL10.AL_BUFFER, buffers.get(0));
       OpenALManager.log();
 
       this.repeat = 0;
@@ -81,12 +81,12 @@ public class PCWavPlayer implements Player
    
    public void deallocate()
    {
-      sources.position(0).limit(1);
-      AL10.alDeleteSources(sources);
+      this.sources.position(0).limit(1);
+      AL10.alDeleteSources(this.sources);
       OpenALManager.log();
       
-      buffers.position(0).limit(1);
-      AL10.alDeleteBuffers(buffers);
+      this.buffers.position(0).limit(1);
+      AL10.alDeleteBuffers(this.buffers);
       OpenALManager.log();
    }
    
@@ -134,7 +134,7 @@ public class PCWavPlayer implements Player
       {
          if(MyManager.isInitialized())
          {
-            AL10.alSourcePlay(sources.get(0));
+            AL10.alSourcePlay(this.sources.get(0));
             OpenALManager.log();
          }
       }
@@ -148,7 +148,7 @@ public class PCWavPlayer implements Player
    {
       try
       {
-         AL10.alSourceStop(sources.get(0));
+         AL10.alSourceStop(this.sources.get(0));
          OpenALManager.log();
       }
       catch(Exception e)

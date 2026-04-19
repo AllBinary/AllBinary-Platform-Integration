@@ -110,9 +110,9 @@ public class IPhoneLauncher extends Launcher {
 
 		fillList();
 
-		textBox = new TextBox("Add MIDlet", "http://www.pyx4me.com/maven2-snapshot/org/microemu/microemu-demo/2.0.3-SNAPSHOT/microemu-demo-2.0.3-20081126.080125-55-me.jar", 255, TextField.URL);
-		textBox.addCommand(CMD_ADD);
-		textBox.setCommandListener(this);
+		this.textBox = new TextBox("Add MIDlet", "http://www.pyx4me.com/maven2-snapshot/org/microemu/microemu-demo/2.0.3-SNAPSHOT/microemu-demo-2.0.3-20081126.080125-55-me.jar", 255, TextField.URL);
+		this.textBox.addCommand(CMD_ADD);
+		this.textBox.setCommandListener(this);
 
 		Display.getDisplay(this).setCurrent(menuList);
 	}
@@ -132,11 +132,11 @@ public class IPhoneLauncher extends Launcher {
 	public void commandAction(Command c, Displayable d) {
 		if (c == CMD_ADD) {
 			if (d == menuList) {
-				Display.getDisplay(this).setCurrent(textBox);
+				Display.getDisplay(this).setCurrent(this.textBox);
 			} else if (d == textBox) {
 				System.out.println(textBox.getString());
 				try {
-					URL url = new URL(textBox.getString());
+					URL url = new URL(this.textBox.getString());
 					File file = new File(MIDLET_FOLDER, URLEncoder.encode(url.toString(),
 							"UTF-8").replace('%', '_'));
 					copyToFile(url.openStream(), file);

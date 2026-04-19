@@ -151,14 +151,14 @@ public class Alert extends Screen
 
 	public void setImage(Image img)
 	{
-		if (alertContent == null) {
-			alertContent = new ImageStringItem(null, img, null);
+		if (this.alertContent == null) {
+			this.alertContent = new ImageStringItem(null, img, null);
 		}
 
 		if (img != NullCanvas.NULL_IMAGE && img.isMutable()) {
 	      img = Image.createImage(img);
 	    }
-	    alertContent.setImage(img);
+	    this.alertContent.setImage(img);
 	    repaint();
 	}
 	
@@ -201,11 +201,11 @@ public class Alert extends Screen
 			((AlertUI) ui).setString(str);
 		}
 		
-		if (alertContent == null) {
-			alertContent = new ImageStringItem(null, null, str);
+		if (this.alertContent == null) {
+			this.alertContent = new ImageStringItem(null, null, str);
 		}
 
-		alertContent.setText(str);
+		this.alertContent.setText(str);
 		repaint();
 	}
 

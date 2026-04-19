@@ -50,9 +50,9 @@ public PopupList(Shell parent, int style) {
 	int listStyle = SWT.SINGLE | SWT.V_SCROLL;
 	if ((style & SWT.H_SCROLL) != 0) listStyle |= SWT.H_SCROLL;
 	
-	shell = new Shell(parent, checkStyle(style));
+	this.shell = new Shell(parent, checkStyle(style));
 	
-	list = new List(shell, listStyle);	
+	this.list = new List(this.shell, listStyle);	
 
 	// close dialog if user selects outside of the shell
 	shell.addListener(SWT.Deactivate, new Listener() {
@@ -140,7 +140,7 @@ public int getMinimumWidth () {
 public String open (Rectangle rect) {
 
 	Point listSize = list.computeSize (rect.width, SWT.DEFAULT, false);
-	Rectangle screenSize = shell.getDisplay().getBounds();
+	Rectangle screenSize = this.shell.getDisplay().getBounds();
 
 	// Position the dialog so that it does not run off the screen and the largest number of items are visible
 	int spaceBelow = screenSize.height - (rect.y + rect.height) - 30;
@@ -169,26 +169,26 @@ public String open (Rectangle rect) {
 	// Make dialog as wide as the cell
 	listSize.x = rect.width;
 	// dialog width should not be less than minimumWidth
-	if (listSize.x < minimumWidth)
-		listSize.x = minimumWidth;
+	if (listSize.x < this.minimumWidth)
+		listSize.x = this.minimumWidth;
 	
 	// Align right side of dialog with right side of cell
 	int x = rect.x + rect.width - listSize.x;
 	
-	shell.setBounds(x, y, listSize.x, listSize.y);
+	this.shell.setBounds(x, y, listSize.x, listSize.y);
 	
-	shell.open();
-	list.setFocus();
+	this.shell.open();
+	this.list.setFocus();
 
-	Display display = shell.getDisplay();
-	while (!shell.isDisposed () && shell.isVisible ()) {
+	Display display = this.shell.getDisplay();
+	while (!this.shell.isDisposed () && this.shell.isVisible ()) {
 		if (!display.readAndDispatch()) display.sleep();
 	}
 	
 	String result = null;
-	if (!shell.isDisposed ()) {
-		String [] strings = list.getSelection ();
-		shell.dispose();
+	if (!this.shell.isDisposed ()) {
+		String [] strings = this.list.getSelection ();
+		this.shell.dispose();
 		if (strings.length != 0) result = strings [0];
 	}
 	return result;
@@ -215,8 +215,8 @@ public void select(String string) {
 	if (string != null){
 		for (int i = 0; i < items.length; i++) {
 			if (items[i].startsWith(string)){
-				int index = list.indexOf(items[i]);
-				list.select(index);
+				int index = this.list.indexOf(items[i]);
+				this.list.select(index);
 				break;
 			}
 		}
@@ -272,6 +272,6 @@ public void setMinimumWidth (int width) {
 	if (width < 0)
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 		
-	minimumWidth = width;
+	this.minimumWidth = width;
 }
 }

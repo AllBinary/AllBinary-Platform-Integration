@@ -209,7 +209,7 @@ protected void checkSubclass () {
 Widget [] computeTabList () {
 	Widget result [] = super.computeTabList ();
 	if (result.length == 0) return result;
-	Control [] list = tabList != null ? _getTabList () : _getChildren ();
+	Control [] list = this.tabList != null ? _getTabList () : _getChildren ();
 	for (int i=0; i<list.length; i++) {
 		Control child = list [i];
 		Widget  [] childList = child.computeTabList ();
@@ -227,11 +227,11 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 	checkWidget ();
 	display.runSkin ();
 	Point size;
-	if (layout != null) {
+	if (this.layout != null) {
 		if (wHint == SWT.DEFAULT || hHint == SWT.DEFAULT) {
 			changed |= (state & LAYOUT_CHANGED) != 0;
 			state &= ~LAYOUT_CHANGED;
-			size = layout.computeSize (this, wHint, hHint, changed);
+			size = this.layout.computeSize (this, wHint, hHint, changed);
 		} else {
 			size = new Point (wHint, hHint);
 		}
@@ -383,24 +383,24 @@ void fixChildren (Shell newShell, Shell oldShell, Decorations newDecorations, De
 }
 
 void fixTabList (Control control) {
-	if (tabList == null) return;
+	if (this.tabList == null) return;
 	int count = 0;
-	for (int i=0; i<tabList.length; i++) {
-		if (tabList [i] == control) count++;
+	for (int i=0; i<this.tabList.length; i++) {
+		if (this.tabList [i] == control) count++;
 	}
 	if (count == 0) return;
 	Control [] newList = null;
-	int length = tabList.length - count;
+	int length = this.tabList.length - count;
 	if (length != 0) {
 		newList = new Control [length];
 		int index = 0;
-		for (int i=0; i<tabList.length; i++) {
-			if (tabList [i] != control) {
-				newList [index++] = tabList [i];
+		for (int i=0; i<this.tabList.length; i++) {
+			if (this.tabList [i] != control) {
+				newList [index++] = this.tabList [i];
 			}
 		}
 	}
-	tabList = newList;
+	this.tabList = newList;
 }
 
 /**
@@ -583,7 +583,7 @@ public boolean isLayoutDeferred () {
  */
 public void layout () {
 	checkWidget ();
-	layout (true);
+	this.layout (true);
 }
 
 /**
@@ -619,8 +619,8 @@ public void layout () {
  */
 public void layout (boolean changed) {
 	checkWidget ();
-	if (layout == null) return;
-	layout (changed, false);
+	if (this.layout == null) return;
+	this.layout (changed, false);
 }
 
 /**
@@ -660,7 +660,7 @@ public void layout (boolean changed) {
  */
 public void layout (boolean changed, boolean all) {
 	checkWidget ();
-	if (layout == null && !all) return;
+	if (this.layout == null && !all) return;
 	markLayout (changed, all);
 	updateLayout (all);
 }
@@ -696,7 +696,7 @@ public void layout (boolean changed, boolean all) {
 public void layout (Control [] changed) {
 	checkWidget ();
 	if (changed == null) error (SWT.ERROR_INVALID_ARGUMENT);
-	layout (changed, SWT.NONE);
+	this.layout (changed, SWT.NONE);
 }
 
 /**
@@ -802,7 +802,7 @@ public void layout (Control [] changed, int flags) {
 			update [i].updateLayout (false);
 		}
 	} else {
-		if (layout == null && (flags & SWT.ALL) == 0) return;
+		if (this.layout == null && (flags & SWT.ALL) == 0) return;
 		markLayout ((flags & SWT.CHANGED) != 0, (flags & SWT.ALL) != 0);
 		if ((flags & SWT.DEFER) != 0) {
 			setLayoutDeferred (true);
@@ -813,7 +813,7 @@ public void layout (Control [] changed, int flags) {
 }
 
 void markLayout (boolean changed, boolean all) {
-	if (layout != null) {
+	if (this.layout != null) {
 		state |= LAYOUT_NEEDED;
 		if (changed) state |= LAYOUT_CHANGED;
 	}
@@ -889,9 +889,9 @@ void releaseWidget () {
 			}
 		}
 	}
-	layout = null;
-	tabList = null;
-	lpwp = null;
+	this.layout = null;
+	this.tabList = null;
+	this.lpwp = null;
 }
 
 void removeControl (Control control) {
@@ -909,14 +909,14 @@ void reskinChildren (int flags) {
 }
 
 void resizeChildren () {
-	if (lpwp == null) return;
+	if (this.lpwp == null) return;
 	do {
 		WINDOWPOS [] currentLpwp = this.lpwp;
 		this.lpwp = null;
 		if (!resizeChildren (true, currentLpwp)) {
 			resizeChildren (false, currentLpwp);
 		}
-	} while (lpwp != null);
+	} while (this.lpwp != null);
 }
 
 boolean resizeChildren (boolean defer, WINDOWPOS [] pwp) {
@@ -976,7 +976,7 @@ void sendResize () {
 	setResizeChildren (false);
 	super.sendResize ();
 	if (isDisposed ()) return;
-	if (layout != null) {
+	if (this.layout != null) {
 		markLayout (false, false);
 		updateLayout (false, false);
 	}
@@ -1130,7 +1130,7 @@ void setResizeChildren (boolean resize) {
 			return;
 		}
 		int count = getChildrenCount ();
-		if (count > 1 && lpwp == null) {
+		if (count > 1 && this.lpwp == null) {
 			this.lpwp = new WINDOWPOS [count];
 		}
 	}
@@ -1287,7 +1287,7 @@ void updateLayout (boolean resize, boolean all) {
 		state &= ~(LAYOUT_NEEDED | LAYOUT_CHANGED);
 		display.runSkin();
 		if (resize) setResizeChildren (false);
-		layout.layout (this, changed);
+		this.layout.layout (this, changed);
 		if (resize) setResizeChildren (true);
 	}
 	if (all) {
@@ -1696,7 +1696,7 @@ LRESULT WM_SIZE (long /*int*/ wParam, long /*int*/ lParam) {
 		* WM_SIZE message.
 		*/
 		if (isDisposed ()) return result;
-		if (layout != null) {
+		if (this.layout != null) {
 			markLayout (false, false);
 			updateLayout (false, false);
 		}

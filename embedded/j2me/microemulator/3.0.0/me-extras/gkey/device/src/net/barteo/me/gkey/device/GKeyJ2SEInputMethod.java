@@ -39,7 +39,7 @@ public class GKeyJ2SEInputMethod extends J2SEInputMethod
 	protected boolean commonKeyPressed(int keyCode) 
 	{
 		if (keyCode == KeyEvent.VK_F8) {
-			handler.getKeyPressed();
+			this.handler.getKeyPressed();
 			return true;
 		}
 		

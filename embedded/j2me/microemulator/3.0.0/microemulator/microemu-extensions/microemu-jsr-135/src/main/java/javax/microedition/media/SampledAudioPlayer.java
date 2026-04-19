@@ -53,11 +53,11 @@ class SampledAudioPlayer implements Player, LineListener
 	    this.strType = type;
 		try 
 	    {
-			audioInputStream = AudioSystem.getAudioInputStream( new BufferedInputStream( stream ) );
-			AudioFormat format = audioInputStream.getFormat();
+			this.audioInputStream = AudioSystem.getAudioInputStream( new BufferedInputStream( stream ) );
+			AudioFormat format = this.audioInputStream.getFormat();
 			if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) 
 			{
-			    AudioFormat baseFormat = audioInputStream.getFormat();
+			    AudioFormat baseFormat = this.audioInputStream.getFormat();
 			    AudioFormat decodedFormat = new AudioFormat( AudioFormat.Encoding.PCM_SIGNED,
 										                     baseFormat.getSampleRate(),
 										                     16,
@@ -65,19 +65,19 @@ class SampledAudioPlayer implements Player, LineListener
 										                     baseFormat.getChannels() * 2,
 										                     baseFormat.getSampleRate(),
 										                     false );
-			    decodedStream = AudioSystem.getAudioInputStream( decodedFormat, audioInputStream );
-			    int frameLength = (int) decodedStream.getFrameLength();
+			    this.decodedStream = AudioSystem.getAudioInputStream( decodedFormat, audioInputStream );
+			    int frameLength = (int) this.decodedStream.getFrameLength();
 			    int frameSize = decodedFormat.getFrameSize();
 			    DataLine.Info info = new DataLine.Info( Clip.class, decodedFormat,
 			    										frameLength * frameSize);
-			    clip = (Clip) AudioSystem.getLine( info );
-		    	clip.open( decodedStream );
+			    this.clip = (Clip) AudioSystem.getLine( info );
+		    	this.clip.open( this.decodedStream );
 			}
 	        else
 	        {
 				DataLine.Info info2 = new DataLine.Info( Clip.class, format, AudioSystem.NOT_SPECIFIED );
-				clip = (Clip) AudioSystem.getLine( info2 );
-		    	clip.open( audioInputStream );
+				this.clip = (Clip) AudioSystem.getLine( info2 );
+		    	this.clip.open( audioInputStream );
 	        }
 	    } 
 	    catch( UnsupportedAudioFileException e ){ e.printStackTrace(); return false; }
@@ -88,33 +88,33 @@ class SampledAudioPlayer implements Player, LineListener
 
 	public void addPlayerListener(PlayerListener playerListener) 
 	{
-		if( vListeners == null )
-			vListeners = new Vector();
-		vListeners.add( playerListener );
+		if( this.vListeners == null )
+			this.vListeners = new Vector();
+		this.vListeners.add( playerListener );
 	}
 
 	public void close() 
 	{
 		Manager.mediaDone( this );
-		if( clip != null )
+		if( this.clip != null )
 		{
-			clip.flush();
-	    	clip.close();
+			this.clip.flush();
+	    	this.clip.close();
 		}
 		
 		try 
 	    {
-			if( decodedStream != null )
-				decodedStream.close();
-			if( audioInputStream != null )
-				audioInputStream.close();
+			if( this.decodedStream != null )
+				this.decodedStream.close();
+			if( this.audioInputStream != null )
+				this.audioInputStream.close();
 	    } 
 	    catch( IOException e ) { e.printStackTrace(); }
 	}
 
 	public void deallocate() {
-		if( clip != null )
-			clip.flush();
+		if( this.clip != null )
+			this.clip.flush();
 	}
 
 	public String getContentType() {
@@ -127,7 +127,7 @@ class SampledAudioPlayer implements Player, LineListener
 	}
 
 	public long getMediaTime() {
-		if( clip != null )
+		if( this.clip != null )
 			return clip.getMicrosecondPosition();
 		return 0;
 	}
@@ -147,41 +147,41 @@ class SampledAudioPlayer implements Player, LineListener
 
 	public void removePlayerListener(PlayerListener playerListener) 
 	{
-	   if( vListeners == null )
+	   if( this.vListeners == null )
 		   return;
-	   for( Iterator it = vListeners.iterator (); it.hasNext (); ) 
+	   for( Iterator it = this.vListeners.iterator (); it.hasNext (); ) 
 	   {
 		    PlayerListener listener = (PlayerListener) it.next ();
 		    if( listener == playerListener )
 		    {
-		    	vListeners.remove( listener );
+		    	this.vListeners.remove( listener );
 		    	break;
 	   		}
 	   }
 	}
 
 	public void setLoopCount(int count) {
-		if( clip != null )
-			clip.loop( count );
+		if( this.clip != null )
+			this.clip.loop( count );
 	}
 
 	public long setMediaTime(long now) throws MediaException {
-		if( clip != null )
-			clip.setMicrosecondPosition( now );
+		if( this.clip != null )
+			this.clip.setMicrosecondPosition( now );
 		return 0;
 	}
 
 	public void start() throws MediaException {
-		if( clip != null )
+		if( this.clip != null )
 		{
-			clip.addLineListener( this );
-			clip.start();
+			this.clip.addLineListener( this );
+			this.clip.start();
 		}
 	}
 
 	public void stop() throws MediaException {
-		if( clip != null )
-			clip.stop();
+		if( this.clip != null )
+			this.clip.stop();
 	}
 
 	public Control getControl(String controlType) {
@@ -199,11 +199,11 @@ class SampledAudioPlayer implements Player, LineListener
 		if (event.getType().equals(LineEvent.Type.STOP))
 		{
 			close();
-			if( vListeners != null )
+			if( this.vListeners != null )
 			{
-                            final int size = vListeners.size();
+                            final int size = this.vListeners.size();
                             for(int index = 0; index < size; index++) {
-                                PlayerListener listener = (PlayerListener) vListeners.get(index);
+                                PlayerListener listener = (PlayerListener) this.vListeners.get(index);
                                 listener.playerUpdate( this, PlayerListener.END_OF_MEDIA, null );
                             }
 			}

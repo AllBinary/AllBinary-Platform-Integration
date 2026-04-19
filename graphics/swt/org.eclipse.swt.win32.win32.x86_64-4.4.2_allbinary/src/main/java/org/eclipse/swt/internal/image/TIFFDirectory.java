@@ -140,8 +140,8 @@ void getEntryValue(int type, byte[] buffer, int index, int[] values) throws IOEx
 	}
 	if (values.length * size > 4) {
 		buffer = new byte[values.length * size]; 
-		file.seek(offset);
-		file.read(buffer);
+		this.file.seek(offset);
+		this.file.read(buffer);
 		start = 0;
 	}
 	for (int i = 0; i < values.length; i++) {
@@ -154,28 +154,28 @@ void decodePixels(ImageData image) throws IOException {
 	byte[] imageData = new byte[(imageWidth * depth + 7) / 8 * imageLength];
 	image.data = imageData;
 	int destIndex = 0;
-	int length = stripOffsets.length;
+	int length = this.stripOffsets.length;
 	for (int i = 0; i < length; i++) {
 		/* Read a strip */
-		byte[] data = new byte[stripByteCounts[i]];
-		file.seek(stripOffsets[i]);
-		file.read(data);
-		if (compression == COMPRESSION_NONE) {
+		byte[] data = new byte[this.stripByteCounts[i]];
+		this.file.seek(this.stripOffsets[i]);
+		this.file.read(data);
+		if (this.compression == COMPRESSION_NONE) {
 			System.arraycopy(data, 0, imageData, destIndex, data.length);
 			destIndex += data.length;
 		} else if (compression == COMPRESSION_PACKBITS) {
 			destIndex += decodePackBits(data, imageData, destIndex);
 		} else if (compression == COMPRESSION_CCITT_3_1 || compression == 3) {
 			TIFFModifiedHuffmanCodec codec = new TIFFModifiedHuffmanCodec();
-			int nRows = rowsPerStrip;
+			int nRows = this.rowsPerStrip;
 			if (i == length -1) {
-				int n = imageLength % this.rowsPerStrip;
+				int n = this.imageLength % this.rowsPerStrip;
 				if (n != 0) nRows = n;
 			}
 			destIndex += codec.decode(data, imageData, destIndex, imageWidth, nRows);
 		}
-		if (loader.hasListeners()) {
-			loader.notifyListeners(new ImageLoaderEvent(loader, image, i, i == length - 1));
+		if (this.loader.hasListeners()) {
+			this.loader.notifyListeners(new ImageLoaderEvent(this.loader, image, i, i == length - 1));
 		}
 	}
 }
@@ -185,8 +185,8 @@ PaletteData getColorMap() throws IOException {
 	/* R, G, B entries are 16 bit wide (2 bytes) */
 	int numBytes = 3 * 2 * numColors;
 	byte[] buffer = new byte[numBytes];
-	file.seek(colorMapOffset);
-	file.read(buffer);
+	this.file.seek(this.colorMapOffset);
+	this.file.read(buffer);
 	RGB[] colors = new RGB[numColors];
 	/**
 	 * SWT does not support 16-bit depth color formats.
@@ -197,7 +197,7 @@ PaletteData getColorMap() throws IOException {
 	 * The fast way to do this is just to drop the low
 	 * byte of the 16-bit value.
 	 */
-	int offset = isLittleEndian ? 1 : 0;
+	int offset = this.isLittleEndian ? 1 : 0;
 	int startG = 2 * numColors;
 	int startB = startG + 2 * numColors;
 	for (int i = 0; i < numColors; i++) {
@@ -215,7 +215,7 @@ PaletteData getGrayPalette() {
 	RGB[] rgbs = new RGB[numColors];
 	for (int i = 0; i < numColors; i++) {
 		int value = i * 0xFF / (numColors - 1);
-		if (photometricInterpretation == 0) value = 0xFF - value;
+		if (this.photometricInterpretation == 0) value = 0xFF - value;
 		rgbs[i] = new RGB(value, value, value);
 	}
 	return new PaletteData(rgbs);
@@ -271,7 +271,7 @@ int formatStrips(int rowByteSize, int nbrRows, byte[] data, int maxStripByteSize
 	* directly in the IFD and we need not reserve space for it.
 	*/
 	int postIFDData = n == 1 ? 0 : n * 2 * 4;
-	int startOffset = offsetPostIFD + extraBytes + postIFDData; /* offset of image data */
+	int startOffset = offsetPostIFD + extraBytes + postIFDData; /* offset of this.image data */
 	
 	int offset = startOffset;
 	for (int i = 0; i < n; i++) {
@@ -316,30 +316,30 @@ void parseEntries(byte[] buffer) throws IOException {
 		int count = toInt(buffer, offset + 4, TYPE_LONG);
 		switch (tag) {
 			case TAG_NewSubfileType: {
-				subfileType = getEntryValue(type, buffer, offset);
+				this.subfileType = getEntryValue(type, buffer, offset);
 				break;
 			}
 			case TAG_SubfileType: {
 				int oldSubfileType = getEntryValue(type, buffer, offset);
-				subfileType = oldSubfileType == OFILETYPE_REDUCEDIMAGE ? FILETYPE_REDUCEDIMAGE : oldSubfileType == OFILETYPE_PAGE ? FILETYPE_PAGE : 0;
+				this.subfileType = oldSubfileType == OFILETYPE_REDUCEDIMAGE ? FILETYPE_REDUCEDIMAGE : oldSubfileType == OFILETYPE_PAGE ? FILETYPE_PAGE : 0;
 				break;
 			}
 			case TAG_ImageWidth: {
-				imageWidth = getEntryValue(type, buffer, offset);
+				this.imageWidth = getEntryValue(type, buffer, offset);
 				break;
 			}
 			case TAG_ImageLength: {
-				imageLength = getEntryValue(type, buffer, offset);
+				this.imageLength = getEntryValue(type, buffer, offset);
 				break;
 			}
 			case TAG_BitsPerSample: {
 				if (type != TYPE_SHORT) SWT.error(SWT.ERROR_INVALID_IMAGE);
-				bitsPerSample = new int[count];
+				this.bitsPerSample = new int[count];
 				getEntryValue(type, buffer, offset, bitsPerSample);
 				break;
 			}
 			case TAG_Compression: {
-				compression = getEntryValue(type, buffer, offset);
+				this.compression = getEntryValue(type, buffer, offset);
 				break;
 			}
 			case TAG_FillOrder: {
@@ -351,12 +351,12 @@ void parseEntries(byte[] buffer) throws IOException {
 				break;
 			}
 			case TAG_PhotometricInterpretation: {
-				photometricInterpretation = getEntryValue(type, buffer, offset);
+				this.photometricInterpretation = getEntryValue(type, buffer, offset);
 				break;
 			}
 			case TAG_StripOffsets: {
 				if (type != TYPE_LONG && type != TYPE_SHORT) SWT.error(SWT.ERROR_INVALID_IMAGE);
-				stripOffsets = new int[count];
+				this.stripOffsets = new int[count];
 				getEntryValue(type, buffer, offset, stripOffsets);
 				break;
 			}
@@ -366,17 +366,17 @@ void parseEntries(byte[] buffer) throws IOException {
 			}
 			case TAG_SamplesPerPixel: {
 				if (type != TYPE_SHORT) SWT.error(SWT.ERROR_INVALID_IMAGE);
-				samplesPerPixel = getEntryValue(type, buffer, offset);
+				this.samplesPerPixel = getEntryValue(type, buffer, offset);
 				/* Only the basic 1 and 3 values are supported */
-				if (samplesPerPixel != 1 && samplesPerPixel != 3) SWT.error(SWT.ERROR_UNSUPPORTED_DEPTH);
+				if (this.samplesPerPixel != 1 && this.samplesPerPixel != 3) SWT.error(SWT.ERROR_UNSUPPORTED_DEPTH);
 				break;
 			}
 			case TAG_RowsPerStrip: {
-				rowsPerStrip = getEntryValue(type, buffer, offset);
+				this.rowsPerStrip = getEntryValue(type, buffer, offset);
 				break;
 			}
 			case TAG_StripByteCounts: {
-				stripByteCounts = new int[count];
+				this.stripByteCounts = new int[count];
 				getEntryValue(type, buffer, offset, stripByteCounts);
 				break;
 			}
@@ -394,8 +394,8 @@ void parseEntries(byte[] buffer) throws IOException {
 			}
 			case TAG_T4Options: {
 				if (type != TYPE_LONG) SWT.error(SWT.ERROR_INVALID_IMAGE);
-				t4Options = getEntryValue(type, buffer, offset);
-				if ((t4Options & 0x1) == 1) {
+				this.t4Options = getEntryValue(type, buffer, offset);
+				if ((this.t4Options & 0x1) == 1) {
 					/* 2-dimensional coding is not supported */
 					SWT.error(SWT.ERROR_UNSUPPORTED_FORMAT);
 				}
@@ -426,49 +426,49 @@ void parseEntries(byte[] buffer) throws IOException {
 public ImageData read(int [] nextIFDOffset) throws IOException {
 	/* Set TIFF default values */
 	bitsPerSample = new int[] {1};
-	colorMapOffset = NO_VALUE;
+	this.colorMapOffset = NO_VALUE;
 	this.compression = 1;
-	imageLength = NO_VALUE;
-	imageWidth = NO_VALUE;
-	photometricInterpretation = NO_VALUE;
+	this.imageLength = NO_VALUE;
+	this.imageWidth = NO_VALUE;
+	this.photometricInterpretation = NO_VALUE;
 	this.rowsPerStrip = Integer.MAX_VALUE;
 	this.samplesPerPixel = 1;
-	stripByteCounts = null;
-	stripOffsets = null;
+	this.stripByteCounts = null;
+	this.stripOffsets = null;
 	
 	byte[] buffer = new byte[2];
-	file.read(buffer);
+	this.file.read(buffer);
 	int numberEntries = toInt(buffer, 0, TYPE_SHORT);
 	buffer = new byte[IFD_ENTRY_SIZE * numberEntries];
-	file.read(buffer);
+	this.file.read(buffer);
 	byte buffer2[] = new byte[4];
-	file.read(buffer2);
+	this.file.read(buffer2);
 	nextIFDOffset[0] = toInt(buffer2, 0, TYPE_LONG);
 	parseEntries(buffer);
 	
 	PaletteData palette = null;
-	depth = 0;
-	switch (photometricInterpretation) {
+	this.depth = 0;
+	switch (this.photometricInterpretation) {
 		case 0:
 		case 1: {
 			/* Bilevel or Grayscale image */
 			palette = getGrayPalette();
-			depth = bitsPerSample[0];
+			this.depth = this.bitsPerSample[0];
 			break;
 		}
 		case 2: {
 			/* RGB image */
-			if (colorMapOffset != NO_VALUE) SWT.error(SWT.ERROR_INVALID_IMAGE);
+			if (this.colorMapOffset != NO_VALUE) SWT.error(SWT.ERROR_INVALID_IMAGE);
 			/* SamplesPerPixel 3 is the only value supported */
 			palette = getRGBPalette(bitsPerSample[0], bitsPerSample[1], bitsPerSample[2]);
-			depth = bitsPerSample[0] + bitsPerSample[1] + bitsPerSample[2];
+			this.depth = bitsPerSample[0] + bitsPerSample[1] + bitsPerSample[2];
 			break;		
 		}
 		case 3: {
 			/* Palette Color image */
-			if (colorMapOffset == NO_VALUE) SWT.error(SWT.ERROR_INVALID_IMAGE);
+			if (this.colorMapOffset == NO_VALUE) SWT.error(SWT.ERROR_INVALID_IMAGE);
 			palette = getColorMap();
-			depth = bitsPerSample[0];
+			this.depth = bitsPerSample[0];
 			break;
 		}
 		default: {
@@ -477,9 +477,9 @@ public ImageData read(int [] nextIFDOffset) throws IOException {
 	}
 
 	ImageData image = ImageData.internal_new(
-			imageWidth,
-			imageLength, 
-			depth,
+			this.imageWidth,
+			this.imageLength, 
+			this.depth,
 			palette,
 			1,
 			null,
@@ -518,9 +518,9 @@ void write(int photometricInterpretation) throws IOException {
 	boolean isColorMap = photometricInterpretation == 3;
 	boolean isBiLevel = photometricInterpretation == 0 || photometricInterpretation == 1;
 
-	int imageWidth = image.width;
-	int imageLength = image.height;
-	int rowByteSize = image.bytesPerLine;
+	int imageWidth = this.image.width;
+	int imageLength = this.image.height;
+	int rowByteSize = this.image.bytesPerLine;
 	
 	int numberEntries = isBiLevel ? 9 : 11;
 	int lengthDirectory = 2 + 12 * numberEntries + 4;
@@ -532,11 +532,11 @@ void write(int photometricInterpretation) throws IOException {
 
 	int[] colorMap = null;
 	if (isColorMap) {	
-		PaletteData palette = image.palette;
+		PaletteData palette = this.image.palette;
 		RGB[] rgbs = palette.getRGBs();
 		colorMap = formatColorMap(rgbs);
 		/* The number of entries of the Color Map must match the bitsPerSample field */
-		if (colorMap.length != 3 * 1 << image.depth) SWT.error(SWT.ERROR_UNSUPPORTED_FORMAT);
+		if (colorMap.length != 3 * 1 << this.image.depth) SWT.error(SWT.ERROR_UNSUPPORTED_FORMAT);
 		/* Extra space used by ColorMap values */
 		extraBytes += colorMap.length * 2;
 	}
@@ -545,7 +545,7 @@ void write(int photometricInterpretation) throws IOException {
 		extraBytes += 6;
 	} 
 	/* TIFF recommends storing the data in strips of no more than 8 Ko */
-	byte[] data = image.data;
+	byte[] data = this.image.data;
 	int[][] strips = new int[2][];
 	int nbrRowsPerStrip = formatStrips(rowByteSize, imageLength, data, 8192, nextOffset, extraBytes, strips);
 	int[] stripOffsets = strips[0];
@@ -577,7 +577,7 @@ void write(int photometricInterpretation) throws IOException {
 	writeHeader();
 	
 	/* Image File Directory */
-	out.writeShort(numberEntries);	
+	this.out.writeShort(numberEntries);	
 	writeEntry(TAG_ImageWidth, TYPE_LONG, 1, imageWidth);	
 	writeEntry(TAG_ImageLength, TYPE_LONG, 1, imageLength);
 	if (isColorMap) writeEntry(TAG_BitsPerSample, TYPE_SHORT, 1, image.depth);
@@ -597,42 +597,42 @@ void write(int photometricInterpretation) throws IOException {
 	/* Values longer than 4 bytes Section */
 	
 	/* BitsPerSample 8,8,8 */
-	if (isRGB) for (int i = 0; i < 3; i++) out.writeShort(8);
+	if (isRGB) for (int i = 0; i < 3; i++) this.out.writeShort(8);
 	if (cnt > 1) {
-		for (int i = 0; i < cnt; i++) out.writeInt(stripOffsets[i]);
-		for (int i = 0; i < cnt; i++) out.writeInt(stripByteCounts[i]);
+		for (int i = 0; i < cnt; i++) this.out.writeInt(stripOffsets[i]);
+		for (int i = 0; i < cnt; i++) this.out.writeInt(stripByteCounts[i]);
 	}
 	/* XResolution and YResolution set to 300 dpi */
 	for (int i = 0; i < 2; i++) {
-		out.writeInt(300);
-		out.writeInt(1);
+		this.out.writeInt(300);
+		this.out.writeInt(1);
 	}
 	/* ColorMap */
-	if (isColorMap) for (int i = 0; i < colorMap.length; i++) out.writeShort(colorMap[i]);
+	if (isColorMap) for (int i = 0; i < colorMap.length; i++) this.out.writeShort(colorMap[i]);
 	
 	/* Image Data */
-	out.write(data);
+	this.out.write(data);
 }
 
 void writeEntry(short tag, int type, int count, int value) throws IOException {
 	out.writeShort(tag);
-	out.writeShort(type);
-	out.writeInt(count);
-	out.writeInt(value);
+	this.out.writeShort(type);
+	this.out.writeInt(count);
+	this.out.writeInt(value);
 }
 
 void writeHeader() throws IOException {
 	/* little endian */
 	out.write(0x49);
-	out.write(0x49);
+	this.out.write(0x49);
 
 	/* TIFF identifier */
-	out.writeShort(42);
+	this.out.writeShort(42);
 	/* 
 	* Offset of the first IFD is chosen to be 8.
 	* It is word aligned and immediately after this header.
 	*/
-	out.writeInt(8);
+	this.out.writeInt(8);
 }
 
 void writeToStream(LEDataOutputStream byteStream) throws IOException {
@@ -640,11 +640,11 @@ void writeToStream(LEDataOutputStream byteStream) throws IOException {
 	int photometricInterpretation = -1;
 	
 	/* Scanline pad must be 1 */
-	if (image.scanlinePad != 1) SWT.error(SWT.ERROR_UNSUPPORTED_FORMAT);
-	switch (image.depth) {
+	if (this.image.scanlinePad != 1) SWT.error(SWT.ERROR_UNSUPPORTED_FORMAT);
+	switch (this.image.depth) {
 		case 1: {
 			/* Palette must be black and white or white and black */
-			PaletteData palette = image.palette;
+			PaletteData palette = this.image.palette;
 			RGB[] rgbs = palette.colors;
 			if (palette.isDirect || rgbs == null || rgbs.length != 2) SWT.error(SWT.ERROR_UNSUPPORTED_FORMAT);
 			RGB rgb0 = rgbs[0];
@@ -655,7 +655,7 @@ void writeToStream(LEDataOutputStream byteStream) throws IOException {
 				SWT.error(SWT.ERROR_UNSUPPORTED_FORMAT); 
 			}
 			/* 0 means a color index of 0 is imaged as white */
-			photometricInterpretation = image.palette.colors[0].red == 0xFF ? 0 : 1;
+			photometricInterpretation = this.image.palette.colors[0].red == 0xFF ? 0 : 1;
 			break;
 		}
 		case 4:

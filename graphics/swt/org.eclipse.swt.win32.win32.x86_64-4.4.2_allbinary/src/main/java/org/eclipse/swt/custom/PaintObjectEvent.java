@@ -72,13 +72,13 @@ public class PaintObjectEvent extends TypedEvent {
  */
 public PaintObjectEvent(StyledTextEvent e) {
 	super(e);
-	gc = e.gc;
-	x = e.x;
-	y = e.y;
-	ascent = e.ascent;
-	descent = e.descent;
-	style = e.style;
-	bullet = e.bullet;
-	bulletIndex = e.bulletIndex;
+	this.gc = e.gc;
+	this.x = e.x;
+	this.y = e.y;
+	this.ascent = e.ascent;
+	this.descent = e.descent;
+	this.style = e.style;
+	this.bullet = e.bullet;
+	this.bulletIndex = e.bulletIndex;
 }
 }

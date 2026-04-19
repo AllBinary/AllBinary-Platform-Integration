@@ -49,7 +49,7 @@ public class TextBoxPanel extends BaseExamplesList {
 
 		for (int i = 0; i < textBoxes.length; i++) {
 			textBoxes[i].addCommand(BaseExamplesForm.backCommand);
-			textBoxes[i].addCommand(okCommand);
+			textBoxes[i].addCommand(this.okCommand);
 			textBoxes[i].setCommandListener(this);
 			append(textBoxes[i].getTitle(), null);
 		}

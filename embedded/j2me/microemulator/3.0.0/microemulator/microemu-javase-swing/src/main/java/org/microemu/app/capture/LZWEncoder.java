@@ -121,14 +121,14 @@ class LZWEncoder {
 		imgW = width;
 		imgH = height;
 		this.pixAry = pixels;
-		initCodeSize = Math.max(2, color_depth);
+		this.initCodeSize = Math.max(2, color_depth);
 	}
 	
 	// Add a character to the end of the current packet, and if it is 254
 	// characters, flush the packet to disk.
 	void char_out(byte c, OutputStream outs) throws IOException {
 		accum[a_count++] = c;
-		if (a_count >= 254)
+		if (this.a_count >= 254)
 			flush_char(outs);
 	}
 	
@@ -137,16 +137,16 @@ class LZWEncoder {
 	// table clear for block compress
 	void cl_block(OutputStream outs) throws IOException {
 		cl_hash(hsize);
-		free_ent = ClearCode + 2;
-		clear_flg = true;
+		this.free_ent = this.ClearCode + 2;
+		this.clear_flg = true;
 
-		output(ClearCode, outs);
+		output(this.ClearCode, outs);
 	}
 	
 	// reset code table
 	void cl_hash(int hsize) {
 		for (int i = 0; i < hsize; ++i)
-			htab[i] = -1;
+			this.htab[i] = -1;
 	}
 	
 	void compress(int init_bits, OutputStream outs) throws IOException {
@@ -159,27 +159,27 @@ class LZWEncoder {
 		int hshift;
 
 		// Set up the globals:  g_init_bits - initial number of bits
-		g_init_bits = init_bits;
+		this.g_init_bits = init_bits;
 
 		// Set up the necessary values
-		clear_flg = false;
-		n_bits = g_init_bits;
-		maxcode = MAXCODE(n_bits);
+		this.clear_flg = false;
+		this.n_bits = this.g_init_bits;
+		this.maxcode = MAXCODE(this.n_bits);
 
-		ClearCode = 1 << (init_bits - 1);
-		EOFCode = ClearCode + 1;
-		free_ent = ClearCode + 2;
+		this.ClearCode = 1 << (init_bits - 1);
+		this.EOFCode = this.ClearCode + 1;
+		this.free_ent = this.ClearCode + 2;
 
-		a_count = 0; // clear packet
+		this.a_count = 0; // clear packet
 
 		ent = nextPixel();
 
 		hshift = 0;
-		for (fcode = hsize; fcode < 65536; fcode *= 2)
+		for (fcode = this.hsize; fcode < 65536; fcode *= 2)
 			++hshift;
 		hshift = 8 - hshift; // set hash code range bound
 
-		hsize_reg = hsize;
+		hsize_reg = this.hsize;
 		cl_hash(hsize_reg); // clear hash table
 
 		output(ClearCode, outs);
@@ -188,7 +188,7 @@ class LZWEncoder {
 			fcode = (c << maxbits) + ent;
 			i = (c << hshift) ^ ent; // xor hashing
 
-			if (htab[i] == fcode) {
+			if (this.htab[i] == fcode) {
 				ent = this.codetab[i];
 				continue;
 			} else if (htab[i] >= 0) // non-empty slot
@@ -200,15 +200,15 @@ class LZWEncoder {
 					if ((i -= disp) < 0)
 						i += hsize_reg;
 
-					if (htab[i] == fcode) {
+					if (this.htab[i] == fcode) {
 						ent = this.codetab[i];
 						continue outer_loop;
 					}
-				} while (htab[i] >= 0);
+				} while (this.htab[i] >= 0);
 			}
 			output(ent, outs);
 			ent = c;
-			if (free_ent < maxmaxcode) {
+			if (this.free_ent < this.maxmaxcode) {
 				this.codetab[i] = free_ent++; // code -> hashtable
 				this.htab[i] = fcode;
 			} else
@@ -216,7 +216,7 @@ class LZWEncoder {
 		}
 		// Put out the final code.
 		output(ent, outs);
-		output(EOFCode, outs);
+		output(this.EOFCode, outs);
 	}
 	
 	//----------------------------------------------------------------------------
@@ -233,9 +233,9 @@ class LZWEncoder {
 	
 	// Flush the packet to disk, and reset the accumulator
 	void flush_char(OutputStream outs) throws IOException {
-		if (a_count > 0) {
-			outs.write(a_count);
-			outs.write(accum, 0, a_count);
+		if (this.a_count > 0) {
+			outs.write(this.a_count);
+			outs.write(this.accum, 0, a_count);
 			a_count = 0;
 		}
 	}
@@ -248,12 +248,12 @@ class LZWEncoder {
 	// Return the next pixel from the image
 	//----------------------------------------------------------------------------
 	private int nextPixel() {
-		if (remaining == 0)
+		if (this.remaining == 0)
 			return EOF;
 
-		--remaining;
+		--this.remaining;
 
-		byte pix = pixAry[curPixel++];
+		byte pix = this.pixAry[curPixel++];
 
 		return pix & 0xff;
 	}
@@ -261,40 +261,40 @@ class LZWEncoder {
 	void output(int code, OutputStream outs) throws IOException {
 		this.cur_accum &= masks[cur_bits];
 
-		if (cur_bits > 0)
-			cur_accum |= (code << cur_bits);
+		if (this.cur_bits > 0)
+			this.cur_accum |= (code << this.cur_bits);
 		else
-			cur_accum = code;
+			this.cur_accum = code;
 
-		cur_bits += n_bits;
+		this.cur_bits += this.n_bits;
 
-		while (cur_bits >= 8) {
-			char_out((byte) (cur_accum & 0xff), outs);
-			cur_accum >>= 8;
-			cur_bits -= 8;
+		while (this.cur_bits >= 8) {
+			char_out((byte) (this.cur_accum & 0xff), outs);
+			this.cur_accum >>= 8;
+			this.cur_bits -= 8;
 		}
 
 		// If the next entry is going to be too big for the code size,
 		// then increase it, if possible.
-		if (free_ent > maxcode || clear_flg) {
-			if (clear_flg) {
-				maxcode = MAXCODE(n_bits = g_init_bits);
-				clear_flg = false;
+		if (this.free_ent > this.maxcode || this.clear_flg) {
+			if (this.clear_flg) {
+				this.maxcode = MAXCODE(this.n_bits = this.g_init_bits);
+				this.clear_flg = false;
 			} else {
-				++n_bits;
-				if (n_bits == maxbits)
-					maxcode = maxmaxcode;
+				++this.n_bits;
+				if (this.n_bits == this.maxbits)
+					this.maxcode = this.maxmaxcode;
 				else
-					maxcode = MAXCODE(n_bits);
+					this.maxcode = MAXCODE(this.n_bits);
 			}
 		}
 
-		if (code == EOFCode) {
+		if (code == this.EOFCode) {
 			// At EOF, write the rest of the buffer.
-			while (cur_bits > 0) {
-				char_out((byte) (cur_accum & 0xff), outs);
-				cur_accum >>= 8;
-				cur_bits -= 8;
+			while (this.cur_bits > 0) {
+				char_out((byte) (this.cur_accum & 0xff), outs);
+				this.cur_accum >>= 8;
+				this.cur_bits -= 8;
 			}
 
 			flush_char(outs);

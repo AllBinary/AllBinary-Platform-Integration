@@ -103,7 +103,7 @@ int[] getPartId(int part) {
 			} else if ((style & SWT.DROP_DOWN) != 0) {
 				iPartId = OS.TP_SPLITBUTTON;
 			} else if ((style & SWT.SEPARATOR) != 0) {
-				if ((parent.style & SWT.VERTICAL) != 0) {
+				if ((this.parent.style & SWT.VERTICAL) != 0) {
 					iPartId = OS.TP_SEPARATORVERT;
 				} else {
 					iPartId = OS.TP_SEPARATOR;

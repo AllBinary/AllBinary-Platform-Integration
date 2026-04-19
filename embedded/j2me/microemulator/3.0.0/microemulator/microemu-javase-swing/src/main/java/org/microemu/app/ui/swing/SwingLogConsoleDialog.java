@@ -186,21 +186,21 @@ public class SwingLogConsoleDialog extends JFrame implements LoggerAppender {
 
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		isShown = true;
-		if (isShown) {
+		this.isShown = true;
+		if (this.isShown) {
 			SwingUtilities.invokeLater(new SwingLogUpdater());
 		}
 	}
 
 	private void log(String message) {
 		boolean createUpdater = false;
-		synchronized (logLinesQueue) {
-			if (logLinesQueue.isEmpty()) {
+		synchronized (this.logLinesQueue) {
+			if (this.logLinesQueue.isEmpty()) {
 				createUpdater = true;
 			}
-			logLinesQueue.addElement(message);
+			this.logLinesQueue.addElement(message);
 		}
-		if (createUpdater && isShown) {
+		if (createUpdater && this.isShown) {
 			SwingUtilities.invokeLater(new SwingLogUpdater());
 		}
 	}

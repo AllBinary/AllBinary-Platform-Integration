@@ -75,26 +75,26 @@ public class Preprocessor
 	
 	public Preprocessor(ILogger logger, ILineFilter lineFilter)
 	{
-		m_logger = logger;
-		m_lineFilter = lineFilter;
-		m_defines = new Defines(lineFilter);
+		this.m_logger = logger;
+		this.m_lineFilter = lineFilter;
+		this.m_defines = new Defines(lineFilter);
 	}
 	
 	public void setListener(IPreprocessorListener listener)
 	{
-		m_listener = listener;
+		this.m_listener = listener;
 	}
 
 	public void setFile(File fileName)
 	{
-		m_file = fileName;
+		this.m_file = fileName;
 	}
 
 	public void addDefines(String defines) throws PPException
 	{
 		try
 		{
-			m_defines.addDefines(defines);
+			this.m_defines.addDefines(defines);
 		}
 		catch (ANTLRException e)
 		{
@@ -106,7 +106,7 @@ public class Preprocessor
 	{
 		try
 		{
-			m_defines.loadDefines(in);
+			this.m_defines.loadDefines(in);
 		}
 		catch (ANTLRException e)
 		{
@@ -118,7 +118,7 @@ public class Preprocessor
 	{
 		try
 		{
-			m_defines.loadDefines(file);
+			this.m_defines.loadDefines(file);
 		}
 		catch (ANTLRException e)
 		{
@@ -130,11 +130,11 @@ public class Preprocessor
 
 	private void log(String msg)
 	{
-		if (m_verbose)
+		if (this.m_verbose)
 		{
-			if (m_logger != null)
+			if (this.m_logger != null)
 			{
-				m_logger.log(msg);
+				this.m_logger.log(msg);
 			}
 			else
 			{
@@ -189,19 +189,19 @@ public class Preprocessor
 		}
 		catch (IOException e)
 		{
-			if (m_listener != null)
+			if (this.m_listener != null)
 			{
-				m_listener.error(e, -1,-1,-1);
+				this.m_listener.error(e, -1,-1,-1);
 			}
 			throw e;
 		}
 		catch (PPException e)
 		{
-			if (m_listener != null)
+			if (this.m_listener != null)
 			{
 				int lineNumber = e.getLineNumber();
 				int ln = lineNumber != PPException.UNKNOWN_LINE ?  (lineNumber + 1) : lineNumber;
-				m_listener.error(e, ln, -1, -1);
+				this.m_listener.error(e, ln, -1, -1);
 				return false;
 			}
 			else
@@ -215,23 +215,23 @@ public class Preprocessor
 	private boolean preprocessImpl(Vector lines, String encoding) throws IOException, PPException
 	{
 		this.m_modified = false;
-		m_statsStack = new Stack();
-		m_currentState = STATE_NO_CONDITIONAL;
-		m_disabledByCondition = false;
+		this.m_statsStack = new Stack();
+		this.m_currentState = STATE_NO_CONDITIONAL;
+		this.m_disabledByCondition = false;
 
-		CommandEvaluator eval = new CommandEvaluator(m_defines);
+		CommandEvaluator eval = new CommandEvaluator(this.m_defines);
 
 		int i = 0;
 		while (i < lines.size())
 		{
 			// System.out.println("(" + i + ") " + lines.get(i));
 			String line = (String) lines.get(i);
-			if (m_lineFilter != null)
+			if (this.m_lineFilter != null)
 			{
-				line = m_lineFilter.filter(line);
+				line = this.m_lineFilter.filter(line);
 			}
 
-			PPLine lp = new PPLine(m_file, line, i);
+			PPLine lp = new PPLine(this.m_file, line, i);
 			try
 			{
 				if (lp.getType() == PPLine.TYPE_VISIBLE || lp.getType() == PPLine.TYPE_HIDDEN)
@@ -240,7 +240,7 @@ public class Preprocessor
 					{
 						String l = commentLine(lp);
 						if (!l.equals(line))
-							m_modified = true;
+							this.m_modified = true;
 
 						lines.set(i, l);
 						if (isVerbose())
@@ -255,7 +255,7 @@ public class Preprocessor
 						String str = uncommentLine(lp);
 						
 						if (!str.equals(line))
-							m_modified = true;
+							this.m_modified = true;
 
 						if (replace)
 						{
@@ -272,7 +272,7 @@ public class Preprocessor
 						}
 					}
 					// reset debug hide for next line.
-					m_debugHideNextLine = false;
+					this.m_debugHideNextLine = false;
 				}
 				else
 				{
@@ -287,7 +287,7 @@ public class Preprocessor
 						int currentLine = i;
 						while (i < lines.size()) 
 						{
-							PPLine lp2 = new PPLine(m_file, (String) lines.get(i), currentLine);
+							PPLine lp2 = new PPLine(this.m_file, (String) lines.get(i), currentLine);
 							if (lp2.getType() == PPLine.TYPE_COMMAND)
 							{
 								CommonAST ast2 = getAST(lp2);
@@ -311,11 +311,11 @@ public class Preprocessor
 						Vector includeLines = loadIncludedFile(includeLine, file, encoding);
 						if (includeLines != null)
 						{
-							Preprocessor includePreprocessor = new Preprocessor(m_logger, m_lineFilter);
+							Preprocessor includePreprocessor = new Preprocessor(this.m_logger, m_lineFilter);
 							includePreprocessor.setFile(m_file);
-							includePreprocessor.setListener(m_listener);
+							includePreprocessor.setListener(this.m_listener);
 							// make a copy to be sure changes (defines, undefine does not effect including file).
-							includePreprocessor.m_defines = m_defines.copy();
+							includePreprocessor.m_defines = this.m_defines.copy();
 							includePreprocessor.preprocess(includeLines, encoding);
 							
 							for (int k = 0; k < includeLines.size(); k++)
@@ -328,7 +328,7 @@ public class Preprocessor
 								}
 								lines.insertElementAt(s, i);
 								i++;
-								m_modified = true;
+								this.m_modified = true;
 							}
 						}
 					}
@@ -350,12 +350,12 @@ public class Preprocessor
 
 		}
 		
-		if (m_currentState != STATE_NO_CONDITIONAL)
+		if (this.m_currentState != STATE_NO_CONDITIONAL)
 		{
 			throw new PPException("Missing #endif", m_file, -1);
 		}
 		
-		if (m_insideHiddenMdebugBlock)
+		if (this.m_insideHiddenMdebugBlock)
 		{
 			throw new PPException("Missing #enddebug", m_file, m_currentMdebugBlockStart);
 		}
@@ -472,7 +472,7 @@ public class Preprocessor
 		}
 		else
 		{
-			File parent = m_file.getParentFile();
+			File parent = this.m_file.getParentFile();
 			f = new File(parent, file);
 		}
 		if (!f.exists()) throw new PPException("File not found : " + f,m_file, lineNum);
@@ -491,18 +491,18 @@ public class Preprocessor
 
 	private void pushState()
 	{
-		m_statsStack.push(new Integer(m_currentState));
+		this.m_statsStack.push(new Integer(this.m_currentState));
 	}
 
 	private void popState()
 	{
-		m_currentState = ((Integer) m_statsStack.pop()).intValue();
+		this.m_currentState = ((Integer) this.m_statsStack.pop()).intValue();
 	}
 
 	public boolean isBlind()
 	{
 		return m_currentState == STATE_CAN_BECOME_TRUE || m_currentState == STATE_HAS_BEEN_TRUE
-				|| this.m_disabledByCondition || this.m_debugHideNextLine || m_insideHiddenMdebugBlock;
+				|| this.m_disabledByCondition || this.m_debugHideNextLine || this.m_insideHiddenMdebugBlock;
 	}
 
 	public boolean isVerbose()
@@ -512,7 +512,7 @@ public class Preprocessor
 
 	public void setVerbose(boolean verbose)
 	{
-		m_verbose = verbose;
+		this.m_verbose = verbose;
 	}
 
 	String commentLine(PPLine lp)
@@ -557,18 +557,18 @@ public class Preprocessor
 
 	private void handleElseIf(boolean condition)
 	{
-		if (m_currentState == STATE_NO_CONDITIONAL)
+		if (this.m_currentState == STATE_NO_CONDITIONAL)
 		{
 			throw new IllegalStateException("Unexpected #elif");
 		}
-		else if (m_currentState == STATE_CAN_BECOME_TRUE)
+		else if (this.m_currentState == STATE_CAN_BECOME_TRUE)
 		{
 			if (condition)
-				m_currentState = STATE_IS_TRUE;
+				this.m_currentState = STATE_IS_TRUE;
 			else
-				m_currentState = STATE_CAN_BECOME_TRUE;
+				this.m_currentState = STATE_CAN_BECOME_TRUE;
 		}
-		else if (m_currentState == STATE_IS_TRUE)
+		else if (this.m_currentState == STATE_IS_TRUE)
 		{
 			this.m_currentState = STATE_HAS_BEEN_TRUE;
 		}
@@ -576,15 +576,15 @@ public class Preprocessor
 
 	private void handleElse()
 	{
-		if (m_currentState == STATE_NO_CONDITIONAL)
+		if (this.m_currentState == STATE_NO_CONDITIONAL)
 		{
 			throw new IllegalStateException("Unexpected #else");
 		}
-		else if (m_currentState == STATE_CAN_BECOME_TRUE)
+		else if (this.m_currentState == STATE_CAN_BECOME_TRUE)
 		{
 			this.m_currentState = STATE_IS_TRUE;
 		}
-		else if (m_currentState == STATE_IS_TRUE)
+		else if (this.m_currentState == STATE_IS_TRUE)
 		{
 			this.m_currentState = STATE_HAS_BEEN_TRUE;
 		}
@@ -592,7 +592,7 @@ public class Preprocessor
 
 	private void handleEndIf()
 	{
-		if (m_currentState == STATE_NO_CONDITIONAL)
+		if (this.m_currentState == STATE_NO_CONDITIONAL)
 		{
 			throw new IllegalStateException("Unexpected #endif");
 		}
@@ -655,7 +655,7 @@ public class Preprocessor
 			case APPParser.LITERAL_debug:
 			{
 				boolean show = evaluator.evaluate(ppl, ast, m_listener);
-				m_debugHideNextLine = !show;
+				this.m_debugHideNextLine = !show;
 			}
 				break;
 			case APPParser.LITERAL_mdebug:
@@ -687,7 +687,7 @@ public class Preprocessor
 		String template = toTemplate(expLine);
 		int nextIndex = ppl.getLineNumber() + 1;
 		String str = lines.size() > nextIndex ? (String)lines.get(nextIndex) : "";
-		PPLine nextPPline = new PPLine(m_file, str, nextIndex);
+		PPLine nextPPline = new PPLine(this.m_file, str, nextIndex);
 		
 		String nextLine = uncommentLine(nextPPline);
 		boolean replace = nextLine.matches(template);
@@ -710,14 +710,14 @@ public class Preprocessor
 
 	private void handleEnddebug()
 	{
-		m_currentMdebugBlockStart = -1;
-		m_insideHiddenMdebugBlock = false;
+		this.m_currentMdebugBlockStart = -1;
+		this.m_insideHiddenMdebugBlock = false;
 	}
 
 	private void handleMdebug(boolean show, int lineNumber)
 	{
-		m_currentMdebugBlockStart = lineNumber;
-		m_insideHiddenMdebugBlock = !show;
+		this.m_currentMdebugBlockStart = lineNumber;
+		this.m_insideHiddenMdebugBlock = !show;
 	}
 
 
@@ -752,7 +752,7 @@ public class Preprocessor
 
 	public void clearDefines()
 	{
-		m_defines.clear();
+		this.m_defines.clear();
 	}
 
 }

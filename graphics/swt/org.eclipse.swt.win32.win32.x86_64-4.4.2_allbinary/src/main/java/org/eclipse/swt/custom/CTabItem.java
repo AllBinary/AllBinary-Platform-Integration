@@ -115,7 +115,7 @@ public CTabItem (CTabFolder parent, int style) {
  */
 public CTabItem (CTabFolder parent, int style, int index) {
 	super (parent, style);
-	showClose = (style & SWT.CLOSE) != 0;
+	this.showClose = (style & SWT.CLOSE) != 0;
 	parent.createItem (this, index);
 }
 
@@ -124,13 +124,13 @@ public CTabItem (CTabFolder parent, int style, int index) {
 public void dispose() {
 	if (isDisposed ()) return;
 	//if (!isValidThread ()) error (SWT.ERROR_THREAD_INVALID_ACCESS);
-	parent.destroyItem(this);
+	this.parent.destroyItem(this);
 	super.dispose();
-	parent = null;
-	control = null;
-	toolTipText = null;
-	shortenedText = null;
-	font = null;
+	this.parent = null;
+	this.control = null;
+	this.toolTipText = null;
+	this.shortenedText = null;
+	this.font = null;
 }
 
 /**
@@ -242,9 +242,9 @@ public boolean getShowClose() {
  */
 public String getToolTipText () {
 	checkWidget();
-	if (toolTipText == null && shortenedText != null) {
+	if (this.toolTipText == null && this.shortenedText != null) {
 		String text = getText();
-		if (!shortenedText.equals(text)) return text;
+		if (!this.shortenedText.equals(text)) return text;
 	}
 	return toolTipText;
 }
@@ -284,22 +284,22 @@ public void setControl (Control control) {
 	checkWidget();
 	if (control != null) {
 		if (control.isDisposed()) SWT.error (SWT.ERROR_INVALID_ARGUMENT);
-		if (control.getParent() != parent) SWT.error (SWT.ERROR_INVALID_PARENT);
+		if (control.getParent() != this.parent) SWT.error (SWT.ERROR_INVALID_PARENT);
 	}
 	if (this.control != null && !this.control.isDisposed()) {
 		this.control.setVisible(false);
 	}
 	this.control = control;
 	if (this.control != null) {
-		int index = parent.indexOf (this);
-		if (index == parent.getSelectionIndex ()){
-			this.control.setBounds(parent.getClientArea ());
+		int index = this.parent.indexOf (this);
+		if (index == this.parent.getSelectionIndex ()){
+			this.control.setBounds(this.parent.getClientArea ());
 			this.control.setVisible(true);
 		} else {
-		    int selectedIndex = parent.getSelectionIndex();
+		    int selectedIndex = this.parent.getSelectionIndex();
 		    Control selectedControl = null;
 		    if (selectedIndex != -1) {
-		    	selectedControl = parent.getItem(selectedIndex).control;
+		    	selectedControl = this.parent.getItem(selectedIndex).control;
 		    }
 		    if (this.control != selectedControl) {
 		    	this.control.setVisible(false);
@@ -356,7 +356,7 @@ public void setFont (Font font){
 	if (font == null && this.font == null) return;
 	if (font != null && font.equals(this.font)) return;
 	this.font = font;
-	parent.updateFolder(CTabFolder.UPDATE_TAB_HEIGHT | CTabFolder.REDRAW_TABS);
+	this.parent.updateFolder(CTabFolder.UPDATE_TAB_HEIGHT | CTabFolder.REDRAW_TABS);
 }
 @Override
 public void setImage (Image image) {
@@ -368,7 +368,7 @@ public void setImage (Image image) {
 	if (image == null && oldImage == null) return;
 	if (image != null && image.equals(oldImage)) return;
 	super.setImage(image);
-	parent.updateFolder(CTabFolder.UPDATE_TAB_HEIGHT | CTabFolder.REDRAW_TABS);
+	this.parent.updateFolder(CTabFolder.UPDATE_TAB_HEIGHT | CTabFolder.REDRAW_TABS);
 }
 /**
  * Sets to <code>true</code> to indicate that the receiver's close button should be shown.
@@ -386,9 +386,9 @@ public void setImage (Image image) {
  */
 public void setShowClose(boolean close) {
 	checkWidget();
-	if (showClose == close) return;
-	showClose = close;
-	parent.updateFolder(CTabFolder.REDRAW_TABS);
+	if (this.showClose == close) return;
+	this.showClose = close;
+	this.parent.updateFolder(CTabFolder.REDRAW_TABS);
 }
 @Override
 public void setText (String string) {
@@ -396,9 +396,9 @@ public void setText (String string) {
 	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	if (string.equals(getText())) return;
 	super.setText(string);
-	shortenedText = null;
-	shortenedTextWidth = 0;
-	parent.updateFolder(CTabFolder.UPDATE_TAB_HEIGHT | CTabFolder.REDRAW_TABS);
+	this.shortenedText = null;
+	this.shortenedTextWidth = 0;
+	this.parent.updateFolder(CTabFolder.UPDATE_TAB_HEIGHT | CTabFolder.REDRAW_TABS);
 }
 /**
  * Sets the receiver's tool tip text to the argument, which
@@ -422,7 +422,7 @@ public void setText (String string) {
  */
 public void setToolTipText (String string) {
 	checkWidget();
-	toolTipText = string;
+	this.toolTipText = string;
 }
 
 }

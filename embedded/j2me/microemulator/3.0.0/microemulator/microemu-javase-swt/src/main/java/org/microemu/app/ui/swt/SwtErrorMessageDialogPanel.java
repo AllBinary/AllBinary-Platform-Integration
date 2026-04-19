@@ -50,7 +50,7 @@ public class SwtErrorMessageDialogPanel implements MessageListener {
 		default:
 			messageType = SwtMessageDialog.INFORMATION;
 		}
-		SwtMessageDialog.openMessageDialog(shell, title, text, messageType);
+		SwtMessageDialog.openMessageDialog(this.shell, title, text, messageType);
 	}
 
 }

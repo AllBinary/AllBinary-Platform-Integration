@@ -49,7 +49,7 @@ class BooleanEvaluator {
 	 */
 	public BooleanEvaluator(String defines) {
 		this.defines = defines;
-		symbols = new Hashtable();
+		this.symbols = new Hashtable();
 
         if (defines != null) {
     		defines = defines + ",";

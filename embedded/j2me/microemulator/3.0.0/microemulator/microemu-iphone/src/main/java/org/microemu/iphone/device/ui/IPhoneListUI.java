@@ -106,7 +106,7 @@ public class IPhoneListUI extends AbstractUI<List> implements ListUI {
 		}
 		
 		protected void doReload() {
-			if(tableView!=null)
+			if(this.tableView!=null)
 				ThreadDispatcher.dispatchOnMainThread(new ARunnable() {
 					public void run() {
 						tableView.reloadData();
@@ -146,7 +146,7 @@ public class IPhoneListUI extends AbstractUI<List> implements ListUI {
 			cell.setReuseIdentifier$("reuse");
 		}
 		cell.setText$(displayable.getString(indexPath.row()));
-		if(choiceGroup.getType()==List.MULTIPLE&&displayable.isSelected(indexPath.row()))
+		if(this.choiceGroup.getType()==List.MULTIPLE&&displayable.isSelected(indexPath.row()))
 			cell.setAccessoryType$(3);
 		else
 			cell.setAccessoryType$(0);
@@ -156,13 +156,13 @@ public class IPhoneListUI extends AbstractUI<List> implements ListUI {
 	@Message
 	public final void tableView$didSelectRowAtIndexPath$(UITableView table, NSIndexPath indexPath) {
 		System.out.println(displayable.getString(indexPath.row()) + " selected");
-		if(choiceGroup.getType()==List.MULTIPLE){
+		if(this.choiceGroup.getType()==List.MULTIPLE){
 			displayable.setSelectedIndex(indexPath.row(), !displayable.isSelected(indexPath.row()));
 		}else{
 			displayable.setSelectedIndex(indexPath.row(),true);
 		}
-		if(commandListener!=null&&selectCommand!=null&&choiceGroup.getType()==List.IMPLICIT)
-			commandListener.commandAction(selectCommand, displayable);
+		if(commandListener!=null&&this.selectCommand!=null&&this.choiceGroup.getType()==List.IMPLICIT)
+			commandListener.commandAction(this.selectCommand, displayable);
 	}
 
 	public int append(String stringPart, Image imagePart) {
@@ -195,17 +195,17 @@ public class IPhoneListUI extends AbstractUI<List> implements ListUI {
 	public void showNotify() {
 		System.out.println("showNotify");
 
-		if (view==null) {
-			view = new UIView().initWithFrame$(microEmulator.getWindow().bounds());
+		if (this.view==null) {
+			this.view = new UIView().initWithFrame$(microEmulator.getWindow().bounds());
 
-			navigtionBar = new UINavigationBar().initWithFrame$(new CGRect(0, 0,
+			this.navigtionBar = new UINavigationBar().initWithFrame$(new CGRect(0, 0,
 					microEmulator.getWindow().bounds().size.width, NAVIGATION_HEIGHT));
 			UINavigationItem title = new UINavigationItem().initWithTitle$(displayable.getTitle());
 			title.setBackButtonTitle$("Back");
-			navigtionBar.pushNavigationItem$(title);
-			view.addSubview$(navigtionBar);
+			this.navigtionBar.pushNavigationItem$(title);
+			this.view.addSubview$(this.navigtionBar);
 			
-			tableView = new UITableView().initWithFrame$style$(
+			this.tableView = new UITableView().initWithFrame$style$(
 					new CGRect(0, NAVIGATION_HEIGHT, microEmulator.getWindow().bounds().size.width,
 							microEmulator.getWindow().bounds().size.height - NAVIGATION_HEIGHT - TOOLBAR_HEIGHT), 0);
 			
@@ -215,26 +215,26 @@ public class IPhoneListUI extends AbstractUI<List> implements ListUI {
 				ChoiceGroup cgO = (ChoiceGroup)cg.get(displayable);
 				Field type=ChoiceGroup.class.getDeclaredField("choiceType");
 				type.setAccessible(true);
-				choiceGroup = new ChoiceGroupDelegate(cgO,(Integer)type.get(cgO));
+				this.choiceGroup = new ChoiceGroupDelegate(cgO,(Integer)type.get(cgO));
 				cg.set(displayable, choiceGroup);
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
 			
-			view.addSubview$(tableView);
+			this.view.addSubview$(this.tableView);
 			toolbar = (UIToolbar) new UIToolbar().initWithFrame$(new CGRect(0,
 					microEmulator.getWindow().bounds().size.height - TOOLBAR_HEIGHT, microEmulator.getWindow().bounds().size.width,
 					TOOLBAR_HEIGHT));
-			view.addSubview$(toolbar);
+			this.view.addSubview$(toolbar);
 			updateToolbar();
 		}
-		tableView.setDataSource$(this);
-		tableView.setDelegate$(this);
-		tableView.reloadData();
+		this.tableView.setDataSource$(this);
+		this.tableView.setDelegate$(this);
+		this.tableView.reloadData();
 
-		view.retain();
-		microEmulator.getWindow().addSubview$(view);
+		this.view.retain();
+		microEmulator.getWindow().addSubview$(this.view);
 	}
 }
 

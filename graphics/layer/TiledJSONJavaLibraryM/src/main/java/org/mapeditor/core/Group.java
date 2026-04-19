@@ -59,8 +59,8 @@ public class Group
      */
     
     public BasicArrayList getLayers() {
-        if (layers == null) {
-            layers = new BasicArrayList();
+        if (this.layers == null) {
+            this.layers = new BasicArrayList();
         }
         return this.layers;
     }

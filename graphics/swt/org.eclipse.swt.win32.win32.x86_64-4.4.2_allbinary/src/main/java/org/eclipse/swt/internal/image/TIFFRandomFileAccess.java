@@ -23,8 +23,8 @@ final class TIFFRandomFileAccess {
 
 public TIFFRandomFileAccess(LEDataInputStream stream) {
 	this.inputStream = stream;
-	start = current = next = inputStream.getPosition();
-	buffers = new byte[LIST_SIZE][];
+	start = current = next = this.inputStream.getPosition();
+	this.buffers = new byte[LIST_SIZE][];
 }
 
 void seek(int pos) throws IOException {
@@ -37,13 +37,13 @@ void seek(int pos) throws IOException {
 		int index = next / CHUNK_SIZE;
 		int offset = next % CHUNK_SIZE;
 		while (n > 0) {
-			if (index >= buffers.length) {
-				byte[][] oldBuffers = buffers;
-				buffers = new byte[Math.max(index + 1, oldBuffers.length + LIST_SIZE)][];
+			if (index >= this.buffers.length) {
+				byte[][] oldBuffers = this.buffers;
+				this.buffers = new byte[Math.max(index + 1, oldBuffers.length + LIST_SIZE)][];
 				System.arraycopy(oldBuffers, 0, buffers, 0, oldBuffers.length);
 			}
 			if (buffers[index] == null) buffers[index] = new byte[CHUNK_SIZE];
-			int cnt = inputStream.read(buffers[index], offset, Math.min(n, CHUNK_SIZE - offset));
+			int cnt = this.inputStream.read(buffers[index], offset, Math.min(n, CHUNK_SIZE - offset));
 			n -= cnt;
 			next += cnt;
 			index++;
@@ -63,7 +63,7 @@ void read(byte b[]) throws IOException {
 		int offset = current % CHUNK_SIZE;		
 		while (nCached > 0) {
 			int cnt = Math.min(nCached, CHUNK_SIZE - offset);
-			System.arraycopy(buffers[index], offset, b, destNext, cnt);
+			System.arraycopy(this.buffers[index], offset, b, destNext, cnt);
 			nCached -= cnt; 
 			destNext += cnt;
 			index++;
@@ -75,13 +75,13 @@ void read(byte b[]) throws IOException {
 		int index = next / CHUNK_SIZE;
 		int offset = next % CHUNK_SIZE;
 		while (nMissing > 0) {
-			if (index >= buffers.length) {
-				byte[][] oldBuffers = buffers;
-				buffers = new byte[Math.max(index, oldBuffers.length + LIST_SIZE)][];
+			if (index >= this.buffers.length) {
+				byte[][] oldBuffers = this.buffers;
+				this.buffers = new byte[Math.max(index, oldBuffers.length + LIST_SIZE)][];
 				System.arraycopy(oldBuffers, 0, buffers, 0, oldBuffers.length);
 			}
 			if (buffers[index] == null) buffers[index] = new byte[CHUNK_SIZE];
-			int cnt = inputStream.read(buffers[index], offset, Math.min(nMissing, CHUNK_SIZE - offset));
+			int cnt = this.inputStream.read(buffers[index], offset, Math.min(nMissing, CHUNK_SIZE - offset));
 			System.arraycopy(buffers[index], offset, b, destNext, cnt);
 			nMissing -= cnt;
 			next += cnt;

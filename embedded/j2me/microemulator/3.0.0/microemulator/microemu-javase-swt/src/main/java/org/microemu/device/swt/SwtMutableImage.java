@@ -121,7 +121,7 @@ public class SwtMutableImage extends MutableImage {
     }
     
     public javax.microedition.lcdui.Graphics getGraphics() {
-        return this.platformImage.getGraphics(gc, getWidth(), getHeight(), this);
+        return this.platformImage.getGraphics(this.gc, getWidth(), getHeight(), this);
     }
 
     public boolean isMutable() {
@@ -192,7 +192,7 @@ public class SwtMutableImage extends MutableImage {
             }
         }
         
-        final ImageData imageData = image.getImageData();
+        final ImageData imageData = this.image.getImageData();
         this.depth = imageData.depth;
         //System.out.println("TWB mutable id: " + img);
         final byte[] alphas = new byte[width * height];
@@ -236,7 +236,7 @@ public class SwtMutableImage extends MutableImage {
             }
         }
 
-        final ImageData imageData = image.getImageData();
+        final ImageData imageData = this.image.getImageData();
         this.depth = imageData.depth;
         for (int i = 0; i < height; i++) {
             imageData.setPixels(x, y + i, width, argb, offset + i * scanlength);

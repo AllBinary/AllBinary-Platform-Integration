@@ -55,14 +55,14 @@ public class AboutCommandProcessor {
             //midletCommandListener.commandAction(command, canvas);
 
             final Context context = (Context) this.context;
-            final Intent intent = new Intent(context, this.getClass().getClassLoader().loadClass(WEB_VIEW_ACTIVITY));
-            intent.putExtra(NAME, LicenseInitInfoUtil.getInstance().ABOUT);
+            final Intent intent = new Intent(context, this.getClass().getClassLoader().loadClass(this.WEB_VIEW_ACTIVITY));
+            intent.putExtra(this.NAME, LicenseInitInfoUtil.getInstance().ABOUT);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 
         } catch(ClassNotFoundException e) {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            logUtil.put(commonStrings.EXCEPTION, this, "process", e);
+            this.logUtil.put(commonStrings.EXCEPTION, this, "process", e);
         }
     }
     
@@ -71,7 +71,7 @@ public class AboutCommandProcessor {
     }
     
     public Context getContext() {
-        return (Context) context;
+        return (Context) this.context;
     }
 
 }

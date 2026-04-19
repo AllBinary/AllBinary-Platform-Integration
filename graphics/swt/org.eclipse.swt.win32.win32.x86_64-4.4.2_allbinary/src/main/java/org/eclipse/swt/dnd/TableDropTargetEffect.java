@@ -107,23 +107,23 @@ public class TableDropTargetEffect extends DropTargetEffect {
 	public void dragLeave(DropTargetEvent event) {
 		Table table = (Table) control;
 		long /*int*/ handle = table.handle;
-		if (dropHighlight != null) {
+		if (this.dropHighlight != null) {
 			LVITEM lvItem = new LVITEM ();
 			lvItem.stateMask = OS.LVIS_DROPHILITED;
 			OS.SendMessage(handle, OS.LVM_SETITEMSTATE, -1, lvItem);		
-			dropHighlight = null;
+			this.dropHighlight = null;
 		}
 		if (!OS.IsWinCE && OS.WIN32_VERSION >= OS.VERSION(5, 1)) {
-			if (iItemInsert != -1) {
+			if (this.iItemInsert != -1) {
 				LVINSERTMARK plvim = new LVINSERTMARK ();
 				plvim.cbSize = LVINSERTMARK.sizeof;
 				plvim.iItem = -1;
 				OS.SendMessage(handle, OS.LVM_SETINSERTMARK, 0, plvim);
-				iItemInsert = -1;
+				this.iItemInsert = -1;
 			}
 		}
-		scrollBeginTime = 0;
-		scrollIndex = -1;
+		this.scrollBeginTime = 0;
+		this.scrollIndex = -1;
 	}
 
 	/**
@@ -157,8 +157,8 @@ public class TableDropTargetEffect extends DropTargetEffect {
 			this.scrollBeginTime = 0;
 			this.scrollIndex = -1;
 		} else {
-			if (pinfo.iItem != -1 && scrollIndex == pinfo.iItem && scrollBeginTime != 0) {
-				if (System.currentTimeMillis() >= scrollBeginTime) {
+			if (pinfo.iItem != -1 && this.scrollIndex == pinfo.iItem && this.scrollBeginTime != 0) {
+				if (System.currentTimeMillis() >= this.scrollBeginTime) {
 					int top = Math.max (0, (int)/*64*/OS.SendMessage (handle, OS.LVM_GETTOPINDEX, 0, 0));
 					int count = (int)/*64*/OS.SendMessage (handle, OS.LVM_GETITEMCOUNT, 0, 0);
 					int index = (scrollIndex - 1 < top) ? Math.max(0, scrollIndex - 1) : Math.min(count - 1, scrollIndex + 1);
@@ -184,31 +184,31 @@ public class TableDropTargetEffect extends DropTargetEffect {
 						OS.SendMessage (handle, OS.LVM_ENSUREVISIBLE, index, 0);
 						table.redraw();
 					}
-					scrollBeginTime = 0;
+					this.scrollBeginTime = 0;
 					scrollIndex = -1;
 				}
 			} else {
-				scrollBeginTime = System.currentTimeMillis() + SCROLL_HYSTERESIS;
+				this.scrollBeginTime = System.currentTimeMillis() + SCROLL_HYSTERESIS;
 				scrollIndex = pinfo.iItem;
 			}
 		}
 		
 		if (pinfo.iItem != -1 && (effect & DND.FEEDBACK_SELECT) != 0) {
 			TableItem item = table.getItem(pinfo.iItem);
-			if (dropHighlight != item) {
+			if (this.dropHighlight != item) {
 				LVITEM lvItem = new LVITEM();
 				lvItem.stateMask = OS.LVIS_DROPHILITED;
 				OS.SendMessage(handle, OS.LVM_SETITEMSTATE, -1, lvItem);		
 				lvItem.state = OS.LVIS_DROPHILITED;
 				OS.SendMessage(handle, OS.LVM_SETITEMSTATE, pinfo.iItem, lvItem);
-				dropHighlight = item;
+				this.dropHighlight = item;
 			}
 		} else {
-			if (dropHighlight != null) {
+			if (this.dropHighlight != null) {
 				LVITEM lvItem = new LVITEM ();
 				lvItem.stateMask = OS.LVIS_DROPHILITED;
 				OS.SendMessage(handle, OS.LVM_SETITEMSTATE, -1, lvItem);		
-				dropHighlight = null;
+				this.dropHighlight = null;
 			}
 		}
 		if (!OS.IsWinCE && OS.WIN32_VERSION >= OS.VERSION(5, 1)) {
@@ -221,12 +221,12 @@ public class TableDropTargetEffect extends DropTargetEffect {
 						this.iItemInsert = pinfo.iItem;
 					}
 			} else {
-				if (iItemInsert != -1) {
+				if (this.iItemInsert != -1) {
 					LVINSERTMARK plvim = new LVINSERTMARK ();
 					plvim.cbSize = LVINSERTMARK.sizeof;
 					plvim.iItem = -1;
 					OS.SendMessage(handle, OS.LVM_SETINSERTMARK, 0, plvim);
-					iItemInsert = -1;
+					this.iItemInsert = -1;
 				}
 			}
 		}

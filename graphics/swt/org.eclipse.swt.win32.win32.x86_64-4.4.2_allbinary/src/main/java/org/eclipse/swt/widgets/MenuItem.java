@@ -544,8 +544,8 @@ void releaseParent () {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	if (hBitmap != 0) OS.DeleteObject (hBitmap);
-	hBitmap = 0;
+	if (this.hBitmap != 0) OS.DeleteObject (this.hBitmap);
+	this.hBitmap = 0;
 	if (accelerator != 0) {
 		parent.destroyAccelerators ();
 	}
@@ -810,8 +810,8 @@ public void setImage (Image image) {
 		info.hbmpItem = OS.HBMMENU_CALLBACK;
 	} else {
 		if (!OS.IsWinCE && OS.WIN32_VERSION >= OS.VERSION (6, 0) && OS.IsAppThemed ()) {
-			if (hBitmap != 0) OS.DeleteObject (hBitmap);
-			info.hbmpItem = hBitmap = image != null ? Display.create32bitDIB (image) : 0;
+			if (this.hBitmap != 0) OS.DeleteObject (this.hBitmap);
+			info.hbmpItem = this.hBitmap = image != null ? Display.create32bitDIB (image) : 0;
 		} else {
 			info.hbmpItem = image != null ? OS.HBMMENU_CALLBACK : 0;
 		}

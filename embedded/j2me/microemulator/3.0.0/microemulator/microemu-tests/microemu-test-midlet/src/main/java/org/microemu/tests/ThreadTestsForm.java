@@ -84,11 +84,11 @@ public class ThreadTestsForm extends BaseTestsForm {
 					}
 				}
 			};
-			thread.start();
+			this.thread.start();
 		} else if (c == stopThreadCommand) {
-			if (thread != null) {
-				thread.interrupt();
-				thread = null;
+			if (this.thread != null) {
+				this.thread.interrupt();
+				this.thread = null;
 			}
 		} else {
 			super.commandAction(c, d);

@@ -128,32 +128,32 @@ public class WtkPackage extends Jar {
 
     public void init() throws BuildException {
         super.init();
-        utility = Utility.getInstance(getProject(), this);
+        this.utility = Utility.getInstance(getProject(), this);
         
-        config = "CLDC-" + utility.getCldcVersion();
-        profile = "MIDP-" + utility.getMidpVersion();
+        this.config = "CLDC-" + this.utility.getCldcVersion();
+        this.profile = "MIDP-" + this.utility.getMidpVersion();
         
-        condition = new Conditional(getProject());
-        classpath = new Path(getProject());
+        this.condition = new Conditional(getProject());
+        this.classpath = new Path(getProject());
         setUpdate(false);
     }
 
     public Preserve createPreserve() {
         Preserve pre = new Preserve(getProject());
-        preserve.addElement(pre);
+        this.preserve.addElement(pre);
         return pre;
     }
     
     public Argument createArgument() {
         Argument a = new Argument(getProject());
-        arguments.addElement(a);
+        this.arguments.addElement(a);
         return a;
     }
 
     public Vector getArguments() {
         Vector result = new Vector();
-        for (int i = 0; i < arguments.size(); i++) {
-            Argument a = (Argument) arguments.elementAt(i);
+        for (int i = 0; i < this.arguments.size(); i++) {
+            Argument a = (Argument) this.arguments.elementAt(i);
             if (a.isActive()) {
                 result.add(a);
             }
@@ -203,28 +203,28 @@ public class WtkPackage extends Jar {
 
     public void setNonative(boolean b) {
         if (b) {
-            flags = flags | Utility.PREVERIFY_NONATIVE;
+            this.flags = this.flags | Utility.PREVERIFY_NONATIVE;
         }
         else {
-            flags = flags & ~Utility.PREVERIFY_NONATIVE;
+            this.flags = this.flags & ~Utility.PREVERIFY_NONATIVE;
         }
     }
 
     public void setNofloat(boolean b) {
         if (b) {
-            flags = flags | Utility.PREVERIFY_NOFLOAT;
+            this.flags = this.flags | Utility.PREVERIFY_NOFLOAT;
         }
         else {
-            flags = flags & ~Utility.PREVERIFY_NOFLOAT;
+            this.flags = this.flags & ~Utility.PREVERIFY_NOFLOAT;
         }
     }
 
     public void setNofinalize(boolean b) {
         if (b) {
-            flags = flags | Utility.PREVERIFY_NOFINALIZE;
+            this.flags = this.flags | Utility.PREVERIFY_NOFINALIZE;
         }
         else {
-            flags = flags & ~Utility.PREVERIFY_NOFINALIZE;
+            this.flags = this.flags & ~Utility.PREVERIFY_NOFINALIZE;
         }
     }
 
@@ -245,8 +245,8 @@ public class WtkPackage extends Jar {
     }
 
     public Path createBootclasspath() {
-        if (bootclasspath == null) {
-            bootclasspath = new Path(getProject());
+        if (this.bootclasspath == null) {
+            this.bootclasspath = new Path(getProject());
         }
         return bootclasspath.createPath();
     }
@@ -260,8 +260,8 @@ public class WtkPackage extends Jar {
     }
 
     public Path createClasspath() {
-        if (classpath == null) {
-            classpath = new Path(getProject());
+        if (this.classpath == null) {
+            this.classpath = new Path(getProject());
         }
         return classpath.createPath();
     }
@@ -275,8 +275,8 @@ public class WtkPackage extends Jar {
     }
 
     public Path createLibclasspath() {
-        if (libclasspath == null) {
-            libclasspath = new Path(getProject());
+        if (this.libclasspath == null) {
+            this.libclasspath = new Path(getProject());
         }
         return libclasspath.createPath();
     }
@@ -292,14 +292,14 @@ public class WtkPackage extends Jar {
 
     public void addFileset(FileSet files) {
         super.addFileset(files);
-        classDirs = classDirs + files.getDir(getProject()) + File.pathSeparator;
+        this.classDirs = this.classDirs + files.getDir(getProject()) + File.pathSeparator;
 
     }
 
     public Vector getPreserve() {
         Vector result = new Vector();
-        for (int i = 0; i < preserve.size(); i++) {
-            Preserve p = (Preserve) preserve.elementAt(i);
+        for (int i = 0; i < this.preserve.size(); i++) {
+            Preserve p = (Preserve) this.preserve.elementAt(i);
             if (p.isActive()) {
                 result.add(p);
             }
@@ -373,8 +373,8 @@ public class WtkPackage extends Jar {
 
             jos.flush();
             jos.close();
-            utility.delete(jarFile);
-            utility.copy(tmp, jarFile);
+            this.utility.delete(jarFile);
+            this.utility.copy(tmp, jarFile);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -386,39 +386,39 @@ public class WtkPackage extends Jar {
     public void execute() throws BuildException {
         if (!isActive()) return;
 
-        File tmpDir = utility.getTempDir();
+        File tmpDir = this.utility.getTempDir();
 
         try {
-            if (bootclasspath == null) {
-                String bcp = utility.getMidpApi(); // was: getEmptyApi()
+            if (this.bootclasspath == null) {
+                String bcp = this.utility.getMidpApi(); // was: getEmptyApi()
                 setBootclasspath(new Path(getProject(), bcp));
             }
 
-            if (jadFile == null) {
+            if (this.jadFile == null) {
                 throw new BuildException("Required parameter jadfile missing");
             }
 
             JadFile jad = new JadFile();
             try {
-                jad.load(jadFile.getAbsolutePath(), encoding);
+                jad.load(this.jadFile.getAbsolutePath(), encoding);
             }
             catch (IOException ex) {
                 throw new BuildException("Error loading JAD file", ex);
             }
 
-            if (jarFile == null) {
+            if (this.jarFile == null) {
                 String jar = jad.getValue("MIDlet-JAR-URL");
                 if (jar != null) {
-                    setJarfile(new File(jadFile.getParent() + "/" + new File(jar).getName()));
+                    setJarfile(new File(this.jadFile.getParent() + "/" + new File(jar).getName()));
                 }
             }
 
             JadFile man = new JadFile();
-            if (manifest == null) {
+            if (this.manifest == null) {
             	Vector excludes = new Vector();
-            	for (int i = 0; m_excludeFromManifest != null && i < m_excludeFromManifest.size(); i++)
+            	for (int i = 0; this.m_excludeFromManifest != null && i < this.m_excludeFromManifest.size(); i++)
 				{
-            		Exclude_From_Manifest ex = (Exclude_From_Manifest)m_excludeFromManifest.get(i);
+            		Exclude_From_Manifest ex = (Exclude_From_Manifest)this.m_excludeFromManifest.get(i);
             		if (ex.name != null)
             		{
             			excludes.add(ex.name);
@@ -443,7 +443,7 @@ public class WtkPackage extends Jar {
             }
             else {
                 try {
-                    man.load(manifest.getAbsolutePath(), manifestEncoding);
+                    man.load(this.manifest.getAbsolutePath(), manifestEncoding);
                 }
                 catch (IOException ex) {
                     throw new BuildException("Error opening MANIFEST.MF file ", ex);
@@ -451,13 +451,13 @@ public class WtkPackage extends Jar {
             }
 
             String newVersion = null;
-            if (autoversion) {
-                newVersion = utility.getNewVersion(jad.getValue("MIDlet-Version"));
+            if (this.autoversion) {
+                newVersion = this.utility.getNewVersion(jad.getValue("MIDlet-Version"));
                 jad.setValue("MIDlet-Version", newVersion);
                 man.setValue("MIDlet-Version", newVersion);
             }
 
-            File manFile = (manifest == null ? new File(tmpDir + "/MANIFEST.MF") : manifest);
+            File manFile = (this.manifest == null ? new File(tmpDir + "/MANIFEST.MF") : this.manifest);
             try {
                 man.save("" + manFile, manifestEncoding);
             }
@@ -467,8 +467,8 @@ public class WtkPackage extends Jar {
 
             super.setManifest(manFile);
 
-            if (libclasspath != null) {
-                String[] libs = libclasspath.list();
+            if (this.libclasspath != null) {
+                String[] libs = this.libclasspath.list();
                 if (libs != null) {
                     for (int i = 0; i < libs.length; i++) {
                         File lib = new File(libs[i]);
@@ -490,17 +490,17 @@ public class WtkPackage extends Jar {
                 }
             }
 
-            String cp = "" + bootclasspath;
-            if (classpath.size() != 0) cp = cp + File.pathSeparator + classpath;
+            String cp = "" + this.bootclasspath;
+            if (this.classpath.size() != 0) cp = cp + File.pathSeparator + this.classpath;
 
             super.execute();
 
-            if (obfuscate) {
+            if (this.obfuscate) {
                 File obfFile = new File(tmpDir + "/obfuscated.jar");
                 Vector preserve = new Vector();
-                utility.getPreserveList(jad, preserve);
+                this.utility.getPreserveList(jad, preserve);
                 preserve.addAll(getPreserve());
-                utility.obfuscate(jarFile, obfFile, cp, verbose, preserve, null, getArguments(), jad);
+                this.utility.obfuscate(this.jarFile, obfFile, cp, verbose, preserve, null, getArguments(), jad);
 
                 Jar jar = new Jar();
                 jar.setProject(getProject());
@@ -510,16 +510,16 @@ public class WtkPackage extends Jar {
                 jar.setUpdate(true);
                 jar.execute();
 
-                utility.copy(obfFile, jarFile);
+                this.utility.copy(obfFile, jarFile);
             }
 
-            if (preverify) {
-                utility.preverify(jarFile, tmpDir, cp, cldc, flags);
-                utility.copy(new File(tmpDir + File.separator + jarFile.getName()), jarFile);
+            if (this.preverify) {
+                this.utility.preverify(jarFile, tmpDir, cp, cldc, flags);
+                this.utility.copy(new File(tmpDir + File.separator + jarFile.getName()), jarFile);
             }
 
             //re-create do the file with the non ordered manifest.
-            if (keepManifestOrder) {
+            if (this.keepManifestOrder) {
                 addManifest(tmpDir, manFile);
             }
 
@@ -529,23 +529,23 @@ public class WtkPackage extends Jar {
 
             jad.setValue("MIDlet-Jar-Size", "" + jarFile.length());
 
-            log("Updating JAD file " + jadFile);
+            log("Updating JAD file " + this.jadFile);
             try {
-                jad.save("" + jadFile, encoding);
+                jad.save("" + this.jadFile, encoding);
             }
             catch (IOException ex) {
                 throw new BuildException("Error processing JAD file", ex);
             }
         }
         finally {
-            utility.delete(tmpDir);
+            this.utility.delete(tmpDir);
         }
     }
     
 	public Exclude_From_Manifest createExclude_From_Manifest() {
-		if (m_excludeFromManifest == null) m_excludeFromManifest = new Vector();
+		if (this.m_excludeFromManifest == null) this.m_excludeFromManifest = new Vector();
 		Exclude_From_Manifest a = new Exclude_From_Manifest();
-		m_excludeFromManifest.addElement(a);
+		this.m_excludeFromManifest.addElement(a);
 		return a;
 	}
     

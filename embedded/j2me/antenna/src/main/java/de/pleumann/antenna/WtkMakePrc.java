@@ -60,8 +60,8 @@ public class WtkMakePrc extends Task {
 
     public void init() throws BuildException {
         super.init();
-        utility = Utility.getInstance(getProject(), this);
-        condition = new Conditional(getProject());
+        this.utility = Utility.getInstance(getProject(), this);
+        this.condition = new Conditional(getProject());
         
         if (getProject().getProperty("wtk.wme.home") != null) {
             this.converter = "wme";
@@ -134,9 +134,9 @@ public class WtkMakePrc extends Task {
 	public void executeWtk() throws BuildException {
        
 		JadFile jad = new JadFile();
-		if (jadFile != null) {
+		if (this.jadFile != null) {
 			try {
-				jad.load(jadFile.getAbsolutePath(), encoding);
+				jad.load(this.jadFile.getAbsolutePath(), encoding);
 			}
 			catch (IOException ex) {
 				throw new BuildException("Error loading JAD file", ex);
@@ -144,15 +144,15 @@ public class WtkMakePrc extends Task {
 		}
 
 		String prc;
-		if (prcFile == null) {
-			prc = (jadFile == null ? jarFile : jadFile).getAbsolutePath();
+		if (this.prcFile == null) {
+			prc = (this.jadFile == null ? this.jarFile : this.jadFile).getAbsolutePath();
 			prc = prc.substring(0, prc.lastIndexOf('.')) + ".prc";
 		}
 		else {
-			prc = prcFile.getAbsolutePath();
+			prc = this.prcFile.getAbsolutePath();
 		}
         
-		String converter = utility.getWtkRelative("wtklib/devices/PalmOS_Device/converter.jar");
+		String converter = this.utility.getWtkRelative("wtklib/devices/PalmOS_Device/converter.jar");
 
 		Java java = new Java();
 		java.setProject(getProject());
@@ -164,24 +164,24 @@ public class WtkMakePrc extends Task {
         
 		java.createArg().setLine(" -o \"" + prc + "\"");
 
-		if (creator != null) java.createArg().setLine(" -creator \"" + creator + "\"");
-		if (icon != null) java.createArg().setLine(" -icon \"" + icon + "\"");
-		if (smallicon != null) java.createArg().setLine(" -smallicon \"" + smallicon + "\"");
-		if (name != null) java.createArg().setLine(" -name \"" + name + "\"");
-		if (longname != null) java.createArg().setLine(" -longname \"" + longname + "\"");
-		if (type != null) java.createArg().setLine(" -type " + type);
-		if (jadFile != null) java.createArg().setLine(" -jad \"" + jadFile + "\"");
+		if (this.creator != null) java.createArg().setLine(" -creator \"" + this.creator + "\"");
+		if (this.icon != null) java.createArg().setLine(" -icon \"" + this.icon + "\"");
+		if (this.smallicon != null) java.createArg().setLine(" -smallicon \"" + this.smallicon + "\"");
+		if (this.name != null) java.createArg().setLine(" -name \"" + this.name + "\"");
+		if (this.longname != null) java.createArg().setLine(" -longname \"" + this.longname + "\"");
+		if (this.type != null) java.createArg().setLine(" -type " + this.type);
+		if (this.jadFile != null) java.createArg().setLine(" -jad \"" + this.jadFile + "\"");
                 
-		if (jarFile != null) {        
-			java.createArg().setFile(jarFile);
+		if (this.jarFile != null) {        
+			java.createArg().setFile(this.jarFile);
 		}
 		else {
-			java.createArg().setFile(new File(jadFile.getParent(), new File(jad.getValue("MIDlet-Jar-URL")).getName()));
+			java.createArg().setFile(new File(this.jadFile.getParent(), new File(jad.getValue("MIDlet-Jar-URL")).getName()));
 		}
 
 		log("Generating PRC file " + new File(prc).getName() + " using WTK");
         
-		utility.delete(new File(prc));
+		this.utility.delete(new File(prc));
 		java.execute();
 		if (!new File(prc).exists()) {
 			log("There was a problem generating the PRC file. Maybe you are using");
@@ -211,23 +211,23 @@ public class WtkMakePrc extends Task {
 		}
 
 		String prc;
-		if (prcFile == null) {
-			prc = (jadFile == null ? jarFile : jadFile).getAbsolutePath();
+		if (this.prcFile == null) {
+			prc = (this.jadFile == null ? this.jarFile : this.jadFile).getAbsolutePath();
 			prc = prc.substring(0, prc.lastIndexOf('.')) + ".prc";
 		}
 		else {
-			prc = prcFile.getAbsolutePath();
+			prc = this.prcFile.getAbsolutePath();
 		}
 
-		if (jarFile == null) {
+		if (this.jarFile == null) {
 			JadFile jad = new JadFile();
-			if (jadFile != null) {
+			if (this.jadFile != null) {
 				try {
-					jad.load(jadFile.getAbsolutePath(), encoding);
+					jad.load(this.jadFile.getAbsolutePath(), encoding);
 					
-					jarFile = new File(jad.getValue("MIDlet-Jar-URL"));
-					if (!jarFile.isAbsolute()) {
-						jarFile = new File(jadFile.getParentFile(), jarFile.getName());
+					this.jarFile = new File(jad.getValue("MIDlet-Jar-URL"));
+					if (!this.jarFile.isAbsolute()) {
+						jarFile = new File(this.jadFile.getParentFile(), jarFile.getName());
 					}
 				}
 				catch (IOException ex) {
@@ -236,29 +236,29 @@ public class WtkMakePrc extends Task {
 			}
 		}
         
-		String executable = utility.getQuotedName(new File(wme + "/bin/jartoprc.exe"));
+		String executable = this.utility.getQuotedName(new File(wme + "/bin/jartoprc.exe"));
 		StringBuffer arguments = new StringBuffer();
 
 		//if (prc != null) // ZHOU: PRC file is obsolete in jartoprc.exe. property 'name' is neccessary
-        if (name==null) {
+        if (this.name==null) {
             String fileSeparator = System.getProperty("file.separator");
             int begin = prc.lastIndexOf(fileSeparator);
             int end = prc.lastIndexOf('.');
-            name = prc.substring(begin, end);
+            this.name = prc.substring(begin, end);
         }
-        arguments.append(" -name:").append(name);
+        arguments.append(" -name:").append(this.name);
 
-		if (creator != null) arguments.append(" -id:").append(creator);
+		if (this.creator != null) arguments.append(" -id:").append(this.creator);
         // if (type != null) // ZHOU: type is obsolete in jartoprc.exe
-		if (icon != null) arguments.append(" -lgicon:").append("\"").append(icon).append("\"");
-		if (smallicon != null) arguments.append(" -smicon:").append("\"").append(smallicon).append("\"");
+		if (this.icon != null) arguments.append(" -lgicon:").append("\"").append(this.icon).append("\"");
+		if (this.smallicon != null) arguments.append(" -smicon:").append("\"").append(this.smallicon).append("\"");
 
-		if (jadFile != null) arguments.append(" -jad:").append("\"").append(jadFile).append("\"");
+		if (this.jadFile != null) arguments.append(" -jad:").append("\"").append(this.jadFile).append("\"");
         // ZHOU: jartoprc.requirs that jad exists, then do not specify jar
         else if (jarFile != null) arguments.append(" -jar:").append("\"").append(jarFile).append("\"");
         else throw new BuildException("JAD & JAR missing, PRC cannot be generated");
 
-        if (highres==true) arguments.append(" -highres");
+        if (this.highres==true) arguments.append(" -highres");
 
 		log("Executable: " + executable, Project.MSG_VERBOSE);
 		log("Arguments : " + arguments, Project.MSG_VERBOSE);
@@ -268,7 +268,7 @@ public class WtkMakePrc extends Task {
 		try {
 			Process proc = Runtime.getRuntime().exec(executable + " " + arguments, null, new File(wme + "/bin"));
 			proc.waitFor();
-			utility.printProcessOutput(proc);
+			this.utility.printProcessOutput(proc);
 
 			if (proc.exitValue() != 0)
 				throw new BuildException("PRC generation failed (result=" + proc.exitValue() + ")");
@@ -284,11 +284,11 @@ public class WtkMakePrc extends Task {
     public void execute() throws BuildException {
         if (!isActive()) return;
         
-        if ((jadFile == null) && (jarFile == null)) {
+        if ((this.jadFile == null) && (this.jarFile == null)) {
             throw new BuildException("Need either a JAR file or a JAD file");
         }
 
-        if ("wme".equalsIgnoreCase(converter)) {
+        if ("wme".equalsIgnoreCase(this.converter)) {
         	executeWme();
         }
         else {

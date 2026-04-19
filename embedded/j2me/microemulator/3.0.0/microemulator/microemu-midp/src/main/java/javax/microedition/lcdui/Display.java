@@ -151,20 +151,20 @@ public class Display {
 		public void run() {
 			switch (type) {
 			case KEY_PRESSED:
-				if (current != null) {
-					current.keyPressed(keyCode);
+				if (this.current != null) {
+					this.current.keyPressed(keyCode);
 				}
 				break;
 
 			case KEY_RELEASED:
-				if (current != null) {
-					current.keyReleased(keyCode);
+				if (this.current != null) {
+					this.current.keyReleased(keyCode);
 				}
 				break;
 
 			case KEY_REPEATED:
-				if (current != null) {
-					current.keyRepeated(keyCode);
+				if (this.current != null) {
+					this.current.keyRepeated(keyCode);
 				}
 				break;
 			}

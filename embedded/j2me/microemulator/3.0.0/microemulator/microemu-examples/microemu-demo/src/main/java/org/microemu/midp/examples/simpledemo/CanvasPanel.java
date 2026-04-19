@@ -204,7 +204,7 @@ public class CanvasPanel extends BaseExamplesCanvas implements HasRunnable {
 		g.setGrayScale(0);
 		g.drawRect(2, 2, width - 5, height - 5);
 
-		int pos = posX;
+		int pos = this.posX;
 		while (pos < width - 5) {
 			g.drawLine(3 + pos, 3, 3 + pos, height - 4);
 			pos += POSNUMBER;
@@ -233,14 +233,14 @@ public class CanvasPanel extends BaseExamplesCanvas implements HasRunnable {
 		g.drawString(text, width/2, (height - f.getHeight())/2, Graphics.HCENTER | Graphics.TOP);
 
 		// Pint Ball
-		g.setColor(ballColor);
-		g.fillRoundRect(ballPosX - 4, ballPosY - 4, 8, 8, 8, 8);
+		g.setColor(this.ballColor);
+		g.fillRoundRect(this.ballPosX - 4, ballPosY - 4, 8, 8, 8, 8);
 
-		ballPosX += ballMoveX;
+		this.ballPosX += this.ballMoveX;
 		ballPosY += ballMoveY;
 
 		boolean changeColor = false;
-		if ((ballPosX < 4) || (ballPosX > width - 4)) {
+		if ((this.ballPosX < 4) || (this.ballPosX > width - 4)) {
 			this.ballMoveX = -this.ballMoveX;
 			changeColor = true;
 		}
@@ -249,7 +249,7 @@ public class CanvasPanel extends BaseExamplesCanvas implements HasRunnable {
 			changeColor = true;
 		}
 		if (changeColor) {
-			ballColor = ballRandom.nextInt(0xFF) + (ballRandom.nextInt(0xFF) << 8) + (ballRandom.nextInt(0xFF) << 16);
+			this.ballColor = this.ballRandom.nextInt(0xFF) + (this.ballRandom.nextInt(0xFF) << 8) + (this.ballRandom.nextInt(0xFF) << 16);
 		}
 	}
 

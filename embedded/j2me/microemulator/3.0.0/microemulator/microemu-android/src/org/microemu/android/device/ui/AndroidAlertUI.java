@@ -76,7 +76,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 			final Alert alert) {
 		super(activity, alert, false);
 
-		displayableUnboxed = alert;
+		this.displayableUnboxed = alert;
 
                 final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		activity2.post(new ARunnable() {
@@ -123,7 +123,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 	 */
 	protected String getToastMessage() {
 		String title = displayableUnboxed.getTitle();
-		String string = displayableUnboxed.getString();
+		String string = this.displayableUnboxed.getString();
 
 		boolean hasBoth = title != null && !title.equals("") && string != null
 				&& !string.equals("");
@@ -173,7 +173,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 
 		// set toast flag
 		// needed for hideNotify
-		inShowingToast = isToastable;
+		this.inShowingToast = isToastable;
 
                 final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		if (isToastable) {
@@ -195,8 +195,8 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 	@Override
 	public void hideNotify() {
 		// we don't need to hide anything if Toasted
-		if (inShowingToast) {
-			inShowingToast = false;
+		if (this.inShowingToast) {
+			this.inShowingToast = false;
 		} else {
                     final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 			activity2.post(new ARunnable() {
@@ -229,10 +229,10 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 			}
 		}
 		if (which == 0) {
-			alertDialog.setButton(command.getLabel(), onClickListener);
+			this.alertDialog.setButton(command.getLabel(), onClickListener);
 			which = DialogInterface.BUTTON_POSITIVE;
 		} else {
-			alertDialog.setButton(which, command.getLabel(), onClickListener);
+			this.alertDialog.setButton(which, command.getLabel(), onClickListener);
 		}
 		buttons.put(which, cmd);
 	}

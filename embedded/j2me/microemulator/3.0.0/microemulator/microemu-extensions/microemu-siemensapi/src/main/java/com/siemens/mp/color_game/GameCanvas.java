@@ -54,7 +54,7 @@ public abstract class GameCanvas extends Canvas {
     
     public int getKeyStates() {
         int ret=this.keyMask;
-        keyMask=0;
+        this.keyMask=0;
         return ret;
     }
     

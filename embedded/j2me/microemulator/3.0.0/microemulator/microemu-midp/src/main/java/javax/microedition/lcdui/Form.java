@@ -40,7 +40,7 @@ public class Form extends Screen
 		super(title);
 		super.setUI(DeviceFactory.getDevice().getUIFactory().createFormUI(this));
 		
-		focusItemIndex = -1;
+		this.focusItemIndex = -1;
 	}
 
 	
@@ -64,19 +64,19 @@ public class Form extends Screen
 			((FormUI) ui).append(item.ui);
 		}
 		
-		if (numOfItems + 1 >= items.length) {
-			Item newitems[] = new Item[numOfItems + 4];
+		if (this.numOfItems + 1 >= items.length) {
+			Item newitems[] = new Item[this.numOfItems + 4];
 			System.arraycopy(items, 0, newitems, 0, numOfItems);
 			items = newitems;
 		}
 		items[numOfItems] = item;
 		numOfItems++;
 		
-		if (focusItemIndex == -1) {
+		if (this.focusItemIndex == -1) {
 			for (int i = 0; i < numOfItems; i++) {
 				if (items[i].isFocusable()) {
 					items[i].setFocus(true);
-					focusItemIndex = i;
+					this.focusItemIndex = i;
 					break;
 				}
 			}
@@ -118,7 +118,7 @@ public class Form extends Screen
 		numOfItems--;
 		
 		if (numOfItems == 0) {
-			focusItemIndex = -1;
+			this.focusItemIndex = -1;
 		}
 		
 		repaint();
@@ -131,11 +131,11 @@ public class Form extends Screen
 			((FormUI) ui).deleteAll();
 		}
 
-		for (int i = 0; i < numOfItems; i++) {
+		for (int i = 0; i < this.numOfItems; i++) {
 			items[i].setOwner(null);
 		}
-		numOfItems = 0;
-		focusItemIndex = -1;
+		this.numOfItems = 0;
+		this.focusItemIndex = -1;
 		
 		repaint();
 	}
@@ -164,7 +164,7 @@ public class Form extends Screen
 	
 	public void insert(int itemNum, Item item) 
 	{
-		if (itemNum != numOfItems) {
+		if (itemNum != this.numOfItems) {
 			verifyItemNum(itemNum);
 		}
 		verifyItem(item);
@@ -173,8 +173,8 @@ public class Form extends Screen
 			((FormUI) ui).insert(itemNum, item.ui);
 		}
 
-		if (numOfItems + 1 == items.length) {
-			Item newitems[] = new Item[numOfItems + 4];
+		if (this.numOfItems + 1 == items.length) {
+			Item newitems[] = new Item[this.numOfItems + 4];
 			System.arraycopy(items, 0, newitems, 0, numOfItems);
 			items = newitems;
 		}
@@ -228,7 +228,7 @@ public class Form extends Screen
 	{
 		int contentHeight = 0;
 		int translateY;
-		for (int i = 0; i < numOfItems; i++) {
+		for (int i = 0; i < this.numOfItems; i++) {
 			translateY = items[i].paint(g);
 			g.translate(0, translateY);
 			contentHeight += translateY;
@@ -248,21 +248,21 @@ public class Form extends Screen
 	
 	void fireItemStateListener()
     {
-		if (focusItemIndex >= 0 && focusItemIndex < items.length)
-			fireItemStateListener(items[focusItemIndex]);
+		if (this.focusItemIndex >= 0 && this.focusItemIndex < items.length)
+			fireItemStateListener(items[this.focusItemIndex]);
     }
 	
         @Override
 	public void keyPressed(int keyCode) 
 	{
-		if (focusItemIndex != -1) {
+		if (this.focusItemIndex != -1) {
 			if (Display.getGameAction(keyCode) == Canvas.FIRE) {
-				items[focusItemIndex].select();
+				items[this.focusItemIndex].select();
 				// why do we call this here?
 				// Andres Navarro
                 fireItemStateListener();
 			} else {
-				items[focusItemIndex].keyPressed(keyCode);
+				items[this.focusItemIndex].keyPressed(keyCode);
 			}
 		}
 
@@ -274,10 +274,10 @@ public class Form extends Screen
 	{
 		super.showNotify();
 
-		if (focusItemIndex < 0)
+		if (this.focusItemIndex < 0)
 			return;
-		int heightToItem = getHeightToItem(focusItemIndex);
-		int heightAfterItem = heightToItem + items[focusItemIndex].getHeight();
+		int heightToItem = getHeightToItem(this.focusItemIndex);
+		int heightAfterItem = heightToItem + items[this.focusItemIndex].getHeight();
 		if (viewPortY > heightToItem) {
 			viewPortY = heightToItem;
 		} else if ((viewPortY + viewPortHeight) < heightAfterItem) {
@@ -290,8 +290,8 @@ public class Form extends Screen
 	{
 		super.hideNotify();
 
-		if (focusItemIndex > -1) {
-			items[focusItemIndex].setFocus(false);
+		if (this.focusItemIndex > -1) {
+			items[this.focusItemIndex].setFocus(false);
 		}
 	}
 
@@ -301,13 +301,13 @@ public class Form extends Screen
 		int height, testItemIndex, traverse, i;
 		int topItemIndex, bottomItemIndex;
 
-		if (numOfItems == 0) {
+		if (this.numOfItems == 0) {
 			return 0;
 		}
 
 		if (gameKeyCode == Canvas.UP) {
 			topItemIndex = getTopVisibleIndex(top);
-			if (focusItemIndex == -1) {
+			if (this.focusItemIndex == -1) {
 				testItemIndex = topItemIndex;
 				height = getHeightToItem(testItemIndex);
 				traverse =
@@ -317,7 +317,7 @@ public class Form extends Screen
 						bottom - height,
 						false);
 			} else {
-				testItemIndex = focusItemIndex;
+				testItemIndex = this.focusItemIndex;
 				height = getHeightToItem(testItemIndex);
 				traverse =
 					items[testItemIndex].traverse(
@@ -327,21 +327,21 @@ public class Form extends Screen
 						true);
 			}
 			if (traverse != Item.OUTOFITEM) {
-				if (focusItemIndex == -1
+				if (this.focusItemIndex == -1
 					&& items[testItemIndex].isFocusable()) {
 					items[testItemIndex].setFocus(true);
-					focusItemIndex = testItemIndex;
+					this.focusItemIndex = testItemIndex;
 				}
 				return traverse;
 			} else {
 				if (testItemIndex > 0) {
 					for (i = testItemIndex - 1; i >= topItemIndex; i--) {
 						if (items[i].isFocusable()) {
-							if (focusItemIndex != -1) {
-								items[focusItemIndex].setFocus(false);
+							if (this.focusItemIndex != -1) {
+								items[this.focusItemIndex].setFocus(false);
 							}
 							items[i].setFocus(true);
-							focusItemIndex = i;
+							this.focusItemIndex = i;
 							height = getHeightToItem(i);
 							traverse =
 								items[i].traverse(
@@ -366,10 +366,10 @@ public class Form extends Screen
 					if (traverse == Item.OUTOFITEM) {
 					} else {
 						bottomItemIndex = getTopVisibleIndex(bottom + traverse);
-						if (focusItemIndex != -1
-							&& focusItemIndex > bottomItemIndex) {
-							items[focusItemIndex].setFocus(false);
-							focusItemIndex = -1;
+						if (this.focusItemIndex != -1
+							&& this.focusItemIndex > bottomItemIndex) {
+							items[this.focusItemIndex].setFocus(false);
+							this.focusItemIndex = -1;
 						}
 						return traverse;
 					}
@@ -378,7 +378,7 @@ public class Form extends Screen
 		}
 		if (gameKeyCode == Canvas.DOWN) {
 			bottomItemIndex = getBottomVisibleIndex(bottom);
-			if (focusItemIndex == -1) {
+			if (this.focusItemIndex == -1) {
 				testItemIndex = bottomItemIndex;
 				height = getHeightToItem(testItemIndex);
 				traverse =
@@ -388,7 +388,7 @@ public class Form extends Screen
 						bottom - height,
 						false);
 			} else {
-				testItemIndex = focusItemIndex;
+				testItemIndex = this.focusItemIndex;
 				height = getHeightToItem(testItemIndex);
 				traverse =
 					items[testItemIndex].traverse(
@@ -398,21 +398,21 @@ public class Form extends Screen
 						true);
 			}
 			if (traverse != Item.OUTOFITEM) {
-				if (focusItemIndex == -1
+				if (this.focusItemIndex == -1
 					&& items[testItemIndex].isFocusable()) {
 					items[testItemIndex].setFocus(true);
-					focusItemIndex = testItemIndex;
+					this.focusItemIndex = testItemIndex;
 				}
 				return traverse;
 			} else {
-				if (testItemIndex < numOfItems - 1) {
+				if (testItemIndex < this.numOfItems - 1) {
 					for (i = testItemIndex + 1; i <= bottomItemIndex; i++) {
 						if (items[i].isFocusable()) {
-							if (focusItemIndex != -1) {
-								items[focusItemIndex].setFocus(false);
+							if (this.focusItemIndex != -1) {
+								items[this.focusItemIndex].setFocus(false);
 							}
 							items[i].setFocus(true);
-							focusItemIndex = i;
+							this.focusItemIndex = i;
 							height = getHeightToItem(i);
 							traverse =
 								items[i].traverse(
@@ -437,10 +437,10 @@ public class Form extends Screen
 					if (traverse == Item.OUTOFITEM) {
 					} else {
 						topItemIndex = getTopVisibleIndex(top + traverse);
-						if (focusItemIndex != -1
-							&& focusItemIndex < topItemIndex) {
-							items[focusItemIndex].setFocus(false);
-							focusItemIndex = -1;
+						if (this.focusItemIndex != -1
+							&& this.focusItemIndex < topItemIndex) {
+							items[this.focusItemIndex].setFocus(false);
+							this.focusItemIndex = -1;
 						}
 						return traverse;
 					}
@@ -456,7 +456,7 @@ public class Form extends Screen
 	{
 		int height = 0;
 
-		for (int i = 0; i < numOfItems; i++) {
+		for (int i = 0; i < this.numOfItems; i++) {
 			height += items[i].getHeight();
 			if (height >= top) {
 				return i;
@@ -471,7 +471,7 @@ public class Form extends Screen
 	{
 		int height = 0;
 
-		for (int i = 0; i < numOfItems; i++) {
+		for (int i = 0; i < this.numOfItems; i++) {
 			height += items[i].getHeight();
 			if (height > bottom) {
 				return i;
@@ -523,7 +523,7 @@ public class Form extends Screen
 	 */
 	private void verifyItemNum(int itemNum) 
 	{
-		if (itemNum < 0 || itemNum >= numOfItems) {
+		if (itemNum < 0 || itemNum >= this.numOfItems) {
 			throw new IndexOutOfBoundsException("item number is outside range of Form");
 		}
 	}
@@ -531,10 +531,10 @@ public class Form extends Screen
         @Override
 	public Vector getCommands() {
 		Vector formCommands = super.getCommands();
-		if (focusItemIndex < 0)
+		if (this.focusItemIndex < 0)
 			return formCommands;
 		
-		Item item = items[focusItemIndex];
+		Item item = items[this.focusItemIndex];
 		Vector itemCommands = item.commands;
 		if (itemCommands.isEmpty())
 			return formCommands;

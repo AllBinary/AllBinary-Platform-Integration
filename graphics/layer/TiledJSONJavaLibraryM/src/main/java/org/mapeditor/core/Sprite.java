@@ -153,7 +153,7 @@ public class Sprite {
      */
     public Sprite() {
         frameSize = new Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0);
-        keys = new BasicArrayList();
+        this.keys = new BasicArrayList();
     }
 
     /**
@@ -179,8 +179,8 @@ public class Sprite {
 
         //TODO: break up the image into tiles
         //given this information, extrapolate the rest...
-        frameSize.setWidth(image.getWidth() / (fpl + borderWidth * fpl));
-        frameSize.setHeight((int) (image.getHeight() / (Math.ceil(totalFrames / fpl) + Math.ceil(totalFrames / fpl) * borderWidth)));
+        this.frameSize.setWidth(image.getWidth() / (fpl + this.borderWidth * fpl));
+        this.frameSize.setHeight((int) (image.getHeight() / (Math.ceil(totalFrames / fpl) + Math.ceil(totalFrames / fpl) * this.borderWidth)));
         createKey(StringUtil.getInstance().EMPTY_STRING, frames, KeyFrame.KEY_LOOP);
     }
 
@@ -203,7 +203,7 @@ public class Sprite {
      */
     public void setFrameSize(int w, int h) {
         frameSize.setWidth(w);
-        frameSize.setHeight(h);
+        this.frameSize.setHeight(h);
     }
 
     /**
@@ -231,39 +231,39 @@ public class Sprite {
      */
     public void setCurrentFrame(float c) {
         if (c < 0) {
-            switch (currentKey.flags & KeyFrame.MASK_ANIMATION) {
+            switch (this.currentKey.flags & KeyFrame.MASK_ANIMATION) {
                 case KeyFrame.KEY_LOOP:
-                    currentFrame = currentKey.getLastFrame();
+                    this.currentFrame = this.currentKey.getLastFrame();
                     break;
                 case KeyFrame.KEY_AUTO:
-                    currentKey = getPreviousKey();
-                    currentFrame = currentKey.getLastFrame();
+                    this.currentKey = getPreviousKey();
+                    this.currentFrame = this.currentKey.getLastFrame();
                     break;
                 case KeyFrame.KEY_REVERSE:
-                    currentKey.setFrameRate(-currentKey.getFrameRate());
-                    currentFrame = 0;
+                    this.currentKey.setFrameRate(-this.currentKey.getFrameRate());
+                    this.currentFrame = 0;
                     break;
                 case KeyFrame.KEY_STOP:
-                    bPlaying = false;
-                    currentFrame = 0;
+                    this.bPlaying = false;
+                    this.currentFrame = 0;
                     break;
             }
         } else if (c > currentKey.getLastFrame()) {
-            switch (currentKey.flags & KeyFrame.MASK_ANIMATION) {
+            switch (this.currentKey.flags & KeyFrame.MASK_ANIMATION) {
                 case KeyFrame.KEY_LOOP:
                     this.currentFrame = 0;
                     break;
                 case KeyFrame.KEY_AUTO:
                     this.currentFrame = 0;
-                    currentKey = getNextKey();
+                    this.currentKey = getNextKey();
                     break;
                 case KeyFrame.KEY_REVERSE:
-                    currentKey.setFrameRate(-currentKey.getFrameRate());
-                    currentFrame = currentKey.getLastFrame();
+                    this.currentKey.setFrameRate(-this.currentKey.getFrameRate());
+                    this.currentFrame = this.currentKey.getLastFrame();
                     break;
                 case KeyFrame.KEY_STOP:
-                    bPlaying = false;
-                    currentFrame = currentKey.getLastFrame();
+                    this.bPlaying = false;
+                    this.currentFrame = this.currentKey.getLastFrame();
                     break;
             }
         } else {
@@ -315,7 +315,7 @@ public class Sprite {
      * @return a {@link org.mapeditor.core.Tile} object.
      */
     public Tile getCurrentFrame() {
-        return currentKey.getFrame((int) currentFrame);
+        return currentKey.getFrame((int) this.currentFrame);
     }
 
     /**
@@ -326,9 +326,9 @@ public class Sprite {
     public KeyFrame getNextKey() {
         final int size = keys.size();
         KeyFrame k;
-        int index = keys.indexOf(currentKey);
+        int index = this.keys.indexOf(this.currentKey);
         if(index < size - 1) {
-            return (KeyFrame) keys.get(index + 1);
+            return (KeyFrame) this.keys.get(index + 1);
         }
 //        for (int index = 0; index < size; index++) {
 //            k = (KeyFrame) keys.get(index);
@@ -337,7 +337,7 @@ public class Sprite {
 //            }
 //        }
 
-        return (KeyFrame) keys.get(0);
+        return (KeyFrame) this.keys.get(0);
     }
 
     /**
@@ -386,9 +386,9 @@ public class Sprite {
         final int size = keys.size();
         KeyFrame k;
         for (int index = 0; index < size; index++) {
-            k = (KeyFrame) keys.get(index);
+            k = (KeyFrame) this.keys.get(index);
             if (k.equalsIgnoreCase(name)) {
-                currentKey = k;
+                this.currentKey = k;
                 break;
             }
         }
@@ -430,8 +430,8 @@ public class Sprite {
      * iterateFrame.
      */
     public void iterateFrame() {
-        if (currentKey != null && bPlaying) {
-            setCurrentFrame(currentFrame + currentKey.getFrameRate());
+        if (this.currentKey != null && this.bPlaying) {
+            setCurrentFrame(this.currentFrame + this.currentKey.getFrameRate());
         }
     }
 
@@ -486,7 +486,7 @@ public class Sprite {
         final int size = keys.size();
         KeyFrame k;
         for (int index = 0; index < size; index++) {
-            k = (KeyFrame) keys.get(index);
+            k = (KeyFrame) this.keys.get(index);
             if (k != null && k.equalsIgnoreCase(keyName)) {
                 return k;
             }
@@ -501,7 +501,7 @@ public class Sprite {
      * @return a {@link org.mapeditor.core.Sprite.KeyFrame} object.
      */
     public KeyFrame getKey(int i) {
-        return (KeyFrame) keys.get(i);
+        return (KeyFrame) this.keys.get(i);
     }
 
     /**
@@ -521,9 +521,9 @@ public class Sprite {
     public Rectangle getCurrentFrameRect() {
         int x = 0, y = 0;
 
-        if (frameSize.getHeight() > 0 && frameSize.getWidth() > 0) {
-            y = ((int) currentFrame / fpl) * (frameSize.getHeight() + borderWidth);
-            x = ((int) currentFrame % fpl) * (frameSize.getWidth() + borderWidth);
+        if (this.frameSize.getHeight() > 0 && this.frameSize.getWidth() > 0) {
+            y = ((int) this.currentFrame / this.fpl) * (this.frameSize.getHeight() + this.borderWidth);
+            x = ((int) this.currentFrame % this.fpl) * (this.frameSize.getWidth() + this.borderWidth);
         }
 
         return new Rectangle(PointFactory.getInstance().getInstance(x, y), frameSize.getWidth(), frameSize.getHeight());
@@ -532,7 +532,7 @@ public class Sprite {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return "Frame: (" + frameSize.getWidth() + "x" + frameSize.getHeight() + ")\n"
+        return "Frame: (" + this.frameSize.getWidth() + "x" + this.frameSize.getHeight() + ")\n"
                 + "Border: " + borderWidth + CommonSeps.getInstance().NEW_LINE
                 + "FPL: " + fpl + CommonSeps.getInstance().NEW_LINE
                 + "Total Frames: " + getTotalFrames() + CommonSeps.getInstance().NEW_LINE

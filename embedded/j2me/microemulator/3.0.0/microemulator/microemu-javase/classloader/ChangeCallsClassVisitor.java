@@ -67,7 +67,7 @@ public class ChangeCallsClassVisitor extends ClassAdapter {
 			String v = (String) javaVersion.get(new Integer(version));
 			Logger.warn("Loading MIDlet class " + name + " of version " + version + ((v == null) ? "" : (" " + v)));
 		}
-		if (config.isEnhanceThreadCreation()) {
+		if (this.config.isEnhanceThreadCreation()) {
 			if (superName.equals("java/lang/Thread")) {
 				superName = ChangeCallsMethodVisitor.codeName(MIDletThread.class);
 			} else if (superName.equals("java/util/Timer")) {

@@ -68,22 +68,22 @@ public class SwtSystemFont implements SwtFont {
 	}
 
 	private synchronized void checkInitialized() {
-		if (!initialized) {
+		if (!this.initialized) {
 			int swtStyle = 0;
-			if (style.indexOf("plain") != -1) {
+			if (this.style.indexOf("plain") != -1) {
 				swtStyle |= SWT.NORMAL;
 			}
-			if (style.indexOf("bold") != -1) {
+			if (this.style.indexOf("bold") != -1) {
 				swtStyle |= SWT.BOLD;
 			}
-			if (style.indexOf("italic") != -1) {
+			if (this.style.indexOf("italic") != -1) {
 				swtStyle |= SWT.ITALIC;
 			}
-			if (style.indexOf("underlined") != -1) {
+			if (this.style.indexOf("underlined") != -1) {
 				// TODO underlined style not implemented
 			}
-			font = SwtDeviceComponent.getFont(name, size, swtStyle, antialiasing);
-			initialized = true;
+			this.font = SwtDeviceComponent.getFont(this.name, size, swtStyle, antialiasing);
+			this.initialized = true;
 		}
 	}
 
@@ -95,25 +95,25 @@ public class SwtSystemFont implements SwtFont {
 		checkInitialized();
 
                 final String str = new String(ch, offset, length);
-		return SwtDeviceComponent.stringWidth(font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize);
+		return SwtDeviceComponent.stringWidth(this.font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize);
 	}
 
 	public int getBaselinePosition() {
 		checkInitialized();
 		
-		return SwtDeviceComponent.getFontMetrics(font).getAscent();
+		return SwtDeviceComponent.getFontMetrics(this.font).getAscent();
 	}
 
 	public int getHeight() {
 		checkInitialized();
 		
-		return SwtDeviceComponent.getFontMetrics(font).getHeight();
+		return SwtDeviceComponent.getFontMetrics(this.font).getHeight();
 	}
 
 	public int stringWidth(String str) {
 		checkInitialized();
 		
-		return SwtDeviceComponent.stringWidth(font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize);
+		return SwtDeviceComponent.stringWidth(this.font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize);
 	}
 
 }

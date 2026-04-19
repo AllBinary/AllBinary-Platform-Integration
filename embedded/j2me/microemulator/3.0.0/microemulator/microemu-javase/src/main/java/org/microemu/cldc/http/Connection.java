@@ -56,35 +56,35 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 		} catch (MalformedURLException ex) {
 			throw new IOException(ex.toString());
 		}
-		cn = url.openConnection();
+		this.cn = url.openConnection();
                 
 //                if (timeouts) {
 //                   cn.setConnectTimeout(7000);
 //                }
 
-		cn.setDoOutput(true);
+		this.cn.setDoOutput(true);
 		// J2ME do not follow redirects. Test this url
 		// http://www.microemu.org/test/r/
-		if (cn instanceof HttpURLConnection) {
-			((HttpURLConnection) cn).setInstanceFollowRedirects(false);
+		if (this.cn instanceof HttpURLConnection) {
+			((HttpURLConnection) this.cn).setInstanceFollowRedirects(false);
 		}
 		return this;
 	}
 
 	public void close() throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			return;
 		}
 
-		if (cn instanceof HttpURLConnection) {
-			((HttpURLConnection) cn).disconnect();
+		if (this.cn instanceof HttpURLConnection) {
+			((HttpURLConnection) this.cn).disconnect();
 		}
 
-		cn = null;
+		this.cn = null;
 	}
 
 	public String getURL() {
-		if (cn == null) {
+		if (this.cn == null) {
 			return null;
 		}
 
@@ -96,7 +96,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 	}
 
 	public String getHost() {
-		if (cn == null) {
+		if (this.cn == null) {
 			return null;
 		}
 
@@ -104,7 +104,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 	}
 
 	public String getFile() {
-		if (cn == null) {
+		if (this.cn == null) {
 			return null;
 		}
 
@@ -112,7 +112,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 	}
 
 	public String getRef() {
-		if (cn == null) {
+		if (this.cn == null) {
 			return null;
 		}
 
@@ -120,7 +120,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 	}
 
 	public String getQuery() {
-		if (cn == null) {
+		if (this.cn == null) {
 			return null;
 		}
 
@@ -129,11 +129,11 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 	}
 
 	public int getPort() {
-		if (cn == null) {
+		if (this.cn == null) {
 			return -1;
 		}
 
-		int port = cn.getURL().getPort();
+		int port = this.cn.getURL().getPort();
 		if (port == -1) {
 			return 80;
 		}
@@ -141,33 +141,33 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 	}
 
 	public String getRequestMethod() {
-		if (cn == null) {
+		if (this.cn == null) {
 			return null;
 		}
 
-		if (cn instanceof HttpURLConnection) {
-			return ((HttpURLConnection) cn).getRequestMethod();
+		if (this.cn instanceof HttpURLConnection) {
+			return ((HttpURLConnection) this.cn).getRequestMethod();
 		} else {
 			return null;
 		}
 	}
 
 	public void setRequestMethod(String method) throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
 
 		if (method.equals(HttpConnection.POST)) {
-			cn.setDoOutput(true);
+			this.cn.setDoOutput(true);
 		}
 
-		if (cn instanceof HttpURLConnection) {
-			((HttpURLConnection) cn).setRequestMethod(method);
+		if (this.cn instanceof HttpURLConnection) {
+			((HttpURLConnection) this.cn).setRequestMethod(method);
 		}
 	}
 
 	public String getRequestProperty(String key) {
-		if (cn == null) {
+		if (this.cn == null) {
 			return null;
 		}
 
@@ -175,154 +175,154 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 	}
 
 	public void setRequestProperty(String key, String value) throws IOException {
-		if (cn == null || connected) {
+		if (this.cn == null || this.connected) {
 			throw new IOException();
 		}
 
-		cn.setRequestProperty(key, value);
+		this.cn.setRequestProperty(key, value);
 	}
 
 	public int getResponseCode() throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
-		if (cn instanceof HttpURLConnection) {
-			return ((HttpURLConnection) cn).getResponseCode();
+		if (this.cn instanceof HttpURLConnection) {
+			return ((HttpURLConnection) this.cn).getResponseCode();
 		} else {
 			return -1;
 		}
 	}
 
 	public String getResponseMessage() throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
-		if (cn instanceof HttpURLConnection) {
-			return ((HttpURLConnection) cn).getResponseMessage();
+		if (this.cn instanceof HttpURLConnection) {
+			return ((HttpURLConnection) this.cn).getResponseMessage();
 		} else {
 			return null;
 		}
 	}
 
 	public long getExpiration() throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
 		return cn.getExpiration();
 	}
 
 	public long getDate() throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
 		return cn.getDate();
 	}
 
 	public long getLastModified() throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
 		return cn.getLastModified();
 	}
 
 	public String getHeaderField(String name) throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
 		return cn.getHeaderField(name);
 	}
 
 	public int getHeaderFieldInt(String name, int def) throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
 		return cn.getHeaderFieldInt(name, def);
 	}
 
 	public long getHeaderFieldDate(String name, long def) throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
 		return cn.getHeaderFieldDate(name, def);
 	}
 
 	public String getHeaderField(int n) throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
 		return cn.getHeaderField(getImplIndex(n));
 	}
 
 	public String getHeaderFieldKey(int n) throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
-		if (!connected) {
-			cn.connect();
-			connected = true;
+		if (!this.connected) {
+			this.cn.connect();
+			this.connected = true;
 		}
 
 		return cn.getHeaderFieldKey(getImplIndex(n));
 	}
 
 	private int getImplIndex(int index){
-		if (cn.getHeaderFieldKey(0) == null && cn.getHeaderField(0) != null){
+		if (this.cn.getHeaderFieldKey(0) == null && this.cn.getHeaderField(0) != null){
 			index++;
 		}
 		return index;
 	}
 
 	public InputStream openInputStream() throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
 
-		connected = true;
+		this.connected = true;
 
 		return cn.getInputStream();
 	}
@@ -332,11 +332,11 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 	}
 
 	public OutputStream openOutputStream() throws IOException {
-		if (cn == null) {
+		if (this.cn == null) {
 			throw new IOException();
 		}
 
-		connected = true;
+		this.connected = true;
 
 		return cn.getOutputStream();
 	}

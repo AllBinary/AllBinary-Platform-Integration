@@ -54,7 +54,7 @@ public class CommandEvaluator
 				return !evaluate(ast.getNextSibling());
 			case APPLexerTokenTypes.SYMBOL:
 			{
-				Define define = m_defines.getDefine(ast.getText());
+				Define define = this.m_defines.getDefine(ast.getText());
 				if (define == null) return false; // if not defined, assume false.
 				// if is a boolean, return it's value.
 				if (define.m_value.isBoolean()) return define.m_value.isTrue();
@@ -112,12 +112,12 @@ public class CommandEvaluator
 				return !evaluate(ast.getFirstChild());
 			}
 			case APPLexerTokenTypes.LITERAL_define:
-				m_defines.define(ast.getNextSibling().ast);
+				this.m_defines.define(ast.getNextSibling().ast);
 				return true;
 			case APPLexerTokenTypes.LITERAL_undefine:
 			{
 				String def = ast.getNextSibling().getText();
-				boolean removed = m_defines.undefine(def);
+				boolean removed = this.m_defines.undefine(def);
 				if (!removed)
 				{
 					System.err.println("Warning: attempting to undefine \"" + def + "\" which is not defined");
@@ -138,7 +138,7 @@ public class CommandEvaluator
 
 	private boolean evaluateDebug(Eval eval) throws PPException
 	{
-		boolean debugDefined = m_defines.isDefined(DEBUG_KEY);
+		boolean debugDefined = this.m_defines.isDefined(DEBUG_KEY);
 		if (!debugDefined) return false;
 		
 		AST nextSibling = eval.ast.getNextSibling();
@@ -149,7 +149,7 @@ public class CommandEvaluator
 		}
 		else
 		{
-			Define define = m_defines.getDefine(DEBUG_KEY);
+			Define define = this.m_defines.getDefine(DEBUG_KEY);
 			String currentValue = define.m_value.getValue();
 			int currentLevel = getDebugLevelNumber(currentValue);
 			if (currentLevel == -1)
@@ -250,7 +250,7 @@ public class CommandEvaluator
 		switch (type)
 		{
 			case APPLexerTokenTypes.SYMBOL:
-				Define v = m_defines.getDefine(text);
+				Define v = this.m_defines.getDefine(text);
 				if (v != null)
 				{
 					Literal lit = v.m_value;
@@ -294,7 +294,7 @@ public class CommandEvaluator
 		switch (type)
 		{
 			case APPLexerTokenTypes.SYMBOL:
-				Define v = m_defines.getDefine(text);
+				Define v = this.m_defines.getDefine(text);
 				if (v != null)
 					return v.m_value;
 				else
@@ -394,10 +394,10 @@ public class CommandEvaluator
 		public void warning(String message)
 		{
 			System.out.println(message);
-			if (listener != null)
+			if (this.listener != null)
 			{
-				int ln = ppl.getLineNumber() + 1; // use 1 based line number system for the external world
-				listener.warning(message, ln, ast.getColumn(), getText().length());
+				int ln = this.ppl.getLineNumber() + 1; // use 1 based line number system for the external world
+				this.listener.warning(message, ln, ast.getColumn(), getText().length());
 			}
 		}
 
@@ -413,12 +413,12 @@ public class CommandEvaluator
 
 		public Eval getFirstChild()
 		{
-			return new Eval(ppl, ast.getFirstChild(), listener);
+			return new Eval(this.ppl, ast.getFirstChild(), listener);
 		}
 
 		public Eval getNextSibling()
 		{
-			return new Eval(ppl, ast.getNextSibling(), listener);
+			return new Eval(this.ppl, ast.getNextSibling(), listener);
 		}
 		
 		public String toString()

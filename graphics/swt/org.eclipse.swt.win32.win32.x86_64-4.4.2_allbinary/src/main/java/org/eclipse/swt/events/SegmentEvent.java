@@ -94,7 +94,7 @@ public class SegmentEvent extends TypedEvent {
 	
 	public SegmentEvent(Event e) {
 		super(e);
-		lineText = e.text;
-		lineOffset = e.detail;
+		this.lineText = e.text;
+		this.lineOffset = e.detail;
 	}
 }

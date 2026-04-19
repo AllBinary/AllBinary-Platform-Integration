@@ -112,11 +112,11 @@ public class WtkJad extends Task {
     
     public void init() throws BuildException {
         super.init();
-        utility = Utility.getInstance(getProject(), this);
-        condition = new Conditional(getProject());
+        this.utility = Utility.getInstance(getProject(), this);
+        this.condition = new Conditional(getProject());
         
-        config = "CLDC-" + utility.getCldcVersion();
-        profile = "MIDP-" + utility.getMidpVersion();
+        this.config = "CLDC-" + this.utility.getCldcVersion();
+        this.profile = "MIDP-" + this.utility.getMidpVersion();
     }
 	public void setJadfile(File file) {
 		this.jadFile = file;
@@ -168,13 +168,13 @@ public class WtkJad extends Task {
 
 	public Attribute createAttribute() {
 		Attribute a = new Attribute(getProject());
-		attributes.addElement(a);
+		this.attributes.addElement(a);
 		return a;
 	}
 
 	public MIDlet createMidlet() {
 		MIDlet m = new MIDlet(getProject());
-		midlets.addElement(m);
+		this.midlets.addElement(m);
 		return m;
 	}
 
@@ -193,44 +193,44 @@ public class WtkJad extends Task {
 	public void execute() throws BuildException {
         if (!isActive()) return;
         
-        if (jadFile == null) {
+        if (this.jadFile == null) {
             throw new BuildException("JAD file name needed");
         }
         
-        log((update ? "Updating" : "Creating") + " JAD file " + jadFile);
+        log((this.update ? "Updating" : "Creating") + " JAD file " + this.jadFile);
         
 		JadFile jad = new JadFile();
 
-		if (update) {
+		if (this.update) {
 			try {
-				jad.load(jadFile.getPath(), encoding);
+				jad.load(this.jadFile.getPath(), encoding);
 			}
 			catch (IOException ignored) {
 			}
 		}
 
-		if (jarFile != null) {
-            String url = jarFile.getName();
-            if (target != null && target.length() != 0) {
-                if(!target.startsWith("http://") && !target.startsWith("http://"))
+		if (this.jarFile != null) {
+            String url = this.jarFile.getName();
+            if (this.target != null && this.target.length() != 0) {
+                if(!this.target.startsWith("http://") && !target.startsWith("http://"))
                     url =  "http://" + target + "/" + url;
                 else
-                    url = target + "/" +url;
+                    url = this.target + "/" +url;
             }
             
 			jad.setValue("MIDlet-Jar-URL", url);
-			jad.setValue("MIDlet-Jar-Size", "" + jarFile.length());
+			jad.setValue("MIDlet-Jar-Size", "" + this.jarFile.length());
 		}
 
 		if (name != null)
 			jad.setValue("MIDlet-Name", name);
-		if (vendor != null)
+		if (this.vendor != null)
 			jad.setValue("MIDlet-Vendor", vendor);
-		if (version != null)
+		if (this.version != null)
 			jad.setValue("MIDlet-Version", version);
 
-		if (midlets.size() != 0) {
-			if (update) {
+		if (this.midlets.size() != 0) {
+			if (this.update) {
 				// Clear old MIDlet list
 				for (int i = jad.getMIDletCount(); i > 0; i--) {
 					jad.setValue("MIDlet-" + i, null);
@@ -239,8 +239,8 @@ public class WtkJad extends Task {
 
 			// Set new MIDlet list
 			int number = 1;
-			for (int i = 0; i < midlets.size(); i++) {
-				MIDlet m = (MIDlet) midlets.elementAt(i);
+			for (int i = 0; i < this.midlets.size(); i++) {
+				MIDlet m = (MIDlet) this.midlets.elementAt(i);
                 if (m.isActive()) {
     				jad.setValue("MIDlet-" + (number++), m.name + ", " + m.icon + ", " + m.cls);
                 }
@@ -248,7 +248,7 @@ public class WtkJad extends Task {
 		}
 		
 		// populate attributes from JadAttributes external task, if it has attributes for this jad.
-		if (attribName != null && JadAttributes.hasAttributesFor(attribName))
+		if (this.attribName != null && JadAttributes.hasAttributesFor(this.attribName))
 		{
 			String pairs[][] = JadAttributes.getAttributesFor(this, attribName);
 			for (int i = 0; i < pairs.length; i++)
@@ -256,33 +256,33 @@ public class WtkJad extends Task {
 				Attribute at = new Attribute(getProject());
 				at.name = pairs[i][0];
 				at.value = pairs[i][1];
-				attributes.addElement(at);
+				this.attributes.addElement(at);
 			}
 		}
 	
 		// Set attributes. If value is null, existing attribute is
         // deleted (makes sense in update mode)
-		for (int i = 0; i < attributes.size(); i++) {
-			Attribute a = (Attribute) attributes.elementAt(i);
+		for (int i = 0; i < this.attributes.size(); i++) {
+			Attribute a = (Attribute) this.attributes.elementAt(i);
 			if (a.isActive() && a.name != null) {
 				jad.setValue(a.name, a.value);
 			}
 		}
         
         // If versioning is requested, increase version number or set to "1.0.0"
-        if (autoversion) {
+        if (this.autoversion) {
             jad.setValue("MIDlet-Version", utility.getNewVersion(jad.getValue("MIDlet-Version")));
         }
 
         try {
-            jad.save(jadFile.getPath(), encoding);
+            jad.save(this.jadFile.getPath(), encoding);
         }
         catch (IOException ex) {
             throw new BuildException(ex);
         }
         
-        if (manifest != null) {
-            log("Creating MANIFEST file " + manifest);
+        if (this.manifest != null) {
+            log("Creating MANIFEST file " + this.manifest);
             
             jad.setValue("MIDlet-Jar-URL", null);
             jad.setValue("MIDlet-Jar-Size", null);
@@ -291,7 +291,7 @@ public class WtkJad extends Task {
             jad.setValue("MicroEdition-Profile", profile);
 
             try {
-                jad.save(manifest.getPath(), encoding);
+                jad.save(this.manifest.getPath(), encoding);
             }
             catch (IOException ex) {
                 throw new BuildException(ex);

@@ -98,8 +98,8 @@ public class Sprite extends GraphicObject{
     
     public boolean isCollidingWithPos(int xpos, int ypos) {
         //System.out.println("public boolean isCollidingWithPos(int xpos, int ypos)");
-        return  (xpos>=x+collx)&&(xpos<x+collw)&&
-                (ypos>=y+colly)&&(ypos<y+collh);
+        return  (xpos>=this.x+collx)&&(xpos<this.x+collw)&&
+                (ypos>=this.y+colly)&&(ypos<this.y+collh);
     }
     
     public void setCollisionRectangle(int x, int y, int width, int height) {

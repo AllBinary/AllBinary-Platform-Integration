@@ -63,7 +63,7 @@ public String toString() {
 	return string.substring (0, string.length() - 1) // remove trailing '}'
 		+ " start=" + start
 		+ " end=" + end
-		+ " text=" + text
+		+ " text=" + this.text
 		+ "}";
 }
 }

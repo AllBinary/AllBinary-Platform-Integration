@@ -148,7 +148,7 @@ public Font(Device device, String name, int height, int style) {
 }
 void destroy() {
 	OS.DeleteObject(handle);
-	handle = 0;
+	this.handle = 0;
 }
 
 /**
@@ -165,7 +165,7 @@ public boolean equals(Object object) {
 	if (object == this) return true;
 	if (!(object instanceof Font)) return false;
 	Font font = (Font) object;
-	return device == font.device && handle == font.handle;
+	return device == font.device && this.handle == font.handle;
 }
 
 /**
@@ -183,7 +183,7 @@ public boolean equals(Object object) {
 public FontData[] getFontData() {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	LOGFONT logFont = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
-	OS.GetObject(handle, LOGFONT.sizeof, logFont);
+	OS.GetObject(this.handle, LOGFONT.sizeof, logFont);
 	return new FontData[] {FontData.win32_new(logFont, device.computePoints(logFont, handle))};
 }
 
@@ -198,7 +198,7 @@ public FontData[] getFontData() {
  * @see #equals
  */
 public int hashCode () {
-	return (int)/*64*/handle;
+	return (int)/*64*/this.handle;
 }
 
 void init (FontData fd) {
@@ -206,9 +206,9 @@ void init (FontData fd) {
 	LOGFONT logFont = fd.data;
 	int lfHeight = logFont.lfHeight;
 	logFont.lfHeight = device.computePixels(fd.height);
-	handle = OS.CreateFontIndirect(logFont);
+	this.handle = OS.CreateFontIndirect(logFont);
 	logFont.lfHeight = lfHeight;
-	if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+	if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 }
 
 /**
@@ -233,7 +233,7 @@ public boolean isDisposed() {
  */
 public String toString () {
 	if (isDisposed()) return "Font {*DISPOSED*}";
-	return "Font {" + handle + "}";
+	return "Font {" + this.handle + "}";
 }
 
 /**	 

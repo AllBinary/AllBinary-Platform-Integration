@@ -57,9 +57,9 @@ public class Defines
 
 	public void addDefines(String defines) throws RecognitionException, TokenStreamException
 	{
-		if (m_lineFilter != null)
+		if (this.m_lineFilter != null)
 		{
-			defines = m_lineFilter.filter(defines);
+			defines = this.m_lineFilter.filter(defines);
 		}
 		
 		APPLexer lexer = new APPLexer(new StringReader(defines));
@@ -89,16 +89,16 @@ public class Defines
 	public void loadDefines(InputStream in) throws RecognitionException, TokenStreamException, IOException
 	{
 		String line = null;
-		Hashtable backup = (Hashtable) m_defines.clone();
+		Hashtable backup = (Hashtable) this.m_defines.clone();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		
 		try
 		{
 			while ((line = reader.readLine()) != null)
 			{
-				if (m_lineFilter != null)
+				if (this.m_lineFilter != null)
 				{
-					line = m_lineFilter.filter(line);
+					line = this.m_lineFilter.filter(line);
 				}
 				if (line.length() > 0)
 				{
@@ -188,13 +188,13 @@ public class Defines
 		switch(action)
 		{
 			case -1:
-				m_defines.put(key, define);
+				this.m_defines.put(key, define);
 				break;
 			case APPLexerTokenTypes.LITERAL_add_if_new:
-				if (!m_defines.containsKey(key)) m_defines.put(key, define);
+				if (!this.m_defines.containsKey(key)) this.m_defines.put(key, define);
 				break;				
 			case APPLexerTokenTypes.LITERAL_unset:
-				m_defines.remove(key);
+				this.m_defines.remove(key);
 				break;	
 			default:
 				throw new RecognitionException("Unsupported action " + action);
@@ -208,7 +208,7 @@ public class Defines
 
 	public Define getDefine(String text)
 	{
-		return (Define) m_defines.get(text);
+		return (Define) this.m_defines.get(text);
 	}
 	
 	public boolean undefine(String key)
@@ -218,8 +218,8 @@ public class Defines
 	
 	public String toString()
 	{
-		Enumeration keys = m_defines.keys();
-		Vector v = new Vector(m_defines.size());
+		Enumeration keys = this.m_defines.keys();
+		Vector v = new Vector(this.m_defines.size());
 		while(keys.hasMoreElements())
 		{
 			String key = (String) keys.nextElement();
@@ -246,7 +246,7 @@ public class Defines
 		for (int i = 0; i < v.size(); i++)
 		{
 			String key = (String) v.get(i);
-			Define def = (Define) m_defines.get(key);
+			Define def = (Define) this.m_defines.get(key);
 			b.append(def);
 			b.append("\n");
 		}
@@ -255,28 +255,28 @@ public class Defines
 	
 	public String[] keys()
 	{
-		String keys[] = new String[m_defines.size()];
-		m_defines.keySet().toArray(keys);
+		String keys[] = new String[this.m_defines.size()];
+		this.m_defines.keySet().toArray(keys);
 		return keys;
 	}
 	
 	public Define[] values()
 	{
-		Define defines[] = new Define[m_defines.size()];
-		m_defines.values().toArray(defines);
+		Define defines[] = new Define[this.m_defines.size()];
+		this.m_defines.values().toArray(defines);
 		return defines;
 	}
 	
 	public Defines copy()
 	{
 		Defines copy = new Defines();
-		copy.m_defines = (Hashtable) m_defines.clone();
+		copy.m_defines = (Hashtable) this.m_defines.clone();
 		return copy;
 	}
 	
 
 	public void clear()
 	{
-		m_defines = new Hashtable();
+		this.m_defines = new Hashtable();
 	}
 }

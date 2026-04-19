@@ -763,10 +763,10 @@ void unloadIntoByteStream(ImageLoader loader) {
 		outputStream.writeShort((short)image.depth);
 		outputStream.writeInt(comp);
 		outputStream.writeInt(data.length);
-		outputStream.writeInt(pelsPerMeter.x);
-		outputStream.writeInt(pelsPerMeter.y);
+		outputStream.writeInt(this.pelsPerMeter.x);
+		outputStream.writeInt(this.pelsPerMeter.y);
 		outputStream.writeInt(numCols);
-		outputStream.writeInt(importantColors);
+		outputStream.writeInt(this.importantColors);
 	} catch (IOException e) {
 		SWT.error(SWT.ERROR_IO, e);
 	}

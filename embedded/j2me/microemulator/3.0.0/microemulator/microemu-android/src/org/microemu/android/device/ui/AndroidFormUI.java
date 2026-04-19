@@ -76,9 +76,9 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 	public int append(final ItemUI item) {
             final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		if (activity2.isActivityThread()) {
-			appendTransfer = doAppend(item);
+			this.appendTransfer = doAppend(item);
 		} else {
-			appendTransfer = Integer.MIN_VALUE;
+			this.appendTransfer = Integer.MIN_VALUE;
 			activity2.post(new ARunnable() {
 				public void run() {
 					synchronized (AndroidFormUI.this) {
@@ -89,7 +89,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 			});
 
 			synchronized (AndroidFormUI.this) {
-				if (appendTransfer == Integer.MIN_VALUE) {
+				if (this.appendTransfer == Integer.MIN_VALUE) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -105,13 +105,13 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 	private int doAppend(ItemUI item) {
 		if (item instanceof AndroidCustomItemUI) {
 			// SurfaceView cannot be put inside the ScrollView
-			if (((LinearLayout) AndroidFormUI.this.view).indexOfChild(scrollView) != -1) {
-				scrollView.removeAllViews();
-				((LinearLayout) AndroidFormUI.this.view).removeView(scrollView);
-				((LinearLayout) AndroidFormUI.this.view).addView(listView);
+			if (((LinearLayout) AndroidFormUI.this.view).indexOfChild(this.scrollView) != -1) {
+				this.scrollView.removeAllViews();
+				((LinearLayout) AndroidFormUI.this.view).removeView(this.scrollView);
+				((LinearLayout) AndroidFormUI.this.view).addView(this.listView);
 			}		
 		}
-		listView.addView((View) item);
+		this.listView.addView((View) item);
 		
 		return listView.getChildCount() - 1;
 	}

@@ -229,7 +229,7 @@ public class AndroidDevice implements Device {
 	}
 
 	public boolean vibrate(int duration) {
-		Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+		Vibrator vibrator = (Vibrator) this.activity.getSystemService(Context.VIBRATOR_SERVICE);
 		if (vibrator != null) {
 			vibrator.vibrate(duration);
 			return true;

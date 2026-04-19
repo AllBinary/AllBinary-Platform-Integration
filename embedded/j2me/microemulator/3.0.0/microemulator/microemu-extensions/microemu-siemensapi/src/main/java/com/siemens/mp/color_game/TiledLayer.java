@@ -178,7 +178,7 @@ public class TiledLayer extends Layer {
                     }
                     if((tx+cellWidth>=clipX)&&(ty+cellHeight>=clipY)&&(tx<=clipX+clipW)&&(ty<=clipY+clipH)) {
                         g.setClip(tx, ty, this.cellWidth, this.cellHeight);
-                        g.drawImage(sourceImage, tx-tileSetX[tileIndex], ty-tileSetY[tileIndex], Graphics.TOP | Graphics.LEFT);
+                        g.drawImage(sourceImage, tx-this.tileSetX[tileIndex], ty-this.tileSetY[tileIndex], Graphics.TOP | Graphics.LEFT);
                     }
                     
                 }
@@ -201,8 +201,8 @@ public class TiledLayer extends Layer {
         sourceImage = image;
         
         numberOfTiles = noOfFrames;
-        tileSetX = new int[numberOfTiles];
-        tileSetY = new int[numberOfTiles];
+        this.tileSetX = new int[numberOfTiles];
+        this.tileSetY = new int[numberOfTiles];
         
         if (!maintainIndices) {
             // populate cell matrix, all the indices are 0 to begin with

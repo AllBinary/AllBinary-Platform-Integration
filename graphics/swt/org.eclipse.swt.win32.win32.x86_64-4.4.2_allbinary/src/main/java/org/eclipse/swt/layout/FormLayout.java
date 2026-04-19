@@ -282,10 +282,10 @@ int computeWidth (Control control, FormData data, boolean flushCache) {
 @Override
 protected void layout (Composite composite, boolean flushCache) {
 	Rectangle rect = composite.getClientArea ();
-	int x = rect.x + marginLeft + marginWidth;
-	int y = rect.y + marginTop + marginHeight;
-	int width = Math.max (0, rect.width - marginLeft - 2 * marginWidth - marginRight);
-	int height = Math.max (0, rect.height - marginTop - 2 * marginHeight - marginBottom);
+	int x = rect.x + this.marginLeft + this.marginWidth;
+	int y = rect.y + this.marginTop + this.marginHeight;
+	int width = Math.max (0, rect.width - this.marginLeft - 2 * this.marginWidth - this.marginRight);
+	int height = Math.max (0, rect.height - this.marginTop - 2 * this.marginHeight - this.marginBottom);
 	layout (composite, true, x, y, width, height, flushCache);
 }
 
@@ -361,8 +361,8 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 			children [i].setBounds (bounds [i]);
 		}
 	}
-	w += marginLeft + marginWidth * 2 + marginRight;
-	h += marginTop + marginHeight * 2 + marginBottom;
+	w += this.marginLeft + this.marginWidth * 2 + this.marginRight;
+	h += this.marginTop + this.marginHeight * 2 + this.marginBottom;
 	return new Point (w, h);
 }
 
@@ -375,13 +375,13 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 @Override
 public String toString () {
  	String string =  getName ()+" {";
- 	if (marginWidth != 0) string += "marginWidth="+marginWidth+" ";
- 	if (marginHeight != 0) string += "marginHeight="+marginHeight+" ";
- 	if (marginLeft != 0) string += "marginLeft="+marginLeft+" ";
- 	if (marginRight != 0) string += "marginRight="+marginRight+" ";
- 	if (marginTop != 0) string += "marginTop="+marginTop+" ";
- 	if (marginBottom != 0) string += "marginBottom="+marginBottom+" ";
- 	if (spacing != 0) string += "spacing="+spacing+" ";
+ 	if (this.marginWidth != 0) string += "marginWidth="+this.marginWidth+" ";
+ 	if (this.marginHeight != 0) string += "marginHeight="+this.marginHeight+" ";
+ 	if (this.marginLeft != 0) string += "marginLeft="+this.marginLeft+" ";
+ 	if (this.marginRight != 0) string += "marginRight="+this.marginRight+" ";
+ 	if (this.marginTop != 0) string += "marginTop="+this.marginTop+" ";
+ 	if (this.marginBottom != 0) string += "marginBottom="+this.marginBottom+" ";
+ 	if (this.spacing != 0) string += "spacing="+this.spacing+" ";
  	string = string.trim();
  	string += "}";
  	return string;

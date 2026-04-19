@@ -105,21 +105,21 @@ public class J2SETrueTypeFont implements J2SEFont {
 	}
 
 	private synchronized void checkInitialized() {
-		if (!initialized) {
+		if (!this.initialized) {
 			int awtStyle = 0;
-			if (style.indexOf("plain") != -1) {
+			if (this.style.indexOf("plain") != -1) {
 				awtStyle |= Font.PLAIN;
 			}
-			if (style.indexOf("bold") != -1) {
+			if (this.style.indexOf("bold") != -1) {
 				awtStyle |= Font.BOLD;
 			}
-			if (style.indexOf("italic") != -1) {
+			if (this.style.indexOf("italic") != -1) {
 				awtStyle |= Font.ITALIC;
 			}
-			if (style.indexOf("underlined") != -1) {
+			if (this.style.indexOf("underlined") != -1) {
 				// TODO underlined style not implemented
 			}
-			if (antialiasing) {
+			if (this.antialiasing) {
 				graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			} else {
 				graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
@@ -127,8 +127,8 @@ public class J2SETrueTypeFont implements J2SEFont {
 
 			try {
 				Font baseFont = Font.createFont(Font.TRUETYPE_FONT, url.openStream());
-				fontMetrics = graphics.getFontMetrics(baseFont.deriveFont(awtStyle, size));
-				initialized = true;
+				this.fontMetrics = graphics.getFontMetrics(baseFont.deriveFont(awtStyle, size));
+				this.initialized = true;
 			} catch (FontFormatException ex) {
 				Logger.error(ex);
 			} catch (IOException ex) {

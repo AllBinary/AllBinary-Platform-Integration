@@ -281,14 +281,14 @@ public String open () {
 
 	/* Compute filters and copy into lpstrFilter */
 	String strFilter = "";
-	if (filterNames == null) filterNames = new String [0];
-	if (filterExtensions == null) filterExtensions = new String [0];
-	for (int i=0; i<filterExtensions.length; i++) {
+	if (this.filterNames == null) this.filterNames = new String [0];
+	if (this.filterExtensions == null) this.filterExtensions = new String [0];
+	for (int i=0; i<this.filterExtensions.length; i++) {
 		String filterName = this.filterExtensions [i];
-		if (i < filterNames.length) filterName = filterNames [i];
-		strFilter = strFilter + filterName + '\0' + filterExtensions [i] + '\0';
+		if (i < this.filterNames.length) filterName = this.filterNames [i];
+		strFilter = strFilter + filterName + '\0' + this.filterExtensions [i] + '\0';
 	}
-	if (filterExtensions.length == 0) {
+	if (this.filterExtensions.length == 0) {
 		strFilter = strFilter + FILTER + '\0' + FILTER + '\0';
 	}
 	/* Use the character encoding for the default locale */
@@ -317,7 +317,7 @@ public String open () {
 	* Copy the path into lpstrInitialDir and ensure that
 	* the last byte is NULL and the buffer does not overrun.
 	*/
-	if (filterPath == null) filterPath = "";
+	if (this.filterPath == null) this.filterPath = "";
 	/* Use the character encoding for the default locale */
 	TCHAR path = new TCHAR (0, filterPath.replace ('/', '\\'), true);
 	int byteCount5 = OS.MAX_PATH * TCHAR.sizeof;
@@ -330,7 +330,7 @@ public String open () {
 	struct.lStructSize = OPENFILENAME.sizeof;
 	struct.Flags = OS.OFN_HIDEREADONLY | OS.OFN_NOCHANGEDIR;
 	boolean save = (style & SWT.SAVE) != 0;
-	if (save && overwrite) struct.Flags |= OS.OFN_OVERWRITEPROMPT;
+	if (save && this.overwrite) struct.Flags |= OS.OFN_OVERWRITEPROMPT;
 	Callback callback = null;
 	if ((style & SWT.MULTI) != 0) {
 		struct.Flags |= OS.OFN_ALLOWMULTISELECT | OS.OFN_EXPLORER | OS.OFN_ENABLESIZING;
@@ -348,7 +348,7 @@ public String open () {
 	struct.nMaxFile = nMaxFile;
 	struct.lpstrInitialDir = lpstrInitialDir;
 	struct.lpstrFilter = lpstrFilter;
-	struct.nFilterIndex = filterIndex == 0 ? filterIndex : filterIndex + 1;
+	struct.nFilterIndex = this.filterIndex == 0 ? this.filterIndex : this.filterIndex + 1;
 
 	/*
 	* Set the default extension to an empty string.  If the
@@ -410,7 +410,7 @@ public String open () {
 	lpstrFile = struct.lpstrFile;
 
 	/* Set the new path, file name and filter */
-	fileNames = new String [0];
+	this.fileNames = new String [0];
 	String fullPath = null;
 	if (success) {
 		
@@ -451,15 +451,15 @@ public String open () {
 			* by a NULL character with 2 NULL characters at the end.
 			*/
 			int count = 0;
-			fileNames = new String [(style & SWT.MULTI) != 0 ? 4 : 1];
+			this.fileNames = new String [(style & SWT.MULTI) != 0 ? 4 : 1];
 			int start = nFileOffset;
 			do {
 				int end = start;
 				while (end < buffer.length () && buffer.tcharAt (end) != 0) end++;
 				String string = buffer.toString (start, end - start);
 				start = end;
-				if (count == fileNames.length) {
-					String [] newFileNames = new String [fileNames.length + 4];
+				if (count == this.fileNames.length) {
+					String [] newFileNames = new String [this.fileNames.length + 4];
 					System.arraycopy (fileNames, 0, newFileNames, 0, fileNames.length);
 					fileNames = newFileNames;
 				}
@@ -481,7 +481,7 @@ public String open () {
 				fileNames = newFileNames;
 			}
 		}
-		filterIndex = struct.nFilterIndex - 1;
+		this.filterIndex = struct.nFilterIndex - 1;
 	}
 	
 	/* Free the memory that was allocated. */

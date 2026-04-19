@@ -29,6 +29,6 @@ String getName () {
  */
 @Override
 public String toString () {
-	return getName()+" {weight="+weight+"}"; //$NON-NLS-2$
+	return getName()+" {weight="+this.weight+"}"; //$NON-NLS-2$
 }
 }

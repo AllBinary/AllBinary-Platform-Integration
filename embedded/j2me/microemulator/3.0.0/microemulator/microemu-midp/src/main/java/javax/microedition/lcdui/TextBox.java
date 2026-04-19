@@ -70,7 +70,7 @@ public class TextBox extends Screen {
 	public TextBox(String title, String text, int maxSize, int constraints) {
 		super(title);
 
-		tf = new TextField(null, text, maxSize, constraints);
+		this.tf = new TextField(null, text, maxSize, constraints);
 		
 		super.setUI(DeviceFactory.getDevice().getUIFactory().createTextBoxUI(this));
 		
@@ -81,7 +81,7 @@ public class TextBox extends Screen {
 		if (ui != null && ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextBoxUI")) {
 			((TextBoxUI) ui).delete(offset, length);
 		} else {
-			tf.delete(offset, length);
+			this.tf.delete(offset, length);
 		}
 	}
 
@@ -121,7 +121,7 @@ public class TextBox extends Screen {
 		if (ui != null && ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextBoxUI")) {
 			((TextBoxUI) ui).insert(src, position);
 		} else {
-			tf.insert(src, position);
+			this.tf.insert(src, position);
 		}
 	}
 
@@ -145,7 +145,7 @@ public class TextBox extends Screen {
 		if (ui != null && ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextBoxUI")) {
 			((TextBoxUI) ui).setString(text);
 		} else {
-			tf.setString(text);
+			this.tf.setString(text);
 		}
 	}
 
@@ -183,7 +183,7 @@ public class TextBox extends Screen {
 			g.setClip(3, 3, getWidth() - 6, viewPortHeight - 6);
 			g.translate(3, 3);
 			g.translate(0, -viewPortY);
-			tf.paintContent(g);
+			this.tf.paintContent(g);
 	
 			return tf.stringComponent.getHeight() + 6;
 		}
@@ -192,7 +192,7 @@ public class TextBox extends Screen {
 	void setCaretPosition(int position) {
 		tf.setCaretPosition(position);
 
-		StringComponent tmp = tf.stringComponent;
+		StringComponent tmp = this.tf.stringComponent;
 		if (tmp.getCharPositionY(position) < viewPortY) {
 			viewPortY = tmp.getCharPositionY(position);
 		} else if (tmp.getCharPositionY(position) + tmp.getCharHeight() > viewPortY + viewPortHeight - 6) {
@@ -207,7 +207,7 @@ public class TextBox extends Screen {
 		inputMethod.setInputMethodListener(inputMethodListener);
 		inputMethod.setMaxSize(getMaxSize());
 		setCaretPosition(getString().length());
-		tf.setCaretVisible(true);
+		this.tf.setCaretVisible(true);
 	}
 
         @Override

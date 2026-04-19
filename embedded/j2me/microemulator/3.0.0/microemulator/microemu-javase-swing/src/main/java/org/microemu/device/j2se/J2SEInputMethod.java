@@ -93,7 +93,7 @@ public class J2SEInputMethod extends InputMethodImpl {
 
 		// TODO When InputMethod will be removed from EmulatorContext add:
 		// if (DeviceFactory.getDevice().hasRepeatEvents()) {
-		keyReleasedDelayTimer = ThreadUtils.createTimer("InputKeyReleasedDelayTimer");
+		this.keyReleasedDelayTimer = ThreadUtils.createTimer("InputKeyReleasedDelayTimer");
 	}
 
 	/**
@@ -330,7 +330,7 @@ public class J2SEInputMethod extends InputMethodImpl {
 	}
 
 	public void buttonTyped(J2SEButton button) {
-		if (eventAlreadyConsumed) {
+		if (this.eventAlreadyConsumed) {
 			return;
 		}
 	}
@@ -340,7 +340,7 @@ public class J2SEInputMethod extends InputMethodImpl {
 				&& ((inputMethodListener.getText().length() + str.length()) <= maxSize)) {
 			insertText(str);
 		}
-		eventAlreadyConsumed = true;
+		this.eventAlreadyConsumed = true;
 	}
 
 	public void buttonPressed(J2SEButton button, final char keyChar, final int keyCode1) {
@@ -348,8 +348,8 @@ public class J2SEInputMethod extends InputMethodImpl {
 		if (button != null && keyChar == '\0') {
 			keyCode = button.getKeyCode();
 		}
-		eventAlreadyConsumed = false;
-		ignoreButtonRelease = null;
+		this.eventAlreadyConsumed = false;
+		this.ignoreButtonRelease = null;
 		if (DeviceFactory.getDevice().hasRepeatEvents()) {
 			if (repeatModeKeyCodes.contains(new Integer(keyCode))) {
 				MIDletAccess ma = MIDletBridge.getMIDletAccess();
@@ -386,14 +386,14 @@ public class J2SEInputMethod extends InputMethodImpl {
 				} else {
 					da.commandAction(cmd, da.getCurrent());
 				}
-				eventAlreadyConsumed = true;
-				ignoreButtonRelease = button;
+				this.eventAlreadyConsumed = true;
+				this.ignoreButtonRelease = button;
 				return;
 			}
 		}
 
 		if (fireInputMethodListener(button, keyChar, keyCode1)) {
-			eventAlreadyConsumed = true;
+			this.eventAlreadyConsumed = true;
 			return;
 		}
 	}
@@ -408,8 +408,8 @@ public class J2SEInputMethod extends InputMethodImpl {
 			keyCode = button.getKeyCode();
 		}
 		if (DeviceFactory.getDevice().hasRepeatEvents()) {
-			repeatModeKeyCodes.remove(new Integer(keyCode));
-			keyReleasedDelayTimer.schedule(new KeyReleasedDelayTask(keyCode1), 50);
+			this.repeatModeKeyCodes.remove(new Integer(keyCode));
+			this.keyReleasedDelayTimer.schedule(new KeyReleasedDelayTask(keyCode1), 50);
 		} else {
 			MIDletAccess ma = MIDletBridge.getMIDletAccess();
 			if (ma == null) {
@@ -424,7 +424,7 @@ public class J2SEInputMethod extends InputMethodImpl {
 			}
 
 			da.keyReleased(keyCode1);
-			eventAlreadyConsumed = false;
+			this.eventAlreadyConsumed = false;
 		}
 	}
 

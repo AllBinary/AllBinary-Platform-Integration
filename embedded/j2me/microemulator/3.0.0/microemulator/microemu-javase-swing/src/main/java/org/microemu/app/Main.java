@@ -791,19 +791,19 @@ public class Main extends JFrame {
 	public Main(DeviceEntry defaultDevice) {
 
 		this.logQueueAppender = new QueueAppender(1024);
-		Logger.addAppender(logQueueAppender);
+		Logger.addAppender(this.logQueueAppender);
 
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu menuFile = new JMenu("File");
 
-		menuOpenMIDletFile = new JMenuItem("Open MIDlet File...");
-		menuOpenMIDletFile.addActionListener(menuOpenMIDletFileListener);
-		menuFile.add(menuOpenMIDletFile);
+		this.menuOpenMIDletFile = new JMenuItem("Open MIDlet File...");
+		this.menuOpenMIDletFile.addActionListener(menuOpenMIDletFileListener);
+		menuFile.add(this.menuOpenMIDletFile);
 
-		menuOpenMIDletURL = new JMenuItem("Open MIDlet URL...");
-		menuOpenMIDletURL.addActionListener(menuOpenMIDletURLListener);
-		menuFile.add(menuOpenMIDletURL);
+		this.menuOpenMIDletURL = new JMenuItem("Open MIDlet URL...");
+		this.menuOpenMIDletURL.addActionListener(menuOpenMIDletURLListener);
+		menuFile.add(this.menuOpenMIDletURL);
 
 		JMenuItem menuItemTmp = new JMenuItem("Close MIDlet");
 		menuItemTmp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.CTRL_MASK));
@@ -830,9 +830,9 @@ public class Main extends JFrame {
 
 		menuFile.addSeparator();
 
-		menuSaveForWeb = new JMenuItem("Save for Web...");
-		menuSaveForWeb.addActionListener(menuSaveForWebListener);
-		menuFile.add(menuSaveForWeb);
+		this.menuSaveForWeb = new JMenuItem("Save for Web...");
+		this.menuSaveForWeb.addActionListener(menuSaveForWebListener);
+		menuFile.add(this.menuSaveForWeb);
 
 		menuFile.addSeparator();
 
@@ -843,43 +843,43 @@ public class Main extends JFrame {
 
 		JMenu menuOptions = new JMenu("Options");
 
-		menuSelectDevice = new JMenuItem("Select device...");
-		menuSelectDevice.addActionListener(menuSelectDeviceListener);
-		menuOptions.add(menuSelectDevice);
+		this.menuSelectDevice = new JMenuItem("Select device...");
+		this.menuSelectDevice.addActionListener(menuSelectDeviceListener);
+		menuOptions.add(this.menuSelectDevice);
 
 		JMenu menuScaleLCD = new JMenu("Scaled display");
 		menuOptions.add(menuScaleLCD);
-		zoomLevels = new JCheckBoxMenuItem[3];
-		for (int i = 0; i < zoomLevels.length; ++i) {
-			zoomLevels[i] = new JCheckBoxMenuItem("x " + (i + 2));
-			zoomLevels[i].setActionCommand("" + (i + 2));
-			zoomLevels[i].addActionListener(menuScaledDisplayListener);
-			menuScaleLCD.add(zoomLevels[i]);
+		this.zoomLevels = new JCheckBoxMenuItem[3];
+		for (int i = 0; i < this.zoomLevels.length; ++i) {
+			this.zoomLevels[i] = new JCheckBoxMenuItem("x " + (i + 2));
+			this.zoomLevels[i].setActionCommand("" + (i + 2));
+			this.zoomLevels[i].addActionListener(menuScaledDisplayListener);
+			menuScaleLCD.add(this.zoomLevels[i]);
 		}
 
-		menuStartCapture = new JMenuItem("Start capture to GIF...");
-		menuStartCapture.addActionListener(menuStartCaptureListener);
-		menuOptions.add(menuStartCapture);
+		this.menuStartCapture = new JMenuItem("Start capture to GIF...");
+		this.menuStartCapture.addActionListener(menuStartCaptureListener);
+		menuOptions.add(this.menuStartCapture);
 
-		menuStopCapture = new JMenuItem("Stop capture");
-		menuStopCapture.setEnabled(false);
-		menuStopCapture.addActionListener(menuStopCaptureListener);
-		menuOptions.add(menuStopCapture);
+		this.menuStopCapture = new JMenuItem("Stop capture");
+		this.menuStopCapture.setEnabled(false);
+		this.menuStopCapture.addActionListener(menuStopCaptureListener);
+		menuOptions.add(this.menuStopCapture);
 
-		menuMIDletNetworkConnection = new JCheckBoxMenuItem("MIDlet Network access");
-		menuMIDletNetworkConnection.setState(true);
-		menuMIDletNetworkConnection.addActionListener(menuMIDletNetworkConnectionListener);
-		menuOptions.add(menuMIDletNetworkConnection);
+		this.menuMIDletNetworkConnection = new JCheckBoxMenuItem("MIDlet Network access");
+		this.menuMIDletNetworkConnection.setState(true);
+		this.menuMIDletNetworkConnection.addActionListener(menuMIDletNetworkConnectionListener);
+		menuOptions.add(this.menuMIDletNetworkConnection);
 
-		menuRecordStoreManager = new JCheckBoxMenuItem("Record Store Manager");
-		menuRecordStoreManager.setState(false);
-		menuRecordStoreManager.addActionListener(menuRecordStoreManagerListener);
-		menuOptions.add(menuRecordStoreManager);
+		this.menuRecordStoreManager = new JCheckBoxMenuItem("Record Store Manager");
+		this.menuRecordStoreManager.setState(false);
+		this.menuRecordStoreManager.addActionListener(menuRecordStoreManagerListener);
+		menuOptions.add(this.menuRecordStoreManager);
 
-		menuLogConsole = new JCheckBoxMenuItem("Log console");
-		menuLogConsole.setState(false);
-		menuLogConsole.addActionListener(menuLogConsoleListener);
-		menuOptions.add(menuLogConsole);
+		this.menuLogConsole = new JCheckBoxMenuItem("Log console");
+		this.menuLogConsole.setState(false);
+		this.menuLogConsole.addActionListener(menuLogConsoleListener);
+		menuOptions.add(this.menuLogConsole);
 
 		menuOptions.addSeparator();
 		JCheckBoxMenuItem menuShowMouseCoordinates = new JCheckBoxMenuItem("Mouse coordinates");
@@ -915,7 +915,7 @@ public class Main extends JFrame {
 
 		getContentPane().add(createContents(getContentPane()), "Center");
 
-		selectDevicePanel = new SwingSelectDevicePanel(emulatorContext);
+		this.selectDevicePanel = new SwingSelectDevicePanel(emulatorContext);
 
 		this.common = new Common(emulatorContext, NullUtil.getInstance().NULL_OBJECT);
 		this.common.setStatusBarListener(statusBarListener);
@@ -940,20 +940,20 @@ public class Main extends JFrame {
 
 		JPanel statusPanel = new JPanel();
 		statusPanel.setLayout(new BorderLayout());
-		statusPanel.add(statusBar, "West");
+		statusPanel.add(this.statusBar, "West");
 		statusPanel.add(this.resizeButton, "East");
 
 		getContentPane().add(statusPanel, "South");
 
 		Message.addListener(new SwingErrorMessageDialogPanel(this));
 
-		devicePanel.setTransferHandler(new DropTransferHandler());
+		this.devicePanel.setTransferHandler(new DropTransferHandler());
 	}
 
 	protected Component createContents(Container parent) {
 		devicePanel = new SwingDeviceComponent();
-		devicePanel.addKeyListener(devicePanel);
-		addKeyListener(devicePanel);
+		this.devicePanel.addKeyListener(this.devicePanel);
+		addKeyListener(this.devicePanel);
 
 		return devicePanel;
 	}
@@ -986,7 +986,7 @@ public class Main extends JFrame {
 				    setDeviceSize(deviceDisplay, size.width, size.height);
 				}
 			}
-			common.setDevice(device);
+			this.common.setDevice(device);
 			updateDevice();
 			return true;
 		} catch (MalformedURLException e) {
@@ -1012,7 +1012,7 @@ public class Main extends JFrame {
         // resize the display area
         deviceDisplay.setDisplayPaintable(new Rectangle(0, 0, width, height - menuh));
         deviceDisplay.setDisplayRectangle(new Rectangle(0, 0, width, height));
-        ((SwingDisplayComponent) devicePanel.getDisplayComponent()).init();
+        ((SwingDisplayComponent) this.devicePanel.getDisplayComponent()).init();
         // update display
         MIDletAccess ma = MIDletBridge.getMIDletAccess();
         if (ma == null) {
@@ -1029,15 +1029,15 @@ public class Main extends JFrame {
 		devicePanel.init();
 		if (((DeviceDisplayImpl) DeviceFactory.getDevice().getDeviceDisplay()).isResizable()) {
 			setResizable(true);
-			resizeButton.setVisible(true);
+			this.resizeButton.setVisible(true);
 		} else {
 			setResizable(false);
-			resizeButton.setVisible(false);
+			this.resizeButton.setVisible(false);
 		}
 
 		pack();
 
-		devicePanel.requestFocus();
+		this.devicePanel.requestFocus();
 	}
 
 	public static void main(String args[]) {

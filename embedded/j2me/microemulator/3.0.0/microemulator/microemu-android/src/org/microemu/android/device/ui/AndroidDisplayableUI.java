@@ -77,14 +77,14 @@ public abstract class AndroidDisplayableUI implements DisplayableUI {
 		this.displayable = displayable;
 		
 		if (initView) {
-			view = new LinearLayout(activity);
-			((LinearLayout) view).setOrientation(LinearLayout.VERTICAL);
-			view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
+			this.view = new LinearLayout(activity);
+			((LinearLayout) this.view).setOrientation(LinearLayout.VERTICAL);
+			this.view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
 			
-			titleView = new TextView(activity);
-			titleView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-			titleView.setTextAppearance(titleView.getContext(), android.R.style.TextAppearance_DialogWindowTitle);
-			((LinearLayout) view).addView(titleView);
+			this.titleView = new TextView(activity);
+			this.titleView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			this.titleView.setTextAppearance(this.titleView.getContext(), android.R.style.TextAppearance_DialogWindowTitle);
+			((LinearLayout) this.view).addView(this.titleView);
 		}
 	}
 	
@@ -102,17 +102,17 @@ public abstract class AndroidDisplayableUI implements DisplayableUI {
 
 	public void addCommandUI(CommandUI cmd) {
 		synchronized (this) {
-			if (!commands.contains(cmd)) {
-				commands.add((AndroidCommandUI) cmd);
+			if (!this.commands.contains(cmd)) {
+				this.commands.add((AndroidCommandUI) cmd);
 			}
 			// TODO decide whether this is the best way for keeping sorted commands
-			Collections.sort(commands, commandsPriorityComparator);
+			Collections.sort(this.commands, commandsPriorityComparator);
 		}
 	}
 
 	public void removeCommandUI(CommandUI cmd) {
 		synchronized (this) {
-			commands.remove(cmd);
+			this.commands.remove(cmd);
 		}
 	}
 

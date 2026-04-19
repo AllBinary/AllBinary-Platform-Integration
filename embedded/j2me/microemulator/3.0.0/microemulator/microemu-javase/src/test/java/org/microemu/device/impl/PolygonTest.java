@@ -48,14 +48,14 @@ public class PolygonTest //extends TestCase
 		java.awt.Polygon awt = new java.awt.Polygon();
 
 		
-		Matcher mp = rx.matcher(polygon);
+		Matcher mp = this.rx.matcher(polygon);
 		while (mp.find()) {
 			int px = Integer.parseInt(mp.group(1));
 			int py = Integer.parseInt(mp.group(2));
 			pl.addPoint(px, py);
 			awt.addPoint(px, py);
 		}
-		Matcher mxy = rx.matcher(points);
+		Matcher mxy = this.rx.matcher(points);
 		while (mxy.find()) {
 			int x = Integer.parseInt(mxy.group(1));
 			int y = Integer.parseInt(mxy.group(2));

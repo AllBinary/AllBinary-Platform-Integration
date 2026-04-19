@@ -87,7 +87,7 @@ public class WtkRapc extends PostProcessor {
         project = getProject();
 
         // Check Preconditions
-        if ((jadfile == null) || (source == null)) {
+        if ((this.jadfile == null) || (this.source == null)) {
             throw new BuildException("RAPC needs a JAD and source files");
         }
         String bbjdebuildJars = getProject().getProperty(BB_BUILD_TOOLS_HOME);
@@ -97,13 +97,13 @@ public class WtkRapc extends PostProcessor {
 
         // Win32 vs. Linux file system (slash vs. backslash) fix
         String rapc = getUtility().getQuotedName(new File(bbjdebuildJars + RAPC_EXE));
-        String jad = getUtility().getQuotedName(jadfile);
+        String jad = getUtility().getQuotedName(this.jadfile);
         String src = getUtility().getQuotedName(source);
 
         // Build the exec command and argument list.
         String arguments =
-            "import="+getUtility().getOutsideQuotedPath(importlibs) + " codename="+codename + " " + jad + " " + src;
-        String execCmd = rapc + ((quietMode)?" -quiet ":" ") + ((midletMode)?" -midlet ":" ") + ((libraryMode)?" -library ":" ") + arguments;
+            "import="+getUtility().getOutsideQuotedPath(this.importlibs) + " codename="+this.codename + " " + jad + " " + src;
+        String execCmd = rapc + ((this.quietMode)?" -quiet ":" ") + ((this.midletMode)?" -midlet ":" ") + ((this.libraryMode)?" -library ":" ") + arguments;
 
         try {
 
@@ -120,13 +120,13 @@ public class WtkRapc extends PostProcessor {
             this.log("* " + t2 + " *");
             this.log("**************************************************************");
 
-            this.log("Codename   : " + codename);
-            this.log("JAD        : " + jadfile);
+            this.log("Codename   : " + this.codename);
+            this.log("JAD        : " + this.jadfile);
             this.log("Source(s)  : " + source);
-            this.log("Imports    : " + importlibs);
-            this.log("MIDlet mode: " + midletMode);
-            this.log("Quiet mode : " + quietMode);
-            this.log("DestDir    : " + destDir);
+            this.log("Imports    : " + this.importlibs);
+            this.log("MIDlet mode: " + this.midletMode);
+            this.log("Quiet mode : " + this.quietMode);
+            this.log("DestDir    : " + this.destDir);
             this.log("Compiling now...");
             this.log("");
 
@@ -139,29 +139,29 @@ public class WtkRapc extends PostProcessor {
             }
 
             // Output a blank line for readablity
-            project.log("");
+            this.project.log("");
 
             // If a destination directory was specified,
             //  copy appropriate files to such destination
-            if (destDir != null) {
+            if (this.destDir != null) {
                 File srcfile;
                 File destfile;
 
                 // Copy the JAD file
-                srcfile = jadfile;
-                destfile = new File(destDir+"/"+codename+".jad");
+                srcfile = this.jadfile;
+                destfile = new File(this.destDir+"/"+this.codename+".jad");
                 this.log("Copying file " + srcfile + " To " + destfile);
                 getUtility().copy(srcfile, destfile);
 
                 // Copy the COD file
-                srcfile = new File(project.getBaseDir()+"/"+codename+".cod");
-                destfile = new File(destDir+"/"+codename+".cod");
+                srcfile = new File(this.project.getBaseDir()+"/"+this.codename+".cod");
+                destfile = new File(this.destDir+"/"+this.codename+".cod");
                 this.log("Copying file " + srcfile + " To " + destfile);
                 getUtility().copy(srcfile, destfile);
 
                 // Copy the ALX file
-                srcfile = new File(project.getBaseDir()+"/"+codename+".alx");
-                destfile = new File(destDir+"/"+codename+".alx");
+                srcfile = new File(this.project.getBaseDir()+"/"+this.codename+".alx");
+                destfile = new File(this.destDir+"/"+this.codename+".alx");
                 this.log("Copying file " + srcfile + " To " + destfile);
                 getUtility().copy(srcfile, destfile);
 

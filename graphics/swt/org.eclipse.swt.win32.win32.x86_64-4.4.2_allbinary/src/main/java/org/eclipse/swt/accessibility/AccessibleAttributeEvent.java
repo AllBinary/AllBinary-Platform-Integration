@@ -132,17 +132,17 @@ public AccessibleAttributeEvent(Object source) {
 @Override
 public String toString () {
 	return "AccessibleAttributeEvent {" //$NON-NLS-1$
-		+ " topMargin=" + topMargin   //$NON-NLS-1$
-		+ " bottomMargin=" + bottomMargin   //$NON-NLS-1$
-		+ " leftMargin=" + leftMargin   //$NON-NLS-1$
-		+ " rightMargin=" + rightMargin   //$NON-NLS-1$
-		+ " tabStops=" + tabStops   //$NON-NLS-1$
-		+ " justify=" + justify   //$NON-NLS-1$
-		+ " alignment=" + alignment   //$NON-NLS-1$
-		+ " indent=" + indent   //$NON-NLS-1$
-		+ " groupLevel=" + groupLevel   //$NON-NLS-1$
-		+ " groupCount=" + groupCount   //$NON-NLS-1$
-		+ " groupIndex=" + groupIndex   //$NON-NLS-1$
+		+ " topMargin=" + this.topMargin   //$NON-NLS-1$
+		+ " bottomMargin=" + this.bottomMargin   //$NON-NLS-1$
+		+ " leftMargin=" + this.leftMargin   //$NON-NLS-1$
+		+ " rightMargin=" + this.rightMargin   //$NON-NLS-1$
+		+ " tabStops=" + this.tabStops   //$NON-NLS-1$
+		+ " justify=" + this.justify   //$NON-NLS-1$
+		+ " alignment=" + this.alignment   //$NON-NLS-1$
+		+ " indent=" + this.indent   //$NON-NLS-1$
+		+ " groupLevel=" + this.groupLevel   //$NON-NLS-1$
+		+ " groupCount=" + this.groupCount   //$NON-NLS-1$
+		+ " groupIndex=" + this.groupIndex   //$NON-NLS-1$
 		+ "}";  //$NON-NLS-1$
 }
 }

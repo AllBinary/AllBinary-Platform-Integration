@@ -56,7 +56,7 @@ class MidiAudioPlayer implements Player, MetaEventListener
 		try {
     		// First, get a Sequencer to play sequences of MIDI events
     		//That is, to send events to a Synthesizer at the right time.
-    		sequencer = MidiSystem.getSequencer( ); // Used to play sequences
+    		this.sequencer = MidiSystem.getSequencer( ); // Used to play sequences
     		sequencer.open(); // Turn it on.
     		//Get a Synthesizer for the Sequencer to send notes to
     		Synthesizer synth = MidiSystem.getSynthesizer( );
@@ -67,8 +67,8 @@ class MidiAudioPlayer implements Player, MetaEventListener
     		Receiver receiver = synth.getReceiver( );
     		transmitter.setReceiver(receiver);
     		//Read the sequence from the file and tell the sequencer about it
-    		sequence = MidiSystem.getSequence( stream );
-    		sequencer.setSequence(sequence);
+    		this.sequence = MidiSystem.getSequence( stream );
+    		this.sequencer.setSequence(this.sequence);
 	    } catch(UnsatisfiedLinkError e) { 
 	        e.printStackTrace(); 
 	    } catch(IOException e) { 
@@ -79,7 +79,7 @@ class MidiAudioPlayer implements Player, MetaEventListener
 	        e.printStackTrace(); 
 	    }
 	    
-	    state = UNREALIZED;
+	    this.state = UNREALIZED;
 	    
 		return false;
 	}
@@ -91,16 +91,16 @@ class MidiAudioPlayer implements Player, MetaEventListener
 	
 	public void addPlayerListener(PlayerListener playerListener) 
 	{
-		if( vListeners == null )
-			vListeners = new Vector();
-		vListeners.add( playerListener );
+		if( this.vListeners == null )
+			this.vListeners = new Vector();
+		this.vListeners.add( playerListener );
 	}
 
 	public void close() 
 	{
 		Manager.mediaDone( this );
-		if( sequencer != null )
-			sequencer.close();
+		if( this.sequencer != null )
+			this.sequencer.close();
 	}
 
 	public void deallocate() {
@@ -116,7 +116,7 @@ class MidiAudioPlayer implements Player, MetaEventListener
 
 	public long getMediaTime() 
 	{
-		if( sequencer != null )
+		if( this.sequencer != null )
 			return sequencer.getMicrosecondPosition();
 		return 0;
 	}
@@ -137,14 +137,14 @@ class MidiAudioPlayer implements Player, MetaEventListener
 
 	public void removePlayerListener(PlayerListener playerListener) 
 	{
-	   if( vListeners == null )
+	   if( this.vListeners == null )
 		   return;
-	   for( Iterator it = vListeners.iterator (); it.hasNext (); ) 
+	   for( Iterator it = this.vListeners.iterator (); it.hasNext (); ) 
 	   {
 		    PlayerListener listener = (PlayerListener) it.next ();
 		    if( listener == playerListener )
 		    {
-		    	vListeners.remove( listener );
+		    	this.vListeners.remove( listener );
 		    	break;
 	   		}
 	   }
@@ -156,23 +156,23 @@ class MidiAudioPlayer implements Player, MetaEventListener
 	}
 
 	public long setMediaTime(long now) throws MediaException {
-		if( sequencer != null )
-			sequencer.setMicrosecondPosition( now );
+		if( this.sequencer != null )
+			this.sequencer.setMicrosecondPosition( now );
 		return now;
 	}
 
 	public void start() throws MediaException {
-		if (sequencer != null) {
-			sequencer.addMetaEventListener( this );
-			sequencer.start();
-			state = STARTED;
+		if (this.sequencer != null) {
+			this.sequencer.addMetaEventListener( this );
+			this.sequencer.start();
+			this.state = STARTED;
 		}
 	}
 
 	public void stop() throws MediaException {
-		if( sequencer != null ) {
-			sequencer.stop();
-			state = PREFETCHED;
+		if( this.sequencer != null ) {
+			this.sequencer.stop();
+			this.state = PREFETCHED;
 		}
 	}
 
@@ -193,22 +193,22 @@ class MidiAudioPlayer implements Player, MetaEventListener
     {
         if (event.getType() == 47) //End of Track type
         {
-            if (iLoopCount > 0) 
+            if (this.iLoopCount > 0) 
             {
                 iLoopCount--;
             }
-            if( iLoopCount > 0 || iLoopCount == -1)
+            if( this.iLoopCount > 0 || this.iLoopCount == -1)
         	{
-        		sequencer.setMicrosecondPosition( 0 );
+        		this.sequencer.setMicrosecondPosition( 0 );
         		try{ start(); } 
         		catch( MediaException e ) { e.printStackTrace(); }
         	}
         	else
         	{
     			close();
-    			if( vListeners != null )
+    			if( this.vListeners != null )
     			{
-    				for( Iterator it = vListeners.iterator (); it.hasNext (); ) 
+    				for( Iterator it = this.vListeners.iterator (); it.hasNext (); ) 
     				{
     				    PlayerListener listener = (PlayerListener) it.next ();
     				    listener.playerUpdate( this, PlayerListener.END_OF_MEDIA, null );

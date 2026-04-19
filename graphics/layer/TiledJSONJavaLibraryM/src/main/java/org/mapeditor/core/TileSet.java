@@ -162,7 +162,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
         //final int size2 = this.tileSetImage.getHeight();
         final int size2 = this.tileSetImageHeight;
         
-        logUtil.putF(new StringMaker().append("size: ").appendint(size).append(" size2: ").appendint(size2).toString(), this, "addTiles");
+        this.logUtil.putF(new StringMaker().append("size: ").appendint(size).append(" size2: ").appendint(size2).toString(), this, "addTiles");
         
         int row = 0;
         Tile tile;
@@ -370,7 +370,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
             //logUtil.putF("i: " + i, this, "getTile");
             final Tile tile = tiles.get(i);
             if(tile == null) {
-                logUtil.putF("was null for i: " + i, this, "getTile");
+                this.logUtil.putF("was null for i: " + i, this, "getTile");
             }
             return tile;
         } catch (IndexOutOfBoundsException e) {

@@ -113,11 +113,11 @@ public class Command {
 		}
 		// we are allowed by the spec to threat all commands containes
 		// in an Item as of the type ITEM
-		if (itemCommand == null) {
-			itemCommand = new Command(getLabel(), Command.ITEM, getPriority());
-			itemCommand.originalCommand = this;
+		if (this.itemCommand == null) {
+			this.itemCommand = new Command(getLabel(), Command.ITEM, getPriority());
+			this.itemCommand.originalCommand = this;
 		}
-		itemCommand.focusedItem = item;
+		this.itemCommand.focusedItem = item;
 		return itemCommand;
 	}
 

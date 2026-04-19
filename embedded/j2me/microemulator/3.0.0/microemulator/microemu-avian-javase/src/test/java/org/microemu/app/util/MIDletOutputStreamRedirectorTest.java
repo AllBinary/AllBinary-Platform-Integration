@@ -13,13 +13,13 @@ public class MIDletOutputStreamRedirectorTest //extends TestCase
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		capture = new EventCatureLoggerAppender();
-		Logger.addAppender(capture);
+		this.capture = new EventCatureLoggerAppender();
+		Logger.addAppender(this.capture);
 	}
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		Logger.removeAppender(capture);
+		Logger.removeAppender(this.capture);
 	}
 
 	private void verify(LoggingEvent event, StackTraceElement b4call, final String message) {
@@ -34,26 +34,26 @@ public class MIDletOutputStreamRedirectorTest //extends TestCase
 
 	public void testRedirectStack() throws Exception {
 		final String message = "Test text";
-		capture.clearLastEvent();
+		this.capture.clearLastEvent();
 
 		StackTraceElement b4call = new Throwable().getStackTrace()[0];
 		Injected.out.println(message);
 
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 
 		b4call = new Throwable().getStackTrace()[0];
 		Injected.out.print(message + CommonSeps.getInstance().NEW_LINE);
 
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 	}
 
 	public void testRedirectMultiLine() throws Exception {
 		final String message = "Test Line1\nTest Line2\nTest Line3";
-		capture.clearLastEvent();
+		this.capture.clearLastEvent();
 
 		StackTraceElement b4call = new Throwable().getStackTrace()[0];
 		Injected.out.println(message);
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 	}
 
 	private class LogginThread extends Thread {
@@ -112,23 +112,23 @@ public class MIDletOutputStreamRedirectorTest //extends TestCase
 
 	public void testMIDletInternalLogger() throws Exception {
 		final String message = "Test text";
-		capture.clearLastEvent();
+		this.capture.clearLastEvent();
 		MIDletInternlaLogger log = new MIDletInternlaLogger();
 
 		StackTraceElement b4call = new Throwable().getStackTrace()[0];
 		log.debug(message);
 
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 
 		b4call = new Throwable().getStackTrace()[0];
 		log.error(message);
 
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 
 		b4call = new Throwable().getStackTrace()[0];
 		log.log(message);
 
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 
 	}
 
@@ -177,22 +177,22 @@ public class MIDletOutputStreamRedirectorTest //extends TestCase
 
 	public void testMIDletInternalStaticLogger() throws Exception {
 		final String message = "Test text Static logger";
-		capture.clearLastEvent();
+		this.capture.clearLastEvent();
 
 		StackTraceElement b4call = new Throwable().getStackTrace()[0];
 		StaticLogger.debug(message);
 
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 
 		b4call = new Throwable().getStackTrace()[0];
 		StaticLogger.error(message);
 
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 
 		b4call = new Throwable().getStackTrace()[0];
 		StaticLogger.log(message);
 
-		verify(capture.getLastEvent(), b4call, message);
+		verify(this.capture.getLastEvent(), b4call, message);
 
 	}
 

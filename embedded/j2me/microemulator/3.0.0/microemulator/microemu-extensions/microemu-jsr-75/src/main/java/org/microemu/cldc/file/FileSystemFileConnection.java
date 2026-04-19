@@ -186,7 +186,7 @@ public class FileSystemFileConnection implements FileConnection {
 
 	public long availableSize() {
 		throwClosed();
-		if (fsRoot == null) {
+		if (this.fsRoot == null) {
 			return -1;
 		}
 
@@ -195,7 +195,7 @@ public class FileSystemFileConnection implements FileConnection {
 
 	public long totalSize() {
 		throwClosed();
-		if (fsRoot == null) {
+		if (this.fsRoot == null) {
 			return -1;
 		}
 		return getFileValueJava6("getTotalSpace");
@@ -297,7 +297,7 @@ public class FileSystemFileConnection implements FileConnection {
 		// TODO test on real device. Not declared
 		throwClosed();
 
-		if (isRoot) {
+		if (this.isRoot) {
 			return "";
 		}
 
@@ -314,15 +314,15 @@ public class FileSystemFileConnection implements FileConnection {
 
 		// returns Parent directory
 		// /<root>/<directory>/
-		if (isRoot) {
-			return DIR_SEP + fullPath + DIR_SEP;
+		if (this.isRoot) {
+			return DIR_SEP + this.fullPath + DIR_SEP;
 		}
 
-		int pathEnd = fullPath.lastIndexOf(DIR_SEP);
+		int pathEnd = this.fullPath.lastIndexOf(DIR_SEP);
 		if (pathEnd == -1) {
 			return DIR_SEP_STR;
 		}
-		return DIR_SEP + fullPath.substring(0, pathEnd + 1);
+		return DIR_SEP + this.fullPath.substring(0, pathEnd + 1);
 	}
 
 	public String getURL() {
@@ -332,7 +332,7 @@ public class FileSystemFileConnection implements FileConnection {
 		// file://<host>/<root>/<directory>/<filename.extension>
 		// or
 		// file://<host>/<root>/<directory>/<directoryname>/
-		return Connection.PROTOCOL + this.host + DIR_SEP + fullPath + ((this.isDirectory) ? DIR_SEP_STR : "");
+		return Connection.PROTOCOL + this.host + DIR_SEP + this.fullPath + ((this.isDirectory) ? DIR_SEP_STR : "");
 	}
 
 	public boolean isDirectory() {
@@ -561,7 +561,7 @@ public class FileSystemFileConnection implements FileConnection {
 		}
 		// Use Java6 function in reflection.
 		try {
-			final Method setWritable = file.getClass().getMethod(mehtodName, new Class[] { boolean.class });
+			final Method setWritable = this.file.getClass().getMethod(mehtodName, new Class[] { boolean.class });
 			doPrivilegedIO(new PrivilegedExceptionAction() {
 				public Object run() throws IOException {
 					try {
@@ -585,7 +585,7 @@ public class FileSystemFileConnection implements FileConnection {
 		}
 		// Use Java6 function in reflection.
 		try {
-			final Method getter = file.getClass().getMethod(mehtodName, new Class[] {});
+			final Method getter = this.file.getClass().getMethod(mehtodName, new Class[] {});
 			Long rc = (Long) doPrivilegedIO(new PrivilegedExceptionAction() {
 				public Object run() throws IOException {
 					try {
@@ -651,16 +651,16 @@ public class FileSystemFileConnection implements FileConnection {
 			if (this.notifyClosed != null) {
 				this.notifyClosed.notifyClosed(this);
 			}
-			locationClosedFrom = new Throwable();
-			locationClosedFrom.fillInStackTrace();
+			this.locationClosedFrom = new Throwable();
+			this.locationClosedFrom.fillInStackTrace();
 			this.file = null;
 		}
 	}
 
 	private void throwClosed() throws ConnectionClosedException {
 		if (this.file == null) {
-			if (locationClosedFrom != null) {
-				locationClosedFrom.printStackTrace();
+			if (this.locationClosedFrom != null) {
+				this.locationClosedFrom.printStackTrace();
 			}
 			throw new ConnectionClosedException("Connection already closed");
 		}

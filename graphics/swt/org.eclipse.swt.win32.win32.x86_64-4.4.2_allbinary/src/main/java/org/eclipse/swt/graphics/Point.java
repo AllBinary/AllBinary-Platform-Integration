@@ -93,7 +93,7 @@ public boolean equals (Object object) {
  */
 @Override
 public int hashCode () {
-	return x ^ y;
+	return x ^ this.y;
 }
 
 /**
@@ -104,7 +104,7 @@ public int hashCode () {
  */
 @Override
 public String toString () {
-	return "Point {" + x + ", " + y + "}"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	return "Point {" + this.x + ", " + this.y + "}"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 }
 
 }

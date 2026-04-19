@@ -143,7 +143,7 @@ BrowserFunction (Browser browser, String name, boolean top, String[] frameNames,
 	for (int i = 0; i < bytes.length; i++) {
 		buffer.append (Integer.toHexString (bytes[i] & 0xff));
 	}
-	token = buffer.toString ();
+	this.token = buffer.toString ();
 	if (create) browser.webBrowser.createFunction (this);
 }
 
@@ -160,11 +160,11 @@ public void dispose () {
 }
 
 void dispose (boolean remove) {
-	if (index < 0) return;
-	if (remove) browser.webBrowser.destroyFunction (this);
-	browser = null;
-	name = functionString = null;
-	index = -1;
+	if (this.index < 0) return;
+	if (remove) this.browser.webBrowser.destroyFunction (this);
+	this.browser = null;
+	this.name = this.functionString = null;
+	this.index = -1;
 }
 
 /**
@@ -198,8 +198,8 @@ void dispose (boolean remove) {
  * </ul>
  */
 public Object function (Object[] arguments) {
-	if (index < 0) SWT.error (SWT.ERROR_FUNCTION_DISPOSED);
-	browser.checkWidget ();
+	if (this.index < 0) SWT.error (SWT.ERROR_FUNCTION_DISPOSED);
+	this.browser.checkWidget ();
 	return null;
 }
 
@@ -214,8 +214,8 @@ public Object function (Object[] arguments) {
  * </ul>
  */
 public Browser getBrowser () {
-	if (index < 0) SWT.error (SWT.ERROR_FUNCTION_DISPOSED);
-	browser.checkWidget ();
+	if (this.index < 0) SWT.error (SWT.ERROR_FUNCTION_DISPOSED);
+	this.browser.checkWidget ();
 	return browser;
 }
 
@@ -230,8 +230,8 @@ public Browser getBrowser () {
  * </ul>
  */
 public String getName () {
-	if (index < 0) SWT.error (SWT.ERROR_FUNCTION_DISPOSED);
-	browser.checkWidget ();
+	if (this.index < 0) SWT.error (SWT.ERROR_FUNCTION_DISPOSED);
+	this.browser.checkWidget ();
 	return name;
 }
 

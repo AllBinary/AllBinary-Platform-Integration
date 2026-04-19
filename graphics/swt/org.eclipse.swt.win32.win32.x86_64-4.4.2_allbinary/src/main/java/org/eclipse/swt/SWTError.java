@@ -125,8 +125,8 @@ public Throwable getCause() {
  */
 @Override
 public String getMessage () {
-	if (throwable == null) return super.getMessage ();
-	return super.getMessage () + " (" + throwable.toString () + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+	if (this.throwable == null) return super.getMessage ();
+	return super.getMessage () + " (" + this.throwable.toString () + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 }
 
 /**
@@ -140,9 +140,9 @@ public String getMessage () {
 @Override
 public void printStackTrace () {
 	super.printStackTrace ();
-	if (Library.JAVA_VERSION < Library.JAVA_VERSION(1, 4, 0) && throwable != null) {
+	if (Library.JAVA_VERSION < Library.JAVA_VERSION(1, 4, 0) && this.throwable != null) {
 		System.err.println ("*** Stack trace of contained error ***"); //$NON-NLS-1$
-		throwable.printStackTrace ();
+		this.throwable.printStackTrace ();
 	}
 }
 

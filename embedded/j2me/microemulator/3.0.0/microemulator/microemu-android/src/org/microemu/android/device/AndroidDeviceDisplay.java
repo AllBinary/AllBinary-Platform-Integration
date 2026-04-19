@@ -86,8 +86,8 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
 	        this.displayRectangleWidth = MicroEmulatorActivity.config.ORIG_DISPLAY_WIDTH;
 	        this.displayRectangleHeight = MicroEmulatorActivity.config.ORIG_DISPLAY_HEIGHT;
 		} else {
-	        displayRectangleWidth = (int) (width * (MicroEmulatorActivity.config.CANVAS_AREA_RIGHT - MicroEmulatorActivity.config.CANVAS_AREA_LEFT));
-	        displayRectangleHeight = (int) (height * (MicroEmulatorActivity.config.CANVAS_AREA_BOTTOM - MicroEmulatorActivity.config.CANVAS_AREA_TOP));
+	        this.displayRectangleWidth = (int) (width * (MicroEmulatorActivity.config.CANVAS_AREA_RIGHT - MicroEmulatorActivity.config.CANVAS_AREA_LEFT));
+	        this.displayRectangleHeight = (int) (height * (MicroEmulatorActivity.config.CANVAS_AREA_BOTTOM - MicroEmulatorActivity.config.CANVAS_AREA_TOP));
 		}
 	}
 
@@ -96,7 +96,7 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
 		if (midlet == null) {
 			midlet = getClass();
 		}
-		InputStream is = context.getResourceAsStream(midlet.getClass(), name);
+		InputStream is = this.context.getResourceAsStream(midlet.getClass(), name);
 		if (is == null) {
 			throw new IOException(name + " could not be found.");
 		}
@@ -227,11 +227,11 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
     private Timer flashBackLightTimer = null;
     
     public boolean flashBacklight(int duration) {
-    	if (flashBackLightTimer == null) {
-    		flashBackLightTimer = new Timer();
+    	if (this.flashBackLightTimer == null) {
+    		this.flashBackLightTimer = new Timer();
     	}
     	
-		PowerManager pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
+		PowerManager pm = (PowerManager) this.activity.getSystemService(Context.POWER_SERVICE);
 		final PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "");
 		wakeLock.acquire();
 		
@@ -306,13 +306,13 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
 
 	public void paintDisplayable(int x, int y, int width, int height) {
         rectangle.left = x;
-        rectangle.top = y;
-        rectangle.right = x + width;
-        rectangle.bottom = y + height;
-        for (int i = 0; i < displayRepaintListeners.size(); i++) {
-            DisplayRepaintListener l = displayRepaintListeners.get(i);
+        this.rectangle.top = y;
+        this.rectangle.right = x + width;
+        this.rectangle.bottom = y + height;
+        for (int i = 0; i < this.displayRepaintListeners.size(); i++) {
+            DisplayRepaintListener l = this.displayRepaintListeners.get(i);
             if (l != null) {
-                l.repaintInvoked(rectangle);    
+                l.repaintInvoked(this.rectangle);    
             }
         }
 	}

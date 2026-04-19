@@ -88,7 +88,7 @@ public class J2SEButton implements Button {
 		if (skinVersion >= NAME_RIMARY_SINCE_SKIN_VERSION) {
 			this.modeChange = modeChange;
 		} else {
-			this.modeChange = (functionalName == ButtonName.KEY_POUND);
+			this.modeChange = (this.functionalName == ButtonName.KEY_POUND);
 		}
 
 		if (keyCode == Integer.MIN_VALUE) {
@@ -130,7 +130,7 @@ public class J2SEButton implements Button {
 	 * @deprecated
 	 */
 	public int getKeyboardKey() {
-		if (keyboardKeys.length == 0) {
+		if (this.keyboardKeys.length == 0) {
 			return 0;
 		}
 		return keyboardKeys[0];
@@ -153,7 +153,7 @@ public class J2SEButton implements Button {
 	 * when it is impossible to map to VK keys.
 	 */
 	public char[] getKeyboardCharCodes() {
-		if (keyboardCharCodes == null) {
+		if (this.keyboardCharCodes == null) {
 			return new char[0];
 		}
 		return keyboardCharCodes.toCharArray();
@@ -171,17 +171,17 @@ public class J2SEButton implements Button {
 		char[] result = null;
 		switch (inputMode) {
 		case InputMethod.INPUT_123:
-			result = (char[]) inputToChars.get("123");
+			result = (char[]) this.inputToChars.get("123");
 			break;
 		case InputMethod.INPUT_ABC_LOWER:
-			result = (char[]) inputToChars.get("abc");
+			result = (char[]) this.inputToChars.get("abc");
 			break;
 		case InputMethod.INPUT_ABC_UPPER:
-			result = (char[]) inputToChars.get("ABC");
+			result = (char[]) this.inputToChars.get("ABC");
 			break;
 		}
 		if (result == null) {
-			result = (char[]) inputToChars.get("common");
+			result = (char[]) this.inputToChars.get("common");
 		}
 		if (result == null) {
 			result = new char[0];
@@ -191,7 +191,7 @@ public class J2SEButton implements Button {
 	}
 
 	public boolean isChar(char c, int inputMode) {
-		if (inputToChars == null) {
+		if (this.inputToChars == null) {
 			return false;
 		}
 		c = Character.toLowerCase(c);

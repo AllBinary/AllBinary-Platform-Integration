@@ -308,9 +308,9 @@ public String getToolTipText () {
  */
 public int getWidth () {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return 0;
-	long /*int*/ hwndHeader = parent.hwndHeader;
+	long /*int*/ hwndHeader = this.parent.hwndHeader;
 	if (hwndHeader == 0) return 0;
 	HDITEM hdItem = new HDITEM ();
 	hdItem.mask = OS.HDI_WIDTH;
@@ -331,10 +331,10 @@ public int getWidth () {
  */
 public void pack () {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
 	int columnWidth = 0;
-	long /*int*/ hwnd = parent.handle, hwndHeader = parent.hwndHeader;
+	long /*int*/ hwnd = this.parent.handle, hwndHeader = this.parent.hwndHeader;
 	RECT headerRect = new RECT ();
 	OS.SendMessage (hwndHeader, OS.HDM_GETITEMRECT, index, headerRect);
 	long /*int*/ hDC = OS.GetDC (hwnd);
@@ -345,13 +345,13 @@ public void pack () {
 	tvItem.hItem = OS.SendMessage (hwnd, OS.TVM_GETNEXTITEM, OS.TVGN_ROOT, 0);
 	while (tvItem.hItem != 0) {
 		OS.SendMessage (hwnd, OS.TVM_GETITEM, 0, tvItem);
-		TreeItem item = tvItem.lParam != -1 ? parent.items [(int)/*64*/tvItem.lParam] : null;
+		TreeItem item = tvItem.lParam != -1 ? this.parent.items [(int)/*64*/tvItem.lParam] : null;
 		if (item != null) {
 			int itemRight = 0;
-			if (parent.hooks (SWT.MeasureItem)) {
+			if (this.parent.hooks (SWT.MeasureItem)) {
 				int detail = (tvItem.state & OS.TVIS_SELECTED) != 0 ? SWT.SELECTED : 0;
-				Event event = parent.sendMeasureItemEvent (item, index, hDC, detail);
-				if (isDisposed () || parent.isDisposed ()) break;
+				Event event = this.parent.sendMeasureItemEvent (item, index, hDC, detail);
+				if (isDisposed () || this.parent.isDisposed ()) break;
 				itemRight = event.x + event.width;
 			} else {
 				long /*int*/ hFont = item.fontHandle (index);
@@ -366,15 +366,15 @@ public void pack () {
 	}
 	RECT rect = new RECT ();
 	int flags = OS.DT_CALCRECT | OS.DT_NOPREFIX;
-	TCHAR buffer = new TCHAR (parent.getCodePage (), text, false);
+	TCHAR buffer = new TCHAR (this.parent.getCodePage (), text, false);
 	OS.DrawText (hDC, buffer, buffer.length (), rect, flags);
 	int headerWidth = rect.right - rect.left + Tree.HEADER_MARGIN;
 	if (OS.COMCTL32_MAJOR >= 6 && OS.IsAppThemed ()) headerWidth += Tree.HEADER_EXTRA;
-	if (image != null || parent.sortColumn == this) {
+	if (image != null || this.parent.sortColumn == this) {
 		Image headerImage = null;
-		if (parent.sortColumn == this && parent.sortDirection != SWT.NONE) {
+		if (this.parent.sortColumn == this && this.parent.sortDirection != SWT.NONE) {
 			if (OS.COMCTL32_MAJOR < 6) {
-				headerImage = display.getSortImage (parent.sortDirection);
+				headerImage = display.getSortImage (this.parent.sortDirection);
 			} else {
 				headerWidth += Tree.SORT_WIDTH;
 			}
@@ -395,19 +395,19 @@ public void pack () {
 	}
 	if (newFont != 0) OS.SelectObject (hDC, oldFont);
 	OS.ReleaseDC (hwnd, hDC);
-	int gridWidth = parent.linesVisible ? Tree.GRID_WIDTH : 0;
+	int gridWidth = this.parent.linesVisible ? Tree.GRID_WIDTH : 0;
 	setWidth (Math.max (headerWidth, columnWidth + gridWidth));
 }
 
 void releaseHandle () {
 	super.releaseHandle ();
-	parent = null;
+	this.parent = null;
 }
 
 void releaseParent () {
 	super.releaseParent ();
-	if (parent.sortColumn == this) {
-		parent.sortColumn = null;
+	if (this.parent.sortColumn == this) {
+		this.parent.sortColumn = null;
 	}
 }
 
@@ -479,11 +479,11 @@ public void removeSelectionListener(SelectionListener listener) {
 public void setAlignment (int alignment) {
 	checkWidget ();
 	if ((alignment & (SWT.LEFT | SWT.RIGHT | SWT.CENTER)) == 0) return;
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1 || index == 0) return;
 	style &= ~(SWT.LEFT | SWT.RIGHT | SWT.CENTER);
 	style |= alignment & (SWT.LEFT | SWT.RIGHT | SWT.CENTER);
-	long /*int*/ hwndHeader = parent.hwndHeader;
+	long /*int*/ hwndHeader = this.parent.hwndHeader;
 	if (hwndHeader == 0) return;
 	HDITEM hdItem = new HDITEM ();
 	hdItem.mask = OS.HDI_FORMAT;
@@ -494,8 +494,8 @@ public void setAlignment (int alignment) {
 	if ((style & SWT.RIGHT) == SWT.RIGHT) hdItem.fmt |= OS.HDF_RIGHT;
 	OS.SendMessage (hwndHeader, OS.HDM_SETITEM, index, hdItem);
 	if (index != 0) {
-		long /*int*/ hwnd = parent.handle;
-		parent.forceResize ();
+		long /*int*/ hwnd = this.parent.handle;
+		this.parent.forceResize ();
 		RECT rect = new RECT (), headerRect = new RECT ();
 		OS.GetClientRect (hwnd, rect);
 		OS.SendMessage (hwndHeader, OS.HDM_GETITEMRECT, index, headerRect);
@@ -511,7 +511,7 @@ public void setImage (Image image) {
 		error (SWT.ERROR_INVALID_ARGUMENT);
 	}
 	super.setImage (image);
-	if (parent.sortColumn != this || parent.sortDirection != SWT.NONE) {
+	if (this.parent.sortColumn != this || this.parent.sortDirection != SWT.NONE) {
 		setImage (image, false, false);
 	}
 }
@@ -519,7 +519,7 @@ public void setImage (Image image) {
 void setImage (Image image, boolean sort, boolean right) {
 	int index = parent.indexOf (this);
 	if (index == -1) return;
-	long /*int*/ hwndHeader = parent.hwndHeader;
+	long /*int*/ hwndHeader = this.parent.hwndHeader;
 	if (hwndHeader == 0) return;
 	HDITEM hdItem = new HDITEM ();
 	hdItem.mask = OS.HDI_FORMAT | OS.HDI_IMAGE | OS.HDI_BITMAP;
@@ -535,7 +535,7 @@ void setImage (Image image, boolean sort, boolean right) {
 			hdItem.mask &= ~OS.HDI_BITMAP;
 			hdItem.fmt &= ~OS.HDF_BITMAP;
 			hdItem.fmt |= OS.HDF_IMAGE;
-			hdItem.iImage = parent.imageIndexHeader (image);
+			hdItem.iImage = this.parent.imageIndexHeader (image);
 		}
 		if (right) hdItem.fmt |= OS.HDF_BITMAP_ON_RIGHT;
 	} else {
@@ -590,9 +590,9 @@ public void setResizable (boolean resizable) {
 
 void setSortDirection (int direction) {
 	if (OS.COMCTL32_MAJOR >= 6) {
-		long /*int*/ hwndHeader = parent.hwndHeader;
+		long /*int*/ hwndHeader = this.parent.hwndHeader;
 		if (hwndHeader != 0) {
-			int index = parent.indexOf (this);
+			int index = this.parent.indexOf (this);
 			if (index == -1) return;
 			HDITEM hdItem = new HDITEM ();
 			hdItem.mask = OS.HDI_FORMAT | OS.HDI_IMAGE;
@@ -612,7 +612,7 @@ void setSortDirection (int direction) {
 					hdItem.fmt &= ~(OS.HDF_SORTUP | OS.HDF_SORTDOWN);
 					if (image != null) {
 						hdItem.fmt |= OS.HDF_IMAGE;
-						hdItem.iImage = parent.imageIndexHeader (image);
+						hdItem.iImage = this.parent.imageIndexHeader (image);
 					} else {
 						hdItem.fmt &= ~OS.HDF_IMAGE;
 						hdItem.mask &= ~OS.HDI_IMAGE;
@@ -621,8 +621,8 @@ void setSortDirection (int direction) {
 			}
 			OS.SendMessage (hwndHeader, OS.HDM_SETITEM, index, hdItem);
 			if (OS.COMCTL32_MAJOR >= 6 && OS.IsAppThemed ()) {
-				long /*int*/ hwnd = parent.handle;
-				parent.forceResize ();
+				long /*int*/ hwnd = this.parent.handle;
+				this.parent.forceResize ();
 				RECT rect = new RECT (), headerRect = new RECT ();
 				OS.GetClientRect (hwnd, rect);
 				OS.SendMessage (hwndHeader, OS.HDM_GETITEMRECT, index, headerRect);
@@ -648,7 +648,7 @@ public void setText (String string) {
 	checkWidget ();
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (string.equals (text)) return;
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
 	super.setText (string);
 	/*
@@ -661,11 +661,11 @@ public void setText (String string) {
 	*/
 	boolean replace = !OS.IsWinCE && OS.WIN32_VERSION <= OS.VERSION (4, 10);
 	long /*int*/ hHeap = OS.GetProcessHeap ();
-	TCHAR buffer = new TCHAR (parent.getCodePage (), fixMnemonic (string, replace), true);
+	TCHAR buffer = new TCHAR (this.parent.getCodePage (), fixMnemonic (string, replace), true);
 	int byteCount = buffer.length () * TCHAR.sizeof;
 	long /*int*/ pszText = OS.HeapAlloc (hHeap, OS.HEAP_ZERO_MEMORY, byteCount);
 	OS.MoveMemory (pszText, buffer, byteCount);
-	long /*int*/ hwndHeader = parent.hwndHeader;
+	long /*int*/ hwndHeader = this.parent.hwndHeader;
 	if (hwndHeader == 0) return;
 	HDITEM hdItem = new HDITEM ();
 	hdItem.mask = OS.HDI_TEXT;
@@ -699,11 +699,11 @@ public void setText (String string) {
  */
 public void setToolTipText (String string) {
 	checkWidget();
-	toolTipText = string;
-	long /*int*/ hwndHeaderToolTip = parent.headerToolTipHandle;
+	this.toolTipText = string;
+	long /*int*/ hwndHeaderToolTip = this.parent.headerToolTipHandle;
 	if (hwndHeaderToolTip == 0) {
-		parent.createHeaderToolTips ();
-		parent.updateHeaderToolTips ();
+		this.parent.createHeaderToolTips ();
+		this.parent.updateHeaderToolTips ();
 	}
 }
 
@@ -720,9 +720,9 @@ public void setToolTipText (String string) {
 public void setWidth (int width) {
 	checkWidget ();
 	if (width < 0) return;
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
-	long /*int*/ hwndHeader = parent.hwndHeader;
+	long /*int*/ hwndHeader = this.parent.hwndHeader;
 	if (hwndHeader == 0) return;
 	HDITEM hdItem = new HDITEM ();
 	hdItem.mask = OS.HDI_WIDTH;
@@ -730,25 +730,25 @@ public void setWidth (int width) {
 	OS.SendMessage (hwndHeader, OS.HDM_SETITEM, index, hdItem);
 	RECT headerRect = new RECT ();
 	OS.SendMessage (hwndHeader, OS.HDM_GETITEMRECT, index, headerRect);
-	parent.forceResize ();
-	long /*int*/ hwnd = parent.handle;
+	this.parent.forceResize ();
+	long /*int*/ hwnd = this.parent.handle;
 	RECT rect = new RECT ();
 	OS.GetClientRect (hwnd, rect);
 	rect.left = headerRect.left;
 	OS.InvalidateRect (hwnd, rect, true);
-	parent.setScrollWidth ();
+	this.parent.setScrollWidth ();
 }
 
 void updateToolTip (int index) {
 	long /*int*/ hwndHeaderToolTip = parent.headerToolTipHandle;
 	if (hwndHeaderToolTip != 0) {
-		long /*int*/ hwndHeader = parent.hwndHeader;
+		long /*int*/ hwndHeader = this.parent.hwndHeader;
 		RECT rect = new RECT ();
 		if (OS.SendMessage (hwndHeader, OS.HDM_GETITEMRECT, index, rect) != 0) {
 			TOOLINFO lpti = new TOOLINFO ();
 			lpti.cbSize = TOOLINFO.sizeof;
 			lpti.hwnd = hwndHeader;
-			lpti.uId = id;
+			lpti.uId = this.id;
 			lpti.left = rect.left;
 			lpti.top = rect.top;
 			lpti.right = rect.right;

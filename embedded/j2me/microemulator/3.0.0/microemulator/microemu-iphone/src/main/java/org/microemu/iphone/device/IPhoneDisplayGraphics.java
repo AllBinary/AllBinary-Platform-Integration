@@ -78,7 +78,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 		this.context = context;
 		this.height = height;
 		this.clip = new Rectangle(0, 0, width, height);
-		renderQueue = new LinkedList<Renderable>();
+		this.renderQueue = new LinkedList<Renderable>();
 		// CoreGraphics.CGContextClipToRect(canvas, CoreGraphics.CGRectMake(0,
 		// 0, width, height));
 		// flip upside down
@@ -327,8 +327,8 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
 	public void translate(final int x, final int y) {
 		super.translate(x, y);
-		clip.x -= x;
-		clip.y -= y;
+		this.clip.x -= x;
+		this.clip.y -= y;
 
 		queue(new Renderable() {
 			public void render() {
@@ -574,13 +574,13 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
 	final void flushRenderQueue() {
 		System.out.println("IPhoneDisplayGraphics.flushRenderQueue() " + renderQueue.size());
-		synchronized (renderQueue) {
+		synchronized (this.renderQueue) {
 			Scope scope = new Scope();
 			try {
-				CoreGraphics.UIGraphicsPushContext(context);
+				CoreGraphics.UIGraphicsPushContext(this.context);
 
-				while (!renderQueue.isEmpty()) {
-					Renderable renderable = renderQueue.poll();
+				while (!this.renderQueue.isEmpty()) {
+					Renderable renderable = this.renderQueue.poll();
 					renderable.render();
 				}
 			} finally {

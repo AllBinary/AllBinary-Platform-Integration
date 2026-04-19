@@ -66,15 +66,15 @@ public class MRUList implements XMLItem {
 		if (!(item instanceof XMLItem)) {
 			throw new ClassCastException(item.getClass().getName());
 		}
-		modified = true;
-		if (items.size() > maxCapacity) {
-			items.pop();
+		this.modified = true;
+		if (this.items.size() > this.maxCapacity) {
+			this.items.pop();
 		}
-		items.remove(item);
-		if (items.empty()) {
-			items.add(item);
+		this.items.remove(item);
+		if (this.items.empty()) {
+			this.items.add(item);
 		} else {
-			items.insertElementAt(item, 0);
+			this.items.insertElementAt(item, 0);
 		}
 		fireListener(item);
 		return item;
@@ -103,29 +103,29 @@ public class MRUList implements XMLItem {
 	}
 
 	public void save(XMLElement xml) {
-		if (!modified) {
+		if (!this.modified) {
 			return;
 		}
 		xml.removeChildren();
-		xml.setAttribute("maxCapacity", String.valueOf(maxCapacity));
-		for (Iterator iter = items.iterator(); iter.hasNext();) {
+		xml.setAttribute("maxCapacity", String.valueOf(this.maxCapacity));
+		for (Iterator iter = this.items.iterator(); iter.hasNext();) {
 			XMLItem element = (XMLItem) iter.next();
-			element.save(xml.addChild(itemsName));
+			element.save(xml.addChild(this.itemsName));
 		}
-		modified = false;
+		this.modified = false;
 	}
 
 	public void read(XMLElement xml) {
 		this.modified = false;
-		items.removeAllElements();
+		this.items.removeAllElements();
 		this.maxCapacity = xml.getIntAttribute("maxCapacity", MAXCAPACITY_DEFAULT);
 		for (Enumeration en = xml.enumerateChildren(); en.hasMoreElements();) {
 			XMLElement xmlChild = (XMLElement) en.nextElement();
-			if (xmlChild.getName().equals(itemsName)) {
+			if (xmlChild.getName().equals(this.itemsName)) {
 				try {
-					XMLItem element = (XMLItem) classXMLItem.newInstance();
+					XMLItem element = (XMLItem) this.classXMLItem.newInstance();
 					element.read(xmlChild);
-					items.add(element);
+					this.items.add(element);
 				} catch (InstantiationException e) {
 					throw new RuntimeException(e);
 				} catch (IllegalAccessException e) {
@@ -134,9 +134,9 @@ public class MRUList implements XMLItem {
 			}
 		}
 
-		if (!items.empty()) {
+		if (!this.items.empty()) {
 			// Fire Listener in reverse order
-			for (ListIterator iter = items.listIterator(items.size()); iter.hasPrevious();) {
+			for (ListIterator iter = this.items.listIterator(this.items.size()); iter.hasPrevious();) {
 				XMLItem element = (XMLItem) iter.previous();
 				fireListener(element);
 			}

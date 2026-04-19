@@ -134,8 +134,8 @@ public Transform(Device device, float[] elements) {
 public Transform (Device device, float m11, float m12, float m21, float m22, float dx, float dy) {
 	super(device);
 	this.device.checkGDIP();
-	handle = Gdip.Matrix_new(m11, m12, m21, m22, dx, dy);
-	if (handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
+	this.handle = Gdip.Matrix_new(m11, m12, m21, m22, dx, dy);
+	if (this.handle == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 	init();
 }
 
@@ -147,7 +147,7 @@ static float[] checkTransform(float[] elements) {
 
 void destroy() {
 	Gdip.Matrix_delete(handle);
-	handle = 0;
+	this.handle = 0;
 }
 
 /**
@@ -168,7 +168,7 @@ public void getElements(float[] elements) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	if (elements == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (elements.length < 6) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-	Gdip.Matrix_GetElements(handle, elements);
+	Gdip.Matrix_GetElements(this.handle, elements);
 }
 
 /**
@@ -183,7 +183,7 @@ public void getElements(float[] elements) {
  */
 public void identity() {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	Gdip.Matrix_SetElements(handle, 1, 0, 0, 1, 0, 0);
+	Gdip.Matrix_SetElements(this.handle, 1, 0, 0, 1, 0, 0);
 }
 
 /**
@@ -197,7 +197,7 @@ public void identity() {
  */
 public void invert() {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	if (Gdip.Matrix_Invert(handle) != 0) SWT.error(SWT.ERROR_CANNOT_INVERT_MATRIX);
+	if (Gdip.Matrix_Invert(this.handle) != 0) SWT.error(SWT.ERROR_CANNOT_INVERT_MATRIX);
 }
 
 /**
@@ -222,7 +222,7 @@ public boolean isDisposed() {
  */
 public boolean isIdentity() {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	return Gdip.Matrix_IsIdentity(handle);
+	return Gdip.Matrix_IsIdentity(this.handle);
 }
 
 /**
@@ -244,7 +244,7 @@ public void multiply(Transform matrix) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	if (matrix == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (matrix.isDisposed()) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-	Gdip.Matrix_Multiply(handle, matrix.handle, Gdip.MatrixOrderPrepend);
+	Gdip.Matrix_Multiply(this.handle, matrix.handle, Gdip.MatrixOrderPrepend);
 }
 
 /**
@@ -262,7 +262,7 @@ public void multiply(Transform matrix) {
  */
 public void rotate(float angle) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	Gdip.Matrix_Rotate(handle, angle, Gdip.MatrixOrderPrepend);
+	Gdip.Matrix_Rotate(this.handle, angle, Gdip.MatrixOrderPrepend);
 }
 
 /**
@@ -278,7 +278,7 @@ public void rotate(float angle) {
  */
 public void scale(float scaleX, float scaleY) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	Gdip.Matrix_Scale(handle, scaleX, scaleY, Gdip.MatrixOrderPrepend);
+	Gdip.Matrix_Scale(this.handle, scaleX, scaleY, Gdip.MatrixOrderPrepend);
 }
 
 /**
@@ -298,7 +298,7 @@ public void scale(float scaleX, float scaleY) {
  */
 public void setElements(float m11, float m12, float m21, float m22, float dx, float dy) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	Gdip.Matrix_SetElements(handle, m11, m12, m21, m22, dx, dy);
+	Gdip.Matrix_SetElements(this.handle, m11, m12, m21, m22, dx, dy);
 }
 
 /**
@@ -316,7 +316,7 @@ public void setElements(float m11, float m12, float m21, float m22, float dx, fl
  */
 public void shear(float shearX, float shearY) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	Gdip.Matrix_Shear(handle, shearX, shearY, Gdip.MatrixOrderPrepend);
+	Gdip.Matrix_Shear(this.handle, shearX, shearY, Gdip.MatrixOrderPrepend);
 }
 
 /** 
@@ -336,7 +336,7 @@ public void shear(float shearX, float shearY) {
 public void transform(float[] pointArray) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 	if (pointArray == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	Gdip.Matrix_TransformPoints(handle, pointArray, pointArray.length / 2);
+	Gdip.Matrix_TransformPoints(this.handle, pointArray, pointArray.length / 2);
 }
 
 /**
@@ -352,7 +352,7 @@ public void transform(float[] pointArray) {
  */
 public void translate(float offsetX, float offsetY) {
 	if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	Gdip.Matrix_Translate(handle, offsetX, offsetY, Gdip.MatrixOrderPrepend);
+	Gdip.Matrix_Translate(this.handle, offsetX, offsetY, Gdip.MatrixOrderPrepend);
 }
 
 /**

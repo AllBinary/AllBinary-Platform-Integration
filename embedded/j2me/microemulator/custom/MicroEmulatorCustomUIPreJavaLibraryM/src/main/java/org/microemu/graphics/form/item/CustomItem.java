@@ -73,8 +73,8 @@ public class CustomItem
 
     protected CustomItem(final String label, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
     {
-        labelStringComponent = new StringComponent(label, backgroundBasicColor, foregroundBasicColor);
-        commands = new Vector<Object>();
+        this.labelStringComponent = new StringComponent(label, backgroundBasicColor, foregroundBasicColor);
+        this.commands = new Vector<Object>();
     }
 
     public void addCommand(final Command cmd)
@@ -83,18 +83,18 @@ public class CustomItem
             throw new NullPointerException();
         }
 
-        if (!commands.contains(cmd))
+        if (!this.commands.contains(cmd))
         {
             // Now insert it in order
             boolean inserted = false;
 
             Command command;
-            for (int i = 0; i < commands.size(); i++)
+            for (int i = 0; i < this.commands.size(); i++)
             {
-                command = (Command) commands.elementAt(i);
+                command = (Command) this.commands.elementAt(i);
                 if (cmd.getPriority() < command.getPriority())
                 {
-                    commands.insertElementAt(cmd, i);
+                    this.commands.insertElementAt(cmd, i);
                     inserted = true;
                     break;
                 }
@@ -103,7 +103,7 @@ public class CustomItem
             if (!inserted)
             {
                 // Not inserted just place it at the end
-                commands.addElement(cmd);
+                this.commands.addElement(cmd);
             }
         }
 
@@ -172,9 +172,9 @@ public class CustomItem
 
     public void removeCommand(Command cmd)
     {
-        commands.removeElement(cmd);
-        if (defaultCommand == cmd)
-            defaultCommand = MyCommandsFactory.getInstance().NO_COMMAND;
+        this.commands.removeElement(cmd);
+        if (this.defaultCommand == cmd)
+            this.defaultCommand = MyCommandsFactory.getInstance().NO_COMMAND;
     }
 
     public void setDefaultCommand(Command cmd)
@@ -184,7 +184,7 @@ public class CustomItem
         {
             // we should repaint even if the command was added
             // because the command layout could become different
-            if (commands.contains(cmd)) {
+            if (this.commands.contains(cmd)) {
                 this.addCommand(cmd);
             }
         }
@@ -286,9 +286,9 @@ public class CustomItem
         // call the default command (if there is one)
         // however subclasses may override this behaviour
         // (ie popup choices uses select to bring the popup)
-        if (defaultCommand != null && commandListener != null)
+        if (this.defaultCommand != null && this.commandListener != null)
         {
-            commandListener.commandAction(defaultCommand, this);
+            this.commandListener.commandAction(this.defaultCommand, this);
             return true;
         }
         else
@@ -304,7 +304,7 @@ public class CustomItem
 
     int getMaximumHeight()
     {
-        if (owner != null)
+        if (this.owner != null)
         {
             return owner.getHeight() * 10;
         }
@@ -316,7 +316,7 @@ public class CustomItem
 
     int getMaximumWidth()
     {
-        if (owner != null)
+        if (this.owner != null)
         {
             return owner.getWidth() - 3;
         }

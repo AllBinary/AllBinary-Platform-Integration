@@ -51,45 +51,45 @@ public class OTAServer extends HttpServlet {
 
         String s = getInitParameter("files");
         if (s == null) {
-            files = new File(getServletContext().getRealPath("/WEB-INF/files"));
+            this.files = new File(getServletContext().getRealPath("/WEB-INF/files"));
         }
         else {
-            files = new File(s);
+            this.files = new File(s);
         }
 
-        files.mkdirs();
+        this.files.mkdirs();
 
-        login = getInitParameter("login");
-        password = getInitParameter("password");
+        this.login = getInitParameter("login");
+        this.password = getInitParameter("password");
 
-        htmlpage = new Strings();
+        this.htmlpage = new Strings();
         try {
-            htmlpage.loadFromFile(getServletContext().getRealPath("/WEB-INF/") + "/index.html");
+            this.htmlpage.loadFromFile(getServletContext().getRealPath("/WEB-INF/") + "/index.html");
         }
         catch (IOException ex) {
             try {
-                htmlpage.loadFromStream(getClass().getResourceAsStream("/index.html"));
+                this.htmlpage.loadFromStream(getClass().getResourceAsStream("/index.html"));
             }
             catch (IOException ignored) {
-                htmlpage.clear();
+                this.htmlpage.clear();
             }
         }
 
-        wmlpage = new Strings();
+        this.wmlpage = new Strings();
         try {
-            wmlpage.loadFromFile(getServletContext().getRealPath("/WEB-INF/") + "/index.wml");
+            this.wmlpage.loadFromFile(getServletContext().getRealPath("/WEB-INF/") + "/index.wml");
         }
         catch (IOException ex) {
             try {
-                wmlpage.loadFromStream(getClass().getResourceAsStream("/index.wml"));
+                this.wmlpage.loadFromStream(getClass().getResourceAsStream("/index.wml"));
             }
             catch (IOException ignored) {
             }
         }
 
-        counters = new Strings();
+        this.counters = new Strings();
         try {
-            counters.loadFromFile(getServletContext().getRealPath("/WEB-INF/") + "/counter.txt");
+            this.counters.loadFromFile(getServletContext().getRealPath("/WEB-INF/") + "/counter.txt");
         }
         catch (IOException ex) {
         }
@@ -129,7 +129,7 @@ public class OTAServer extends HttpServlet {
             listFiles(request, wmlpage, writer);
         }
         else {
-            File file = new File(files + name);
+            File file = new File(this.files + name);
             if (!file.exists()) {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 return;
@@ -186,8 +186,8 @@ public class OTAServer extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("" + new Date() + " PUT " + request.getPathInfo());
 
-        if (login != null && password != null) {
-            if (!login.equals(request.getParameter("login")) || !password.equals(request.getParameter("password"))) {
+        if (this.login != null && this.password != null) {
+            if (!this.login.equals(request.getParameter("login")) || !this.password.equals(request.getParameter("password"))) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
@@ -195,7 +195,7 @@ public class OTAServer extends HttpServlet {
 
         if ("true".equals(request.getParameter("delete"))) {
             String name = request.getPathInfo();
-            new File(files + name).delete();
+            new File(this.files + name).delete();
         }
         else {
             String name = request.getPathInfo();
@@ -203,7 +203,7 @@ public class OTAServer extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
 
-            File file = new File(files + name);
+            File file = new File(this.files + name);
             OutputStream output = new FileOutputStream(file);
             InputStream input = request.getInputStream();
             copyStreams(input, output);
@@ -216,11 +216,11 @@ public class OTAServer extends HttpServlet {
 
     private synchronized void increaseCounter(String name) {
         try {
-            String num = counters.getValue(name);
+            String num = this.counters.getValue(name);
             if (num == null) num = "0";
             int i = Integer.parseInt(num) + 1;
-            counters.setValue(name, "" + i);
-            counters.saveToFile(getServletContext().getRealPath("/WEB-INF/") + "/counter.txt");
+            this.counters.setValue(name, "" + i);
+            this.counters.saveToFile(getServletContext().getRealPath("/WEB-INF/") + "/counter.txt");
         }
         catch (Exception ignored) {
         }
@@ -238,7 +238,7 @@ public class OTAServer extends HttpServlet {
             writer.println(template.get(i));
         }
 
-        File[] list = files.listFiles();
+        File[] list = this.files.listFiles();
         if (list != null) {
             Arrays.sort(list);
 
@@ -276,7 +276,7 @@ public class OTAServer extends HttpServlet {
                                         + monthNames.substring(3 * month, 3 * month + 3) + "-" + year;
                             }
                             else if ("Counter".equals(key)) {
-                                value = counters.getValue(new File(jad.getValue("MIDlet-Jar-URL")).getName());
+                                value = this.counters.getValue(new File(jad.getValue("MIDlet-Jar-URL")).getName());
                                 if (value == null) value = "0";
                             }
                             else if ("MIDlet-Jar-URL".equals(key)) {

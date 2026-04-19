@@ -131,9 +131,9 @@ void _setText (int index, String string) {
 			if (j < i) string = new String (text, 0, j);
 		}
 	}
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	long /*int*/ hHeap = OS.GetProcessHeap ();
-	TCHAR buffer = new TCHAR (parent.getCodePage (), string, true);
+	TCHAR buffer = new TCHAR (this.parent.getCodePage (), string, true);
 	int byteCount = buffer.length () * TCHAR.sizeof;
 	long /*int*/ pszText = OS.HeapAlloc (hHeap, OS.HEAP_ZERO_MEMORY, byteCount);
 	OS.MoveMemory (pszText, buffer, byteCount); 
@@ -185,10 +185,10 @@ public Control getControl () {
  */
 public Rectangle getBounds() {
 	checkWidget();
-	int index = parent.indexOf(this);
+	int index = this.parent.indexOf(this);
 	if (index == -1) return new Rectangle (0, 0, 0, 0);
 	RECT itemRect = new RECT ();
-	OS.SendMessage (parent.handle, OS.TCM_GETITEMRECT, index, itemRect);
+	OS.SendMessage (this.parent.handle, OS.TCM_GETITEMRECT, index, itemRect);
 	return new Rectangle(itemRect.left, itemRect.top, itemRect.right - itemRect.left, itemRect.bottom - itemRect.top);
 }
 
@@ -225,20 +225,20 @@ public String getToolTipText () {
 
 void releaseHandle () {
 	super.releaseHandle ();
-	parent = null;
+	this.parent = null;
 }
 
 void releaseParent () {
 	super.releaseParent ();
-	int index = parent.indexOf (this);
-	if (index == parent.getSelectionIndex ()) {
-		if (control != null) control.setVisible (false);
+	int index = this.parent.indexOf (this);
+	if (index == this.parent.getSelectionIndex ()) {
+		if (this.control != null) this.control.setVisible (false);
 	}
 }
 
 void releaseWidget () {
 	super.releaseWidget ();
-	control = null;
+	this.control = null;
 }
 
 /**
@@ -260,18 +260,18 @@ public void setControl (Control control) {
 	checkWidget();
 	if (control != null) {
 		if (control.isDisposed()) error (SWT.ERROR_INVALID_ARGUMENT);
-		if (control.parent != parent) error (SWT.ERROR_INVALID_PARENT);
+		if (control.parent != this.parent) error (SWT.ERROR_INVALID_PARENT);
 	}
 	if (this.control != null && this.control.isDisposed ()) {
 		this.control = null;
 	}
 	Control oldControl = this.control, newControl = control;
 	this.control = control;
-	int index = parent.indexOf (this), selectionIndex = parent.getSelectionIndex();
+	int index = this.parent.indexOf (this), selectionIndex = this.parent.getSelectionIndex();
 	if (index != selectionIndex) {
 		if (newControl != null) {
 			if (selectionIndex != -1) {
-				Control selectedControl = parent.getItem(selectionIndex).getControl();
+				Control selectedControl = this.parent.getItem(selectionIndex).getControl();
 				if (selectedControl == newControl) return;
 			}
 			newControl.setVisible(false);
@@ -279,7 +279,7 @@ public void setControl (Control control) {
 		}
 	}
 	if (newControl != null) {
-		newControl.setBounds (parent.getClientArea ());
+		newControl.setBounds (this.parent.getClientArea ());
 		newControl.setVisible (true);
 	}
 	if (oldControl != null) oldControl.setVisible (false);
@@ -287,7 +287,7 @@ public void setControl (Control control) {
 
 public void setImage (Image image) {
 	checkWidget();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
 	super.setImage (image);
 	/*
@@ -301,10 +301,10 @@ public void setImage (Image image) {
 	if (OS.COMCTL32_MAJOR >= 6) {
 		if (text.indexOf ('&') != -1) _setText (index, text);
 	}
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	TCITEM tcItem = new TCITEM ();
 	tcItem.mask = OS.TCIF_IMAGE;
-	tcItem.iImage = parent.imageIndex (image);
+	tcItem.iImage = this.parent.imageIndex (image);
 	OS.SendMessage (hwnd, OS.TCM_SETITEM, index, tcItem);
 }
 /**
@@ -337,7 +337,7 @@ public void setText (String string) {
 	checkWidget();
 	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (string.equals (text)) return;
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
 	super.setText (string);
 	_setText (index, string);
@@ -345,7 +345,7 @@ public void setText (String string) {
 
 boolean updateTextDirection(int textDirection) {
 	if (super.updateTextDirection(textDirection)) {
-		int index = parent.indexOf (this);
+		int index = this.parent.indexOf (this);
 		if (index != -1) {
 			if ((textDirection & SWT.RIGHT_TO_LEFT) != 0) {
 				_setText(index, RLE + text);
@@ -381,7 +381,7 @@ boolean updateTextDirection(int textDirection) {
  */
 public void setToolTipText (String string) {
 	checkWidget();
-	toolTipText = string;
+	this.toolTipText = string;
 }
 
 }

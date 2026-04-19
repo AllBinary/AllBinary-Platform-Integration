@@ -68,7 +68,7 @@ void createCOMInterfaces () {
 
 int decideDestinationWithSuggestedFilename (long /*int*/ download, long /*int*/ filename) {
 	String name = WebKit.extractBSTR (filename);
-	FileDialog dialog = new FileDialog (browser.getShell(), SWT.SAVE);
+	FileDialog dialog = new FileDialog (this.browser.getShell(), SWT.SAVE);
 	dialog.setText (SWT.getMessage ("SWT_FileDownload")); //$NON-NLS-1$
 	dialog.setFileName (name);
 	dialog.setOverwrite (true);
@@ -94,22 +94,22 @@ int decideDestinationWithSuggestedFilename (long /*int*/ download, long /*int*/ 
 
 int didBegin (long /*int*/ download) {
 	new IWebDownload (download).AddRef ();
-	status = -1;
+	this.status = -1;
 	size = 0;
 	totalSize = 0;
-	url = null;
+	this.url = null;
 	return COM.S_OK;
 }
 
 int didFailWithError (long /*int*/ download, long /*int*/ error) {
 	new IWebDownload (download).Release ();
-	status = DOWNLOAD_ERROR;
+	this.status = DOWNLOAD_ERROR;
 	return COM.S_OK;
 }
 
 int didFinish (long /*int*/ download) {
 	new IWebDownload (download).Release ();
-	status = DOWNLOAD_FINISHED;
+	this.status = DOWNLOAD_FINISHED;
 	return COM.S_OK;
 }
 
@@ -127,7 +127,7 @@ int didReceiveResponse (long /*int*/ download, long /*int*/ response) {
 		long /*int*/[] result = new long /*int*/[1];
 		hr = urlResponse.URL (result);
 		if (hr == COM.S_OK && result[0] != 0) {
-			url = WebKit.extractBSTR (result[0]);
+			this.url = WebKit.extractBSTR (result[0]);
 			COM.SysFreeString (result[0]);
 		}
 	}
@@ -135,9 +135,9 @@ int didReceiveResponse (long /*int*/ download, long /*int*/ response) {
 }
 
 void disposeCOMInterfaces () {
-	if (iWebDownloadDelegate != null) {
-		iWebDownloadDelegate.dispose ();
-		iWebDownloadDelegate = null;
+	if (this.iWebDownloadDelegate != null) {
+		this.iWebDownloadDelegate.dispose ();
+		this.iWebDownloadDelegate = null;
 	}	
 }
 
@@ -157,7 +157,7 @@ void openDownloadWindow (final IWebDownload download, String name) {
 	Label nameLabel = new Label (shell, SWT.WRAP);
 	nameLabel.setText (Compatibility.getMessage ("SWT_Download_Location", new Object[] {name, url})); //$NON-NLS-1$
 	GridData data = new GridData ();
-	Monitor monitor = browser.getMonitor ();
+	Monitor monitor = this.browser.getMonitor ();
 	int maxWidth = monitor.getBounds ().width / 2;
 	int width = nameLabel.computeSize (SWT.DEFAULT, SWT.DEFAULT).x;
 	data.widthHint = Math.min (width, maxWidth);
@@ -184,7 +184,7 @@ void openDownloadWindow (final IWebDownload download, String name) {
 	};
 	cancel.addListener (SWT.Selection, cancelListener);
 
-	final Display display = browser.getDisplay ();
+	final Display display = this.browser.getDisplay ();
 	final int INTERVAL = 500;
 	display.timerExec (INTERVAL, new ARunnable () {
 		public void run () {
@@ -219,13 +219,13 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	COM.MoveMemory (guid, riid, GUID.sizeof);
 
 	if (COM.IsEqualGUID (guid, COM.IIDIUnknown)) {
-		COM.MoveMemory (ppvObject, new long /*int*/[] {iWebDownloadDelegate.getAddress ()}, OS.PTR_SIZEOF);
-		new IUnknown (iWebDownloadDelegate.getAddress ()).AddRef ();
+		COM.MoveMemory (ppvObject, new long /*int*/[] {this.iWebDownloadDelegate.getAddress ()}, OS.PTR_SIZEOF);
+		new IUnknown (this.iWebDownloadDelegate.getAddress ()).AddRef ();
 		return COM.S_OK;
 	}
 	if (COM.IsEqualGUID (guid, WebKit_win32.IID_IWebDownloadDelegate)) {
-		COM.MoveMemory (ppvObject, new long /*int*/[] {iWebDownloadDelegate.getAddress ()}, OS.PTR_SIZEOF);
-		new IUnknown (iWebDownloadDelegate.getAddress ()).AddRef ();
+		COM.MoveMemory (ppvObject, new long /*int*/[] {this.iWebDownloadDelegate.getAddress ()}, OS.PTR_SIZEOF);
+		new IUnknown (this.iWebDownloadDelegate.getAddress ()).AddRef ();
 		return COM.S_OK;
 	}
 
@@ -235,7 +235,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		disposeCOMInterfaces ();
 	}
 	return refCount;

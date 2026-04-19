@@ -89,7 +89,7 @@ public class XYConstraints implements Cloneable {
 	 * Returns the hashcode for this XYConstraints.
 	 */
 	public int hashCode() {
-		return x ^ (y * 37) ^ (width * 43) ^ (height * 47);
+		return x ^ (this.y * 37) ^ (width * 43) ^ (height * 47);
 	}
 
 	/**
@@ -98,16 +98,16 @@ public class XYConstraints implements Cloneable {
 	public boolean equals(Object that) {
 		if (that instanceof XYConstraints) {
 			XYConstraints other = (XYConstraints) that;
-			return other.x == x && other.y == y && other.width == width && other.height == height;
+			return other.x == this.x && other.y == this.y && other.width == width && other.height == height;
 		}
 		return false;
 	}
 
 	public Object clone() {
-		return new XYConstraints(x, y, width, height);
+		return new XYConstraints(this.x, y, width, height);
 	}
 
 	public String toString() {
-		return "XYConstraints[" + x + "," + y + "," + width + "," + height + "]";
+		return "XYConstraints[" + this.x + "," + this.y + "," + width + "," + height + "]";
 	}
 }

@@ -379,9 +379,9 @@ void setBounds (int x, int y, int width, int height, int flags) {
 	* get the scroll bar to recompute the size of the flashing cursor.
 	*/
 	if (OS.GetFocus () == handle) {
-		ignoreFocus = true;
+		this.ignoreFocus = true;
 		OS.SendMessage (handle, OS.WM_SETFOCUS, 0, 0);
-		ignoreFocus = false;
+		this.ignoreFocus = false;
 	}
 }
 
@@ -499,9 +499,9 @@ boolean SetScrollInfo (long /*int*/ hwnd, int flags, SCROLLINFO info, boolean fR
 	* cursor.
 	*/
 	if (OS.GetFocus () == handle) {
-		ignoreFocus = true;
+		this.ignoreFocus = true;
 		OS.SendMessage (handle, OS.WM_SETFOCUS, 0, 0);
-		ignoreFocus = false;
+		this.ignoreFocus = false;
 	}
 	return result;
 }
@@ -722,7 +722,7 @@ LRESULT WM_LBUTTONDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 }
 
 LRESULT WM_SETFOCUS (long /*int*/ wParam, long /*int*/ lParam) {
-	if (ignoreFocus) return null;
+	if (this.ignoreFocus) return null;
 	return super.WM_SETFOCUS (wParam, lParam);
 }
 

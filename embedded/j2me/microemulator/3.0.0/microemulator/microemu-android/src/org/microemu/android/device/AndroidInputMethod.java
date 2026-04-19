@@ -52,7 +52,7 @@ public class AndroidInputMethod extends InputMethod {
         
 	public void buttonPressed(int keyCode) {
 		if (DeviceFactory.getDevice().hasRepeatEvents() && inputMethodListener == null) {
-			if (repeatModeKeyCode == keyCode) {
+			if (this.repeatModeKeyCode == keyCode) {
 				MIDletAccess ma = MIDletBridge.getMIDletAccess();
 				if (ma == null) {
 					return;

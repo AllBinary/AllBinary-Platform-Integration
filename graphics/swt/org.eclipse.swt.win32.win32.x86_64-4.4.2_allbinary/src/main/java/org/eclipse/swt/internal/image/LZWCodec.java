@@ -206,8 +206,8 @@ int encodeLoop() {
 			}
 		} else {
 			nextPutCode(clearCode);
-			for (int i = 0; i < nodeStack.length; i++)
-				nodeStack[i].children = null;
+			for (int i = 0; i < this.nodeStack.length; i++)
+				this.nodeStack[i].children = null;
 			codeSize = bitsPerPixel + 1;
 			codeMask = MASK_TABLE[codeSize - 1];
 			currentSlot = newCodes;
@@ -235,8 +235,8 @@ void initializeForDecoding() {
 	suffix = new int[4096];
 	prefix = new int[4096];
 	block = new byte[256];
-	imageWidth = image.width;
-	imageHeight = image.height;
+	imageWidth = this.image.width;
+	imageHeight = this.image.height;
 }
 /**
  * Initialize the receiver for encoding the given
@@ -244,7 +244,7 @@ void initializeForDecoding() {
  */
 void initializeForEncoding() {
 	interlaced = false;
-	bitsPerPixel = image.depth;
+	bitsPerPixel = this.image.depth;
 	codeSize = bitsPerPixel + 1;
 	topSlot = 1 << codeSize;
 	clearCode = 1 << bitsPerPixel;
@@ -256,16 +256,16 @@ void initializeForEncoding() {
 	blockSize = 255;
 	block = new byte[blockSize];
 	block[0] = (byte)(blockSize - 1);
-	nodeStack = new LZWNode[1 << bitsPerPixel];
-	for (int i = 0; i < nodeStack.length; i++) {
+	this.nodeStack = new LZWNode[1 << bitsPerPixel];
+	for (int i = 0; i < this.nodeStack.length; i++) {
 		LZWNode node = new LZWNode();
 		node.code = i + 1;
 		node.prefix = -1;
 		node.suffix = i + 1;
-		nodeStack[i] = node;
+		this.nodeStack[i] = node;
 	}
-	imageWidth = image.width;
-	imageHeight = image.height;
+	imageWidth = this.image.width;
+	imageHeight = this.image.height;
 	imageY = -1;
 	lineArray = new byte[imageWidth];
 	imageX = imageWidth + 1; // Force a read
@@ -326,10 +326,10 @@ int nextPixel() {
  * Copy a row of pixel values from the image.
  */
 void nextPixels(byte[] buf, int lineWidth) {
-	if (image.depth == 8) {
-		System.arraycopy(image.data, imageY * image.bytesPerLine, buf, 0, lineWidth);
+	if (this.image.depth == 8) {
+		System.arraycopy(this.image.data, imageY * this.image.bytesPerLine, buf, 0, lineWidth);
 	} else {
-		image.getPixels(0, imageY, lineWidth, buf, 0);
+		this.image.getPixels(0, imageY, lineWidth, buf, 0);
 	}
 }
 /**
@@ -388,15 +388,15 @@ void nextPutCode(int aCode) {
  * Copy a row of pixel values to the image.
  */
 void nextPutPixels(byte[] buf) {
-	if (image.depth == 8) {
+	if (this.image.depth == 8) {
 		// Slight optimization for depth = 8.
-		int start = line * image.bytesPerLine;
+		int start = line * this.image.bytesPerLine;
 		for (int i = 0; i < imageWidth; i++)
-			image.data[start + i] = buf[i];
+			this.image.data[start + i] = buf[i];
 	} else {
-		image.setPixels(0, line, imageWidth, buf, 0);
+		this.image.setPixels(0, line, imageWidth, buf, 0);
 	}
-	if (interlaced) {
+	if (this.interlaced) {
 		if (pass == 1) {
 			copyRow(buf, 7);
 			line += 8;
@@ -418,8 +418,8 @@ void nextPutPixels(byte[] buf) {
 			else if (pass == 4) line = 1;
 			else if (pass == 5) line = 0;
 			if (pass < 5) {
-				if (loader.hasListeners()) {
-					ImageData imageCopy = (ImageData) image.clone();
+				if (this.loader.hasListeners()) {
+					ImageData imageCopy = (ImageData) this.image.clone();
 					loader.notifyListeners(
 						new ImageLoaderEvent(loader, imageCopy, pass - 2, false));
 				}
@@ -437,7 +437,7 @@ void nextPutPixels(byte[] buf) {
 void copyRow(byte[] buf, int copies) {
 	for (int i = 1; i <= copies; i++) {
 		if (line + i < imageHeight) {
-			image.setPixels(0, line + i, imageWidth, buf, 0);
+			this.image.setPixels(0, line + i, imageWidth, buf, 0);
 		}
 	}
 }
@@ -449,12 +449,12 @@ void copyRow(byte[] buf, int copies) {
 int readBlock() {
 	int size = -1;
 	try {
-		size = inputStream.read();
+		size = this.inputStream.read();
 		if (size == -1) {
 			SWT.error(SWT.ERROR_INVALID_IMAGE);
 		}
 		block[0] = (byte)size;
-		size = inputStream.read(block, 1, size);
+		size = this.inputStream.read(block, 1, size);
 		if (size == -1) {
 			SWT.error(SWT.ERROR_INVALID_IMAGE);
 		}
@@ -469,7 +469,7 @@ int readBlock() {
  */
 void writeBlock() {
 	try {
-		outputStream.write(block, 0, (block[0] & 0xFF) + 1);
+		this.outputStream.write(block, 0, (block[0] & 0xFF) + 1);
 	} catch (Exception e) {
 		SWT.error(SWT.ERROR_IO, e);
 	}

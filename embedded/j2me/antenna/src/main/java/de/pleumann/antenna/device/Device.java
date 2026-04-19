@@ -37,17 +37,17 @@ public class Device extends Task
 	
 	public void execute() throws BuildException
 	{
-		if (m_result == null)
+		if (this.m_result == null)
 		{
 			throw new BuildException("result property is not set");
 		}
 
-		if (m_name == null)
+		if (this.m_name == null)
 		{
 			throw new BuildException("name property is not set");
 		}
 
-		if (m_op == null)
+		if (this.m_op == null)
 		{
 			throw new BuildException("op property is not set");
 		}
@@ -57,64 +57,64 @@ public class Device extends Task
 			throw new BuildException("key property not set");
 		}
 		
-		DeviceProps deviceProps = Devices.getDevice(m_name);
+		DeviceProps deviceProps = Devices.getDevice(this.m_name);
 		if (deviceProps == null) 
 		{
-			throw new BuildException("Unsupported device \"" + m_name + "\"");
+			throw new BuildException("Unsupported device \"" + this.m_name + "\"");
 		}
 		
-		if (m_op.equalsIgnoreCase("has_capability"))
+		if (this.m_op.equalsIgnoreCase("has_capability"))
 		{
-			getProject().setProperty(m_result, "" + deviceProps.hasCapability(m_key));
+			getProject().setProperty(this.m_result, "" + deviceProps.hasCapability(this.m_key));
 		}
 		else
-		if (m_op.equalsIgnoreCase("get_capability"))
+		if (this.m_op.equalsIgnoreCase("get_capability"))
 		{
-			String capability = deviceProps.getCapability(m_key);
-			getProject().setProperty(m_result, capability == null ? "" : capability);
+			String capability = deviceProps.getCapability(this.m_key);
+			getProject().setProperty(this.m_result, capability == null ? "" : capability);
 		}
 		else
-		if (m_op.equalsIgnoreCase("in_group"))
+		if (this.m_op.equalsIgnoreCase("in_group"))
 		{
-			getProject().setProperty(m_result, "" + deviceProps.inGroup(m_key));
+			getProject().setProperty(this.m_result, "" + deviceProps.inGroup(this.m_key));
 		}
 		else
-		if (m_op.equalsIgnoreCase("has_capability"))
+		if (this.m_op.equalsIgnoreCase("has_capability"))
 		{
-			getProject().setProperty(m_result, "" + deviceProps.hasCapability(m_key));
+			getProject().setProperty(this.m_result, "" + deviceProps.hasCapability(this.m_key));
 		}
 		else
-		if (m_op.equalsIgnoreCase("support_sound"))
+		if (this.m_op.equalsIgnoreCase("support_sound"))
 		{
-			getProject().setProperty(m_result, "" + deviceProps.supportSound(m_key));
+			getProject().setProperty(this.m_result, "" + deviceProps.supportSound(this.m_key));
 		}
 		else
-		if (m_op.equalsIgnoreCase("support_video"))
+		if (this.m_op.equalsIgnoreCase("support_video"))
 		{
-			getProject().setProperty(m_result, "" + deviceProps.supportVideo(m_key));
+			getProject().setProperty(this.m_result, "" + deviceProps.supportVideo(this.m_key));
 		}
 		else
-		if (m_op.equalsIgnoreCase("support_package"))
+		if (this.m_op.equalsIgnoreCase("support_package"))
 		{
-			getProject().setProperty(m_result, "" + deviceProps.supportsPackage(m_key));
+			getProject().setProperty(this.m_result, "" + deviceProps.supportsPackage(this.m_key));
 		}
 		else
-		if (m_op.equalsIgnoreCase("has_bug"))
+		if (this.m_op.equalsIgnoreCase("has_bug"))
 		{
-			getProject().setProperty(m_result, "" + deviceProps.hasBug(m_key));
+			getProject().setProperty(this.m_result, "" + deviceProps.hasBug(this.m_key));
 		}
 		else
-		if (m_op.equalsIgnoreCase("translate"))
+		if (this.m_op.equalsIgnoreCase("translate"))
 		{
-			getProject().setProperty(m_result, Util.expandMacros(m_key, deviceProps.getCapabilities()));
+			getProject().setProperty(this.m_result, Util.expandMacros(this.m_key, deviceProps.getCapabilities()));
 		}
 		else
-			throw new BuildException("Unsupported operation : " + m_op);
+			throw new BuildException("Unsupported operation : " + this.m_op);
 	}
 
 	public void setName(String name)
 	{
-		m_name = name;
+		this.m_name = name;
 	}
 
 	public void setResult(String result)
@@ -134,7 +134,7 @@ public class Device extends Task
 		{
 			if (op.equals(cap[i]))
 			{
-				m_op = op;
+				this.m_op = op;
 				return;
 			}
 		}
@@ -158,6 +158,6 @@ public class Device extends Task
 
 	public void setKey(String key)
 	{
-		m_key = key;
+		this.m_key = key;
 	}
 }

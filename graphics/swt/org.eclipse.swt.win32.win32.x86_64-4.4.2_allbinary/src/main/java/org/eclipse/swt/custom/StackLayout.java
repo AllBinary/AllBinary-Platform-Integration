@@ -99,8 +99,8 @@ protected Point computeSize(Composite composite, int wHint, int hHint, boolean f
 		maxWidth = Math.max(size.x, maxWidth);
 		maxHeight = Math.max(size.y, maxHeight);
 	}
-	int width = maxWidth + 2 * marginWidth;
-	int height = maxHeight + 2 * marginHeight;
+	int width = maxWidth + 2 * this.marginWidth;
+	int height = maxHeight + 2 * this.marginHeight;
 	if (wHint != SWT.DEFAULT) width = wHint;
 	if (hHint != SWT.DEFAULT) height = hHint;
 	return new Point(width, height);
@@ -115,13 +115,13 @@ protected boolean flushCache(Control control) {
 protected void layout(Composite composite, boolean flushCache) {
 	Control children[] = composite.getChildren();
 	Rectangle rect = composite.getClientArea();
-	rect.x += marginWidth;
-	rect.y += marginHeight;
-	rect.width -= 2 * marginWidth;
-	rect.height -= 2 * marginHeight;
+	rect.x += this.marginWidth;
+	rect.y += this.marginHeight;
+	rect.width -= 2 * this.marginWidth;
+	rect.height -= 2 * this.marginHeight;
 	for (int i = 0; i < children.length; i++) {
 		children[i].setBounds(rect);
-		children[i].setVisible(children[i] == topControl);
+		children[i].setVisible(children[i] == this.topControl);
 	}
 }
 
@@ -141,9 +141,9 @@ String getName () {
 @Override
 public String toString () {
  	String string = getName ()+" {";
- 	if (marginWidth != 0) string += "marginWidth="+marginWidth+" ";
- 	if (marginHeight != 0) string += "marginHeight="+marginHeight+" ";
- 	if (topControl != null) string += "topControl="+topControl+" ";
+ 	if (this.marginWidth != 0) string += "marginWidth="+this.marginWidth+" ";
+ 	if (this.marginHeight != 0) string += "marginHeight="+this.marginHeight+" ";
+ 	if (this.topControl != null) string += "topControl="+this.topControl+" ";
  	string = string.trim();
  	string += "}";
  	return string;

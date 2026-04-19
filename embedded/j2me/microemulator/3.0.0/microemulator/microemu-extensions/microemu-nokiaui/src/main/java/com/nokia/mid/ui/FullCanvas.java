@@ -105,13 +105,13 @@ class NokiaCommandListener implements CommandListener
     
 	NokiaCommandListener(FullCanvas f)
 	{
-		fc=f;
+		this.fc=f;
 	}
     
     
 	public void commandAction(Command c, Displayable d)
 	{
-		fc.press(((NokiaCommand)c).getKey());
+		this.fc.press(((NokiaCommand)c).getKey());
 		//this.keyReleased(((NokiaCommand)c).getKey());
 	}
 	

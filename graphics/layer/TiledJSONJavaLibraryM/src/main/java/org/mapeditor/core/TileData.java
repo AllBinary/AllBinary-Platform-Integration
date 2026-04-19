@@ -161,8 +161,8 @@ public class TileData {
      */
     
     public BasicArrayList getObjectgroup() {
-        if (objectgroup == null) {
-            objectgroup = new BasicArrayList();
+        if (this.objectgroup == null) {
+            this.objectgroup = new BasicArrayList();
         }
         return this.objectgroup;
     }

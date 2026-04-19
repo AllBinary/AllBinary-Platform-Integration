@@ -20,7 +20,7 @@ class PngPlteChunk extends PngChunk {
 
 PngPlteChunk(PaletteData palette) {
 	super(palette.getRGBs().length * 3);
-	paletteSize = length / 3;
+	this.paletteSize = length / 3;
 	setType(TYPE_PLTE);
 	setPaletteData(palette);
 	setCRC(computeCRC());
@@ -28,7 +28,7 @@ PngPlteChunk(PaletteData palette) {
 
 PngPlteChunk(byte[] reference){
 	super(reference);
-	paletteSize = length / 3;
+	this.paletteSize = length / 3;
 }
 
 @Override
@@ -109,18 +109,18 @@ void validate(PngFileReadState readState, PngIhdrChunk headerChunk) {
 	// Palettes cannot have more entries than 2^bitDepth
 	// where bitDepth is the bit depth of the image given
 	// in the IHDR chunk.
-	if (1 << headerChunk.getBitDepth() < paletteSize) {
+	if (1 << headerChunk.getBitDepth() < this.paletteSize) {
 		SWT.error(SWT.ERROR_INVALID_IMAGE);
 	}
 	
 	// Palettes cannot have more than 256 entries.
-	if (256 < paletteSize) SWT.error(SWT.ERROR_INVALID_IMAGE);
+	if (256 < this.paletteSize) SWT.error(SWT.ERROR_INVALID_IMAGE);
 }
 
 @Override
 void contributeToString(StringBuffer buffer) {
 	buffer.append("\n\tPalette size:");
-	buffer.append(paletteSize);
+	buffer.append(this.paletteSize);
 }
 
 }

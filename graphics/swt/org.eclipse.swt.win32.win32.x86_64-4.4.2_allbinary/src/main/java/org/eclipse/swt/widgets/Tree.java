@@ -432,16 +432,16 @@ LRESULT CDDS_ITEMPOSTPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int
 	OS.GetClientRect (scrolledHandle (), clientRect);
 	if (hwndHeader != 0) {
 		OS.MapWindowPoints (hwndParent, handle, clientRect, 2);
-		if (columnCount != 0) {
-			order = new int [columnCount];
+		if (this.columnCount != 0) {
+			order = new int [this.columnCount];
 			OS.SendMessage (hwndHeader, OS.HDM_GETORDERARRAY, columnCount, order);
 		}
 	}
 	int sortIndex = -1, clrSortBk = -1;
 	if (OS.COMCTL32_MAJOR >= 6 && OS.IsAppThemed ()) {
-		if (sortColumn != null && sortDirection != SWT.NONE) {
+		if (this.sortColumn != null && sortDirection != SWT.NONE) {
 			if (findImageControl () == null) {
-				sortIndex = indexOf (sortColumn);
+				sortIndex = indexOf (this.sortColumn);
 				clrSortBk = getSortColumnPixel ();
 			}
 		}
@@ -809,7 +809,7 @@ LRESULT CDDS_ITEMPOSTPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int
 							if (clrTextBk != -1) clrTextBk = OS.SetBkColor (hDC, clrTextBk);
 							int flags = OS.DT_NOPREFIX | OS.DT_SINGLELINE | OS.DT_VCENTER;
 							if (i != 0) flags |= OS.DT_ENDELLIPSIS;
-							TreeColumn column = columns != null ? columns [index] : null;
+							TreeColumn column = this.columns != null ? this.columns [index] : null;
 							if (column != null) {
 								if ((column.style & SWT.CENTER) != 0) flags |= OS.DT_CENTER;
 								if ((column.style & SWT.RIGHT) != 0) flags |= OS.DT_RIGHT;
@@ -871,7 +871,7 @@ LRESULT CDDS_ITEMPOSTPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int
 				int cellHeight = cellRect.bottom - cellRect.top;
 				gc.setClipping (cellRect.left, cellRect.top, cellWidth, cellHeight);
 				sendEvent (SWT.PaintItem, event);
-				if (data.focusDrawn) focusRect = null;
+				if (data.focusDrawn) this.focusRect = null;
 				event.gc = null;
 				gc.dispose ();
 				OS.RestoreDC (hDC, nSavedDC);
@@ -896,7 +896,7 @@ LRESULT CDDS_ITEMPOSTPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int
 		OS.SetRect (rect, nmcd.left, nmcd.top, nmcd.right, nmcd.bottom);
 		OS.DrawEdge (hDC, rect, OS.BDR_SUNKENINNER, OS.BF_BOTTOM);
 	}
-	if (!ignoreDrawFocus && focusRect != null) {
+	if (!ignoreDrawFocus && this.focusRect != null) {
 		OS.DrawFocusRect (hDC, focusRect);
 		focusRect = null;
 	} else {
@@ -954,7 +954,7 @@ LRESULT CDDS_ITEMPREPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*
 		return new LRESULT (hFont == -1 ? OS.CDRF_DODEFAULT : OS.CDRF_NEWFONT);
 	}
 	RECT clipRect = null;
-	if (columnCount != 0) {
+	if (this.columnCount != 0) {
 		boolean clip = !printClient;
 		if (!OS.IsWinCE && OS.WIN32_VERSION >= OS.VERSION (6, 0)) {
 			clip = true;
@@ -976,9 +976,9 @@ LRESULT CDDS_ITEMPREPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*
 	}
 	int clrSortBk = -1;
 	if (OS.COMCTL32_MAJOR >= 6 && OS.IsAppThemed ()) {
-		if (sortColumn != null && sortDirection != SWT.NONE) {
+		if (this.sortColumn != null && sortDirection != SWT.NONE) {
 			if (findImageControl () == null) {
-				if (indexOf (sortColumn) == index) {
+				if (indexOf (this.sortColumn) == index) {
 					clrSortBk = getSortColumnPixel ();
 					if (clrTextBk == -1) clrTextBk = clrSortBk; 
 				}
@@ -1077,7 +1077,7 @@ LRESULT CDDS_ITEMPREPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*
 				boolean draw = !selected && !hot;
 				if (!explorerTheme && selected) draw = !ignoreDrawSelection;
 				if (draw) {
-					if (columnCount == 0) {
+					if (this.columnCount == 0) {
 						if ((style & SWT.FULL_SELECTION) != 0) {
 							fillBackground (hDC, clrTextBk, rect);
 						} else {
@@ -1124,7 +1124,7 @@ LRESULT CDDS_ITEMPREPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*
 					* is to emulate TVS_FULLROWSELECT.
 					*/
 					if ((style & SWT.FULL_SELECTION) != 0) {
-						if ((style & SWT.FULL_SELECTION) != 0 && columnCount == 0) {
+						if ((style & SWT.FULL_SELECTION) != 0 && this.columnCount == 0) {
 							fillBackground (hDC, OS.GetBkColor (hDC), rect);
 						} else {
 							fillBackground (hDC, OS.GetBkColor (hDC), cellRect);
@@ -1167,7 +1167,7 @@ LRESULT CDDS_ITEMPREPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*
 				}
 				nmcd.uItemState &= ~OS.CDIS_FOCUS;
 				OS.MoveMemory (lParam, nmcd, NMTVCUSTOMDRAW.sizeof);
-				focusRect = textRect;
+				this.focusRect = textRect;
 			}
 			if (explorerTheme) {
 				if (selected || (hot && ignoreDrawHot)) nmcd.uItemState &= ~OS.CDIS_HOT;
@@ -1226,7 +1226,7 @@ LRESULT CDDS_ITEMPREPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*
 			if (clrTextBk != -1) {
 				int bits = OS.GetWindowLong (handle, OS.GWL_STYLE);
 				if ((bits & OS.TVS_FULLROWSELECT) == 0) {
-					if (columnCount != 0 && hwndHeader != 0) {
+					if (this.columnCount != 0 && hwndHeader != 0) {
 						RECT rect = new RECT ();
 						HDITEM hdItem = new HDITEM ();
 						hdItem.mask = OS.HDI_WIDTH;
@@ -1290,7 +1290,7 @@ LRESULT CDDS_ITEMPREPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*
 					if (clrTextBk != -1) {
 						if ((style & SWT.FULL_SELECTION) != 0) {
 							RECT rect = new RECT ();
-							if (columnCount != 0) {
+							if (this.columnCount != 0) {
 								HDITEM hdItem = new HDITEM ();
 								hdItem.mask = OS.HDI_WIDTH;
 								OS.SendMessage (hwndHeader, OS.HDM_GETITEM, index, hdItem);
@@ -1338,9 +1338,9 @@ LRESULT CDDS_POSTPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*/ l
 	if (ignoreCustomDraw) return null;
 	if (OS.IsWindowVisible (handle)) {
 		if (OS.COMCTL32_MAJOR >= 6 && OS.IsAppThemed ()) {
-			if (sortColumn != null && sortDirection != SWT.NONE) {
+			if (this.sortColumn != null && sortDirection != SWT.NONE) {
 				if (findImageControl () == null) {
-					int index = indexOf (sortColumn);
+					int index = indexOf (this.sortColumn);
 					if (index != -1) {
 						int top = nmcd.top;
 						/*
@@ -1389,7 +1389,7 @@ LRESULT CDDS_POSTPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int*/ l
 				RECT rect = new RECT ();
 				HDITEM hdItem = new HDITEM ();
 				hdItem.mask = OS.HDI_WIDTH;
-				for (int i=0; i<columnCount; i++) {
+				for (int i=0; i<this.columnCount; i++) {
 					int index = (int)/*64*/OS.SendMessage (hwndHeader, OS.HDM_ORDERTOINDEX, i, 0);
 					OS.SendMessage (hwndHeader, OS.HDM_GETITEM, index, hdItem);
 					OS.SetRect (rect, x, nmcd.top, x + hdItem.cxy, nmcd.bottom);
@@ -1646,8 +1646,8 @@ boolean checkData (TreeItem item, int index, boolean redraw) {
 		Event event = new Event ();
 		event.item = item;
 		event.index = index;
-		TreeItem oldItem = currentItem;
-		currentItem = item;
+		TreeItem oldItem = this.currentItem;
+		this.currentItem = item;
 		/*
 		* Bug in Windows.  If the tree scrolls during WM_NOTIFY
 		* with TVN_GETDISPINFO, pixel corruption occurs.  The fix
@@ -1657,7 +1657,7 @@ boolean checkData (TreeItem item, int index, boolean redraw) {
 		long /*int*/ hTopItem = OS.SendMessage (handle, OS.TVM_GETNEXTITEM, OS.TVGN_FIRSTVISIBLE, 0);
 		sendEvent (SWT.SetData, event);
 		//widget could be disposed at this point
-		currentItem = oldItem;
+		this.currentItem = oldItem;
 		if (isDisposed () || item.isDisposed ()) return false;
 		if (redraw) item.redraw ();
 		if (hTopItem != OS.SendMessage (handle, OS.TVM_GETNEXTITEM, OS.TVGN_FIRSTVISIBLE, 0)) {
@@ -1738,7 +1738,7 @@ void clear (long /*int*/ hItem, TVITEM tvItem) {
 	tvItem.hItem = hItem;
 	TreeItem item = null;
 	if (OS.SendMessage (handle, OS.TVM_GETITEM, 0, tvItem) != 0) {
-		item = tvItem.lParam != -1 ? items [(int)/*64*/tvItem.lParam] : null;
+		item = tvItem.lParam != -1 ? this.items [(int)/*64*/tvItem.lParam] : null;
 	}
 	if (item != null) {
 		if ((style & SWT.VIRTUAL) != 0 && !item.cached) return;
@@ -1772,9 +1772,9 @@ public void clearAll (boolean all) {
 	if (hItem == 0) return;
 	if (all) {
 		boolean redraw = false;
-		for (int i=0; i<items.length; i++) {
-			TreeItem item = items [i];
-			if (item != null && item != currentItem) {
+		for (int i=0; i<this.items.length; i++) {
+			TreeItem item = this.items [i];
+			if (item != null && item != this.currentItem) {
 				item.clear ();
 				redraw = true;
 			}
@@ -1810,7 +1810,7 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 	if (hwndHeader != 0) {
 		HDITEM hdItem = new HDITEM ();
 		hdItem.mask = OS.HDI_WIDTH;
-		for (int i=0; i<columnCount; i++) {
+		for (int i=0; i<this.columnCount; i++) {
 			OS.SendMessage (hwndHeader, OS.HDM_GETITEM, i, hdItem);
 			width += hdItem.cxy;
 		}
@@ -1912,7 +1912,7 @@ void createHandle () {
 	long /*int*/ hFont = OS.GetStockObject (OS.SYSTEM_FONT);
 	OS.SendMessage (handle, OS.WM_SETFONT, hFont, 0);
 	
-	createdAsRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
+	this.createdAsRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
 }
 
 void createHeaderToolTips () {
@@ -1945,18 +1945,18 @@ void createHeaderToolTips () {
 
 void createItem (TreeColumn column, int index) {
 	if (hwndHeader == 0) createParent ();
-	if (!(0 <= index && index <= columnCount)) error (SWT.ERROR_INVALID_RANGE);
-	if (columnCount == columns.length) {
-		TreeColumn [] newColumns = new TreeColumn [columns.length + 4];
+	if (!(0 <= index && index <= this.columnCount)) error (SWT.ERROR_INVALID_RANGE);
+	if (this.columnCount == this.columns.length) {
+		TreeColumn [] newColumns = new TreeColumn [this.columns.length + 4];
 		System.arraycopy (columns, 0, newColumns, 0, columns.length);
 		columns = newColumns;
 	}
-	for (int i=0; i<items.length; i++) {
-		TreeItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		TreeItem item = this.items [i];
 		if (item != null) {
 			String [] strings = item.strings;
 			if (strings != null) {
-				String [] temp = new String [columnCount + 1];
+				String [] temp = new String [this.columnCount + 1];
 				System.arraycopy (strings, 0, temp, 0, index);
 				System.arraycopy (strings, index, temp, index + 1, columnCount - index);
 				item.strings = temp;
@@ -2081,9 +2081,9 @@ void createItem (TreeColumn column, int index) {
 void createItem (TreeItem item, long /*int*/ hParent, long /*int*/ hInsertAfter, long /*int*/ hItem) {
 	int id = -1;
 	if (item != null) {
-		id = lastID < items.length ? lastID : 0;
-		while (id < items.length && items [id] != null) id++;
-		if (id == items.length) {
+		id = this.lastID < this.items.length ? this.lastID : 0;
+		while (id < this.items.length && this.items [id] != null) id++;
+		if (id == this.items.length) {
 			/*
 			* Grow the array faster when redraw is off or the
 			* table is not visible.  When the table is painted,
@@ -2092,7 +2092,7 @@ void createItem (TreeItem item, long /*int*/ hParent, long /*int*/ hInsertAfter,
 			*/
 			int length = 0;
 			if (getDrawing () && OS.IsWindowVisible (handle)) {
-				length = items.length + 4;
+				length = this.items.length + 4;
 			} else {
 				shrink = true;
 				length = Math.max (4, items.length * 3 / 2);
@@ -2101,7 +2101,7 @@ void createItem (TreeItem item, long /*int*/ hParent, long /*int*/ hInsertAfter,
 			System.arraycopy (items, 0, newItems, 0, items.length);
 			items = newItems;
 		}
-		lastID = id + 1;
+		this.lastID = id + 1;
 	}
 	long /*int*/ hNewItem = 0;
 	long /*int*/ hFirstItem = OS.SendMessage (handle, OS.TVM_GETNEXTITEM, OS.TVGN_CHILD, hParent);
@@ -2173,7 +2173,7 @@ void createItem (TreeItem item, long /*int*/ hParent, long /*int*/ hInsertAfter,
 		* new area.
 		*/
 		if ((style & SWT.VIRTUAL) != 0) {
-			if (currentItem != null) {
+			if (this.currentItem != null) {
 				RECT rect = new RECT ();
 				if (OS.TreeView_GetItemRect (handle, hNewItem, rect, false)) {
 					RECT damageRect = new RECT ();
@@ -2333,8 +2333,8 @@ void createParent () {
 
 void createWidget () {
 	super.createWidget ();
-	items = new TreeItem [4];
-	columns = new TreeColumn [4];
+	this.items = new TreeItem [4];
+	this.columns = new TreeColumn [4];
 	itemCount = -1;
 }
 
@@ -2414,8 +2414,8 @@ public void deselectAll () {
 			long /*int*/ hItem = OS.SendMessage (handle, OS.TVM_GETNEXTITEM, OS.TVGN_ROOT, 0);
 			deselect (hItem, tvItem, 0);
 		} else {
-			for (int i=0; i<items.length; i++) {
-				TreeItem item = items [i];
+			for (int i=0; i<this.items.length; i++) {
+				TreeItem item = this.items [i];
 				if (item != null) {
 					tvItem.hItem = item.handle;
 					OS.SendMessage (handle, OS.TVM_SETITEM, 0, tvItem);
@@ -2429,11 +2429,11 @@ public void deselectAll () {
 void destroyItem (TreeColumn column) {
 	if (hwndHeader == 0) error (SWT.ERROR_ITEM_NOT_REMOVED);
 	int index = 0;
-	while (index < columnCount) {
-		if (columns [index] == column) break;
+	while (index < this.columnCount) {
+		if (this.columns [index] == column) break;
 		index++;
 	}
-	int [] oldOrder = new int [columnCount];
+	int [] oldOrder = new int [this.columnCount];
 	OS.SendMessage (hwndHeader, OS.HDM_GETORDERARRAY, columnCount, oldOrder);
 	int orderIndex = 0;
 	while (orderIndex < columnCount) {
@@ -2447,8 +2447,8 @@ void destroyItem (TreeColumn column) {
 	}
 	System.arraycopy (columns, index + 1, columns, index, --columnCount - index);
 	columns [columnCount] = null;
-	for (int i=0; i<items.length; i++) {
-		TreeItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		TreeItem item = this.items [i];
 		if (item != null) {
 			if (columnCount == 0) {
 				item.strings = null;
@@ -2650,7 +2650,7 @@ void destroyItem (TreeItem item, long /*int*/ hItem) {
 				customDraw = false;
 			}
 		}
-		items = new TreeItem [4];
+		this.items = new TreeItem [4];
 		scrollWidth = 0;
 		setScrollWidth ();
 	}
@@ -3012,7 +3012,7 @@ long /*int*/ getBottomItem () {
  */
 public TreeColumn getColumn (int index) {
 	checkWidget ();
-	if (!(0 <= index && index < columnCount)) error (SWT.ERROR_INVALID_RANGE);
+	if (!(0 <= index && index < this.columnCount)) error (SWT.ERROR_INVALID_RANGE);
 	return columns [index];
 }
 
@@ -3067,8 +3067,8 @@ public int getColumnCount () {
  */
 public int[] getColumnOrder () {
 	checkWidget ();
-	if (columnCount == 0) return new int [0];
-	int [] order = new int [columnCount];
+	if (this.columnCount == 0) return new int [0];
+	int [] order = new int [this.columnCount];
 	OS.SendMessage (hwndHeader, OS.HDM_GETORDERARRAY, columnCount, order);
 	return order;
 }
@@ -3104,8 +3104,8 @@ public int[] getColumnOrder () {
  */
 public TreeColumn [] getColumns () {
 	checkWidget ();
-	TreeColumn [] result = new TreeColumn [columnCount];
-	System.arraycopy (columns, 0, result, 0, columnCount);
+	TreeColumn [] result = new TreeColumn [this.columnCount];
+	System.arraycopy (this.columns, 0, result, 0, columnCount);
 	return result;
 }
 
@@ -3471,8 +3471,8 @@ public TreeItem [] getSelection () {
 			tvItem = new TVITEM ();
 			tvItem.mask = OS.TVIF_STATE;
 		}
-		for (int i=0; i<items.length; i++) {
-			TreeItem item = items [i];
+		for (int i=0; i<this.items.length; i++) {
+			TreeItem item = this.items [i];
 			if (item != null) {
 				long /*int*/ hItem = item.handle;
 				int state = 0;
@@ -3555,8 +3555,8 @@ public int getSelectionCount () {
 		long /*int*/ hItem = OS.SendMessage (handle, OS.TVM_GETNEXTITEM, OS.TVGN_ROOT, 0);
 		count = getSelection (hItem, tvItem, null, 0, -1, false, true);
 	} else {
-		for (int i=0; i<items.length; i++) {
-			TreeItem item = items [i];
+		for (int i=0; i<this.items.length; i++) {
+			TreeItem item = this.items [i];
 			if (item != null) {
 				long /*int*/ hItem = item.handle;
 				int state = 0;
@@ -3746,8 +3746,8 @@ public int indexOf (TreeColumn column) {
 	checkWidget ();
 	if (column == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (column.isDisposed()) error(SWT.ERROR_INVALID_ARGUMENT);
-	for (int i=0; i<columnCount; i++) {
-		if (columns [i] == column) return i;
+	for (int i=0; i<this.columnCount; i++) {
+		if (this.columns [i] == column) return i;
 	}
 	return -1;
 }
@@ -3900,12 +3900,12 @@ void releaseItem (long /*int*/ hItem, TVITEM tvItem, boolean release) {
 	tvItem.hItem = hItem;
 	if (OS.SendMessage (handle, OS.TVM_GETITEM, 0, tvItem) != 0) {
 		if (tvItem.lParam != -1) {
-			if (tvItem.lParam < lastID) lastID = (int)/*64*/tvItem.lParam;
+			if (tvItem.lParam < this.lastID) this.lastID = (int)/*64*/tvItem.lParam;
 			if (release) {
-				TreeItem item = items [(int)/*64*/tvItem.lParam];
+				TreeItem item = this.items [(int)/*64*/tvItem.lParam];
 				if (item != null) item.release (false);
 			}
-			items [(int)/*64*/tvItem.lParam] = null;
+			this.items [(int)/*64*/tvItem.lParam] = null;
 		}
 	}
 }
@@ -3925,23 +3925,23 @@ void releaseHandle () {
 }
 
 void releaseChildren (boolean destroy) {
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			TreeItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			TreeItem item = this.items [i];
 			if (item != null && !item.isDisposed ()) {
 				item.release (false);
 			}
 		}
-		items = null;
+		this.items = null;
 	}
-	if (columns != null) {
-		for (int i=0; i<columns.length; i++) {
-			TreeColumn column = columns [i];
+	if (this.columns != null) {
+		for (int i=0; i<this.columns.length; i++) {
+			TreeColumn column = this.columns [i];
 			if (column != null && !column.isDisposed ()) {
 				column.release (false);
 			}
 		}
-		columns = null;
+		this.columns = null;
 	}
 	super.releaseChildren (destroy);
 }
@@ -3989,8 +3989,8 @@ public void removeAll () {
 	checkWidget ();
 	hFirstIndexOf = hLastIndexOf = 0;
 	itemCount = -1;
-	for (int i=0; i<items.length; i++) {
-		TreeItem item = items [i];
+	for (int i=0; i<this.items.length; i++) {
+		TreeItem item = this.items [i];
 		if (item != null && !item.isDisposed ()) {
 			item.release (false);
 		}
@@ -4019,7 +4019,7 @@ public void removeAll () {
 	}
 	hAnchor = hInsert = hFirstIndexOf = hLastIndexOf = 0;
 	itemCount = -1;
-	items = new TreeItem [4];
+	this.items = new TreeItem [4];
 	scrollWidth = 0;
 	setScrollWidth ();
 	updateScrollBar ();
@@ -4075,15 +4075,15 @@ public void removeTreeListener(TreeListener listener) {
 }
 
 void reskinChildren (int flags) {
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			TreeItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			TreeItem item = this.items [i];
 			if (item != null) item.reskinChildren (flags);
 		}
 	}
-	if (columns != null) {
-		for (int i=0; i<columns.length; i++) {
-			TreeColumn column = columns [i];
+	if (this.columns != null) {
+		for (int i=0; i<this.columns.length; i++) {
+			TreeColumn column = this.columns [i];
 			if (column != null) column.reskinChildren (flags);
 		}
 	}
@@ -4174,7 +4174,7 @@ void setItemCount (int count, long /*int*/ hParent, long /*int*/ hItem) {
 		tvItem.hItem = hItem;
 		OS.SendMessage (handle, OS.TVM_GETITEM, 0, tvItem);
 		hItem = OS.SendMessage (handle, OS.TVM_GETNEXTITEM, OS.TVGN_NEXT, hItem);
-		TreeItem item = tvItem.lParam != -1 ? items [(int)/*64*/tvItem.lParam] : null;
+		TreeItem item = tvItem.lParam != -1 ? this.items [(int)/*64*/tvItem.lParam] : null;
 		if (item != null && !item.isDisposed ()) {
 			item.dispose ();
 		} else {
@@ -4191,7 +4191,7 @@ void setItemCount (int count, long /*int*/ hParent, long /*int*/ hItem) {
 	} else {
 		shrink = true;
 		int extra = Math.max (4, (count + 3) / 4 * 4);
-		TreeItem [] newItems = new TreeItem [items.length + extra];
+		TreeItem [] newItems = new TreeItem [this.items.length + extra];
 		System.arraycopy (items, 0, newItems, 0, items.length);
 		items = newItems;
 		for (int i=itemCount; i<count; i++) {
@@ -4446,7 +4446,7 @@ Event sendMeasureItemEvent (TreeItem item, int index, long /*int*/ hDC, int deta
 	OS.RestoreDC (hDC, nSavedDC);
 	if (isDisposed () || item.isDisposed ()) return null;
 	if (hwndHeader != 0) {
-		if (columnCount == 0) {
+		if (this.columnCount == 0) {
 			if (event.x + event.width > scrollWidth) {
 				setScrollWidth (scrollWidth = event.x + event.width);
 			}
@@ -4588,12 +4588,12 @@ void setCursor () {
 public void setColumnOrder (int [] order) {
 	checkWidget ();
 	if (order == null) error (SWT.ERROR_NULL_ARGUMENT);
-	if (columnCount == 0) {
+	if (this.columnCount == 0) {
 		if (order.length != 0) error (SWT.ERROR_INVALID_ARGUMENT);
 		return;
 	}
-	if (order.length != columnCount) error (SWT.ERROR_INVALID_ARGUMENT);
-	int [] oldOrder = new int [columnCount];
+	if (order.length != this.columnCount) error (SWT.ERROR_INVALID_ARGUMENT);
+	int [] oldOrder = new int [this.columnCount];
 	OS.SendMessage (hwndHeader, OS.HDM_GETORDERARRAY, columnCount, oldOrder);
 	boolean reorder = false;
 	boolean [] seen = new boolean [columnCount];
@@ -4614,7 +4614,7 @@ public void setColumnOrder (int [] order) {
 		OS.InvalidateRect (handle, null, true);
 		updateImageList ();
 		TreeColumn [] newColumns = new TreeColumn [columnCount];
-		System.arraycopy (columns, 0, newColumns, 0, columnCount);
+		System.arraycopy (this.columns, 0, newColumns, 0, columnCount);
 		RECT newRect = new RECT ();
 		for (int i=0; i<columnCount; i++) {
 			TreeColumn column = newColumns [i];
@@ -4831,7 +4831,7 @@ void setScrollWidth () {
 	if (hwndHeader == 0 || hwndParent == 0) return;
 	int width = 0;
 	HDITEM hdItem = new HDITEM ();
-	for (int i=0; i<columnCount; i++) {
+	for (int i=0; i<this.columnCount; i++) {
 		hdItem.mask = OS.HDI_WIDTH;
 		OS.SendMessage (hwndHeader, OS.HDM_GETITEM, i, hdItem);
 		width += hdItem.cxy;
@@ -4848,7 +4848,7 @@ void setScrollWidth (int width) {
 	SCROLLINFO info = new SCROLLINFO ();
 	info.cbSize = SCROLLINFO.sizeof;
 	info.fMask = OS.SIF_RANGE | OS.SIF_PAGE;
-	if (columnCount == 0 && width == 0) {
+	if (this.columnCount == 0 && width == 0) {
 		OS.GetScrollInfo (hwndParent, OS.SB_HORZ, info);
 		info.nPage = info.nMax + 1;
 		OS.SetScrollInfo (hwndParent, OS.SB_HORZ, info, true);
@@ -4885,7 +4885,7 @@ void setScrollWidth (int width) {
 	SetWindowPos (hwndHeader, OS.HWND_TOP, pos.x - left, pos.y, pos.cx + left, pos.cy, OS.SWP_NOACTIVATE);
 	int bits = OS.GetWindowLong (handle, OS.GWL_EXSTYLE);
 	int b = (bits & OS.WS_EX_CLIENTEDGE) != 0 ? OS.GetSystemMetrics (OS.SM_CXEDGE) : 0;
-	int w = pos.cx + (columnCount == 0 && width == 0 ? 0 : OS.GetSystemMetrics (OS.SM_CXVSCROLL));
+	int w = pos.cx + (this.columnCount == 0 && width == 0 ? 0 : OS.GetSystemMetrics (OS.SM_CXVSCROLL));
 	int h = rect.bottom - rect.top - pos.cy;
 	boolean oldIgnore = ignoreResize;
 	ignoreResize = true;
@@ -5105,12 +5105,12 @@ void expandToItem(TreeItem item) {
 public void setSortColumn (TreeColumn column) {
 	checkWidget ();
 	if (column != null && column.isDisposed ()) error (SWT.ERROR_INVALID_ARGUMENT);
-	if (sortColumn != null && !sortColumn.isDisposed ()) {
-		sortColumn.setSortDirection (SWT.NONE);
+	if (this.sortColumn != null && !this.sortColumn.isDisposed ()) {
+		this.sortColumn.setSortDirection (SWT.NONE);
 	}
-	sortColumn = column;
-	if (sortColumn != null && sortDirection != SWT.NONE) {
-		sortColumn.setSortDirection (sortDirection);
+	this.sortColumn = column;
+	if (this.sortColumn != null && sortDirection != SWT.NONE) {
+		this.sortColumn.setSortDirection (sortDirection);
 	}
 }
 
@@ -5131,8 +5131,8 @@ public void setSortDirection (int direction) {
 	checkWidget ();
 	if ((direction & (SWT.UP | SWT.DOWN)) == 0 && direction != SWT.NONE) return;
 	sortDirection = direction;
-	if (sortColumn != null && !sortColumn.isDisposed ()) {
-		sortColumn.setSortDirection (direction);
+	if (this.sortColumn != null && !this.sortColumn.isDisposed ()) {
+		this.sortColumn.setSortDirection (direction);
 	}
 }
 
@@ -5305,7 +5305,7 @@ public void showColumn (TreeColumn column) {
 	if (column.parent != this) return;
 	int index = indexOf (column);
 	if (index == -1) return;
-	if (0 <= index && index < columnCount) {
+	if (0 <= index && index < this.columnCount) {
 		forceResize ();
 		RECT rect = new RECT ();
 		OS.GetClientRect (hwndParent, rect);
@@ -5396,8 +5396,8 @@ public void showSelection () {
 		} else {
 			//FIXME - this code expands first selected item it finds
 			int index = 0;
-			while (index <items.length) {
-				TreeItem item = items [index];
+			while (index <this.items.length) {
+				TreeItem item = this.items [index];
 				if (item != null) {
 					int state = 0;
 					if (OS.IsWinCE) {
@@ -5439,7 +5439,7 @@ void sort (long /*int*/ hParent, boolean all) {
 		TVSORTCB psort = new TVSORTCB ();
 		psort.hParent = hParent;
 		psort.lpfnCompare = lpfnCompare;
-		psort.lParam = sortColumn == null ? 0 : indexOf (sortColumn);
+		psort.lParam = this.sortColumn == null ? 0 : indexOf (this.sortColumn);
 		OS.SendMessage (handle, OS.TVM_SORTCHILDRENCB, all ? 1 : 0, psort);
 		compareCallback.dispose ();
 	}
@@ -5478,8 +5478,8 @@ String toolTipText (NMTTDISPINFO hdr) {
 	long /*int*/ hwndToolTip = OS.SendMessage (handle, OS.TVM_GETTOOLTIPS, 0, 0);
 	if (hwndToolTip == hdr.hwndFrom && toolTipText != null) return ""; //$NON-NLS-1$
 	if (headerToolTipHandle == hdr.hwndFrom) {
-		for (int i=0; i<columnCount; i++) {
-			TreeColumn column = columns [i];
+		for (int i=0; i<this.columnCount; i++) {
+			TreeColumn column = this.columns [i];
 			if (column.id == hdr.idFrom) return column.toolTipText;
 		}
 		return super.toolTipText (hdr);
@@ -5544,8 +5544,8 @@ void updateHeaderToolTips () {
 	lpti.uFlags = OS.TTF_SUBCLASS;
 	lpti.hwnd = hwndHeader;
 	lpti.lpszText = OS.LPSTR_TEXTCALLBACK;
-	for (int i=0; i<columnCount; i++) {
-		TreeColumn column = columns [i];
+	for (int i=0; i<this.columnCount; i++) {
+		TreeColumn column = this.columns [i];
 		if (OS.SendMessage (hwndHeader, OS.HDM_GETITEMRECT, i, rect) != 0) {
 			lpti.uId = column.id = display.nextToolTipId++;
 			lpti.left = rect.left;
@@ -5561,8 +5561,8 @@ void updateImageList () {
 	if (imageList == null) return;
 	if (hwndHeader == 0) return;
 	int i = 0, index = (int)/*64*/OS.SendMessage (hwndHeader, OS.HDM_ORDERTOINDEX, 0, 0);
-	while (i < items.length) {
-		TreeItem item = items [i];
+	while (i < this.items.length) {
+		TreeItem item = this.items [i];
 		if (item != null) {
 			Image image = null;
 			if (index == 0) {
@@ -5580,7 +5580,7 @@ void updateImageList () {
 	* times, Windows does work making this operation slow.  The fix
 	* is to test for the same image list before setting the new one.
 	*/
-	long /*int*/ hImageList = i == items.length ? 0 : imageList.getHandle ();
+	long /*int*/ hImageList = i == this.items.length ? 0 : imageList.getHandle ();
 	long /*int*/ hOldImageList = OS.SendMessage (handle, OS.TVM_GETIMAGELIST, OS.TVSIL_NORMAL, 0);
 	if (hImageList != hOldImageList) {
 		OS.SendMessage (handle, OS.TVM_SETIMAGELIST, OS.TVSIL_NORMAL, hImageList);
@@ -5588,12 +5588,12 @@ void updateImageList () {
 }
 
 void updateImages () {
-	if (sortColumn != null && !sortColumn.isDisposed ()) {
+	if (this.sortColumn != null && !this.sortColumn.isDisposed ()) {
 		if (OS.COMCTL32_MAJOR < 6) {
 			switch (sortDirection) {
 				case SWT.UP:
 				case SWT.DOWN:
-					sortColumn.setImage (display.getSortImage (sortDirection), true, true);
+					this.sortColumn.setImage (display.getSortImage (sortDirection), true, true);
 					break;
 			}
 		}
@@ -5656,8 +5656,8 @@ void updateOrientation () {
 		Point size = imageList.getImageSize ();
 		display.releaseImageList (imageList);
 		imageList = display.getImageList (style & SWT.RIGHT_TO_LEFT, size.x, size.y);
-		for (int i = 0; i < items.length; i++) {
-			TreeItem item = items[i];
+		for (int i = 0; i < this.items.length; i++) {
+			TreeItem item = this.items[i];
 			if (item != null) {
 				Image image = item.image;
 				if (image != null) {
@@ -5674,9 +5674,9 @@ void updateOrientation () {
 			Point size = headerImageList.getImageSize ();
 			display.releaseImageList (headerImageList);
 			headerImageList = display.getImageList (style & SWT.RIGHT_TO_LEFT, size.x, size.y);	
-			if (columns != null) {
-				for (int i = 0; i < columns.length; i++) {
-					TreeColumn column = columns[i];
+			if (this.columns != null) {
+				for (int i = 0; i < this.columns.length; i++) {
+					TreeColumn column = this.columns[i];
 					if (column != null) {
 						Image image = column.image;
 						if (image != null) {
@@ -5702,7 +5702,7 @@ void updateOrientation () {
 
 void updateScrollBar () {
 	if (hwndParent != 0) {
-		if (columnCount != 0 || scrollWidth != 0) {
+		if (this.columnCount != 0 || scrollWidth != 0) {
 			SCROLLINFO info = new SCROLLINFO ();
 			info.cbSize = SCROLLINFO.sizeof;
 			info.fMask = OS.SIF_ALL;
@@ -5834,7 +5834,7 @@ long /*int*/ windowProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long /
 						pinfo.x = pt.x;
 						pinfo.y = pt.y;
 						int index = (int)/*64*/OS.SendMessage (hwndHeader, OS.HDM_HITTEST, 0, pinfo);
-						if (0 <= index && index < columnCount && !columns [index].resizable) {
+						if (0 <= index && index < this.columnCount && !this.columns [index].resizable) {
 							if ((pinfo.flags & (OS.HHT_ONDIVIDER | OS.HHT_ONDIVOPEN)) != 0) {
 								OS.SetCursor (OS.LoadCursor (0, OS.IDC_ARROW));
 								return 1;
@@ -6166,7 +6166,7 @@ LRESULT WM_KEYDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 			* create the control.
 		    */
 		    boolean isRTL = (style & SWT.RIGHT_TO_LEFT) != 0;
-		    if (isRTL != createdAsRTL) {
+		    if (isRTL != this.createdAsRTL) {
 			   long /*int*/ code = callWindowProc (handle, OS.WM_KEYDOWN, wParam == OS.VK_RIGHT ? OS.VK_LEFT : OS.VK_RIGHT, lParam);
 			   return new LRESULT (code);
 		    }
@@ -6182,8 +6182,8 @@ LRESULT WM_KEYDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 		case OS.VK_ADD:
 			if (OS.GetKeyState (OS.VK_CONTROL) < 0) {
 				if (hwndHeader != 0) {
-					TreeColumn [] newColumns = new TreeColumn [columnCount];
-					System.arraycopy (columns, 0, newColumns, 0, columnCount);
+					TreeColumn [] newColumns = new TreeColumn [this.columnCount];
+					System.arraycopy (this.columns, 0, newColumns, 0, columnCount);
 					for (int i=0; i<columnCount; i++) {
 						TreeColumn column = newColumns [i];
 						if (!column.isDisposed () && column.getResizable ()) {
@@ -6784,8 +6784,8 @@ LRESULT WM_LBUTTONDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 					long /*int*/ hItem = OS.SendMessage (handle, OS.TVM_GETNEXTITEM, OS.TVGN_ROOT, 0);
 					deselect (hItem, tvItem, hNewItem);
 				} else {
-					for (int i=0; i<items.length; i++) {
-						TreeItem item = items [i];
+					for (int i=0; i<this.items.length; i++) {
+						TreeItem item = this.items [i];
 						if (item != null && item.handle != hNewItem) {
 							tvItem.hItem = item.handle;
 							OS.SendMessage (handle, OS.TVM_SETITEM, 0, tvItem);
@@ -6985,17 +6985,17 @@ LRESULT WM_PAINT (long /*int*/ wParam, long /*int*/ lParam) {
 
 	if (shrink && !ignoreShrink) {
 		/* Resize the item array to fit the last item */
-		int count = items.length - 1;
+		int count = this.items.length - 1;
 		while (count >= 0) {
-			if (items [count] != null) break;
+			if (this.items [count] != null) break;
 			--count;
 		}
 		count++;
-		if (items.length > 4 && items.length - count > 3) {
+		if (this.items.length > 4 && this.items.length - count > 3) {
 			int length = Math.max (4, (count + 3) / 4 * 4);
 			TreeItem [] newItems = new TreeItem [length];
-			System.arraycopy (items, 0, newItems, 0, count);
-			items = newItems;
+			System.arraycopy (this.items, 0, newItems, 0, count);
+			this.items = newItems;
 		}
 		shrink = false;
 	}
@@ -7270,16 +7270,16 @@ LRESULT WM_TIMER (long /*int*/ wParam, long /*int*/ lParam) {
 	long /*int*/ bits = OS.SendMessage (handle, OS.TVM_GETEXTENDEDSTYLE, 0, 0);
 	if ((bits & OS.TVS_EX_FADEINOUTEXPANDOS) != 0) {
 		if (!OS.IsWindowVisible (handle)) {
-			if (lastTimerID == wParam) {
+			if (this.lastTimerID == wParam) {
 				lastTimerCount++;
 			} else {
 				this.lastTimerCount = 0;
 			}
 			this.lastTimerID = wParam;
-			if (lastTimerCount >= TIMER_MAX_COUNT) {
+			if (this.lastTimerCount >= TIMER_MAX_COUNT) {
 				OS.CallWindowProc (TreeProc, handle, OS.WM_MOUSEMOVE, 0, 0);
-				lastTimerID = -1;
-				lastTimerCount = 0;
+				this.lastTimerID = -1;
+				this.lastTimerCount = 0;
 			}
 		} else {
 			this.lastTimerID = -1;
@@ -7345,8 +7345,8 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 				* right away, queue a redraw for later.
 				*/
 				if (!ignoreShrink) {
-					if (items != null && lptvdi.lParam != -1) {
-						if (items [(int)/*64*/lptvdi.lParam] != null && items [(int)/*64*/lptvdi.lParam].cached) {
+					if (this.items != null && lptvdi.lParam != -1) {
+						if (this.items [(int)/*64*/lptvdi.lParam] != null && this.items [(int)/*64*/lptvdi.lParam].cached) {
 							checkVisible = false;
 						}
 					}
@@ -7366,7 +7366,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 					}
 				}
 			}
-			if (items == null) break;
+			if (this.items == null) break;
 			/*
 			* Bug in Windows.  If the lParam field of TVITEM
 			* is changed during custom draw using TVM_SETITEM,
@@ -7457,7 +7457,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 			}
 			if (!customDraw && findImageControl () == null) {
 				if (OS.COMCTL32_MAJOR >= 6 && OS.IsAppThemed ()) {
-					if (sortColumn == null || sortDirection == SWT.NONE) {
+					if (this.sortColumn == null || sortDirection == SWT.NONE) {
 						break;
 					}
 				}
@@ -7614,7 +7614,7 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 				* the item has already been removed from the list of
 				* items.  The fix is to check for null. 
 				*/
-				if (items == null) break;
+				if (this.items == null) break;
 				TreeItem item = _getItem (tvItem.hItem, (int)/*64*/tvItem.lParam);
 				if (item == null) break;
 				Event event = new Event ();
@@ -7769,7 +7769,7 @@ LRESULT wmNotifyHeader (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 		case OS.HDN_DIVIDERDBLCLICKA: {
 			NMHEADER phdn = new NMHEADER ();
 			OS.MoveMemory (phdn, lParam, NMHEADER.sizeof);
-			TreeColumn column = columns [phdn.iItem];
+			TreeColumn column = this.columns [phdn.iItem];
 			if (column != null && !column.getResizable ()) {
 				return LRESULT.ONE;
 			}
@@ -7783,8 +7783,8 @@ LRESULT wmNotifyHeader (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 		}
 		case OS.NM_RELEASEDCAPTURE: {
 			if (!ignoreColumnMove) {
-				for (int i=0; i<columnCount; i++) {
-					TreeColumn column = columns [i];
+				for (int i=0; i<this.columnCount; i++) {
+					TreeColumn column = this.columns [i];
 					column.updateToolTip (i);
 				}
 				updateImageList ();
@@ -7797,7 +7797,7 @@ LRESULT wmNotifyHeader (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 			NMHEADER phdn = new NMHEADER ();
 			OS.MoveMemory (phdn, lParam, NMHEADER.sizeof);
 			if (phdn.iItem != -1) {
-				TreeColumn column = columns [phdn.iItem];
+				TreeColumn column = this.columns [phdn.iItem];
 				if (column != null && !column.getMoveable ()) {
 					ignoreColumnMove = true;
 					return LRESULT.ONE;
@@ -7812,7 +7812,7 @@ LRESULT wmNotifyHeader (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 				HDITEM pitem = new HDITEM ();
 				OS.MoveMemory (pitem, phdn.pitem, HDITEM.sizeof);
 				if ((pitem.mask & OS.HDI_ORDER) != 0 && pitem.iOrder != -1) {
-					int [] order = new int [columnCount];
+					int [] order = new int [this.columnCount];
 					OS.SendMessage (hwndHeader, OS.HDM_GETORDERARRAY, columnCount, order);
 					int index = 0;
 					while (index < order.length) {
@@ -7832,7 +7832,7 @@ LRESULT wmNotifyHeader (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 					OS.InvalidateRect (handle, rect, true);
 					ignoreColumnMove = false;
 					for (int i=start; i<=end; i++) {
-						TreeColumn column = columns [order [i]];
+						TreeColumn column = this.columns [order [i]];
 						if (!column.isDisposed ()) {
 							column.postEvent (SWT.Move);
 						}
@@ -7901,13 +7901,13 @@ LRESULT wmNotifyHeader (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 							}
 						}
 					}
-					TreeColumn column = columns [phdn.iItem];
+					TreeColumn column = this.columns [phdn.iItem];
 					if (column != null) {
 						column.updateToolTip (phdn.iItem);
 						column.sendEvent (SWT.Resize);
 						if (isDisposed ()) return LRESULT.ZERO;	
 						TreeColumn [] newColumns = new TreeColumn [columnCount];
-						System.arraycopy (columns, 0, newColumns, 0, columnCount);
+						System.arraycopy (this.columns, 0, newColumns, 0, columnCount);
 						int [] order = new int [columnCount];
 						OS.SendMessage (hwndHeader, OS.HDM_GETORDERARRAY, columnCount, order);
 						boolean moved = false;
@@ -7929,7 +7929,7 @@ LRESULT wmNotifyHeader (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 		case OS.HDN_ITEMCLICKA: {
 			NMHEADER phdn = new NMHEADER ();
 			OS.MoveMemory (phdn, lParam, NMHEADER.sizeof);
-			TreeColumn column = columns [phdn.iItem];
+			TreeColumn column = this.columns [phdn.iItem];
 			if (column != null) {
 				column.sendSelectionEvent (SWT.Selection);
 			}
@@ -7939,7 +7939,7 @@ LRESULT wmNotifyHeader (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 		case OS.HDN_ITEMDBLCLICKA: {
 			NMHEADER phdn = new NMHEADER ();
 			OS.MoveMemory (phdn, lParam, NMHEADER.sizeof);
-			TreeColumn column = columns [phdn.iItem];
+			TreeColumn column = this.columns [phdn.iItem];
 			if (column != null) {
 				column.sendSelectionEvent (SWT.DefaultSelection);
 			}
@@ -8059,7 +8059,7 @@ LRESULT wmNotifyToolTip (NMTTCUSTOMDRAW nmcd, long /*int*/ lParam) {
 							String string = item [0].getText (index [0]);
 							if (string != null) {
 								int flags = OS.DT_NOPREFIX | OS.DT_SINGLELINE | OS.DT_VCENTER;
-								TreeColumn column = columns != null ? columns [index [0]] : null;
+								TreeColumn column = this.columns != null ? this.columns [index [0]] : null;
 								if (column != null) {
 									if ((column.style & SWT.CENTER) != 0) flags |= OS.DT_CENTER;
 									if ((column.style & SWT.RIGHT) != 0) flags |= OS.DT_RIGHT;

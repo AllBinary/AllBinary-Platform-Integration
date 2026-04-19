@@ -60,8 +60,8 @@ public class AlertPanel extends BaseExamplesList {
 	public void commandAction(Command c, Displayable d) {
 		if (d == this) {
 			if (c == List.SELECT_COMMAND) {
-				if (alertCmd == alerts[getSelectedIndex()]) {
-					alertCmd.addCommand(okCommand);
+				if (this.alertCmd == alerts[getSelectedIndex()]) {
+					this.alertCmd.addCommand(okCommand);
 				}
 				SimpleDemoMIDlet.setCurrentDisplayable(alerts[getSelectedIndex()]);
 			}

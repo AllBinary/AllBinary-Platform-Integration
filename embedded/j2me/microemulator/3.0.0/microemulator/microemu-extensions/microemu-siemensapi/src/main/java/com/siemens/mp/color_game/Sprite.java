@@ -159,7 +159,7 @@ public class Sprite extends Layer {
     }
     
     public void setFrame(int sequenceIndex) {
-        if (sequenceIndex < 0 || sequenceIndex >= frameSequence.length) {
+        if (sequenceIndex < 0 || sequenceIndex >= this.frameSequence.length) {
             throw new IndexOutOfBoundsException();
         }
         this.sequenceIndex = sequenceIndex;
@@ -188,7 +188,7 @@ public class Sprite extends Layer {
     
     public void prevFrame() {
         if (sequenceIndex == 0) {
-            sequenceIndex = frameSequence.length - 1;
+            sequenceIndex = this.frameSequence.length - 1;
         } else {
             sequenceIndex--;
         }
@@ -224,10 +224,10 @@ public class Sprite extends Layer {
             // revert to the default sequence
             sequenceIndex = 0;
             customSequenceDefined = false;
-            frameSequence = new int[numberFrames];
+            this.frameSequence = new int[numberFrames];
             // copy frames indices into frameSequence
             for (int i = 0; i < numberFrames; i++) {
-                frameSequence[i] = i;
+                this.frameSequence[i] = i;
             }
             return;
         }
@@ -242,7 +242,7 @@ public class Sprite extends Layer {
             }
         }
         customSequenceDefined = true;
-        frameSequence = new int[sequence.length];
+        this.frameSequence = new int[sequence.length];
         System.arraycopy(sequence, 0, frameSequence, 0, sequence.length);
         sequenceIndex = 0;
     }
@@ -267,7 +267,7 @@ public class Sprite extends Layer {
             customSequenceDefined = false;
         }
         
-        if (! ((srcFrameWidth == frameWidth) &&
+        if (! ((this.srcFrameWidth == frameWidth) &&
         (srcFrameHeight == frameHeight))) {
             
             // computing is the location
@@ -307,8 +307,8 @@ public class Sprite extends Layer {
         
         collisionRectX = x;
         collisionRectY = y;
-        collisionRectWidth = width;
-        collisionRectHeight = height;
+        this.collisionRectWidth = width;
+        this.collisionRectHeight = height;
     }
     
     //transfrom is ignored
@@ -465,22 +465,22 @@ public class Sprite extends Layer {
         int numHorizontalFrames = imageW / fWidth;
         int numVerticalFrames   = imageH / fHeight;
         
-        sourceImage = image;
+        this.sourceImage = image;
         
-        srcFrameWidth = fWidth;
-        srcFrameHeight = fHeight;
+        this.srcFrameWidth = fWidth;
+        this.srcFrameHeight = fHeight;
         
         numberFrames = numHorizontalFrames*numVerticalFrames;
         
-        frameCoordsX = new int[numberFrames];
-        frameCoordsY = new int[numberFrames];
+        this.frameCoordsX = new int[numberFrames];
+        this.frameCoordsY = new int[numberFrames];
         
         if (!maintainCurFrame) {
             sequenceIndex = 0;
         }
         
         if (!customSequenceDefined) {
-            frameSequence = new int[numberFrames];
+            this.frameSequence = new int[numberFrames];
         }
         
         int currentFrame = 0;
@@ -492,7 +492,7 @@ public class Sprite extends Layer {
                 this.frameCoordsY[currentFrame] = yy;
                 
                 if (!customSequenceDefined) {
-                    frameSequence[currentFrame] = currentFrame;
+                    this.frameSequence[currentFrame] = currentFrame;
                 }
                 currentFrame++;
                 

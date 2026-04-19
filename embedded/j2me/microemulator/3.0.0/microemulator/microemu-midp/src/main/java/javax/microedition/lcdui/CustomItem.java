@@ -209,7 +209,7 @@ public class CustomItem extends Item {
 		int[] inout = new int[4];
         inout[0] = 0;
         inout[1] = top;
-        inout[2] = width;
+        inout[2] = this.width;
         inout[3] = bottom - top;
 		boolean result = traverse(gameKeyCode, width, bottom - top, inout);
 		if (result == false) {

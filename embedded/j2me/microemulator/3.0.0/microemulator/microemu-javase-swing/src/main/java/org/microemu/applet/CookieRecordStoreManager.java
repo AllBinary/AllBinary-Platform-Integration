@@ -93,7 +93,7 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 		}
 
 		removeCookie(recordStoreName, cookieContent);
-		cookies.remove(recordStoreName);
+		this.cookies.remove(recordStoreName);
 
 		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, recordStoreName);
 
@@ -101,7 +101,7 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 	}
 
 	public void deleteStores() {
-		for (Iterator it = cookies.keySet().iterator(); it.hasNext();) {
+		for (Iterator it = this.cookies.keySet().iterator(); it.hasNext();) {
 			try {
 				deleteRecordStore((String) it.next());
 			} catch (RecordStoreException ex) {
@@ -114,7 +114,7 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 	public void init() {
 /*		JSObject window = (JSObject) JSObject.getWindow(applet);
 		document = (JSObject) window.getMember("document");
-		cookies = new HashMap();
+		this.cookies = new HashMap();
 
 		String load = (String) document.getMember("cookie");
 		if (load != null) {
@@ -126,10 +126,10 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 					if (token.charAt(index + 1) == 'a') {
 						String first = token.substring(0, 1);
 						String name = token.substring(1, index).trim();
-						CookieContent content = (CookieContent) cookies.get(name);
+						CookieContent content = (CookieContent) this.cookies.get(name);
 						if (content == null) {
 							content = new CookieContent();
-							cookies.put(name, content);
+							this.cookies.put(name, content);
 						}
 						if (first.equals("x")) {
 							content.setPart(0, token.substring(index + 2));
@@ -150,7 +150,7 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 
 	public String[] listRecordStores() {
 		System.out.println("listRecordStores:");
-		String[] result = (String[]) cookies.keySet().toArray();
+		String[] result = (String[]) this.cookies.keySet().toArray();
 
 		if (result.length == 0) {
 			result = null;
@@ -163,7 +163,7 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 			throws RecordStoreNotFoundException {
 		RecordStoreImpl result;
 
-		CookieContent load = (CookieContent) cookies.get(recordStoreName);
+		CookieContent load = (CookieContent) this.cookies.get(recordStoreName);
 		if (load != null) {
 			try {
 				byte[] data = Base64Coder.decode(load.toCharArray());
@@ -187,8 +187,8 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 			System.out.println("openRecordStore: " + recordStoreName + " (" + load + ")");
 		}
 		result.setOpen(true);
-		if (recordListener != null) {
-			result.addRecordListener(recordListener);
+		if (this.recordListener != null) {
+			result.addRecordListener(this.recordListener);
 		}
 
 		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
@@ -217,19 +217,19 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 			}
 			CookieContent cookieContent = new CookieContent(Base64Coder.encode(baos.toByteArray()));
 
-			CookieContent previousCookie = (CookieContent) cookies.get(recordStoreImpl.getName());
+			CookieContent previousCookie = (CookieContent) this.cookies.get(recordStoreImpl.getName());
 			if (previousCookie != null) {
 				removeCookie(recordStoreImpl.getName(), previousCookie);
 			}
 
-			cookies.put(recordStoreImpl.getName(), cookieContent);
+			this.cookies.put(recordStoreImpl.getName(), cookieContent);
 
 			String[] parts = cookieContent.getParts();
 			if (parts.length == 1) {
-				document.setMember("cookie", "x" + recordStoreImpl.getName() + "=a" + parts[0] + expires);
+				document.setMember("cookie", "x" + recordStoreImpl.getName() + "=a" + parts[0] + this.expires);
 			} else {
 				for (int i = 0; i < parts.length; i++) {
-					document.setMember("cookie", i + recordStoreImpl.getName() + "=a" + parts[i] + expires);
+					document.setMember("cookie", i + recordStoreImpl.getName() + "=a" + parts[i] + this.expires);
 				}
 			}
 
@@ -260,10 +260,10 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 
 	private void removeCookie(String recordStoreName, CookieContent cookieContent) {
 /*		String[] parts = cookieContent.getParts();
-		if (parts.length == 1) {
+		if (this.parts.length == 1) {
 			document.setMember("cookie", "x" + recordStoreName + "=r");
 		} else {
-			for (int i = 0; i < parts.length; i++) {
+			for (int i = 0; i < this.parts.length; i++) {
 				document.setMember("cookie", i + recordStoreName + "=r");
 			}
 		}
@@ -335,8 +335,8 @@ public class CookieRecordStoreManager implements RecordStoreManager {
 	}
 
 	public void fireRecordStoreListener(int type, String recordStoreName) {
-		if (recordListener != null) {
-			recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
+		if (this.recordListener != null) {
+			this.recordListener.recordStoreEvent(type, System.currentTimeMillis(), recordStoreName);
 		}
 	}
 }

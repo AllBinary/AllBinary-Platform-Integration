@@ -80,7 +80,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 //			setClearsContext$(Static.NO);
 			setBackgroundColor$(UIColor.$clearColor());
 			
-			offscreen=new IPhoneMutableImage(canvas.getWidth(), canvas.getHeight());
+			this.offscreen=new IPhoneMutableImage(canvas.getWidth(), canvas.getHeight());
 			
 			System.out.println(clearsContextBeforeDrawing());
 		}
@@ -88,7 +88,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 		@Override
 		public UIView initWithFrame$(CGRect arg0) {
 			UIView view = super.initWithFrame$(arg0);
-			keyboardHandler=new UITextField().initWithFrame$(new CGRect(1000, 1000, 100, 100));
+			this.keyboardHandler=new UITextField().initWithFrame$(new CGRect(1000, 1000, 100, 100));
 //			System.out.println("CanvasView.initWithFrame$(1)");
 //			Runtime.msgSend(keyboardHandler, UITextInputTraits.class, "setKeyboardType:", 5);
 //			System.out.println("CanvasView.initWithFrame$(2)");
@@ -104,10 +104,10 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 			if (ma == null) {
 				return;
 			}
-			String text=keyboardHandler.text().toString();
-			System.out.println(oldText+" -> "+text);
+			String text=this.keyboardHandler.text().toString();
+			System.out.println(this.oldText+" -> "+text);
 			int key;
-			if(text.length()>oldText.length()){
+			if(text.length()>this.oldText.length()){
 				key=text.charAt(text.length()-1);
 			} else {
 				//removed one, so backspace
@@ -115,7 +115,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 			}
 			ma.getDisplayAccess().keyPressed(key);
 			ma.getDisplayAccess().keyReleased(key);
-			oldText=text;
+			this.oldText=text;
 		}
 		
 		@Override
@@ -131,7 +131,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 			CoreGraphics.CGContextScaleCTM(context, 1.0f, -1.0f);
 //			CoreGraphics.CGContextSaveGState(context);
 //			Graphics g = new IPhoneDisplayGraphics(context, canvas.getWidth(), canvas.getHeight(), false);
-			ma.getDisplayAccess().paint(offscreen.getGraphics());
+			ma.getDisplayAccess().paint(this.offscreen.getGraphics());
 		
 			Pointer<CGRect> rect=CoreGraphics.CGRectMake(0, 0, offscreen.getWidth(), offscreen.getHeight());
 	        Pointer<CGImage> bitmap = offscreen.getBitmap();
@@ -225,14 +225,14 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 			if (touches.count() == 2) {
 				UITouch touch1 = (UITouch) ((NSArray) touches.allObjects()).objectAtIndex$(0);
 				UITouch touch2 = (UITouch) ((NSArray) touches.allObjects()).objectAtIndex$(1);
-				CGPoint touchPoint = new CGPoint((touch1.locationInView$(view).x + touch2.locationInView$(view).x) / 2,
-						(touch1.locationInView$(view).y + touch2.locationInView$(view).y) / 2);
+				CGPoint touchPoint = new CGPoint((touch1.locationInView$(this.view).x + touch2.locationInView$(this.view).x) / 2,
+						(touch1.locationInView$(this.view).y + touch2.locationInView$(this.view).y) / 2);
 				if (type == Touch.BEGIN) {
-					moveFrom = touchPoint;
+					this.moveFrom = touchPoint;
 				} else if (type == Touch.END && moveFrom != null) {
 					Integer key = null;
-					CGPoint from = moveFrom;
-					moveFrom = null;
+					CGPoint from = this.moveFrom;
+					this.moveFrom = null;
 					CGPoint to = touchPoint;
 					System.out.println(from.x + "," + from.y + " -> " + to.x + "," + to.y);
 					float diffX = to.x - from.x;
@@ -258,16 +258,16 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 					}
 				}
 			} else if (touches.count() == 3 && type == Touch.END) {
-				if (keybordVisible) {
+				if (this.keybordVisible) {
 					System.out.println("Hide Keyboard");
-					Runtime.msgSend(keyboardHandler, UITextField.class, "resignFirstResponder");
+					Runtime.msgSend(this.keyboardHandler, UITextField.class, "resignFirstResponder");
 					// view.resignFirstResponder();
 				} else {
 					System.out.println("Show Keyboard");
-					Runtime.msgSend(keyboardHandler, UITextField.class, "becomeFirstResponder");
+					Runtime.msgSend(this.keyboardHandler, UITextField.class, "becomeFirstResponder");
 					// view.becomeFirstResponder();
 				}
-				keybordVisible=!keybordVisible;
+				this.keybordVisible=!this.keybordVisible;
 			}
 		}
 	}
@@ -291,21 +291,21 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 	}
 
 	public void showNotify() {
-		if (view == null) {
-			canvasView = new CanvasView(displayable).initWithFrame$(microEmulator.getWindow().bounds());
+		if (this.view == null) {
+			this.canvasView = new CanvasView(displayable).initWithFrame$(microEmulator.getWindow().bounds());
 
-			view = new UIView().initWithFrame$(microEmulator.getWindow().bounds());
+			this.view = new UIView().initWithFrame$(microEmulator.getWindow().bounds());
 			// tableView = new UITableView().initWithFrame$style$(
 			// new CGRect(0, 0, microEmulator.getWindow().bounds().size.width,
 			// microEmulator.getWindow().bounds().size.height - 40), 0);
-			view.addSubview$(canvasView);
+			this.view.addSubview$(this.canvasView);
 			toolbar = (UIToolbar) new UIToolbar().initWithFrame$(new CGRect(0,
 					microEmulator.getWindow().bounds().size.height - TOOLBAR_HEIGHT,
 					microEmulator.getWindow().bounds().size.width, TOOLBAR_HEIGHT));
-			view.addSubview$(toolbar);
+			this.view.addSubview$(toolbar);
 			updateToolbar();
 		}
-		microEmulator.getWindow().addSubview$(view);
+		microEmulator.getWindow().addSubview$(this.view);
 	}
 
 	public UIView getCanvasView() {

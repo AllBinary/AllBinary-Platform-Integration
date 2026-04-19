@@ -142,15 +142,15 @@ public PaletteData(int redMask, int greenMask, int blueMask) {
  */
 public int getPixel(RGB rgb) {
 	if (rgb == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (isDirect) {
+	if (this.isDirect) {
 		int pixel = 0;
-		pixel |= (redShift < 0 ? rgb.red << -redShift : rgb.red >>> redShift) & redMask;
-		pixel |= (greenShift < 0 ? rgb.green << -greenShift : rgb.green >>> greenShift) & greenMask;
-		pixel |= (blueShift < 0 ? rgb.blue << -blueShift : rgb.blue >>> blueShift) & blueMask;
+		pixel |= (this.redShift < 0 ? rgb.red << -this.redShift : rgb.red >>> this.redShift) & this.redMask;
+		pixel |= (this.greenShift < 0 ? rgb.green << -this.greenShift : rgb.green >>> this.greenShift) & this.greenMask;
+		pixel |= (this.blueShift < 0 ? rgb.blue << -this.blueShift : rgb.blue >>> this.blueShift) & this.blueMask;
 		return pixel;
 	} else {
-		for (int i = 0; i < colors.length; i++) {
-			if (colors[i].equals(rgb)) return i;
+		for (int i = 0; i < this.colors.length; i++) {
+			if (this.colors[i].equals(rgb)) return i;
 		}
 		/* The RGB did not exist in the palette */
 		SWT.error(SWT.ERROR_INVALID_ARGUMENT);
@@ -170,16 +170,16 @@ public int getPixel(RGB rgb) {
  * </ul>
  */
 public RGB getRGB(int pixel) {
-	if (isDirect) {
-		int r = pixel & redMask;
-		r = (redShift < 0) ? r >>> -redShift : r << redShift;
-		int g = pixel & greenMask;
-		g = (greenShift < 0) ? g >>> -greenShift : g << greenShift;
-		int b = pixel & blueMask;
-		b = (blueShift < 0) ? b >>> -blueShift : b << blueShift;
+	if (this.isDirect) {
+		int r = pixel & this.redMask;
+		r = (this.redShift < 0) ? r >>> -this.redShift : r << this.redShift;
+		int g = pixel & this.greenMask;
+		g = (this.greenShift < 0) ? g >>> -this.greenShift : g << this.greenShift;
+		int b = pixel & this.blueMask;
+		b = (this.blueShift < 0) ? b >>> -this.blueShift : b << this.blueShift;
 		return new RGB(r, g, b);
 	} else {
-		if (pixel < 0 || pixel >= colors.length) {
+		if (pixel < 0 || pixel >= this.colors.length) {
 			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 		}
 		return colors[pixel];

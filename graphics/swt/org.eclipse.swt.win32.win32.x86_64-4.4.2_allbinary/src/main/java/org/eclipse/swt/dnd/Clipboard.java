@@ -68,7 +68,7 @@ public Clipboard(Display display) {
 	}
 	this.display = display;
 	TCHAR chFormatName = new TCHAR(0, "Preferred DropEffect", true); //$NON-NLS-1$
-	CFSTR_PREFERREDDROPEFFECT = OS.RegisterClipboardFormat(chFormatName);
+	this.CFSTR_PREFERREDDROPEFFECT = OS.RegisterClipboardFormat(chFormatName);
 	createCOMInterfaces();
 	this.AddRef();
 }
@@ -212,7 +212,7 @@ public void clearContents(int clipboards) {
  */
 public void dispose () {
 	if (isDisposed()) return;
-	if (display.getThread() != Thread.currentThread()) DND.error(SWT.ERROR_THREAD_INVALID_ACCESS);
+	if (this.display.getThread() != Thread.currentThread()) DND.error(SWT.ERROR_THREAD_INVALID_ACCESS);
 	/* OleIsCurrentClipboard([in] pDataObject)
 	 * The argument pDataObject is owned by the caller so reference count does not
 	 * need to be incremented.
@@ -221,7 +221,7 @@ public void dispose () {
 		COM.OleFlushClipboard();
 	}	
 	this.Release();
-	display = null;
+	this.display = null;
 }
 
 /**
@@ -358,7 +358,7 @@ public Object getContents(Transfer transfer, int clipboards) {
  * @since 3.0
  */
 public boolean isDisposed () {
-	return (display == null);
+	return (this.display == null);
 }
 
 /**
@@ -505,7 +505,7 @@ public void setContents(Object[] data, Transfer[] dataTypes, int clipboards) {
 		try {Thread.sleep(50);} catch (Throwable t) {final String message = ExceptionUtil.getInstance().getStackTrace(t); System.out.println("Exception in SWT: " + message);}
 		MSG msg = new MSG();
 		OS.PeekMessage(msg, 0, 0, 0, OS.PM_NOREMOVE | OS.PM_NOYIELD);
-		result = COM.OleSetClipboard(iDataObject.getAddress());
+		result = COM.OleSetClipboard(this.iDataObject.getAddress());
 	}
 	if (result != COM.S_OK) {
 		DND.error(DND.ERROR_CANNOT_SET_CLIPBOARD);
@@ -533,9 +533,9 @@ private void createCOMInterfaces() {
 	};
 }
 private void disposeCOMInterfaces() {
-	if (iDataObject != null)
-		iDataObject.dispose();
-	iDataObject = null;
+	if (this.iDataObject != null)
+		this.iDataObject.dispose();
+	this.iDataObject = null;
 }
 /*
  * EnumFormatEtc([in] dwDirection, [out] ppenumFormatetc)
@@ -547,8 +547,8 @@ private int EnumFormatEtc(int dwDirection, long /*int*/ ppenumFormatetc) {
 	if (dwDirection == COM.DATADIR_SET) return COM.E_NOTIMPL;
 	// what types have been registered?
 	TransferData[] allowedDataTypes = new TransferData[0];
-	for (int i = 0; i < transferAgents.length; i++){
-		TransferData[] formats = transferAgents[i].getSupportedTypes();
+	for (int i = 0; i < this.transferAgents.length; i++){
+		TransferData[] formats = this.transferAgents[i].getSupportedTypes();
 		TransferData[] newAllowedDataTypes = new TransferData[allowedDataTypes.length + formats.length];
 		System.arraycopy(allowedDataTypes, 0, newAllowedDataTypes, 0, allowedDataTypes.length);
 		System.arraycopy(formats, 0, newAllowedDataTypes, allowedDataTypes.length, formats.length);
@@ -562,7 +562,7 @@ private int EnumFormatEtc(int dwDirection, long /*int*/ ppenumFormatetc) {
 	}
 	// include the drop effect format to specify a copy operation
 	FORMATETC dropeffect = new FORMATETC();
-	dropeffect.cfFormat = CFSTR_PREFERREDDROPEFFECT;
+	dropeffect.cfFormat = this.CFSTR_PREFERREDDROPEFFECT;
 	dropeffect.dwAspect = COM.DVASPECT_CONTENT;
 	dropeffect.lindex = -1;
 	dropeffect.tymed = COM.TYMED_HGLOBAL;
@@ -587,7 +587,7 @@ private int GetData(long /*int*/ pFormatetc, long /*int*/ pmedium) {
 	transferData.stgmedium = new STGMEDIUM();
 	transferData.result = COM.E_FAIL;
 
-	if (transferData.type == CFSTR_PREFERREDDROPEFFECT) {
+	if (transferData.type == this.CFSTR_PREFERREDDROPEFFECT) {
 		// specify that a copy operation is to be performed
 		STGMEDIUM stgmedium = new STGMEDIUM();
 		stgmedium.tymed = COM.TYMED_HGLOBAL;
@@ -601,28 +601,28 @@ private int GetData(long /*int*/ pFormatetc, long /*int*/ pmedium) {
 		
 	// get matching transfer agent to perform conversion
 	int transferIndex = -1;
-	for (int i = 0; i < transferAgents.length; i++){
-		if (transferAgents[i].isSupportedType(transferData)){
+	for (int i = 0; i < this.transferAgents.length; i++){
+		if (this.transferAgents[i].isSupportedType(transferData)){
 			transferIndex = i;
 			break;
 		}
 	}
 	if (transferIndex == -1) return COM.DV_E_FORMATETC;
-	transferAgents[transferIndex].javaToNative(data[transferIndex], transferData);
+	this.transferAgents[transferIndex].javaToNative(data[transferIndex], transferData);
 	COM.MoveMemory(pmedium, transferData.stgmedium, STGMEDIUM.sizeof);
 	return transferData.result;
 }
 
 private int QueryGetData(long /*int*/ pFormatetc) {
-	if (transferAgents == null) return COM.E_FAIL;
+	if (this.transferAgents == null) return COM.E_FAIL;
 	TransferData transferData = new TransferData();
 	transferData.formatetc = new FORMATETC();
 	COM.MoveMemory(transferData.formatetc, pFormatetc, FORMATETC.sizeof);
 	transferData.type = transferData.formatetc.cfFormat;
-	if (transferData.type == CFSTR_PREFERREDDROPEFFECT) return COM.S_OK;
+	if (transferData.type == this.CFSTR_PREFERREDDROPEFFECT) return COM.S_OK;
 	// is this type supported by the transfer agent?
-	for (int i = 0; i < transferAgents.length; i++){
-		if (transferAgents[i].isSupportedType(transferData))
+	for (int i = 0; i < this.transferAgents.length; i++){
+		if (this.transferAgents[i].isSupportedType(transferData))
 			return COM.S_OK;
 	}
 	
@@ -637,7 +637,7 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 	GUID guid = new GUID();
 	COM.MoveMemory(guid, riid, GUID.sizeof);
 	if (COM.IsEqualGUID(guid, COM.IIDIUnknown) || COM.IsEqualGUID(guid, COM.IIDIDataObject) ) {
-		OS.MoveMemory(ppvObject, new long /*int*/[] {iDataObject.getAddress()}, OS.PTR_SIZEOF);
+		OS.MoveMemory(ppvObject, new long /*int*/[] {this.iDataObject.getAddress()}, OS.PTR_SIZEOF);
 		AddRef();
 		return COM.S_OK;
 	}
@@ -646,7 +646,7 @@ private int QueryInterface(long /*int*/ riid, long /*int*/ ppvObject) {
 }
 private int Release() {
 	refCount--;
-	if (refCount == 0) {
+	if (this.refCount == 0) {
 		this.data = new Object[0];
 		this.transferAgents = new Transfer[0];
 		disposeCOMInterfaces();

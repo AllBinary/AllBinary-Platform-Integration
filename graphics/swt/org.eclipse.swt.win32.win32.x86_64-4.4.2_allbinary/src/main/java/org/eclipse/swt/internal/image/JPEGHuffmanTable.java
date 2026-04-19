@@ -254,7 +254,7 @@ void initialize() {
 		huffTables[huffTableCount] = dhtTable;
 		huffTableCount++;
 	}
-	allTables = new JPEGHuffmanTable[huffTableCount];
+	this.allTables = new JPEGHuffmanTable[huffTableCount];
 	System.arraycopy(huffTables, 0, allTables, 0, huffTableCount);
 }
 

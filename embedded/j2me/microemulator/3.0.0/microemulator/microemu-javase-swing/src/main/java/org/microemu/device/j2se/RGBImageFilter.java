@@ -43,11 +43,11 @@ public class RGBImageFilter extends java.awt.image.RGBImageFilter
     canFilterIndexColorModel = true;
     this.backgroundColor = 
         ((J2SEDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getBackgroundColor();    
-    foregroundColor = 
+    this.foregroundColor = 
         ((J2SEDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getForegroundColor();    
-    Rr = foregroundColor.getRed() - backgroundColor.getRed();
-    Rg = foregroundColor.getGreen() - backgroundColor.getGreen();
-    Rb = foregroundColor.getBlue() - backgroundColor.getBlue();
+    Rr = this.foregroundColor.getRed() - this.backgroundColor.getRed();
+    Rg = this.foregroundColor.getGreen() - this.backgroundColor.getGreen();
+    Rb = this.foregroundColor.getBlue() - this.backgroundColor.getBlue();
   }
 
 
@@ -59,19 +59,19 @@ public class RGBImageFilter extends java.awt.image.RGBImageFilter
     int b = (rgb & 0x000000FF);
 
     if (Rr > 0) {
-      r = (int) (r * Rr) / 255 + backgroundColor.getRed();
+      r = (int) (r * Rr) / 255 + this.backgroundColor.getRed();
     } else {
-      r = (int) (r * -Rr) / 255 + foregroundColor.getRed();
+      r = (int) (r * -Rr) / 255 + this.foregroundColor.getRed();
     }
     if (Rr > 0) {
-      g = (int) (g * Rg) / 255 + backgroundColor.getGreen();
+      g = (int) (g * Rg) / 255 + this.backgroundColor.getGreen();
     } else {
-      g = (int) (g * -Rg) / 255 + foregroundColor.getGreen();
+      g = (int) (g * -Rg) / 255 + this.foregroundColor.getGreen();
     }
     if (Rr > 0) {
-      b = (int) (b * Rb) / 255 + backgroundColor.getBlue();
+      b = (int) (b * Rb) / 255 + this.backgroundColor.getBlue();
     } else {
-      b = (int) (b * -Rb) / 255 + foregroundColor.getBlue();
+      b = (int) (b * -Rb) / 255 + this.foregroundColor.getBlue();
     }
 
     return a | (r << 16) | (g << 8) | b;

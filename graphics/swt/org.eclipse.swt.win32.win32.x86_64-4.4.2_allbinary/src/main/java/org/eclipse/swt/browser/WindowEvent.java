@@ -206,14 +206,14 @@ public WindowEvent(Widget widget) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " required=" + required
-		+ " browser=" + browser
-		+ " location=" + location
-		+ " size=" + size
-		+ " addressBar=" + addressBar
-		+ " menuBar=" + menuBar
-		+ " statusBar=" + statusBar
-		+ " toolBar=" + toolBar
+		+ " required=" + this.required
+		+ " browser=" + this.browser
+		+ " location=" + this.location
+		+ " size=" + this.size
+		+ " addressBar=" + this.addressBar
+		+ " menuBar=" + this.menuBar
+		+ " statusBar=" + this.statusBar
+		+ " toolBar=" + this.toolBar
 		+ "}";
 }
 }

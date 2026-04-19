@@ -38,7 +38,7 @@ public class ImageStringItem extends CustomItem
     {
         super(label, backgroundBasicColor, foregroundBasicColor);
         
-        stringComponent = new StringComponent(text, backgroundBasicColor, foregroundBasicColor);
+        this.stringComponent = new StringComponent(text, backgroundBasicColor, foregroundBasicColor);
         setImage(img);
     }
 
@@ -52,7 +52,7 @@ public class ImageStringItem extends CustomItem
         this.img = img;
         if (this.img != null)
         {
-            stringComponent.setWidthDecreaser(img.getWidth() + 2);
+            this.stringComponent.setWidthDecreaser(img.getWidth() + 2);
         }
     }
 
@@ -63,13 +63,13 @@ public class ImageStringItem extends CustomItem
 
     public void setText(String text)
     {
-        stringComponent.setText(text);
+        this.stringComponent.setText(text);
     }
 
     @Override
     public int getHeight()
     {
-        if (img != null && img.getHeight() > stringComponent.getHeight())
+        if (this.img != null && this.img.getHeight() > this.stringComponent.getHeight())
         {
             return img.getHeight();
         } else
@@ -80,28 +80,28 @@ public class ImageStringItem extends CustomItem
 
     public void invertPaint(boolean state)
     {
-        stringComponent.invertPaint(state);
+        this.stringComponent.invertPaint(state);
     }
 
     @Override
     public int paint(Graphics g)
     {
-        if (stringComponent == null)
+        if (this.stringComponent == null)
         {
             return 0;
         }
 
-        if (img != null)
+        if (this.img != null)
         {
-            g.drawImage(img, 0, 0, Graphics.LEFT | Graphics.TOP);
-            g.translate(img.getWidth() + 2, 0);
+            g.drawImage(this.img, 0, 0, Graphics.LEFT | Graphics.TOP);
+            g.translate(this.img.getWidth() + 2, 0);
         }
 
-        int y = stringComponent.paint(g);
+        int y = this.stringComponent.paint(g);
 
-        if (img != null)
+        if (this.img != null)
         {
-            g.translate(-img.getWidth() - 2, 0);
+            g.translate(-this.img.getWidth() - 2, 0);
         }
 
         return y;

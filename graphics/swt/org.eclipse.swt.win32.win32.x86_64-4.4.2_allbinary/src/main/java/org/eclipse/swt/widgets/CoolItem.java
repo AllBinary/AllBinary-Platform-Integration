@@ -184,15 +184,15 @@ protected void checkSubclass () {
  */
 public Point computeSize (int wHint, int hHint) {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return new Point (0, 0);
 	int width = wHint, height = hHint;
 	if (wHint == SWT.DEFAULT) width = 32;
 	if (hHint == SWT.DEFAULT) height = 32;
-	if ((parent.style & SWT.VERTICAL) != 0) {
-		height += parent.getMargin (index);
+	if ((this.parent.style & SWT.VERTICAL) != 0) {
+		height += this.parent.getMargin (index);
 	} else {
-		width += parent.getMargin (index);
+		width += this.parent.getMargin (index);
 	}
 	return new Point (width, height);
 }
@@ -215,9 +215,9 @@ void destroyWidget () {
  */
 public Rectangle getBounds () {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return new Rectangle (0, 0, 0, 0);
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	RECT rect = new RECT ();
 	OS.SendMessage (hwnd, OS.RB_GETRECT, index, rect);
 	if (OS.COMCTL32_MAJOR >= 6) {
@@ -226,12 +226,12 @@ public Rectangle getBounds () {
 		rect.left -= margins.cxLeftWidth;
 		rect.right += margins.cxRightWidth;
 	}
-	if (!parent.isLastItemOfRow (index)) {
-		rect.right += (parent.style & SWT.FLAT) == 0 ? CoolBar.SEPARATOR_WIDTH : 0;
+	if (!this.parent.isLastItemOfRow (index)) {
+		rect.right += (this.parent.style & SWT.FLAT) == 0 ? CoolBar.SEPARATOR_WIDTH : 0;
 	}
 	int width = rect.right - rect.left;
 	int height = rect.bottom - rect.top;
-	if ((parent.style & SWT.VERTICAL) != 0) {
+	if ((this.parent.style & SWT.VERTICAL) != 0) {
 		return new Rectangle (rect.top, rect.left, height, width);
 	}
 	return new Rectangle (rect.left, rect.top, width, height);
@@ -239,9 +239,9 @@ public Rectangle getBounds () {
 
 Rectangle getClientArea () {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return new Rectangle (0, 0, 0, 0);
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	RECT insetRect = new RECT ();
 	OS.SendMessage (hwnd, OS.RB_GETBANDBORDERS, index, insetRect);
 	RECT rect = new RECT ();
@@ -250,7 +250,7 @@ Rectangle getClientArea () {
 	int y = rect.top;
 	int width = rect.right - rect.left - insetRect.left;
 	int height = rect.bottom - rect.top;
-	if ((parent.style & SWT.FLAT) == 0) {
+	if ((this.parent.style & SWT.FLAT) == 0) {
 		y += insetRect.top;
 		width -= insetRect.right;
 		height -= insetRect.top + insetRect.bottom; 
@@ -297,9 +297,9 @@ public CoolBar getParent () {
 
 void releaseHandle () {
 	super.releaseHandle ();
-	parent = null;
-	id = -1;
-	control = null;
+	this.parent = null;
+	this.id = -1;
+	this.control = null;
 }
 
 /**
@@ -321,15 +321,15 @@ public void setControl (Control control) {
 	checkWidget ();
 	if (control != null) {
 		if (control.isDisposed()) error (SWT.ERROR_INVALID_ARGUMENT);
-		if (control.parent != parent) error (SWT.ERROR_INVALID_PARENT);
+		if (control.parent != this.parent) error (SWT.ERROR_INVALID_PARENT);
 	}
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
 	if (this.control != null && this.control.isDisposed ()) {
 		this.control = null;
 	}
 	Control oldControl = this.control, newControl = control;
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	long /*int*/ hwndChild = newControl != null ? control.topHandle () : 0;
 	REBARBANDINFO rbBand = new REBARBANDINFO ();
 	rbBand.cbSize = REBARBANDINFO.sizeof;
@@ -372,15 +372,15 @@ public void setControl (Control control) {
  */
 public Point getPreferredSize () {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return new Point (0, 0);
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	REBARBANDINFO rbBand = new REBARBANDINFO ();
 	rbBand.cbSize = REBARBANDINFO.sizeof;
 	rbBand.fMask = OS.RBBIM_CHILDSIZE | OS.RBBIM_IDEALSIZE;
 	OS.SendMessage (hwnd, OS.RB_GETBANDINFO, index, rbBand);
-	int width = rbBand.cxIdeal + parent.getMargin (index);
-	if ((parent.style & SWT.VERTICAL) != 0) {
+	int width = rbBand.cxIdeal + this.parent.getMargin (index);
+	if ((this.parent.style & SWT.VERTICAL) != 0) {
 		return new Point (rbBand.cyMaxChild, width);
 	}
 	return new Point (width, rbBand.cyMaxChild);
@@ -399,18 +399,18 @@ public Point getPreferredSize () {
  */
 public void setPreferredSize (int width, int height) {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
 	width = Math.max (0, width);
 	height = Math.max (0, height);
 	ideal = true;
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	int cxIdeal, cyMaxChild;
-	if ((parent.style & SWT.VERTICAL) != 0) {
-		cxIdeal = Math.max (0, height - parent.getMargin (index));
+	if ((this.parent.style & SWT.VERTICAL) != 0) {
+		cxIdeal = Math.max (0, height - this.parent.getMargin (index));
 		cyMaxChild = width;
 	} else {
-		cxIdeal = Math.max (0, width - parent.getMargin (index));
+		cxIdeal = Math.max (0, width - this.parent.getMargin (index));
 		cyMaxChild = height;
 	}
 	REBARBANDINFO rbBand = new REBARBANDINFO ();
@@ -462,9 +462,9 @@ public void setPreferredSize (Point size) {
  */
 public Point getSize() {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) new Point (0, 0);
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	RECT rect = new RECT ();
 	OS.SendMessage (hwnd, OS.RB_GETRECT, index, rect);
 	if (OS.COMCTL32_MAJOR >= 6) {
@@ -473,12 +473,12 @@ public Point getSize() {
 		rect.left -= margins.cxLeftWidth;
 		rect.right += margins.cxRightWidth;
 	}
-	if (!parent.isLastItemOfRow (index)) {
-		rect.right += (parent.style & SWT.FLAT) == 0 ? CoolBar.SEPARATOR_WIDTH : 0;
+	if (!this.parent.isLastItemOfRow (index)) {
+		rect.right += (this.parent.style & SWT.FLAT) == 0 ? CoolBar.SEPARATOR_WIDTH : 0;
 	}
 	int width = rect.right - rect.left;
 	int height = rect.bottom - rect.top;
-	if ((parent.style & SWT.VERTICAL) != 0) {
+	if ((this.parent.style & SWT.VERTICAL) != 0) {
 		return new Point (height, width);
 	}
 	return new Point (width, height);
@@ -502,20 +502,20 @@ public Point getSize() {
  */
 public void setSize (int width, int height) {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
 	width = Math.max (0, width);
 	height = Math.max (0, height);
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	int cx, cyChild, cxIdeal;
-	if ((parent.style & SWT.VERTICAL) != 0) {
+	if ((this.parent.style & SWT.VERTICAL) != 0) {
 		cx = height;
 		cyChild = width;
-		cxIdeal = Math.max (0, height - parent.getMargin (index));
+		cxIdeal = Math.max (0, height - this.parent.getMargin (index));
 	} else {
 		cx = width;
 		cyChild = height;
-		cxIdeal = Math.max (0, width - parent.getMargin (index));
+		cxIdeal = Math.max (0, width - this.parent.getMargin (index));
 	}
 	REBARBANDINFO rbBand = new REBARBANDINFO ();
 	rbBand.cbSize = REBARBANDINFO.sizeof;
@@ -532,13 +532,13 @@ public void setSize (int width, int height) {
 	/*
 	* Do not set the size for the last item on the row.
 	*/	
-	if (!parent.isLastItemOfRow (index)) {
+	if (!this.parent.isLastItemOfRow (index)) {
 		if (OS.COMCTL32_MAJOR >= 6) {
 			MARGINS margins = new MARGINS ();
 			OS.SendMessage (hwnd, OS.RB_GETBANDMARGINS, 0, margins);
 			cx -= margins.cxLeftWidth + margins.cxRightWidth;
 		}
-		int separator = (parent.style & SWT.FLAT) == 0 ? CoolBar.SEPARATOR_WIDTH : 0;
+		int separator = (this.parent.style & SWT.FLAT) == 0 ? CoolBar.SEPARATOR_WIDTH : 0;
 		rbBand.cx = cx - separator;
 		rbBand.fMask |= OS.RBBIM_SIZE;
 	}
@@ -583,14 +583,14 @@ public void setSize (Point size) {
  */
 public Point getMinimumSize () {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return new Point (0, 0);
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	REBARBANDINFO rbBand = new REBARBANDINFO ();
 	rbBand.cbSize = REBARBANDINFO.sizeof;
 	rbBand.fMask = OS.RBBIM_CHILDSIZE;
 	OS.SendMessage (hwnd, OS.RB_GETBANDINFO, index, rbBand);
-	if ((parent.style & SWT.VERTICAL) != 0) {
+	if ((this.parent.style & SWT.VERTICAL) != 0) {
 		return new Point (rbBand.cyMinChild, rbBand.cxMinChild);
 	}
 	return new Point (rbBand.cxMinChild, rbBand.cyMinChild);
@@ -612,14 +612,14 @@ public Point getMinimumSize () {
  */
 public void setMinimumSize (int width, int height) {
 	checkWidget ();
-	int index = parent.indexOf (this);
+	int index = this.parent.indexOf (this);
 	if (index == -1) return;
 	width = Math.max (0, width);
 	height = Math.max (0, height);
 	minimum = true;
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	int cxMinChild, cyMinChild;
-	if ((parent.style & SWT.VERTICAL) != 0) {
+	if ((this.parent.style & SWT.VERTICAL) != 0) {
 		cxMinChild = height;
 		cyMinChild = width;
 	} else {
@@ -663,7 +663,7 @@ public void setMinimumSize (Point size) {
 
 boolean getWrap() {
 	int index = parent.indexOf (this);
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	REBARBANDINFO rbBand = new REBARBANDINFO ();
 	rbBand.cbSize = REBARBANDINFO.sizeof;
 	rbBand.fMask = OS.RBBIM_STYLE;
@@ -673,7 +673,7 @@ boolean getWrap() {
 
 void setWrap(boolean wrap) {
 	int index = parent.indexOf (this);
-	long /*int*/ hwnd = parent.handle;
+	long /*int*/ hwnd = this.parent.handle;
 	REBARBANDINFO rbBand = new REBARBANDINFO ();
 	rbBand.cbSize = REBARBANDINFO.sizeof;
 	rbBand.fMask = OS.RBBIM_STYLE;

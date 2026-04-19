@@ -54,7 +54,7 @@ public class PreprocessorBridge implements IPreprocessor {
             };
         }
 
-        m_preprocessor = new Preprocessor(logger, filter);
+        this.m_preprocessor = new Preprocessor(logger, filter);
     }
 
     /*
@@ -121,7 +121,7 @@ public class PreprocessorBridge implements IPreprocessor {
      */
     public void addSymbols(String defines) throws PreprocessorException {
         try {
-            m_preprocessor.addDefines(defines);
+            this.m_preprocessor.addDefines(defines);
         } catch (PPException e) {
             throw new PreprocessorException(e.getMessage(), e);
         }
@@ -135,7 +135,7 @@ public class PreprocessorBridge implements IPreprocessor {
     public void addSymbols(InputStream in) throws PreprocessorException,
             IOException {
         try {
-            m_preprocessor.addDefines(in);
+            this.m_preprocessor.addDefines(in);
         } catch (PPException e) {
             throw new PreprocessorException(e.getMessage(), e);
         }
@@ -148,7 +148,7 @@ public class PreprocessorBridge implements IPreprocessor {
      */
     public void addSymbols(File file) throws PreprocessorException, IOException {
         try {
-            m_preprocessor.addDefines(file);
+            this.m_preprocessor.addDefines(file);
         } catch (PPException e) {
             throw new PreprocessorException(e.getMessage(), e);
         }
@@ -200,7 +200,7 @@ public class PreprocessorBridge implements IPreprocessor {
      */
     public void setDebugLevel(String level) throws PreprocessorException {
         if ("none".equals(level) || level == null) {
-            m_preprocessor.getDefines().undefine("DEBUG");
+            this.m_preprocessor.getDefines().undefine("DEBUG");
         } else {
             if (level.equalsIgnoreCase("debug")
                     || level.equalsIgnoreCase("info")
@@ -209,7 +209,7 @@ public class PreprocessorBridge implements IPreprocessor {
                     || level.equalsIgnoreCase("fatal")) {
             	try
 				{
-            		m_preprocessor.addDefines("DEBUG=" + level);
+            		this.m_preprocessor.addDefines("DEBUG=" + level);
 				} catch (Exception e)
 				{
 					throw new PreprocessorException("Error adding defines",e);

@@ -55,14 +55,14 @@ public class WtkObfuscate extends PostProcessor {
 
 	public Argument createArgument() {
 		Argument a = new Argument(getProject());
-		arguments.addElement(a);
+		this.arguments.addElement(a);
 		return a;
 	}
 
 	public Vector getArguments() {
 		Vector result = new Vector();
-		for (int i = 0; i < arguments.size(); i++) {
-			Argument a = (Argument) arguments.elementAt(i);
+		for (int i = 0; i < this.arguments.size(); i++) {
+			Argument a = (Argument) this.arguments.elementAt(i);
 			if (a.isActive()) {
 				result.add(a);
 			}

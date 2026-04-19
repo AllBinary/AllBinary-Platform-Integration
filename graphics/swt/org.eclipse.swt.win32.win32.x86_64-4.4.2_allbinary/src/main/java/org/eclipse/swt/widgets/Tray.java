@@ -49,9 +49,9 @@ Tray (Display display, int style) {
 }
 	
 void createItem (TrayItem item, int index) {
-	if (!(0 <= index && index <= itemCount)) error (SWT.ERROR_INVALID_RANGE);
-	if (itemCount == items.length) {
-		TrayItem [] newItems = new TrayItem [items.length + 4];
+	if (!(0 <= index && index <= this.itemCount)) error (SWT.ERROR_INVALID_RANGE);
+	if (this.itemCount == this.items.length) {
+		TrayItem [] newItems = new TrayItem [this.items.length + 4];
 		System.arraycopy (items, 0, newItems, 0, items.length);
 		items = newItems;
 	}
@@ -61,13 +61,13 @@ void createItem (TrayItem item, int index) {
 
 void destroyItem (TrayItem item) {
 	int index = 0;
-	while (index < itemCount) {
-		if (items [index] == item) break;
+	while (index < this.itemCount) {
+		if (this.items [index] == item) break;
 		index++;
 	}
-	if (index == itemCount) return;
-	System.arraycopy (items, index + 1, items, index, --itemCount - index);
-	items [itemCount] = null;
+	if (index == this.itemCount) return;
+	System.arraycopy (items, index + 1, items, index, --this.itemCount - index);
+	items [this.itemCount] = null;
 }
 
 /**
@@ -87,7 +87,7 @@ void destroyItem (TrayItem item) {
  */
 public TrayItem getItem (int index) {
 	checkWidget ();
-	if (!(0 <= index && index < itemCount)) error (SWT.ERROR_INVALID_RANGE);
+	if (!(0 <= index && index < this.itemCount)) error (SWT.ERROR_INVALID_RANGE);
 	return items [index];
 }
 
@@ -124,21 +124,21 @@ public int getItemCount () {
  */
 public TrayItem [] getItems () {
 	checkWidget ();
-	TrayItem [] result = new TrayItem [itemCount];
-	System.arraycopy (items, 0, result, 0, result.length);
+	TrayItem [] result = new TrayItem [this.itemCount];
+	System.arraycopy (this.items, 0, result, 0, result.length);
 	return result;
 }
 
 @Override
 void releaseChildren (boolean destroy) {
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			TrayItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			TrayItem item = this.items [i];
 			if (item != null && !item.isDisposed ()) {
 				item.release (false);
 			}
 		}
-		items = null;
+		this.items = null;
 	}
 	super.releaseChildren (destroy);
 }
@@ -151,9 +151,9 @@ void releaseParent () {
 
 @Override
 void reskinChildren (int flags) {	
-	if (items != null) {
-		for (int i=0; i<items.length; i++) {
-			TrayItem item = items [i];
+	if (this.items != null) {
+		for (int i=0; i<this.items.length; i++) {
+			TrayItem item = this.items [i];
 			if (item != null) item.reskin (flags);
 		}
 	}

@@ -55,8 +55,8 @@ public class WangSets {
      */
     
     public BasicArrayList getWangset() {
-        if (wangset == null) {
-            wangset = new BasicArrayList();
+        if (this.wangset == null) {
+            this.wangset = new BasicArrayList();
         }
         return this.wangset;
     }

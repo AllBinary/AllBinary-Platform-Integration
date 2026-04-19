@@ -42,8 +42,8 @@ public class GKeyJ2SEDevice extends J2SEDevice implements GetKeyHandler
 	
 	public InputMethod getInputMethod() 
 	{
-		if (inputMethod == null) {
-			inputMethod = new GKeyJ2SEInputMethod(this);
+		if (this.inputMethod == null) {
+			this.inputMethod = new GKeyJ2SEInputMethod(this);
 		}
 
 		return inputMethod;

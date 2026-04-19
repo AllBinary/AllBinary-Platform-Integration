@@ -57,7 +57,7 @@ public class SwtFontManager implements FontManagerImpl {
     	key |= meFont.getStyle();
     	key |= meFont.getSize();
     	
-    	org.microemu.device.impl.Font result = (org.microemu.device.impl.Font) fonts.get(new Integer(key));
+    	org.microemu.device.impl.Font result = (org.microemu.device.impl.Font) this.fonts.get(new Integer(key));
 	    
 	    if (result == null) {
 	    	String name = null;
@@ -93,14 +93,14 @@ public class SwtFontManager implements FontManagerImpl {
                 //Using the specified size breaks from the J2ME impl.
                 if(Common.allowJ2SEFontSizing) {
                     //System.out.println(new StringBuffer().append("Sizeable J2SESystemFont: ").append(name).append(" style: ").append(style).append(" size: ").append(meFont.getSize()).toString());
-                    result = new SwtSystemFont(name, style, meFont.getSize(), antialiasing);
+                    result = new SwtSystemFont(name, style, meFont.getSize(), this.antialiasing);
                 } else {
                     //System.out.println(new StringBuffer().append("Sizeable J2SESystemFont: ").append(name).append(" style: ").append(style).append(" size: ").append(size).toString());
-                    result = new SwtSystemFont(name, style, size, antialiasing);
+                    result = new SwtSystemFont(name, style, size, this.antialiasing);
                 }
                 
                 //System.out.println("J2SEFontManager put - font");                
-	    	fonts.put(new Integer(key), result);
+	    	this.fonts.put(new Integer(key), result);
 	    }
 	    
 	    return result;
@@ -138,7 +138,7 @@ public class SwtFontManager implements FontManagerImpl {
 	{
 		this.antialiasing = antialiasing;
 		
-		Enumeration en = fonts.elements();
+		Enumeration en = this.fonts.elements();
 		while (en.hasMoreElements()) {
 			SwtFont font = (SwtFont) en.nextElement();
 			font.setAntialiasing(antialiasing);
@@ -178,7 +178,7 @@ public class SwtFontManager implements FontManagerImpl {
 			key |= Font.SIZE_LARGE;
 		}
 		
-		fonts.put(new Integer(key), font);
+		this.fonts.put(new Integer(key), font);
 	}
 
 	public org.microemu.device.impl.Font createSystemFont(String defName, String defStyle, int defSize, boolean antialiasing) {

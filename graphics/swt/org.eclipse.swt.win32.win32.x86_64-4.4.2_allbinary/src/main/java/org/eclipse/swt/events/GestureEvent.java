@@ -146,14 +146,14 @@ public GestureEvent(Event e) {
 public String toString() {
 	String string = super.toString ();
 	return string.substring (0, string.length() - 1) // remove trailing '}'
-		+ " stateMask=0x" + Integer.toHexString(stateMask)
-		+ " detail=" + detail
-		+ " x=" + x
-		+ " y=" + y
-		+ " rotation=" + rotation
-		+ " xDirection=" + xDirection
-		+ " yDirection=" + yDirection
-		+ " magnification=" + magnification
+		+ " stateMask=0x" + Integer.toHexString(this.stateMask)
+		+ " detail=" + this.detail
+		+ " x=" + this.x
+		+ " y=" + this.y
+		+ " rotation=" + this.rotation
+		+ " xDirection=" + this.xDirection
+		+ " yDirection=" + this.yDirection
+		+ " magnification=" + this.magnification
 		+ "}";
 }
 }

@@ -60,15 +60,15 @@ public class MIDletClassLoaderTest //extends TestCase
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		capture = new EventCatureLoggerAppender();
-		Logger.addAppender(capture);
-		enhanceCatchBlockSave = MIDletClassLoader.enhanceCatchBlock;
+		this.capture = new EventCatureLoggerAppender();
+		Logger.addAppender(this.capture);
+		this.enhanceCatchBlockSave = MIDletClassLoader.enhanceCatchBlock;
 	}
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		Logger.removeAppender(capture);
-		MIDletClassLoader.enhanceCatchBlock = enhanceCatchBlockSave;
+		Logger.removeAppender(this.capture);
+		MIDletClassLoader.enhanceCatchBlock = this.enhanceCatchBlockSave;
 	}
 
 	public void testGetResourceAsStream() throws Exception {
@@ -126,7 +126,7 @@ public class MIDletClassLoaderTest //extends TestCase
 		Runnable instrumentedInstance = (Runnable) instrumentedClass.newInstance();
 		instrumentedInstance.run();
 
-		LoggingEvent lastEvent = capture.getLastEvent();
+		LoggingEvent lastEvent = this.capture.getLastEvent();
 		assertNotNull("got event", lastEvent);
 		assertEquals("All tests OK", lastEvent.getMessage());
 		StackTraceElement ste = lastEvent.getLocation();
@@ -140,7 +140,7 @@ public class MIDletClassLoaderTest //extends TestCase
 		Runnable instrumentedInstance = (Runnable) instrumentedClass.newInstance();
 		instrumentedInstance.run();
 
-		LoggingEvent lastEvent = capture.getLastEvent();
+		LoggingEvent lastEvent = this.capture.getLastEvent();
 		assertNotNull("got event", lastEvent);
 		assertNotNull("got message", lastEvent.getMessage());
 		System.out.println("[" + lastEvent.getMessage() + "]");

@@ -549,7 +549,7 @@ void createCOMInterfaces () {
 	};
 
 	if (GetScriptableFlags24Proc != null) {
-		long /*int*/ ppVtable = xpcScriptable.getVtable ();
+		long /*int*/ ppVtable = this.xpcScriptable.getVtable ();
 		long /*int*/[] pVtable = new long /*int*/[1];
 		C.memmove (pVtable, ppVtable, C.PTR_SIZEOF);
 		long /*int*/[] funcs = new long /*int*/[24];
@@ -560,29 +560,29 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}
-	if (classInfo != null) {
-		classInfo.dispose ();
-		classInfo = null;
+	if (this.classInfo != null) {
+		this.classInfo.dispose ();
+		this.classInfo = null;
 	}
-	if (securityCheckedComponent != null) {
-		securityCheckedComponent.dispose ();
-		securityCheckedComponent = null;
+	if (this.securityCheckedComponent != null) {
+		this.securityCheckedComponent.dispose ();
+		this.securityCheckedComponent = null;
 	}
-	if (external != null) {
-		external.dispose ();
-		external = null;
+	if (this.external != null) {
+		this.external.dispose ();
+		this.external = null;
 	}
-	if (scriptObjectOwner != null) {
-		scriptObjectOwner.dispose ();
-		scriptObjectOwner = null;
+	if (this.scriptObjectOwner != null) {
+		this.scriptObjectOwner.dispose ();
+		this.scriptObjectOwner = null;
 	}
-	if (xpcScriptable != null) {
-		xpcScriptable.dispose ();
-		xpcScriptable = null;
+	if (this.xpcScriptable != null) {
+		this.xpcScriptable.dispose ();
+		this.xpcScriptable = null;
 	}
 }
 
@@ -596,35 +596,35 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIClassInfo.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {classInfo.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.classInfo.getAddress ()}, C.PTR_SIZEOF);
 		AddRef();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (XPCOM.NS_ISECURITYCHECKEDCOMPONENT_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {securityCheckedComponent.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.securityCheckedComponent.getAddress ()}, C.PTR_SIZEOF);
 		AddRef();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (EXTERNAL_IID)) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {external.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.external.getAddress ()}, C.PTR_SIZEOF);
 		AddRef();
 		return XPCOM.NS_OK;
 	}
 
 	if (MozillaVersion.CheckVersion (MozillaVersion.VERSION_XR10)) {
 		if (guid.Equals (XPCOM.NS_ISCRIPTOBJECTOWNER_IID)) {
-			XPCOM.memmove (ppvObject, new long /*int*/[] {scriptObjectOwner.getAddress ()}, C.PTR_SIZEOF);
+			XPCOM.memmove (ppvObject, new long /*int*/[] {this.scriptObjectOwner.getAddress ()}, C.PTR_SIZEOF);
 			AddRef();
 			return XPCOM.NS_OK;
 		}
 		if (MozillaVersion.CheckVersion (MozillaVersion.VERSION_XR24)) {
 			if (guid.Equals (XPCOM.NS_IXPCSCRIPTABLE_IID)) {
-				XPCOM.memmove (ppvObject, new long /*int*/[] {xpcScriptable.getAddress ()}, C.PTR_SIZEOF);
+				XPCOM.memmove (ppvObject, new long /*int*/[] {this.xpcScriptable.getAddress ()}, C.PTR_SIZEOF);
 				AddRef();
 				return XPCOM.NS_OK;
 			}
@@ -637,7 +637,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 

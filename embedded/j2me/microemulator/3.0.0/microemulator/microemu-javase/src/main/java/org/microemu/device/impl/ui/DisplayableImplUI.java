@@ -49,8 +49,8 @@ public class DisplayableImplUI implements DisplayableUI {
 
 	public void addCommandUI(CommandUI cmd) {
 		// Check that its not the same command
-		for (int i = 0; i < commands.size(); i++) {
-			if (cmd == (CommandUI) commands.elementAt(i)) {
+		for (int i = 0; i < this.commands.size(); i++) {
+			if (cmd == (CommandUI) this.commands.elementAt(i)) {
 				// Its the same just return
 				return;
 			}
@@ -58,19 +58,19 @@ public class DisplayableImplUI implements DisplayableUI {
 
 		// Now insert it in order
 		boolean inserted = false;
-		for (int i = 0; i < commands.size(); i++) {
-			if (cmd.getCommand().getPriority() < ((CommandUI) commands.elementAt(i)).getCommand().getPriority()) {
-				commands.insertElementAt(cmd, i);
+		for (int i = 0; i < this.commands.size(); i++) {
+			if (cmd.getCommand().getPriority() < ((CommandUI) this.commands.elementAt(i)).getCommand().getPriority()) {
+				this.commands.insertElementAt(cmd, i);
 				inserted = true;
 				break;
 			}
 		}
 		if (inserted == false) {
 			// Not inserted just place it at the end
-			commands.addElement(cmd);
+			this.commands.addElement(cmd);
 		}		
 
-		if (displayable.isShown()) {
+		if (this.displayable.isShown()) {
 			updateCommands();
 		}
 	}
@@ -78,7 +78,7 @@ public class DisplayableImplUI implements DisplayableUI {
 	public void removeCommandUI(CommandUI cmd) {
 		commands.removeElement(cmd);
 		
-		if (displayable.isShown()) {
+		if (this.displayable.isShown()) {
 			updateCommands();
 		}
 	}

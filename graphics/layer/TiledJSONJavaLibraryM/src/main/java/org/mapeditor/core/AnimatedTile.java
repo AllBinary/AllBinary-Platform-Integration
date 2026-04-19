@@ -63,7 +63,7 @@ public class AnimatedTile extends Tile {
      */
     public AnimatedTile(Tile[] frames) {
         this();
-        sprite = new Sprite(frames);
+        this.sprite = new Sprite(frames);
     }
 
     /**

@@ -88,13 +88,13 @@ void createCOMInterfaces () {
 }
 
 void disposeCOMInterfaces () {
-	if (supports != null) {
-		supports.dispose ();
-		supports = null;
+	if (this.supports != null) {
+		this.supports.dispose ();
+		this.supports = null;
 	}	
-	if (filePicker != null) {
-		filePicker.dispose ();
-		filePicker = null;	
+	if (this.filePicker != null) {
+		this.filePicker.dispose ();
+		this.filePicker = null;	
 	}
 }
 
@@ -108,12 +108,12 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 	XPCOM.memmove (guid, riid, nsID.sizeof);
 
 	if (guid.Equals (IIDStore.GetIID (nsISupports.class))) {
-		XPCOM.memmove (ppvObject, new long /*int*/[] {supports.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove (ppvObject, new long /*int*/[] {this.supports.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
 	if (guid.Equals (IIDStore.GetIID (nsIFilePicker.class))) {
-		XPCOM.memmove(ppvObject, new long /*int*/[] {filePicker.getAddress ()}, C.PTR_SIZEOF);
+		XPCOM.memmove(ppvObject, new long /*int*/[] {this.filePicker.getAddress ()}, C.PTR_SIZEOF);
 		AddRef ();
 		return XPCOM.NS_OK;
 	}
@@ -124,7 +124,7 @@ int QueryInterface (long /*int*/ riid, long /*int*/ ppvObject) {
 
 int Release () {
 	refCount--;
-	if (refCount == 0) disposeCOMInterfaces ();
+	if (this.refCount == 0) disposeCOMInterfaces ();
 	return refCount;
 }
 
@@ -152,7 +152,7 @@ int Init (long /*int*/ parent, long /*int*/ title, short mode) {
 }
 
 int Show (long /*int*/ _retval) {
-	if (mode == nsIFilePicker.modeGetFolder) {
+	if (this.mode == nsIFilePicker.modeGetFolder) {
 		/* picking a directory */
 		int result = showDirectoryPicker ();
 		XPCOM.memmove (_retval, new short[] {(short)result}, 2); /* PRInt16 */
@@ -160,9 +160,9 @@ int Show (long /*int*/ _retval) {
 	}
 
 	/* picking a file */
-	int style = mode == nsIFilePicker.modeSave ? SWT.SAVE : SWT.OPEN;
-	if (mode == nsIFilePicker.modeOpenMultiple) style |= SWT.MULTI;
-	Browser browser = getBrowser (parentHandle);
+	int style = this.mode == nsIFilePicker.modeSave ? SWT.SAVE : SWT.OPEN;
+	if (this.mode == nsIFilePicker.modeOpenMultiple) style |= SWT.MULTI;
+	Browser browser = getBrowser (this.parentHandle);
 	Shell parent = null;
 	if (browser != null) {
 		parent = browser.getShell ();

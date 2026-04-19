@@ -18,7 +18,7 @@ public class Literal
 	
 	public Literal(int type, String value)
 	{
-		m_type = type;
+		this.m_type = type;
 		switch (type)
 		{
 			case SYMBOL:
@@ -29,14 +29,14 @@ public class Literal
 			case STRING:
 				if (value.toLowerCase().equals("false") || value.toLowerCase().equals("true"))
 				{
-					m_type = BOOLEAN;
+					this.m_type = BOOLEAN;
 				}
 				else
 				{
 					try
 					{
 						Double.parseDouble(value);
-						m_type = NUMBER;
+						this.m_type = NUMBER;
 					}
 					catch (NumberFormatException e){}
 				}
@@ -44,7 +44,7 @@ public class Literal
 			case APPLexerTokenTypes.LITERAL_false:
 			case APPLexerTokenTypes.LITERAL_true:
 			case BOOLEAN:
-				m_type = BOOLEAN;
+				this.m_type = BOOLEAN;
 				if (!value.toLowerCase().equals("false") && !value.toLowerCase().equals("true")) throw new IllegalArgumentException("Invalid boolean value");
 				value = value.toLowerCase();
 				break;
@@ -54,17 +54,17 @@ public class Literal
 			case APPLexerTokenTypes.LITERAL_error:
 			case APPLexerTokenTypes.LITERAL_fatal:
 			case DEBUG_LEVEL:
-				m_type = DEBUG_LEVEL;
+				this.m_type = DEBUG_LEVEL;
 				break;
 			default:
 				throw new IllegalArgumentException("unsupported type " + type + " for value " + value);
 		}
-		m_value = value;
+		this.m_value = value;
 	}
 	
 	public String toString()
 	{
-		switch (m_type)
+		switch (this.m_type)
 		{
 			case STRING:
 				return "\""+this.m_value+"\"";
@@ -83,19 +83,19 @@ public class Literal
 		if (obj instanceof Literal)
 		{
 			Literal other = (Literal) obj;
-			return other.m_type == m_type && other.m_value.equals(m_value);
+			return other.m_type == this.m_type && other.m_value.equals(this.m_value);
 		}
 		return false;
 	}
 
 	public boolean isFalse()
 	{
-		return m_type == BOOLEAN && m_value.equals("false");
+		return m_type == BOOLEAN && this.m_value.equals("false");
 	}
 
 	public boolean isTrue()
 	{
-		return m_type == BOOLEAN && m_value.equals("true");
+		return m_type == BOOLEAN && this.m_value.equals("true");
 	}
 	
 	public String getValue()

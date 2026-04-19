@@ -69,19 +69,19 @@ public class List extends Screen implements Choice {
 					append(stringElements[i], imageElements[i]);
 				}
 			}
-			choiceGroup = new ChoiceGroup(null, listType, stringElements, imageElements, false);
+			this.choiceGroup = new ChoiceGroup(null, listType, stringElements, imageElements, false);
 		} else {
 	        if (listType == Choice.IMPLICIT) {
-	            choiceGroup = new ChoiceGroup(null, Choice.IMPLICIT, stringElements, imageElements, false);
+	            this.choiceGroup = new ChoiceGroup(null, Choice.IMPLICIT, stringElements, imageElements, false);
 	            for (int i = 0; i < size(); i++) {
 	                set(i, getString(i), null);
 	            }
 	        } else {
-	            choiceGroup = new ChoiceGroup(null, listType, stringElements, imageElements);
+	            this.choiceGroup = new ChoiceGroup(null, listType, stringElements, imageElements);
 	        }
 		}
-        choiceGroup.setOwner(this);
-        choiceGroup.setFocus(true);
+        this.choiceGroup.setOwner(this);
+        this.choiceGroup.setFocus(true);
 
         this.selCommand = SELECT_COMMAND;
         this.initialPressedItem = -1;
@@ -101,7 +101,7 @@ public class List extends Screen implements Choice {
       if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
         ((ListUI) ui).delete(elementNum);
       } else {
-        choiceGroup.delete(elementNum);
+        this.choiceGroup.delete(elementNum);
       }
     }
 
@@ -110,7 +110,7 @@ public class List extends Screen implements Choice {
       if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
         ((ListUI) ui).deleteAll();
       } else {
-        choiceGroup.deleteAll();
+        this.choiceGroup.deleteAll();
       }
     }
 
@@ -157,7 +157,7 @@ public class List extends Screen implements Choice {
     	if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
     		((ListUI) ui).insert(elementNum, stringPart, imagePart);
     	} else {
-    		choiceGroup.insert(elementNum, stringPart, imagePart);
+    		this.choiceGroup.insert(elementNum, stringPart, imagePart);
     	}    
     }
 
@@ -177,7 +177,7 @@ public class List extends Screen implements Choice {
     	if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
     		((ListUI) ui).set(elementNum, stringPart, imagePart);
     	} else {
-    		choiceGroup.set(elementNum, stringPart, imagePart);
+    		this.choiceGroup.set(elementNum, stringPart, imagePart);
     	}
     }
 
@@ -207,7 +207,7 @@ public class List extends Screen implements Choice {
       if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
         ((ListUI) ui).setSelectedIndex(elementNum, selected);
       } else {
-        choiceGroup.setSelectedIndex(elementNum, selected);
+        this.choiceGroup.setSelectedIndex(elementNum, selected);
       }
     }
 
@@ -225,9 +225,9 @@ public class List extends Screen implements Choice {
 
     @Override
     public void keyPressed(int keyCode) {
-        if (Display.getGameAction(keyCode) == Canvas.FIRE && choiceGroup.select() && super.getCommandListener() != null
-                && choiceGroup.choiceType == Choice.IMPLICIT) {
-        	MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(selCommand, this);
+        if (Display.getGameAction(keyCode) == Canvas.FIRE && this.choiceGroup.select() && super.getCommandListener() != null
+                && this.choiceGroup.choiceType == Choice.IMPLICIT) {
+        	MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(this.selCommand, this);
         } else {
             super.keyPressed(keyCode);
         }
@@ -244,14 +244,14 @@ public class List extends Screen implements Choice {
         y -= title.getHeight();
         y -= 1;
         if (y >= 0 && y < viewPortHeight) {
-            int pressedItem = choiceGroup.getItemIndexAt(x, y + viewPortY);
+            int pressedItem = this.choiceGroup.getItemIndexAt(x, y + viewPortY);
             if (pressedItem != -1) {
-                if (choiceGroup.choiceType == Choice.MULTIPLE) {
+                if (this.choiceGroup.choiceType == Choice.MULTIPLE) {
                     setSelectedIndex(pressedItem, !isSelected(pressedItem));
                 } else {
                     setSelectedIndex(pressedItem, true);
                 }
-                initialPressedItem = pressedItem;
+                this.initialPressedItem = pressedItem;
             }
         }
     }
@@ -266,11 +266,11 @@ public class List extends Screen implements Choice {
         StringComponent title = new StringComponent(getTitle());
         y -= title.getHeight();
         y -= 1;
-        if (y >= 0 && y < viewPortHeight && choiceGroup.choiceType == Choice.IMPLICIT) {
-            int releasedItem = choiceGroup.getItemIndexAt(x, y + viewPortY);
+        if (y >= 0 && y < viewPortHeight && this.choiceGroup.choiceType == Choice.IMPLICIT) {
+            int releasedItem = this.choiceGroup.getItemIndexAt(x, y + viewPortY);
             if (releasedItem != -1) {
-                if (releasedItem == initialPressedItem && super.getCommandListener() != null
-                        && choiceGroup.choiceType == Choice.IMPLICIT) {
+                if (releasedItem == this.initialPressedItem && super.getCommandListener() != null
+                        && this.choiceGroup.choiceType == Choice.IMPLICIT) {
                 	MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(SELECT_COMMAND, this);
                 }
             }
@@ -298,10 +298,10 @@ public class List extends Screen implements Choice {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 		} else {
 	        int selectedItemIndex = getSelectedIndex();
-	        int heightToItem = choiceGroup.getHeightToItem(selectedItemIndex);
+	        int heightToItem = this.choiceGroup.getHeightToItem(selectedItemIndex);
 	        int heightAfterItem = heightToItem;
 	        if (selectedItemIndex >= 0) {
-	            heightAfterItem += choiceGroup.getItemHeight(selectedItemIndex);
+	            heightAfterItem += this.choiceGroup.getItemHeight(selectedItemIndex);
 	        }
 	        if (viewPortY > heightToItem) {
 	            viewPortY = heightToItem;

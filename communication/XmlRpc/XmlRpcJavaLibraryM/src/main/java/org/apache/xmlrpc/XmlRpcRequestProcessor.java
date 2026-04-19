@@ -76,7 +76,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
      */
     protected XmlRpcRequestProcessor()
     {
-        requestParams = new Vector();
+        this.requestParams = new Vector();
     }
 
     /**
@@ -107,7 +107,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
             if (XmlRpc.debug)
             {
                 System.out.println("XML-RPC method name: " + methodName);
-                System.out.println("Request parameters: " + requestParams);
+                System.out.println("Request parameters: " + this.requestParams);
             }
             // check for errors from the XML parser
             if (errorLevel > NONE)
@@ -115,11 +115,11 @@ public class XmlRpcRequestProcessor extends XmlRpc
                 throw new ParseFailed(errorMsg);
             }
 
-            return new XmlRpcRequest(methodName, (Vector) requestParams.clone());
+            return new XmlRpcRequest(methodName, (Vector) this.requestParams.clone());
         }
         finally
         {
-            requestParams.removeAllElements();
+            this.requestParams.removeAllElements();
             if (XmlRpc.debug)
             {
                 System.out.println("Spent " + (System.currentTimeMillis() - now) + " millis decoding request");
@@ -135,6 +135,6 @@ public class XmlRpcRequestProcessor extends XmlRpc
      */
     protected void objectParsed(Object what)
     {
-        requestParams.addElement(what);
+        this.requestParams.addElement(what);
     }
 }

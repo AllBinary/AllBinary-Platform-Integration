@@ -65,13 +65,13 @@ public class GaugePanel extends BaseExamplesForm implements HasRunnable {
 	}
 
 	public void startRunnable() {
-		cancel = false;
+		this.cancel = false;
 		Thread thread = new Thread(timerTask, "GaugePanelThread");
 		thread.start();
 	}
 
 	public void stopRunnable() {
-		cancel = true;
+		this.cancel = true;
 	}
 
 }

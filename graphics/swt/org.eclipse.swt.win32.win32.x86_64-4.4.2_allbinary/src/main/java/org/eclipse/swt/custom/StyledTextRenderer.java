@@ -218,7 +218,7 @@ void calculate(int startLine, int lineCount) {
 		}
 		if (lineWidth[i] > maxWidth) {
 			maxWidth = lineWidth[i];
-			maxWidthLineIndex = i;
+			this.maxWidthLineIndex = i;
 		}
 	}
 }
@@ -410,7 +410,7 @@ int drawLine(int lineIndex, int paintX, int paintY, GC gc, Color widgetBackgroun
 	int bulletIndex = -1;
 	if (bullets != null) {
 		if (bulletsIndices != null) {
-			int index = lineIndex - topIndex;
+			int index = lineIndex - this.topIndex;
 			if (0 <= index && index < CACHE_SIZE) {
 				bullet = bullets[index];
 				bulletIndex = bulletsIndices[index];
@@ -732,7 +732,7 @@ TextLayout getTextLayout(int lineIndex, int orientation, int width, int lineSpac
 					if (layouts[i] != null) {
 						int layoutIndex = (i + this.topIndex) - topIndex;
 						if (0 <= layoutIndex && layoutIndex < newLayouts.length) {
-							newLayouts[layoutIndex] = layouts[i];
+							newLayouts[layoutIndex] = this.layouts[i];
 						} else {
 							layouts[i].dispose();
 						}
@@ -763,7 +763,7 @@ TextLayout getTextLayout(int lineIndex, int orientation, int width, int lineSpac
 		if (layouts != null) {
 			int layoutIndex = lineIndex - topIndex;
 			if (0 <= layoutIndex && layoutIndex < layouts.length) {
-				layout = layouts[layoutIndex];
+				layout = this.layouts[layoutIndex];
 				if (layout != null) {
 					if (lineWidth[lineIndex] != -1) return layout;
 				} else {
@@ -1032,7 +1032,7 @@ int getWidth() {
 void reset() {
 	if (layouts != null) {
 		for (int i = 0; i < layouts.length; i++) {
-			TextLayout layout = layouts[i];
+			TextLayout layout = this.layouts[i];
 			if (layout != null) layout.dispose();
 		}
 		layouts = null;
@@ -1059,12 +1059,12 @@ void reset(int startLine, int lineCount) {
 	}
 	if (startLine <= maxWidthLineIndex && maxWidthLineIndex < endLine) {
 		maxWidth = 0;
-		maxWidthLineIndex = -1;
+		this.maxWidthLineIndex = -1;
 		if (lineCount != this.lineCount) {
 			for (int i = 0; i < this.lineCount; i++) {
 				if (lineWidth[i] > maxWidth) {
 					maxWidth = lineWidth[i];
-					maxWidthLineIndex = i;
+					this.maxWidthLineIndex = i;
 				}
 			}
 		}
@@ -1438,8 +1438,8 @@ void textChanging(TextChangingEvent event) {
 					if (0 <= i && i < layouts.length) {
 						endIndex = i + delta;
 						if (0 <= endIndex && endIndex < layouts.length) {
-							layouts[endIndex] = layouts[i];
-							layouts[i] = null;
+							this.layouts[endIndex] = this.layouts[i];
+							this.layouts[i] = null;
 							if (bullets != null && bulletsIndices != null) {
 								bullets[endIndex] = bullets[i];
 								bulletsIndices[endIndex] = bulletsIndices[i];
@@ -1457,8 +1457,8 @@ void textChanging(TextChangingEvent event) {
 					if (0 <= i && i < layouts.length) {
 						endIndex = i + delta;
 						if (0 <= endIndex && endIndex < layouts.length) {
-							layouts[endIndex] = layouts[i];
-							layouts[i] = null;
+							this.layouts[endIndex] = this.layouts[i];
+							this.layouts[i] = null;
 							if (bullets != null && bulletsIndices != null) {
 								bullets[endIndex] = bullets[i];
 								bulletsIndices[endIndex] = bulletsIndices[i];
@@ -1492,11 +1492,11 @@ void textChanging(TextChangingEvent event) {
 		lineCount += delta;
 		if (maxWidthLineIndex != -1 && startLine <= maxWidthLineIndex && maxWidthLineIndex <= startLine + replaceLineCount) {
 			maxWidth = 0;
-			maxWidthLineIndex = -1;
+			this.maxWidthLineIndex = -1;
 			for (int i = 0; i < lineCount; i++) {
 				if (lineWidth[i] > maxWidth) {
 					maxWidth = lineWidth[i];
-					maxWidthLineIndex = i;
+					this.maxWidthLineIndex = i;
 				}
 			}
 		}

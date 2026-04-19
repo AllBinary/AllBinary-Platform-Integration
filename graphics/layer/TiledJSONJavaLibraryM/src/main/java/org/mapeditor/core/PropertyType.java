@@ -99,7 +99,7 @@ public enum PropertyType {
     private final String value;
 
     PropertyType(String v) {
-        value = v;
+        this.value = v;
     }
 
     public String value() {

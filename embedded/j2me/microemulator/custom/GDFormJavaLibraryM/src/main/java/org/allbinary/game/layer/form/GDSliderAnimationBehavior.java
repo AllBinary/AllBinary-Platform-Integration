@@ -98,7 +98,7 @@ implements GDGameLayerItemStateListener {
                 this.setValue2(value2);
             }
         } else if(motionGestureInput == touchMotionGestureFactory.RELEASED) {
-            draggingThumb = false;
+            this.draggingThumb = false;
         } else if((motionGestureInput == touchMotionGestureFactory.LEFT || motionGestureInput == touchMotionGestureFactory.RIGHT) && draggingThumb) {
             final int value2 = point.getX() - this.deltaFromPointToStartOfThumb - gameLayer.getXP();
             this.setValue2(value2);

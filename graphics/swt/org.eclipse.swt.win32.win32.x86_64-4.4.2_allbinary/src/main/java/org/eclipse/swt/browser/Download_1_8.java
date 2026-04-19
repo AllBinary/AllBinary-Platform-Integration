@@ -442,7 +442,7 @@ int OnSecurityChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int stat
 
 int OnStateChange (long /*int*/ aWebProgress, long /*int*/ aRequest, int aStateFlags, int aStatus) {
 	if ((aStateFlags & nsIWebProgressListener.STATE_STOP) != 0) {
-		cancelable = null;
+		this.cancelable = null;
 		if (shell != null && !shell.isDisposed ()) shell.dispose ();
 		shell = null;
 	}

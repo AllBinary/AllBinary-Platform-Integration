@@ -49,7 +49,7 @@ public class Connection extends org.microemu.cldc.socket.SocketConnection implem
 	private SecurityInfo securityInfo;
 	
 	public Connection() {
-		securityInfo = null;
+		this.securityInfo = null;
 	}
 
 	public javax.microedition.io.Connection open(String name) throws IOException {

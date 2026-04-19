@@ -47,7 +47,7 @@ public class CommandEvaluator {
      * @param defines
      */
     public CommandEvaluator(Defines defines) {
-        m_defines = defines;
+        this.m_defines = defines;
     }
 
     /**

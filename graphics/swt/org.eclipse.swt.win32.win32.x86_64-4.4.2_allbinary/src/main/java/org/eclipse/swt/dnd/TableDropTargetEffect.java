@@ -84,10 +84,10 @@ public class TableDropTargetEffect extends DropTargetEffect {
 	 * @see DropTargetEvent
 	 */
 	public void dragEnter(DropTargetEvent event) {
-		scrollBeginTime = 0;
-		scrollIndex = -1;
-		dropHighlight = null;
-		iItemInsert = -1;
+		this.scrollBeginTime = 0;
+		this.scrollIndex = -1;
+		this.dropHighlight = null;
+		this.iItemInsert = -1;
 	}
 	
 	/**
@@ -154,8 +154,8 @@ public class TableDropTargetEffect extends DropTargetEffect {
 		pinfo.y = coordinates.y;
 		OS.SendMessage(handle, OS.LVM_HITTEST, 0, pinfo);	
 		if ((effect & DND.FEEDBACK_SCROLL) == 0) {
-			scrollBeginTime = 0;
-			scrollIndex = -1;
+			this.scrollBeginTime = 0;
+			this.scrollIndex = -1;
 		} else {
 			if (pinfo.iItem != -1 && scrollIndex == pinfo.iItem && scrollBeginTime != 0) {
 				if (System.currentTimeMillis() >= scrollBeginTime) {
@@ -218,7 +218,7 @@ public class TableDropTargetEffect extends DropTargetEffect {
 					plvim.dwFlags = (effect & DND.FEEDBACK_INSERT_AFTER) != 0 ? OS.LVIM_AFTER : 0;
 					plvim.iItem = pinfo.iItem;
 					if (OS.SendMessage(handle, OS.LVM_SETINSERTMARK, 0, plvim) != 0) {
-						iItemInsert = pinfo.iItem;
+						this.iItemInsert = pinfo.iItem;
 					}
 			} else {
 				if (iItemInsert != -1) {

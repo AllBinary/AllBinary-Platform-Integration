@@ -104,7 +104,7 @@ void releaseSynchronizer () {
 	display = null;
 	messages = null;
 	messageLock = null;
-	syncThread = null;
+	this.syncThread = null;
 }
 
 RunnableLock removeFirst () {
@@ -131,7 +131,7 @@ boolean runAsyncMessages (boolean all) {
 		if (lock == null) return run;
 		run = true;
 		synchronized (lock) {
-			syncThread = lock.thread;
+			this.syncThread = lock.thread;
 			display.sendPreEvent(null);
 			try {
 				lock.run();

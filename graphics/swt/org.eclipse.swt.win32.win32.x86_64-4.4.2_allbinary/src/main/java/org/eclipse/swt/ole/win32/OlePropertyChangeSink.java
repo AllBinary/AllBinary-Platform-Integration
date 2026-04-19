@@ -54,7 +54,7 @@ void connect(IUnknown objIUnknown) {
 			IConnectionPoint cp = new IConnectionPoint(ppvObject[0]);
 			int[] cookie = new int[1];
 			if (cp.Advise(iPropertyNotifySink.getAddress(), cookie) == COM.S_OK) {
-				propertyCookie = cookie[0];
+				this.propertyCookie = cookie[0];
 			}
 			cp.Release();
 		}
@@ -87,7 +87,7 @@ void disconnect(IUnknown objIUnknown) {
 			if (cpc.FindConnectionPoint(COM.IIDIPropertyNotifySink, ppvObject) == COM.S_OK) {
 				IConnectionPoint cp = new IConnectionPoint(ppvObject[0]);
 				if (cp.Unadvise(propertyCookie) == COM.S_OK) {
-					propertyCookie = 0;
+					this.propertyCookie = 0;
 				}
 				cp.Release();
 			}

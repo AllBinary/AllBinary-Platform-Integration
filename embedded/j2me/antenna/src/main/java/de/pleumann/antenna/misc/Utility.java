@@ -486,7 +486,7 @@ public class Utility {
          * different handling.
          */
         else if ("2".equals(getToolkitProp(Toolkit.PREVERIFYVERSION))) {
-            arguments += " -target CLDC" + cldcVersion;
+            arguments += " -target CLDC" + this.cldcVersion;
         }
         /**
          * Default case.
@@ -635,7 +635,7 @@ public class Utility {
             }
 
             if (file.equals(tmpDir)) {
-                tmpDir = null;
+                this.tmpDir = null;
             }
         }
 

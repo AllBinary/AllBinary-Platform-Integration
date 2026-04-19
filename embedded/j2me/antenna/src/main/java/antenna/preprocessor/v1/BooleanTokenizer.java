@@ -96,9 +96,9 @@ class BooleanTokenizer {
 	 * Creates a new scanner for the given expression.
 	 */
 	public BooleanTokenizer(String expr) {
-		sourceText = expr + " ";
+		this.sourceText = expr + " ";
 		sourcePos = 0;
-		tokenType = -1;
+		this.tokenType = -1;
 		tokenPos = 0;
 	}
 
@@ -127,47 +127,47 @@ class BooleanTokenizer {
 
 		/* Check for end of source */
 		if (sourcePos >= sourceText.length()) {
-			tokenType = TYPE_STOP;
+			this.tokenType = TYPE_STOP;
 			return tokenType;
 		}
 
 		/* Check for other kinds of tokens */
 		char c = sourceText.charAt(sourcePos);
 		if (Character.isJavaIdentifierStart(c)) {
-			tokenType = TYPE_ID;
+			this.tokenType = TYPE_ID;
 			sourcePos++;
 			while (isIdentifierPart(sourceText.charAt(sourcePos))) {
 				sourcePos++;
 			}
 		}
 		else if (c == '(') {
-			tokenType = TYPE_LPAR;
+			this.tokenType = TYPE_LPAR;
 			sourcePos++;
 		}
 		else if (c == ')') {
-			tokenType = TYPE_RPAR;
+			this.tokenType = TYPE_RPAR;
 			sourcePos++;
 		}
 		else if (c == '&') {
-			tokenType = TYPE_AND;
+			this.tokenType = TYPE_AND;
 			sourcePos++;
 			if (sourceText.charAt(sourcePos) == '&') {
 				sourcePos++;
 			}
 		}
 		else if (c == '|') {
-			tokenType = TYPE_OR;
+			this.tokenType = TYPE_OR;
 			sourcePos++;
 			if (sourceText.charAt(sourcePos) == '|') {
 				sourcePos++;
 			}
 		}
 		else if (c == '^') {
-			tokenType = TYPE_XOR;
+			this.tokenType = TYPE_XOR;
 			sourcePos++;
 		}
 		else if (c == '!') {
-			tokenType = TYPE_NOT;
+			this.tokenType = TYPE_NOT;
 			sourcePos++;
 		}
 		else

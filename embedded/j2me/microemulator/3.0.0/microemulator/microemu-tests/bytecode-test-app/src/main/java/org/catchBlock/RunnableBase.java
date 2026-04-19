@@ -36,7 +36,7 @@ public abstract class RunnableBase implements Runnable {
 	
 	public RunnableBase() {
 		if (System.getProperty("test.verbose") != null) {
-			verbose = true;
+			this.verbose = true;
 		}
 	}
 

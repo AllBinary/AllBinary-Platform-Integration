@@ -80,7 +80,7 @@ void disconnect() {
 			if (cpc.FindConnectionPoint(eventGuid, ppvObject) == COM.S_OK) {
 				IConnectionPoint cp = new IConnectionPoint(ppvObject[0]);
 				if (cp.Unadvise(eventCookie) == COM.S_OK) {
-					eventCookie = 0;
+					this.eventCookie = 0;
 				}
 				cp.Release();
 			}

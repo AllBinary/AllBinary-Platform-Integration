@@ -27,15 +27,15 @@ PngHuffmanTable (int[] lengths) {
 }
 
 private void initialize(int[] lengths) {
-	codeValues = new int[lengths.length];
+	this.codeValues = new int[lengths.length];
 	for (int i = 0; i < codeValues.length; i++) {
-		codeValues[i] = i;
+		this.codeValues[i] = i;
 	}
 	
 	// minCodesByLength[n] : The smallest Huffman code of length n + 1.
 	// maxCodesByLength[n] : The largest Huffman code of length n + 1.
 	// indexesByLength[n] : Index into the values array. First value with a code of length n + 1.
-	codeLengthInfo = new CodeLengthInfo[MAX_CODE_LENGTH];
+	this.codeLengthInfo = new CodeLengthInfo[MAX_CODE_LENGTH];
 	for (int i = 0; i < MAX_CODE_LENGTH; i++) {
 		codeLengthInfo[i] = new CodeLengthInfo();
 		codeLengthInfo[i].length = i;
@@ -51,15 +51,15 @@ private void generateTable(int[] lengths) {
 	for (int k = 0; k < 16; k++) {
 		for (int h = incs[k], i = h; i < lengths.length; i++) {
 			int v = lengths[i];
-			codeValuesTemp = codeValues[i];
+			codeValuesTemp = this.codeValues[i];
 			int j = i;
 			while (j >= h && (lengths[j - h] > v || (lengths[j - h] == v && codeValues[j - h] > codeValuesTemp))) {
 				lengths[j] = lengths[j - h];
-				codeValues[j] = codeValues[j - h];
+				this.codeValues[j] = this.codeValues[j - h];
 				j -= h;
 			}
 			lengths[j] = v;
-			codeValues[j] = codeValuesTemp;
+			this.codeValues[j] = codeValuesTemp;
 		}
 	}
 
@@ -84,8 +84,8 @@ private void generateTable(int[] lengths) {
 	for (int i = 0; i < lengths.length; i++) {
 		if (last != lengths[i]) {
 			last = lengths[i];
-			codeLengthInfo[last - 1].baseIndex = i;
-			codeLengthInfo[last - 1].min = codes[i];
+			this.codeLengthInfo[last - 1].baseIndex = i;
+			this.codeLengthInfo[last - 1].min = codes[i];
 		}
 		if (last != 0) codeLengthInfo[last - 1].max = codes[i];
 	}

@@ -283,9 +283,9 @@ public class DeviceImpl implements Device {
             System.out.println("loadConfig");
 		String deviceName = doc.getStringAttribute("name");
 		if (deviceName != null) {
-			name = deviceName;
+			this.name = deviceName;
 		} else {
-			name = base;
+			this.name = base;
 		}
 
 		loadSkinVersion(doc);

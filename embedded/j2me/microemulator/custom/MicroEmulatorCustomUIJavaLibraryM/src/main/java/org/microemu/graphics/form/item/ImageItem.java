@@ -94,7 +94,7 @@ public class ImageItem extends CustomItem
 	}
 
 	public void setAltText(String text) {
-		altTextP = text;
+		this.altTextP = text;
 	}
 	
 	public void setImage(Image img) {

@@ -172,7 +172,7 @@ public class MapObject extends MapObjectData implements Cloneable {
             return;
         }
 
-        imageSource = source;
+        this.imageSource = source;
 
         // Attempt to read the image
         if (imageSource.length() > 0) {
@@ -180,13 +180,13 @@ public class MapObject extends MapObjectData implements Cloneable {
                 throw new RuntimeException();
                 //image = ImageIO.read(new File(imageSource));
             } catch (Exception e) {
-                image = null;
+                this.image = null;
             }
         } else {
-            image = null;
+            this.image = null;
         }
 
-        scaledImage = null;
+        this.scaledImage = null;
     }
 
     /**

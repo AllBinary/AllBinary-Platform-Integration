@@ -57,7 +57,7 @@ public enum Encoding {
     private final String value;
 
     Encoding(String v) {
-        value = v;
+        this.value = v;
     }
 
     public String value() {

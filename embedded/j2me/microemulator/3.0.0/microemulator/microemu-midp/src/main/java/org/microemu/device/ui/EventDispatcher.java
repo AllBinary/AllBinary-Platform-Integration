@@ -55,7 +55,7 @@ public class EventDispatcher implements Runnable {
 			Event event = null;
 			synchronized (this) {
 				if (head != null) {
-					event = head;
+					event = this.head;
 
 					if (maxFps > 0 && event instanceof PaintEvent) {
 						long difference = System.currentTimeMillis() - lastPaintEventTime;
@@ -69,12 +69,12 @@ public class EventDispatcher implements Runnable {
 					}
 					
 					if (event != null) {
-						head = event.next;
+						this.head = event.next;
 						if (head == null) {
-							tail = null;
+							this.tail = null;
 						}
 						if (event instanceof PointerEvent && ((PointerEvent) event).type == PointerEvent.POINTER_DRAGGED) {
-							scheduledPointerDraggedEvent = null;
+							this.scheduledPointerDraggedEvent = null;
 						}
 					}
 				} else {
@@ -89,7 +89,7 @@ public class EventDispatcher implements Runnable {
 				if (event instanceof PaintEvent) {
 					synchronized (serviceRepaintsLock) {
 						synchronized (this) {
-							scheduledPaintEvent = null;
+							this.scheduledPaintEvent = null;
 						}
 						lastPaintEventTime = System.currentTimeMillis();
 						post(event);
@@ -106,7 +106,7 @@ public class EventDispatcher implements Runnable {
 	 * Do not service any more events
 	 */
 	public final void cancel() {
-		cancelled = true;
+		this.cancelled = true;
 		synchronized (this) {
 			notify();
 		}
@@ -130,9 +130,9 @@ public class EventDispatcher implements Runnable {
 				if (tail != null) {
 					tail.next = event;
 				}
-				tail = event;
+				this.tail = event;
 				if (head == null) {
-					head = event;
+					this.head = event;
 				}
 				notify();
 			}

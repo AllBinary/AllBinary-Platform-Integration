@@ -621,10 +621,10 @@ ToolItem [] _getTabItemList () {
 	int index = 0;
 	for (int i=0; i<tabItemList.length; i++) {
 		if (!tabItemList [i].isDisposed ()) {
-			newList [index++] = tabItemList [i];
+			newList [index++] = this.tabItemList [i];
 		}
 	}
-	tabItemList = newList;
+	this.tabItemList = newList;
 	return tabItemList;
 }
 

@@ -120,7 +120,7 @@ class LZWEncoder {
 	LZWEncoder(int width, int height, byte[] pixels, int color_depth) {
 		imgW = width;
 		imgH = height;
-		pixAry = pixels;
+		this.pixAry = pixels;
 		initCodeSize = Math.max(2, color_depth);
 	}
 	
@@ -189,7 +189,7 @@ class LZWEncoder {
 			i = (c << hshift) ^ ent; // xor hashing
 
 			if (htab[i] == fcode) {
-				ent = codetab[i];
+				ent = this.codetab[i];
 				continue;
 			} else if (htab[i] >= 0) // non-empty slot
 				{
@@ -201,7 +201,7 @@ class LZWEncoder {
 						i += hsize_reg;
 
 					if (htab[i] == fcode) {
-						ent = codetab[i];
+						ent = this.codetab[i];
 						continue outer_loop;
 					}
 				} while (htab[i] >= 0);
@@ -209,8 +209,8 @@ class LZWEncoder {
 			output(ent, outs);
 			ent = c;
 			if (free_ent < maxmaxcode) {
-				codetab[i] = free_ent++; // code -> hashtable
-				htab[i] = fcode;
+				this.codetab[i] = free_ent++; // code -> hashtable
+				this.htab[i] = fcode;
 			} else
 				cl_block(outs);
 		}
@@ -259,7 +259,7 @@ class LZWEncoder {
 	}
 	
 	void output(int code, OutputStream outs) throws IOException {
-		cur_accum &= masks[cur_bits];
+		this.cur_accum &= masks[cur_bits];
 
 		if (cur_bits > 0)
 			cur_accum |= (code << cur_bits);

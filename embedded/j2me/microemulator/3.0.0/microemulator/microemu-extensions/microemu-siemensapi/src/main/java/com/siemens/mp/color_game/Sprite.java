@@ -488,8 +488,8 @@ public class Sprite extends Layer {
         for (int yy = 0; yy < imageH; yy += fHeight) {
             for (int xx = 0; xx < imageW; xx += fWidth) {
                 
-                frameCoordsX[currentFrame] = xx;
-                frameCoordsY[currentFrame] = yy;
+                this.frameCoordsX[currentFrame] = xx;
+                this.frameCoordsY[currentFrame] = yy;
                 
                 if (!customSequenceDefined) {
                     frameSequence[currentFrame] = currentFrame;
@@ -510,8 +510,8 @@ public class Sprite extends Layer {
         collisionRectY = 0;
         
         // intialize the collision rectangle bounds to that of the sprite
-        collisionRectWidth = this.width;
-        collisionRectHeight = this.height;
+        this.collisionRectWidth = this.width;
+        this.collisionRectHeight = this.height;
         
     }
     

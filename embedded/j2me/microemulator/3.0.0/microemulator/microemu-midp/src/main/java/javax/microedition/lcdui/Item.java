@@ -137,7 +137,7 @@ public class Item
     }
     
     public int getPreferredHeight() {
-        int ret = prefHeight;
+        int ret = this.prefHeight;
         int min = getMinimumHeight();
         int max = getMaximumHeight();
 
@@ -152,7 +152,7 @@ public class Item
     }
 
     public int getPreferredWidth() {
-        int ret = prefWidth;
+        int ret = this.prefWidth;
         int min = getMinimumWidth();
         int max = getMaximumWidth();
         
@@ -299,7 +299,7 @@ public class Item
         //TWB - made public
 	public void setFocus(boolean state)
 	{
-		focus = state;
+		this.focus = state;
 	}
 
   //TWB - made public

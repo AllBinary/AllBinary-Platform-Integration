@@ -324,7 +324,7 @@ public class Main extends Applet implements MicroEmulator {
 		} else if (key.equals("microemu.applet")) {
 			value = "true";
 		} else if (key.equals("microemu.accessible.host")) {
-			value = accessibleHost;
+			value = this.accessibleHost;
 		} else if (getParameter(key) != null) {
 			value = getParameter(key);
 		} else {

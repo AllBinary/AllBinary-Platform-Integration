@@ -911,8 +911,8 @@ void reskinChildren (int flags) {
 void resizeChildren () {
 	if (lpwp == null) return;
 	do {
-		WINDOWPOS [] currentLpwp = lpwp;
-		lpwp = null;
+		WINDOWPOS [] currentLpwp = this.lpwp;
+		this.lpwp = null;
 		if (!resizeChildren (true, currentLpwp)) {
 			resizeChildren (false, currentLpwp);
 		}
@@ -1131,7 +1131,7 @@ void setResizeChildren (boolean resize) {
 		}
 		int count = getChildrenCount ();
 		if (count > 1 && lpwp == null) {
-			lpwp = new WINDOWPOS [count];
+			this.lpwp = new WINDOWPOS [count];
 		}
 	}
 }

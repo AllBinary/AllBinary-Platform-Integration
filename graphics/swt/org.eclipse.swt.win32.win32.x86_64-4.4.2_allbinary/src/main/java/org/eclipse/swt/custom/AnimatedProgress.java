@@ -72,7 +72,7 @@ public AnimatedProgress(Composite parent, int style) {
 	super(parent, checkStyle(style));
 	
 	if ((style & SWT.VERTICAL) != 0) {
-		orientation = SWT.VERTICAL;
+		this.orientation = SWT.VERTICAL;
 	}
 	showBorder = (style & SWT.BORDER) != 0;
 	

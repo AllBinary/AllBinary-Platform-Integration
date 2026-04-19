@@ -1956,7 +1956,7 @@ void onPaint(Event event) {
 	Font font = getFont();
 	if (oldFont == null || !oldFont.equals(font)) {
 		// handle case where  default font changes
-		oldFont = font;
+		this.oldFont = font;
 		if (!updateTabHeight(false)) {
 			updateItems();
 			redraw();
@@ -2147,7 +2147,7 @@ void redrawTabs() {
 	Point size = getSize();
 	Rectangle trim = renderer.computeTrim(CTabFolderRenderer.PART_BODY, SWT.NONE, 0, 0, 0, 0);
 	if (onBottom) {
-		int h = trim.height + trim.y - marginHeight;
+		int h = trim.height + trim.y - this.marginHeight;
 		redraw(0, size.y - h - 1, size.x, h + 1, false);
 	} else {
 		redraw(0, 0, size.x, -trim.y - marginHeight + 1, false);
@@ -2365,7 +2365,7 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
 		}
 		if (same) {
 		    for (int i = 0; i < gradientPercents.length; i++) {
-			same = gradientPercents[i] == percents[i];
+			same = this.gradientPercents[i] == percents[i];
 			if (!same) break;
 		    }
 		}
@@ -2373,20 +2373,20 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
 	}
 	// Store the new settings
 	if (colors == null) {
-		gradientColors = null;
-		gradientPercents = null;
-		gradientVertical = false;
+		this.gradientColors = null;
+		this.gradientPercents = null;
+		this.gradientVertical = false;
 		setBackground((Color)null);
 	} else {
-		gradientColors = new Color[colors.length];
+		this.gradientColors = new Color[colors.length];
 		for (int i = 0; i < colors.length; ++i) {
-			gradientColors[i] = colors[i];
+			this.gradientColors[i] = colors[i];
 		}
-		gradientPercents = new int[percents.length];
+		this.gradientPercents = new int[percents.length];
 		for (int i = 0; i < percents.length; ++i) {
-			gradientPercents[i] = percents[i];
+			this.gradientPercents[i] = percents[i];
 		}
-		gradientVertical = vertical;
+		this.gradientVertical = vertical;
 		setBackground(gradientColors[gradientColors.length-1]);
 	}
 
@@ -2492,7 +2492,7 @@ void setButtonBounds(GC gc) {
 	boolean[][] overflow = new boolean[1][0];
 	Rectangle[] rects = computeControlBounds(size, overflow);
 	if (fixedTabHeight != SWT.DEFAULT) {
-		int height = fixedTabHeight;
+		int height = this.fixedTabHeight;
 		if (!hovering) {
 			hoverTb = false;
 			Rectangle tabBounds = this.getBounds();
@@ -2726,7 +2726,7 @@ boolean setItemSize(GC gc) {
 	if (chevron != null) chevron.setVisible(false);
 	showChevron = false;
 	if (single) {
-		showChevron = chevronVisible && items.length > 1;
+		showChevron = this.chevronVisible && items.length > 1;
 		if (showChevron) {
 			chevron.setVisible(true);
 		}
@@ -2767,7 +2767,7 @@ boolean setItemSize(GC gc) {
 	}
 	if (minWidth > tabAreaWidth) {
 		// full compression required and a chevron
-		showChevron = chevronVisible && items.length > 1;
+		showChevron = this.chevronVisible && items.length > 1;
 		if (showChevron) {
 			tabAreaWidth -= chevron.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 			chevron.setVisible(true);
@@ -3249,7 +3249,7 @@ public void setSelectionBackground(Color[] colors, int[] percents, boolean verti
 			}
 			if (same) {
 				for (int i = 0; i < selectionGradientPercents.length; i++) {
-					same = selectionGradientPercents[i] == percents[i];
+					same = this.selectionGradientPercents[i] == percents[i];
 					if (!same) break;
 				}
 			}
@@ -3260,21 +3260,21 @@ public void setSelectionBackground(Color[] colors, int[] percents, boolean verti
 	}
 	// Store the new settings
 	if (colors == null) {
-		selectionGradientColors = null;
-		selectionGradientPercents = null;
-		selectionGradientVertical = false;
+		this.selectionGradientColors = null;
+		this.selectionGradientPercents = null;
+		this.selectionGradientVertical = false;
 		setSelectionBackground((Color)null);
 		setSelectionHighlightGradientColor(null);
 	} else {
-		selectionGradientColors = new Color[colorsLength];
+		this.selectionGradientColors = new Color[colorsLength];
 		for (int i = 0; i < colorsLength; ++i) {
-			selectionGradientColors[i] = colors[i];
+			this.selectionGradientColors[i] = colors[i];
 		}
-		selectionGradientPercents = new int[percents.length];
+		this.selectionGradientPercents = new int[percents.length];
 		for (int i = 0; i < percents.length; ++i) {
-			selectionGradientPercents[i] = percents[i];
+			this.selectionGradientPercents[i] = percents[i];
 		}
-		selectionGradientVertical = vertical;
+		this.selectionGradientVertical = vertical;
 		setSelectionBackground(selectionGradientColors[selectionGradientColors.length-1]);
 		setSelectionHighlightGradientColor(highlightBeginColor);
 	}
@@ -3308,8 +3308,8 @@ public void setSelectionBackground(Image image) {
 	setSelectionHighlightGradientColor(null);
 	if (image == selectionBgImage) return;
 	if (image != null) {
-		selectionGradientColors = null;
-		selectionGradientPercents = null;
+		this.selectionGradientColors = null;
+		this.selectionGradientPercents = null;
 		renderer.disposeSelectionHighlightGradientColors(); //TODO: need better caching strategy
 	}
 	selectionBgImage = image;
@@ -3734,7 +3734,7 @@ boolean updateTabHeight(boolean force){
 }
 
 void updateFolder (int flags) {
-	updateFlags |= flags;
+	this.updateFlags |= flags;
 	if (updateRun != null) return;
 	updateRun = new ARunnable() {
 		public void run() {

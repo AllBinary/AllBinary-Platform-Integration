@@ -107,8 +107,8 @@ public class GameCanvas extends Canvas {
 
     public int getKeyStates() {
     	synchronized(this) {
-	        int ret = latchedKeyState;
-	        latchedKeyState = actualKeyState;
+	        int ret = this.latchedKeyState;
+	        this.latchedKeyState = this.actualKeyState;
 	        return ret;
     	}
     }

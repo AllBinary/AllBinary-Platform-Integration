@@ -35,8 +35,8 @@ public class PositionedImage
 
     public PositionedImage(Image img, Rectangle arectangle)
     {
-        image = img;
-        rectangle = arectangle;
+        this.image = img;
+        this.rectangle = arectangle;
     }
 
     public Image getImage()

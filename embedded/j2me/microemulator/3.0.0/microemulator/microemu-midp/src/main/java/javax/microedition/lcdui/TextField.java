@@ -159,7 +159,7 @@ public class TextField extends Item
             throw new IllegalArgumentException("text  is illegal for the current input constraints");
         }
         if (text == null) {
-            field = "";
+            this.field = "";
             stringComponent.setText("");
         } else {
             if (text.length() > maxSize) {

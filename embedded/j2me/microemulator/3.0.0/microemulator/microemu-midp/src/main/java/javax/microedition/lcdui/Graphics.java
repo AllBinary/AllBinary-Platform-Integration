@@ -205,8 +205,8 @@ public class Graphics {
 	}		
 
 	public void translate(int x, int y) {
-		translateX += x;
-		translateY += y;
+		this.translateX += x;
+		this.translateY += y;
 	}
 	
 	// MIDP2

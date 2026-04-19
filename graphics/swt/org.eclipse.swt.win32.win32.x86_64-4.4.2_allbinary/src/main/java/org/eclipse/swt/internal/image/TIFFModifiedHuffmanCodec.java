@@ -110,24 +110,24 @@ public int decode(byte[] src, byte[] dest, int offsetDest, int rowSize, int nRow
 	this.src = src;
 	this.dest = dest;
 	this.rowSize = rowSize;
-	byteOffsetSrc = 0;
+	this.byteOffsetSrc = 0;
 	bitOffsetSrc = 0;
-	byteOffsetDest = offsetDest;
-	bitOffsetDest = 0;
+	this.byteOffsetDest = offsetDest;
+	this.bitOffsetDest = 0;
 	int cnt = 0;
 	while (cnt < nRows && decodeRow()) {
 		cnt++;
 		/* byte aligned */
 		if (bitOffsetDest > 0) {
 			byteOffsetDest++;
-			bitOffsetDest = 0; 
+			this.bitOffsetDest = 0; 
 		}
 	}
 	return byteOffsetDest - offsetDest;
 }
 
 boolean decodeRow() {
-	isWhite = true;
+	this.isWhite = true;
 	int n = 0;
 	while (n < rowSize) {
 		int runLength = decodeRunLength();
@@ -142,10 +142,10 @@ boolean decodeRow() {
 int decodeRunLength() {
 	int runLength = 0;
 	int partialRun = 0;
-	short[][][] huffmanCode = isWhite ? WHITE_CODE : BLACK_CODE;
+	short[][][] huffmanCode = this.isWhite ? WHITE_CODE : BLACK_CODE;
 	while (true) {
 		boolean found = false;
-		nbrBits = isWhite ? WHITE_MIN_BITS : BLACK_MIN_BITS;
+		nbrBits = this.isWhite ? WHITE_MIN_BITS : BLACK_MIN_BITS;
 		code = getNextBits(nbrBits);
 		for (int i = 0; i < huffmanCode.length; i++) {
 			for (int j = 0; j < huffmanCode[i].length; j++) {
@@ -191,7 +191,7 @@ int getNextBits(int cnt) {
 void setNextBits(int value, int cnt) {
 	int n = cnt;
 	while (bitOffsetDest > 0 && bitOffsetDest <= 7 && n > 0) {
-		dest[byteOffsetDest] = value == 1 ?
+		dest[this.byteOffsetDest] = value == 1 ?
 			(byte)(dest[byteOffsetDest] | (1 << (7 - bitOffsetDest))) :
 			(byte)(dest[byteOffsetDest] & ~(1 << (7 - bitOffsetDest)));
 		n--;
@@ -199,14 +199,14 @@ void setNextBits(int value, int cnt) {
 	}
 	if (bitOffsetDest == 8) {
 		byteOffsetDest++;
-		bitOffsetDest = 0;
+		this.bitOffsetDest = 0;
 	}
 	while (n >= 8) {
 		dest[byteOffsetDest++] = (byte) (value == 1 ? 0xFF : 0);
 		n -= 8;
 	}
 	while (n > 0) {
-		dest[byteOffsetDest] = value == 1 ?
+		dest[this.byteOffsetDest] = value == 1 ?
 			(byte)(dest[byteOffsetDest] | (1 << (7 - bitOffsetDest))) :
 			(byte)(dest[byteOffsetDest] & ~(1 << (7 - bitOffsetDest)));
 		n--;

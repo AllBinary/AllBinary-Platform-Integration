@@ -175,7 +175,7 @@ public class Sprite {
     public Sprite(Image image, int fpl, int border, int totalFrames) {
         Tile[] frames = null;
         this.fpl = fpl;
-        borderWidth = border;
+        this.borderWidth = border;
 
         //TODO: break up the image into tiles
         //given this information, extrapolate the rest...
@@ -212,7 +212,7 @@ public class Sprite {
      * @param b a int.
      */
     public void setBorderWidth(int b) {
-        borderWidth = b;
+        this.borderWidth = b;
     }
 
     /**
@@ -251,10 +251,10 @@ public class Sprite {
         } else if (c > currentKey.getLastFrame()) {
             switch (currentKey.flags & KeyFrame.MASK_ANIMATION) {
                 case KeyFrame.KEY_LOOP:
-                    currentFrame = 0;
+                    this.currentFrame = 0;
                     break;
                 case KeyFrame.KEY_AUTO:
-                    currentFrame = 0;
+                    this.currentFrame = 0;
                     currentKey = getNextKey();
                     break;
                 case KeyFrame.KEY_REVERSE:
@@ -267,7 +267,7 @@ public class Sprite {
                     break;
             }
         } else {
-            currentFrame = c;
+            this.currentFrame = c;
         }
     }
 
@@ -277,7 +277,7 @@ public class Sprite {
      * @param t a int.
      */
     public void setTotalKeys(int t) {
-        totalKeys = t;
+        this.totalKeys = t;
     }
 
     /**

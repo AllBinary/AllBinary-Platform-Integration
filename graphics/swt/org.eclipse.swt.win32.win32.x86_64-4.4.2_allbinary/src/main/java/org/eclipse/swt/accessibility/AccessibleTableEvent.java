@@ -60,7 +60,7 @@ public String toString () {
 	return "AccessibleTableEvent {" //$NON-NLS-1$
 		+ "accessible=" + accessible   //$NON-NLS-1$
 		+ " accessibles=" + accessibles   //$NON-NLS-1$
-		+ " string=" + result   //$NON-NLS-1$
+		+ " string=" + this.result   //$NON-NLS-1$
 		+ " isSelected=" + isSelected   //$NON-NLS-1$
 		+ " column=" + column   //$NON-NLS-1$
 		+ " count=" + count   //$NON-NLS-1$

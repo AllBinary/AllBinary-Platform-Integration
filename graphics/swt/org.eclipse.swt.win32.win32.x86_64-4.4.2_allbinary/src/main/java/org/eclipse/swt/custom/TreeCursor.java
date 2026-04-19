@@ -749,7 +749,7 @@ void _resize() {
  */
 @Override
 public void setBackground (Color color) {
-	background = color;
+	this.background = color;
 	super.setBackground(getBackground());
 	redraw();
 }
@@ -772,7 +772,7 @@ public void setBackground (Color color) {
  */
 @Override
 public void setForeground (Color color) {
-	foreground = color;
+	this.foreground = color;
 	super.setForeground(getForeground());
 	redraw();
 }

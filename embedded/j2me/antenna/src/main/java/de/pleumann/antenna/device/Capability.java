@@ -26,7 +26,7 @@ public class Capability
 				String text = Util.getText(e);
 				if ("identifier".equals(tagName))
 				{
-					m_identifier = text;
+					this.m_identifier = text;
 				}
 				else
 				if ("extension-mode".equals(tagName))
@@ -36,7 +36,7 @@ public class Capability
 				else
 				if ("group".equals(tagName))
 				{
-					m_group = text;
+					this.m_group = text;
 				}
 				else
 				if ("required".equals(tagName))
@@ -46,12 +46,12 @@ public class Capability
 				else
 				if ("type".equals(tagName))
 				{
-					m_type = text;
+					this.m_type = text;
 				}
 				else
 				if ("implicit-group".equals(tagName))
 				{
-					m_implicitGroup = text;
+					this.m_implicitGroup = text;
 				}
 			}
 		}		

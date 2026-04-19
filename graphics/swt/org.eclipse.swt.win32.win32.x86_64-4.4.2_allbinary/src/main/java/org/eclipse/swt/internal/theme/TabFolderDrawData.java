@@ -25,7 +25,7 @@ public class TabFolderDrawData extends DrawData {
 public TabFolderDrawData() {
 	state = new int[1];
 	if (SWT.getPlatform().equals("gtk")) {
-		spacing = -2;
+		this.spacing = -2;
 	}
 }
 
@@ -37,9 +37,9 @@ void draw(Theme theme, GC gc, Rectangle bounds) {
 		rect.right = bounds.x + bounds.width;
 		rect.top = bounds.y;
 		if ((style & SWT.BOTTOM) != 0) {
-			rect.bottom = bounds.y + bounds.height - tabsHeight;
+			rect.bottom = bounds.y + bounds.height - this.tabsHeight;
 		} else {
-			rect.top += tabsHeight;
+			rect.top += this.tabsHeight;
 			rect.bottom = bounds.y + bounds.height;
 		}
 		int[] part = getPartId(DrawData.WIDGET_WHOLE);
@@ -49,9 +49,9 @@ void draw(Theme theme, GC gc, Rectangle bounds) {
 			tabsArea.x = bounds.x;
 			tabsArea.y = bounds.y;
 			tabsArea.width = bounds.width;
-			tabsArea.height = tabsHeight;
+			tabsArea.height = this.tabsHeight;
 			if ((style & SWT.BOTTOM) != 0) {
-				tabsArea.y += bounds.height - tabsHeight;
+				tabsArea.y += bounds.height - this.tabsHeight;
 			}
 		}
 	}

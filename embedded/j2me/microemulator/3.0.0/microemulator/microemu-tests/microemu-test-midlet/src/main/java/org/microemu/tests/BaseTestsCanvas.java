@@ -65,7 +65,7 @@ public abstract class BaseTestsCanvas extends Canvas implements CommandListener,
 	}
 	
 	public void setFullScreenMode(boolean mode) {
-		fullScreenMode = mode;
+		this.fullScreenMode = mode;
 		super.setFullScreenMode(mode);
 	}
 }

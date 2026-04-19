@@ -154,7 +154,7 @@ public class Displayable
 
 	public void setCommandListener(CommandListener l)
 	{
-		listener = l;
+		this.listener = l;
 		
 		ui.setCommandListener(l);
 	}
@@ -305,7 +305,7 @@ public class Displayable
 	final void showNotify(Display d)
 	{
 		currentDisplay = d;
-        viewPortY = 0;
+        this.viewPortY = 0;
         // TODO remove this StringComponent object when native UI is completed
         StringComponent title = new StringComponent(getTitle());
         viewPortHeight = getHeight() - title.getHeight() - 1;

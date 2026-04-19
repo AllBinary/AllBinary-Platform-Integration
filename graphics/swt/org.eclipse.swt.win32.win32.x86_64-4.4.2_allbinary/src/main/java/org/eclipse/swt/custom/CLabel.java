@@ -742,7 +742,7 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
 			}
 			if (same) {
 				for (int i = 0; i < gradientPercents.length; i++) {
-					same = gradientPercents[i] == percents[i];
+					same = this.gradientPercents[i] == percents[i];
 					if (!same) break;
 				}
 			}
@@ -753,11 +753,11 @@ public void setBackground(Color[] colors, int[] percents, boolean vertical) {
 	}
 	// Store the new settings
 	if (colors == null) {
-		gradientColors = null;
-		gradientPercents = null;
+		this.gradientColors = null;
+		this.gradientPercents = null;
 		gradientVertical = false;
 	} else {
-		gradientColors = new Color[colors.length];
+		this.gradientColors = new Color[colors.length];
 		for (int i = 0; i < colors.length; ++i)
 			gradientColors[i] = (colors[i] != null) ? colors[i] : background;
 		gradientPercents = new int[percents.length];
@@ -782,8 +782,8 @@ public void setBackground(Image image) {
 	checkWidget();
 	if (image == backgroundImage) return;
 	if (image != null) {
-		gradientColors = null;
-		gradientPercents = null;
+		this.gradientColors = null;
+		this.gradientPercents = null;
 	}
 	backgroundImage = image;
 	redraw();

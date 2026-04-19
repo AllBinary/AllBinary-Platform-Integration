@@ -152,7 +152,7 @@ class MidiAudioPlayer implements Player, MetaEventListener
 
 	public void setLoopCount(int count) 
 	{
-		iLoopCount = count;
+		this.iLoopCount = count;
 	}
 
 	public long setMediaTime(long now) throws MediaException {

@@ -136,7 +136,7 @@ void clear () {
 	checked = grayed = false;
 	font = null;
 	background = foreground = -1;
-	cellFont = null; 
+	this.cellFont = null; 
 	cellBackground = cellForeground = null;
 	if ((parent.style & SWT.VIRTUAL) != 0) cached = false;
 }

@@ -378,7 +378,7 @@ private void drag(Event dragEvent) {
 		operation = (operation == DND.DROP_NONE || operation == DND.DROP_COPY) ? DND.DROP_TARGET_MOVE : DND.DROP_MOVE;
 	} else {
 		if (dataEffect != DND.DROP_NONE) {
-			operation = dataEffect;
+			operation = this.dataEffect;
 		}
 	}
 	event = new DNDEvent();
@@ -716,7 +716,7 @@ private int SetData(long /*int*/ pFormatetc, long /*int*/ pmedium, int fRelease)
  * @since 3.3
  */
 public void setDragSourceEffect(DragSourceEffect effect) {
-	dragEffect = effect;
+	this.dragEffect = effect;
 }
 
 /**

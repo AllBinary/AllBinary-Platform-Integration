@@ -4271,13 +4271,13 @@ int SetWebBrowser (long /*int*/ aWebBrowser) {
    
 int GetChromeFlags (long /*int*/ aChromeFlags) {
 	int[] ret = new int[1];
-	ret[0] = chromeFlags;
+	ret[0] = this.chromeFlags;
 	XPCOM.memmove (aChromeFlags, ret, 4); /* PRUint32 */
 	return XPCOM.NS_OK;
 }
 
 int SetChromeFlags (int aChromeFlags) {
-	chromeFlags = aChromeFlags;
+	this.chromeFlags = aChromeFlags;
 	return XPCOM.NS_OK;
 }
 

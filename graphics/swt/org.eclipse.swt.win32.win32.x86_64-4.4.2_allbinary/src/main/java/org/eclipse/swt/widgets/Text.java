@@ -493,11 +493,11 @@ void applySegments () {
 		int [] segmentsCrLf = new int [nSegments + Math.min (nSegments, segmentsCharsCrLf.length - segmentsChars.length)];
 		for (int i = 0, c = 0; i < segmentsChars.length && i < nSegments; i++) {
 			if (segmentsChars [i] == '\n' && segmentsCharsCrLf [i + c] == '\r') {
-				segmentsCrLf [i + c++] = segments [i];
+				segmentsCrLf [i + c++] = this.segments [i];
 			}
-			segmentsCrLf [i + c] = segments [i];
+			segmentsCrLf [i + c] = this.segments [i];
 		}
-		segments = segmentsCrLf;
+		this.segments = segmentsCrLf;
 		nSegments = segments.length;
 		segmentsChars = segmentsCharsCrLf;
 	}
@@ -518,7 +518,7 @@ void applySegments () {
 		}
 	}
 	while (segmentCount < nSegments) {
-		segments [segmentCount] = charCount - segmentCount;
+		this.segments [segmentCount] = charCount - segmentCount;
 		char separator = segmentsChars != null && segmentsChars.length > segmentCount ? segmentsChars [segmentCount] : defaultSeparator;
 		newChars [charCount++] = separator;
 		segmentCount++;
@@ -589,7 +589,7 @@ void clearSegments (boolean applyText) {
 		OS.SendMessage (handle, OS.EM_SETLIMITTEXT, Math.max (1, limit - nSegments), 0);
 	}
 	if (!applyText) {
-		segments = null;
+		this.segments = null;
 		return;
 	}
 	boolean oldIgnoreCharacter = ignoreCharacter, oldIgnoreModify = ignoreModify, oldIgnoreVerify = ignoreVerify;
@@ -2570,7 +2570,7 @@ long /*int*/ windowProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long /
 				processSegments = wParam == OS.VK_DELETE;
 				break;
 			case OS.WM_COPY:
-				processSegments = segments != null;
+				processSegments = this.segments != null;
 				break;
 			case OS.WM_CHAR: 
 				processSegments = !ignoreCharacter && OS.GetKeyState (OS.VK_CONTROL) >= 0 && OS.GetKeyState (OS.VK_MENU) >= 0;

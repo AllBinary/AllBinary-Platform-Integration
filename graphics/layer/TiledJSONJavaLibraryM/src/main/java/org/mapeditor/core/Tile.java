@@ -115,7 +115,7 @@ public class Tile extends TileData {
      * @param set a {@link org.mapeditor.core.TileSet} object.
      */
     public void setTileSet(TileSet set) {
-        tileset = set;
+        this.tileset = set;
     }
 
     /**

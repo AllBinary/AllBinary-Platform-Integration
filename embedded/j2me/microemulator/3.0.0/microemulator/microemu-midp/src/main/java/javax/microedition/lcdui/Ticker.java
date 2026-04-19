@@ -91,7 +91,7 @@ public class Ticker
         xPos += stringWidth;
       }
       if (textPos + stringWidth < 0) {
-        resetTextPosTo = textPos + stringWidth;
+        this.resetTextPosTo = textPos + stringWidth;
       }
     }
     

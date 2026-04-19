@@ -220,12 +220,12 @@ void compress(ImageData image, byte[] dataYComp, byte[] dataCbComp, byte[] dataC
 	int srcHeight = image.height;
 	int vhFactor = maxV * maxH;
 	int[] frameComponent;
-	imageComponents = new byte[nComponents][];
+	this.imageComponents = new byte[nComponents][];
 	for (int i = 0; i < nComponents; i++) {
-		frameComponent = frameComponents[componentIds[i]];
-		imageComponents[i] = new byte[frameComponent[CW] * frameComponent[CH]];
+		frameComponent = this.frameComponents[componentIds[i]];
+		this.imageComponents[i] = new byte[frameComponent[CW] * frameComponent[CH]];
 	}
-	frameComponent = frameComponents[componentIds[ID_Y]];
+	frameComponent = this.frameComponents[componentIds[ID_Y]];
 	for (int yPos = 0; yPos < srcHeight; yPos++) {
 		int srcOfs = yPos * srcWidth;
 		int dstOfs = yPos * frameComponent[CW];
@@ -260,8 +260,8 @@ void compress(ImageData image, byte[] dataYComp, byte[] dataCbComp, byte[] dataC
 		}
 	}
 	for (int iComp = 0; iComp < nComponents; iComp++) {
-		byte[] imageComponent = imageComponents[iComp];
-		frameComponent = frameComponents[componentIds[iComp]];
+		byte[] imageComponent = this.imageComponents[iComp];
+		frameComponent = this.frameComponents[componentIds[iComp]];
 		int hFactor = frameComponent[HI];
 		int vFactor = frameComponent[VI];
 		int componentWidth = frameComponent[CW];
@@ -453,7 +453,7 @@ void convertMultiRGBToYCbCr(ImageData image) {
 	compress(image, dataYComp, dataCbComp, dataCrComp);
 }
 byte[] convertYToRGB() {
-	int compWidth = frameComponents[componentIds[ID_Y]][CW];
+	int compWidth = this.frameComponents[componentIds[ID_Y]][CW];
 	int bytesPerLine = (((imageWidth * 8 + 7) / 8) + 3) / 4 * 4;
 	byte[] data = new byte[bytesPerLine * imageHeight];
 	byte[] yComp = imageComponents[ID_Y];
@@ -548,7 +548,7 @@ byte[] convertYCbCrToRGB() {
 }
 void decodeACCoefficients(int[] dataUnit, int iComp) {
 	int[] sParams = scanHeader.componentParameters[componentIds[iComp]];
-	JPEGHuffmanTable acTable = acHuffmanTables[sParams[AC]];
+	JPEGHuffmanTable acTable = this.acHuffmanTables[sParams[AC]];
 	int k = 1;
 	while (k < 64) {
 		int rs = decodeUsingTable(acTable);
@@ -574,7 +574,7 @@ void decodeACFirstCoefficients(int[] dataUnit, int iComp, int start, int end, in
 		return;
 	}
 	int[] sParams = scanHeader.componentParameters[componentIds[iComp]];
-	JPEGHuffmanTable acTable = acHuffmanTables[sParams[AC]];
+	JPEGHuffmanTable acTable = this.acHuffmanTables[sParams[AC]];
 	int k = start;
 	while (k <= end) {
 		int rs = decodeUsingTable(acTable);
@@ -597,7 +597,7 @@ void decodeACFirstCoefficients(int[] dataUnit, int iComp, int start, int end, in
 }
 void decodeACRefineCoefficients(int[] dataUnit, int iComp, int start, int end, int approxBit) {
 	int[] sParams = scanHeader.componentParameters[componentIds[iComp]];
-	JPEGHuffmanTable acTable = acHuffmanTables[sParams[AC]];
+	JPEGHuffmanTable acTable = this.acHuffmanTables[sParams[AC]];
 	int k = start;
 	while (k <= end) {
 		if (eobrun > 0) {
@@ -667,13 +667,13 @@ int refineAC(int ac, int approxBit) {
 }
 void decodeDCCoefficient(int[] dataUnit, int iComp, boolean first, int approxBit) {
 	int[] sParams = scanHeader.componentParameters[componentIds[iComp]];
-	JPEGHuffmanTable dcTable = dcHuffmanTables[sParams[DC]];
+	JPEGHuffmanTable dcTable = this.dcHuffmanTables[sParams[DC]];
 	int lastDC = 0;
 	if (progressive && !first) {
 		int bit = nextBit();
 		lastDC = dataUnit[0] + (bit << approxBit);
 	} else {
-		lastDC = precedingDCs[iComp];
+		lastDC = this.precedingDCs[iComp];
 		int nBits = decodeUsingTable(dcTable);
 		if (nBits != 0) {
 			int bits = receive(nBits);
@@ -688,7 +688,7 @@ void decodeDCCoefficient(int[] dataUnit, int iComp, boolean first, int approxBit
 	dataUnit[0] = lastDC;
 }
 void dequantize(int[] dataUnit, int iComp) {
-	int[] qTable = quantizationTables[frameComponents[componentIds[iComp]][TQI]];
+	int[] qTable = this.quantizationTables[frameComponents[componentIds[iComp]][TQI]];
 	for (int i = 0; i < dataUnit.length; i++) {
 		int zzIndex = ZigZag8x8[i];
 		dataUnit[zzIndex] = dataUnit[zzIndex] * qTable[i];
@@ -713,7 +713,7 @@ void decodeMCUAtXAndY(int xmcu, int ymcu, int nComponentsInScan, boolean first, 
 		while (scanHeader.componentParameters[componentIds[scanComponent]] == null) {
 			scanComponent++;
 		}
-		int[] frameComponent = frameComponents[componentIds[scanComponent]];
+		int[] frameComponent = this.frameComponents[componentIds[scanComponent]];
 		int hi = frameComponent[HI];
 		int vi = frameComponent[VI];
 		if (nComponentsInScan == 1) {
@@ -730,7 +730,7 @@ void decodeMCUAtXAndY(int xmcu, int ymcu, int nComponentsInScan, boolean first, 
 					dataUnit = dataUnits[scanComponent][index];
 					if (dataUnit == null) {
 						dataUnit = new int[64];
-						dataUnits[scanComponent][index] = dataUnit;
+						this.dataUnits[scanComponent][index] = dataUnit;
 					}
 				} else {
 					// Sequential: Clear and reuse the data unit buffer.
@@ -782,7 +782,7 @@ void decodeScan() {
 		while (scanHeader.componentParameters[componentIds[scanComponent]] == null) {
 			scanComponent++;
 		}
-		int[] frameComponent = frameComponents[componentIds[scanComponent]];
+		int[] frameComponent = this.frameComponents[componentIds[scanComponent]];
 		int hi = frameComponent[HI];
 		int vi = frameComponent[VI];
 		int mcuWidth = DCTSIZE * maxH / hi;
@@ -837,7 +837,7 @@ void emit(int huffCode, int nBits) {
 	int abs = nBits - (8 - currentBitCount);
 	if (abs < 0) abs = -abs;
 	if ((abs >> 3) > 0) {
-		currentByte += codeBuffer[2];
+		this.currentByte += codeBuffer[2];
 		emitByte((byte)currentByte);
 		emitByte(codeBuffer[1]);
 		currentByte = codeBuffer[0];
@@ -845,12 +845,12 @@ void emit(int huffCode, int nBits) {
 	} else {
 		currentBitCount += nBits;
 		if (currentBitCount >= 8) {
-			currentByte += codeBuffer[2];
+			this.currentByte += codeBuffer[2];
 			emitByte((byte)currentByte);
 			currentByte = codeBuffer[1];
 			currentBitCount -= 8;
 		} else {
-			currentByte += codeBuffer[2];
+			this.currentByte += codeBuffer[2];
 		}
 	}
 }
@@ -866,7 +866,7 @@ void emitByte(byte byteValue) {
 }
 void encodeACCoefficients(int[] dataUnit, int iComp) {
 	int[] sParams = scanHeader.componentParameters[iComp];
-	JPEGHuffmanTable acTable = acHuffmanTables[sParams[AC]];
+	JPEGHuffmanTable acTable = this.acHuffmanTables[sParams[AC]];
 	int[] ehCodes = acTable.ehCodes;
 	byte[] ehSizes = acTable.ehCodeLengths;
 	int r = 0;
@@ -904,11 +904,11 @@ void encodeACCoefficients(int[] dataUnit, int iComp) {
 }
 void encodeDCCoefficients(int[] dataUnit, int iComp) {
 	int[] sParams = scanHeader.componentParameters[iComp];
-	JPEGHuffmanTable dcTable = dcHuffmanTables[sParams[DC]];
-	int lastDC = precedingDCs[iComp];
+	JPEGHuffmanTable dcTable = this.dcHuffmanTables[sParams[DC]];
+	int lastDC = this.precedingDCs[iComp];
 	int dcValue = dataUnit[0];
 	int diff = dcValue - lastDC;
-	precedingDCs[iComp] = dcValue;
+	this.precedingDCs[iComp] = dcValue;
 	if (diff < 0) {
 		int absDiff = 0 - diff;
 		int nBits = NBitsTable[absDiff];
@@ -926,7 +926,7 @@ void encodeMCUAtXAndY(int xmcu, int ymcu) {
 	int nComponentsInScan = scanHeader.getNumberOfImageComponents();
 	dataUnit = new int[64];
 	for (int iComp = 0; iComp < nComponentsInScan; iComp++) {
-		int[] frameComponent = frameComponents[componentIds[iComp]];
+		int[] frameComponent = this.frameComponents[componentIds[iComp]];
 		int hi = frameComponent[HI];
 		int vi = frameComponent[VI];
 		for (int ivi = 0; ivi < vi; ivi++) {
@@ -953,13 +953,13 @@ void encodeScan() {
 }
 void expandImageComponents() {
 	for (int iComp = 0; iComp < nComponents; iComp++) {
-		int[] frameComponent = frameComponents[componentIds[iComp]];
+		int[] frameComponent = this.frameComponents[componentIds[iComp]];
 		int hi = frameComponent[HI];
 		int vi = frameComponent[VI];
 		int upH = maxH / hi;
 		int upV = maxV / vi;
 		if ((upH * upV) > 1) {
-			byte[] component = imageComponents[iComp];
+			byte[] component = this.imageComponents[iComp];
 			int compWidth = frameComponent[CW];
 			int compHeight = frameComponent[CH];
 			int upCompWidth = compWidth * upH;
@@ -978,8 +978,8 @@ int extendBy(int diff, int t) {
 	}
 }
 void extractData(int[] dataUnit, int iComp, int xmcu, int ymcu, int ihi, int ivi) {
-	byte[] compImage = imageComponents[iComp];
-	int[] frameComponent = frameComponents[componentIds[iComp]];
+	byte[] compImage = this.imageComponents[iComp];
+	int[] frameComponent = this.frameComponents[componentIds[iComp]];
 	int hi = frameComponent[HI];
 	int vi = frameComponent[VI];
 	int compWidth = frameComponent[CW];
@@ -1164,10 +1164,10 @@ void getDHT() {
 		SWT.error(SWT.ERROR_INVALID_IMAGE);
 	}
 	if (acHuffmanTables == null) {
-		acHuffmanTables = new JPEGHuffmanTable[4];
+		this.acHuffmanTables = new JPEGHuffmanTable[4];
 	}
 	if (dcHuffmanTables == null) {
-		dcHuffmanTables = new JPEGHuffmanTable[4];
+		this.dcHuffmanTables = new JPEGHuffmanTable[4];
 	}
 	JPEGHuffmanTable[] dhtTables = dht.getAllTables();
 	for (int i = 0; i < dhtTables.length; i++) {
@@ -1194,7 +1194,7 @@ void getDQT() {
 		int index = dqtTablesKeys[i];
 		currentTables[index] = dqtTablesValues[i];
 	}
-	quantizationTables = currentTables;
+	this.quantizationTables = currentTables;
 }
 void getDRI() {
 	JPEGRestartInterval dri = new JPEGRestartInterval(inputStream);
@@ -1415,17 +1415,17 @@ ImageData[] loadFromByteStream() {
 	imageComponents = new byte[nComponents][];
 	if (progressive) {
 		// Progressive jpeg: need to keep all of the data units.
-		dataUnits = new int[nComponents][][];
+		this.dataUnits = new int[nComponents][][];
 	} else {
 		// Sequential jpeg: only need one data unit.
 		dataUnit = new int[8 * 8];
 	}
 	for (int i = 0; i < nComponents; i++) {
-		int[] frameComponent = frameComponents[componentIds[i]];
+		int[] frameComponent = this.frameComponents[componentIds[i]];
 		int bufferSize = frameComponent[CW] * frameComponent[CH];
-		imageComponents[i] = new byte[bufferSize];
+		this.imageComponents[i] = new byte[bufferSize];
 		if (progressive) {
-			dataUnits[i] = new int[bufferSize][];
+			this.dataUnits[i] = new int[bufferSize][];
 		}
 	}
 
@@ -1475,7 +1475,7 @@ ImageData[] loadFromByteStream() {
 		for (int ymcu = 0; ymcu < interleavedMcuRows; ymcu++) {
 			for (int xmcu = 0; xmcu < interleavedMcuCols; xmcu++) {
 				for (int iComp = 0; iComp < nComponents; iComp++) {
-					int[] frameComponent = frameComponents[componentIds[iComp]];
+					int[] frameComponent = this.frameComponents[componentIds[iComp]];
 					int hi = frameComponent[HI];
 					int vi = frameComponent[VI];
 					int compWidth = frameComponent[CW];
@@ -1521,9 +1521,9 @@ ImageData createImageData() {
 int nextBit() {
 	if (currentBitCount != 0) {
 		currentBitCount--;
-		currentByte *= 2;
+		this.currentByte *= 2;
 		if (currentByte > 255) {
-			currentByte -= 256;
+			this.currentByte -= 256;
 			return 1;
 		} else {
 			return 0;
@@ -1548,9 +1548,9 @@ int nextBit() {
 		if (nextByte == 0) {
 			bufferCurrentPosition ++;
 			currentBitCount--;
-			currentByte *= 2;
+			this.currentByte *= 2;
 			if (currentByte > 255) {
-				currentByte -= 256;
+				this.currentByte -= 256;
 				return 1;
 			} else {
 				return 0;
@@ -1566,9 +1566,9 @@ int nextBit() {
 		}
 	} else {
 		currentBitCount--;
-		currentByte *= 2;
+		this.currentByte *= 2;
 		if (currentByte > 255) {
-			currentByte -= 256;
+			this.currentByte -= 256;
 			return 1;
 		} else {
 			return 0;
@@ -1648,7 +1648,7 @@ JPEGSegment processTables() {
 	}
 }
 void quantizeData(int[] dataUnit, int iComp) {
-	int[] qTable = quantizationTables[frameComponents[componentIds[iComp]][TQI]];
+	int[] qTable = this.quantizationTables[frameComponents[componentIds[iComp]][TQI]];
 	for (int i = 0; i < dataUnit.length; i++) {
 		int zzIndex = ZigZag8x8[i];
 		int data = dataUnit[zzIndex];
@@ -1745,8 +1745,8 @@ static void skipSegmentFrom(LEDataInputStream byteStream) {
 	}
 }
 void storeData(int[] dataUnit, int iComp, int xmcu, int ymcu, int hi, int ihi, int vi, int ivi) {
-	byte[] compImage = imageComponents[iComp];
-	int[] frameComponent = frameComponents[componentIds[iComp]];
+	byte[] compImage = this.imageComponents[iComp];
+	int[] frameComponent = this.frameComponents[componentIds[iComp]];
 	int compWidth = frameComponent[CW];
 	int destIndex = ((ymcu * vi + ivi) * compWidth * DCTSIZE) + ((xmcu * hi + ihi) * DCTSIZE);
 	int srcIndex = 0;
@@ -1781,14 +1781,14 @@ void unloadIntoByteStream(ImageLoader loader) {
 	int[] jpegDQTKeys = chromDQT.getQuantizationTablesKeys();
 	int[][] jpegDQTValues = chromDQT.getQuantizationTablesValues();
 	for (int i = 0; i < jpegDQTKeys.length; i++) {
-		quantizationTables[jpegDQTKeys[i]] = jpegDQTValues[i];
+		this.quantizationTables[jpegDQTKeys[i]] = jpegDQTValues[i];
 	}
 	JPEGQuantizationTable lumDQT = JPEGQuantizationTable.defaultLuminanceTable();
 	lumDQT.scaleBy(encoderQFactor);
 	jpegDQTKeys = lumDQT.getQuantizationTablesKeys();
 	jpegDQTValues = lumDQT.getQuantizationTablesValues();
 	for (int i = 0; i < jpegDQTKeys.length; i++) {
-		quantizationTables[jpegDQTKeys[i]] = jpegDQTValues[i];
+		this.quantizationTables[jpegDQTKeys[i]] = jpegDQTValues[i];
 	}
 	if (!lumDQT.writeToStream(outputStream)) {
 		SWT.error(SWT.ERROR_IO);

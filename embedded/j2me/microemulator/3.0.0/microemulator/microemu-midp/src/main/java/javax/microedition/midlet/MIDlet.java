@@ -115,7 +115,7 @@ public class MIDlet
 
     public final void notifyDestroyed()
     {
-        destroyed = true;
+        this.destroyed = true;
         MIDletBridge.notifyDestroyed();
     }
 

@@ -76,7 +76,7 @@ public class DrawData {
 	static final char [] TREEVIEW = new char [] {'T', 'R', 'E', 'E', 'V', 'I', 'E', 'W', 0};
 
 public DrawData() {
-	state = new int[1];
+	this.state = new int[1];
 }
 
 Rectangle computeTrim(Theme theme, GC gc) {

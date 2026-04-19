@@ -437,7 +437,7 @@ public class CTabFolderRenderer {
 					x = x - ITEM_LEFT_MARGIN;
 					width = width + ITEM_LEFT_MARGIN + ITEM_RIGHT_MARGIN;
 					if (!parent.simple && !parent.single && (state & SWT.SELECTED) != 0) {
-						width += curveWidth - curveIndent;
+						width += this.curveWidth - this.curveIndent;
 					}
 					y = y - ITEM_TOP_MARGIN;
 					height = height + ITEM_TOP_MARGIN + ITEM_BOTTOM_MARGIN;
@@ -1040,8 +1040,8 @@ public class CTabFolderRenderer {
 		
 		//draw right swoop highlight up to diagonal portion
 		for (int i = 0; i < topCurveHighlightStart.length /2; i++) {
-			int rawX = topCurveHighlightStart[i * 2];
-			int rawY = topCurveHighlightStart[i * 2 + 1];
+			int rawX = this.topCurveHighlightStart[i * 2];
+			int rawY = this.topCurveHighlightStart[i * 2 + 1];
 			lastX = rawX + rightEdgeOffset;
 			lastY = rawY + y;
 			lastColorIndex = rawY - 1;
@@ -1060,8 +1060,8 @@ public class CTabFolderRenderer {
 
 		//draw right swoop highlight from diagonal portion to end
 		for (int i = 0; i < topCurveHighlightEnd.length /2; i++) {
-			int rawX = topCurveHighlightEnd[i * 2]; //d is already encoded in this value
-			int rawY = topCurveHighlightEnd[i * 2 + 1]; //d already encoded
+			int rawX = this.topCurveHighlightEnd[i * 2]; //d is already encoded in this value
+			int rawY = this.topCurveHighlightEnd[i * 2 + 1]; //d already encoded
 			lastX = rawX + rightEdgeOffset;
 			lastY = rawY + y;
 			lastColorIndex = rawY - 1;
@@ -1351,12 +1351,12 @@ public class CTabFolderRenderer {
 						shape[index++] = y + height + left[2*i+1] - 1;
 					}
 					for (int i = 0; i < right.length/2; i++) {
-						shape[index++] = parent.simple ? rightEdge - 1 + right[2*i] : rightEdge - curveIndent + right[2*i];
+						shape[index++] = parent.simple ? rightEdge - 1 + right[2*i] : rightEdge - this.curveIndent + right[2*i];
 						shape[index++] = parent.simple ? y + height + right[2*i+1] - 1 : y + right[2*i+1] - 2;
 					}
-					shape[index++] = parent.simple ? rightEdge - 1 : rightEdge + curveWidth - curveIndent;
+					shape[index++] = parent.simple ? rightEdge - 1 : rightEdge + this.curveWidth - this.curveIndent;
 					shape[index++] = y - 1;
-					shape[index++] = parent.simple ? rightEdge - 1 : rightEdge + curveWidth - curveIndent;
+					shape[index++] = parent.simple ? rightEdge - 1 : rightEdge + this.curveWidth - this.curveIndent;
 					shape[index++] = y - 1;
 				} else {
 					int[] left = parent.simple ? SIMPLE_TOP_LEFT_CORNER : TOP_LEFT_CORNER;
@@ -1375,12 +1375,12 @@ public class CTabFolderRenderer {
 						shape[index++] = y + left[2*i+1];
 					}
 					for (int i = 0; i < right.length/2; i++) {
-						shape[index++] = parent.simple ? rightEdge - 1 + right[2*i] : rightEdge - curveIndent + right[2*i];
+						shape[index++] = parent.simple ? rightEdge - 1 + right[2*i] : rightEdge - this.curveIndent + right[2*i];
 						shape[index++] = y + right[2*i+1];
 					}
-					shape[index++] = parent.simple ? rightEdge - 1 : rightEdge + curveWidth - curveIndent;
+					shape[index++] = parent.simple ? rightEdge - 1 : rightEdge + this.curveWidth - this.curveIndent;
 					shape[index++] = y + height + 1;
-					shape[index++] = parent.simple ? rightEdge - 1 : rightEdge + curveWidth - curveIndent;
+					shape[index++] = parent.simple ? rightEdge - 1 : rightEdge + this.curveWidth - this.curveIndent;
 					shape[index++] = y + height + 1;
 				}
 				
@@ -1738,7 +1738,7 @@ public class CTabFolderRenderer {
 		//
 		//Set to null to match all the early return cases.
 		//For early returns, don't realloc the cache, we may get a cache hit next time we're given the highlight
-		selectionHighlightGradientBegin = null;
+		this.selectionHighlightGradientBegin = null;
 	
 		if(start == null)
 			return;
@@ -1790,21 +1790,21 @@ public class CTabFolderRenderer {
 		if (tabHeight == lastTabHeight) return;
 		if (parent.onBottom) {
 			int d = tabHeight - 12;
-			curve = new int[]{0,13+d, 0,12+d, 2,12+d, 3,11+d, 5,11+d, 6,10+d, 7,10+d, 9,8+d, 10,8+d,
+			this.curve = new int[]{0,13+d, 0,12+d, 2,12+d, 3,11+d, 5,11+d, 6,10+d, 7,10+d, 9,8+d, 10,8+d,
 					          11,7+d, 11+d,7,
 							  12+d,6, 13+d,6, 15+d,4, 16+d,4, 17+d,3, 19+d,3, 20+d,2, 22+d,2, 23+d,1}; 
-			curveWidth = 26+d;
-			curveIndent = curveWidth/3;	
+			this.curveWidth = 26+d;
+			this.curveIndent = curveWidth/3;	
 		} else {
 			int d = tabHeight - 12;
-			curve = new int[]{0,0, 0,1, 2,1, 3,2, 5,2, 6,3, 7,3, 9,5, 10,5,
+			this.curve = new int[]{0,0, 0,1, 2,1, 3,2, 5,2, 6,3, 7,3, 9,5, 10,5,
 					          11,6, 11+d,6+d,
 					          12+d,7+d, 13+d,7+d, 15+d,9+d, 16+d,9+d, 17+d,10+d, 19+d,10+d, 20+d,11+d, 22+d,11+d, 23+d,12+d};
-			curveWidth = 26+d;
-			curveIndent = curveWidth/3;
+			this.curveWidth = 26+d;
+			this.curveIndent = curveWidth/3;
 			
 			//this could be static but since values depend on curve, better to keep in one place
-			topCurveHighlightStart = new int[] { 
+			this.topCurveHighlightStart = new int[] { 
 					0, 2,  1, 2,  2, 2,    
 					3, 3,  4, 3,  5, 3, 
 					6, 4,  7, 4,
@@ -1812,7 +1812,7 @@ public class CTabFolderRenderer {
 					9, 6, 10, 6};
 			
 			//also, by adding in 'd' here we save some math cost when drawing the curve
-			topCurveHighlightEnd = new int[] { 
+			this.topCurveHighlightEnd = new int[] { 
 					10+d, 6+d,
 					11+d, 7+d,
 					12+d, 8+d,  13+d, 8+d,

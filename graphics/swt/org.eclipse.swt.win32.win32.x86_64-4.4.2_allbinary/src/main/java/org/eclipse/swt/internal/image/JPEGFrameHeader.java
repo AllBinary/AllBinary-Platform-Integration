@@ -71,11 +71,11 @@ final class JPEGFrameHeader extends JPEGVariableSizeSegment {
 	}
 	
 	public void setMaxHFactor(int anInteger) {
-		maxHFactor = anInteger;
+		this.maxHFactor = anInteger;
 	}
 	
 	public void setMaxVFactor(int anInteger) {
-		maxVFactor = anInteger;
+		this.maxVFactor = anInteger;
 	}
 	
 	/* Used when decoding. */
@@ -88,7 +88,7 @@ final class JPEGFrameHeader extends JPEGVariableSizeSegment {
 		for (int i = 0; i < nf; i++) {
 			int ofs = i * 3 + 10;
 			int ci = reference[ofs] & 0xFF;
-			componentIdentifiers[i] = ci;
+			this.componentIdentifiers[i] = ci;
 			int hi = (reference[ofs + 1] & 0xFF) >> 4;
 			int vi = reference[ofs + 1] & 0xF;
 			int tqi = reference[ofs + 2] & 0xFF;

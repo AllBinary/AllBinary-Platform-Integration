@@ -899,7 +899,7 @@ void releaseParent () {
  * @see #releaseParent
  */
 void releaseWidget () {
-	eventTable = null;
+	this.eventTable = null;
 	data = null;
 }
 

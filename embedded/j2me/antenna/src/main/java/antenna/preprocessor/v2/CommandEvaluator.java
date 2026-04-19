@@ -25,7 +25,7 @@ public class CommandEvaluator
 
 	public CommandEvaluator(Defines defines)
 	{
-		m_defines = defines;
+		this.m_defines = defines;
 	}
 
 	public boolean evaluate(PPLine ppl, AST ast, IPreprocessorListener listener) throws ANTLRException, PPException

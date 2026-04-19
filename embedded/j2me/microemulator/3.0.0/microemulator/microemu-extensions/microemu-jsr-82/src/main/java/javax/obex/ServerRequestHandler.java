@@ -52,7 +52,7 @@ public class ServerRequestHandler {
 	 * Creates a ServerRequestHandler.
 	 */
 	protected ServerRequestHandler() {
-		connectionID = -1;
+		this.connectionID = -1;
 	}
 
 	/**

@@ -936,7 +936,7 @@ void onFocusIn(Event e) {
 void onFocusOut(Event e) {
 }
 private int OnInPlaceActivate() {
-	state = STATE_INPLACEACTIVE;
+	this.state = STATE_INPLACEACTIVE;
 	frame.setCurrentDocument(this);
 	if (objIOleObject == null)
 		return COM.S_OK;

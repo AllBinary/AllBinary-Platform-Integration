@@ -338,12 +338,12 @@ void moveAndResizeGap(int position, int size, int newGapLine) {
 	if (size > 0) {
 		newSize = highWatermark + size;
 	} else {
-		newSize = lowWatermark - size;
+		newSize = this.lowWatermark - size;
 	}
 	// remove the old gap from the lines information
 	if (gapExists()) {
 		// adjust the line length
-		lines[gapLine][1] = lines[gapLine][1] - oldSize;
+		lines[this.gapLine][1] = lines[this.gapLine][1] - oldSize;
 		// adjust the offsets of the lines after the gapLine
 		for (int i = gapLine + 1; i < lineCount; i++) {
 			lines[i][0] = lines[i][0] - oldSize;
@@ -384,7 +384,7 @@ void moveAndResizeGap(int position, int size, int newGapLine) {
 	
 	// add the new gap to the lines information
 	if (gapExists()) {
-		gapLine = newGapLine;
+		this.gapLine = newGapLine;
 		// adjust the line length
 		int gapLength = gapEnd - gapStart;
 		lines[gapLine][1] = lines[gapLine][1] + (gapLength);

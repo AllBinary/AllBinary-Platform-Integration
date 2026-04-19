@@ -53,7 +53,7 @@ public class CustomImageItem
         if (max > labelSet.length()) {
             maxLabelLength = labelSet.length();
         } else {
-            maxLabelLength = max;
+            maxLabelLength = this.max;
         }
 
         this.labelViewable = labelSet.substring(0, maxLabelLength);

@@ -28,7 +28,7 @@ RunnableLock (Runnable runnable) {
 }
 
 boolean done () {
-	return runnable == null || throwable != null;
+	return runnable == null || this.throwable != null;
 }
 
 void run () {

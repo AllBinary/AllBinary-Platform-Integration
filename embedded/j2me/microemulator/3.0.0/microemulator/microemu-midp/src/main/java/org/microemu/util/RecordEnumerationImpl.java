@@ -181,7 +181,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
     @Override
     public void reset()
     {
-        currentRecord = 0;
+        this.currentRecord = 0;
     }
 
     @Override

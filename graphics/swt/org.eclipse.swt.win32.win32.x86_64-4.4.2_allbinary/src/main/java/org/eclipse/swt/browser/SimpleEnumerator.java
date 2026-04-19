@@ -106,7 +106,7 @@ int Release () {
 }
 
 int HasMoreElements (long /*int*/ _retval) {
-	boolean more = values != null && index < values.length;
+	boolean more = values != null && this.index < values.length;
 	XPCOM.memmove (_retval, new boolean[] {more});
 	return XPCOM.NS_OK;
 }	

@@ -77,14 +77,14 @@ public class SwtDisplayComponent implements DisplayComponent
 	
 	public void addDisplayRepaintListener(DisplayRepaintListener l)
 	{
-		displayRepaintListener = l;
+		this.displayRepaintListener = l;
 	}
 
 
 	public void removeDisplayRepaintListener(DisplayRepaintListener l)
 	{
 		if (displayRepaintListener == l) {
-			displayRepaintListener = null;
+			this.displayRepaintListener = null;
 		}
 	}
 	

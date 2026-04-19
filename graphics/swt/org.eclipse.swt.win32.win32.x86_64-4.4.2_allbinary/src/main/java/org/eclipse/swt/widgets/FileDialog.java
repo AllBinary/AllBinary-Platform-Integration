@@ -284,7 +284,7 @@ public String open () {
 	if (filterNames == null) filterNames = new String [0];
 	if (filterExtensions == null) filterExtensions = new String [0];
 	for (int i=0; i<filterExtensions.length; i++) {
-		String filterName = filterExtensions [i];
+		String filterName = this.filterExtensions [i];
 		if (i < filterNames.length) filterName = filterNames [i];
 		strFilter = strFilter + filterName + '\0' + filterExtensions [i] + '\0';
 	}
@@ -474,7 +474,7 @@ public String open () {
 			if (length > 0 && filterPath.charAt (length - 1) != '\\') {
 				separator = "\\";
 			}
-			fullPath = filterPath + separator + fileName;
+			fullPath = this.filterPath + separator + fileName;
 			if (count < fileNames.length) {
 				String [] newFileNames = new String [count];
 				System.arraycopy (fileNames, 0, newFileNames, 0, count);
@@ -540,7 +540,7 @@ public void setFileName (String string) {
  * names corresponding to the extensions
  */
 public void setFilterExtensions (String [] extensions) {
-	filterExtensions = extensions;
+	this.filterExtensions = extensions;
 }
 
 /**
@@ -560,7 +560,7 @@ public void setFilterExtensions (String [] extensions) {
  * @since 3.4
  */
 public void setFilterIndex (int index) {
-	filterIndex = index;
+	this.filterIndex = index;
 }
 
 /**
@@ -578,7 +578,7 @@ public void setFilterIndex (int index) {
  * @see #setFilterExtensions
  */
 public void setFilterNames (String [] names) {
-	filterNames = names;
+	this.filterNames = names;
 }
 
 /**
@@ -599,7 +599,7 @@ public void setFilterNames (String [] names) {
  * @see #setFilterExtensions
  */
 public void setFilterPath (String string) {
-	filterPath = string;
+	this.filterPath = string;
 }
 
 /**

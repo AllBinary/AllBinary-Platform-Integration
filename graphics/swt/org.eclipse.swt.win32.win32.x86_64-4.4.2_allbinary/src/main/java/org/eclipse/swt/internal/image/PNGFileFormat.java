@@ -114,9 +114,9 @@ void readNextChunk(PngChunkReader chunkReader) throws IOException {
 					}
 				}
 				if (transparentCount == 0) {
-					alphaPalette = null;
+					this.alphaPalette = null;
 				} else if (transparentCount == 1 && alphaPalette[transparentPixel] == 0) {
-					alphaPalette = null;
+					this.alphaPalette = null;
 					imageData.transparentPixel = transparentPixel;
 				}
 			}
@@ -263,7 +263,7 @@ void setPixelData(byte[] data, ImageData imageData) {
 				byte[] pixelData = new byte[size];
 				imageData.getPixels(0, 0, size, pixelData, 0);
 				for (int i = 0; i < pixelData.length; i++) {
-					alphaData[i] = alphaPalette[pixelData[i] & 0xFF];
+					alphaData[i] = this.alphaPalette[pixelData[i] & 0xFF];
 				}
 				imageData.alphaData = alphaData;
 			}

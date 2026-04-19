@@ -52,7 +52,7 @@ public AccessibleActionEvent(Object source) {
 @Override
 public String toString () {
 	return "AccessibleActionEvent {" //$NON-NLS-1$
-		+ "string=" + result   //$NON-NLS-1$
+		+ "string=" + this.result   //$NON-NLS-1$
 		+ " count=" + count   //$NON-NLS-1$
 		+ " index=" + index   //$NON-NLS-1$
 		+ "}";  //$NON-NLS-1$

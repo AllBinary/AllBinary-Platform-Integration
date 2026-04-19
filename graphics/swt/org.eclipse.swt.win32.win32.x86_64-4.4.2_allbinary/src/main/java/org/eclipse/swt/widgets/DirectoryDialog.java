@@ -157,7 +157,7 @@ public String open () {
 	/* Copy the message to OS memory */
 	long /*int*/ lpszTitle = 0;
 	if (message.length () != 0) {
-		String string = message;
+		String string = this.message;
 		if (string.indexOf ('&') != -1) {
 			int length = string.length ();
 			char [] buffer = new char [length * 2];

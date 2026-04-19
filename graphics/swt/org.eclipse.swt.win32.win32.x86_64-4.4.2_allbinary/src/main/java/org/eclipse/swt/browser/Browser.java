@@ -559,7 +559,7 @@ public boolean execute (String script) {
 public boolean close () {
 	checkWidget();
 	if (webBrowser.close ()) {
-		isClosing = true;
+		this.isClosing = true;
 		dispose ();
 		isClosing = false;
 		return true;

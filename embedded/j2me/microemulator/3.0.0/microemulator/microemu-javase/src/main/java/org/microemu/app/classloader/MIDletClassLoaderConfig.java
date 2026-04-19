@@ -50,7 +50,7 @@ public class MIDletClassLoaderConfig {
     List appclasspath = new Vector();
 
     public MIDletClassLoaderConfig() {
-        delegationSelected = false;
+        this.delegationSelected = false;
         delegationType = DELEGATION_STRICT;
     }
 

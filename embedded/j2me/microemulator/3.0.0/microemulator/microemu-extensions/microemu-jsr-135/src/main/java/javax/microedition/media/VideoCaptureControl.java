@@ -86,7 +86,7 @@ public class VideoCaptureControl implements VideoControl {
 	 * 
 	 */
 	public VideoCaptureControl(Player player, String locator) {
-		m_player = player;
+		this.m_player = player;
 		// TODO we should parse the locator in order to setup the
 		// original video size properly.
 	}
@@ -228,7 +228,7 @@ public class VideoCaptureControl implements VideoControl {
 	}
 
 	void startVideo() {
-		m_started = true;
+		this.m_started = true;
 		doStartVideo();
 	}
 
@@ -242,7 +242,7 @@ public class VideoCaptureControl implements VideoControl {
 	}
 
 	void stopVideo() {
-		m_started = false;
+		this.m_started = false;
 		doStopVideo();
 	}
 

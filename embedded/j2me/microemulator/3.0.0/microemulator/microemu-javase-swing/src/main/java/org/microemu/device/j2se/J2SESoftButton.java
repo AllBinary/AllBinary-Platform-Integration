@@ -131,7 +131,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 	 */
 	public void setCommand(Command cmd) {
 		synchronized (this) {
-			command = cmd;
+			this.command = cmd;
 		}
 	}
 
@@ -153,7 +153,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 	}
 
 	public void setVisible(boolean state) {
-		visible = state;
+		this.visible = state;
 	}
 
 	public boolean isPressed() {

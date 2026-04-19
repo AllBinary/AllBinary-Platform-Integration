@@ -270,7 +270,7 @@ void onDispose(Event event) {
 void onMouseDown (int x, int y) {
 	if (curveRect.contains(x, y)) {
 		dragging = true;
-		rightDragDisplacement = curveStart - x + curve_width - curve_indent;
+		rightDragDisplacement = this.curveStart - x + this.curve_width - this.curve_indent;
 	}
 }
 void onMouseExit() {
@@ -321,10 +321,10 @@ void onPaint(GC gc) {
 	line1[index++] = x + 1;
 	line1[index++] = size.y - BORDER_STRIPE;
 	for (int i = 0; i < curve.length/2; i++) {
-		line1[index++]=x+curve[2*i];
-		line1[index++]=curve[2*i+1];
+		line1[index++]=x+this.curve[2*i];
+		line1[index++]=this.curve[2*i+1];
 	}
-	line1[index++] = x + curve_width;
+	line1[index++] = x + this.curve_width;
 	line1[index++] = 0;
 	line1[index++] = size.x;
 	line1[index++] = 0;
@@ -534,11 +534,11 @@ public void setSimple(boolean simple) {
 	if (this.simple != simple) {
 		this.simple = simple;
 		if (simple) {
-			curve_width = 5;
-			curve_indent = -2;
+			this.curve_width = 5;
+			this.curve_indent = -2;
 		} else {
-			curve_width = 50;
-			curve_indent = 5;
+			this.curve_width = 50;
+			this.curve_indent = 5;
 		}
 		updateCurve(getSize().y);
 		layout(false);
@@ -548,7 +548,7 @@ public void setSimple(boolean simple) {
 void updateCurve(int height) {
 	int h = height - BORDER_STRIPE;
 	if (simple) {
-		curve = new int[] {0,h, 1,h, 2,h-1, 3,h-2,
+		this.curve = new int[] {0,h, 1,h, 2,h-1, 3,h-2,
 			                       3,2, 4,1, 5,0,};
 	} else {
 		curve = bezier(0, h+1, BEZIER_LEFT, h+1,

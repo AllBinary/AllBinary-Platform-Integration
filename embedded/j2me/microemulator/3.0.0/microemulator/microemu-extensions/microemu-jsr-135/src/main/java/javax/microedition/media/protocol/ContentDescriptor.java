@@ -28,7 +28,7 @@ public class ContentDescriptor {
 	}
 
 	public ContentDescriptor(String contentType) {
-		encoding = contentType;
+		this.encoding = contentType;
 	}
 
 }

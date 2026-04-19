@@ -67,19 +67,19 @@ public class WtkDeploy extends Task {
 	}
 
 	public void setTarget(String s) {
-		target = s;
+		this.target = s;
 	}
 
 	public void setDelete(boolean b) {
-		delete = b;
+		this.delete = b;
 	}
 
     public void setLogin(String s) {
-        login = s;
+        this.login = s;
     }
 
     public void setPassword(String s ) {
-        password = s;
+        this.password = s;
     }
 
     public void setIf(String s) {
@@ -136,10 +136,10 @@ public class WtkDeploy extends Task {
 
 		String s = target + "/" + file.getName() + "?delete=" + delete;
         if (login != null) {
-            s = s + "&login=" + login;
+            s = s + "&login=" + this.login;
         }
         if (password != null) {
-            s = s + "&password=" + password;
+            s = s + "&password=" + this.password;
         }
         
 		URL url = new URL(s);

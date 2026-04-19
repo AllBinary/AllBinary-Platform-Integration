@@ -179,7 +179,7 @@ public class CustomForm extends CustomScreen
 	
 	public void setItemStateListener(CustomItemStateListener iListener) 
 	{
-		itemStateListener = iListener;
+		this.itemStateListener = iListener;
 	}
 
 	

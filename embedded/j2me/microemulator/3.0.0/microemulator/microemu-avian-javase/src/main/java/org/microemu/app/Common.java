@@ -494,7 +494,7 @@ public class Common implements MicroEmulator, CommonInterface {
     }
 
     public void setResponseInterfaceListener(ResponseInterfaceListener listener) {
-        responseInterfaceListener = listener;
+        this.responseInterfaceListener = listener;
     }
 
     protected void handleStartMidletException(Throwable e) {
@@ -658,7 +658,7 @@ public class Common implements MicroEmulator, CommonInterface {
     }
     
     public void setSuiteName(String name) {
-    	midletSuiteName = name;
+    	this.midletSuiteName = name;
     }
 
     public Device getDevice() {
@@ -824,7 +824,7 @@ public class Common implements MicroEmulator, CommonInterface {
                     clConfig.setDelegationType((String) argsIterator.next());
                     argsIterator.remove();
                 } else if (arg.equals("--usesystemclassloader")) {
-                    useSystemClassLoader = true;
+                    this.useSystemClassLoader = true;
                     clConfig.setDelegationType("system");
                 } else if (arg.equals("-j2sefont")) {
                     System.out.println("Allow J2SE Font Sizes");

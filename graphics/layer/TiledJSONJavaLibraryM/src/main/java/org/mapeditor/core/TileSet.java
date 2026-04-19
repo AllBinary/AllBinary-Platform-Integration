@@ -268,7 +268,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      *
      */
     public void setTransparentColor(BasicColor color) {
-        transparentColor = color;
+        this.transparentColor = color;
     }
 
     /**

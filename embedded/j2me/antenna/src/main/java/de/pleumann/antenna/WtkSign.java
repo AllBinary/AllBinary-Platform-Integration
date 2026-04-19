@@ -132,7 +132,7 @@ public class WtkSign extends Task
 			{
 				for (int i = 0; i < certificates.length; i++)
 				{
-					String key = "MIDlet-Certificate-" + m_certNum + "-"
+					String key = "MIDlet-Certificate-" + this.m_certNum + "-"
 							+ (i + 1);
 					String value = Base64.encodeBytes(certificates[i].getEncoded(), Base64.DONT_BREAK_LINES);
 					jadfile.setValue(key, value);
@@ -232,7 +232,7 @@ public class WtkSign extends Task
 	 */
 	public void setCertNum(int certNum)
 	{
-		m_certNum = certNum;
+		this.m_certNum = certNum;
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class WtkSign extends Task
 	 */
 	public void setJadFile(File jadFile)
 	{
-		m_jadFile = jadFile;
+		this.m_jadFile = jadFile;
 	}
 
 	/**
@@ -256,7 +256,7 @@ public class WtkSign extends Task
 	 */
 	public void setCertPass(String keypass)
 	{
-		m_certPass = keypass;
+		this.m_certPass = keypass;
 	}
 
 	/**
@@ -272,7 +272,7 @@ public class WtkSign extends Task
 	 */
 	public void setStorePass(String storePass)
 	{
-		m_storePass = storePass;
+		this.m_storePass = storePass;
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class WtkSign extends Task
 	 */
 	public void setJadEncoding(String jadEncoding)
 	{
-		m_jadEncoding = jadEncoding;
+		this.m_jadEncoding = jadEncoding;
 	}
     /**
       * @param storeType The storeType to set.

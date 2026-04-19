@@ -176,7 +176,7 @@ public class GDForm extends GDFormInput
     }
 
     public void setItemStateListener(GDGameLayerItemStateListener iListener) {
-        itemStateListener = iListener;
+        this.itemStateListener = iListener;
     }
 
     public int size() {

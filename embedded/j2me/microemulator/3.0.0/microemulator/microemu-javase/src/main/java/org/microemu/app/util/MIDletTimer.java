@@ -184,7 +184,7 @@ public class MIDletTimer extends Timer implements Runnable {
 	}
 
 	private void terminate() {
-		cancelled = true;
+		this.cancelled = true;
 	}
 	
 	private void schedule(TimerTask task, long time, long period, boolean fixedRate) {

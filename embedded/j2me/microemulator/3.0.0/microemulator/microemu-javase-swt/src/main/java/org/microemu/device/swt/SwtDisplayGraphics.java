@@ -101,7 +101,7 @@ public class SwtDisplayGraphics extends javax.microedition.lcdui.Graphics //impl
 	
 	public void setColor(int RGB) 
 	{
-		color = RGB;
+		this.color = RGB;
 
                 //g.setForeground(g.getColor(new RGBA((color >> 16) & 0xff, (color >> 8) & 0xff, color & 0xff, 0)));
                 //g.setForeground(g.getColor(new RGBA((color >> 16) & 0xff, (color >> 8) & 0xff, color & 0xff, 255)));
@@ -118,7 +118,7 @@ public class SwtDisplayGraphics extends javax.microedition.lcdui.Graphics //impl
 	
 	public void setFont(javax.microedition.lcdui.Font font) 
 	{
-		currentFont = font;
+		this.currentFont = font;
 		SwtFont tmpFont = (SwtFont)((SwtFontManager) DeviceFactory.getDevice().getFontManager()).getFont(currentFont);
 		g.setFont(tmpFont.getFont());
 	}

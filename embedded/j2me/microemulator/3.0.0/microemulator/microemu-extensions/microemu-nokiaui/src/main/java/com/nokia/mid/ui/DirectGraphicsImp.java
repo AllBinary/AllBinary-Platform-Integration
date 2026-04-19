@@ -41,7 +41,7 @@ public class DirectGraphicsImp implements DirectGraphics{
      * @param g
      */
     public DirectGraphicsImp(Graphics g) {
-        graphics = g;
+        this.graphics = g;
     }
     
     /**

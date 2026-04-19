@@ -95,14 +95,14 @@ public class Preprocessor implements IPreprocessor{
 		pushState();
 		if (!isBlind()) {
 			if (condition) {
-				state = STATE_IS_TRUE;
+				this.state = STATE_IS_TRUE;
 			}
 			else {
-				state = STATE_CAN_BECOME_TRUE;
+				this.state = STATE_CAN_BECOME_TRUE;
 			}
 		}
 		else {
-			state = STATE_HAS_BEEN_TRUE;
+			this.state = STATE_HAS_BEEN_TRUE;
 		}
 	}
 
@@ -115,7 +115,7 @@ public class Preprocessor implements IPreprocessor{
 				state = STATE_IS_TRUE;
 		}
 		else if (state == STATE_IS_TRUE) {
-			state = STATE_HAS_BEEN_TRUE;
+			this.state = STATE_HAS_BEEN_TRUE;
 		}
 	}
 
@@ -124,10 +124,10 @@ public class Preprocessor implements IPreprocessor{
 			throw new PreprocessorException("Unexpected #else",file,  currentLine);
 		}
 		else if (state == STATE_CAN_BECOME_TRUE) {
-			state = STATE_IS_TRUE;
+			this.state = STATE_IS_TRUE;
 		}
 		else if (state == STATE_IS_TRUE) {
-			state = STATE_HAS_BEEN_TRUE;
+			this.state = STATE_HAS_BEEN_TRUE;
 		}
 	}
 

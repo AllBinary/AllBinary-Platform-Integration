@@ -196,7 +196,7 @@ int getFiles (long /*int*/ prop, long /*int*/ _retval) {
 				}
 			}
 			if (pluginDirs == null) {
-				pluginDirs = new String[IsSparc ? 1 : 2];
+				this.pluginDirs = new String[IsSparc ? 1 : 2];
 			}
 
 			/* set the next value to the GRE path + "plugins" */
@@ -209,7 +209,7 @@ int getFiles (long /*int*/ prop, long /*int*/ _retval) {
 			* to not add the directory containing this plug-in to the plug-in search path. 
 			*/
 			if (!IsSparc) {
-				pluginDirs[index++] = mozillaPath + PLUGINS_DIR;
+				this.pluginDirs[index++] = mozillaPath + PLUGINS_DIR;
 			}
 
 			/* set the next value to the home directory + "/.mozilla/plugins" */

@@ -291,18 +291,18 @@ void onResize() {
 	} else {
 		int width = 0;
 		if (oldSize.x < size.x) {
-			width = size.x - oldSize.x + borderRight + highlight;
+			width = size.x - oldSize.x + this.borderRight + highlight;
 		} else if (oldSize.x > size.x) {
-			width = borderRight + highlight;			
+			width = this.borderRight + highlight;			
 		}
 		redraw(size.x - width, 0, width, size.y, false);
 		
 		int height = 0;
 		if (oldSize.y < size.y) {
-			height = size.y - oldSize.y + borderBottom + highlight;		
+			height = size.y - oldSize.y + this.borderBottom + highlight;		
 		}
 		if (oldSize.y > size.y) {
-			height = borderBottom + highlight;		
+			height = this.borderBottom + highlight;		
 		}
 		redraw(0, size.y - height, size.x, height, false);
 	}
@@ -453,10 +453,10 @@ public void setBorderVisible(boolean show) {
 	
 	showBorder = show;
 	if (showBorder) {
-		borderLeft = borderTop = borderRight = borderBottom = 1;
+		this.borderLeft = this.borderTop = this.borderRight = this.borderBottom = 1;
 		if ((getStyle() & SWT.FLAT)== 0) highlight = 2;
 	} else {
-		borderBottom = borderTop = borderLeft = borderRight = 0;
+		this.borderBottom = this.borderTop = this.borderLeft = this.borderRight = 0;
 		highlight = 0;
 	}
 	layout(false);

@@ -716,13 +716,13 @@ private int SetBorderSpace(long /*int*/ pborderwidths) {
  *        the menubar
  */
 public void setContainerMenus(MenuItem[] containerMenus){
-	containerMenuItems = containerMenus;
+	this.containerMenuItems = containerMenus;
 }
 OleClientSite getCurrentDocument() {
 	return currentdoc;
 }
 void setCurrentDocument(OleClientSite doc) {
-	currentdoc = doc;
+	this.currentdoc = doc;
 
 	if (currentdoc != null && objIOleInPlaceActiveObject != null) {
 		RECT lpRect = new RECT();
@@ -748,7 +748,7 @@ void setCurrentDocument(OleClientSite doc) {
  *        the menubar
  */
 public void setFileMenus(MenuItem[] fileMenus){
-	fileMenuItems = fileMenus;
+	this.fileMenuItems = fileMenus;
 }
 private int SetMenu(long /*int*/ hmenuShared, long /*int*/ holemenu, long /*int*/ hwndActiveObject) {
 	long /*int*/ inPlaceActiveObject = 0;
@@ -791,7 +791,7 @@ private int SetMenu(long /*int*/ hmenuShared, long /*int*/ holemenu, long /*int*
  *        the menubar
  */
 public void setWindowMenus(MenuItem[] windowMenus){
-	windowMenuItems = windowMenus;
+	this.windowMenuItems = windowMenus;
 }
 private boolean translateOleAccelerator(MSG msg) {
 	if (objIOleInPlaceActiveObject == null) return false;

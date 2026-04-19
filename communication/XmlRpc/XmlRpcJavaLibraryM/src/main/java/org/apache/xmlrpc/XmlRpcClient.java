@@ -244,11 +244,11 @@ public class XmlRpcClient implements XmlRpcHandler
             Worker w = (Worker) pool.pop();
             if (async)
             {
-                asyncWorkers += 1;
+                this.asyncWorkers += 1;
             }
             else
             {
-                workers += 1;
+                this.workers += 1;
             }
             return w;
         }
@@ -265,9 +265,9 @@ public class XmlRpcClient implements XmlRpcHandler
     public Worker addWorker(final boolean async) {
         if (workers < XmlRpc.getMaxThreads()) {
             if (async) {
-                asyncWorkers += 1;
+                this.asyncWorkers += 1;
             } else {
-                workers += 1;
+                this.workers += 1;
             }
             return new Worker();
         }
@@ -288,11 +288,11 @@ public class XmlRpcClient implements XmlRpcHandler
         }
         if (async)
         {
-            asyncWorkers -= 1;
+            this.asyncWorkers -= 1;
         }
         else
         {
-            workers -= 1;
+            this.workers -= 1;
         }
     }
 

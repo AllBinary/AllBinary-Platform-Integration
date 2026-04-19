@@ -425,7 +425,7 @@ void computeRuns (GC gc) {
 				int newLineWidth = 0;
 				for (int j = 0; j < runs[line].length; j++) {
 					StyleItem item = runs[line][j];
-					int iDx = item.width * wrapWidth / lineWidth;
+					int iDx = item.width * this.wrapWidth / lineWidth;
 					if (iDx != item.width) {
 						item.justify = OS.HeapAlloc(hHeap, OS.HEAP_ZERO_MEMORY, item.glyphCount * 4);
 						if (item.justify == 0) SWT.error(SWT.ERROR_NO_HANDLES);
@@ -1602,7 +1602,7 @@ public Rectangle getBounds () {
 	computeRuns(null);
 	int width = 0;
 	if (wrapWidth != -1) {
-		width = wrapWidth;
+		width = this.wrapWidth;
 	} else {
 		for (int line=0; line<runs.length; line++) {
 			width = Math.max(width, lineWidth[line] + getLineIndent(line));

@@ -178,7 +178,7 @@ public class FilesList extends List implements CommandListener {
 						currentDir.close();
 					} catch (IOException ignore) {
 					}
-					currentDir = null;
+					this.currentDir = null;
 				}
 				FCViewMIDlet.exit2();
 			}

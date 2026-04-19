@@ -279,7 +279,7 @@ public class SwtSelectDeviceDialog extends SwtDialog {
 		for (int i = 0; i < devs.size(); i++) {
 			DeviceEntry entry = (DeviceEntry) devs.elementAt(i);
 			if (entry.isDefaultDevice()) {
-				selectedEntry = entry;
+				this.selectedEntry = entry;
 			}
 		}
 	}

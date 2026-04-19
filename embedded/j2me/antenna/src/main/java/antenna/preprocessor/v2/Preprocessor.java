@@ -214,7 +214,7 @@ public class Preprocessor
 	
 	private boolean preprocessImpl(Vector lines, String encoding) throws IOException, PPException
 	{
-		m_modified = false;
+		this.m_modified = false;
 		m_statsStack = new Stack();
 		m_currentState = STATE_NO_CONDITIONAL;
 		m_disabledByCondition = false;
@@ -502,7 +502,7 @@ public class Preprocessor
 	public boolean isBlind()
 	{
 		return m_currentState == STATE_CAN_BECOME_TRUE || m_currentState == STATE_HAS_BEEN_TRUE
-				|| m_disabledByCondition || m_debugHideNextLine || m_insideHiddenMdebugBlock;
+				|| this.m_disabledByCondition || this.m_debugHideNextLine || m_insideHiddenMdebugBlock;
 	}
 
 	public boolean isVerbose()
@@ -542,16 +542,16 @@ public class Preprocessor
 		{
 			if (condition)
 			{
-				m_currentState = STATE_IS_TRUE;
+				this.m_currentState = STATE_IS_TRUE;
 			}
 			else
 			{
-				m_currentState = STATE_CAN_BECOME_TRUE;
+				this.m_currentState = STATE_CAN_BECOME_TRUE;
 			}
 		}
 		else
 		{
-			m_currentState = STATE_HAS_BEEN_TRUE;
+			this.m_currentState = STATE_HAS_BEEN_TRUE;
 		}
 	}
 
@@ -570,7 +570,7 @@ public class Preprocessor
 		}
 		else if (m_currentState == STATE_IS_TRUE)
 		{
-			m_currentState = STATE_HAS_BEEN_TRUE;
+			this.m_currentState = STATE_HAS_BEEN_TRUE;
 		}
 	}
 
@@ -582,11 +582,11 @@ public class Preprocessor
 		}
 		else if (m_currentState == STATE_CAN_BECOME_TRUE)
 		{
-			m_currentState = STATE_IS_TRUE;
+			this.m_currentState = STATE_IS_TRUE;
 		}
 		else if (m_currentState == STATE_IS_TRUE)
 		{
-			m_currentState = STATE_HAS_BEEN_TRUE;
+			this.m_currentState = STATE_HAS_BEEN_TRUE;
 		}
 	}
 
@@ -677,7 +677,7 @@ public class Preprocessor
 		if (type != APPParser.LITERAL_debug)
 		{
 			// reset the debug hide
-			m_debugHideNextLine = false;
+			this.m_debugHideNextLine = false;
 		}
 	}
 
@@ -695,7 +695,7 @@ public class Preprocessor
 		String expanded = Expander.expandMacros(expLine, m_defines);
 		if (!nextLine.equals(expanded))
 		{
-			m_modified = true;
+			this.m_modified = true;
 		}
 		
 		if (replace)
@@ -723,7 +723,7 @@ public class Preprocessor
 
 	private void handleCondition(boolean conditionTrue)
 	{
-		m_disabledByCondition = !conditionTrue;
+		this.m_disabledByCondition = !conditionTrue;
 	}
 
 	/**

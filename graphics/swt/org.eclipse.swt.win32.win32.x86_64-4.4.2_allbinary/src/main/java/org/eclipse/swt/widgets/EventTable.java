@@ -151,8 +151,8 @@ public void sendEvent (Event event) {
 //        }
 //        aLastTime = currentTime;
             
-		boolean compact = level < 0;
-		level -= level >= 0 ? 1 : -1;
+		boolean compact = this.level < 0;
+		this.level -= this.level >= 0 ? 1 : -1;
 		if (compact && level == 0) {
 			int index = 0;
 			for (int i=0; i<types.length; i++) {

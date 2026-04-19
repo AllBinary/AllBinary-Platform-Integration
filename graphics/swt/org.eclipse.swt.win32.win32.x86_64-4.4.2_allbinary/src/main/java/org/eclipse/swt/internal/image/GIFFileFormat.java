@@ -251,9 +251,9 @@ public final class GIFFileFormat extends FileFormat {
 			delayTime = (controlBlock[1] & 0xFF) | ((controlBlock[2] & 0xFF) << 8);
 			// Store the transparent color.
 			if ((bitField & 0x01) != 0) {
-				transparentPixel = controlBlock[3] & 0xFF;
+				this.transparentPixel = controlBlock[3] & 0xFF;
 			} else {
-				transparentPixel = -1;
+				this.transparentPixel = -1;
 			}
 			return controlBlock;
 		} catch (Exception e) {
@@ -345,7 +345,7 @@ public final class GIFFileFormat extends FileFormat {
 		 * invalid index for the transparent pixel that is larger
 		 * than the number of entries in the palette. */
 		if (transparentPixel > 1 << depth) {
-			transparentPixel = -1;
+			this.transparentPixel = -1;
 		}
 		// Promote depth to next highest supported value.
 		if (!(depth == 1 || depth == 4 || depth == 8)) {

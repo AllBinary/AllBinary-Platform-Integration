@@ -28,7 +28,7 @@ public abstract class DataSource implements Controllable {
 	private String sourceLocator;
 
 	public DataSource(String locator) {
-		sourceLocator = locator;
+		this.sourceLocator = locator;
 	}
 
 	public String getLocator() {

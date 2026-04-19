@@ -193,7 +193,7 @@ void checkGDIP() {
 		GdiplusStartupInput input = new GdiplusStartupInput ();
 		input.GdiplusVersion = 1;
 		if (Gdip.GdiplusStartup (token, input, 0) == 0) {
-			gdipToken = token;
+			this.gdipToken = token;
 			if (loadedFonts != null) {
 				fontCollection = Gdip.PrivateFontCollection_new();
 				if (fontCollection == 0) SWT.error(SWT.ERROR_NO_HANDLES);
@@ -757,8 +757,8 @@ protected void init () {
 	System.arraycopy (lppe, 0, logPalette, 4, 4 * numEntries);
 	/* Lock the indices corresponding to the system entries */
 	for (int i = 0; i < numReserved / 2; i++) {
-		colorRefCount [i] = 1;
-		colorRefCount [numEntries - 1 - i] = 1;
+		this.colorRefCount [i] = 1;
+		this.colorRefCount [numEntries - 1 - i] = 1;
 	}
 	internal_dispose_GC (hDC, null);
 	hPalette = OS.CreatePalette (logPalette);

@@ -639,9 +639,9 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 
 	/* Position the controls */
 	if (move) {
-		int gridY = y + marginTop + marginHeight;
+		int gridY = y + this.marginTop + this.marginHeight;
 		for (int i=0; i<rowCount; i++) {
-			int gridX = x + marginLeft + marginWidth;
+			int gridX = x + this.marginLeft + this.marginWidth;
 			for (int j=0; j<columnCount; j++) {
 				GridData data = getData (grid, i, j, rowCount, columnCount, true);
 				if (data != null) {

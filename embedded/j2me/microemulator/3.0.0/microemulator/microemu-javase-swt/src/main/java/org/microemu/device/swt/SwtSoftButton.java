@@ -129,7 +129,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 	 */
 	public void setCommand(Command cmd) {
 		synchronized (this) {
-			command = cmd;
+			this.command = cmd;
 		}
 	}
 
@@ -147,7 +147,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 	}
 
 	public void setVisible(boolean state) {
-		visible = state;
+		this.visible = state;
 	}
 
 	public boolean isPressed() {

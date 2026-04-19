@@ -412,24 +412,24 @@ void updateHashtable(int to, int from) {
 		hash = hash(data);
 		
 		if (window[nextWindow].previous != null) {
-			window[nextWindow].previous.next = null;
+			this.window[this.nextWindow].previous.next = null;
 		}
 		else if (window[nextWindow].hash != 0) {
-			hashtable[window[nextWindow].hash].next = null;
+			this.hashtable[window[this.nextWindow].hash].next = null;
 		}
 		
-		window[nextWindow].hash = hash;
-		window[nextWindow].value = i;
-		window[nextWindow].previous = null;
-		temp = window[nextWindow].next = hashtable[hash].next;
-		hashtable[hash].next = window[nextWindow];
+		this.window[this.nextWindow].hash = hash;
+		this.window[this.nextWindow].value = i;
+		this.window[this.nextWindow].previous = null;
+		temp = this.window[this.nextWindow].next = this.hashtable[hash].next;
+		this.hashtable[hash].next = this.window[this.nextWindow];
 		if (temp != null) {
-			temp.previous = window[nextWindow];
+			temp.previous = this.window[this.nextWindow];
 		}
 		
-		nextWindow = nextWindow + 1;
+		this.nextWindow = this.nextWindow + 1;
 		if (nextWindow == WINDOW) {
-			nextWindow = 0;
+			this.nextWindow = 0;
 		}
 			
 	}

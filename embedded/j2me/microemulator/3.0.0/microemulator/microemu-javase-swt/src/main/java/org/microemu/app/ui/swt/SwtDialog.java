@@ -239,7 +239,7 @@ public class SwtDialog
 	
 	protected void setReturnCode(int code) 
 	{
-		returnCode = code;
+		this.returnCode = code;
 	}
 	
 	

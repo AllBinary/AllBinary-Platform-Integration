@@ -396,7 +396,7 @@ int setFrame (long /*int*/ sender, long /*int*/ frame) {
 
 int setMenuBarVisible (long /*int*/ sender, int visible) {
 	/* Note.  Webkit only emits the notification when the status bar should be hidden. */
-	menuBar = visible == 1;
+	this.menuBar = visible == 1;
 	return COM.S_OK;
 }
 

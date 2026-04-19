@@ -196,15 +196,15 @@ public class TileLayer extends TileLayerData {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (dir == MIRROR_VERTICAL) {
-                    mirror[y][x] = tileMap[height - 1 - y][x];
+                    mirror[y][x] = this.tileMap[height - 1 - y][x];
                     mirrorFlags[y][x] = flags[height - 1 - y][x];
                 } else {
-                    mirror[y][x] = tileMap[y][width - 1 - x];
+                    mirror[y][x] = this.tileMap[y][width - 1 - x];
                     mirrorFlags[y][x] = flags[y][width - 1 - x];
                 }
             }
         }
-        tileMap = mirror;
+        this.tileMap = mirror;
         flags = mirrorFlags;
     }
 
@@ -329,7 +329,7 @@ public class TileLayer extends TileLayerData {
         final GPoint point = rect.getPoint();
         if (rectangleCollisionUtil.isInside(point.getX(), point.getY(), rect.getMaxX(), rect.getMaxY(), tx, ty)) {
         //if (.contains(tx, ty)) {
-            tileMap[ty - this.y][tx - this.x] = tile;
+            this.tileMap[ty - this.y][tx - this.x] = tile;
             if(tile != null) {
                 this.tileToIdArray[ty - this.y][tx - this.x] = tile.id;
             } else {

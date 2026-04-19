@@ -156,7 +156,7 @@ int encodeLoop() {
 	LZWNode node;
 	while (true) {
 		int currentPrefix = pixel;
-		node = nodeStack[currentPrefix];
+		node = this.nodeStack[currentPrefix];
 		found = true;
 		pixel = nextPixel();
 		if (pixel < 0)

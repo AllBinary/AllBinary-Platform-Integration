@@ -43,28 +43,28 @@ public class WtkPreverify extends PostProcessor {
 
 	public void setNonative(boolean b) {
 		if (b) {
-			flags = flags | Utility.PREVERIFY_NONATIVE;
+			this.flags = this.flags | Utility.PREVERIFY_NONATIVE;
 		}
 		else  {
-			flags = flags & ~Utility.PREVERIFY_NONATIVE;
+			this.flags = this.flags & ~Utility.PREVERIFY_NONATIVE;
 		}
 	}
 	
 	public void setNofloat(boolean b) {
 		if (b) {
-			flags = flags | Utility.PREVERIFY_NOFLOAT;
+			this.flags = this.flags | Utility.PREVERIFY_NOFLOAT;
 		}
 		else  {
-			flags = flags & ~Utility.PREVERIFY_NOFLOAT;
+			this.flags = this.flags & ~Utility.PREVERIFY_NOFLOAT;
 		}
 	}
 	
 	public void setNofinalize(boolean b) {
 		if (b) {
-			flags = flags | Utility.PREVERIFY_NOFINALIZE;
+			this.flags = this.flags | Utility.PREVERIFY_NOFINALIZE;
 		}
 		else  {
-			flags = flags & ~Utility.PREVERIFY_NOFINALIZE;
+			this.flags = this.flags & ~Utility.PREVERIFY_NOFINALIZE;
 		}
 	}
 

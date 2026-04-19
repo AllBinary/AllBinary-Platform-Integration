@@ -122,14 +122,14 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
 
     public void startRunnable() {
 
-        cancel = false;
+        this.cancel = false;
         Thread thread = new Thread(timerTask, "CanvasPanelThread");
         thread.start();
     }
 
     public void stopRunnable() {
 
-        cancel = true;
+        this.cancel = true;
     }
 
     public void commandAction(Command c, Displayable d) {
@@ -137,21 +137,21 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
         if (d == this) {
             synchronized (this) {
                 if (c == nwCommand) {
-                    moveX = -1;
+                    this.moveX = -1;
                     moveY = -1;
-                    moving = true;
+                    this.moving = true;
                 } else if (c == neCommand) {
-                    moveX = 1;
+                    this.moveX = 1;
                     moveY = -1;
-                    moving = true;
+                    this.moving = true;
                 } else if (c == swCommand) {
-                    moveX = -1;
+                    this.moveX = -1;
                     moveY = 1;
-                    moving = true;
+                    this.moving = true;
                 } else if (c == seCommand) {
-                    moveX = 1;
+                    this.moveX = 1;
                     moveY = 1;
-                    moving = true;
+                    this.moving = true;
                 }
             }
         }
@@ -169,42 +169,42 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
     public void keyPressed(int keyCode) {
         int actionCode = getGameAction(keyCode);
         if (keyCode == '1' /* nwCommand */) {
-            moveX = -1;
+            this.moveX = -1;
             moveY = -1;
-            moving = true;
+            this.moving = true;
         } else if (keyCode == '2') {
-            moveX = 0;
+            this.moveX = 0;
             moveY = -1;
-            moving = true;
+            this.moving = true;
         } else if (keyCode == '3' /* neCommand */) {
-            moveX = 1;
+            this.moveX = 1;
             moveY = -1;
-            moving = true;
+            this.moving = true;
         } else if (keyCode == '4') {
-            moveX = -1;
+            this.moveX = -1;
             moveY = 0;
-            moving = true;
+            this.moving = true;
         } else if (keyCode == '6') {
-            moveX = 1;
+            this.moveX = 1;
             moveY = 0;
-            moving = true;
+            this.moving = true;
         } else if (keyCode == '7' /* swCommand */) {
-            moveX = -1;
+            this.moveX = -1;
             moveY = 1;
-            moving = true;
+            this.moving = true;
         } else if (keyCode == '8') {
-            moveX = 0;
+            this.moveX = 0;
             moveY = 1;
-            moving = true;
+            this.moving = true;
         } else if (keyCode == '9' /* seCommand */) {
-            moveX = 1;
+            this.moveX = 1;
             moveY = 1;
-            moving = true;
+            this.moving = true;
         } else if (keyCode == '5' /* fullScreenModeCommand */) {
             setFullScreenMode(!fullScreenMode);
             repaint();
         } else if (keyCode == KEY_POUND) {
-            moving = !moving;
+            this.moving = !this.moving;
         } else if (actionCode == UP) {
             if (ballMoveY > 0) {
                 ballMoveY = -ballMoveY;
@@ -215,11 +215,11 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
             }
         } else if (actionCode == LEFT) {
             if (ballMoveX > 0) {
-                ballMoveX = -ballMoveX;
+                this.ballMoveX = -this.ballMoveX;
             }
         } else if (actionCode == RIGHT) {
             if (ballMoveX < 0) {
-                ballMoveX = -ballMoveX;
+                this.ballMoveX = -this.ballMoveX;
             }
         } else if (keyCode == '0' /* backCommand */) {
             SimpleDemoMIDlet.showMenu();
@@ -281,7 +281,7 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
 
         boolean changeColor = false;
         if ((ballPosX < 4) || (ballPosX > width - 4)) {
-            ballMoveX = -ballMoveX;
+            this.ballMoveX = -this.ballMoveX;
             changeColor = true;
         }
         if ((ballPosY < 4) || (ballPosY > height - 4)) {

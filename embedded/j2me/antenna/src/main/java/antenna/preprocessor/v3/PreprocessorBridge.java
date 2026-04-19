@@ -35,7 +35,7 @@ public class PreprocessorBridge implements IPreprocessor {
      * @param utility
      */
     public PreprocessorBridge(Utility utility) {
-        m_utility = utility;
+        this.m_utility = utility;
         ILineFilter filter = null;
         ILogger logger = null;
 

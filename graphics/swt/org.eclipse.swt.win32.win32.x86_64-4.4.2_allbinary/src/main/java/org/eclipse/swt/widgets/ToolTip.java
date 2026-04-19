@@ -296,7 +296,7 @@ void releaseWidget () {
 	if (item != null && item.toolTip == this) {
 		item.toolTip = null;
 	}
-	item = null;
+	this.item = null;
 	text = message = null;
 }
 

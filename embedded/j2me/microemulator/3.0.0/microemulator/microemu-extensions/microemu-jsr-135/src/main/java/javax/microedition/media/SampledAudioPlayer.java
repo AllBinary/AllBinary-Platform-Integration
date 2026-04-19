@@ -50,7 +50,7 @@ class SampledAudioPlayer implements Player, LineListener
 	
 	public boolean open( InputStream stream, String type ) 
 	{
-	    strType = type;
+	    this.strType = type;
 		try 
 	    {
 			audioInputStream = AudioSystem.getAudioInputStream( new BufferedInputStream( stream ) );

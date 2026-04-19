@@ -50,7 +50,7 @@ public class TypedListener implements Listener {
  * @noreference This method is not intended to be referenced by clients.
  */
 public TypedListener (SWTEventListener listener) {
-	eventListener = listener;
+	this.eventListener = listener;
 }
 
 /**

@@ -135,8 +135,8 @@ public class Preprocessor {
      * @param lineFilter
      */
     public Preprocessor(ILogger logger, ILineFilter lineFilter) {
-        m_logger = logger;
-        m_lineFilter = lineFilter;
+        this.m_logger = logger;
+        this.m_lineFilter = lineFilter;
         m_defines = new Defines(lineFilter);
     }
 
@@ -306,7 +306,7 @@ public class Preprocessor {
     private boolean preprocessImpl(Vector lines, String encoding)
             throws IOException, PPException {
 
-        m_modified = false;
+        this.m_modified = false;
         m_statsStack = new Stack();
         m_currentState = STATE_NO_CONDITIONAL;
         m_disabledByCondition = false;
@@ -330,7 +330,7 @@ public class Preprocessor {
                     if (isBlind()) {
                         String l = commentLine(lp);
                         if (!l.equals(line)) {
-                            m_modified = true;
+                            this.m_modified = true;
                         }
 
                         lines.set(i, l);
@@ -343,7 +343,7 @@ public class Preprocessor {
                         String str = uncommentLine(lp);
 
                         if (!str.equals(line)) {
-                            m_modified = true;
+                            this.m_modified = true;
                         }
 
                         if (replace) {
@@ -667,12 +667,12 @@ public class Preprocessor {
         pushState();
         if (!isBlind()) {
             if (condition) {
-                m_currentState = STATE_IS_TRUE;
+                this.m_currentState = STATE_IS_TRUE;
             } else {
-                m_currentState = STATE_CAN_BECOME_TRUE;
+                this.m_currentState = STATE_CAN_BECOME_TRUE;
             }
         } else {
-            m_currentState = STATE_HAS_BEEN_TRUE;
+            this.m_currentState = STATE_HAS_BEEN_TRUE;
         }
     }
 
@@ -684,10 +684,10 @@ public class Preprocessor {
             throw new IllegalStateException("Unexpected #elif");
         } else if (m_currentState == STATE_CAN_BECOME_TRUE) {
             if (condition) {
-                m_currentState = STATE_IS_TRUE;
+                this.m_currentState = STATE_IS_TRUE;
             }
         } else if (m_currentState == STATE_IS_TRUE) {
-            m_currentState = STATE_HAS_BEEN_TRUE;
+            this.m_currentState = STATE_HAS_BEEN_TRUE;
         }
     }
 
@@ -698,9 +698,9 @@ public class Preprocessor {
         if (m_currentState == STATE_NO_CONDITIONAL) {
             throw new IllegalStateException("Unexpected #else");
         } else if (m_currentState == STATE_CAN_BECOME_TRUE) {
-            m_currentState = STATE_IS_TRUE;
+            this.m_currentState = STATE_IS_TRUE;
         } else if (m_currentState == STATE_IS_TRUE) {
-            m_currentState = STATE_HAS_BEEN_TRUE;
+            this.m_currentState = STATE_HAS_BEEN_TRUE;
         }
     }
 
@@ -814,7 +814,7 @@ public class Preprocessor {
 
         if (type != APPLexer.DEBUG) {
             // reset the debug hide
-            m_debugHideNextLine = false;
+            this.m_debugHideNextLine = false;
         }
     }
 
@@ -835,7 +835,7 @@ public class Preprocessor {
 
         String expanded = Expander.expandMacros(expLine, m_defines);
         if (!nextLine.equals(expanded)) {
-            m_modified = true;
+            this.m_modified = true;
         }
 
         if (replace) {
@@ -849,7 +849,7 @@ public class Preprocessor {
      * 
      */
     private void handleEnddebug() {
-        m_currentMdebugBlockStart = -1;
+        this.m_currentMdebugBlockStart = -1;
         m_insideHiddenMdebugBlock = false;
     }
 
@@ -858,7 +858,7 @@ public class Preprocessor {
      * @param lineNumber
      */
     private void handleMdebug(boolean show, int lineNumber) {
-        m_currentMdebugBlockStart = lineNumber;
+        this.m_currentMdebugBlockStart = lineNumber;
         m_insideHiddenMdebugBlock = !show;
     }
 
@@ -866,7 +866,7 @@ public class Preprocessor {
      * @param conditionTrue
      */
     private void handleCondition(boolean conditionTrue) {
-        m_disabledByCondition = !conditionTrue;
+        this.m_disabledByCondition = !conditionTrue;
     }
 
     /**

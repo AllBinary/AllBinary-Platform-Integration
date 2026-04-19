@@ -235,11 +235,11 @@ String fixText (boolean enabled) {
 	if ((style & SWT.RIGHT_TO_LEFT) != 0) {
 		String string = null;
 		if (!enabled && (OS.COMCTL32_MAJOR < 6 || !OS.IsAppThemed ())) {
-			string = " " + text + " ";
+			string = " " + this.text + " ";
 		}
 		return (style & SWT.FLIP_TEXT_DIRECTION) == 0 ? string : string != null ? LRE + string : LRE + text;
 	} else if ((style & SWT.FLIP_TEXT_DIRECTION) != 0) {
-		return RLE + text;
+		return RLE + this.text;
 	}
 	return null;
 }

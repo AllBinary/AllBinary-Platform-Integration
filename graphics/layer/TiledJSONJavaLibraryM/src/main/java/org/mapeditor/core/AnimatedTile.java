@@ -82,7 +82,7 @@ public class AnimatedTile extends Tile {
      * @param s a {@link org.mapeditor.core.Sprite} object.
      */
     public final void setSprite(Sprite s) {
-        sprite = s;
+        this.sprite = s;
     }
 
     /**

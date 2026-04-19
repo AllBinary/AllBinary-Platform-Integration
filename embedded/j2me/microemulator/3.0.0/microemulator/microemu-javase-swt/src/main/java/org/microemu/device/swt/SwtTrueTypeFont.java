@@ -57,7 +57,7 @@ public class SwtTrueTypeFont implements SwtFont {
 	public void setAntialiasing(boolean antialiasing) {
 		if (this.antialiasing != antialiasing) {
 			this.antialiasing = antialiasing;
-			initialized = false;
+			this.initialized = false;
 		}
 	}
 
@@ -84,7 +84,7 @@ public class SwtTrueTypeFont implements SwtFont {
 			}
 
 //			font = SwtDeviceComponent.getFont(name, size, swtStyle, antialiasing);
-			initialized = true;
+			this.initialized = true;
 			try {
 				throw new RuntimeException(CommonStrings.getInstance().NOT_IMPLEMENTED);
 			} catch (RuntimeException ex) {

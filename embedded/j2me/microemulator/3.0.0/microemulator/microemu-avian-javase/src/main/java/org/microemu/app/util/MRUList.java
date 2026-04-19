@@ -116,7 +116,7 @@ public class MRUList implements XMLItem {
 	}
 
 	public void read(XMLElement xml) {
-		modified = false;
+		this.modified = false;
 		items.removeAllElements();
 		this.maxCapacity = xml.getIntAttribute("maxCapacity", MAXCAPACITY_DEFAULT);
 		for (Enumeration en = xml.enumerateChildren(); en.hasMoreElements();) {

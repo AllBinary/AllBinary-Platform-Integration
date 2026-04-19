@@ -94,8 +94,8 @@ public class StyledTextDropTargetEffect extends DropTargetEffect {
 	@Override
 	public void dragEnter(DropTargetEvent event) {
 		currentOffset = -1;
-		scrollBeginTime = 0;
-		scrollX = -1;
+		this.scrollBeginTime = 0;
+		this.scrollX = -1;
 		scrollY = -1;
 		getControl().removeListener(SWT.Paint, paintListener);
 		getControl().addListener (SWT.Paint, paintListener);
@@ -150,12 +150,12 @@ public class StyledTextDropTargetEffect extends DropTargetEffect {
 		
 		Point pt = text.getDisplay().map(null, text, event.x, event.y);
 		if ((effect & DND.FEEDBACK_SCROLL) == 0) {
-			scrollBeginTime = 0;
-			scrollX = scrollY = -1;
+			this.scrollBeginTime = 0;
+			this.scrollX = scrollY = -1;
 		} else {
 			if (text.getCharCount() == 0) {
-				scrollBeginTime = 0;
-				scrollX = scrollY = -1;
+				this.scrollBeginTime = 0;
+				this.scrollX = scrollY = -1;
 			} else {
 				if (scrollX != -1 && scrollY != -1 && scrollBeginTime != 0 &&
 					(pt.x >= scrollX && pt.x <= (scrollX + SCROLL_TOLERANCE) ||

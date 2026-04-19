@@ -50,7 +50,7 @@ public class Defines {
      * 
      */
     public Defines() {
-        m_lineFilter = null;
+        this.m_lineFilter = null;
         clear();
     }
 
@@ -58,7 +58,7 @@ public class Defines {
      * @param lineFilter
      */
     public Defines(ILineFilter lineFilter) {
-        m_lineFilter = lineFilter;
+        this.m_lineFilter = lineFilter;
         clear();
     }
 
@@ -68,7 +68,7 @@ public class Defines {
      * @throws RecognitionException 
      */
     public Defines(String defines) throws RecognitionException, IOException  {
-        m_lineFilter = null;
+        this.m_lineFilter = null;
         clear();
         addDefines(defines);
     }
@@ -80,7 +80,7 @@ public class Defines {
      * @throws RecognitionException 
      */
     public Defines(String defines, ILineFilter lineFilter) throws RecognitionException, IOException  {
-        m_lineFilter = lineFilter;
+        this.m_lineFilter = lineFilter;
         clear();
         addDefines(defines);
     }
@@ -176,10 +176,10 @@ public class Defines {
                 define(returnAST);
             }
         } catch (RecognitionException e) {
-            m_defines = backup;
+            this.m_defines = backup;
             throw e;
         } catch (IOException e) {
-            m_defines = backup;
+            this.m_defines = backup;
             throw e;
         }
     }

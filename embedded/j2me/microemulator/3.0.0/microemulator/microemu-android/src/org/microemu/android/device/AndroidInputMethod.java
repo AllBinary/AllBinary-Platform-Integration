@@ -64,7 +64,7 @@ public class AndroidInputMethod extends InputMethod {
 				da.keyRepeated(keyCode);
 				return;
 			} else {
-				repeatModeKeyCode = keyCode;
+				this.repeatModeKeyCode = keyCode;
 			}
 		}
 
@@ -77,7 +77,7 @@ public class AndroidInputMethod extends InputMethod {
 	
 	public void buttonReleased(int keyCode) {
 		if (DeviceFactory.getDevice().hasRepeatEvents() && inputMethodListener == null) {
-			repeatModeKeyCode = Integer.MAX_VALUE;
+			this.repeatModeKeyCode = Integer.MAX_VALUE;
 		}
 		
 		MIDletAccess ma = MIDletBridge.getMIDletAccess();

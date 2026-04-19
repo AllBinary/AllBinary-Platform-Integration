@@ -77,7 +77,7 @@ public class CustomGaugeItem extends CustomItem
         int percent = (int) ((this.value * 100) / this.getMaxValue());
         if(percent < 25)
         {
-            this.currentInnerColor = START_INNER_COLOR;
+            this.currentInnerColor = this.START_INNER_COLOR;
         }
         else
             if(percent < 66)

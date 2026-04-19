@@ -95,7 +95,7 @@ public class InputMethod
 
 	public void setInputMode(int mode)
 	{
-		inputMode = mode;
+		this.inputMode = mode;
 	}
 
 

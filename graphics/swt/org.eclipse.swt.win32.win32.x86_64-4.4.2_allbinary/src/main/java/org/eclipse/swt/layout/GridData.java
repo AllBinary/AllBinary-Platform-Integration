@@ -510,7 +510,7 @@ void computeSize (Control control, int wHint, int hHint, boolean flushCache) {
 }
 
 void flushCache () {
-	cacheWidth = cacheHeight = -1;
+	this.cacheWidth = cacheHeight = -1;
 	defaultWidth = defaultHeight = -1;
 	currentWidth = currentHeight = -1;
 }

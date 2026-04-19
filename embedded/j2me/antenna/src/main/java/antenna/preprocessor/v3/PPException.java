@@ -137,7 +137,7 @@ public class PPException extends Exception {
      */
     public String getMessage() {
         if (m_file != null) {
-            String ln = m_lineNumber != UNKNOWN_LINE ? ":" + m_lineNumber : "";
+            String ln = this.m_lineNumber != UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
             return m_file + ln + " : " + super.getMessage();
         } else {
             if (m_lineNumber != UNKNOWN_LINE) {

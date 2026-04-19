@@ -111,14 +111,14 @@ public class NeuQuant {
 		int i;
 		int[] p;
 
-		thepicture = thepic;
-		lengthcount = len;
+		this.thepicture = thepic;
+		this.lengthcount = len;
 		samplefac = sample;
 
-		network = new int[netsize][];
+		this.network = new int[netsize][];
 		for (i = 0; i < netsize; i++) {
-			network[i] = new int[4];
-			p = network[i];
+			this.network[i] = new int[4];
+			p = this.network[i];
 			p[0] = p[1] = p[2] = (i << (netbiasshift + 8)) / netsize;
 			freq[i] = intbias / netsize; /* 1/netsize */
 			bias[i] = 0;
@@ -152,18 +152,18 @@ public class NeuQuant {
 		previouscol = 0;
 		startpos = 0;
 		for (i = 0; i < netsize; i++) {
-			p = network[i];
+			p = this.network[i];
 			smallpos = i;
 			smallval = p[1]; /* index on g */
 			/* find smallest in i..netsize-1 */
 			for (j = i + 1; j < netsize; j++) {
-				q = network[j];
+				q = this.network[j];
 				if (q[1] < smallval) { /* index on g */
 					smallpos = j;
 					smallval = q[1]; /* index on g */
 				}
 			}
-			q = network[smallpos];
+			q = this.network[smallpos];
 			/* swap p (i) and q (smallpos) entries */
 			if (i != smallpos) {
 				j = q[0];
@@ -256,7 +256,7 @@ public class NeuQuant {
 			if (delta == 0)
 				delta = 1;
 			if (i % delta == 0) {
-				alpha -= alpha / alphadec;
+				alpha -= alpha / this.alphadec;
 				radius -= radius / radiusdec;
 				rad = radius >> radiusbiasshift;
 				if (rad <= 1)
@@ -279,12 +279,12 @@ public class NeuQuant {
 
 		bestd = 1000; /* biggest possible dist is 256*3 */
 		best = -1;
-		i = netindex[g]; /* index on g */
+		i = this.netindex[g]; /* index on g */
 		j = i - 1; /* start at netindex[g] and work outwards */
 
 		while ((i < netsize) || (j >= 0)) {
 			if (i < netsize) {
-				p = network[i];
+				p = this.network[i];
 				dist = p[1] - g; /* inx key */
 				if (dist >= bestd)
 					i = netsize; /* stop iter */
@@ -309,7 +309,7 @@ public class NeuQuant {
 				}
 			}
 			if (j >= 0) {
-				p = network[j];
+				p = this.network[j];
 				dist = g - p[1]; /* inx key - reverse dif */
 				if (dist >= bestd)
 					j = -1; /* stop iter */
@@ -350,9 +350,9 @@ public class NeuQuant {
 		int i, j;
 
 		for (i = 0; i < netsize; i++) {
-			network[i][0] >>= netbiasshift;
-			network[i][1] >>= netbiasshift;
-			network[i][2] >>= netbiasshift;
+			this.network[i][0] >>= netbiasshift;
+			this.network[i][1] >>= netbiasshift;
+			this.network[i][2] >>= netbiasshift;
 			network[i][3] = i; /* record colour no */
 		}
 	}
@@ -375,9 +375,9 @@ public class NeuQuant {
 		k = i - 1;
 		m = 1;
 		while ((j < hi) || (k > lo)) {
-			a = radpower[m++];
+			a = this.radpower[m++];
 			if (j < hi) {
-				p = network[j++];
+				p = this.network[j++];
 				try {
 					p[0] -= (a * (p[0] - b)) / alpharadbias;
 					p[1] -= (a * (p[1] - g)) / alpharadbias;
@@ -386,7 +386,7 @@ public class NeuQuant {
 				} // prevents 1.3 miscompilation
 			}
 			if (k > lo) {
-				p = network[k--];
+				p = this.network[k--];
 				try {
 					p[0] -= (a * (p[0] - b)) / alpharadbias;
 					p[1] -= (a * (p[1] - g)) / alpharadbias;
@@ -402,7 +402,7 @@ public class NeuQuant {
 	protected void altersingle(int alpha, int i, int b, int g, int r) {
 
 		/* alter hit neuron */
-		int[] n = network[i];
+		int[] n = this.network[i];
 		n[0] -= (alpha * (n[0] - b)) / initalpha;
 		n[1] -= (alpha * (n[1] - g)) / initalpha;
 		n[2] -= (alpha * (n[2] - r)) / initalpha;
@@ -427,7 +427,7 @@ public class NeuQuant {
 		bestbiaspos = bestpos;
 
 		for (i = 0; i < netsize; i++) {
-			n = network[i];
+			n = this.network[i];
 			dist = n[0] - b;
 			if (dist < 0)
 				dist = -dist;

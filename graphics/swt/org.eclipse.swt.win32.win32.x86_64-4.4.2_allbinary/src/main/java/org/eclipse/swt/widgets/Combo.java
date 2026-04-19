@@ -381,7 +381,7 @@ void applyEditSegments () {
 		}
 	}
 	while (segmentCount < nSegments) {
-		segments [segmentCount] = charCount - segmentCount;
+		this.segments [segmentCount] = charCount - segmentCount;
 		char separator = segmentsChars != null && segmentsChars.length > segmentCount ? segmentsChars [segmentCount] : defaultSeparator;
 		newChars [charCount++] = separator;
 		segmentCount++;
@@ -548,7 +548,7 @@ void clearSegments (boolean applyText) {
 		OS.SendMessage (hwndText, OS.EM_SETLIMITTEXT, Math.max (1, limit - nSegments), 0);
 	}
 	if (!applyText) {
-		segments = null;
+		this.segments = null;
 		return;
 	}
 	boolean oldIgnoreCharacter = ignoreCharacter, oldIgnoreModify = ignoreModify;

@@ -92,12 +92,12 @@ public class TreeDropTargetEffect extends DropTargetEffect {
 	 * @see DropTargetEvent
 	 */
 	public void dragEnter(DropTargetEvent event) {
-		dropIndex = -1;
-		insertItem = null;
-		expandBeginTime = 0;
-		expandIndex = -1;	
-		scrollBeginTime = 0;
-		scrollIndex = -1;
+		this.dropIndex = -1;
+		this.insertItem = null;
+		this.expandBeginTime = 0;
+		this.expandIndex = -1;	
+		this.scrollBeginTime = 0;
+		this.scrollIndex = -1;
 	}
 	
 	/**
@@ -166,8 +166,8 @@ public class TreeDropTargetEffect extends DropTargetEffect {
 		OS.SendMessage (handle, OS.TVM_HITTEST, 0, lpht);
 		long /*int*/ hItem = lpht.hItem;
 		if ((effect & DND.FEEDBACK_SCROLL) == 0) {
-			scrollBeginTime = 0;
-			scrollIndex = -1;
+			this.scrollBeginTime = 0;
+			this.scrollIndex = -1;
 		} else {
 			if (hItem != -1 && scrollIndex == hItem && scrollBeginTime != 0) {
 				if (System.currentTimeMillis() >= scrollBeginTime) {
@@ -203,8 +203,8 @@ public class TreeDropTargetEffect extends DropTargetEffect {
 			}
 		}
 		if ((effect & DND.FEEDBACK_EXPAND) == 0) {
-			expandBeginTime = 0;
-			expandIndex = -1;
+			this.expandBeginTime = 0;
+			this.expandIndex = -1;
 		} else {
 			if (hItem != -1 && expandIndex == hItem && expandBeginTime != 0) {
 				if (System.currentTimeMillis() >= expandBeginTime) {

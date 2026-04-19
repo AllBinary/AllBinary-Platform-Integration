@@ -22,7 +22,7 @@ final class TIFFRandomFileAccess {
 	static final int LIST_SIZE = 128;
 
 public TIFFRandomFileAccess(LEDataInputStream stream) {
-	inputStream = stream;
+	this.inputStream = stream;
 	start = current = next = inputStream.getPosition();
 	buffers = new byte[LIST_SIZE][];
 }

@@ -138,7 +138,7 @@ public class HTTPPanel extends BaseExamplesForm {
 			alert.setTimeout(Alert.FOREVER);
 			SimpleDemoMIDlet.setCurrentDisplayable(alert);
 		} finally {
-			requestThread = null;
+			this.requestThread = null;
 			if (is != null) {
                 try {
 					is.close();

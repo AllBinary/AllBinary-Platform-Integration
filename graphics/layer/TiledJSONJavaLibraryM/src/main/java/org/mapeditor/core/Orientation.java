@@ -69,7 +69,7 @@ public enum Orientation {
     private final String value;
 
     Orientation(String v) {
-        value = v;
+        this.value = v;
     }
 
     public String value() {

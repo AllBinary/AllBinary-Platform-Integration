@@ -64,10 +64,10 @@ public class WtkMakePrc extends Task {
         condition = new Conditional(getProject());
         
         if (getProject().getProperty("wtk.wme.home") != null) {
-            converter = "wme";
+            this.converter = "wme";
         }
         else {
-            converter = "wtk";
+            this.converter = "wtk";
         }
     }
 

@@ -94,7 +94,7 @@ final class LEDataInputStream extends InputStream {
 			off += count;
 			read += count;
 		}
-		position += read;
+		this.position += read;
 		if (read == 0 && read != len) return -1;
 		return read;
 	}

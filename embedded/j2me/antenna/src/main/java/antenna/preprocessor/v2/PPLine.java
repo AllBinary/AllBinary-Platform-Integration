@@ -62,15 +62,15 @@ public class PPLine
 	 */
 	public PPLine(File fileName, String s, int lineNumber) 
 	{
-		m_fileName = fileName;
-		m_lineNumber = lineNumber;
+		this.m_fileName = fileName;
+		this.m_lineNumber = lineNumber;
 		processLine(s);
 	}
 
 	private void processLine(String s) 
 	{
 		// keep original text
-		m_source = s;
+		this.m_source = s;
 
 		String ws[] = getWhites(s);
 		// keep whitespace and strip it from the string
@@ -95,16 +95,16 @@ public class PPLine
 				// maintain backward compatiblity with //$ and //#
 				if (c == '#' || c == '$' || c == HIDDEN_LINE_COMMENT_CHAR)
 				{
-					m_prefixChar = c;
+					this.m_prefixChar = c;
 					if (c == HIDDEN_LINE_COMMENT_CHAR || c == '$' || s.length() == 0 || (s.charAt(0) == ' ' || s.charAt(0) == '\t'))
 					{
-						m_type = TYPE_HIDDEN;
+						this.m_type = TYPE_HIDDEN;
 					}
 					else
 					{
-						m_type = TYPE_COMMAND;
+						this.m_type = TYPE_COMMAND;
 					}
-					m_text = s;
+					this.m_text = s;
 				}
 			}
 		}
@@ -112,7 +112,7 @@ public class PPLine
 
 	public String toString()
 	{
-		return m_type + "[" + m_source + "]";
+		return m_type + "[" + this.m_source + "]";
 	}
 
 	private String[] getWhites(String s)

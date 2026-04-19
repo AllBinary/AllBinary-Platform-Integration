@@ -119,7 +119,7 @@ public class Device extends Task
 
 	public void setResult(String result)
 	{
-		m_result = result;
+		this.m_result = result;
 	}
 
 	public void setOp(String op)

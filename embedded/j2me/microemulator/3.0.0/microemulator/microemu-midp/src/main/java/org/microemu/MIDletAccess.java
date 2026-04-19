@@ -46,7 +46,7 @@ public class MIDletAccess {
 	private DisplayAccess displayAccess;
 
 	public MIDletAccess(MIDlet amidlet) {
-		midlet = amidlet;
+		this.midlet = amidlet;
 	}
 
 	public DisplayAccess getDisplayAccess() {
@@ -54,7 +54,7 @@ public class MIDletAccess {
 	}
 
 	public void setDisplayAccess(DisplayAccess adisplayAccess) {
-		displayAccess = adisplayAccess;
+		this.displayAccess = adisplayAccess;
 	}
 
 	public void startApp() throws MIDletStateChangeException {

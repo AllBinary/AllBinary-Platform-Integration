@@ -7273,17 +7273,17 @@ LRESULT WM_TIMER (long /*int*/ wParam, long /*int*/ lParam) {
 			if (lastTimerID == wParam) {
 				lastTimerCount++;
 			} else {
-				lastTimerCount = 0;
+				this.lastTimerCount = 0;
 			}
-			lastTimerID = wParam;
+			this.lastTimerID = wParam;
 			if (lastTimerCount >= TIMER_MAX_COUNT) {
 				OS.CallWindowProc (TreeProc, handle, OS.WM_MOUSEMOVE, 0, 0);
 				lastTimerID = -1;
 				lastTimerCount = 0;
 			}
 		} else {
-			lastTimerID = -1;
-			lastTimerCount = 0;
+			this.lastTimerID = -1;
+			this.lastTimerCount = 0;
 		}
 	}
 	return result;

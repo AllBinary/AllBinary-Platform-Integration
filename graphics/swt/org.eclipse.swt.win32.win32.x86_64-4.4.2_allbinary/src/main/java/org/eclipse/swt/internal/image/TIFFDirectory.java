@@ -169,7 +169,7 @@ void decodePixels(ImageData image) throws IOException {
 			TIFFModifiedHuffmanCodec codec = new TIFFModifiedHuffmanCodec();
 			int nRows = rowsPerStrip;
 			if (i == length -1) {
-				int n = imageLength % rowsPerStrip;
+				int n = imageLength % this.rowsPerStrip;
 				if (n != 0) nRows = n;
 			}
 			destIndex += codec.decode(data, imageData, destIndex, imageWidth, nRows);
@@ -427,12 +427,12 @@ public ImageData read(int [] nextIFDOffset) throws IOException {
 	/* Set TIFF default values */
 	bitsPerSample = new int[] {1};
 	colorMapOffset = NO_VALUE;
-	compression = 1;
+	this.compression = 1;
 	imageLength = NO_VALUE;
 	imageWidth = NO_VALUE;
 	photometricInterpretation = NO_VALUE;
-	rowsPerStrip = Integer.MAX_VALUE;
-	samplesPerPixel = 1;
+	this.rowsPerStrip = Integer.MAX_VALUE;
+	this.samplesPerPixel = 1;
 	stripByteCounts = null;
 	stripOffsets = null;
 	
@@ -636,7 +636,7 @@ void writeHeader() throws IOException {
 }
 
 void writeToStream(LEDataOutputStream byteStream) throws IOException {
-	out = byteStream;
+	this.out = byteStream;
 	int photometricInterpretation = -1;
 	
 	/* Scanline pad must be 1 */

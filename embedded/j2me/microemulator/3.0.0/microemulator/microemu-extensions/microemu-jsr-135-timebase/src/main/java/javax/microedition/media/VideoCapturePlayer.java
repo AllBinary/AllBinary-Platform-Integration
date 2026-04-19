@@ -65,9 +65,9 @@ public class VideoCapturePlayer implements Player {
 			}
 		}
 		if (m_state == PREFETCHED) {
-			m_state = REALIZED;
+			this.m_state = REALIZED;
 		} else if (m_state == REALIZED) {
-			m_state = UNREALIZED;
+			this.m_state = UNREALIZED;
 		}
 	}
 
@@ -98,7 +98,7 @@ public class VideoCapturePlayer implements Player {
 		if (m_state > PREFETCHED) {
 			return;
 		}
-		m_state = PREFETCHED;
+		this.m_state = PREFETCHED;
 	}
 
 	private synchronized void ensureNotClosed() {
@@ -112,7 +112,7 @@ public class VideoCapturePlayer implements Player {
 		if (m_state >= REALIZED) {
 			return;
 		}
-		m_state = REALIZED;
+		this.m_state = REALIZED;
 	}
 
 	public synchronized void removePlayerListener(PlayerListener playerListener) {
@@ -135,7 +135,7 @@ public class VideoCapturePlayer implements Player {
 		if (m_state == STARTED) {
 			return;
 		}
-		m_state = STARTED;
+		this.m_state = STARTED;
 		notifyListeners(PlayerListener.STARTED, new Long(0));
 		if (m_videoControl != null) {
 			m_videoControl.startVideo();
@@ -156,7 +156,7 @@ public class VideoCapturePlayer implements Player {
 		if (m_state == PREFETCHED) {
 			return;
 		}
-		m_state = PREFETCHED;
+		this.m_state = PREFETCHED;
 		if (m_videoControl != null) {
 			m_videoControl.stopVideo();
 		}

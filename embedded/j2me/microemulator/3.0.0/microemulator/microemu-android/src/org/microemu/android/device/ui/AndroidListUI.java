@@ -119,7 +119,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	}
 
 	public int getSelectedIndex() {
-		int index = selectedPosition;
+		int index = this.selectedPosition;
 		if (index == AdapterView.INVALID_POSITION) {
 			index = listView.getSelectedItemPosition();
 			if (index == AdapterView.INVALID_POSITION) {

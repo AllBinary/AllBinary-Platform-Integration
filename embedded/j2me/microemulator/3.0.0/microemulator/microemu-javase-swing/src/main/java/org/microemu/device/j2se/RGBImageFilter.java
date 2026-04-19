@@ -41,7 +41,7 @@ public class RGBImageFilter extends java.awt.image.RGBImageFilter
   public RGBImageFilter()
 	{
     canFilterIndexColorModel = true;
-    backgroundColor = 
+    this.backgroundColor = 
         ((J2SEDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getBackgroundColor();    
     foregroundColor = 
         ((J2SEDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay()).getForegroundColor();    

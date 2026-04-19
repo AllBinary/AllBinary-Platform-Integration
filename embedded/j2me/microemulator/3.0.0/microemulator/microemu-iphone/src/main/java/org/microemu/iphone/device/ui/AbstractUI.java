@@ -99,7 +99,7 @@ public abstract class AbstractUI<T extends Displayable> extends NSObject impleme
 	}
 
 	public void setCommandListener(CommandListener l) {
-		commandListener = l;
+		this.commandListener = l;
 	}
 
 	class CommandCaller extends NSObject {

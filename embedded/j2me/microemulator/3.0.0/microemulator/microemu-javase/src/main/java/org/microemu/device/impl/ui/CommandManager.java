@@ -158,7 +158,7 @@ public class CommandManager
 	        menuList.delete(0);
 	    }
 		for (int i = 0; i < commandsTable.size(); i++) {
-			menuCommands = commandsTable;
+			this.menuCommands = commandsTable;
 			menuList.append(((Command) commandsTable.elementAt(i)).getLabel(), NullCanvas.NULL_IMAGE);
 		}
 	}

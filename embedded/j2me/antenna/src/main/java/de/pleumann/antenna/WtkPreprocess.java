@@ -98,7 +98,7 @@ public class WtkPreprocess extends MatchingTask {
     }
 
     public void setDestdir(File value) {
-        targetDir = value;
+        this.targetDir = value;
     }
 
     public void setSymbols(String symbols) 
@@ -360,7 +360,7 @@ public class WtkPreprocess extends MatchingTask {
 								}
 							}
 
-							targetFile = "" + targetDir + File.separatorChar + filename;
+							targetFile = "" + this.targetDir + File.separatorChar + filename;
 
 							File file = new File(targetFile + "~");
 							file.delete();

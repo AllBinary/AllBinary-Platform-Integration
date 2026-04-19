@@ -58,7 +58,7 @@ public enum Compression {
     private final String value;
 
     Compression(String v) {
-        value = v;
+        this.value = v;
     }
 
     public String value() {

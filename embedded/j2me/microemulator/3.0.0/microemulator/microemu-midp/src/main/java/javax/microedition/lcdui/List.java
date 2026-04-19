@@ -192,7 +192,7 @@ public class List extends Screen implements Choice {
     }
 
     public void setSelectCommand(Command command) {
-        selCommand = command;
+        this.selCommand = command;
         
         ((ListUI) ui).setSelectCommand(command);
     }

@@ -43,7 +43,7 @@ public abstract class Layer {
         l.height=height;
         l.x=x;
         l.y=y;
-        l.image=image;
+        l.image=this.image;
     }
     
     protected void setLayerImage(Image img) {

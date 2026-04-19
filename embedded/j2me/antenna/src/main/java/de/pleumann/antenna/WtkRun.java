@@ -393,6 +393,6 @@ public class WtkRun extends Task {
 
 	public void setSourcePath(String sourcePath)
 	{
-		m_sourcePath = sourcePath;
+		this.m_sourcePath = sourcePath;
 	}
 }

@@ -111,13 +111,13 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 	
 	public void keyPressed(int keyCode) {
 		if (lastKeyCode == keyCode) {
-			sameKeyCount ++;
+			this.sameKeyCount ++;
 			if ((fullScreenMode) && (sameKeyCount >= 3)) {
 				setFullScreenMode(false);
 				SimpleDemoMIDlet.showMenu();
 			}
 		} else {
-			sameKeyCount = 1;
+			this.sameKeyCount = 1;
 			logEvent(String.valueOf(keyCode) + " " + getKeyName(keyCode));
 		}
 		keyRepeatedTime = System.currentTimeMillis();
@@ -146,22 +146,22 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 	public void keyRepeated(int keyCode) {
 	    long keyRepeatedDellay = 0;
 		if (lastKeyRepeatedKeyCode == keyCode) {
-			keyRepeatedCount ++;
+			this.keyRepeatedCount ++;
 		} else {
-			keyRepeatedCount = 1;
+			this.keyRepeatedCount = 1;
 		}
 		keyRepeatedDellay = System.currentTimeMillis() - keyRepeatedTime; 
         if (keyRepeatedInitialDellay == 0) {
-            keyRepeatedInitialDellay = keyRepeatedDellay;
+            this.keyRepeatedInitialDellay = keyRepeatedDellay;
         }
         keyRepeatedTime = System.currentTimeMillis();
         
 		lastKeyEvent = "keyRepeated (" + Utils.d00(keyRepeatedCount) + ")";
 		if (keyRepeatedDellay != 0) {
-		    lastKeyEvent += " " + keyRepeatedInitialDellay + "/" + keyRepeatedDellay + " ms";
+		    lastKeyEvent += " " + this.keyRepeatedInitialDellay + "/" + keyRepeatedDellay + " ms";
 		}
 		lastKeyCode = keyCode;
-		lastKeyRepeatedKeyCode = keyCode;
+		this.lastKeyRepeatedKeyCode = keyCode;
 		if (debug) {
             System.out.println(lastKeyEvent + " " + keyCode);
         }

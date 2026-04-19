@@ -41,11 +41,11 @@ public class Conditional {
     }
     
     public void setIf(String s) {
-        ifExpr = s;
+        this.ifExpr = s;
     }
     
     public void setUnless(String s) {
-        unlessExpr = s;
+        this.unlessExpr = s;
     }
 
     public boolean isActive() {

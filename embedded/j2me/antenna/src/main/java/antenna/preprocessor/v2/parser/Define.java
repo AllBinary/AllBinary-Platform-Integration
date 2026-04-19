@@ -13,21 +13,21 @@ public class Define
 	
 	public Define(String key)
 	{
-		m_key = key;
-		m_value = null;
+		this.m_key = key;
+		this.m_value = null;
 	}
 	
 	public Define(String key, Literal value)
 	{
-		m_key = key;
-		m_value = value;
+		this.m_key = key;
+		this.m_value = value;
 	}
 	
 	public String toString()
 	{
 		if (m_value !=  null)
 		{
-			return m_key + "=" + m_value;
+			return m_key + "=" + this.m_value;
 		}
 		else
 		{

@@ -198,8 +198,8 @@ public class Sprite extends Layer {
 //    }
     
     public void defineReferencePixel(int x, int y) {
-        refX = x;
-        refY = y;
+        this.refX = x;
+        this.refY = y;
     }
     
     public int getRefPixelX() {
@@ -217,36 +217,36 @@ public class Sprite extends Layer {
 
         switch(transform) {
             case TRANS_NONE:
-                curRefX = refX;
-                curRefY = refY;
+                curRefX = this.refX;
+                curRefY = this.refY;
                 break;
             case TRANS_MIRROR_ROT180:
-                curRefX = width - refX;
-                curRefY = height - refY;
+                curRefX = width - this.refX;
+                curRefY = height - this.refY;
                 break;
             case TRANS_MIRROR:
-                curRefX = width - refX;
-                curRefY = refY;
+                curRefX = width - this.refX;
+                curRefY = this.refY;
                 break;
             case TRANS_ROT180:
-                curRefX = refX;
-                curRefY = height - refY;
+                curRefX = this.refX;
+                curRefY = height - this.refY;
                 break;
             case TRANS_MIRROR_ROT270:
-                curRefX = height - refY;
-                curRefY = refX;
+                curRefX = height - this.refY;
+                curRefY = this.refX;
                 break;
             case TRANS_ROT90:
-                curRefX = height - refY;
-                curRefY = width - refX;
+                curRefX = height - this.refY;
+                curRefY = width - this.refX;
                 break;
             case TRANS_ROT270:
-                curRefX = refY;
-                curRefY = refX;
+                curRefX = this.refY;
+                curRefY = this.refX;
                 break;
             case TRANS_MIRROR_ROT90:
-                curRefX = refY;
-                curRefY = width - refX;
+                curRefX = this.refY;
+                curRefY = width - this.refX;
                 break;
             default: // cant really happen, but the return keeps the
                     // compiler happy (otherwise it'll report variable
@@ -431,36 +431,36 @@ public class Sprite extends Layer {
 
         switch(transform) {
             case TRANS_NONE:
-                newRefX = refX;
-                newRefY = refY;
+                newRefX = this.refX;
+                newRefY = this.refY;
                 break;
             case TRANS_MIRROR_ROT180:
-                newRefX = width - refX;
-                newRefY = height - refY;
+                newRefX = width - this.refX;
+                newRefY = height - this.refY;
                 break;
             case TRANS_MIRROR:
-                newRefX = width - refX;
-                newRefY = refY;
+                newRefX = width - this.refX;
+                newRefY = this.refY;
                 break;
             case TRANS_ROT180:
-                newRefX = refX;
-                newRefY = height - refY;
+                newRefX = this.refX;
+                newRefY = height - this.refY;
                 break;
             case TRANS_MIRROR_ROT270:
-                newRefX = height - refY;
-                newRefY = refX;
+                newRefX = height - this.refY;
+                newRefY = this.refX;
                 break;
             case TRANS_ROT90:
-                newRefX = height - refY;
-                newRefY = width - refX;
+                newRefX = height - this.refY;
+                newRefY = width - this.refX;
                 break;
             case TRANS_ROT270:
-                newRefX = refY;
-                newRefY = refX;
+                newRefX = this.refY;
+                newRefY = this.refX;
                 break;
             case TRANS_MIRROR_ROT90:
-                newRefX = refY;
-                newRefY = width - refX;
+                newRefX = this.refY;
+                newRefY = width - this.refX;
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -473,36 +473,36 @@ public class Sprite extends Layer {
 
         switch(currentTransform) {
             case TRANS_NONE:
-                curRefX = refX;
-                curRefY = refY;
+                curRefX = this.refX;
+                curRefY = this.refY;
                 break;
             case TRANS_MIRROR_ROT180:
-                curRefX = width - refX;
-                curRefY = height - refY;
+                curRefX = width - this.refX;
+                curRefY = height - this.refY;
                 break;
             case TRANS_MIRROR:
-                curRefX = width - refX;
-                curRefY = refY;
+                curRefX = width - this.refX;
+                curRefY = this.refY;
                 break;
             case TRANS_ROT180:
-                curRefX = refX;
-                curRefY = height - refY;
+                curRefX = this.refX;
+                curRefY = height - this.refY;
                 break;
             case TRANS_MIRROR_ROT270:
-                curRefX = height - refY;
-                curRefY = refX;
+                curRefX = height - this.refY;
+                curRefY = this.refX;
                 break;
             case TRANS_ROT90:
-                curRefX = height - refY;
-                curRefY = width - refX;
+                curRefX = height - this.refY;
+                curRefY = width - this.refX;
                 break;
             case TRANS_ROT270:
-                curRefX = refY;
-                curRefY = refX;
+                curRefX = this.refY;
+                curRefY = this.refX;
                 break;
             case TRANS_MIRROR_ROT90:
-                curRefX = refY;
-                curRefY = width - refX;
+                curRefX = this.refY;
+                curRefY = width - this.refX;
                 break;
             default: // cant really happen, but the return keeps the
                     // compiler happy (otherwise it'll report variable

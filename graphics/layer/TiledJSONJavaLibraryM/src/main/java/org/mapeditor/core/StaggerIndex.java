@@ -57,7 +57,7 @@ public enum StaggerIndex {
     private final String value;
 
     StaggerIndex(String v) {
-        value = v;
+        this.value = v;
     }
 
     public String value() {

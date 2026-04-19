@@ -23,7 +23,7 @@ public class PreprocessorBridge implements IPreprocessor
 	
 	public PreprocessorBridge(Utility utility)
 	{
-		m_utility = utility;
+		this.m_utility = utility;
 		Preprocessor.ILineFilter filter = null;
 		Preprocessor.ILogger logger = null;
 		

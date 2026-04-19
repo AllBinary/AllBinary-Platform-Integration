@@ -277,7 +277,7 @@ public class AnimatedGifEncoder {
 			byte temp = colorTab[i];
 			colorTab[i] = colorTab[i + 2];
 			colorTab[i + 2] = temp;
-			usedEntry[i / 3] = false;
+			this.usedEntry[i / 3] = false;
 		}
 		// map image pixels to new palette
 		int k = 0;

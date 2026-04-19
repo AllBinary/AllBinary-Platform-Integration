@@ -262,7 +262,7 @@ public class CustomItem
 
     public void setFocus(boolean state)
     {
-        focus = state;
+        this.focus = state;
     }
 
     Displayable getOwner()

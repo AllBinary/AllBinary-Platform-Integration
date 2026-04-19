@@ -2832,7 +2832,7 @@ public class Accessible {
 			if (enumIndex <= endIndex) {
 				nextItems = new Object[endIndex - enumIndex + 1];
 				for (int i = 0; i < nextItems.length; i++) {
-					Object child = variants[enumIndex];
+					Object child = this.variants[enumIndex];
 					if (child instanceof Integer) {
 						nextItems[i] = new Integer(childIDToOs(((Integer)child).intValue()));
 					} else {

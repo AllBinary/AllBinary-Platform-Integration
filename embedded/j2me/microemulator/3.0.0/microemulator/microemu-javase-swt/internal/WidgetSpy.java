@@ -53,7 +53,7 @@ public class WidgetSpy {
 	 */
 	public void setWidgetTracker(WidgetTracker tracker) {
 		isEnabled = tracker != null;
-		widgetTracker = tracker;
+		this.widgetTracker = tracker;
 	}
 
 	public void widgetCreated(Widget widget) {

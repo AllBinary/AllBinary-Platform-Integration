@@ -3531,11 +3531,11 @@ Rectangle getBlockSelectionPosition() {
 		firstLine = lastLine;
 		lastLine = temp;
 	}
-	int left = blockXAnchor;
+	int left = this.blockXAnchor;
 	int right = blockXLocation;
 	if (left > right) {
 		left = blockXLocation;
-		right = blockXAnchor;
+		right = this.blockXAnchor;
 	}
 	return new Rectangle (left - horizontalScrollOffset, firstLine, right - horizontalScrollOffset, lastLine);
 }
@@ -6058,7 +6058,7 @@ void handleMouseDown(Event event) {
 	if ((event.button != 1) || (IS_MAC && (event.stateMask & SWT.MOD4) != 0)) {
 		return;	
 	}
-	clickCount = event.count;
+	this.clickCount = event.count;
 	if (clickCount == 1) {
 		boolean select = (event.stateMask & SWT.MOD2) != 0;
 		doMouseLocationChange(event.x, event.y, select);
@@ -6110,7 +6110,7 @@ void handleMouseMove(Event event) {
  * Autoscrolling ends when the mouse button is released.
  */
 void handleMouseUp(Event event) {
-	clickCount = 0;
+	this.clickCount = 0;
 	endAutoScroll();
 	if (event.button == 1) {
 		copySelection(DND.SELECTION_CLIPBOARD);
@@ -6236,7 +6236,7 @@ void handleTextChanged(TextChangedEvent event) {
 		topIndexY = 0;
 		super.redraw();
 	} else {
-		int lastLine = firstLine + lastTextChangeNewLineCount;
+		int lastLine = firstLine + this.lastTextChangeNewLineCount;
 		int firstLineTop = getLinePixel(firstLine);
 		int newLastLineBottom = getLinePixel(lastLine + 1);
 		if (lastLineBottom != newLastLineBottom) {
@@ -6286,16 +6286,16 @@ void handleTextChanging(TextChangingEvent event) {
 		event.replaceCharCount *= -1;
 	}
 	lastTextChangeStart = event.start;
-	lastTextChangeNewLineCount = event.newLineCount;
+	this.lastTextChangeNewLineCount = event.newLineCount;
 	lastTextChangeNewCharCount = event.newCharCount;
-	lastTextChangeReplaceLineCount = event.replaceLineCount;
+	this.lastTextChangeReplaceLineCount = event.replaceLineCount;
 	lastTextChangeReplaceCharCount = event.replaceCharCount;	
 	int lineIndex = content.getLineAtOffset(event.start);
 	int srcY = getLinePixel(lineIndex + event.replaceLineCount + 1);
 	int destY = getLinePixel(lineIndex + 1) + event.newLineCount * renderer.getLineHeight();
 	lastLineBottom = destY;
 	if (srcY < 0 && destY < 0) {
-		lastLineBottom += srcY - destY;
+		this.lastLineBottom += srcY - destY;
 		verticalScrollOffset += destY - srcY;
 		calculateTopIndex(destY - srcY);
 		setScrollBars(true);
@@ -8410,7 +8410,7 @@ void setBlockSelectionLocation (int x, int y, boolean sendEvent) {
 	int offset = getOffsetAtPoint(x, y, alignment);
 	setCaretOffset(offset, alignment[0]);
 	if (blockXAnchor == -1) {
-		blockXAnchor = blockXLocation;
+		this.blockXAnchor = blockXLocation;
 		blockYAnchor = blockYLocation;
 		selectionAnchor = caretOffset;
 	}
@@ -8430,7 +8430,7 @@ void setBlockSelectionOffset (int offset, boolean sendEvent) {
 	blockYLocation = point.y + verticalScrollOffset;
 	setCaretOffset(offset, SWT.DEFAULT);
 	if (blockXAnchor == -1) {
-		blockXAnchor = blockXLocation;
+		this.blockXAnchor = blockXLocation;
 		blockYAnchor = blockYLocation;
 		selectionAnchor = caretOffset;
 	}

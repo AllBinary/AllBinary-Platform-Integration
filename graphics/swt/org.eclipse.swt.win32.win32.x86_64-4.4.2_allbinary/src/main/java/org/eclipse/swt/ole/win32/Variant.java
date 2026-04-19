@@ -115,7 +115,7 @@ public Variant() {
  */
 public Variant(float val) {
 	type = COM.VT_R4;
-	floatData = val;
+	this.floatData = val;
 }
 /**
  * Create a Variant object which represents a Java double as a VT_R8.
@@ -126,7 +126,7 @@ public Variant(float val) {
  */
 public Variant(double val) {
 	type = COM.VT_R8;
-	doubleData = val;
+	this.doubleData = val;
 }
 /**
  * Create a Variant object which represents a Java int as a VT_I4.
@@ -136,7 +136,7 @@ public Variant(double val) {
  */
  public Variant(int val) {
 	type = COM.VT_I4;
-	intData = val;
+	this.intData = val;
 }
 /**
  * Create a Variant object which contains a reference to the data being transferred.
@@ -189,7 +189,7 @@ public Variant(IDispatch idispatch) {
  */
 public Variant(IUnknown unknown) {
 	type = COM.VT_UNKNOWN;
-	unknownData = unknown;
+	this.unknownData = unknown;
 }
 /**
  * Create a Variant object which represents a Java long as a VT_I8.
@@ -200,7 +200,7 @@ public Variant(IUnknown unknown) {
  */
  public Variant(long val) {
 	type = COM.VT_I8;
-	longData = val;
+	this.longData = val;
 }
 /**
  * Create a Variant object which represents a Java String as a VT_BSTR.
@@ -210,7 +210,7 @@ public Variant(IUnknown unknown) {
  */
 public Variant(String string) {
 	type = COM.VT_BSTR;
-	stringData = string;
+	this.stringData = string;
 }
 /**
  * Create a Variant object which represents a Java short as a VT_I2.
@@ -220,7 +220,7 @@ public Variant(String string) {
  */
 public Variant(short val) {
 	type = COM.VT_I2;
-	shortData = val;
+	this.shortData = val;
 }
 /**
  * Create a Variant object which represents a Java boolean as a VT_BOOL.
@@ -230,7 +230,7 @@ public Variant(short val) {
  */
 public Variant(boolean val) {
 	type = COM.VT_BOOL;
-	booleanData = val;
+	this.booleanData = val;
 }
 
 /**
@@ -1009,7 +1009,7 @@ void setData(long /*int*/ pData){
 				COM.MoveMemory(buffer, hMem[0], size);
 				stringData = new String(buffer);
 			} else {
-				stringData = ""; //$NON-NLS-1$
+				this.stringData = ""; //$NON-NLS-1$
 			}
 			break;
 	

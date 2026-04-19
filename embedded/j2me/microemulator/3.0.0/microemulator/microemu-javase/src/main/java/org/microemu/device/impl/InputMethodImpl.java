@@ -58,7 +58,7 @@ public class InputMethodImpl extends InputMethod implements Runnable {
 
 	// TODO to be removed when event dispatcher will run input method task
 	public void dispose() {
-		cancel = true;
+		this.cancel = true;
 		synchronized (this) {
 			notify();
 		}
@@ -69,7 +69,7 @@ public class InputMethodImpl extends InputMethod implements Runnable {
 	{
 		while (!cancel) {
 			try {
-				resetKey = true;
+				this.resetKey = true;
 				synchronized (this) {
 					wait(1500);
 				}
@@ -79,8 +79,8 @@ public class InputMethodImpl extends InputMethod implements Runnable {
 				if (resetKey && lastButton != null && inputMethodListener != null) {
 					int caret = inputMethodListener.getCaretPosition() + 1;
                     if (caret <= inputMethodListener.getText().length()) {
-    					lastButton = null;
-    					lastButtonCharIndex = -1;
+    					this.lastButton = null;
+    					this.lastButtonCharIndex = -1;
 						InputMethodEvent event = new InputMethodEvent(InputMethodEvent.CARET_POSITION_CHANGED, caret, inputMethodListener.getText());
 						inputMethodListener.caretPositionChanged(event);
                     }
@@ -121,8 +121,8 @@ public class InputMethodImpl extends InputMethod implements Runnable {
 			synchronized (this) {
 				if (lastButton != null) {
 					caret++;
-					lastButton = null;
-					lastButtonCharIndex = -1;
+					this.lastButton = null;
+					this.lastButtonCharIndex = -1;
 				}
 				if (caret > 0) {
 					tmp += inputMethodListener.getText().substring(0, caret);

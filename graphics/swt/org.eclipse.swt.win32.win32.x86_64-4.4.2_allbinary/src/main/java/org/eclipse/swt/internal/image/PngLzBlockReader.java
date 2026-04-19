@@ -57,11 +57,11 @@ public class PngLzBlockReader {
 
 PngLzBlockReader(PngDecodingDataStream stream) {
 	this.stream = stream;
-	isLastBlock = false;
+	this.isLastBlock = false;
 }
 
 void setWindowSize(int windowSize) {
-	window = new byte[windowSize];
+	this.window = new byte[windowSize];
 }	
 
 void readNextBlockHeader() throws IOException {
@@ -115,8 +115,8 @@ void assertCompressedDataAtEnd() throws IOException {
 
 private byte getNextCompressedByte() throws IOException {
 	if (copyBytesRemaining > 0) {
-		byte value = window[copyIndex];
-		window[windowIndex] = value;
+		byte value = this.window[this.copyIndex];
+		this.window[this.windowIndex] = value;
 		copyBytesRemaining--;
 		
 		copyIndex++;

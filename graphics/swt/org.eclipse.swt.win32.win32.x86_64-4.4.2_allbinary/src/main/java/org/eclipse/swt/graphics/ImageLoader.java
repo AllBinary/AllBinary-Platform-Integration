@@ -116,12 +116,12 @@ public ImageLoader() {
  * <code>imageLoaderListeners</code> field.
  */
 void reset() {
-	data = null;
-	logicalScreenWidth = 0;
-	logicalScreenHeight = 0;
-	backgroundPixel = -1;
-	repeatCount = 1;
-	compression = -1;
+	this.data = null;
+	this.logicalScreenWidth = 0;
+	this.logicalScreenHeight = 0;
+	this.backgroundPixel = -1;
+	this.repeatCount = 1;
+	this.compression = -1;
 }
 
 /**

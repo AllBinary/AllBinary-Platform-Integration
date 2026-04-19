@@ -53,7 +53,7 @@ abstract ImageData[] loadFromByteStream();
  */	
 public ImageData[] loadFromStream(LEDataInputStream stream) {
 	try {
-		inputStream = stream;
+		this.inputStream = stream;
 		return loadFromByteStream();
 	} catch (Exception e) {
 		if (e instanceof IOException) {
@@ -124,7 +124,7 @@ abstract void unloadIntoByteStream(ImageLoader loader);
  */	
 public void unloadIntoStream(ImageLoader loader, LEDataOutputStream stream) {
 	try {
-		outputStream = stream;
+		this.outputStream = stream;
 		unloadIntoByteStream(loader);
 		outputStream.flush();
 	} catch (Exception e) {

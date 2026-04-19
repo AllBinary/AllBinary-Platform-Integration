@@ -54,7 +54,7 @@ public AccessibleHyperlinkEvent(Object source) {
 public String toString () {
 	return "AccessibleHyperlinkEvent {" //$NON-NLS-1$
 		+ "accessible=" + accessible   //$NON-NLS-1$
-		+ " string=" + result   //$NON-NLS-1$
+		+ " string=" + this.result   //$NON-NLS-1$
 		+ " index=" + index   //$NON-NLS-1$
 		+ "}";  //$NON-NLS-1$
 }

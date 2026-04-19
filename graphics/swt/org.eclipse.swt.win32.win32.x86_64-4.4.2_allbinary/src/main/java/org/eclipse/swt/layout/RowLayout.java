@@ -279,7 +279,7 @@ Point layoutHorizontal (Composite composite, boolean move, boolean wrap, int wid
 		bounds = new Rectangle [count];
 		wraps = new int [count];
 	}
-	int maxX = 0, x = marginLeft + marginWidth, y = marginTop + marginHeight;
+	int maxX = 0, x = this.marginLeft + marginWidth, y = this.marginTop + marginHeight;
 	for (int i=0; i<count; i++) {
 		Control child = children [i];
 		if (pack) {
@@ -398,7 +398,7 @@ Point layoutVertical (Composite composite, boolean move, boolean wrap, int heigh
 		bounds = new Rectangle [count];
 		wraps = new int [count];
 	}
-	int maxY = 0, x = marginLeft + marginWidth, y = marginTop + marginHeight;
+	int maxY = 0, x = this.marginLeft + marginWidth, y = this.marginTop + marginHeight;
 	for (int i=0; i<count; i++) {
 		Control child = children [i];
 		if (pack) {

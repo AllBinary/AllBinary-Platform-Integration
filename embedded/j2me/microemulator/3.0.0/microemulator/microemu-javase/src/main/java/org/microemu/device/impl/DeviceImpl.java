@@ -278,9 +278,9 @@ public class DeviceImpl implements Device {
 	protected void loadConfig(ClassLoader classLoader, String base, XMLElement doc) throws IOException {
 		String deviceName = doc.getStringAttribute("name");
 		if (deviceName != null) {
-			name = deviceName;
+			this.name = deviceName;
 		} else {
-			name = base;
+			this.name = base;
 		}
 
 		loadSkinVersion(doc);

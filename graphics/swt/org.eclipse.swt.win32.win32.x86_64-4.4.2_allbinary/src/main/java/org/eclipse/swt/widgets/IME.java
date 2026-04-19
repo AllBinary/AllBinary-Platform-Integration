@@ -103,8 +103,8 @@ public IME (Canvas parent, int style) {
 }
 
 void createWidget () {
-	text = ""; //$NON-NLS-1$
-	startOffset = -1;
+	this.text = ""; //$NON-NLS-1$
+	this.startOffset = -1;
 	if (parent.getIME () == null) {
 		parent.setIME (this);
 	}
@@ -243,7 +243,7 @@ public int [] getRanges () {
 	if (ranges == null) return new int [0];
 	int [] result = new int [ranges.length];
 	for (int i = 0; i < result.length; i++) {
-		result [i] = ranges [i] + startOffset; 
+		result [i] = this.ranges [i] + this.startOffset; 
 	}
 	return result;
 }
@@ -353,7 +353,7 @@ public void setCompositionOffset (int offset) {
 	checkWidget ();
 	if (offset < 0) return;
 	if (startOffset != -1) {
-		startOffset = offset;
+		this.startOffset = offset;
 	}
 }
 
@@ -435,8 +435,8 @@ LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 						TF_DISPLAYATTRIBUTE attr = null; 
 						TextStyle style = null;
 						for (int i = 0; i < length; i++) {
-							ranges [i * 2] = clauses [i];
-							ranges [i * 2 + 1] = clauses [i + 1] - 1;
+							this.ranges [i * 2] = clauses [i];
+							this.ranges [i * 2 + 1] = clauses [i + 1] - 1;
 							styles [i] = style = new TextStyle ();
 							attr = getDisplayAttribute (langID, attrs [clauses [i]]);
 							if (attr != null) {
@@ -504,8 +504,8 @@ LRESULT WM_IME_COMPOSITION (long /*int*/ wParam, long /*int*/ lParam) {
 		event.text = text = buffer != null ? buffer.toString () : ""; //$NON-NLS-1$
 		sendEvent (SWT.ImeComposition, event);
 		if (text.length() == 0) {
-			startOffset = -1;
-			ranges = null;
+			this.startOffset = -1;
+			this.ranges = null;
 			styles = null;
 		}
 	}

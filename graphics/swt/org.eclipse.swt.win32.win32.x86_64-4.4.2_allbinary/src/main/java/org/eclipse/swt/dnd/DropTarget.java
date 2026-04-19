@@ -277,7 +277,7 @@ int DragEnter_64(long /*int*/ pDataObject, int grfKeyState, long pt, long /*int*
 
 int DragEnter(long /*int*/ pDataObject, int grfKeyState, int pt_x, int pt_y, long /*int*/ pdwEffect) {
 	selectedDataType = null;
-	selectedOperation = DND.DROP_NONE;
+	this.selectedOperation = DND.DROP_NONE;
 	if (iDataObject != null) iDataObject.Release();
 	iDataObject = null;
 	
@@ -308,9 +308,9 @@ int DragEnter(long /*int*/ pDataObject, int grfKeyState, int pt_x, int pt_y, lon
 		}
 	}
 	
-	selectedOperation = DND.DROP_NONE;
+	this.selectedOperation = DND.DROP_NONE;
 	if (selectedDataType != null && ((allowedOperations & event.detail) != 0)) {
-		selectedOperation = event.detail;
+		this.selectedOperation = event.detail;
 	}
 	
 	OS.MoveMemory(pdwEffect, new int[] {opToOs(selectedOperation)}, 4);
@@ -318,7 +318,7 @@ int DragEnter(long /*int*/ pDataObject, int grfKeyState, int pt_x, int pt_y, lon
 }
 
 int DragLeave() {
-	keyOperation = -1;
+	this.keyOperation = -1;
 
 	if (iDataObject == null) return COM.S_FALSE;
 
@@ -346,7 +346,7 @@ int DragOver(int grfKeyState, int pt_x, int pt_y, long /*int*/ pdwEffect) {
 	
 	DNDEvent event = new DNDEvent();
 	if (!setEventData(event, iDataObject.getAddress(), grfKeyState, pt_x, pt_y, pdwEffect)) {
-		keyOperation = -1;
+		this.keyOperation = -1;
 		OS.MoveMemory(pdwEffect, new int[] {COM.DROPEFFECT_NONE}, 4);
 		return COM.S_FALSE;
 	}
@@ -358,7 +358,7 @@ int DragOver(int grfKeyState, int pt_x, int pt_y, long /*int*/ pdwEffect) {
 	if (keyOperation == oldKeyOperation) {
 		event.type = DND.DragOver;
 		event.dataType = selectedDataType;
-		event.detail = selectedOperation;
+		event.detail = this.selectedOperation;
 	} else {
 		event.type = DND.DragOperationChanged;
 		event.dataType = selectedDataType;
@@ -377,9 +377,9 @@ int DragOver(int grfKeyState, int pt_x, int pt_y, long /*int*/ pdwEffect) {
 		}
 	}
 
-	selectedOperation = DND.DROP_NONE;
+	this.selectedOperation = DND.DROP_NONE;
 	if (selectedDataType != null && ((allowedOperations & event.detail) == event.detail)) {
-		selectedOperation = event.detail;
+		this.selectedOperation = event.detail;
 	}
 	
 	OS.MoveMemory(pdwEffect, new int[] {opToOs(selectedOperation)}, 4);
@@ -405,11 +405,11 @@ int Drop(long /*int*/ pDataObject, int grfKeyState, int pt_x, int pt_y, long /*i
 	
 	event = new DNDEvent();
 	if (!setEventData(event, pDataObject, grfKeyState, pt_x, pt_y, pdwEffect)) {
-		keyOperation = -1;
+		this.keyOperation = -1;
 		OS.MoveMemory(pdwEffect, new int[] {COM.DROPEFFECT_NONE}, 4);
 		return COM.S_FALSE;
 	}
-	keyOperation = -1;
+	this.keyOperation = -1;
 	int allowedOperations = event.operations;
 	TransferData[] allowedDataTypes = new TransferData[event.dataTypes.length];
 	System.arraycopy(event.dataTypes, 0, allowedDataTypes, 0, allowedDataTypes.length);
@@ -425,9 +425,9 @@ int Drop(long /*int*/ pDataObject, int grfKeyState, int pt_x, int pt_y, long /*i
 			break;
 		}
 	}
-	selectedOperation = DND.DROP_NONE;
+	this.selectedOperation = DND.DROP_NONE;
 	if (selectedDataType != null && (allowedOperations & event.detail) == event.detail) {
-		selectedOperation = event.detail;
+		this.selectedOperation = event.detail;
 	}
 
 	if (selectedOperation == DND.DROP_NONE){
@@ -445,10 +445,10 @@ int Drop(long /*int*/ pDataObject, int grfKeyState, int pt_x, int pt_y, long /*i
 		}
 	}
 	if (object == null){
-		selectedOperation = DND.DROP_NONE;
+		this.selectedOperation = DND.DROP_NONE;
 	}
 	
-	event.detail = selectedOperation;
+	event.detail = this.selectedOperation;
 	event.dataType = selectedDataType;
 	event.data = object;
 	OS.ImageList_DragShowNolock(false);
@@ -460,7 +460,7 @@ int Drop(long /*int*/ pDataObject, int grfKeyState, int pt_x, int pt_y, long /*i
 	refresh();
 	selectedOperation = DND.DROP_NONE;
 	if ((allowedOperations & event.detail) == event.detail) {
-		selectedOperation = event.detail;
+		this.selectedOperation = event.detail;
 	}
 	//notify source of action taken		
 	OS.MoveMemory(pdwEffect, new int[] {opToOs(selectedOperation)}, 4);	
@@ -686,7 +686,7 @@ public void removeDropListener(DropTargetListener listener) {
  * @since 3.3
  */
 public void setDropTargetEffect(DropTargetEffect effect) {
-	dropEffect = effect;
+	this.dropEffect = effect;
 }
 
 boolean setEventData(DNDEvent event, long /*int*/ pDataObject, int grfKeyState, int pt_x, int pt_y, long /*int*/ pdwEffect) {	

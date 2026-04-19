@@ -72,7 +72,7 @@ private FORMATETC[] getNextItems(int numItems){
 	
 	FORMATETC[] items =  new FORMATETC[endIndex - index + 1];
 	for (int i = 0; i < items.length; i++){
-		items[i] = formats[index];
+		items[i] = this.formats[this.index];
 		index++;
 	}
 
@@ -142,12 +142,12 @@ int Release() {
 }
 private int Reset() {
 	//Resets the enumeration sequence to the beginning.
-	index = 0;
+	this.index = 0;
 	return COM.S_OK;
 }
 void setFormats(FORMATETC[] newFormats) {
-	formats = newFormats;
-	index = 0;
+	this.formats = newFormats;
+	this.index = 0;
 }
 private int Skip(int celt) {
 	//Skips over the next specified number of elements in the enumeration sequence.
@@ -155,7 +155,7 @@ private int Skip(int celt) {
 	
 	index += celt;
 	if (index > (formats.length - 1)){
-		index = formats.length - 1;
+		this.index = formats.length - 1;
 		return COM.S_FALSE;
 	}
 	return COM.S_OK;

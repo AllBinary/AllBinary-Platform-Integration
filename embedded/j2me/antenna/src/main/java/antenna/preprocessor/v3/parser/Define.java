@@ -105,7 +105,7 @@ public class Define {
      */
     public String toString() {
         if (m_value != null) {
-            return m_key + "=" + m_value;
+            return m_key + "=" + this.m_value;
         } else {
             return m_key;
         }

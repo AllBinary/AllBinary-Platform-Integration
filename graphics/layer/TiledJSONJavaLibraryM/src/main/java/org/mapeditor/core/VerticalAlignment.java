@@ -62,7 +62,7 @@ public enum VerticalAlignment {
     private final String value;
 
     VerticalAlignment(String v) {
-        value = v;
+        this.value = v;
     }
 
     public String value() {

@@ -664,7 +664,7 @@ public void invokeNoReply(int dispIdMember, Variant[] rgvarg, int[] rgdispidName
 private void manageExcepinfo(int hResult, EXCEPINFO excepInfo) {
 
 	if (hResult == COM.S_OK){
-		exceptionDescription = "No Error"; //$NON-NLS-1$
+		this.exceptionDescription = "No Error"; //$NON-NLS-1$
 		return;
 	}
 
@@ -676,15 +676,15 @@ private void manageExcepinfo(int hResult, EXCEPINFO excepInfo) {
 			COM.MoveMemory(buffer, excepInfo.bstrDescription, size);
 			exceptionDescription = new String(buffer);
 		} else {
-			exceptionDescription = "OLE Automation Error Exception "; //$NON-NLS-1$
+			this.exceptionDescription = "OLE Automation Error Exception "; //$NON-NLS-1$
 			if (excepInfo.wCode != 0){
-				exceptionDescription += "code = "+excepInfo.wCode; //$NON-NLS-1$
+				this.exceptionDescription += "code = "+excepInfo.wCode; //$NON-NLS-1$
 			} else if (excepInfo.scode != 0){
-				exceptionDescription += "code = "+excepInfo.scode; //$NON-NLS-1$
+				this.exceptionDescription += "code = "+excepInfo.scode; //$NON-NLS-1$
 			}
 		}
 	} else {
-		exceptionDescription = "OLE Automation Error HResult : " + hResult; //$NON-NLS-1$
+		this.exceptionDescription = "OLE Automation Error HResult : " + hResult; //$NON-NLS-1$
 	}
 
 	// cleanup EXCEPINFO struct

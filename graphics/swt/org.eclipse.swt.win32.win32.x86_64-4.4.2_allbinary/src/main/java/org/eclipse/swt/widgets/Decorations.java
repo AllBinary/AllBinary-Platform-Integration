@@ -1735,7 +1735,7 @@ LRESULT WM_MOVE (long /*int*/ wParam, long /*int*/ lParam) {
 		if (location.x == oldX && location.y == oldY) {
 			return null;
 		}
-		oldX = location.x;
+		this.oldX = location.x;
 		oldY = location.y;
 	}
 	return super.WM_MOVE (wParam, lParam);

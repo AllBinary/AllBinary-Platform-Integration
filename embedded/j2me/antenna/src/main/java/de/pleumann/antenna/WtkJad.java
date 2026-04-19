@@ -119,15 +119,15 @@ public class WtkJad extends Task {
         profile = "MIDP-" + utility.getMidpVersion();
     }
 	public void setJadfile(File file) {
-		jadFile = file;
+		this.jadFile = file;
 	}
 
 	public void setJarfile(File file) {
-		jarFile = file;
+		this.jarFile = file;
 	}
 
     public void setTarget(String url) {
-        target = url;
+        this.target = url;
     }
 
 	public void setUpdate(boolean update) {

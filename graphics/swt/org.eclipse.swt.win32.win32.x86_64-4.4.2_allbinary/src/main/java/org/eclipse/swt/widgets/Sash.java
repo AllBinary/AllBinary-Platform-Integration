@@ -291,7 +291,7 @@ LRESULT WM_LBUTTONDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 	
 	/* Draw the banding rectangle */
 	if (event.doit) {
-		dragging = true;
+		this.dragging = true;
 		lastX = event.x;
 		lastY = event.y;
 		menuShell ().bringToTop ();

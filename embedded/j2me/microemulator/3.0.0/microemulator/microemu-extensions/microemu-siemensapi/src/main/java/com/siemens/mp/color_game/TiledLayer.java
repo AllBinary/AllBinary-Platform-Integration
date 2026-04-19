@@ -221,8 +221,8 @@ public class TiledLayer extends Layer {
         for (int y = 0; y < imageH; y += tileHeight) {
             for (int x = 0; x < imageW; x += tileWidth) {
                 
-                tileSetX[currentTile] = x;
-                tileSetY[currentTile] = y;
+                this.tileSetX[currentTile] = x;
+                this.tileSetY[currentTile] = y;
                 
                 currentTile++;
             }

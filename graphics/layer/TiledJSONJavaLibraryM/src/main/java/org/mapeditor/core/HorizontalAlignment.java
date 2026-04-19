@@ -62,7 +62,7 @@ public enum HorizontalAlignment {
     private final String value;
 
     HorizontalAlignment(String v) {
-        value = v;
+        this.value = v;
     }
 
     public String value() {

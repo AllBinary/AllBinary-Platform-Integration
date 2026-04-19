@@ -83,8 +83,8 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
     
 	public void setSize(int width, int height) {
 		if (MicroEmulatorActivity.config.ORIG_DISPLAY_FIXED) {
-	        displayRectangleWidth = MicroEmulatorActivity.config.ORIG_DISPLAY_WIDTH;
-	        displayRectangleHeight = MicroEmulatorActivity.config.ORIG_DISPLAY_HEIGHT;
+	        this.displayRectangleWidth = MicroEmulatorActivity.config.ORIG_DISPLAY_WIDTH;
+	        this.displayRectangleHeight = MicroEmulatorActivity.config.ORIG_DISPLAY_HEIGHT;
 		} else {
 	        displayRectangleWidth = (int) (width * (MicroEmulatorActivity.config.CANVAS_AREA_RIGHT - MicroEmulatorActivity.config.CANVAS_AREA_LEFT));
 	        displayRectangleHeight = (int) (height * (MicroEmulatorActivity.config.CANVAS_AREA_BOTTOM - MicroEmulatorActivity.config.CANVAS_AREA_TOP));

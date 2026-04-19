@@ -239,7 +239,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	}
 
 	public void setResizable(boolean state) {
-		resizable = state;
+		this.resizable = state;
 	}
 
 	public Rectangle getDisplayRectangle() {
@@ -514,7 +514,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	 * @see com.barteo.emulator.device.impl.DeviceDisplayImpl#setDisplayRectangle(java.awt.Rectangle)
 	 */
 	public void setDisplayRectangle(Rectangle rectangle) {
-		displayRectangle = rectangle;
+		this.displayRectangle = rectangle;
 	}
 
 	/*
@@ -523,7 +523,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	 * @see com.barteo.emulator.device.impl.DeviceDisplayImpl#setDisplayPaintable(java.awt.Rectangle)
 	 */
 	public void setDisplayPaintable(Rectangle rectangle) {
-		displayPaintable = rectangle;
+		this.displayPaintable = rectangle;
 	}
 
 	/*
@@ -532,7 +532,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	 * @see com.barteo.emulator.device.impl.DeviceDisplayImpl#setMode123Image(com.barteo.emulator.device.impl.PositionedImage)
 	 */
 	public void setMode123Image(PositionedImage object) {
-		mode123Image = object;
+		this.mode123Image = object;
 	}
 
 	/*
@@ -541,7 +541,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	 * @see com.barteo.emulator.device.impl.DeviceDisplayImpl#setModeAbcLowerImage(com.barteo.emulator.device.impl.PositionedImage)
 	 */
 	public void setModeAbcLowerImage(PositionedImage object) {
-		modeAbcLowerImage = object;
+		this.modeAbcLowerImage = object;
 	}
 
 	/*
@@ -550,7 +550,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	 * @see com.barteo.emulator.device.impl.DeviceDisplayImpl#setModeAbcUpperImage(com.barteo.emulator.device.impl.PositionedImage)
 	 */
 	public void setModeAbcUpperImage(PositionedImage object) {
-		modeAbcUpperImage = object;
+		this.modeAbcUpperImage = object;
 	}
 
 	public Image createSystemImage(URL url) throws IOException {

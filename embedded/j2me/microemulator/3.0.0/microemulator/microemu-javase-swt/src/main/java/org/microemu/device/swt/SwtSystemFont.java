@@ -57,7 +57,7 @@ public class SwtSystemFont implements SwtFont {
 	public void setAntialiasing(boolean antialiasing) {
 		if (this.antialiasing != antialiasing) {
 			this.antialiasing = antialiasing;
-			initialized = false;
+			this.initialized = false;
 		}
 	}
 

@@ -261,17 +261,17 @@ public class SwingDisplayComponent extends JComponent implements DisplayComponen
 	public void init() {
 		synchronized (this) {
 			graphicsSurface = null;
-			initialPressedSoftButton = null;
+			this.initialPressedSoftButton = null;
 		}
 	}
 
 	public void addDisplayRepaintListener(DisplayRepaintListener l) {
-		displayRepaintListener = l;
+		this.displayRepaintListener = l;
 	}
 
 	public void removeDisplayRepaintListener(DisplayRepaintListener l) {
 		if (displayRepaintListener == l) {
-			displayRepaintListener = null;
+			this.displayRepaintListener = null;
 		}
 	}
 

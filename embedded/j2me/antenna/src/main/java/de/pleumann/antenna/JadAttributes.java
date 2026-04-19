@@ -65,7 +65,7 @@ public class JadAttributes extends Task
 	 */
 	public void setClear(String value)
 	{
-		m_clear = value;
+		this.m_clear = value;
 	}
 	
 	/**

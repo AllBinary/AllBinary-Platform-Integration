@@ -25,13 +25,13 @@ public class Define
 	
 	public String toString()
 	{
-		if (m_value !=  null)
+		if (this.m_value !=  null)
 		{
-			return m_key + "=" + this.m_value;
+			return this.m_key + "=" + this.m_value;
 		}
 		else
 		{
-			return m_key;
+			return this.m_key;
 		}
 	}
 	

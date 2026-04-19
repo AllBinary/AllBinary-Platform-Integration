@@ -123,7 +123,7 @@ public int decode(byte[] src, byte[] dest, int offsetDest, int rowSize, int nRow
 			this.bitOffsetDest = 0; 
 		}
 	}
-	return byteOffsetDest - offsetDest;
+	return this.byteOffsetDest - offsetDest;
 }
 
 boolean decodeRow() {

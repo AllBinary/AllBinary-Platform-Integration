@@ -112,7 +112,7 @@ public class PPLine
 
 	public String toString()
 	{
-		return m_type + "[" + this.m_source + "]";
+		return this.m_type + "[" + this.m_source + "]";
 	}
 
 	private String[] getWhites(String s)

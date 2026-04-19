@@ -100,11 +100,11 @@ public class JadAttributes extends Task
 			
 			if (m_fileName == null) // file is null, we need key and value
 			{
-				if (m_key == null)
+				if (this.m_key == null)
 				{
 					throw new BuildException("Missing key name");
 				}
-				if (m_value == null)
+				if (this.m_value == null)
 				{
 					throw new BuildException("Missing value name");
 				}

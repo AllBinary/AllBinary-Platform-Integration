@@ -157,13 +157,13 @@ public class Literal {
     public String toString() {
         switch (m_type) {
         case STRING:
-            return "\"" + m_value + "\"";
+            return "\"" + this.m_value + "\"";
         case NUMBER:
         case BOOLEAN:
         case SYMBOL:
         case DEBUG_LEVEL:
         default:
-            return m_value;
+            return this.m_value;
 
         }
     }
@@ -205,7 +205,7 @@ public class Literal {
      * @return the Literal value
      */
     public String getValue() {
-        return m_value;
+        return this.m_value;
     }
 
     /**

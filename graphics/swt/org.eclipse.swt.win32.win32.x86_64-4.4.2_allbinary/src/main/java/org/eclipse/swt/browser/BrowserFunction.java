@@ -250,6 +250,6 @@ public String getName () {
  * and <code>false</code> otherwise
  */
 public boolean isDisposed () {
-	return index < 0;
+	return this.index < 0;
 }
 }

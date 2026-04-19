@@ -67,13 +67,13 @@ public class Literal
 		switch (m_type)
 		{
 			case STRING:
-				return "\""+m_value+"\"";
+				return "\""+this.m_value+"\"";
 			case NUMBER:
 			case BOOLEAN:
 			case SYMBOL:
 			case DEBUG_LEVEL:
 			default:
-				return m_value;
+				return this.m_value;
 			
 		}
 	}
@@ -100,7 +100,7 @@ public class Literal
 	
 	public String getValue()
 	{
-		return m_value;
+		return this.m_value;
 	}
 	
 	public boolean isDebugLevel()

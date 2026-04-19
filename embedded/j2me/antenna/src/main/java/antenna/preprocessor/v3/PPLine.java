@@ -151,7 +151,7 @@ public class PPLine {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return m_type + "[" + this.m_source + "]";
+        return this.m_type + "[" + this.m_source + "]";
     }
 
     /**

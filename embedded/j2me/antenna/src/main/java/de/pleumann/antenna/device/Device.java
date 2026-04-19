@@ -52,7 +52,7 @@ public class Device extends Task
 			throw new BuildException("op property is not set");
 		}
 		
-		if (m_key == null)
+		if (this.m_key == null)
 		{
 			throw new BuildException("key property not set");
 		}

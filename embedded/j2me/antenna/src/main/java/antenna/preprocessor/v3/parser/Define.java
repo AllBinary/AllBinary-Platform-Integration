@@ -104,10 +104,10 @@ public class Define {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        if (m_value != null) {
-            return m_key + "=" + this.m_value;
+        if (this.m_value != null) {
+            return this.m_key + "=" + this.m_value;
         } else {
-            return m_key;
+            return this.m_key;
         }
     }
 

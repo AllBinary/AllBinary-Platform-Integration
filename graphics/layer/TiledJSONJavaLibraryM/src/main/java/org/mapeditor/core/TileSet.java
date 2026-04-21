@@ -40,6 +40,7 @@ import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 //import org.mapeditor.util.TransparentImageFilter;
 
@@ -73,7 +74,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      */
     public TileSet() {
         super();
-        this.internalTiles = new BasicArrayList();
+        this.internalTiles = new BasicArrayListD();
         this.tiles = new Hashtable();
     }
 

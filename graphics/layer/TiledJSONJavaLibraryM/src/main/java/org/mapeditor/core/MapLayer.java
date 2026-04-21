@@ -170,7 +170,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public Rectangle getBounds() {
 
-        return new Rectangle(x == null && y == null ? PointFactory.getInstance().ZERO_ZERO : PointFactory.getInstance().getInstance(x, y), width, height);
+        return new Rectangle(x == null && y == null ? PointFactory.getInstance().ZERO_ZERO : PointFactory.getInstance().getInstance0(x, y), width, height);
     }
 
     /**
@@ -179,7 +179,7 @@ public class MapLayer extends LayerData implements Cloneable {
      * @param rect the rectangle to which the layer bounds are assigned
      */
     public void getBounds(Rectangle rect) {
-        rect.setPoint(PointFactory.getInstance().getInstance(this.x, this.y));
+        rect.setPoint(PointFactory.getInstance().getInstance0(this.x, this.y));
         rect.setWidth(this.width);
         rect.setHeight(this.height);
     }

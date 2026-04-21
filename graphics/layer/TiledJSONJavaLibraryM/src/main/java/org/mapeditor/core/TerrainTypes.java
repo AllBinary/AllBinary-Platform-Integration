@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * This element defines an array of terrain types, which can be<br>
@@ -57,7 +58,7 @@ public class TerrainTypes {
     
     public BasicArrayList getTerrain() {
         if (this.terrain == null) {
-            this.terrain = new BasicArrayList();
+            this.terrain = new BasicArrayListD();
         }
         return this.terrain;
     }

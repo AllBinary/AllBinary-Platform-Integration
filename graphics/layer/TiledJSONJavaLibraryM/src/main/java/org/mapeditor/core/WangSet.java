@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * Defines a list of corner colors and a list of edge colors, and<br>
@@ -79,7 +80,7 @@ public class WangSet {
     
     public BasicArrayList getWangcornercolor() {
         if (this.wangcornercolor == null) {
-            this.wangcornercolor = new BasicArrayList();
+            this.wangcornercolor = new BasicArrayListD();
         }
         return this.wangcornercolor;
     }
@@ -90,7 +91,7 @@ public class WangSet {
     
     public BasicArrayList getWangedgecolor() {
         if (this.wangedgecolor == null) {
-            this.wangedgecolor = new BasicArrayList();
+            this.wangedgecolor = new BasicArrayListD();
         }
         return this.wangedgecolor;
     }
@@ -101,7 +102,7 @@ public class WangSet {
     
     public BasicArrayList getWangtile() {
         if (this.wangtile == null) {
-            this.wangtile = new BasicArrayList();
+            this.wangtile = new BasicArrayListD();
         }
         return this.wangtile;
     }

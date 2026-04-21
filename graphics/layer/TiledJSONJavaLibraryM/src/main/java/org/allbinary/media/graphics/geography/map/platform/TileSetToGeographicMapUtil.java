@@ -20,6 +20,7 @@ import org.allbinary.string.CommonSeps;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 import org.mapeditor.core.ObjectGroupData;
 import org.mapeditor.core.Tile;
 import org.mapeditor.core.TileSet;
@@ -87,7 +88,7 @@ public class TileSetToGeographicMapUtil {
 
         BasicArrayList idsWithTypeList = (BasicArrayList) map.get(name);
         if (idsWithTypeList == null) {
-            idsWithTypeList = new BasicArrayList();
+            idsWithTypeList = new BasicArrayListD();
             idsWithTypeList.add(id);
             map.put(name, idsWithTypeList);
         } else {

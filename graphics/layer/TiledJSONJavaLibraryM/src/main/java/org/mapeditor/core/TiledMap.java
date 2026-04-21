@@ -108,7 +108,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return a new rectangle containing the maximum bounds of this plane
      */
     public Rectangle getBounds() {
-        return new Rectangle(PointFactory.getInstance().getInstance(width, height), 0, 0);
+        return new Rectangle(PointFactory.getInstance().getInstance0(width, height), 0, 0);
     }
 
     /**

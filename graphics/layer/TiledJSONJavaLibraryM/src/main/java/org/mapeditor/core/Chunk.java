@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 
 /**
@@ -83,7 +84,7 @@ public class Chunk {
     
     public BasicArrayList getTile() {
         if (this.tile == null) {
-            this.tile = new BasicArrayList();
+            this.tile = new BasicArrayListD();
         }
         return this.tile;
     }

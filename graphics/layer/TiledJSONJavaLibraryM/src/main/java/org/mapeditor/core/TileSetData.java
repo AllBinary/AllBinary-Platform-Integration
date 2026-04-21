@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * If there are multiple `tileset` elements, they are in ascending<br>
@@ -291,7 +292,7 @@ public class TileSetData {
     
     public BasicArrayList getInternalTiles() {
         if (this.internalTiles == null) {
-            this.internalTiles = new BasicArrayList();
+            this.internalTiles = new BasicArrayListD();
         }
         return this.internalTiles;
     }

@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * 
@@ -162,7 +163,7 @@ public class TileData {
     
     public BasicArrayList getObjectgroup() {
         if (this.objectgroup == null) {
-            this.objectgroup = new BasicArrayList();
+            this.objectgroup = new BasicArrayListD();
         }
         return this.objectgroup;
     }

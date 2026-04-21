@@ -44,6 +44,7 @@ import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.logic.util.event.AllBinaryEventObject;
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 public class GDForm extends GDFormInput
 {
@@ -54,7 +55,7 @@ public class GDForm extends GDFormInput
     private final CommonStrings commonStrings = CommonStrings.getInstance();
     private final GameInputStrings gameInputStrings = GameInputStrings.getInstance();
     
-    private final BasicArrayList list = new BasicArrayList();
+    private final BasicArrayList list = new BasicArrayListD();
 
     private int focusItemIndex;
     private GDGameLayerItemStateListener itemStateListener = null;

@@ -37,6 +37,7 @@ import org.allbinary.graphics.Rectangle;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonSeps;
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * Sprite class.
@@ -153,7 +154,7 @@ public class Sprite {
      */
     public Sprite() {
         frameSize = new Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0);
-        this.keys = new BasicArrayList();
+        this.keys = new BasicArrayListD();
     }
 
     /**
@@ -526,7 +527,7 @@ public class Sprite {
             x = ((int) this.currentFrame % this.fpl) * (this.frameSize.getWidth() + this.borderWidth);
         }
 
-        return new Rectangle(PointFactory.getInstance().getInstance(x, y), frameSize.getWidth(), frameSize.getHeight());
+        return new Rectangle(PointFactory.getInstance().getInstance0(x, y), frameSize.getWidth(), frameSize.getHeight());
     }
 
     /** {@inheritDoc} */

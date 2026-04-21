@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 
 /**
@@ -74,7 +75,7 @@ public class ObjectGroupData
     
     public BasicArrayList getObjects() {
         if (this.objects == null) {
-            this.objects = new BasicArrayList();
+            this.objects = new BasicArrayListD();
         }
         return this.objects;
     }

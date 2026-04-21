@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * Contains the list of Wang sets defined for this tileset.
@@ -56,7 +57,7 @@ public class WangSets {
     
     public BasicArrayList getWangset() {
         if (this.wangset == null) {
-            this.wangset = new BasicArrayList();
+            this.wangset = new BasicArrayListD();
         }
         return this.wangset;
     }

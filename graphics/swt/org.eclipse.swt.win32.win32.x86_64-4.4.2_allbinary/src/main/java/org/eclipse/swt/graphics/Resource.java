@@ -12,6 +12,7 @@ package org.eclipse.swt.graphics;
 
 //import org.allbinary.logic.communication.log.ForcedLogUtil;
 //import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 import org.eclipse.swt.*;
 
 /**
@@ -44,7 +45,7 @@ public abstract class Resource {
 	 */
 	Device device;
 
-//        private static BasicArrayList list = new BasicArrayList();
+//        private static BasicArrayList list = new BasicArrayListD();
 //        static {
 //            final int size = 10000;
 //            for(int index = 0; index < size; index++) {

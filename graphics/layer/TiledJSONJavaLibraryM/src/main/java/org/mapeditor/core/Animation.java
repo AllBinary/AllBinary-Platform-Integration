@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * Contains a list of animation frames.<br>
@@ -61,7 +62,7 @@ public class Animation {
     
     public BasicArrayList getFrame() {
         if (frame == null) {
-            frame = new BasicArrayList();
+            frame = new BasicArrayListD();
         }
         return this.frame;
     }

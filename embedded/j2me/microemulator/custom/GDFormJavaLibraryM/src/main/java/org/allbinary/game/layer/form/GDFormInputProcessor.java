@@ -20,6 +20,7 @@ import org.allbinary.input.motion.gesture.observer.MovedMotionGesturesHandler;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  *
@@ -48,7 +49,7 @@ public class GDFormInputProcessor
     private final BasicMotionGesturesHandler basicMotionGesturesHandler = BasicMotionGesturesHandler.getInstance();
     private final MovedMotionGesturesHandler movedMotionGesturesHandler = MovedMotionGesturesHandler.getInstance();
     
-    private final BasicArrayList sceneFormInputListenerList = new BasicArrayList();
+    private final BasicArrayList sceneFormInputListenerList = new BasicArrayListD();
 
     private final PlatformFormInputProcessor platformFormInputProcessor;
     

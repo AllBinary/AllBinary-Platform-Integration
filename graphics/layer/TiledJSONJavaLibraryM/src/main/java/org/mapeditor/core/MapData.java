@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * The `tilewidth` and `tileheight` properties determine the<br>
@@ -199,7 +200,7 @@ public class MapData {
      */
     public BasicArrayList getTileSets() {
         if (this.tileSets == null) {
-            this.tileSets = new BasicArrayList();
+            this.tileSets = new BasicArrayListD();
         }
         return this.tileSets;
     }
@@ -209,7 +210,7 @@ public class MapData {
      */
     public BasicArrayList getLayers() {
         if (this.layers == null) {
-            this.layers = new BasicArrayList();
+            this.layers = new BasicArrayListD();
         }
         return this.layers;
     }

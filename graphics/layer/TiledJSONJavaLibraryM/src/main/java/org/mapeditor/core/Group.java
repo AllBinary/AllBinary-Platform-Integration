@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 
 /**
@@ -60,7 +61,7 @@ public class Group
     
     public BasicArrayList getLayers() {
         if (this.layers == null) {
-            this.layers = new BasicArrayList();
+            this.layers = new BasicArrayListD();
         }
         return this.layers;
     }

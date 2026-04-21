@@ -37,6 +37,7 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * Wraps any number of custom properties. Can be used as a child of<br>
@@ -60,7 +61,7 @@ public class PropertiesData {
     
     public BasicArrayList getProperties() {
         if (this.properties == null) {
-            this.properties = new BasicArrayList();
+            this.properties = new BasicArrayListD();
         }
         return this.properties;
     }

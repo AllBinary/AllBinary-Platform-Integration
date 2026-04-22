@@ -101,11 +101,11 @@ public class XmlRpcClientLite extends XmlRpcClient
     /**
      * Construct a XML-RPC client for the specified hostname and port.
      */
-    public XmlRpcClientLite (String hostname, int port)
-            throws MalformedURLException
-    {
-        super (hostname, port);
-    }
+//    public XmlRpcClientLite (String hostname, int port)
+//            throws MalformedURLException
+//    {
+//        super (hostname, port);
+//    }
 
     /**
      *

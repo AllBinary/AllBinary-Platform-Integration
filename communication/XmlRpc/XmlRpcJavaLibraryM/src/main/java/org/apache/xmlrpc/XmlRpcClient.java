@@ -121,10 +121,10 @@ public class XmlRpcClient implements XmlRpcHandler
     /**
      * Construct a XML-RPC client for the specified hostname and port.
      */
-    public XmlRpcClient(String hostname, int port) throws MalformedURLException
-    {
-        this(new URL("http://" + hostname + ':' + port + "/RPC2"));
-    }
+//    public XmlRpcClient(String hostname, int port) throws MalformedURLException
+//    {
+//        this(new URL("http://" + hostname + ':' + port + "/RPC2"));
+//    }
 
     /**
      * Return the URL for this XML-RPC client.

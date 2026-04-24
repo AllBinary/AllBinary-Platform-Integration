@@ -37,27 +37,19 @@ public class CustomForm extends CustomScreen
 	private CustomItemStateListener itemStateListener = CustomItemState.NULL_CUSTOM_ITEM_STATE;
 	private int selectedIndex;
 
-	public CustomForm(String title, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) 
-	{
-		super(title, backgroundBasicColor, foregroundBasicColor);
-		
-		this.setSelectedIndex(-1);
-	}
-
     public CustomForm(String title, CustomItem[] items, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) 
     {
-        this(title, backgroundBasicColor, foregroundBasicColor);
+        super(title, backgroundBasicColor, foregroundBasicColor);
 
-        if (items != null) 
-        {
-            this.items = new CustomItem[items.length];
-            System.arraycopy(items, 0, this.items, 0, items.length);
-            this.numOfItems = this.items.length;
-            for (int i = 0; i < this.numOfItems; i++) 
-            {
-                verifyItem(this.items[i]);
-            }
-        }
+		this.items = new CustomItem[items.length];
+		System.arraycopy(items, 0, this.items, 0, items.length);
+		this.numOfItems = this.items.length;
+		for (int i = 0; i < this.numOfItems; i++)
+		{
+			verifyItem(this.items[i]);
+		}
+
+		this.setSelectedIndex(-1);
     }
 
     public void processInput(AllBinaryLayerManager layerManager) throws Exception

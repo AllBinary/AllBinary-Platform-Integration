@@ -11,12 +11,6 @@ import org.allbinary.graphics.color.BasicColor;
 
 public class CustomForm extends org.microemu.graphics.form.CustomForm
 {
-    public CustomForm(String title, BasicColor backgroundBasicColor,
-            BasicColor foregroundBasicColor)
-    {
-        super(title, backgroundBasicColor, foregroundBasicColor);
-    }
-
     public CustomForm(String title, CustomItem[] items,
             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {

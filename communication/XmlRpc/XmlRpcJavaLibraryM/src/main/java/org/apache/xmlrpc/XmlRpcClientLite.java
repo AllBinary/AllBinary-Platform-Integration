@@ -85,10 +85,10 @@ public class XmlRpcClientLite extends XmlRpcClient
     /**
      * Construct a XML-RPC client with this URL.
      */
-    public XmlRpcClientLite (URL url)
-    {
-        super (url);
-    }
+//    public XmlRpcClientLite (URL url)
+//    {
+//        super (url);
+//    }
 
     /**
      * Construct a XML-RPC client for the URL represented by this String.

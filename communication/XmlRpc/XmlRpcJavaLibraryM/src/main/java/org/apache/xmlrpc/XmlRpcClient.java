@@ -101,21 +101,26 @@ public class XmlRpcClient implements XmlRpcHandler
     /**
      * Construct a XML-RPC client with this URL.
      */
-    public XmlRpcClient(URL url)
-    {
-        this.url = url;
-        if (XmlRpc.debug)
-        {
-            System.out.println("XmlRpcClient - Created client to url space " + url);
-        }
-    }
+//    public XmlRpcClient(URL url)
+//    {
+//        this.url = url;
+//        if (XmlRpc.debug)
+//        {
+//            System.out.println("XmlRpcClient - Created client to url space " + url);
+//        }
+//    }
 
     /**
      * Construct a XML-RPC client for the URL represented by this String.
      */
     public XmlRpcClient(String url) throws MalformedURLException
     {
-        this(new URL(url));
+//        this(new URL(url));
+        this.url = new URL(url);
+        if (XmlRpc.debug) {
+            System.out.println("XmlRpcClient - Created client to url space " + url);
+        }
+
     }
 
     /**

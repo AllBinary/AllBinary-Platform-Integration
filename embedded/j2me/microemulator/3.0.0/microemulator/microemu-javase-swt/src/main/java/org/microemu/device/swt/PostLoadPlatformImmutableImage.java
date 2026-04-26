@@ -23,7 +23,7 @@ public class PostLoadPlatformImmutableImage extends PostLoadSwtPlatformImage {
     private int width = -1;
     
     @Override
-    public int getWidth(final Object image, final int width) {
+    public int getSurfaceWidth(final Object image, final int width) {
         
         if(this.width == -1) {
             this.width = ((org.eclipse.swt.graphics.Image) image).getBounds().width;
@@ -33,7 +33,7 @@ public class PostLoadPlatformImmutableImage extends PostLoadSwtPlatformImage {
     }
 
     @Override
-    public int getHeight(final Object image, final int height) {
+    public int getSurfaceHeight(final Object image, final int height) {
         
         if(this.height == -1) {
             this.height = ((org.eclipse.swt.graphics.Image) image).getBounds().height;

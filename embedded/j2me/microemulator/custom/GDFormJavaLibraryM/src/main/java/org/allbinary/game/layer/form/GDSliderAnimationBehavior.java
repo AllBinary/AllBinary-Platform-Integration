@@ -26,7 +26,6 @@ import org.allbinary.input.motion.gesture.MotionGestureInput;
 import org.allbinary.input.motion.gesture.observer.MotionGestureEvent;
 
 import org.allbinary.logic.communication.log.LogUtil;
-import org.allbinary.string.CommonStrings;
 import org.allbinary.math.RectangleCollisionUtil;
 
 /**
@@ -119,7 +118,7 @@ implements GDGameLayerItemStateListener {
     public void keyPressed(final int keyCode) {
 
         final PlatformKeyFactory platformKeyFactory = PlatformKeyFactory.getInstance();
-        final Input input = this.inputFactory.getInstance(keyCode);
+        final Input input = this.inputFactory.getInstanceById(keyCode);
         
         if(platformKeyFactory.isLeft(input)) {
             this.setValue(((SliderAnimation) this.animationArray[0]).getValue() - 1);

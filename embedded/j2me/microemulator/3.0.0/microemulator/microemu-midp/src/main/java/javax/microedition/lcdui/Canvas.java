@@ -192,7 +192,7 @@ public class Canvas extends Displayable
                 */
                 
     		if (currentDisplay != null) {
-                    ScreenListenerHandler.getInstance().fire(mode);
+                    ScreenListenerHandler.getInstance().fireWithState(mode);
                     sizeChanged(currentDisplay);
     		}
     	}

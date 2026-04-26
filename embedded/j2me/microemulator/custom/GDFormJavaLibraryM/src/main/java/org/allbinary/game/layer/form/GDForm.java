@@ -144,7 +144,7 @@ public class GDForm extends GDFormInput
     }
 
     public void delete(int itemNum) {
-        GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.remove(itemNum);
+        GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.removeAt(itemNum);
     }
 
     public void deleteAll() {
@@ -166,14 +166,14 @@ public class GDForm extends GDFormInput
     }
 
     public void insert(int itemNum, GDGameLayer gameLayerAsItem) {
-        list.add(itemNum, gameLayerAsItem);
+        list.addAt(itemNum, gameLayerAsItem);
 
     }
 
     public void set(int itemNum, GDGameLayer gameLayerAsItem) {
         GDGameLayer currentItem = (GDGameLayer) this.list.objectArray[itemNum];
 
-        this.list.add(itemNum, gameLayerAsItem);
+        this.list.addAt(itemNum, gameLayerAsItem);
     }
 
     public void setItemStateListener(GDGameLayerItemStateListener iListener) {
@@ -251,7 +251,7 @@ public class GDForm extends GDFormInput
             final GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[this.focusItemIndex];
 
             final PlatformKeyFactory platformKeyFactory = PlatformKeyFactory.getInstance();
-            final Input input = this.inputFactory.getInstance(keyCode);
+            final Input input = this.inputFactory.getInstanceById(keyCode);
             final String name = platformKeyFactory.getString(keyCode);
 
             boolean traverse = false;

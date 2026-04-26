@@ -76,12 +76,12 @@ public class J2SEMutableImage extends MutableImage
         
 	public int getHeight()
 	{
-            return this.platformImage.getHeight(this.graphicsSurface, 0);
+            return this.platformImage.getSurfaceHeight(this.graphicsSurface, 0);
 	}
 
 	public int getWidth()
 	{
-            return this.platformImage.getWidth(this.graphicsSurface, 0);
+            return this.platformImage.getSurfaceWidth(this.graphicsSurface, 0);
 	}
 
         public int[] getData() {

@@ -50,14 +50,14 @@ public class PostLoadPlatformMutableImage extends PostLoadJ2SEPlatformImage {
 	}
 
         @Override
-	public int getWidth(final Object graphicsSurface, final int width) {
+	public int getSurfaceWidth(final Object graphicsSurface, final int width) {
             
             //logUtil.putF("((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth()" + ((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth(), this, "((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth()");
 		return ((J2SEGraphicsSurface) graphicsSurface).getImage().getWidth();
 	}
 
         @Override
-	public int getHeight(final Object graphicsSurface, final int height) {
+	public int getSurfaceHeight(final Object graphicsSurface, final int height) {
             
             //logUtil.putF("((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight()" + ((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight(), this, "((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight()");
 		return ((J2SEGraphicsSurface) graphicsSurface).getImage().getHeight();

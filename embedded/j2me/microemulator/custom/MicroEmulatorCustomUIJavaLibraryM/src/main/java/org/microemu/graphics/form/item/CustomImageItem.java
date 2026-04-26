@@ -47,7 +47,7 @@ public class CustomImageItem
             throw new Exception("Image: " + image);
         }
 
-        this.max = image.getWidth() / MyFont.getInstance().charWidth();
+        this.max = image.getWidth() / MyFont.getInstance().defaultCharWidth();
 
         final String labelSet = this.getLabel();
         if (this.max > labelSet.length()) {

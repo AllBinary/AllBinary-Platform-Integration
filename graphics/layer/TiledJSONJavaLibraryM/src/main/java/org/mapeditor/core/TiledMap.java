@@ -108,7 +108,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return a new rectangle containing the maximum bounds of this plane
      */
     public Rectangle getBounds() {
-        return new Rectangle(PointFactory.getInstance().getInstance0(width, height), 0, 0);
+        return new Rectangle(PointFactory.getInstance().createXY(width, height), 0, 0);
     }
 
     /**
@@ -142,7 +142,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public void insertLayer(int index, TileLayer layer) {
         layer.setMap(this);
-        getLayers().add(index, layer);
+        getLayers().addAt(index, layer);
     }
 
     /**
@@ -153,7 +153,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return the layer that was removed from the list
      */
     public MapLayer removeLayer(int index) {
-        return (MapLayer) getLayers().remove(index);
+        return (MapLayer) getLayers().removeAt(index);
     }
 
     /**

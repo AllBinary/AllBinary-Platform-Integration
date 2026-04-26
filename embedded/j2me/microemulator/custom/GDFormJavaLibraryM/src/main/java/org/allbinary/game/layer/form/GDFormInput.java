@@ -53,7 +53,7 @@ public class GDFormInput
         
     }
     
-    public void onDownKeyEvent(final Integer keyInteger) throws Exception {
+    public void onDownKey(final Integer keyInteger) throws Exception {
         
     }
     

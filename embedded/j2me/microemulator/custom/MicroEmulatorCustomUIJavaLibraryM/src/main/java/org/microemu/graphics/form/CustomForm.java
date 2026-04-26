@@ -289,7 +289,7 @@ public class CustomForm extends CustomScreen
 
             //PreLogUtil.put(commonStrings.START + gameKey, this, gameInputStrings.KEY_PRESSED);
             
-            Input input = this.inputFactory.getInstance(keyCode);
+            Input input = this.inputFactory.getInstanceById(keyCode);
             PlatformKeyFactory platformKeyFactory = PlatformKeyFactory.getInstance();
             
             if(platformKeyFactory.isEnter(input))

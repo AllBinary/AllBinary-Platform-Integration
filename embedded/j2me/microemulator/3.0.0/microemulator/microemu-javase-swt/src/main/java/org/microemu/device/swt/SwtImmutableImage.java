@@ -87,14 +87,14 @@ public class SwtImmutableImage extends javax.microedition.lcdui.Image {
 //        final int aWidth = this.platformImage.getWidth(this.image, this.width);
 //        System.out.println(this.getName() + "2width: " + aWidth);
 //        return aWidth;
-          return this.platformImage.getWidth(this.image, this.width);
+          return this.platformImage.getSurfaceWidth(this.image, this.width);
     }
 
     public int getHeight() {
 //        final int aHeight = this.platformImage.getHeight(this.image, this.height);
 //        System.out.println(this.getName() + "2height: " + aHeight);
 //        return aHeight;
-          return this.platformImage.getHeight(this.image, this.height);
+          return this.platformImage.getSurfaceHeight(this.image, this.height);
     }
     
     private int depth;

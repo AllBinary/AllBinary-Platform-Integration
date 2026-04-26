@@ -28,8 +28,6 @@ import javax.microedition.lcdui.PostLoadImageProcessor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.ImageData;
 
-import org.allbinary.string.CommonStrings;
-
 import org.microemu.app.ui.swt.SwtDeviceComponent;
 import org.microemu.device.MutableImage;
 
@@ -142,11 +140,11 @@ public class SwtMutableImage extends MutableImage {
     }
 
     public int getWidth() {
-        return this.platformImage.getWidth(this.image, 0);
+        return this.platformImage.getSurfaceWidth(this.image, 0);
     }
 
     public int getHeight() {
-        return this.platformImage.getHeight(this.image, 0);
+        return this.platformImage.getSurfaceHeight(this.image, 0);
     }
 
     public int[] getData() {

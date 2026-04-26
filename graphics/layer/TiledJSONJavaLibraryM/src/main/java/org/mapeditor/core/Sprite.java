@@ -527,7 +527,7 @@ public class Sprite {
             x = ((int) this.currentFrame % this.fpl) * (this.frameSize.getWidth() + this.borderWidth);
         }
 
-        return new Rectangle(PointFactory.getInstance().getInstance0(x, y), frameSize.getWidth(), frameSize.getHeight());
+        return new Rectangle(PointFactory.getInstance().createXY(x, y), frameSize.getWidth(), frameSize.getHeight());
     }
 
     /** {@inheritDoc} */

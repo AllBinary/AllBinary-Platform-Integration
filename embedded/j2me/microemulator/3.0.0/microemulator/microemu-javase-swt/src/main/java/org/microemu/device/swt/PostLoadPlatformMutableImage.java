@@ -28,12 +28,12 @@ public class PostLoadPlatformMutableImage extends PostLoadSwtPlatformImage {
     }
 
     @Override
-    public int getWidth(final Object image, final int width) {
+    public int getSurfaceWidth(final Object image, final int width) {
         return ((org.eclipse.swt.graphics.Image) image).getBounds().width;
     }
 
     @Override
-    public int getHeight(final Object image, final int height) {
+    public int getSurfaceHeight(final Object image, final int height) {
         return ((org.eclipse.swt.graphics.Image) image).getBounds().height;
     }
 

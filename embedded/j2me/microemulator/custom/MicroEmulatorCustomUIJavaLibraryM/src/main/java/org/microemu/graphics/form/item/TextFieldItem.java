@@ -152,7 +152,7 @@ public class TextFieldItem extends TextItem
         graphics.setColor(this.stringComponent.getBackgroundBasicColor().intValue());
         
         graphics.fillRect(x, y + height,
-                myFont.stringWidth(this.maxSize) * this.stringComponent.getFont().getSize() / defaultSize,
+                myFont.defaultStringWidth(this.maxSize) * this.stringComponent.getFont().getSize() / defaultSize,
                 //owner.getWidth() - 3, 
                 stringComponent.getHeight());
 
@@ -170,13 +170,13 @@ public class TextFieldItem extends TextItem
             //final int caretHeight = y_pos + height + (AndroidUtil.isAndroid() ? stringComponent.getHeight() * 2 : stringComponent.getHeight());
             final int caretHeight = this.stringComponent.getHeight();
             
-            if(this.timeDelayHelper.isTime()) {
+            if(this.timeDelayHelper.isTimeTNT()) {
                 this.hide = true;
-                this.timeDelayHelper2.setStartTime();
+                this.timeDelayHelper2.setStartTimeTNT();
             }
 
             if(this.hide) { 
-                if(this.timeDelayHelper2.isTime()) {
+                if(this.timeDelayHelper2.isTimeTNT()) {
                     this.hide = false;
                 }
             } else {

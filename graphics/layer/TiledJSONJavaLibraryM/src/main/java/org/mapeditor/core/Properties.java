@@ -123,7 +123,7 @@ public class Properties extends PropertiesData implements Cloneable {
      * @param props a {@link org.mapeditor.core.Properties} object.
      */
     public void putAll(Properties props) {
-        properties.addAll(props.getProperties());
+        properties.addAllList(props.getProperties());
     }
 
     /** {@inheritDoc} */

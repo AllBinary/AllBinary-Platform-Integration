@@ -202,18 +202,6 @@ public class Displayable
 	public void keyReleased(int keyCode)
 	{
 	}
-
-    public void keyPressed(int keyCode, int deviceId)
-    {
-    }
-
-    public void keyRepeated(int keyCode, int deviceId)
-    {
-    }
-
-    public void keyReleased(int keyCode, int deviceId)
-    {
-    }
     
 	void pointerPressed(int x, int y) 
 	{

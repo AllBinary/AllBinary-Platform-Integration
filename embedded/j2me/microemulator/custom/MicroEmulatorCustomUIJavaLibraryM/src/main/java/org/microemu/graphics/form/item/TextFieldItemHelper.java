@@ -64,7 +64,7 @@ public class TextFieldItemHelper
                 = PlatformKeyFactory.getInstance();
             final StringUtil stringUtil = StringUtil.getInstance();
 
-            final Input input = this.inputFactory.getInstance(keyCode);
+            final Input input = this.inputFactory.getInstanceById(keyCode);
             final String name = platformKeyFactory.getString(keyCode);
 
             PreLogUtil.put(new StringMaker().append("Input: ").append(stringUtil.toString(input)).append(" Name: ").append(name).toString(), this, gameInputStrings.KEY_PRESSED);

@@ -58,6 +58,7 @@
 
     <modules>
         <module>api</module>
+        <module>microemu-javase/microemu-javase-null</module>
         <module>microemu-cldc</module>
         <module>microemu-midp</module>
         <module>microemu-injected</module>

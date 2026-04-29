@@ -77,7 +77,7 @@ public class J2SEImmutableImage extends javax.microedition.lcdui.Image {
     
     //java.awt.Image
     public Object getImage() {
-        return img;
+        return this.img;
     }
 
     public int getWidth() {

@@ -82,7 +82,7 @@ public class Displayable
   
 
 	public void addCommand(Command cmd) {
-		ui.addCommandUI(cmd.ui);
+		this.ui.addCommandUI(cmd.ui);
 	}
 
 
@@ -97,20 +97,20 @@ public class Displayable
     public int getWidth()
     {
     	if (this.width == -1) {
-    		updateWidthAndHeight();
+    		this.updateWidthAndHeight();
     	}
     	
-    	return width;
+    	return this.width;
     }
 
 
     public int getHeight()
     {
     	if (this.height == -1) {
-    		updateWidthAndHeight();
+    		this.updateWidthAndHeight();
     	}
     	
-    	return height;
+    	return this.height;
     }
 
 
@@ -119,13 +119,13 @@ public class Displayable
 		if (this.currentDisplay == null) {
 			return false;
 		}
-		return currentDisplay.isShown(this);
+		return this.currentDisplay.isShown(this);
 	}
 
     
     public Ticker getTicker() 
     {
-        return ticker;
+        return this.ticker;
     }
 
     
@@ -133,13 +133,13 @@ public class Displayable
     {
         this.ticker = ticker;
 
-        repaint();
+        this.repaint();
     }
 
     
     public String getTitle() 
     {
-        return title;
+        return this.title;
     }
 
     
@@ -162,7 +162,7 @@ public class Displayable
 	
 	public CommandListener getCommandListener()
 	{
-		return listener;
+		return this.listener;
 	}
 
 
@@ -188,7 +188,7 @@ public class Displayable
 	{		
 		this.ui.hideNotify();
 
-		hideNotify();
+		this.hideNotify();
 	}
 
 	public void keyPressed(int keyCode)
@@ -260,7 +260,7 @@ public class Displayable
         //public void repaint()
 	void repaint()
 	{
-            repaint(0, 0, getWidth(), getHeight());
+            this.repaint(0, 0, getWidth(), getHeight());
 	}
 
         //Added public
@@ -280,8 +280,8 @@ public class Displayable
 
 	final void sizeChanged(Display d)
 	{
-		updateWidthAndHeight();
-		sizeChanged(this.width, height);
+		this.updateWidthAndHeight();
+		this.sizeChanged(this.width, height);
 	}
 	
 	
@@ -296,7 +296,7 @@ public class Displayable
         this.viewPortY = 0;
         // TODO remove this StringComponent object when native UI is completed
         StringComponent title = new StringComponent(getTitle());
-        this.viewPortHeight = getHeight() - title.getHeight() - 1;
+        this.viewPortHeight = this.getHeight() - title.getHeight() - 1;
         if (this.ticker != null) {
         		this.viewPortHeight -= this.ticker.getHeight();
         }
@@ -315,10 +315,10 @@ public class Displayable
     	}
    	
         if (this.width != w || this.height != h) {
-        	sizeChanged(d);
+        	this.sizeChanged(d);
         }
 		
-		showNotify();
+		this.showNotify();
 
 		this.ui.showNotify();
 	}
@@ -344,7 +344,7 @@ public class Displayable
 
     public boolean isFullScreenMode()
     {
-        return fullScreenMode;
+        return this.fullScreenMode;
     }
     
     public void translate(final int x, final int y) {

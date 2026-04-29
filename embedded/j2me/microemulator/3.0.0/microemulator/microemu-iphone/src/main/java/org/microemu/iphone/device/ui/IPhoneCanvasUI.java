@@ -93,7 +93,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 //			Runtime.msgSend(keyboardHandler, UITextInputTraits.class, "setKeyboardType:", 5);
 //			System.out.println("CanvasView.initWithFrame$(2)");
 			
-			((NSNotificationCenter)NSNotificationCenter.$defaultCenter()).addObserver$selector$name$object$(this, new Selector("keyboardHandlerChanged"), "UITextFieldTextDidChangeNotification", keyboardHandler);
+			((NSNotificationCenter)NSNotificationCenter.$defaultCenter()).addObserver$selector$name$object$(this, new Selector("keyboardHandlerChanged"), "UITextFieldTextDidChangeNotification", this.keyboardHandler);
 			addSubview$(keyboardHandler);
 			return view;
 		}
@@ -156,7 +156,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 			NSCFSet touches = (NSCFSet) event.allTouches();
 
 			if (touches.count() > 1) {
-				handleMultiTouch(ma, touches, Touch.BEGIN);
+				this.handleMultiTouch(ma, touches, Touch.BEGIN);
 			} else {
 				UITouch touch = (UITouch) touches.anyObject();
 				// System.out.println(touch);
@@ -181,7 +181,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 			NSCFSet touches = (NSCFSet) event.allTouches();
 
 			if (touches.count() > 1) {
-				handleMultiTouch(ma, touches, Touch.END);
+				this.handleMultiTouch(ma, touches, Touch.END);
 			} else {
 				UITouch touch = (UITouch) touches.anyObject();
 				// System.out.println(touch);
@@ -207,7 +207,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 			NSCFSet touches = (NSCFSet) event.allTouches();
 
 			if (touches.count() > 1) {
-				handleMultiTouch(ma, touches, Touch.DRAG);
+				this.handleMultiTouch(ma, touches, Touch.DRAG);
 			} else {
 				UITouch touch = (UITouch) touches.anyObject();
 				// System.out.println(touch);
@@ -229,7 +229,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 						(touch1.locationInView$(this.view).y + touch2.locationInView$(this.view).y) / 2);
 				if (type == Touch.BEGIN) {
 					this.moveFrom = touchPoint;
-				} else if (type == Touch.END && moveFrom != null) {
+				} else if (type == Touch.END && this.moveFrom != null) {
 					Integer key = null;
 					CGPoint from = this.moveFrom;
 					this.moveFrom = null;
@@ -309,7 +309,7 @@ public class IPhoneCanvasUI extends AbstractUI<Canvas> implements CanvasUI {
 	}
 
 	public UIView getCanvasView() {
-		return canvasView;
+		return this.canvasView;
 	}
 
 }

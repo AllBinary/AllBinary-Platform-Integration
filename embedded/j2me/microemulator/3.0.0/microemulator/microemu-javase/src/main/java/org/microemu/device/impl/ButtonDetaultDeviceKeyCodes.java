@@ -69,8 +69,8 @@ public class ButtonDetaultDeviceKeyCodes {
 
 	public static ButtonName getButtonNameByGameAction(int gameAction) {
 		Integer value = new Integer(gameAction);
-		if (gameActions.containsValue(value)) {
-			for (Iterator iterator = gameActions.entrySet().iterator(); iterator.hasNext();) {
+		if (ButtonDetaultDeviceKeyCodes.gameActions.containsValue(value)) {
+			for (Iterator iterator = ButtonDetaultDeviceKeyCodes.gameActions.entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry v = (Map.Entry) iterator.next();
 				if (v.getValue().equals(value)) {
 					return (ButtonName) v.getKey();
@@ -81,36 +81,36 @@ public class ButtonDetaultDeviceKeyCodes {
 	}
 
 	static {
-		code(ButtonName.SOFT1, -6);
-		code(ButtonName.SOFT2, -7);
-		code(ButtonName.SELECT, -5, Canvas.FIRE);
-		code(ButtonName.UP, -1, Canvas.UP);
-		code(ButtonName.DOWN, -2, Canvas.DOWN);
-		code(ButtonName.LEFT, -3, Canvas.LEFT);
-		code(ButtonName.RIGHT, -4, Canvas.RIGHT);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.SOFT1, -6);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.SOFT2, -7);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.SELECT, -5, Canvas.FIRE);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.UP, -1, Canvas.UP);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.DOWN, -2, Canvas.DOWN);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.LEFT, -3, Canvas.LEFT);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.RIGHT, -4, Canvas.RIGHT);
 
-		code(ButtonName.BACK_SPACE, -8);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.BACK_SPACE, -8);
 
-		code(ButtonName.KEY_NUM0, Canvas.KEY_NUM0);
-		code(ButtonName.KEY_NUM1, Canvas.KEY_NUM1, Canvas.GAME_A);
-		code(ButtonName.KEY_NUM2, Canvas.KEY_NUM2);
-		code(ButtonName.KEY_NUM3, Canvas.KEY_NUM3, Canvas.GAME_B);
-		code(ButtonName.KEY_NUM4, Canvas.KEY_NUM4);
-		code(ButtonName.KEY_NUM5, Canvas.KEY_NUM5);
-		code(ButtonName.KEY_NUM6, Canvas.KEY_NUM6);
-		code(ButtonName.KEY_NUM7, Canvas.KEY_NUM7, Canvas.GAME_C);
-		code(ButtonName.KEY_NUM8, Canvas.KEY_NUM8);
-		code(ButtonName.KEY_NUM9, Canvas.KEY_NUM9, Canvas.GAME_D);
-		code(ButtonName.KEY_STAR, Canvas.KEY_STAR);
-		code(ButtonName.KEY_POUND, Canvas.KEY_POUND);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM0, Canvas.KEY_NUM0);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM1, Canvas.KEY_NUM1, Canvas.GAME_A);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM2, Canvas.KEY_NUM2);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM3, Canvas.KEY_NUM3, Canvas.GAME_B);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM4, Canvas.KEY_NUM4);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM5, Canvas.KEY_NUM5);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM6, Canvas.KEY_NUM6);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM7, Canvas.KEY_NUM7, Canvas.GAME_C);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM8, Canvas.KEY_NUM8);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_NUM9, Canvas.KEY_NUM9, Canvas.GAME_D);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_STAR, Canvas.KEY_STAR);
+		ButtonDetaultDeviceKeyCodes.code(ButtonName.KEY_POUND, Canvas.KEY_POUND);
 	}
 
 	private static void code(ButtonName name, int code) {
-		codes.put(name, new Integer(code));
+		ButtonDetaultDeviceKeyCodes.codes.put(name, new Integer(code));
 	}
 
 	private static void code(ButtonName name, int code, int gameAction) {
-		code(name, code);
-		gameActions.put(name, new Integer(gameAction));
+		ButtonDetaultDeviceKeyCodes.code(name, code);
+		ButtonDetaultDeviceKeyCodes.gameActions.put(name, new Integer(gameAction));
 	}
 }

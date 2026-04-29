@@ -75,7 +75,7 @@ public class SwtGraphics
 
 
         public void setTransform(final Transform transform) {
-            gc.setTransform(transform);
+            this.gc.setTransform(transform);
             this.gc.setAntialias(SWT.ON);
             this.gc.setInterpolation(SWT.HIGH);
         }
@@ -134,7 +134,7 @@ public class SwtGraphics
 
 	public FontMetrics getFontMetrics() 
 	{
-		return gc.getFontMetrics();
+		return this.gc.getFontMetrics();
 	}
 
 
@@ -146,13 +146,13 @@ public class SwtGraphics
 
 	public Color getBackground() 
 	{
-		return gc.getBackground();
+		return this.gc.getBackground();
 	}
 
 
 	public Color getForeground() 
 	{
-		return gc.getForeground();
+		return this.gc.getForeground();
 	}
 
 
@@ -171,7 +171,7 @@ public class SwtGraphics
 
 	public Rectangle getClipping() 
 	{
-		return gc.getClipping();
+		return this.gc.getClipping();
 	}
 
 
@@ -235,13 +235,13 @@ public class SwtGraphics
 
 	public int stringWidth(String string) 
 	{
-		return gc.stringExtent(string).x;
+		return this.gc.stringExtent(string).x;
 	}
 
 
 	public Font getFont() 
 	{
-		return gc.getFont();
+		return this.gc.getFont();
 	}
 
 

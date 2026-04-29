@@ -73,27 +73,27 @@ public class Command {
 	}
 
 	public int getCommandType() {
-		return commandType;
+		return this.commandType;
 	}
 
 	public String getLabel() {
-		return label;
+		return this.label;
 	}
 
 	public String getLongLabel() {
 		// TODO implement;
-		return label;
+		return this.label;
 	}
 
 	public int getPriority() {
-		return priority;
+		return this.priority;
 	}	
 	
 	/**
 	 * @since MIDP 3.0
 	 */
 	public void setImage(Image image) {
-		ui.setImage(image);
+		this.ui.setImage(image);
 	}
 
 	Item getFocusedItem() {
@@ -101,7 +101,7 @@ public class Command {
 			throw new IllegalStateException();
 		}
 		// can't be null!
-		return focusedItem;
+		return this.focusedItem;
 	}
 
 	Command getItemCommand(Item item) {
@@ -118,7 +118,7 @@ public class Command {
 			this.itemCommand.originalCommand = this;
 		}
 		this.itemCommand.focusedItem = item;
-		return itemCommand;
+		return this.itemCommand;
 	}
 
 	Command getOriginalCommand() {
@@ -126,11 +126,11 @@ public class Command {
 			throw new IllegalStateException();
 		}
 		// can't be null!
-		return originalCommand;
+		return this.originalCommand;
 	}
 
 	boolean isRegularCommand() {
-		return originalCommand == null;
+		return this.originalCommand == null;
 	}
         
         public String toString() {

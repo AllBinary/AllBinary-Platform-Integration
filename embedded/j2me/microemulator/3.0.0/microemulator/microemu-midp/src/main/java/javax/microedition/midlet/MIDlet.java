@@ -222,7 +222,7 @@ public class MIDlet
      */
     public boolean isResized()
     {
-        return resized;
+        return this.resized;
     }
 
     /**

@@ -41,11 +41,11 @@ public class MIDletUrlPanel extends SwingDialogPanel {
 	}
 	
 	public String getText() {
-		return jadUrlField.getText();
+		return this.jadUrlField.getText();
 	}
 
 	protected void showNotify() {
-		jadUrlField.setText("");
+		this.jadUrlField.setText("");
 	}
 	
 }

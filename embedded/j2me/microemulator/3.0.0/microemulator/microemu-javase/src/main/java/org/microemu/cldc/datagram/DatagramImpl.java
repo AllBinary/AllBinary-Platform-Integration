@@ -72,15 +72,15 @@ public class DatagramImpl implements Datagram {
 
 		public BufferOutputStream() {
 			this.originalOffset = packet.getOffset();
-			this.offset = originalOffset;
+			this.offset = this.originalOffset;
 		}
 
 		public void write(int b) throws IOException {
 			byte[] buffer = packet.getData();
-			if (offset > buffer.length - 1) {
+			if (this.offset > buffer.length - 1) {
 				throw new BufferOverflowException();
 			}
-			buffer[offset++] = (byte) b;
+			buffer[this.offset++] = (byte) b;
 		}
 
 		public void reset() {
@@ -102,7 +102,7 @@ public class DatagramImpl implements Datagram {
 			throw new IllegalArgumentException("Invalid size: " + size);
 		}
 		this.packet = new DatagramPacket(new byte[size], size);
-		initialiseInOut();
+		this.initialiseInOut();
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class DatagramImpl implements Datagram {
 	 */
 	DatagramImpl(byte[] buff, int length) {
 		packet = new DatagramPacket(buff, length);
-		initialiseInOut();
+		this.initialiseInOut();
 	}
 
 	/**
@@ -132,15 +132,15 @@ public class DatagramImpl implements Datagram {
 	}
 
 	public byte[] getData() {
-		return packet.getData();
+		return this.packet.getData();
 	}
 
 	public int getLength() {
-		return packet.getLength();
+		return this.packet.getLength();
 	}
 
 	public int getOffset() {
-		return packet.getOffset();
+		return this.packet.getOffset();
 	}
 
 	public void reset() {
@@ -172,132 +172,132 @@ public class DatagramImpl implements Datagram {
 	}
 
 	public void setAddress(Datagram reference) {
-		packet.setAddress(((DatagramImpl) reference).getDatagramPacket().getAddress());
+		this.packet.setAddress(((DatagramImpl) reference).getDatagramPacket().getAddress());
 		this.packet.setPort(((DatagramImpl) reference).getDatagramPacket().getPort());
 	}
 
 	public void setData(byte[] buffer, int offset, int len) {
-		packet.setData(buffer, offset, len);
+		this.packet.setData(buffer, offset, len);
 	}
 
 	public void setLength(int len) {
-		packet.setLength(len);
+		this.packet.setLength(len);
 	}
 
 	public boolean readBoolean() throws IOException {
-		return dis.readBoolean();
+		return this.dis.readBoolean();
 	}
 
 	public byte readByte() throws IOException {
-		return dis.readByte();
+		return this.dis.readByte();
 	}
 
 	public char readChar() throws IOException {
-		return dis.readChar();
+		return this.dis.readChar();
 	}
 
 	public double readDouble() throws IOException {
-		return dis.readDouble();
+		return this.dis.readDouble();
 	}
 
 	public float readFloat() throws IOException {
-		return dis.readFloat();
+		return this.dis.readFloat();
 	}
 
 	public void readFully(byte[] b) throws IOException {
-		dis.readFully(b);
+		this.dis.readFully(b);
 	}
 
 	public void readFully(byte[] b, int off, int len) throws IOException {
-		dis.read(b, off, len);
+		this.dis.read(b, off, len);
 	}
 
 	public int readInt() throws IOException {
-		return dis.readInt();
+		return this.dis.readInt();
 	}
 
 	public String readLine() throws IOException {
-		return dis.readLine();
+		return this.dis.readLine();
 	}
 
 	public long readLong() throws IOException {
-		return dis.readLong();
+		return this.dis.readLong();
 	}
 
 	public short readShort() throws IOException {
-		return dis.readShort();
+		return this.dis.readShort();
 	}
 
 	public String readUTF() throws IOException {
-		return dis.readUTF();
+		return this.dis.readUTF();
 	}
 
 	public int readUnsignedByte() throws IOException {
-		return dis.readUnsignedByte();
+		return this.dis.readUnsignedByte();
 	}
 
 	public int readUnsignedShort() throws IOException {
-		return dis.readUnsignedShort();
+		return this.dis.readUnsignedShort();
 	}
 
 	public int skipBytes(int n) throws IOException {
-		return dis.skipBytes(n);
+		return this.dis.skipBytes(n);
 	}
 
 	public void write(int b) throws IOException {
-		dos.write(b);
+		this.dos.write(b);
 	}
 
 	public void write(byte[] b) throws IOException {
-		dos.write(b);
+		this.dos.write(b);
 	}
 
 	public void write(byte[] b, int off, int len) throws IOException {
-		dos.write(b, off, len);
+		this.dos.write(b, off, len);
 	}
 
 	public void writeBoolean(boolean v) throws IOException {
-		dos.writeBoolean(v);
+		this.dos.writeBoolean(v);
 	}
 
 	public void writeByte(int v) throws IOException {
-		dos.writeByte(v);
+		this.dos.writeByte(v);
 	}
 
 	public void writeBytes(String s) throws IOException {
-		dos.writeBytes(s);
+		this.dos.writeBytes(s);
 	}
 
 	public void writeChar(int v) throws IOException {
-		dos.writeChar(v);
+		this.dos.writeChar(v);
 	}
 
 	public void writeChars(String v) throws IOException {
-		dos.writeChars(v);
+		this.dos.writeChars(v);
 	}
 
 	public void writeDouble(double v) throws IOException {
-		dos.writeDouble(v);
+		this.dos.writeDouble(v);
 	}
 
 	public void writeFloat(float v) throws IOException {
-		dos.writeFloat(v);
+		this.dos.writeFloat(v);
 	}
 
 	public void writeInt(int v) throws IOException {
-		dos.writeInt(v);
+		this.dos.writeInt(v);
 	}
 
 	public void writeLong(long v) throws IOException {
-		dos.writeLong(v);
+		this.dos.writeLong(v);
 	}
 
 	public void writeShort(int v) throws IOException {
-		dos.writeShort(v);
+		this.dos.writeShort(v);
 	}
 
 	public void writeUTF(String str) throws IOException {
-		dos.writeUTF(str);
+		this.dos.writeUTF(str);
 	}
 
 	/**
@@ -306,6 +306,6 @@ public class DatagramImpl implements Datagram {
 	 * @return the encapsulated packet
 	 */
 	DatagramPacket getDatagramPacket() {
-		return packet;
+		return this.packet;
 	}
 }

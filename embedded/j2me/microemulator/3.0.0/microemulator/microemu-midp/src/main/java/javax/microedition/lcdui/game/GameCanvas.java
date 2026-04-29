@@ -102,7 +102,7 @@ public class GameCanvas extends Canvas {
     }
 
     public void flushGraphics() {
-    	flushGraphics(0, 0, getWidth(), getHeight());
+    	this.flushGraphics(0, 0, getWidth(), getHeight());
     }
 
     public int getKeyStates() {

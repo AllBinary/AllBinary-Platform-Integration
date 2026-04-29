@@ -14,15 +14,15 @@ public class SystemProperties {
 	private static final Hashtable props = new Hashtable();
 	
 	static {
-		init();
+		SystemProperties.init();
 	}
 	
 	private static void init() {
-		props.put("microedition.io.file.FileConnection.version", "1.0");
-		props.put("microedition.configuration", "CLDC-1.1");
-		props.put("microedition.configuration", "MIDP-2.0");
-		props.put("microedition.platform" , "MicroEmulator");
-		props.put("microedition.locale", "EN_GB");
+		SystemProperties.props.put("microedition.io.file.FileConnection.version", "1.0");
+		SystemProperties.props.put("microedition.configuration", "CLDC-1.1");
+		SystemProperties.props.put("microedition.configuration", "MIDP-2.0");
+		SystemProperties.props.put("microedition.platform" , "MicroEmulator");
+		SystemProperties.props.put("microedition.locale", "EN_GB");
 	}
 	
 	public static String getProperty(String key) {
@@ -38,11 +38,11 @@ public class SystemProperties {
 	}
 	
 	public static String setProperty(String key, String value) {
-		return (String) props.put(key , value);
+		return (String) SystemProperties.props.put(key , value);
 	}
 	
 	public static String clearProperty(String key) {
-		return (String) props.remove(key);
+		return (String) SystemProperties.props.remove(key);
 	}
 	
 }

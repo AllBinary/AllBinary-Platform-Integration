@@ -87,18 +87,18 @@ public class WidgetSpy {
 
 		@Override
 		public void widgetCreated(Widget widget) {
-			boolean isTracked = isTracked(widget);
+			boolean isTracked = this.isTracked(widget);
 			if (isTracked) {
 				Error creationException = new Error("Created widget of type: " + widget.getClass().getSimpleName());
-				nonDisposedWidgets.put(widget, creationException);
+				this.nonDisposedWidgets.put(widget, creationException);
 			}
 		}
 
 		@Override
 		public void widgetDisposed(Widget widget) {
-			boolean isTracked = isTracked(widget);
+			boolean isTracked = this.isTracked(widget);
 			if (isTracked) {
-				nonDisposedWidgets.remove(widget);
+				this.nonDisposedWidgets.remove(widget);
 			}
 		}
 
@@ -107,12 +107,12 @@ public class WidgetSpy {
 		}
 
 		public void startTracking() {
-			clearNonDisposedWidgets();
+			this.clearNonDisposedWidgets();
 			WidgetSpy.getInstance().setWidgetTracker(this);
 		}
 
 		private void clearNonDisposedWidgets() {
-			nonDisposedWidgets.clear();
+			this.nonDisposedWidgets.clear();
 		}
 
 		public void stopTracking() {
@@ -121,14 +121,14 @@ public class WidgetSpy {
 
 		public void setTrackingEnabled(boolean enabled) {
 			if (enabled) {
-				startTracking();
+				this.startTracking();
 			} else {
-				stopTracking();
+				this.stopTracking();
 			}
 		}
 
 		public void setTrackedTypes(List<Class<? extends Widget>> types) {
-			trackedTypes.clear();
+			this.trackedTypes.clear();
 			this.trackedTypes.addAll(types);
 		}
 

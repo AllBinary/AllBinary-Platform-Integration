@@ -106,8 +106,8 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 	 */
 	protected boolean isToastable() {
 		boolean isToastable = 
-				(displayableUnboxed.getType() == null || displayableUnboxed.getType().equals(AlertType.INFO))
-				&& displayableUnboxed.getTimeout() != Alert.FOREVER
+				(this.displayableUnboxed.getType() == null || this.displayableUnboxed.getType().equals(AlertType.INFO))
+				&& this.displayableUnboxed.getTimeout() != Alert.FOREVER
 				&& getCommandsUI().size() == 1;
 
 		return isToastable;
@@ -160,7 +160,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 		toast.show();
 
 		// needed because we later need to call the commandListener
-		fixLookAndFeel();
+		this.fixLookAndFeel();
 
 		// call commandAction
 		MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(
@@ -169,7 +169,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 
 	@Override
 	public void showNotify() {
-		boolean isToastable = isToastable();
+		boolean isToastable = this.isToastable();
 
 		// set toast flag
 		// needed for hideNotify
@@ -209,7 +209,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 
 	private void fixLookAndFeel() {
 		for (CommandUI cmd : getCommandsUI()) {
-			buttonize(cmd);
+			this.buttonize(cmd);
 		}
 	}
 
@@ -234,7 +234,7 @@ public class AndroidAlertUI extends AndroidDisplayableUI implements AlertUI {
 		} else {
 			this.alertDialog.setButton(which, command.getLabel(), onClickListener);
 		}
-		buttons.put(which, cmd);
+		this.buttons.put(which, cmd);
 	}
 
 	//

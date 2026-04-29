@@ -442,14 +442,14 @@ public class BareMain extends Common
 
             //this.addNotify();
 
-            if(isWindows)
+            if(this.isWindows)
             {
                 //this.getExtendedState() |
                 //this.setExtendedState(Frame.ICONIFIED);
                 //this.setExtendedState(Frame.NORMAL);
             }
 
-            if(widthBeforeFullScreen != 0 && heightBeforeFullScreen != 0)
+            if(this.widthBeforeFullScreen != 0 && this.heightBeforeFullScreen != 0)
             {
                 //this.setSize(widthBeforeFullScreen, heightBeforeFullScreen);
             }
@@ -488,7 +488,7 @@ public class BareMain extends Common
 
             //this.addNotify();
 
-            if(isWindows)
+            if(this.isWindows)
             {
                 //this.setExtendedState(this.getExtendedState() | Frame.ICONIFIED | Frame.MAXIMIZED_BOTH);
             //this.setExtendedState(Frame.ICONIFIED);
@@ -530,8 +530,8 @@ public class BareMain extends Common
 			Device device = DeviceImpl.create(emulatorContext, classLoader, entry.getDescriptorLocation(),
 					SwtDevice.class);
 			this.deviceEntry = entry;
-			setDevice(device);
-			updateDevice();
+			this.setDevice(device);
+			this.updateDevice();
 //		} catch (MalformedURLException ex) {
 //			System.err.println(ex);
 		} catch (IOException ex) {
@@ -540,7 +540,7 @@ public class BareMain extends Common
 	}
 
 	protected void updateDevice() {
-		shell.setSize(shell.computeSize(SWT.DEFAULT, SWT.DEFAULT, true));
+		BareMain.shell.setSize(shell.computeSize(SWT.DEFAULT, SWT.DEFAULT, true));
 	}
 
         public static void main2(final String args[], final String name, final String iconPath) {
@@ -570,7 +570,7 @@ public class BareMain extends Common
                 
 		//shell = new Shell(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
                 //shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.RESIZE | SWT.BORDER | SWT.DOUBLE_BUFFERED);
-                shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.RESIZE);
+                BareMain.shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.RESIZE);
                 //sleak.create(shell);
                 //gc = new GC(BareMain.shell);
 
@@ -623,8 +623,8 @@ public class BareMain extends Common
                 
                 //app.updateDevice();
                 
-		shell.pack();
-		shell.open();
+		BareMain.shell.pack();
+		BareMain.shell.open();
 
                 app.updateDevice();
 
@@ -646,7 +646,7 @@ public class BareMain extends Common
                     
                     final InputStream is = midlet.getClass().getResourceAsStream(iconPath);
                     final Image image = SwtDeviceComponent.createImage(is);
-                    shell.setImage(image);
+                    BareMain.shell.setImage(image);
                     
                     midlet.midletHelper = new SwtMIDletHelper();
                     midlet.midletHelper.midlet = midlet;
@@ -654,9 +654,9 @@ public class BareMain extends Common
                     final SwtMIDletHelper swtMIDletHelper = (SwtMIDletHelper) midlet.midletHelper;
                     ((MidletJOGLInterface) midlet).initView();
                     //logUtil.putF("initView", midlet, "main2");
-                    devicePanel.addMouseListener(swtMIDletHelper);
-                    devicePanel.addMouseMoveListener(swtMIDletHelper);
-                    devicePanel.addDragDetectListener(swtMIDletHelper);
+                    BareMain.devicePanel.addMouseListener(swtMIDletHelper);
+                    BareMain.devicePanel.addMouseMoveListener(swtMIDletHelper);
+                    BareMain.devicePanel.addDragDetectListener(swtMIDletHelper);
                     //devicePanel.addGestureListener(listener);
                     //devicePanel.addMouseTrackListener(listener);
                     //devicePanel.addMouseWheelListener(listener);
@@ -672,11 +672,11 @@ public class BareMain extends Common
                     //logUtil.put("Finished MIDlet initialization", midlet, "main2");
                 }
                 
-                shell.setSize(shell.computeSize(width, height, true));
+                BareMain.shell.setSize(shell.computeSize(width, height, true));
                 
-                if(fullScreen) shell.setFullScreen(true);
-                if(maximized) shell.setMaximized(true);
-                shell.getListeners(SWT.Resize)[0].handleEvent(null);
+                if(fullScreen) BareMain.shell.setFullScreen(true);
+                if(maximized) BareMain.shell.setMaximized(true);
+                BareMain.shell.getListeners(SWT.Resize)[0].handleEvent(null);
                 
                 //logUtil.putF("Begin SWT Event Loop", shell, "main2");
                 
@@ -687,7 +687,7 @@ public class BareMain extends Common
                 
                 try {
                     //TWB - this will need to be the game thread to improve performance
-                    while (!shell.isDisposed()) {
+                    while (!BareMain.shell.isDisposed()) {
                         if (!display.readAndDispatch()) {
                             swtProcessorUtil.swtProcessor.process(display);
                             //display.sleep();
@@ -705,7 +705,7 @@ public class BareMain extends Common
         }
         
 	public static void main(final String args[]) {
-                main2(args, "MiniSpaceWars", "/minispacewar_icon.ico");
+                BareMain.main2(args, "MiniSpaceWars", "/minispacewar_icon.ico");
 	}
 
 }

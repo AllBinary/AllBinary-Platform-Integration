@@ -72,37 +72,37 @@ public class IPhoneListUI extends AbstractUI<List> implements ListUI {
 		public void delete(int itemNum) {
 			// TODO Auto-generated method stub
 			super.delete(itemNum);
-			doReload();
+			this.doReload();
 		}
 		
 		@Override
 		public void deleteAll() {
 			// TODO Auto-generated method stub
 			super.deleteAll();
-			doReload();
+			this.doReload();
 		}
 		
 		@Override
 		public void insert(int elementNum, String stringPart, Image imagePart) {
 			// TODO Auto-generated method stub
 			super.insert(elementNum, stringPart, imagePart);
-			doReload();
+			this.doReload();
 		}
 		@Override
 		public void set(int elementNum, String stringPart, Image imagePart) {
 			// TODO Auto-generated method stub
 			super.set(elementNum, stringPart, imagePart);
-			doReload();
+			this.doReload();
 		}
 		
 		@Override
 		public void setSelectedIndex(int elementNum, boolean selected) {
 			// TODO Auto-generated method stub
 			super.setSelectedIndex(elementNum, selected);
-			doReload();
+			this.doReload();
 		}
 		public int getType() {
-			return type;
+			return this.type;
 		}
 		
 		protected void doReload() {

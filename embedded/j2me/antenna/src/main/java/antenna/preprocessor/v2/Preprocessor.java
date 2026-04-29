@@ -146,9 +146,9 @@ public class Preprocessor
 	public boolean preprocess(InputStream in, OutputStream out, String encoding) throws IOException, PPException
 	{
 		Vector lines = new Vector();
-		loadStrings(lines, in, encoding);
+		Preprocessor.loadStrings(lines, in, encoding);
 		boolean changed = this.preprocess(lines, encoding);
-		saveStrings(lines, out, encoding);
+		Preprocessor.saveStrings(lines, out, encoding);
 		return changed;
 	}
 
@@ -216,7 +216,7 @@ public class Preprocessor
 	{
 		this.m_modified = false;
 		this.m_statsStack = new Stack();
-		this.m_currentState = STATE_NO_CONDITIONAL;
+		this.m_currentState = Preprocessor.STATE_NO_CONDITIONAL;
 		this.m_disabledByCondition = false;
 
 		CommandEvaluator eval = new CommandEvaluator(this.m_defines);
@@ -350,7 +350,7 @@ public class Preprocessor
 
 		}
 		
-		if (this.m_currentState != STATE_NO_CONDITIONAL)
+		if (this.m_currentState != Preprocessor.STATE_NO_CONDITIONAL)
 		{
 			throw new PPException("Missing #endif", m_file, -1);
 		}
@@ -401,7 +401,7 @@ public class Preprocessor
 	private String toTemplate(String line)
 	{
 		// replace %VARIABLE% macors with regexp to match them (.*)
-		return "\\s*"+regExpQuote(line.trim()).replaceAll("%.*%", "\\\\E\\.\\*\\\\Q") + "\\s*";
+		return "\\s*"+Preprocessor.regExpQuote(line.trim()).replaceAll("%.*%", "\\\\E\\.\\*\\\\Q") + "\\s*";
 	}
 
 	/**
@@ -479,7 +479,7 @@ public class Preprocessor
 		Vector v = new Vector();
 		try
 		{
-			loadStrings(v, new FileInputStream(f), encoding);
+			Preprocessor.loadStrings(v, new FileInputStream(f), encoding);
 			return v;
 		}
 		catch (IOException e)
@@ -501,7 +501,7 @@ public class Preprocessor
 
 	public boolean isBlind()
 	{
-		return this.m_currentState == STATE_CAN_BECOME_TRUE || this.m_currentState == STATE_HAS_BEEN_TRUE
+		return this.m_currentState == Preprocessor.STATE_CAN_BECOME_TRUE || this.m_currentState == Preprocessor.STATE_HAS_BEEN_TRUE
 				|| this.m_disabledByCondition || this.m_debugHideNextLine || this.m_insideHiddenMdebugBlock;
 	}
 
@@ -542,57 +542,57 @@ public class Preprocessor
 		{
 			if (condition)
 			{
-				this.m_currentState = STATE_IS_TRUE;
+				this.m_currentState = Preprocessor.STATE_IS_TRUE;
 			}
 			else
 			{
-				this.m_currentState = STATE_CAN_BECOME_TRUE;
+				this.m_currentState = Preprocessor.STATE_CAN_BECOME_TRUE;
 			}
 		}
 		else
 		{
-			this.m_currentState = STATE_HAS_BEEN_TRUE;
+			this.m_currentState = Preprocessor.STATE_HAS_BEEN_TRUE;
 		}
 	}
 
 	private void handleElseIf(boolean condition)
 	{
-		if (this.m_currentState == STATE_NO_CONDITIONAL)
+		if (this.m_currentState == Preprocessor.STATE_NO_CONDITIONAL)
 		{
 			throw new IllegalStateException("Unexpected #elif");
 		}
-		else if (this.m_currentState == STATE_CAN_BECOME_TRUE)
+		else if (this.m_currentState == Preprocessor.STATE_CAN_BECOME_TRUE)
 		{
 			if (condition)
-				this.m_currentState = STATE_IS_TRUE;
+				this.m_currentState = Preprocessor.STATE_IS_TRUE;
 			else
-				this.m_currentState = STATE_CAN_BECOME_TRUE;
+				this.m_currentState = Preprocessor.STATE_CAN_BECOME_TRUE;
 		}
-		else if (this.m_currentState == STATE_IS_TRUE)
+		else if (this.m_currentState == Preprocessor.STATE_IS_TRUE)
 		{
-			this.m_currentState = STATE_HAS_BEEN_TRUE;
+			this.m_currentState = Preprocessor.STATE_HAS_BEEN_TRUE;
 		}
 	}
 
 	private void handleElse()
 	{
-		if (this.m_currentState == STATE_NO_CONDITIONAL)
+		if (this.m_currentState == Preprocessor.STATE_NO_CONDITIONAL)
 		{
 			throw new IllegalStateException("Unexpected #else");
 		}
-		else if (this.m_currentState == STATE_CAN_BECOME_TRUE)
+		else if (this.m_currentState == Preprocessor.STATE_CAN_BECOME_TRUE)
 		{
-			this.m_currentState = STATE_IS_TRUE;
+			this.m_currentState = Preprocessor.STATE_IS_TRUE;
 		}
-		else if (this.m_currentState == STATE_IS_TRUE)
+		else if (this.m_currentState == Preprocessor.STATE_IS_TRUE)
 		{
-			this.m_currentState = STATE_HAS_BEEN_TRUE;
+			this.m_currentState = Preprocessor.STATE_HAS_BEEN_TRUE;
 		}
 	}
 
 	private void handleEndIf()
 	{
-		if (this.m_currentState == STATE_NO_CONDITIONAL)
+		if (this.m_currentState == Preprocessor.STATE_NO_CONDITIONAL)
 		{
 			throw new IllegalStateException("Unexpected #endif");
 		}

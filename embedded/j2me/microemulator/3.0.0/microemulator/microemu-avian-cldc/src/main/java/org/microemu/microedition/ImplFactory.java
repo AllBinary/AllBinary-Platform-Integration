@@ -69,11 +69,11 @@ public class ImplFactory {
 	}
 
 	public static void register(Class delegate, Class implementationClass) {
-		instance().implementations.put(delegate, implementationClass);
+		ImplFactory.instance().implementations.put(delegate, implementationClass);
 	}
 
 	public static void register(Class delegate, Object implementationInstance) {
-		instance().implementations.put(delegate, implementationInstance);
+		ImplFactory.instance().implementations.put(delegate, implementationInstance);
 	}
 
 	public static void unregister(Class delegate, Class implementation) {
@@ -95,11 +95,11 @@ public class ImplFactory {
 		if (scheme == null) {
 			scheme = DEFAULT;
 		}
-		Object impl = instance().implementationsGCF.get(scheme);
+		Object impl = ImplFactory.instance().implementationsGCF.get(scheme);
 		if (impl instanceof ImplementationUnloadable) {
 			((ImplementationUnloadable) impl).unregisterImplementation();
 		}
-		instance().implementationsGCF.put(scheme, implementation);
+		ImplFactory.instance().implementationsGCF.put(scheme, implementation);
 	}
 
 	public static void unregistedGCF(String scheme, Object implementation) {
@@ -109,16 +109,16 @@ public class ImplFactory {
 		if (scheme == null) {
 			scheme = DEFAULT;
 		}
-		Object impl = instance().implementationsGCF.get(scheme);
+		Object impl = ImplFactory.instance().implementationsGCF.get(scheme);
 		if (impl == implementation) {
-			instance().implementationsGCF.remove(scheme);
+			ImplFactory.instance().implementationsGCF.remove(scheme);
 		}
 	}
 
 	private Object getDefaultImplementation(Class delegateInterface) {
 		try {
 			String name = delegateInterface.getName();
-			if (name.endsWith(INTERFACE_NAME_SUFIX)) {
+			if (name.endsWith(ImplFactory.INTERFACE_NAME_SUFIX)) {
 				name = name.substring(0, name.length() - INTERFACE_NAME_SUFIX.length());
 			}
 			final String implClassName = name + IMPLEMENTATION_NAME_SUFIX;
@@ -168,16 +168,16 @@ public class ImplFactory {
 	 * @return
 	 */
 	public static ConnectorDelegate getCGFImplementation(String name) {
-		String scheme = getCGFScheme(name);
-		ConnectorDelegate impl = (ConnectorDelegate) instance().implementationsGCF.get(scheme);
+		String scheme = ImplFactory.getCGFScheme(name);
+		ConnectorDelegate impl = (ConnectorDelegate) ImplFactory.instance().implementationsGCF.get(scheme);
 		if (impl != null) {
 			return impl;
 		}
-		impl = (ConnectorDelegate) instance().implementationsGCF.get(DEFAULT);
+		impl = (ConnectorDelegate) ImplFactory.instance().implementationsGCF.get(DEFAULT);
 		if (impl != null) {
 			return impl;
 		}
-		return (ConnectorDelegate) instance().getDefaultImplementation(ConnectorDelegate.class);
+		return (ConnectorDelegate) ImplFactory.instance().getDefaultImplementation(ConnectorDelegate.class);
 	}
 
 	// public static Implementation getImplementation(Class origClass, Object[]
@@ -190,7 +190,7 @@ public class ImplFactory {
 		// if called from implementation constructor return null to avoid
 		// recurive calls!
 		// TODO can be done using thread stack analyse or ThreadLocal
-		Object impl = instance().implementations.get(delegateInterface);
+		Object impl = ImplFactory.instance().implementations.get(delegateInterface);
 		// debugClassLoader(Implementation.class);
 		// debugClassLoader(origClass);
 		// debugClassLoader(delegateInterface);
@@ -198,12 +198,12 @@ public class ImplFactory {
 
 		if (impl != null) {
 			if (impl instanceof Class) {
-				return (Implementation) instance().implementationNewInstance((Class) impl);
+				return (Implementation) ImplFactory.instance().implementationNewInstance((Class) impl);
 			} else {
 				return (Implementation) impl;
 			}
 		}
-		return (Implementation) instance().getDefaultImplementation(delegateInterface);
+		return (Implementation) ImplFactory.instance().getDefaultImplementation(delegateInterface);
 	}
 
 	// private static void debugClassLoader(Object obj) {

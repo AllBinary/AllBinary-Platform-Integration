@@ -32,7 +32,7 @@ public class DeviceFactory
   
   public static Device getDevice()
   {
-    return device;
+    return DeviceFactory.device;
   }
   
   

@@ -116,7 +116,7 @@ public class Image
         
         public static final int TYPE = 0;
         public int getType() {
-            return TYPE;
+            return Image.TYPE;
         }
         
 	// Andres Navarro
@@ -155,7 +155,7 @@ public class Image
      * @return the platformImage
      */
     public PlatformImage getPlatformImage() {
-        return platformImage;
+        return this.platformImage;
     }
 
     /**
@@ -181,7 +181,7 @@ public class Image
      * @return the name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(final String name) {

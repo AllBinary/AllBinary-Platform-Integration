@@ -126,7 +126,7 @@ public class MIDletClassLoader extends URLClassLoader {
 	 *            Name
 	 */
 	public void addClassURL(String className) throws MalformedURLException {
-		String resource = getClassResourceName(className);
+		String resource = MIDletClassLoader.getClassResourceName(className);
 		URL url = getParent().getResource(resource);
 		if (url == null) {
 			url = this.getResource(resource);
@@ -135,14 +135,14 @@ public class MIDletClassLoader extends URLClassLoader {
 			throw new MalformedURLException("Unable to find class " + className + " URL");
 		}
 		String path = url.toExternalForm();
-		if (debug) {
+		if (MIDletClassLoader.debug) {
 			Logger.debug("addClassURL ", path);
 		}
-		addURL(new URL(path.substring(0, path.length() - resource.length())));
+		this.addURL(new URL(path.substring(0, path.length() - resource.length())));
 	}
 
 	static URL getClassURL(ClassLoader parent, String className) throws MalformedURLException {
-		String resource = getClassResourceName(className);
+		String resource = MIDletClassLoader.getClassResourceName(className);
 		URL url = parent.getResource(resource);
 		if (url == null) {
 			throw new MalformedURLException("Unable to find class " + className + " URL");
@@ -152,7 +152,7 @@ public class MIDletClassLoader extends URLClassLoader {
 	}
 
 	public void addURL(URL url) {
-		if (debug) {
+		if (MIDletClassLoader.debug) {
 			Logger.debug("addURL ", url.toString());
 		}
 		super.addURL(url);
@@ -193,7 +193,7 @@ public class MIDletClassLoader extends URLClassLoader {
 	 * 
 	 */
 	protected synchronized Class loadClass(String name, boolean resolve) throws ClassNotFoundException {
-		if (debug) {
+		if (MIDletClassLoader.debug) {
 			Logger.debug("loadClass", name);
 		}
 		// First, check if the class has already been loaded
@@ -209,14 +209,14 @@ public class MIDletClassLoader extends URLClassLoader {
 		Class result = findLoadedClass(name);
 		if (result == null) {
 			try {
-				result = findClass(name);
-				if (debug2 && (result == null)) {
+				result = this.findClass(name);
+				if (MIDletClassLoader.debug2 && (result == null)) {
 					Logger.debug("loadClass not found", name);
 				}
 			} catch (ClassNotFoundException e) {
 
 				if ((e instanceof LoadClassByParentException) || this.delegatingToParent) {
-					if (traceSystemClassLoading) {
+					if (MIDletClassLoader.traceSystemClassLoading) {
 						Logger.info("Load system class", name);
 					}
 					// This will call our findClass again if Class is not found
@@ -272,9 +272,9 @@ public class MIDletClassLoader extends URLClassLoader {
 					}
 					return url;
 				}
-			}, acc);
+			}, this.acc);
 		} catch (PrivilegedActionException e) {
-			if (debug2) {
+			if (MIDletClassLoader.debug2) {
 				Logger.error("Unable to find resource " + name + " ", e);
 			}
 			return null;
@@ -285,7 +285,7 @@ public class MIDletClassLoader extends URLClassLoader {
 	 * Allow access to resources
 	 */
 	public InputStream getResourceAsStream(String name) {
-		final URL url = getResource(name);
+		final URL url = this.getResource(name);
 		if (url == null) {
 			return null;
 		}
@@ -295,9 +295,9 @@ public class MIDletClassLoader extends URLClassLoader {
 				public Object run() throws IOException {
 					return url.openStream();
 				}
-			}, acc);
+			}, this.acc);
 		} catch (PrivilegedActionException e) {
-			if (debug2) {
+			if (MIDletClassLoader.debug2) {
 				Logger.debug("Unable to find resource for class " + name + " ", e);
 			}
 			return null;
@@ -391,11 +391,11 @@ public class MIDletClassLoader extends URLClassLoader {
 	 * @param klass
 	 */
 	public void disableClassPreporcessing(Class klass) {
-		disableClassPreporcessing(klass.getName());
+		this.disableClassPreporcessing(klass.getName());
 	}
 
 	public void disableClassPreporcessing(String className) {
-		noPreporcessingNames.add(className);
+		this.noPreporcessingNames.add(className);
 	}
 
 	public static String getClassResourceName(String className) {
@@ -403,7 +403,7 @@ public class MIDletClassLoader extends URLClassLoader {
 	}
 
 	protected Class findClass(final String name) throws ClassNotFoundException {
-		if (debug) {
+		if (MIDletClassLoader.debug) {
 			Logger.debug("findClass", name);
 		}
 		if (classLoadByParent(name)) {
@@ -415,13 +415,13 @@ public class MIDletClassLoader extends URLClassLoader {
 				public Object run() throws ClassNotFoundException {
 					return getResourceAsStream(getClassResourceName(name));
 				}
-			}, acc);
+			}, this.acc);
 
 			// Relax ClassLoader behavior
 			if ((is == null) && (this.findPathInParent)) {
 				boolean classFound;
 				try {
-					addClassURL(name);
+					this.addClassURL(name);
 					classFound = true;
 				} catch (MalformedURLException e) {
 					classFound = false;
@@ -431,18 +431,18 @@ public class MIDletClassLoader extends URLClassLoader {
 						public Object run() throws ClassNotFoundException {
 							return getResourceAsStream(getClassResourceName(name));
 						}
-					}, acc);
+					}, this.acc);
 				}
 			}
 		} catch (PrivilegedActionException e) {
-			if (debug2) {
+			if (MIDletClassLoader.debug2) {
 				Logger.debug("Unable to find resource for class " + name + " ", e);
 			}
 			throw new ClassNotFoundException(name, e.getCause());
 		}
 
 		if (is == null) {
-			if (debug2) {
+			if (MIDletClassLoader.debug2) {
 				Logger.debug("Unable to find resource for class: " + name, new Exception());
 			}
 			throw new ClassNotFoundException(name);
@@ -450,10 +450,10 @@ public class MIDletClassLoader extends URLClassLoader {
 		byte[] byteCode;
 		int byteCodeLength;
 		try {
-			if (traceClassLoading) {
+			if (MIDletClassLoader.traceClassLoading) {
 				Logger.info("Load MIDlet class", name);
 			}
-			if (instrumentMIDletClasses) {
+			if (MIDletClassLoader.instrumentMIDletClasses) {
 				byteCode = ClassPreprocessor.instrument(is, config);
 				byteCodeLength = byteCode.length;
 			} else {
@@ -492,7 +492,7 @@ public class MIDletClassLoader extends URLClassLoader {
 			} catch (IOException ignore) {
 			}
 		}
-		if ((debug) && (instrumentMIDletClasses)) {
+		if ((MIDletClassLoader.debug) && (MIDletClassLoader.instrumentMIDletClasses)) {
 			Logger.debug("instrumented ", name);
 		}
 		return defineClass(name, byteCode, 0, byteCodeLength);

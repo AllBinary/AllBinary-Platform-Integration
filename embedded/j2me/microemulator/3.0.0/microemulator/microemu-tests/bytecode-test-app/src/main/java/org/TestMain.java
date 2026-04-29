@@ -37,17 +37,17 @@ public class TestMain implements Runnable {
 	public void run() {
 		
 		if (System.getProperty("test.verbose") != null) {
-			verbose = true;
+			TestMain.verbose = true;
 		}
 		
-		if (verbose) {
+		if (TestMain.verbose) {
 			System.out.println("ClassLoader " + this.getClass().getClassLoader().hashCode() +  " TestMain");
 		}
 		
-		assertProperty("test.property1", "1");
-		assertProperty("microedition.platform", null);
+		this.assertProperty("test.property1", "1");
+		this.assertProperty("microedition.platform", null);
 		
-		if (verbose) {
+		if (TestMain.verbose) {
 			System.out.println("System.getProperty OK");
 		}
 		
@@ -59,7 +59,7 @@ public class TestMain implements Runnable {
 			throw new RuntimeException("Can execute OverrideMicroeditionClient");
 		} catch (Throwable e) {
 			if (e instanceof NoClassDefFoundError) {
-				if (verbose) {
+				if (TestMain.verbose) {
 					System.out.println("no acess to java.microedition in MIDlet jar OK " + e.toString());
 				}
 			} else {
@@ -71,7 +71,7 @@ public class TestMain implements Runnable {
 			Class.forName("javax.microedition.NotAccessible");
 			throw new RuntimeException("Can acess java.microedition from MIDlet jar using Class.forName");
 		} catch (ClassNotFoundException e) {
-			if (verbose) {
+			if (TestMain.verbose) {
 				System.out.println("no acess to java.microedition in MIDlet jar OK " + e.toString());
 			}
 		} 
@@ -80,7 +80,7 @@ public class TestMain implements Runnable {
 		Class drunner;
 		try {
 			drunner = Class.forName(runnerName);
-			if (verbose) {
+			if (TestMain.verbose) {
 				System.out.println("Class.forName("+ runnerName +") OK ");
 			}
 		} catch (ClassNotFoundException e) {
@@ -89,7 +89,7 @@ public class TestMain implements Runnable {
 		Object r;
 		try {
 			r = drunner.newInstance();
-			if (verbose) {
+			if (TestMain.verbose) {
 				System.out.println("Class.forName("+ runnerName +").newInstance() OK ");
 			}
 		} catch (Exception e) {
@@ -107,7 +107,7 @@ public class TestMain implements Runnable {
 	
 	private void assertProperty(String key, String expected) {
 		String value = System.getProperty(key);
-		if (verbose) {
+		if (TestMain.verbose) {
 			System.out.println("Got System.getProperty " + key + " value [" + value + "]");
 		}
 		if (((expected == null) && (value != null)) || ((expected != null) && (!expected.equals(value)))) {

@@ -71,18 +71,18 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 		this.labelView = new TextView(activity);
 		this.labelView.setFocusable(false);
 		this.labelView.setFocusableInTouchMode(false);
-		labelView.setLayoutParams(new LinearLayout.LayoutParams(
+		this.labelView.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.FILL_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT));
-		labelView.setTextAppearance(labelView.getContext(),
+		this.labelView.setTextAppearance(labelView.getContext(),
 				android.R.style.TextAppearance_Large);
 		this.labelView.setVisibility(GONE);
-		addView(this.labelView);
+		this.addView(this.labelView);
 
 		this.textView = new TextView(activity);
 		if (item instanceof StringItem && ((StringItem) item).getAppearanceMode() == Item.BUTTON) {
 			this.textView.setClickable(true);
-			textView.setOnClickListener(new View.OnClickListener() {
+			this.textView.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
 					if (defaultCommand != null) {
@@ -92,7 +92,7 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 
 			});
 		}
-		textView.setLayoutParams(new LinearLayout.LayoutParams(
+		this.textView.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.FILL_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT));
 		addView(this.textView);
@@ -100,7 +100,7 @@ public class AndroidImageStringItemUI extends LinearLayout implements ImageStrin
 		if (item instanceof ImageItem && ((ImageItem) item).getAppearanceMode() == Item.BUTTON) {
 			this.imageView = new ImageButton(activity);
 			this.imageView.setClickable(true);
-			imageView.setOnClickListener(new View.OnClickListener() {
+			this.imageView.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
 					if (defaultCommand != null) {

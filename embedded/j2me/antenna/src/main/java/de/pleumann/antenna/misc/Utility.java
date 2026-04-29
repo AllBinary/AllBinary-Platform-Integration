@@ -160,7 +160,7 @@ public class Utility {
 
         if (utility == null) {
             utility = new Utility(project, parent);
-            instances.put(project, utility);
+            Utility.instances.put(project, utility);
         } else {
             utility.parent = parent;
         }
@@ -229,41 +229,41 @@ public class Utility {
          */
         if (this.toolkit == null) {
             if (new File(getWtkRelative("lib/api.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit(MIDP1.0) ", "lib/api.jar");
             } else if (new File(getWtkRelative("emulators/C6C/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit 3(MIDP2.0)","emulators/C6C/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/C65/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/C65/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/C75/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/C75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/CX6C/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX6C/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/CX7C/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX7C/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/CX75/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/S75/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/SL65/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/SL75/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/SXG75/lib/API.jar")).exists()) {
-                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkitType = Utility.TOOLKIT_SIEMENS;
                 this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
             }else{
                 this.toolkit = new Toolkit("Unknown toolkit","");
-                this.toolkitType = TOOLKIT_UNKNOWN;
+                this.toolkitType = Utility.TOOLKIT_UNKNOWN;
             }
 
         }
@@ -376,7 +376,7 @@ public class Utility {
              * locations. Hence the changes added by Fred Grott
              * 
              */
-            if (this.toolkitType == TOOLKIT_SIEMENS) {
+            if (this.toolkitType == Utility.TOOLKIT_SIEMENS) {
                 results.add(getWtkRelative(this.toolkit.props.getProperty("api")));
             }
         }
@@ -495,11 +495,11 @@ public class Utility {
             arguments += (cldc ? " -cldc " : " ");
         }
 
-        if ((flags & PREVERIFY_NOFINALIZE) != 0)
+        if ((flags & Utility.PREVERIFY_NOFINALIZE) != 0)
             arguments += " -nofinalize";
-        if ((flags & PREVERIFY_NOFLOAT) != 0)
+        if ((flags & Utility.PREVERIFY_NOFLOAT) != 0)
             arguments += " -nofloat";
-        if ((flags & PREVERIFY_NONATIVE) != 0)
+        if ((flags & Utility.PREVERIFY_NONATIVE) != 0)
             arguments += " -nonative";
 
         arguments += " " + source;
@@ -540,7 +540,7 @@ public class Utility {
                 this.parent.log("====" + log + "====", Project.MSG_ERR);
                 try {
                     FileInputStream fin = new FileInputStream(log);
-                    copyStreams(fin, System.out);
+                    Utility.copyStreams(fin, System.out);
                 }
                 catch (IOException e) {
                     e.printStackTrace();

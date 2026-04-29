@@ -106,9 +106,9 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 		private int FIRST_DRAG_SENSITIVITY_X = 5;
 		private int FIRST_DRAG_SENSITIVITY_Y = 5;
 		
-		int pressedX = -FIRST_DRAG_SENSITIVITY_X;
+		int pressedX = -this.FIRST_DRAG_SENSITIVITY_X;
 		
-		int pressedY = -FIRST_DRAG_SENSITIVITY_Y;
+		int pressedY = -this.FIRST_DRAG_SENSITIVITY_Y;
 		
         private AndroidDisplayGraphics graphics;
         
@@ -143,8 +143,8 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 			if (ma == null) {
 				return;
 			}
-			graphics.reset(androidCanvas);
-			graphics.setClip(0, 0, view.getWidth(), view.getHeight());
+			this.graphics.reset(androidCanvas);
+			this.graphics.setClip(0, 0, view.getWidth(), view.getHeight());
 			int suggestedHeight = customItemAccess.getPrefContentHeight(-1);
 			customItemAccess.paint(graphics, view.getWidth(), suggestedHeight);
 		}	

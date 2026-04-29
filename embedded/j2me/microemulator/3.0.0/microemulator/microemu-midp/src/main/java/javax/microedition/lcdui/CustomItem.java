@@ -67,7 +67,7 @@ public class CustomItem extends Item {
 	}
 	
 	protected final int getInteractionModes() {
-		return KEY_PRESS | KEY_RELEASE | KEY_REPEAT | POINTER_PRESS | POINTER_RELEASE | POINTER_DRAG;
+		return CustomItem.KEY_PRESS | CustomItem.KEY_RELEASE | CustomItem.KEY_REPEAT | CustomItem.POINTER_PRESS | CustomItem.POINTER_RELEASE | CustomItem.POINTER_DRAG;
 	}
 	
 	protected int getMinContentHeight() {
@@ -148,7 +148,7 @@ public class CustomItem extends Item {
 
 	protected final void repaint(int x, int y, int w, int h) {
 		// TODO add support for partial repaint
-		repaint();
+		this.repaint();
 	}
 	
 	protected void showNotify() {
@@ -184,14 +184,14 @@ public class CustomItem extends Item {
         @Override
 	public int paint(Graphics g) {
 		// Get preferred width and
-		width = getPrefContentWidth(-1);
-		height = getPrefContentHeight(-1);
+		width = this.getPrefContentWidth(-1);
+		height = this.getPrefContentHeight(-1);
 		// Paint label
 		super.paintContent(g);
 		// Move graphics context down
 		g.translate(0, super.getHeight());
 		// Paint custom item
-		paint(g, width, height);
+		this.paint(g, width, height);
 		// Return 'height' which is the amount the context must translated
 		return height;
 	}
@@ -200,7 +200,7 @@ public class CustomItem extends Item {
         //TWB - made public
         @Override
 	public int getHeight() {
-		return super.getHeight() + height;
+		return super.getHeight() + this.height;
 	}
 
         //TWB - made public
@@ -211,7 +211,7 @@ public class CustomItem extends Item {
         inout[1] = top;
         inout[2] = this.width;
         inout[3] = bottom - top;
-		boolean result = traverse(gameKeyCode, width, bottom - top, inout);
+		boolean result = this.traverse(gameKeyCode, width, bottom - top, inout);
 		if (result == false) {
 			return Item.OUTOFITEM;
 		} else {
@@ -258,7 +258,7 @@ public class CustomItem extends Item {
 	public boolean select() {
 		// send a FIRE keycode here, otherwise there does not appear
 		// to be a way for a CustomItem to use that key
-		keyPressed(-5);
+		this.keyPressed(-5);
 		return super.select();
 	}
 

@@ -59,7 +59,7 @@ public abstract class MIDletTimerTask extends TimerTask {
 	}
 
 	public long scheduledExecutionTime() {
-		return time;
+		return this.time;
 	}
 
 }

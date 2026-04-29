@@ -106,8 +106,8 @@ class XmlWriter extends OutputStreamWriter
 
     static
     {
-        encodings.put(UTF8, "UTF-8");
-        encodings.put(ISO8859_1, "ISO-8859-1");
+        XmlWriter.encodings.put(UTF8, "UTF-8");
+        XmlWriter.encodings.put(ISO8859_1, "ISO-8859-1");
     }
 
     /**
@@ -165,7 +165,7 @@ class XmlWriter extends OutputStreamWriter
      */
     protected static String canonicalizeEncoding(String javaEncoding)
     {
-        return encodings.getProperty(javaEncoding, javaEncoding);
+        return XmlWriter.encodings.getProperty(javaEncoding, javaEncoding);
     }
 
     /**

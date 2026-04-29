@@ -50,7 +50,7 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 	}
 
 	public void destroyApp(boolean unconditional) {
-		if (screenPanels != null) {
+		if (this.screenPanels != null) {
 			for (int i = 0; i < screenPanels.length; i++) {
 				if (screenPanels[i] instanceof HasRunnable) {
 					((HasRunnable) screenPanels[i]).stopRunnable();
@@ -64,7 +64,7 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 
 	public void startApp() {
 		if (this.menuList == null) {
-			screenPanels = new Displayable[] {
+			this.screenPanels = new Displayable[] {
 					new AlertPanel(),
 					new CanvasPanel(),
 					new GameCanvasPanel(),
@@ -92,7 +92,7 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 			this.menuList.setCommandListener(this);
 		}
 
-		showMenu();
+		SimpleDemoMIDlet.showMenu();
 	}
 
 	public static SimpleDemoMIDlet getInstance() {
@@ -100,7 +100,7 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 	}
 
 	public static void showMenu() {
-		setCurrentDisplayable(instance.menuList);
+		SimpleDemoMIDlet.setCurrentDisplayable(instance.menuList);
 	}
 	
 	public static void setCurrentDisplayable(Displayable nextDisplayable) {
@@ -118,9 +118,9 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 	public void commandAction(Command c, Displayable d) {
 		if (d == this.menuList) {
 			if (c == List.SELECT_COMMAND) {
-				setCurrentDisplayable(screenPanels[this.menuList.getSelectedIndex()]);
-			} else if (c == exitCommand) {
-				destroyApp(true);
+				SimpleDemoMIDlet.setCurrentDisplayable(screenPanels[this.menuList.getSelectedIndex()]);
+			} else if (c == SimpleDemoMIDlet.exitCommand) {
+				this.destroyApp(true);
 				notifyDestroyed();
 			}
 		}

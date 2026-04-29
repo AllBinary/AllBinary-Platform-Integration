@@ -58,7 +58,7 @@ public class Ticker
 
   public String getString()
   {
-    return text;
+    return this.text;
   }
 
 

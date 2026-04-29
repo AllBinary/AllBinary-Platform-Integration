@@ -77,7 +77,7 @@ public final class ThreadDispatcher {
 //			} catch (Exception e1) {
 //				e1.printStackTrace();
 //			}
-			queue.add(wrapper);
+			ThreadDispatcher.queue.add(wrapper);
 			if(waitOnFinish){
 				try {
 					wrapper.wait();
@@ -101,7 +101,7 @@ public final class ThreadDispatcher {
 		private Runnable runnable;
 		@Message
 		public final void handle(){
-			runnable.run();
+			this.runnable.run();
 		}
 	}
 }

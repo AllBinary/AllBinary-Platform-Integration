@@ -71,10 +71,10 @@ public class Alert extends Screen
 		super(title);
 		super.setUI(DeviceFactory.getDevice().getUIFactory().createAlertUI(this));
 		
-		setTimeout(getDefaultTimeout());
-		setString(alertText);
-		setImage(alertImage);
-		setType(alertType);
+		this.setTimeout(getDefaultTimeout());
+		this.setString(alertText);
+		this.setImage(alertImage);
+		this.setType(alertType);
 		super.addCommand(Alert.DISMISS_COMMAND);
 		super.setCommandListener(defaultListener);
 	}
@@ -111,19 +111,19 @@ public class Alert extends Screen
 
 	public String getString()
 	{
-		return alertContent.getText();
+		return this.alertContent.getText();
 	}
 
 
 	public int getTimeout()
 	{
-		return time;
+		return this.time;
 	}
 
 
   public AlertType getType()
   {
-    return type;
+    return this.type;
   }
   
   
@@ -145,7 +145,7 @@ public class Alert extends Screen
 
 	public Image getImage()
 	{
-		return alertContent.getImage();
+		return this.alertContent.getImage();
 	}
 
 
@@ -163,7 +163,7 @@ public class Alert extends Screen
 	}
 	
 	public Gauge getIndicator() {
-		return indicator;
+		return this.indicator;
 	}
 	
 	public void setIndicator(Gauge indicator) {
@@ -212,11 +212,11 @@ public class Alert extends Screen
 
 	public void setTimeout(int time)
 	{
-	    if (time != FOREVER && time <= 0) {
+	    if (time != Alert.FOREVER && time <= 0) {
 	      throw new IllegalArgumentException();
 	    }
 	    // XXX stop timeout thread!
-		if (time != FOREVER && getCommands().size() > 1)
+		if (time != Alert.FOREVER && getCommands().size() > 1)
 			time = FOREVER;
 	    
 	    this.time = time;
@@ -225,14 +225,14 @@ public class Alert extends Screen
 
 	private int getContentHeight()
 	{
-		return alertContent.getHeight();
+		return this.alertContent.getHeight();
 	}
 
 
         @Override
 	int paintContent(Graphics g)
 	{
-		return alertContent.paint(g);
+		return this.alertContent.paint(g);
 	}
 
         @Override

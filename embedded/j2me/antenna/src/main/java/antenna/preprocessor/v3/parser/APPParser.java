@@ -92,7 +92,7 @@ public class APPParser extends Parser {
         return this.adaptor;
     }
 
-    public String[] getTokenNames() { return tokenNames; }
+    public String[] getTokenNames() { return APPParser.tokenNames; }
     public String getGrammarFileName() { return "src/antenna/preprocessor/v3/parser/APP.g"; }
 
     
@@ -187,7 +187,7 @@ public class APPParser extends Parser {
             root_0 = (Object)this.adaptor.nil();
 
             set3=(Token)input.LT(1);
-            if ( (input.LA(1)>=TRUE && input.LA(1)<=FALSE) ) {
+            if ( (input.LA(1)>=APPParser.TRUE && input.LA(1)<=APPParser.FALSE) ) {
                 input.consume();
                 if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set3));
                 errorRecovery=false;failed=false;
@@ -246,23 +246,23 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:159:6: ( SYMBOL | STRING | NUMBER | r_boolean )
             int alt1=4;
             switch ( input.LA(1) ) {
-            case SYMBOL:
+            case APPParser.SYMBOL:
                 {
                 alt1=1;
                 }
                 break;
-            case STRING:
+            case APPParser.STRING:
                 {
                 alt1=2;
                 }
                 break;
-            case NUMBER:
+            case APPParser.NUMBER:
                 {
                 alt1=3;
                 }
                 break;
-            case TRUE:
-            case FALSE:
+            case APPParser.TRUE:
+            case APPParser.FALSE:
                 {
                 alt1=4;
                 }
@@ -378,10 +378,10 @@ public class APPParser extends Parser {
             int alt2=2;
             int LA2_0 = input.LA(1);
 
-            if ( ((LA2_0>=TRUE && LA2_0<=FALSE)||(LA2_0>=SYMBOL && LA2_0<=STRING)) ) {
+            if ( ((LA2_0>=APPParser.TRUE && LA2_0<=APPParser.FALSE)||(LA2_0>=APPParser.SYMBOL && LA2_0<=APPParser.STRING)) ) {
                 alt2=1;
             }
-            else if ( (LA2_0==LPAR) ) {
+            else if ( (LA2_0==APPParser.LPAR) ) {
                 alt2=2;
             }
             else {
@@ -472,7 +472,7 @@ public class APPParser extends Parser {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( (LA3_0==NOT) ) {
+                if ( (LA3_0==APPParser.NOT) ) {
                     alt3=1;
                 }
 
@@ -569,7 +569,7 @@ public class APPParser extends Parser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( ((LA5_0>=AT && LA5_0<=GTE)||LA5_0==EQ) ) {
+            if ( ((LA5_0>=APPParser.AT && LA5_0<=APPParser.GTE)||LA5_0==APPParser.EQ) ) {
                 alt5=1;
             }
             switch (alt5) {
@@ -579,37 +579,37 @@ public class APPParser extends Parser {
                     // src/antenna/preprocessor/v3/parser/APP.g:168:15: ( AT | EQ | NEQ | LT | GT | LTE | GTE )
                     int alt4=7;
                     switch ( input.LA(1) ) {
-                    case AT:
+                    case APPParser.AT:
                         {
                         alt4=1;
                         }
                         break;
-                    case EQ:
+                    case APPParser.EQ:
                         {
                         alt4=2;
                         }
                         break;
-                    case NEQ:
+                    case APPParser.NEQ:
                         {
                         alt4=3;
                         }
                         break;
-                    case LT:
+                    case APPParser.LT:
                         {
                         alt4=4;
                         }
                         break;
-                    case GT:
+                    case APPParser.GT:
                         {
                         alt4=5;
                         }
                         break;
-                    case LTE:
+                    case APPParser.LTE:
                         {
                         alt4=6;
                         }
                         break;
-                    case GTE:
+                    case APPParser.GTE:
                         {
                         alt4=7;
                         }
@@ -779,7 +779,7 @@ public class APPParser extends Parser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==AND) ) {
+                if ( (LA6_0==APPParser.AND) ) {
                     alt6=1;
                 }
 
@@ -866,7 +866,7 @@ public class APPParser extends Parser {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( (LA7_0==XOR) ) {
+                if ( (LA7_0==APPParser.XOR) ) {
                     alt7=1;
                 }
 
@@ -953,7 +953,7 @@ public class APPParser extends Parser {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==OR) ) {
+                if ( (LA8_0==APPParser.OR) ) {
                     alt8=1;
                 }
 
@@ -1032,7 +1032,7 @@ public class APPParser extends Parser {
                 int alt9=2;
                 int LA9_0 = input.LA(1);
 
-                if ( ((LA9_0>=DOT && LA9_0<=CHAR)||(LA9_0>=SYMBOL && LA9_0<=61)) ) {
+                if ( ((LA9_0>=APPParser.DOT && LA9_0<=APPParser.CHAR)||(LA9_0>=APPParser.SYMBOL && LA9_0<=61)) ) {
                     alt9=1;
                 }
 
@@ -1042,7 +1042,7 @@ public class APPParser extends Parser {
             	    // src/antenna/preprocessor/v3/parser/APP.g:176:13: ~ EOL
             	    {
             	    set32=(Token)input.LT(1);
-            	    if ( (input.LA(1)>=DOT && input.LA(1)<=CHAR)||(input.LA(1)>=SYMBOL && input.LA(1)<=61) ) {
+            	    if ( (input.LA(1)>=APPParser.DOT && input.LA(1)<=APPParser.CHAR)||(input.LA(1)>=APPParser.SYMBOL && input.LA(1)<=61) ) {
             	        input.consume();
             	        if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set32));
             	        errorRecovery=false;failed=false;
@@ -1112,7 +1112,7 @@ public class APPParser extends Parser {
             root_0 = (Object)this.adaptor.nil();
 
             set33=(Token)input.LT(1);
-            if ( (input.LA(1)>=DEBUG && input.LA(1)<=FATAL) ) {
+            if ( (input.LA(1)>=APPParser.DEBUG && input.LA(1)<=APPParser.FATAL) ) {
                 input.consume();
                 if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set33));
                 errorRecovery=false;failed=false;
@@ -1215,47 +1215,47 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:184:13: ( ( DEFINE define | UNDEFINE SYMBOL | ( IF | ELIF | CONDITION ) expression ) | ( IFDEF | IFNDEF | ELIFDEF | ELIFNDEF ) SYMBOL | ( ENDIF | ELSE | ENDINCLUDE ) | ( INCLUDE (~ EOL )+ ) | ( EXPAND (~ EOL )+ ) | ( ( DEBUG | MDEBUG ) ( debug_level )? ) | ENDDEBUG )
             int alt14=7;
             switch ( input.LA(1) ) {
-            case DEFINE:
-            case UNDEFINE:
-            case IF:
-            case ELIF:
-            case CONDITION:
+            case APPParser.DEFINE:
+            case APPParser.UNDEFINE:
+            case APPParser.IF:
+            case APPParser.ELIF:
+            case APPParser.CONDITION:
                 {
                 alt14=1;
                 }
                 break;
-            case IFDEF:
-            case IFNDEF:
-            case ELIFDEF:
-            case ELIFNDEF:
+            case APPParser.IFDEF:
+            case APPParser.IFNDEF:
+            case APPParser.ELIFDEF:
+            case APPParser.ELIFNDEF:
                 {
                 alt14=2;
                 }
                 break;
-            case ENDIF:
-            case ELSE:
-            case ENDINCLUDE:
+            case APPParser.ENDIF:
+            case APPParser.ELSE:
+            case APPParser.ENDINCLUDE:
                 {
                 alt14=3;
                 }
                 break;
-            case INCLUDE:
+            case APPParser.INCLUDE:
                 {
                 alt14=4;
                 }
                 break;
-            case EXPAND:
+            case APPParser.EXPAND:
                 {
                 alt14=5;
                 }
                 break;
-            case DEBUG:
-            case MDEBUG:
+            case APPParser.DEBUG:
+            case APPParser.MDEBUG:
                 {
                 alt14=6;
                 }
                 break;
-            case ENDDEBUG:
+            case APPParser.ENDDEBUG:
                 {
                 alt14=7;
                 }
@@ -1275,19 +1275,19 @@ public class APPParser extends Parser {
                     // src/antenna/preprocessor/v3/parser/APP.g:185:17: ( DEFINE define | UNDEFINE SYMBOL | ( IF | ELIF | CONDITION ) expression )
                     int alt10=3;
                     switch ( input.LA(1) ) {
-                    case DEFINE:
+                    case APPParser.DEFINE:
                         {
                         alt10=1;
                         }
                         break;
-                    case UNDEFINE:
+                    case APPParser.UNDEFINE:
                         {
                         alt10=2;
                         }
                         break;
-                    case IF:
-                    case ELIF:
-                    case CONDITION:
+                    case APPParser.IF:
+                    case APPParser.ELIF:
+                    case APPParser.CONDITION:
                         {
                         alt10=3;
                         }
@@ -1340,7 +1340,7 @@ public class APPParser extends Parser {
                             // src/antenna/preprocessor/v3/parser/APP.g:188:17: ( IF | ELIF | CONDITION ) expression
                             {
                             set39=(Token)input.LT(1);
-                            if ( (input.LA(1)>=IF && input.LA(1)<=CONDITION) ) {
+                            if ( (input.LA(1)>=APPParser.IF && input.LA(1)<=APPParser.CONDITION) ) {
                                 input.consume();
                                 if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set39));
                                 errorRecovery=false;failed=false;
@@ -1370,7 +1370,7 @@ public class APPParser extends Parser {
                     // src/antenna/preprocessor/v3/parser/APP.g:189:17: ( IFDEF | IFNDEF | ELIFDEF | ELIFNDEF ) SYMBOL
                     {
                     set41=(Token)input.LT(1);
-                    if ( (input.LA(1)>=IFDEF && input.LA(1)<=ELIFNDEF) ) {
+                    if ( (input.LA(1)>=APPParser.IFDEF && input.LA(1)<=APPParser.ELIFNDEF) ) {
                         input.consume();
                         if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set41));
                         errorRecovery=false;failed=false;
@@ -1395,7 +1395,7 @@ public class APPParser extends Parser {
                     // src/antenna/preprocessor/v3/parser/APP.g:190:17: ( ENDIF | ELSE | ENDINCLUDE )
                     {
                     set43=(Token)input.LT(1);
-                    if ( (input.LA(1)>=ENDIF && input.LA(1)<=ENDINCLUDE) ) {
+                    if ( (input.LA(1)>=APPParser.ENDIF && input.LA(1)<=APPParser.ENDINCLUDE) ) {
                         input.consume();
                         if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set43));
                         errorRecovery=false;failed=false;
@@ -1429,7 +1429,7 @@ public class APPParser extends Parser {
                         int alt11=2;
                         int LA11_0 = input.LA(1);
 
-                        if ( ((LA11_0>=DOT && LA11_0<=CHAR)||(LA11_0>=SYMBOL && LA11_0<=61)) ) {
+                        if ( ((LA11_0>=APPParser.DOT && LA11_0<=APPParser.CHAR)||(LA11_0>=APPParser.SYMBOL && LA11_0<=61)) ) {
                             alt11=1;
                         }
 
@@ -1439,7 +1439,7 @@ public class APPParser extends Parser {
                     	    // src/antenna/preprocessor/v3/parser/APP.g:191:27: ~ EOL
                     	    {
                     	    set45=(Token)input.LT(1);
-                    	    if ( (input.LA(1)>=DOT && input.LA(1)<=CHAR)||(input.LA(1)>=SYMBOL && input.LA(1)<=61) ) {
+                    	    if ( (input.LA(1)>=APPParser.DOT && input.LA(1)<=APPParser.CHAR)||(input.LA(1)>=APPParser.SYMBOL && input.LA(1)<=61) ) {
                     	        input.consume();
                     	        if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set45));
                     	        errorRecovery=false;failed=false;
@@ -1490,7 +1490,7 @@ public class APPParser extends Parser {
                         int alt12=2;
                         int LA12_0 = input.LA(1);
 
-                        if ( ((LA12_0>=DOT && LA12_0<=CHAR)||(LA12_0>=SYMBOL && LA12_0<=61)) ) {
+                        if ( ((LA12_0>=APPParser.DOT && LA12_0<=APPParser.CHAR)||(LA12_0>=APPParser.SYMBOL && LA12_0<=61)) ) {
                             alt12=1;
                         }
 
@@ -1500,7 +1500,7 @@ public class APPParser extends Parser {
                     	    // src/antenna/preprocessor/v3/parser/APP.g:192:26: ~ EOL
                     	    {
                     	    set47=(Token)input.LT(1);
-                    	    if ( (input.LA(1)>=DOT && input.LA(1)<=CHAR)||(input.LA(1)>=SYMBOL && input.LA(1)<=61) ) {
+                    	    if ( (input.LA(1)>=APPParser.DOT && input.LA(1)<=APPParser.CHAR)||(input.LA(1)>=APPParser.SYMBOL && input.LA(1)<=61) ) {
                     	        input.consume();
                     	        if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set47));
                     	        errorRecovery=false;failed=false;
@@ -1539,7 +1539,7 @@ public class APPParser extends Parser {
                     // src/antenna/preprocessor/v3/parser/APP.g:193:18: ( DEBUG | MDEBUG ) ( debug_level )?
                     {
                     set48=(Token)input.LT(1);
-                    if ( input.LA(1)==DEBUG||input.LA(1)==MDEBUG ) {
+                    if ( input.LA(1)==APPParser.DEBUG||input.LA(1)==APPParser.MDEBUG ) {
                         input.consume();
                         if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set48));
                         errorRecovery=false;failed=false;
@@ -1555,7 +1555,7 @@ public class APPParser extends Parser {
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
-                    if ( ((LA13_0>=DEBUG && LA13_0<=FATAL)) ) {
+                    if ( ((LA13_0>=APPParser.DEBUG && LA13_0<=APPParser.FATAL)) ) {
                         alt13=1;
                     }
                     switch (alt13) {
@@ -1598,7 +1598,7 @@ public class APPParser extends Parser {
             }
 
             set51=(Token)input.LT(1);
-            if ( input.LA(1)==EOF||input.LA(1)==EOL ) {
+            if ( input.LA(1)==APPParser.EOF||input.LA(1)==APPParser.EOL ) {
                 input.consume();
                 errorRecovery=false;failed=false;
             }
@@ -1701,7 +1701,7 @@ public class APPParser extends Parser {
             root_0 = (Object)this.adaptor.nil();
 
             set53=(Token)input.LT(1);
-            if ( (input.LA(1)>=UNSET && input.LA(1)<=ADD_IF_NEW) ) {
+            if ( (input.LA(1)>=APPParser.UNSET && input.LA(1)<=APPParser.ADD_IF_NEW) ) {
                 input.consume();
                 if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set53));
                 errorRecovery=false;failed=false;
@@ -1757,10 +1757,10 @@ public class APPParser extends Parser {
             int alt15=2;
             int LA15_0 = input.LA(1);
 
-            if ( ((LA15_0>=TRUE && LA15_0<=FALSE)||(LA15_0>=SYMBOL && LA15_0<=STRING)) ) {
+            if ( ((LA15_0>=APPParser.TRUE && LA15_0<=APPParser.FALSE)||(LA15_0>=APPParser.SYMBOL && LA15_0<=APPParser.STRING)) ) {
                 alt15=1;
             }
-            else if ( ((LA15_0>=DEBUG && LA15_0<=FATAL)) ) {
+            else if ( ((LA15_0>=APPParser.DEBUG && LA15_0<=APPParser.FATAL)) ) {
                 alt15=2;
             }
             else {
@@ -1851,7 +1851,7 @@ public class APPParser extends Parser {
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( ((LA16_0>=UNSET && LA16_0<=ADD_IF_NEW)) ) {
+            if ( ((LA16_0>=APPParser.UNSET && LA16_0<=APPParser.ADD_IF_NEW)) ) {
                 alt16=1;
             }
             switch (alt16) {
@@ -1885,7 +1885,7 @@ public class APPParser extends Parser {
             int alt17=2;
             int LA17_0 = input.LA(1);
 
-            if ( (LA17_0==EQ) ) {
+            if ( (LA17_0==APPParser.EQ) ) {
                 alt17=1;
             }
             switch (alt17) {
@@ -1955,10 +1955,10 @@ public class APPParser extends Parser {
             int alt20=2;
             int LA20_0 = input.LA(1);
 
-            if ( (LA20_0==EOF||LA20_0==EOL) ) {
+            if ( (LA20_0==APPParser.EOF||LA20_0==APPParser.EOL) ) {
                 alt20=1;
             }
-            else if ( ((LA20_0>=UNSET && LA20_0<=ADD_IF_NEW)||LA20_0==SYMBOL) ) {
+            else if ( ((LA20_0>=APPParser.UNSET && LA20_0<=APPParser.ADD_IF_NEW)||LA20_0==APPParser.SYMBOL) ) {
                 alt20=2;
             }
             else {
@@ -1975,7 +1975,7 @@ public class APPParser extends Parser {
                     root_0 = (Object)this.adaptor.nil();
 
                     set61=(Token)input.LT(1);
-                    if ( input.LA(1)==EOF||input.LA(1)==EOL ) {
+                    if ( input.LA(1)==APPParser.EOF||input.LA(1)==APPParser.EOL ) {
                         input.consume();
                         if ( backtracking==0 ) adaptor.addChild(root_0, adaptor.create(set61));
                         errorRecovery=false;failed=false;
@@ -2006,7 +2006,7 @@ public class APPParser extends Parser {
                         int alt18=2;
                         int LA18_0 = input.LA(1);
 
-                        if ( (LA18_0==COMMA) ) {
+                        if ( (LA18_0==APPParser.COMMA) ) {
                             alt18=1;
                         }
 
@@ -2035,7 +2035,7 @@ public class APPParser extends Parser {
                     int alt19=2;
                     int LA19_0 = input.LA(1);
 
-                    if ( (LA19_0==EOL) ) {
+                    if ( (LA19_0==APPParser.EOL) ) {
                         alt19=1;
                     }
                     switch (alt19) {

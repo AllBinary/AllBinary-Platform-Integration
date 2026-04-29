@@ -52,7 +52,7 @@ public class ConnectorImpl extends ConnectorAdapter {
 	// TODO make this configurable
 	public static boolean debugConnectionInvocations = false;
 
-	private final boolean needPrivilegedCalls = isWebstart();
+	private final boolean needPrivilegedCalls = ConnectorImpl.isWebstart();
 
 	public ConnectorImpl() {
 		//acc = AccessController.getContext();
@@ -71,10 +71,10 @@ public class ConnectorImpl extends ConnectorAdapter {
 		try {
 //			return (Connection) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 //				public Object run() throws IOException {
-					if (debugConnectionInvocations || this.needPrivilegedCalls) {
-						return openSecureProxy(name, mode, timeouts, needPrivilegedCalls);
+					if (ConnectorImpl.debugConnectionInvocations || this.needPrivilegedCalls) {
+						return this.openSecureProxy(name, mode, timeouts, needPrivilegedCalls);
 					} else {
-						return openSecure(name, mode, timeouts);
+						return this.openSecure(name, mode, timeouts);
 					}
 //				}
 //			}, acc);
@@ -102,9 +102,9 @@ public class ConnectorImpl extends ConnectorAdapter {
 
 	private Connection openSecureProxy(String name, int mode, boolean timeouts, boolean needPrivilegedCalls)
 			throws IOException {
-		Connection origConnection = openSecure(name, mode, timeouts);
+		Connection origConnection = this.openSecure(name, mode, timeouts);
 		Class connectionClass = null;
-		Class[] interfaces = getAllInterfaces(origConnection.getClass());
+		Class[] interfaces = ConnectorImpl.getAllInterfaces(origConnection.getClass());
 		for (int i = 0; i < interfaces.length; i++) {
 			if (Connection.class.isAssignableFrom(interfaces[i])) {
 				connectionClass = interfaces[i];

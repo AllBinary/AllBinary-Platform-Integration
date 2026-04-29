@@ -114,10 +114,10 @@ public class Number3d
 		float cosRY = (float) Math.cos((double) angle);
 		float sinRY = (float) Math.sin((double) angle);
 
-		_temp.setAll(this.x, this.y, this.z); 
+		Number3d._temp.setAll(this.x, this.y, this.z); 
 
-		this.y = (_temp.y*cosRY)-(_temp.z*sinRY);
-		this.z = (_temp.y*sinRY)+(_temp.z*cosRY);
+		this.y = (Number3d._temp.y*cosRY)-(Number3d._temp.z*sinRY);
+		this.z = (Number3d._temp.y*sinRY)+(Number3d._temp.z*cosRY);
 	}
 	
 	public void rotateYSlow(float angle)
@@ -125,10 +125,10 @@ public class Number3d
 		float cosRY = (float) Math.cos((double) angle);
 		float sinRY = (float) Math.sin((double) angle);
 
-		_temp.setAll(this.x, this.y, this.z); 
+		Number3d._temp.setAll(this.x, this.y, this.z); 
 		
-		this.x = (_temp.x*cosRY)+(_temp.z*sinRY);
-		this.z = (_temp.x*-sinRY)+(_temp.z*cosRY);
+		this.x = (Number3d._temp.x*cosRY)+(Number3d._temp.z*sinRY);
+		this.z = (Number3d._temp.x*-sinRY)+(Number3d._temp.z*cosRY);
 	}
 	
 	public void rotateZSlow(float angle)
@@ -136,10 +136,10 @@ public class Number3d
 		float cosRY = (float) Math.cos((double) angle);
 		float sinRY = (float) Math.sin((double) angle);
 
-		_temp.setAll(this.x, this.y, this.z); 		
+		Number3d._temp.setAll(this.x, this.y, this.z); 		
 
-		this.x = (_temp.x*cosRY)-(_temp.y*sinRY);
-		this.y = (_temp.x*sinRY)+(_temp.y*cosRY);
+		this.x = (Number3d._temp.x*cosRY)-(Number3d._temp.y*sinRY);
+		this.y = (Number3d._temp.x*sinRY)+(Number3d._temp.y*cosRY);
 	}
 	
     public void append(final StringMaker stringBuffer) {

@@ -97,7 +97,7 @@ public class SwingMIDletHelper extends PlatformMIDletHelper
      * @return the accessControlContext
      */
     public AccessControlContext getAccessControlContext() {
-        return accessControlContext;
+        return this.accessControlContext;
     }
 
     public void exit() throws Exception {

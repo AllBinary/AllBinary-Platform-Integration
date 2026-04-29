@@ -73,7 +73,7 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
 	public AndroidDeviceDisplay(Activity activity, EmulatorContext context, int width, int height) {
 		this.activity = activity;
 		this.context = context;
-		setSize(width, height);
+		this.setSize(width, height);
 	}
 	
     public void setActivity(ViewCompositeInterface activity)
@@ -101,7 +101,7 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
 			throw new IOException(name + " could not be found.");
 		}
 
-		return createImage(is);
+		return this.createImage(is);
 	}
 
 	public Image createImage(Image source) {
@@ -235,7 +235,7 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
 		final PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "");
 		wakeLock.acquire();
 		
-		flashBackLightTimer.schedule(new TimerTask() {
+		this.flashBackLightTimer.schedule(new TimerTask() {
 
 			@Override
 			public void run() {
@@ -248,21 +248,21 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
     }
 
 	public int getFullHeight() {
-		return displayRectangleHeight;
+		return this.displayRectangleHeight;
 	}
 
 	public int getFullWidth() {
-		return displayRectangleWidth;
+		return this.displayRectangleWidth;
 	}
 
 	public int getHeight() {
 		// TODO Auto-generated method stub
-		return displayRectangleHeight;
+		return this.displayRectangleHeight;
 	}
 
 	public int getWidth() {
 		// TODO Auto-generated method stub
-		return displayRectangleWidth;
+		return this.displayRectangleWidth;
 	}
 
 	public boolean isColor() {
@@ -283,7 +283,7 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
 	}
 
 	public void repaint(int x, int y, int width, int height) {
-		paintDisplayable(x, y, width, height);
+		this.paintDisplayable(x, y, width, height);
 	}
 
 	public void setScrollDown(boolean arg0) {
@@ -297,15 +297,15 @@ public class AndroidDeviceDisplay extends DeviceDisplay {
 	}
 	
 	public void addDisplayRepaintListener(DisplayRepaintListener listener) {
-	    displayRepaintListeners.add(listener);
+	    this.displayRepaintListeners.add(listener);
 	}
 
     public void removeDisplayRepaintListener(DisplayRepaintListener listener) {
-        displayRepaintListeners.remove(listener);
+        this.displayRepaintListeners.remove(listener);
     }
 
 	public void paintDisplayable(int x, int y, int width, int height) {
-        rectangle.left = x;
+        this.rectangle.left = x;
         this.rectangle.top = y;
         this.rectangle.right = x + width;
         this.rectangle.bottom = y + height;

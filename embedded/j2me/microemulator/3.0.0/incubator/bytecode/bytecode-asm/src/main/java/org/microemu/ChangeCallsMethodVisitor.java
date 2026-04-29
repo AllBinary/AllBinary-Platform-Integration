@@ -6,11 +6,11 @@ import org.objectweb.asm.Opcodes;
 
 public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
 
-	static String NEW_SYSTEM_OUT_CLASS = codeName(OutputStreamRedirector.class);
+	static String NEW_SYSTEM_OUT_CLASS = ChangeCallsMethodVisitor.codeName(OutputStreamRedirector.class);
 	
-	static String NEW_SYSTEM_PROPERTIES_CLASS = codeName(SystemProperties.class);
+	static String NEW_SYSTEM_PROPERTIES_CLASS = ChangeCallsMethodVisitor.codeName(SystemProperties.class);
 	
-	static String NEW_RESOURCE_LOADER_CLASS = codeName(ResourceLoader.class);
+	static String NEW_RESOURCE_LOADER_CLASS = ChangeCallsMethodVisitor.codeName(ResourceLoader.class);
 	
 	public ChangeCallsMethodVisitor(MethodVisitor mv) {
 		super(mv);

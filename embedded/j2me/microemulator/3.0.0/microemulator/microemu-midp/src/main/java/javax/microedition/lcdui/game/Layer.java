@@ -35,9 +35,9 @@ public class Layer {
     private boolean visible;
     
     Layer(int x, int y, int width, int height, boolean visible) {
-        setSize(width, height);
-        setPosition(x, y);
-        setVisible(visible);
+        this.setSize(width, height);
+        this.setPosition(x, y);
+        this.setVisible(visible);
     }
     
     // package access to modify from Sprite
@@ -50,23 +50,23 @@ public class Layer {
     }
     
     public final int getWidth() {
-        return width;
+        return this.width;
     }
     
     public final int getHeight() {
-        return height;
+        return this.height;
     }
     
     public final int getX() {
-        return x;
+        return this.x;
     }
     
     public final int getY() {
-        return y;
+        return this.y;
     }
     
     public final boolean isVisible() {
-        return visible;
+        return this.visible;
     }
     
     public void move(int dx, int dy) {

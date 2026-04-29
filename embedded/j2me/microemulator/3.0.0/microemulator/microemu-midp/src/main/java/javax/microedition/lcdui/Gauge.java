@@ -61,8 +61,8 @@ public class Gauge extends Item
 
 		this.interactive = interactive;
 
-		setMaxValue(maxValue);
-		setValue(initialValue);
+		this.setMaxValue(maxValue);
+		this.setValue(initialValue);
 	}
 
 
@@ -81,7 +81,7 @@ public class Gauge extends Item
 					// start thread or whatever it needs to be done
 					if (value == Gauge.INCREMENTAL_UPDATING
 							&& this.value == Gauge.INCREMENTAL_UPDATING) {
-						updateIndefiniteFrame();
+						this.updateIndefiniteFrame();
 					} else {
 						this.value = value;
 						repaint();
@@ -106,7 +106,7 @@ public class Gauge extends Item
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidGaugeUI")) {
 			return ((GaugeUI) ui).getValue();
 		} else {
-			return value;
+			return this.value;
 		}
 	}
 
@@ -118,7 +118,7 @@ public class Gauge extends Item
 		
 		if (maxValue > 0) {
 			this.maxValue = maxValue;
-			setValue(getValue());
+			this.setValue(getValue());
 		} else {
 			if (isInteractive()) {
 				throw new IllegalArgumentException();
@@ -141,13 +141,13 @@ public class Gauge extends Item
 
 
   	public int getMaxValue() {
-		return maxValue;
+		return this.maxValue;
 	}
 
 
   public boolean isInteractive()
   {
-    return interactive;
+    return this.interactive;
   }
 
 
@@ -163,7 +163,7 @@ public class Gauge extends Item
 			  ((getValue() == Gauge.CONTINUOUS_RUNNING) ||
 			  (getValue() == Gauge.INCREMENTAL_UPDATING))) {
 		  if (this.indefiniteFrame+1 < Gauge.IDEFINITE_FRAMES)
-			  indefiniteFrame++;
+			  this.indefiniteFrame++;
 		  else 
 			  this.indefiniteFrame = 0;
 		  repaint();
@@ -175,14 +175,14 @@ public class Gauge extends Item
   @Override
   public int getHeight()
 	{
-		return super.getHeight() + HEIGHT;
+		return super.getHeight() + Gauge.HEIGHT;
 	}
 
   //TWB - made public
         @Override
 	public boolean isFocusable()
 	{
-		return interactive;
+		return this.interactive;
 	}
 
   //TWB - made public
@@ -190,10 +190,10 @@ public class Gauge extends Item
   public void keyPressed(int keyCode)
   {
     if (Display.getGameAction(keyCode) == Canvas.LEFT && this.value > 0) {
-      value--;
+      this.value--;
       repaint();
-    } else if (Display.getGameAction(keyCode) == Canvas.RIGHT && value < maxValue) {
-      value++;
+    } else if (Display.getGameAction(keyCode) == Canvas.RIGHT && this.value < this.maxValue) {
+      this.value++;
       repaint();
     }
   }
@@ -234,7 +234,7 @@ public class Gauge extends Item
     }
     
 	g.translate(0, -super.getHeight());
-    return getHeight();
+    return this.getHeight();
   }
 
 //TWB - made public
@@ -250,7 +250,7 @@ public class Gauge extends Item
 		}
 		if (gameKeyCode == Canvas.DOWN) {
 			if (getHeight() > bottom) {
-				return getHeight() - bottom;
+				return this.getHeight() - bottom;
 			} else {
 				return Item.OUTOFITEM;
 			}

@@ -48,14 +48,14 @@ public class RecordStoreChangePanel extends SwingDialogPanel {
 
 	protected void showNotify() {
 		if (this.common.getRecordStoreManager() instanceof FileRecordStoreManager) {
-			selectStoreCombo.setSelectedIndex(0);
+			this.selectStoreCombo.setSelectedIndex(0);
 		} else {
-			selectStoreCombo.setSelectedIndex(1);
+			this.selectStoreCombo.setSelectedIndex(1);
 		}
 	}
 
 	public String getSelectedRecordStoreName() {
-		return (String) selectStoreCombo.getSelectedItem();
+		return (String) this.selectStoreCombo.getSelectedItem();
 	}
 
 }

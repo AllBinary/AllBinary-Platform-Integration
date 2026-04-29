@@ -46,7 +46,7 @@ public class J2SETextBoxUI extends DisplayableImplUI implements TextBoxUI {
 
 	public String getString() {
 		// TODO not yet used
-		return text;
+		return this.text;
 	}
 
 	public void setString(String text) {

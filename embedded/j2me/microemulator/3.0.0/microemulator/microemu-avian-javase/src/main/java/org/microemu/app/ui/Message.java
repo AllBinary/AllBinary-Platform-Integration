@@ -61,7 +61,7 @@ public class Message {
      */
     public static void error(String title, String text) {
         Logger.error("Message: " + title + ": " + text);
-        callListeners(ERROR, title, text, null);
+        Message.callListeners(ERROR, title, text, null);
     }
 
     /**
@@ -71,7 +71,7 @@ public class Message {
      */
     public static void error(String text) {
         Logger.error("Message: Error: " + text);
-        callListeners(ERROR, "Error", text, null);
+        Message.callListeners(ERROR, "Error", text, null);
     }
     
     /**
@@ -82,12 +82,12 @@ public class Message {
      */
     public static void error(String title, String text, Throwable throwable) {
         Logger.error("Message: " + title + ": " + text, throwable);
-        callListeners(ERROR, title, text, throwable);
+        Message.callListeners(ERROR, title, text, throwable);
     }
 
     public static void error(String text, Throwable throwable) {
         Logger.error("Message: Error : " + text, throwable);
-        callListeners(ERROR, "Error", text, throwable);
+        Message.callListeners(ERROR, "Error", text, throwable);
     }
     
     /**
@@ -97,7 +97,7 @@ public class Message {
      */
     public static void info(String text) {
         Logger.info("Message: info: " + text);
-        callListeners(INFO, "Info", text, null);
+        Message.callListeners(INFO, "Info", text, null);
     }
 
     /**
@@ -107,7 +107,7 @@ public class Message {
      */
     public static void warn(String text) {
         Logger.warn("Message: warn: " + text);
-        callListeners(INFO, "Warning", text, null);
+        Message.callListeners(INFO, "Warning", text, null);
     }
     
     /**
@@ -119,18 +119,18 @@ public class Message {
 		if (throwable.getCause() == null) {
 			return throwable.toString();
 		} else {
-			return getCauseMessage(throwable.getCause());
+			return Message.getCauseMessage(throwable.getCause());
 		}
     }
     
     private static void callListeners(int level, String title, String text, Throwable throwable) {
-		for (Iterator iter = listeners.iterator(); iter.hasNext();) {
+		for (Iterator iter = Message.listeners.iterator(); iter.hasNext();) {
 			MessageListener a = (MessageListener) iter.next();
 			a.showMessage(level, title, text, throwable);
 		};
 	}
 	
 	public static void addListener(MessageListener newListener) {
-		listeners.add(newListener);
+		Message.listeners.add(newListener);
 	}
 }

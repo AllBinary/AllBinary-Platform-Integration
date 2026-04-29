@@ -85,7 +85,7 @@ public class Item
     Item(String label) {
 		labelComponent = new StringComponent(label);
 		this.commands = new Vector();
-		setPreferredSize(-1, -1);
+		this.setPreferredSize(-1, -1);
 	}
 	
     void setUI(ItemUI ui) {
@@ -111,35 +111,35 @@ public class Item
 	          // Not inserted just place it at the end
 	              this.commands.addElement(cmd);
 	        }
-	    	repaintOwner();
+	    	this.repaintOwner();
         }
 
 	}
   
 	public String getLabel()
 	{
-		return labelComponent.getText();
+		return this.labelComponent.getText();
 	}
 
 	public int getLayout() {
-		return layout;
+		return this.layout;
 	}
 	
 	public int getMinimumHeight() {
 		if (this.labelComponent != null)
-			return labelComponent.getHeight();
+			return this.labelComponent.getHeight();
 		else 
 			return 0;
     }
 
     public int getMinimumWidth() {
-    	return getMaximumWidth();
+    	return this.getMaximumWidth();
     }
     
     public int getPreferredHeight() {
         int ret = this.prefHeight;
-        int min = getMinimumHeight();
-        int max = getMaximumHeight();
+        int min = this.getMinimumHeight();
+        int max = this.getMaximumHeight();
 
         if (ret == -1)
         	return min;
@@ -153,8 +153,8 @@ public class Item
 
     public int getPreferredWidth() {
         int ret = this.prefWidth;
-        int min = getMinimumWidth();
-        int max = getMaximumWidth();
+        int min = this.getMinimumWidth();
+        int max = this.getMaximumWidth();
         
         if (ret == -1)
         	return max;
@@ -168,7 +168,7 @@ public class Item
 
     //TWB changed to displayable
 	public void notifyStateChanged() {
-		Displayable owner = getOwner();
+		Displayable owner = this.getOwner();
 		if (owner != null && owner instanceof Form) {
 			Form form = (Form) owner;
 			form.fireItemStateListener(this);
@@ -177,26 +177,26 @@ public class Item
     }
 
 	public void removeCommand(Command cmd) {
-        commands.removeElement(cmd);
+        this.commands.removeElement(cmd);
         if (this.defaultCommand == cmd)
         	this.defaultCommand = null;
-        repaintOwner();
+        this.repaintOwner();
     }
 	
     public void setDefaultCommand(Command cmd) {
         
-        ui.setDefaultCommand(cmd);
+        this.ui.setDefaultCommand(cmd);
         
         this.defaultCommand = cmd;
         if (cmd != null) {
             // we should repaint even if the command was added
             // because the command layout could become different
             if (this.commands.contains(cmd))
-            	addCommand(cmd);
+            	this.addCommand(cmd);
             else 
-            	repaintOwner();
+            	this.repaintOwner();
         } else {
-        	repaintOwner();
+        	this.repaintOwner();
         }
     }
 
@@ -209,7 +209,7 @@ public class Item
     	this.ui.setLabel(label);
     	
 		this.labelComponent.setText(label);
-		repaint();
+		this.repaint();
 	}
 
     public void setLayout(int layout) {
@@ -220,14 +220,14 @@ public class Item
     	// layout policies can't generate conflict
     	// because the center is the or of the two
     	// others (ie VCENTER == (LEFT | RIGHT))
-    	if ((( (layout & LAYOUT_SHRINK) != 0) &&
-    		  ((layout & LAYOUT_EXPAND) != 0)) ||
-    			( ((layout & LAYOUT_VSHRINK) != 0) &&
-    	    	(layout & LAYOUT_VEXPAND) != 0) )
+    	if ((( (layout & Item.LAYOUT_SHRINK) != 0) &&
+    		  ((layout & Item.LAYOUT_EXPAND) != 0)) ||
+    			( ((layout & Item.LAYOUT_VSHRINK) != 0) &&
+    	    	(layout & Item.LAYOUT_VEXPAND) != 0) )
     		throw new IllegalArgumentException(
     				"Bad combination of layout policies");
 		this.layout = layout;
-    	repaint();
+    	this.repaint();
     }
 
     public void setPreferredSize(int width, int height) {
@@ -236,7 +236,7 @@ public class Item
         }
         this.prefWidth = width;
         this.prefHeight = height;
-        repaint();
+        this.repaint();
     }
 
     //
@@ -246,7 +246,7 @@ public class Item
     // repaint the owner of this item (if any)
     //TWB changed to displayable
     void repaintOwner() {
-        Displayable owner = getOwner();
+        Displayable owner = this.getOwner();
         if (owner != null)
         	owner.repaint();
     }
@@ -254,7 +254,7 @@ public class Item
     //TWB - made public
   public int getHeight()
 	{
-		return labelComponent.getHeight();
+		return this.labelComponent.getHeight();
 	}
 	
 	//TWB - made public
@@ -293,7 +293,7 @@ public class Item
         //TWB - made public
 	public boolean hasFocus()
 	{
-		return focus;
+		return this.focus;
 	}
   
         //TWB - made public
@@ -305,7 +305,7 @@ public class Item
   //TWB - made public
   public Displayable getOwner()
   {
-    return owner;
+    return this.owner;
   }
 
   //TWB - made public
@@ -314,7 +314,7 @@ public class Item
 		this.owner = owner;
 
 		if (owner == null) {
-			setFocus(false);
+			this.setFocus(false);
 		}
 	}
 
@@ -342,7 +342,7 @@ public class Item
 //TWB - made public
 	public int getMaximumHeight() {
 		if (this.owner != null) {
-			return owner.getHeight() * 10;
+			return this.owner.getHeight() * 10;
 		} else {
 			return DeviceFactory.getDevice().getDeviceDisplay().getHeight() * 10;
 		}
@@ -351,7 +351,7 @@ public class Item
 	//TWB - made public
 	public int getMaximumWidth() {
 		if (this.owner != null) {
-			return owner.getWidth() - 3;
+			return this.owner.getWidth() - 3;
 		} else {
 			return DeviceFactory.getDevice().getDeviceDisplay().getWidth() - 3;
 		}

@@ -99,7 +99,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 		for (Enumeration e = commands.elements(); e.hasMoreElements();) {
 			String tmp = (String) e.nextElement();
 			try {
-				addCommandType(Command.class.getField(tmp).getInt(null));
+				this.addCommandType(Command.class.getField(tmp).getInt(null));
 			} catch (Exception ex) {
 				System.err.println("a3" + ex);
 			}
@@ -120,7 +120,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 	}
 
 	public int getType() {
-		return type;
+		return this.type;
 	}
 
 	/**
@@ -141,15 +141,15 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 	 * @return The command value
 	 */
 	public Command getCommand() {
-		return command;
+		return this.command;
 	}
 
 	public Rectangle getPaintable() {
-		return paintable;
+		return this.paintable;
 	}
 
 	public boolean isVisible() {
-		return visible;
+		return this.visible;
 	}
 
 	public void setVisible(boolean state) {
@@ -157,7 +157,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 	}
 
 	public boolean isPressed() {
-		return pressed;
+		return this.pressed;
 	}
 
 	public void setPressed(boolean state) {
@@ -190,7 +190,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 						g.setFont(buttonFont.getFont());
 					}
 					FontMetrics metrics = g.getFontMetrics();
-					if (this.alignment == RIGHT) {
+					if (this.alignment == J2SESoftButton.RIGHT) {
 						xoffset = paintable.width - metrics.stringWidth(this.command.getLabel()) - 1;
 					}
 					if (this.pressed) {
@@ -202,7 +202,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 							- metrics.getDescent());
 				}
 			}
-		} else if (type == TYPE_ICON) {
+		} else if (this.type == TYPE_ICON) {
                         //J2SEImmutableImage
 			if (this.pressed) {
 				g.drawImage((java.awt.Image) this.pressedImage.getImage(), paintable.x, paintable.y, null);
@@ -224,7 +224,7 @@ public class J2SESoftButton extends J2SEButton implements SoftButton {
 	}
 
 	public void addCommandType(int commandType) {
-		commandTypes.addElement(new Integer(commandType));
+		this.commandTypes.addElement(new Integer(commandType));
 	}
 
 }

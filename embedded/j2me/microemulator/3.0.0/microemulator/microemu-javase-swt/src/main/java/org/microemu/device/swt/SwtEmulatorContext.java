@@ -53,7 +53,7 @@ public class SwtEmulatorContext implements EmulatorContext {
     }
 
     public static SwtEmulatorContext getInstance() {
-        return androidEmulatorContext;
+        return SwtEmulatorContext.androidEmulatorContext;
     }
 
     public DeviceDisplay getDeviceDisplay() {
@@ -61,11 +61,11 @@ public class SwtEmulatorContext implements EmulatorContext {
     }
 
     public InputMethod getDeviceInputMethod() {
-        return inputMethod;
+        return this.inputMethod;
     }
 
     public FontManager getDeviceFontManager() {
-        return fontManager;
+        return this.fontManager;
     }
 
     public DisplayComponent getDisplayComponent() {

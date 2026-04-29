@@ -95,28 +95,28 @@ public class VideoCaptureControl implements VideoControl {
 	 * @see javax.microedition.media.control.VideoControl#getDisplayHeight()
 	 */
 	public int getDisplayHeight() {
-		return m_displayHeight;
+		return this.m_displayHeight;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.microedition.media.control.VideoControl#getDisplayWidth()
 	 */
 	public int getDisplayWidth() {
-		return m_displayHeight;
+		return this.m_displayHeight;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.microedition.media.control.VideoControl#getDisplayX()
 	 */
 	public int getDisplayX() {
-		return m_displayX;
+		return this.m_displayX;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.microedition.media.control.VideoControl#getDisplayY()
 	 */
 	public int getDisplayY() {
-		return m_displayY;
+		return this.m_displayY;
 	}
 
 	/* (non-Javadoc)
@@ -126,7 +126,7 @@ public class VideoCaptureControl implements VideoControl {
 		BufferedImage image = new BufferedImage(this.m_sourceWidth, m_sourceHeight, BufferedImage.TYPE_INT_ARGB);
 		Image captureImage = Image.createImage(this.m_sourceWidth, m_sourceHeight);
 		// paint the simulated video frame onto a bitmap
-		doPaint(captureImage.getGraphics(), 0, 0, m_sourceWidth, 
+		this.doPaint(captureImage.getGraphics(), 0, 0, m_sourceWidth, 
 				m_sourceHeight);
 		int[] argb = new int[this.m_sourceWidth * m_sourceHeight];
 		// now read the RGB array
@@ -159,14 +159,14 @@ public class VideoCaptureControl implements VideoControl {
 	 * @see javax.microedition.media.control.VideoControl#getSourceHeight()
 	 */
 	public int getSourceHeight() {
-		return m_sourceHeight;
+		return this.m_sourceHeight;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.microedition.media.control.VideoControl#getSourceWidth()
 	 */
 	public int getSourceWidth() {
-		return m_sourceWidth;
+		return this.m_sourceWidth;
 	}
 
 	/* (non-Javadoc)
@@ -180,7 +180,7 @@ public class VideoCaptureControl implements VideoControl {
 		Canvas canvas = (Canvas) obj;
 		this.m_canvas = canvas;
 		if (this.m_player.getState() == Player.STARTED) {
-			startVideo();
+			this.startVideo();
 		}
 		return null;
 	}
@@ -199,7 +199,7 @@ public class VideoCaptureControl implements VideoControl {
 	public void setDisplayLocation(int x, int y) {
 		this.m_displayX = x;
 		this.m_displayY = y;
-		repaintIfVisible();
+		this.repaintIfVisible();
 	}
 
 	/* (non-Javadoc)
@@ -208,7 +208,7 @@ public class VideoCaptureControl implements VideoControl {
 	public void setDisplaySize(int width, int height) throws MediaException {
 		this.m_displayWidth = width;
 		this.m_displayHeight = height;
-		repaintIfVisible();
+		this.repaintIfVisible();
 	}
 
 	private void repaintIfVisible() {
@@ -223,13 +223,13 @@ public class VideoCaptureControl implements VideoControl {
 	public void setVisible(boolean flag) {
 		this.m_visible = flag;
 		if (this.m_repaintThread == null) {
-			doStartVideo();
+			this.doStartVideo();
 		}
 	}
 
 	void startVideo() {
 		this.m_started = true;
-		doStartVideo();
+		this.doStartVideo();
 	}
 
 	private synchronized void doStartVideo() {
@@ -243,7 +243,7 @@ public class VideoCaptureControl implements VideoControl {
 
 	void stopVideo() {
 		this.m_started = false;
-		doStopVideo();
+		this.doStopVideo();
 	}
 
 	private synchronized void doStopVideo() {
@@ -279,10 +279,10 @@ public class VideoCaptureControl implements VideoControl {
 			m_stopped = true;
 		}
 		public void run() {
-			while (!m_stopped) {
+			while (!this.m_stopped) {
 				m_canvas.repaint(m_displayX, m_displayY, m_displayWidth, m_displayHeight);
 				try {
-					if (!m_stopped) {
+					if (!this.m_stopped) {
 						sleep(100);
 					}
 				} catch (InterruptedException e) {

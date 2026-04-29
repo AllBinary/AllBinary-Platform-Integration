@@ -30,7 +30,7 @@ public class JSONML {
         boolean keepStrings,
         int currentNestingDepth
     ) throws JSONException {
-        return parse(x,arrayForm, ja,
+        return JSONML.parse(x,arrayForm, ja,
             keepStrings ? JSONMLParserConfiguration.KEEP_STRINGS : JSONMLParserConfiguration.ORIGINAL,
             currentNestingDepth);
     }
@@ -211,7 +211,7 @@ public class JSONML {
                             throw x.syntaxError("Maximum nesting depth of " + config.getMaxNestingDepth() + " reached");
                         }
 
-                        closeTag = (String)parse(x, arrayForm, newja, config, currentNestingDepth + 1);
+                        closeTag = (String)JSONML.parse(x, arrayForm, newja, config, currentNestingDepth + 1);
                         if (closeTag != null) {
                             if (!closeTag.equals(tagName)) {
                                 throw x.syntaxError("Mismatched '" + tagName +
@@ -254,7 +254,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONArray
      */
     public static JSONArray toJSONArray(String string) throws JSONException {
-        return (JSONArray)parse(new XMLTokener(string), true, null, JSONMLParserConfiguration.ORIGINAL, 0);
+        return (JSONArray)JSONML.parse(new XMLTokener(string), true, null, JSONMLParserConfiguration.ORIGINAL, 0);
     }
 
 
@@ -276,7 +276,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONArray
      */
     public static JSONArray toJSONArray(String string, boolean keepStrings) throws JSONException {
-        return (JSONArray)parse(new XMLTokener(string), true, null, keepStrings, 0);
+        return (JSONArray)JSONML.parse(new XMLTokener(string), true, null, keepStrings, 0);
     }
 
 
@@ -301,7 +301,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONArray
      */
     public static JSONArray toJSONArray(String string, JSONMLParserConfiguration config) throws JSONException {
-        return (JSONArray)parse(new XMLTokener(string), true, null, config, 0);
+        return (JSONArray)JSONML.parse(new XMLTokener(string), true, null, config, 0);
     }
 
 
@@ -325,7 +325,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONArray
      */
     public static JSONArray toJSONArray(XMLTokener x, JSONMLParserConfiguration config) throws JSONException {
-        return (JSONArray)parse(x, true, null, config, 0);
+        return (JSONArray)JSONML.parse(x, true, null, config, 0);
     }
 
 
@@ -347,7 +347,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONArray
      */
     public static JSONArray toJSONArray(XMLTokener x, boolean keepStrings) throws JSONException {
-        return (JSONArray)parse(x, true, null, keepStrings, 0);
+        return (JSONArray)JSONML.parse(x, true, null, keepStrings, 0);
     }
 
 
@@ -364,7 +364,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONArray
      */
     public static JSONArray toJSONArray(XMLTokener x) throws JSONException {
-        return (JSONArray)parse(x, true, null, false, 0);
+        return (JSONArray)JSONML.parse(x, true, null, false, 0);
     }
 
 
@@ -382,7 +382,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONObject
      */
     public static JSONObject toJSONObject(String string) throws JSONException {
-        return (JSONObject)parse(new XMLTokener(string), false, null, false, 0);
+        return (JSONObject)JSONML.parse(new XMLTokener(string), false, null, false, 0);
     }
 
 
@@ -402,7 +402,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONObject
      */
     public static JSONObject toJSONObject(String string, boolean keepStrings) throws JSONException {
-        return (JSONObject)parse(new XMLTokener(string), false, null, keepStrings, 0);
+        return (JSONObject)JSONML.parse(new XMLTokener(string), false, null, keepStrings, 0);
     }
 
 
@@ -424,7 +424,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONObject
      */
     public static JSONObject toJSONObject(String string, JSONMLParserConfiguration config) throws JSONException {
-        return (JSONObject)parse(new XMLTokener(string), false, null, config, 0);
+        return (JSONObject)JSONML.parse(new XMLTokener(string), false, null, config, 0);
     }
 
 
@@ -442,7 +442,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONObject
      */
     public static JSONObject toJSONObject(XMLTokener x) throws JSONException {
-           return (JSONObject)parse(x, false, null, false, 0);
+           return (JSONObject)JSONML.parse(x, false, null, false, 0);
     }
 
 
@@ -462,7 +462,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONObject
      */
     public static JSONObject toJSONObject(XMLTokener x, boolean keepStrings) throws JSONException {
-           return (JSONObject)parse(x, false, null, keepStrings, 0);
+           return (JSONObject)JSONML.parse(x, false, null, keepStrings, 0);
     }
 
 
@@ -484,7 +484,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a JSONObject
      */
     public static JSONObject toJSONObject(XMLTokener x, JSONMLParserConfiguration config) throws JSONException {
-        return (JSONObject)parse(x, false, null, config, 0);
+        return (JSONObject)JSONML.parse(x, false, null, config, 0);
     }
 
 

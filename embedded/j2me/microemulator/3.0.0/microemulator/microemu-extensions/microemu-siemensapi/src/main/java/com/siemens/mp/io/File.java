@@ -42,7 +42,7 @@ public class File {
     
     public int close(int fileDescriptor) {
         //System.out.println("public int close(int fileDescriptor)"+files.elementAt(fileDescriptor));
-        files.setElementAt(null, fileDescriptor);
+        File.files.setElementAt(null, fileDescriptor);
         return 1;
     }
     
@@ -58,13 +58,13 @@ public class File {
     
     public static int delete(java.lang.String fileName) {
         //System.out.println("public static int delete(java.lang.String "+fileName+") ");
-        data.remove(fileName);
+        File.data.remove(fileName);
         return 1;
     }
     
     public static int exists(java.lang.String fileName) {
         //System.out.println("public static int exists(java.lang.String "+fileName+") "+data.containsKey(fileName));
-        if (data.containsKey(fileName.intern())||
+        if (File.data.containsKey(fileName.intern())||
         MIDletBridge.getCurrentMIDlet().getClass().getResourceAsStream(fileName)!=null
         ) return 1; else return -1;
     }
@@ -89,9 +89,9 @@ public class File {
         //System.out.println("public int open(java.lang.String "+fileName+")");
         
         
-        files.addElement(fileName.intern());
+        File.files.addElement(fileName.intern());
         byte[] s=new byte[0];
-        if (!data.containsKey(fileName)) {
+        if (!File.data.containsKey(fileName)) {
             data.put(fileName.intern(), new FileInfo(s));
             try {
                 InputStream is=MIDletBridge.getCurrentMIDlet().getClass().getResourceAsStream(fileName);
@@ -114,7 +114,7 @@ public class File {
                 e.printStackTrace();
             }
         }
-        return files.indexOf(fileName);
+        return File.files.indexOf(fileName);
     }
     
     public int read(int fileDescriptor, byte[] buf, int offset, int numBytes) {
@@ -135,7 +135,7 @@ public class File {
     
     public int seek(int fileDescriptor, int seekpos) {
         //System.out.println("public int seek(int fileDescriptor, int seekpos)");
-        ((FileInfo)data.get(files.elementAt(fileDescriptor))).seek=seekpos;
+        ((FileInfo)File.data.get(File.files.elementAt(fileDescriptor))).seek=seekpos;
         return 1;
     }
     

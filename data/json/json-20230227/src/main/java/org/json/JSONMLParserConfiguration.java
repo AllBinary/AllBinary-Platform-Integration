@@ -35,7 +35,7 @@ public class JSONMLParserConfiguration {
     /**
      * The maximum nesting depth when parsing a XML document to JSONML.
      */
-    private int maxNestingDepth = DEFAULT_MAXIMUM_NESTING_DEPTH;
+    private int maxNestingDepth = JSONMLParserConfiguration.DEFAULT_MAXIMUM_NESTING_DEPTH;
 
     /**
      * Default parser configuration. Does not keep strings (tries to implicitly convert values).
@@ -117,7 +117,7 @@ public class JSONMLParserConfiguration {
     public JSONMLParserConfiguration withMaxNestingDepth(int maxNestingDepth) {
         JSONMLParserConfiguration newConfig = this.clone();
 
-        if (maxNestingDepth > UNDEFINED_MAXIMUM_NESTING_DEPTH) {
+        if (maxNestingDepth > JSONMLParserConfiguration.UNDEFINED_MAXIMUM_NESTING_DEPTH) {
             newConfig.maxNestingDepth = maxNestingDepth;
         } else {
             newConfig.maxNestingDepth = UNDEFINED_MAXIMUM_NESTING_DEPTH;

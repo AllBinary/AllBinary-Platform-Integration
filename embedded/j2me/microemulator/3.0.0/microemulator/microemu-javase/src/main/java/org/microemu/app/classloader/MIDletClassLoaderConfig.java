@@ -51,21 +51,21 @@ public class MIDletClassLoaderConfig {
 
     public MIDletClassLoaderConfig() {
         this.delegationSelected = false;
-        this.delegationType = DELEGATION_STRICT;
+        this.delegationType = MIDletClassLoaderConfig.DELEGATION_STRICT;
     }
 
     public void setDelegationType(String delegationType) throws ConfigurationException {
         if ("strict".equalsIgnoreCase(delegationType)) {
-            this.delegationType = DELEGATION_STRICT;
+            this.delegationType = MIDletClassLoaderConfig.DELEGATION_STRICT;
         } else if ("relaxed".equalsIgnoreCase(delegationType)) {
-            this.delegationType = DELEGATION_RELAXED;
+            this.delegationType = MIDletClassLoaderConfig.DELEGATION_RELAXED;
         } else if ("delegating".equalsIgnoreCase(delegationType)) {
-            this.delegationType = DELEGATION_DELEGATING;
+            this.delegationType = MIDletClassLoaderConfig.DELEGATION_DELEGATING;
         } else if ("system".equalsIgnoreCase(delegationType)) {
             if ((this.appclasses.size() != 0) || (this.appclasspath.size() != 0)) {
                 throw new ConfigurationException("Can't extend system CLASSPATH");
             }
-            this.delegationType = DELEGATION_SYSTEM;
+            this.delegationType = MIDletClassLoaderConfig.DELEGATION_SYSTEM;
         } else {
             throw new ConfigurationException("Unknown delegationType [" + delegationType + "]");
         }
@@ -74,9 +74,9 @@ public class MIDletClassLoaderConfig {
 
     public int getDelegationType(boolean forJad) {
         if ((!this.delegationSelected) && (!forJad)) {
-            return DELEGATION_RELAXED;    
+            return MIDletClassLoaderConfig.DELEGATION_RELAXED;    
         } else {
-            return delegationType;
+            return this.delegationType;
         }
     }
     
@@ -85,14 +85,14 @@ public class MIDletClassLoaderConfig {
     }
 
     public void addAppClassPath(String path) throws ConfigurationException {
-        if (this.delegationType == DELEGATION_SYSTEM) {
+        if (this.delegationType == MIDletClassLoaderConfig.DELEGATION_SYSTEM) {
             throw new ConfigurationException("Can't extend system CLASSPATH");
         }
         this.appclasspath.add(path);
     }
 
     public void addAppClass(String className) throws ConfigurationException {
-        if (this.delegationType == DELEGATION_SYSTEM) {
+        if (this.delegationType == MIDletClassLoaderConfig.DELEGATION_SYSTEM) {
             throw new ConfigurationException("Can't extend system CLASSPATH");
         }
         this.appclasses.add(className);

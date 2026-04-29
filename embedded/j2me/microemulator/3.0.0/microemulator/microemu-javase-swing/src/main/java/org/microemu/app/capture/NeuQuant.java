@@ -33,7 +33,7 @@ public class NeuQuant {
 	protected static final int prime3 = 487;
 	protected static final int prime4 = 503;
 
-	protected static final int minpicturebytes = (3 * prime4);
+	protected static final int minpicturebytes = (3 * NeuQuant.prime4);
 	/* minimum size for input image */
 
 	/* Program Skeleton
@@ -51,38 +51,38 @@ public class NeuQuant {
 	/* Network Definitions
 	   ------------------- */
 
-	protected static final int maxnetpos = (netsize - 1);
+	protected static final int maxnetpos = (NeuQuant.netsize - 1);
 	protected static final int netbiasshift = 4; /* bias for colour values */
 	protected static final int ncycles = 100; /* no. of learning cycles */
 
 	/* defs for freq and bias */
 	protected static final int intbiasshift = 16; /* bias for fractions */
-	protected static final int intbias = (((int) 1) << intbiasshift);
+	protected static final int intbias = (((int) 1) << NeuQuant.intbiasshift);
 	protected static final int gammashift = 10; /* gamma = 1024 */
-	protected static final int gamma = (((int) 1) << gammashift);
+	protected static final int gamma = (((int) 1) << NeuQuant.gammashift);
 	protected static final int betashift = 10;
-	protected static final int beta = (intbias >> betashift); /* beta = 1/1024 */
+	protected static final int beta = (NeuQuant.intbias >> NeuQuant.betashift); /* beta = 1/1024 */
 	protected static final int betagamma =
-		(intbias << (gammashift - betashift));
+		(NeuQuant.intbias << (NeuQuant.gammashift - NeuQuant.betashift));
 
 	/* defs for decreasing radius factor */
-	protected static final int initrad = (netsize >> 3); /* for 256 cols, radius starts */
+	protected static final int initrad = (NeuQuant.netsize >> 3); /* for 256 cols, radius starts */
 	protected static final int radiusbiasshift = 6; /* at 32.0 biased by 6 bits */
-	protected static final int radiusbias = (((int) 1) << radiusbiasshift);
-	protected static final int initradius = (initrad * radiusbias); /* and decreases by a */
+	protected static final int radiusbias = (((int) 1) << NeuQuant.radiusbiasshift);
+	protected static final int initradius = (NeuQuant.initrad * NeuQuant.radiusbias); /* and decreases by a */
 	protected static final int radiusdec = 30; /* factor of 1/30 each cycle */
 
 	/* defs for decreasing alpha factor */
 	protected static final int alphabiasshift = 10; /* alpha starts at 1.0 */
-	protected static final int initalpha = (((int) 1) << alphabiasshift);
+	protected static final int initalpha = (((int) 1) << NeuQuant.alphabiasshift);
 
 	protected int alphadec; /* biased by 10 bits */
 
 	/* radbias and alpharadbias used for radpower calculation */
 	protected static final int radbiasshift = 8;
-	protected static final int radbias = (((int) 1) << radbiasshift);
-	protected static final int alpharadbshift = (alphabiasshift + radbiasshift);
-	protected static final int alpharadbias = (((int) 1) << alpharadbshift);
+	protected static final int radbias = (((int) 1) << NeuQuant.radbiasshift);
+	protected static final int alpharadbshift = (NeuQuant.alphabiasshift + NeuQuant.radbiasshift);
+	protected static final int alpharadbias = (((int) 1) << NeuQuant.alpharadbshift);
 
 	/* Types and Global Variables
 	-------------------------- */
@@ -98,10 +98,10 @@ public class NeuQuant {
 	protected int[] netindex = new int[256];
 	/* for network lookup - really 256 */
 
-	protected int[] bias = new int[netsize];
+	protected int[] bias = new int[NeuQuant.netsize];
 	/* bias and freq arrays for learning */
-	protected int[] freq = new int[netsize];
-	protected int[] radpower = new int[initrad];
+	protected int[] freq = new int[NeuQuant.netsize];
+	protected int[] radpower = new int[NeuQuant.initrad];
 	/* radpower for precomputation */
 
 	/* Initialise network in range (0,0,0) to (255,255,255) and set parameters
@@ -188,9 +188,9 @@ public class NeuQuant {
 				startpos = i;
 			}
 		}
-		this.netindex[previouscol] = (startpos + maxnetpos) >> 1;
+		this.netindex[previouscol] = (startpos + NeuQuant.maxnetpos) >> 1;
 		for (j = previouscol + 1; j < 256; j++)
-			this.netindex[j] = maxnetpos; /* really 256 */
+			this.netindex[j] = NeuQuant.maxnetpos; /* really 256 */
 	}
 	
 	/* Main Learning Loop
@@ -202,7 +202,7 @@ public class NeuQuant {
 		byte[] p;
 		int pix, lim;
 
-		if (this.lengthcount < minpicturebytes)
+		if (this.lengthcount < NeuQuant.minpicturebytes)
 			this.samplefac = 1;
 		this.alphadec = 30 + ((this.samplefac - 1) / 3);
 		p = this.thepicture;
@@ -222,15 +222,15 @@ public class NeuQuant {
 
 		//fprintf(stderr,"beginning 1D learning: initial radius=%d\n", rad);
 
-		if (this.lengthcount < minpicturebytes)
+		if (this.lengthcount < NeuQuant.minpicturebytes)
 			step = 3;
-		else if ((this.lengthcount % prime1) != 0)
+		else if ((this.lengthcount % NeuQuant.prime1) != 0)
 			step = 3 * prime1;
 		else {
-			if ((this.lengthcount % prime2) != 0)
+			if ((this.lengthcount % NeuQuant.prime2) != 0)
 				step = 3 * prime2;
 			else {
-				if ((this.lengthcount % prime3) != 0)
+				if ((this.lengthcount % NeuQuant.prime3) != 0)
 					step = 3 * prime3;
 				else
 					step = 3 * prime4;
@@ -242,11 +242,11 @@ public class NeuQuant {
 			b = (p[pix + 0] & 0xff) << netbiasshift;
 			g = (p[pix + 1] & 0xff) << netbiasshift;
 			r = (p[pix + 2] & 0xff) << netbiasshift;
-			j = contest(b, g, r);
+			j = this.contest(b, g, r);
 
-			altersingle(alpha, j, b, g, r);
+			this.altersingle(alpha, j, b, g, r);
 			if (rad != 0)
-				alterneigh(rad, j, b, g, r); /* alter neighbours */
+				this.alterneigh(rad, j, b, g, r); /* alter neighbours */
 
 			pix += step;
 			if (pix >= lim)
@@ -282,8 +282,8 @@ public class NeuQuant {
 		i = this.netindex[g]; /* index on g */
 		j = i - 1; /* start at this.netindex[g] and work outwards */
 
-		while ((i < netsize) || (j >= 0)) {
-			if (i < netsize) {
+		while ((i < NeuQuant.netsize) || (j >= 0)) {
+			if (i < NeuQuant.netsize) {
 				p = this.network[i];
 				dist = p[1] - g; /* inx key */
 				if (dist >= bestd)
@@ -337,10 +337,10 @@ public class NeuQuant {
 		return (best);
 	}
 	public byte[] process() {
-		learn();
-		unbiasnet();
-		inxbuild();
-		return colorMap();
+		this.learn();
+		this.unbiasnet();
+		this.inxbuild();
+		return this.colorMap();
 	}
 	
 	/* Unbias network to give byte values 0..255 and record position i to prepare for sort
@@ -350,9 +350,9 @@ public class NeuQuant {
 		int i, j;
 
 		for (i = 0; i < netsize; i++) {
-			this.network[i][0] >>= netbiasshift;
-			this.network[i][1] >>= netbiasshift;
-			this.network[i][2] >>= netbiasshift;
+			this.network[i][0] >>= NeuQuant.netbiasshift;
+			this.network[i][1] >>= NeuQuant.netbiasshift;
+			this.network[i][2] >>= NeuQuant.netbiasshift;
 			this.network[i][3] = i; /* record colour no */
 		}
 	}
@@ -368,7 +368,7 @@ public class NeuQuant {
 		if (lo < -1)
 			lo = -1;
 		hi = i + rad;
-		if (hi > netsize)
+		if (hi > NeuQuant.netsize)
 			hi = netsize;
 
 		j = i + 1;
@@ -379,18 +379,18 @@ public class NeuQuant {
 			if (j < hi) {
 				p = this.network[j++];
 				try {
-					p[0] -= (a * (p[0] - b)) / alpharadbias;
-					p[1] -= (a * (p[1] - g)) / alpharadbias;
-					p[2] -= (a * (p[2] - r)) / alpharadbias;
+					p[0] -= (a * (p[0] - b)) / NeuQuant.alpharadbias;
+					p[1] -= (a * (p[1] - g)) / NeuQuant.alpharadbias;
+					p[2] -= (a * (p[2] - r)) / NeuQuant.alpharadbias;
 				} catch (Exception e) {
 				} // prevents 1.3 miscompilation
 			}
 			if (k > lo) {
 				p = this.network[k--];
 				try {
-					p[0] -= (a * (p[0] - b)) / alpharadbias;
-					p[1] -= (a * (p[1] - g)) / alpharadbias;
-					p[2] -= (a * (p[2] - r)) / alpharadbias;
+					p[0] -= (a * (p[0] - b)) / NeuQuant.alpharadbias;
+					p[1] -= (a * (p[1] - g)) / NeuQuant.alpharadbias;
+					p[2] -= (a * (p[2] - r)) / NeuQuant.alpharadbias;
 				} catch (Exception e) {
 				}
 			}
@@ -403,9 +403,9 @@ public class NeuQuant {
 
 		/* alter hit neuron */
 		int[] n = this.network[i];
-		n[0] -= (alpha * (n[0] - b)) / initalpha;
-		n[1] -= (alpha * (n[1] - g)) / initalpha;
-		n[2] -= (alpha * (n[2] - r)) / initalpha;
+		n[0] -= (alpha * (n[0] - b)) / NeuQuant.initalpha;
+		n[1] -= (alpha * (n[1] - g)) / NeuQuant.initalpha;
+		n[2] -= (alpha * (n[2] - r)) / NeuQuant.initalpha;
 	}
 	
 	/* Search for biased BGR values
@@ -450,10 +450,10 @@ public class NeuQuant {
 			}
 			betafreq = (this.freq[i] >> betashift);
 			this.freq[i] -= betafreq;
-			this.bias[i] += (betafreq << gammashift);
+			this.bias[i] += (betafreq << NeuQuant.gammashift);
 		}
-		this.freq[bestpos] += beta;
-		this.bias[bestpos] -= betagamma;
+		this.freq[bestpos] += NeuQuant.beta;
+		this.bias[bestpos] -= NeuQuant.betagamma;
 		return (bestbiaspos);
 	}
 }

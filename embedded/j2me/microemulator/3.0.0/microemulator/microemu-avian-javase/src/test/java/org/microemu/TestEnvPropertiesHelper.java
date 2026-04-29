@@ -9,7 +9,7 @@ import org.microemu.app.Config;
 
 public class TestEnvPropertiesHelper {
 
-	static final Properties utProperties = loadProperties(); 
+	static final Properties utProperties = TestEnvPropertiesHelper.loadProperties(); 
 	
 	static final String FILE_NAME = "tests.properties";
 	
@@ -18,7 +18,7 @@ public class TestEnvPropertiesHelper {
 	 * @return
 	 */
 	public static String getProperty(String key, String defaultValue) {
-		return utProperties.getProperty(key, defaultValue);
+		return TestEnvPropertiesHelper.utProperties.getProperty(key, defaultValue);
 	}
 
 	private static Properties loadProperties() {

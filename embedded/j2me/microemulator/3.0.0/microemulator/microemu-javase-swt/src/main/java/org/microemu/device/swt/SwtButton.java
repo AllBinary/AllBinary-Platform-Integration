@@ -56,7 +56,7 @@ public class SwtButton implements Button
   {
     this.name = name;
     this.shape = shape;
-    this.keyboardKey = parseKeyboardKey(keyName);
+    this.keyboardKey = this.parseKeyboardKey(keyName);
 
     if (keyCode == Integer.MIN_VALUE) {
 	    if (keyName != null) {
@@ -73,13 +73,13 @@ public class SwtButton implements Button
   
   public int getKeyboardKey()
   {
-	  return keyboardKey;
+	  return this.keyboardKey;
   }
   
   
   public int getKeyCode()
   {
-    return keyCode;
+    return this.keyCode;
   }
   
   
@@ -126,13 +126,13 @@ public class SwtButton implements Button
   
   public String getName()
   {
-    return name;
+    return this.name;
   }
 
   
   public Shape getShape()
   {
-    return shape;
+    return this.shape;
   }
   
   

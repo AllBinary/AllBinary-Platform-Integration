@@ -120,26 +120,26 @@ public class AnimatedGifEncoder {
 		try {
 			if (!this.sizeSet) {
 				// use first frame's size
-				setSize(im.getWidth(), im.getHeight());
+				this.setSize(im.getWidth(), im.getHeight());
 			}
 			this.image = im;
-			getImagePixels(); // convert to correct format if necessary
-			analyzePixels(); // build color table & map pixels
+			this.getImagePixels(); // convert to correct format if necessary
+			this.analyzePixels(); // build color table & map pixels
 			if (this.firstFrame) {
-				writeLSD(); // logical screen descriptior
-				writePalette(); // global color table
+				this.writeLSD(); // logical screen descriptior
+				this.writePalette(); // global color table
 				if (this.repeat >= 0) {
 					// use NS app extension to indicate reps
-					writeNetscapeExt();
+					this.writeNetscapeExt();
 				}
 			}
-			writeGraphicCtrlExt(); // write graphic control extension
-			writeImageDesc(); // image descriptor
+			this.writeGraphicCtrlExt(); // write graphic control extension
+			this.writeImageDesc(); // image descriptor
 			if (!this.firstFrame) {
-				writePalette(); // local color table
+				this.writePalette(); // local color table
 			}
-			writePixels(); // encode and write pixel data
-			firstFrame = false;
+			this.writePixels(); // encode and write pixel data
+			this.firstFrame = false;
 		} catch (IOException e) {
 			ok = false;
 		}
@@ -157,8 +157,8 @@ public class AnimatedGifEncoder {
 		boolean ok = true;
 		this.started = false;
 		try {
-			out.write(0x3b); // gif trailer
-			out.flush();
+			this.out.write(0x3b); // gif trailer
+			this.out.flush();
 			if (this.closeStream) {
 				this.out.close();
 			}
@@ -237,11 +237,11 @@ public class AnimatedGifEncoder {
 		this.closeStream = false;
 		this.out = os;
 		try {
-			writeString("GIF89a"); // header
+			this.writeString("GIF89a"); // header
 		} catch (IOException e) {
 			ok = false;
 		}
-		return started = ok;
+		return this.started = ok;
 	}
 	
 	/**
@@ -254,12 +254,12 @@ public class AnimatedGifEncoder {
 		boolean ok = true;
 		try {
 			this.out = new BufferedOutputStream(new FileOutputStream(file));
-			ok = start(this.out);
+			ok = this.start(this.out);
 			this.closeStream = true;
 		} catch (IOException e) {
 			ok = false;
 		}
-		return started = ok;
+		return this.started = ok;
 	}
 	
 	/**
@@ -294,7 +294,7 @@ public class AnimatedGifEncoder {
 		this.palSize = 7;
 		// get closest match to transparent color if specified
 		if (this.transparent != null) {
-			this.transIndex = findClosest(this.transparent);
+			this.transIndex = this.findClosest(this.transparent);
 		}
 	}
 	
@@ -333,11 +333,11 @@ public class AnimatedGifEncoder {
 		int h = this.image.getHeight();
 		int type = this.image.getType();
 		if ((w != this.width)
-			|| (h != height)
+			|| (h != this.height)
 			|| (type != BufferedImage.TYPE_3BYTE_BGR)) {
 			// create new image with right size/format
 			BufferedImage temp =
-				new BufferedImage(this.width, height, BufferedImage.TYPE_3BYTE_BGR);
+				new BufferedImage(this.width, this.height, BufferedImage.TYPE_3BYTE_BGR);
 			Graphics2D g = temp.createGraphics();
 			g.drawImage(this.image, 0, 0, null);
 			this.image = temp;
@@ -349,9 +349,9 @@ public class AnimatedGifEncoder {
 	 * Writes Graphic Control Extension
 	 */
 	protected void writeGraphicCtrlExt() throws IOException {
-		out.write(0x21); // extension introducer
-		out.write(0xf9); // GCE label
-		out.write(4); // data block size
+		this.out.write(0x21); // extension introducer
+		this.out.write(0xf9); // GCE label
+		this.out.write(4); // data block size
 		int transp, disp;
 		if (this.transparent == null) {
 			transp = 0;
@@ -366,36 +366,36 @@ public class AnimatedGifEncoder {
 		disp <<= 2;
 
 		// packed fields
-		out.write(0 | // 1:3 reserved
+		this.out.write(0 | // 1:3 reserved
 			   disp | // 4:6 disposal
 			      0 | // 7   user input - 0 = none
 		     transp); // 8   transparency flag
 
-		writeShort(delay); // delay x 1/100 sec
-		out.write(transIndex); // transparent color index
-		out.write(0); // block terminator
+		this.writeShort(delay); // delay x 1/100 sec
+		this.out.write(transIndex); // transparent color index
+		this.out.write(0); // block terminator
 	}
 	
 	/**
 	 * Writes Image Descriptor
 	 */
 	protected void writeImageDesc() throws IOException {
-		out.write(0x2c); // image separator
-		writeShort(0); // image position x,y = 0,0
-		writeShort(0);
-		writeShort(width); // image size
-		writeShort(height);
+		this.out.write(0x2c); // image separator
+		this.writeShort(0); // image position x,y = 0,0
+		this.writeShort(0);
+		this.writeShort(width); // image size
+		this.writeShort(height);
 		// packed fields
 		if (this.firstFrame) {
 			// no LCT  - GCT is used for first (or only) frame
 			this.out.write(0);
 		} else {
 			// specify normal LCT
-			out.write(0x80 | // 1 local color table  1=yes
+			this.out.write(0x80 | // 1 local color table  1=yes
 						 0 | // 2 interlace - 0=no
 						 0 | // 3 sorted - 0=no
 						 0 | // 4-5 reserved
-				   palSize); // 6-8 size of color table
+				   this.palSize); // 6-8 size of color table
 		}
 	}
 	
@@ -404,16 +404,16 @@ public class AnimatedGifEncoder {
 	 */
 	protected void writeLSD() throws IOException {
 		// logical screen size
-		writeShort(this.width);
-		writeShort(this.height);
+		this.writeShort(this.width);
+		this.writeShort(this.height);
 		// packed fields
-		out.write((0x80 | // 1   : global color table flag = 1 (gct used)
+		this.out.write((0x80 | // 1   : global color table flag = 1 (gct used)
 				   0x70 | // 2-4 : color resolution = 7
 				   0x00 | // 5   : gct sort flag = 0
-			   palSize)); // 6-8 : gct size
+			   this.palSize)); // 6-8 : gct size
 
-		out.write(0); // background color index
-		out.write(0); // pixel aspect ratio - assume 1:1
+		this.out.write(0); // background color index
+		this.out.write(0); // pixel aspect ratio - assume 1:1
 	}
 	
 	/**
@@ -421,14 +421,14 @@ public class AnimatedGifEncoder {
 	 * repeat count.
 	 */
 	protected void writeNetscapeExt() throws IOException {
-		out.write(0x21); // extension introducer
-		out.write(0xff); // app extension label
-		out.write(11); // block size
-		writeString("NETSCAPE" + "2.0"); // app id + auth code
-		out.write(3); // sub-block size
-		out.write(1); // loop sub-block id
-		writeShort(repeat); // loop count (extra iterations, 0=repeat forever)
-		out.write(0); // block terminator
+		this.out.write(0x21); // extension introducer
+		this.out.write(0xff); // app extension label
+		this.out.write(11); // block size
+		this.writeString("NETSCAPE" + "2.0"); // app id + auth code
+		this.out.write(3); // sub-block size
+		this.out.write(1); // loop sub-block id
+		this.writeShort(repeat); // loop count (extra iterations, 0=repeat forever)
+		this.out.write(0); // block terminator
 	}
 	
 	/**
@@ -447,7 +447,7 @@ public class AnimatedGifEncoder {
 	 */
 	protected void writePixels() throws IOException {
 		LZWEncoder encoder =
-			new LZWEncoder(width, height, indexedPixels, colorDepth);
+			new LZWEncoder(this.width, this.height, this.indexedPixels, this.colorDepth);
 		encoder.encode(this.out);
 	}
 	
@@ -455,7 +455,7 @@ public class AnimatedGifEncoder {
 	 *    Write 16-bit value to output stream, LSB first
 	 */
 	protected void writeShort(int value) throws IOException {
-		out.write(value & 0xff);
+		this.out.write(value & 0xff);
 		this.out.write((value >> 8) & 0xff);
 	}
 	

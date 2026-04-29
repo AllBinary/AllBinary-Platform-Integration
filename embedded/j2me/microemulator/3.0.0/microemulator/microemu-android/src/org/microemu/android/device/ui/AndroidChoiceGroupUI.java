@@ -254,7 +254,7 @@ System.out.println("AndroidChoiceGroupUI.isSelected(..) not synced");
 	
 	public void setSelectedFlags(boolean[] selectedArray) {
 		for (int i = 0; i < this.listAdapter.getCount(); ++i) {
-			setSelectedIndex(i, selectedArray[i]);
+			this.setSelectedIndex(i, selectedArray[i]);
 		}
 	}
 
@@ -263,7 +263,7 @@ System.out.println("AndroidChoiceGroupUI.getSelectedFlags(..) not synced");
 		int selectedItemsCount = 0;
 		
 		for (int i = 0; i < selectedArray.length; ++i) {
-			selectedArray[i] = (i < this.listAdapter.getCount()) ? isSelected(i) : false;
+			selectedArray[i] = (i < this.listAdapter.getCount()) ? this.isSelected(i) : false;
 			if (selectedArray[i]) {
 				++selectedItemsCount;
 			}
@@ -274,15 +274,15 @@ System.out.println("AndroidChoiceGroupUI.getSelectedFlags(..) not synced");
 	
 	public String getString(int elementNum) {
 		if (this.choiceType == Choice.POPUP) {
-			return listAdapter.getItem(elementNum).toString();
+			return this.listAdapter.getItem(elementNum).toString();
 		} else {
-			return (String) ((CompoundButton) listAdapter.getItem(elementNum)).getText();
+			return (String) ((CompoundButton) this.listAdapter.getItem(elementNum)).getText();
 		}
   }
 	
 	public void set(int elementNum, String stringPart, Image imagePart) {
 System.out.println("AndroidChoiceGroupUI.set(..) not synced");
-		View view = createView(stringPart, imagePart);
+		View view = this.createView(stringPart, imagePart);
 		if (this.listView instanceof LinearLayout) {
 			this.listView.removeViewAt(elementNum);
 			this.listView.addView(view, elementNum);
@@ -334,7 +334,7 @@ System.out.println("AndroidChoiceGroupUI.set(..) not synced");
 		}
 		
 		public AndroidChoiceGroupUI getUI() {
-			return ui;
+			return this.ui;
 		}
 		
 	}
@@ -357,8 +357,8 @@ System.out.println("AndroidChoiceGroupUI.set(..) not synced");
 		}
 
 		public void set(int position, View item) {
-			remove(position);
-			insert(position, item);
+			this.remove(position);
+			this.insert(position, item);
 			notifyDataSetChanged();
 		}
 
@@ -375,7 +375,7 @@ System.out.println("AndroidChoiceGroupUI.set(..) not synced");
 		}
 
 		public AndroidChoiceGroupUI getUI() {
-			return ui;
+			return this.ui;
 		}
 
 	}

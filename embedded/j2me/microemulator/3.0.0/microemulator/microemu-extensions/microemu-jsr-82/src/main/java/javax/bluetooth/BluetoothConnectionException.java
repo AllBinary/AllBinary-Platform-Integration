@@ -118,6 +118,6 @@ public class BluetoothConnectionException extends IOException {
 	 * 			defined in this class
 	 */
 	public int getStatus() {
-		return errorCode;
+		return this.errorCode;
 	}
 }

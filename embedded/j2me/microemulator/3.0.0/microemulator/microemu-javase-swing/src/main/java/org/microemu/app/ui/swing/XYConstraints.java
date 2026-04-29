@@ -54,7 +54,7 @@ public class XYConstraints implements Cloneable {
 	}
 
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	public void setX(int x) {
@@ -62,7 +62,7 @@ public class XYConstraints implements Cloneable {
 	}
 
 	public int getY() {
-		return y;
+		return this.y;
 	}
 
 	public void setY(int y) {
@@ -70,7 +70,7 @@ public class XYConstraints implements Cloneable {
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public void setWidth(int width) {
@@ -78,7 +78,7 @@ public class XYConstraints implements Cloneable {
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public void setHeight(int height) {
@@ -89,7 +89,7 @@ public class XYConstraints implements Cloneable {
 	 * Returns the hashcode for this XYConstraints.
 	 */
 	public int hashCode() {
-		return x ^ (this.y * 37) ^ (width * 43) ^ (height * 47);
+		return this.x ^ (this.y * 37) ^ (this.width * 43) ^ (this.height * 47);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class XYConstraints implements Cloneable {
 	public boolean equals(Object that) {
 		if (that instanceof XYConstraints) {
 			XYConstraints other = (XYConstraints) that;
-			return other.x == this.x && other.y == this.y && other.width == width && other.height == height;
+			return other.x == this.x && other.y == this.y && other.width == this.width && other.height == this.height;
 		}
 		return false;
 	}
@@ -108,6 +108,6 @@ public class XYConstraints implements Cloneable {
 	}
 
 	public String toString() {
-		return "XYConstraints[" + this.x + "," + this.y + "," + width + "," + height + "]";
+		return "XYConstraints[" + this.x + "," + this.y + "," + this.width + "," + this.height + "]";
 	}
 }

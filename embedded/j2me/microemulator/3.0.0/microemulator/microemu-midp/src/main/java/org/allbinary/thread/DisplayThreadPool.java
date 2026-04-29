@@ -27,7 +27,7 @@ public class DisplayThreadPool extends EmuThreadPool
 
     public static EmuThreadPool getInstance()
     {
-        return THREAD_POOL;
+        return DisplayThreadPool.THREAD_POOL;
     }
 
     public DisplayThreadPool(int total)

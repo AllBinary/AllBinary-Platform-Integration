@@ -14,7 +14,7 @@ public class CommandImplUI implements CommandUI {
 	}
 
 	public Command getCommand() {
-		return command;
+		return this.command;
 	}
 
 	public void setImage(Image image) {

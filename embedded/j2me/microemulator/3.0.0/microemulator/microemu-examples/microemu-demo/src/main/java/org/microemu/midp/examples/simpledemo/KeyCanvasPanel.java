@@ -59,7 +59,7 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 	boolean debug = true;
 	
 	static { 		
-		initActionNames();
+		KeyCanvasPanel.initActionNames();
 	}
 	
 	public KeyCanvasPanel() {
@@ -118,7 +118,7 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 			}
 		} else {
 			this.sameKeyCount = 1;
-			logEvent(String.valueOf(keyCode) + " " + getKeyName(keyCode));
+			this.logEvent(String.valueOf(keyCode) + " " + getKeyName(keyCode));
 		}
 		this.keyRepeatedTime = System.currentTimeMillis();
 		this.lastKeyCode = keyCode;
@@ -177,7 +177,7 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
 
 	
 	static String gameActionName(int gameAction) {
-		return (String)actionNames.get(new Integer(gameAction));
+		return (String)KeyCanvasPanel.actionNames.get(new Integer(gameAction));
 	}
 
 	String shortName(int keyCode) {
@@ -191,34 +191,34 @@ public class KeyCanvasPanel extends BaseExamplesCanvas {
     }
 	
 	private static void actionName(int gameAction, String name, String shortName) {
-		actionNames.put(new Integer(gameAction), name);
-		shortNames.put(new Integer(gameAction), shortName);
+		KeyCanvasPanel.actionNames.put(new Integer(gameAction), name);
+		KeyCanvasPanel.shortNames.put(new Integer(gameAction), shortName);
 	}
 	
 	private static void initActionNames() {
-		actionName(UP, "UP", "u");
-		actionName(DOWN, "DOWN", "d");
-		actionName(LEFT, "LEFT", "l");
-		actionName(RIGHT, "RIGHT", "r");
-		actionName(FIRE, "FIRE", "f");
+		KeyCanvasPanel.actionName(UP, "UP", "u");
+		KeyCanvasPanel.actionName(DOWN, "DOWN", "d");
+		KeyCanvasPanel.actionName(LEFT, "LEFT", "l");
+		KeyCanvasPanel.actionName(RIGHT, "RIGHT", "r");
+		KeyCanvasPanel.actionName(FIRE, "FIRE", "f");
 
-		actionName(GAME_A, "GAME_A", "a");
-		actionName(GAME_B, "GAME_B", "b");
-		actionName(GAME_C, "GAME_C", "c");
-		actionName(GAME_D, "GAME_D", "d");
+		KeyCanvasPanel.actionName(GAME_A, "GAME_A", "a");
+		KeyCanvasPanel.actionName(GAME_B, "GAME_B", "b");
+		KeyCanvasPanel.actionName(GAME_C, "GAME_C", "c");
+		KeyCanvasPanel.actionName(GAME_D, "GAME_D", "d");
 
-		actionName(KEY_NUM0, "KEY_NUM0", "0");
-		actionName(KEY_NUM1, "KEY_NUM1", "1");
-		actionName(KEY_NUM2, "KEY_NUM2", "2");
-		actionName(KEY_NUM3, "KEY_NUM3", "3");
-		actionName(KEY_NUM4, "KEY_NUM4", "4");
-		actionName(KEY_NUM5, "KEY_NUM5", "5");
-		actionName(KEY_NUM6, "KEY_NUM6", "6");
-		actionName(KEY_NUM7, "KEY_NUM7", "7");
-		actionName(KEY_NUM8, "KEY_NUM8", "8");
-		actionName(KEY_NUM9, "KEY_NUM9", "9");
-		actionName(KEY_STAR, "KEY_STAR", "*");
-		actionName(KEY_POUND, "KEY_POUND", "#");
+		KeyCanvasPanel.actionName(KEY_NUM0, "KEY_NUM0", "0");
+		KeyCanvasPanel.actionName(KEY_NUM1, "KEY_NUM1", "1");
+		KeyCanvasPanel.actionName(KEY_NUM2, "KEY_NUM2", "2");
+		KeyCanvasPanel.actionName(KEY_NUM3, "KEY_NUM3", "3");
+		KeyCanvasPanel.actionName(KEY_NUM4, "KEY_NUM4", "4");
+		KeyCanvasPanel.actionName(KEY_NUM5, "KEY_NUM5", "5");
+		KeyCanvasPanel.actionName(KEY_NUM6, "KEY_NUM6", "6");
+		KeyCanvasPanel.actionName(KEY_NUM7, "KEY_NUM7", "7");
+		KeyCanvasPanel.actionName(KEY_NUM8, "KEY_NUM8", "8");
+		KeyCanvasPanel.actionName(KEY_NUM9, "KEY_NUM9", "9");
+		KeyCanvasPanel.actionName(KEY_STAR, "KEY_STAR", "*");
+		KeyCanvasPanel.actionName(KEY_POUND, "KEY_POUND", "#");
 	}
 
 }

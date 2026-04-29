@@ -54,18 +54,18 @@ public class Launcher extends MIDlet implements CommandListener {
 	}
 
 	public static void addMIDletEntry(MIDletEntry entry) {
-		midletEntries.addElement(entry);
+		Launcher.midletEntries.addElement(entry);
 	}
 
 	public static void removeMIDletEntries() {
-		midletEntries.removeAllElements();
+		Launcher.midletEntries.removeAllElements();
 	}
 
 	public MIDletEntry getSelectedMidletEntry() {
 		if (this.menuList != null) {
 			int idx = this.menuList.getSelectedIndex();
-			if (!this.menuList.getString(idx).equals(NOMIDLETS)) {
-				return (MIDletEntry) midletEntries.elementAt(idx);
+			if (!this.menuList.getString(idx).equals(Launcher.NOMIDLETS)) {
+				return (MIDletEntry) Launcher.midletEntries.elementAt(idx);
 			}
 		}
 
@@ -83,7 +83,7 @@ public class Launcher extends MIDlet implements CommandListener {
 		this.menuList.addCommand(CMD_LAUNCH);
 		this.menuList.setCommandListener(this);
 
-		if (midletEntries.size() == 0) {
+		if (Launcher.midletEntries.size() == 0) {
 			this.menuList.append(NOMIDLETS, NullCanvas.NULL_IMAGE);
 		} else {
 			for (int i = 0; i < midletEntries.size(); i++) {
@@ -96,8 +96,8 @@ public class Launcher extends MIDlet implements CommandListener {
 
 	public void commandAction(Command c, Displayable d) {
 		if (d == this.menuList) {
-			if (c == List.SELECT_COMMAND || c == CMD_LAUNCH) {
-				MIDletEntry entry = getSelectedMidletEntry();
+			if (c == List.SELECT_COMMAND || c == Launcher.CMD_LAUNCH) {
+				MIDletEntry entry = this.getSelectedMidletEntry();
 				if (entry != null) {
 					this.common.initMIDlet(true, entry);
 				}

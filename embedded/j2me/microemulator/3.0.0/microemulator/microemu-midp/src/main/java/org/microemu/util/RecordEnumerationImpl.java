@@ -78,7 +78,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
         this.comparator = comparator;
         this.keepUpdated = keepUpdated;
 
-        rebuild();
+        this.rebuild();
 
         if (keepUpdated) {
         	recordStoreImpl.addRecordListener(recordListener);
@@ -88,7 +88,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
     @Override
     public int numRecords()
     {
-        return enumerationRecords.size();
+        return this.enumerationRecords.size();
     }
 
 
@@ -137,7 +137,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
             throw new InvalidRecordIDException();
         }
 
-        currentRecord--;
+        this.currentRecord--;
         byte[] result = ((EnumerationRecord) this.enumerationRecords .elementAt(this.currentRecord)).value;
 
         return result;
@@ -152,7 +152,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
             throw new InvalidRecordIDException();
         }
 
-        currentRecord--;
+        this.currentRecord--;
         int result = ((EnumerationRecord) this.enumerationRecords.elementAt(this.currentRecord)).recordId;
 
         return result;
@@ -243,7 +243,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
     {
         if (keepUpdated) {
             if (!this.keepUpdated) {
-                rebuild();
+                this.rebuild();
                 this.recordStoreImpl.addRecordListener(recordListener);
             }
         } else {
@@ -256,7 +256,7 @@ public class RecordEnumerationImpl implements RecordEnumeration
     @Override
     public boolean isKeptUpdated()
     {
-        return keepUpdated;
+        return this.keepUpdated;
     }
 
 

@@ -91,7 +91,7 @@ public class SwtDisplayComponent implements DisplayComponent
 	
 	public SwtMutableImage getDisplayImage()
 	{
-		return displayImage;
+		return this.displayImage;
 	}
 
 

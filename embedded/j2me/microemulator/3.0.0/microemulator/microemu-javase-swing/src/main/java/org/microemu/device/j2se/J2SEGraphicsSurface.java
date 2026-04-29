@@ -60,12 +60,12 @@ public class J2SEGraphicsSurface {
             final SampleModel sampleModel = new SinglePixelPackedSampleModel(
                     DataBuffer.TYPE_INT, width, height, new int[] { 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 });
             final WritableRaster raster = Raster.createWritableRaster(sampleModel, dataBuffer, new Point(0,0));
-            this.image = new BufferedImage(ALPHA_COLOR_MODEL, raster, true, new Hashtable());
+            this.image = new BufferedImage(J2SEGraphicsSurface.ALPHA_COLOR_MODEL, raster, true, new Hashtable());
         } else {
             final SampleModel sampleModel = new SinglePixelPackedSampleModel(
                     DataBuffer.TYPE_INT, width, height, new int[] { 0xff0000, 0x00ff00, 0x0000ff });             
             final WritableRaster raster = Raster.createWritableRaster(sampleModel, dataBuffer, new Point(0,0));  
-            this.image = new BufferedImage(NO_ALPHA_COLOR_MODEL, raster, false, new Hashtable());
+            this.image = new BufferedImage(J2SEGraphicsSurface.NO_ALPHA_COLOR_MODEL, raster, false, new Hashtable());
         }
             this.graphics = this.image.createGraphics();
         
@@ -80,15 +80,15 @@ public class J2SEGraphicsSurface {
 	}
 
 	public Graphics2D getGraphics() {
-		return graphics;
+		return this.graphics;
 	}
 
 	public BufferedImage getImage() {
-		return image;
+		return this.image;
 	}
 
 	public int[] getImageData() {
-		return imageData;
+		return this.imageData;
 	}
 
 }

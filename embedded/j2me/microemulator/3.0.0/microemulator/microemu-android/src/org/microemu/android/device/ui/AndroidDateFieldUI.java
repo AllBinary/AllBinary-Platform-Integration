@@ -94,7 +94,7 @@ public class AndroidDateFieldUI extends LinearLayout implements DateFieldUI {
 	}
 
 	public void setLabel(String label) {
-		labelView.setText(label);
+		this.labelView.setText(label);
 	}
 
 	public void setInputMode(final int mode) {

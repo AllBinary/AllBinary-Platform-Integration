@@ -47,7 +47,7 @@ public class Workarounds {
 				continue;
 			}
 			if (c < '0' || c > '9') {
-				throw numberFormatException;
+				throw Workarounds.numberFormatException;
 			}
 			// TODO Test long boundaries
 			result += (c - '0') * mul;
@@ -56,7 +56,7 @@ public class Workarounds {
 		
 		// Test if we have at least one digit
 		if (mul == 1) {
-			throw numberFormatException;
+			throw Workarounds.numberFormatException;
 		}
 		
 		if (minus) {

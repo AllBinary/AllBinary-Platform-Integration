@@ -79,9 +79,9 @@ public class ChoiceGroup extends Item implements Choice
 
 		for (int i = 0; i < stringElements.length; i++) {
 			if (imageElements == null) {
-				append(stringElements[i], null);
+				this.append(stringElements[i], null);
 			} else {
-				append(stringElements[i], imageElements[i]);
+				this.append(stringElements[i], imageElements[i]);
 			}
 		}
 	}
@@ -89,7 +89,7 @@ public class ChoiceGroup extends Item implements Choice
 	
         @Override
 	public int append(String stringPart, Image imagePart) {
-		insert(size(), stringPart, imagePart);
+		this.insert(size(), stringPart, imagePart);
 	
 		return (size() - 1);
 	}
@@ -105,9 +105,9 @@ public class ChoiceGroup extends Item implements Choice
 	
 			// Ensure that an item of an EXCLUSIVE list remains selected.
 			if ((Choice.EXCLUSIVE == this.choiceType || Choice.POPUP == this.choiceType)
-					&& items[itemNum].isSelected()) {
+					&& this.items[itemNum].isSelected()) {
 				if (this.numOfItems > 1) {
-					items[itemNum != 0 ? 0 : 1].setSelectedState(true);
+					this.items[itemNum != 0 ? 0 : 1].setSelectedState(true);
 				}
 			}
 	
@@ -116,9 +116,9 @@ public class ChoiceGroup extends Item implements Choice
 				System.arraycopy(items, itemNum + 1, items, itemNum, numOfItems
 						- itemNum - 1);
 			}
-			numOfItems--;
+			this.numOfItems--;
 			// clear the slot to allow garbage collection
-			items[this.numOfItems] = null;
+			this.items[this.numOfItems] = null;
 	
 			// Ensure highlighted item remains highlighted (if it wasn't just
 			// deleted).
@@ -133,7 +133,7 @@ public class ChoiceGroup extends Item implements Choice
 	
 			if (this.choiceType == Choice.POPUP)
 				this.popupList.delete(itemNum);
-			repaint();
+			this.repaint();
 		}
 	}
   
@@ -144,19 +144,19 @@ public class ChoiceGroup extends Item implements Choice
 		} else {
 			// clear the array to allow garbage collection
 			for (int i = 0; i < this.numOfItems; i++)
-				items[i] = null;
+				this.items[i] = null;
 			this.numOfItems = 0;
 			this.highlightedItemIndex = -1;
 			if (this.choiceType == Choice.POPUP)
 				this.popupList.deleteAll();
-			repaint();
+			this.repaint();
 		}
 	}
 
 
         @Override
   public int getFitPolicy() {
-	  return fitPolicy;
+	  return this.fitPolicy;
   }
   
   @Override
@@ -164,7 +164,7 @@ public class ChoiceGroup extends Item implements Choice
 		if (itemNum < 0 || itemNum >= this.numOfItems) {
 			throw new IndexOutOfBoundsException();
 		}
-		return items[itemNum].getFont();
+		return this.items[itemNum].getFont();
   }
   
   @Override
@@ -174,7 +174,7 @@ public class ChoiceGroup extends Item implements Choice
 			throw new IndexOutOfBoundsException();
 		}
 
-    return items[elementNum].getImage();
+    return this.items[elementNum].getImage();
   }
 
 
@@ -206,7 +206,7 @@ public class ChoiceGroup extends Item implements Choice
 			int selectedItemsCount = 0;
 
 			for (int i = 0; i < selectedArray.length; ++i) {
-				selectedArray[i] = (i < this.numOfItems) ? items[i].isSelected() : false;
+				selectedArray[i] = (i < this.numOfItems) ? this.items[i].isSelected() : false;
 				if (selectedArray[i]) {
 					++selectedItemsCount;
 				}
@@ -238,12 +238,12 @@ public class ChoiceGroup extends Item implements Choice
 				// isn't
 				// necessary to search for it.
 				for (int i = 0; i < this.numOfItems; ++i) {
-					if (items[i].isSelected())
+					if (this.items[i].isSelected())
 						return i;
 				}
 				break;
 			case Choice.IMPLICIT:
-				return highlightedItemIndex;
+				return this.highlightedItemIndex;
 			}
 			return -1;
 		}
@@ -265,7 +265,7 @@ public class ChoiceGroup extends Item implements Choice
 				throw new IndexOutOfBoundsException();
 			}
 
-			return items[elementNum].getText();
+			return this.items[elementNum].getText();
 		}
   }
 
@@ -286,26 +286,26 @@ public class ChoiceGroup extends Item implements Choice
 				this.popupList.insert(elementNum, stringPart, imagePart);
 			}
 
-			if (this.numOfItems == items.length /* no space left in item array */) {
+			if (this.numOfItems == this.items.length /* no space left in item array */) {
 				ChoiceItem newItems[] = new ChoiceItem[this.numOfItems + 4];
 				System.arraycopy(items, 0, newItems, 0, numOfItems);
-				items = newItems;
+				this.items = newItems;
 			}
 
 			System.arraycopy(items, elementNum, items, elementNum + 1, numOfItems - elementNum);
 
-			items[elementNum] = new ChoiceItem(null, imagePart, stringPart);
+			this.items[elementNum] = new ChoiceItem(null, imagePart, stringPart);
 
 			++numOfItems;
 
 			if (numOfItems == 1) {
 				this.highlightedItemIndex = 0;
 				if (Choice.EXCLUSIVE == this.choiceType || Choice.POPUP == this.choiceType) {
-					setSelectedIndex(0, true);
+					this.setSelectedIndex(0, true);
 				}
 			}
 
-			repaint();
+			this.repaint();
 		}
 	}
 
@@ -318,7 +318,7 @@ public class ChoiceGroup extends Item implements Choice
 				throw new IndexOutOfBoundsException();
 			}
 	
-			return items[elementNum].isSelected();
+			return this.items[elementNum].isSelected();
 		}
 	}
 
@@ -337,14 +337,14 @@ public class ChoiceGroup extends Item implements Choice
 				throw new NullPointerException();
 			}
 	
-			items[elementNum].setText(stringPart);
-			items[elementNum].setImage(imagePart);
+			this.items[elementNum].setText(stringPart);
+			this.items[elementNum].setImage(imagePart);
 	
 			if (this.choiceType == Choice.POPUP) {
 				this.popupList.set(elementNum, stringPart, imagePart);
 			}
 	
-			repaint();
+			this.repaint();
 		}
 	}
 
@@ -368,7 +368,7 @@ public class ChoiceGroup extends Item implements Choice
 		if (font == null) {
 			font = Font.getDefaultFont();
 		}
-		items[itemNum].setFont(font);
+		this.items[itemNum].setFont(font);
 		if (this.choiceType == Choice.POPUP) {
 			  this.popupList.setFont(itemNum, font);
 		}
@@ -392,19 +392,19 @@ public class ChoiceGroup extends Item implements Choice
 			}
 			if (this.choiceType == Choice.MULTIPLE) {
 				for (int i = 0; i < this.numOfItems; i++) {
-					setSelectedIndex(i, selectedArray[i]);
+					this.setSelectedIndex(i, selectedArray[i]);
 				}
 			} else {
 				int selectedItem = -1;
 				for (int i = 0; i < this.numOfItems; i++) {
 					if (selectedArray[i]) {
-						setSelectedIndex(i, true);
+						this.setSelectedIndex(i, true);
 						selectedItem = i;
 						break;
 					}
 				}
 				if (selectedItem == -1) {
-					setSelectedIndex(0, true);
+					this.setSelectedIndex(0, true);
 				}
 
 				if (this.choiceType == Choice.POPUP) {
@@ -428,19 +428,19 @@ public class ChoiceGroup extends Item implements Choice
 			if ((this.choiceType == Choice.EXCLUSIVE ||
 					this.choiceType == Choice.POPUP) && selected) {
 				for (int i = 0; i < this.numOfItems; i++) {
-					items[i].setSelectedState(elementNum == i);
+					this.items[i].setSelectedState(elementNum == i);
 				}
 				if (this.choiceType == Choice.POPUP) {
 				        this.popupList.setSelectedIndex(elementNum, true);
 			    }
-				 repaint();
-			} else if (choiceType == Choice.MULTIPLE) {
-				items[elementNum].setSelectedState(selected);
-				repaint();
-			} else if (choiceType == Choice.IMPLICIT) {
+				 this.repaint();
+			} else if (this.choiceType == Choice.MULTIPLE) {
+				this.items[elementNum].setSelectedState(selected);
+				this.repaint();
+			} else if (this.choiceType == Choice.IMPLICIT) {
 			    if (selected) {
-					items[elementNum].setSelectedState(selected);
-					repaint();
+					this.items[elementNum].setSelectedState(selected);
+					this.repaint();
 			    }
 			}
 		}
@@ -451,7 +451,7 @@ public class ChoiceGroup extends Item implements Choice
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).size();
 		} else {
-			return numOfItems;
+			return this.numOfItems;
 		}
 	}
 
@@ -514,7 +514,7 @@ public class ChoiceGroup extends Item implements Choice
 
 	int getItemHeight(int itemIndex)
 	{
-		return items[itemIndex].getHeight();
+		return this.items[itemIndex].getHeight();
 	}
 	
 
@@ -528,16 +528,16 @@ public class ChoiceGroup extends Item implements Choice
 		int translatedY = 0;
 		
 		if (this.choiceType == Choice.POPUP) {
-			int index = getSelectedIndex();
+			int index = this.getSelectedIndex();
 			if (index != -1) {
-				items[index].invertPaint(hasFocus());
-				items[index].paint(g);
+				this.items[index].invertPaint(hasFocus());
+				this.items[index].paint(g);
 			}
 			g.translate(0, -super.getHeight());
 		} else {
 			for (int i = 0; i < this.numOfItems; i++) {
-				items[i].invertPaint(i == this.highlightedItemIndex && hasFocus());
-				items[i].paint(g);
+				this.items[i].invertPaint(i == this.highlightedItemIndex && hasFocus());
+				this.items[i].paint(g);
 				g.translate(0, items[i].getHeight());
 				translatedY += items[i].getHeight();
 			}
@@ -545,7 +545,7 @@ public class ChoiceGroup extends Item implements Choice
 			g.translate(0, -super.getHeight());
 		}
 
-		return getHeight();
+		return this.getHeight();
   }
 
 
@@ -566,7 +566,7 @@ public class ChoiceGroup extends Item implements Choice
     	// state, in exclusive selects the highligthed
     	// and in implicit it does nothing
     	// Andres Navarro
-	    setSelectedIndex(this.highlightedItemIndex, !items[this.highlightedItemIndex].isSelected());
+	    this.setSelectedIndex(this.highlightedItemIndex, !items[this.highlightedItemIndex].isSelected());
     }
 
     return true;
@@ -589,7 +589,7 @@ public class ChoiceGroup extends Item implements Choice
 	    } else if (gameKeyCode == Canvas.DOWN) {
 	    	if (!action) {
 	    		int height = super.getHeight();
-				int index = getSelectedIndex();
+				int index = this.getSelectedIndex();
 				if (index != -1) {
 	    			height += items[index].getHeight();
 				}
@@ -597,7 +597,7 @@ public class ChoiceGroup extends Item implements Choice
 				if (height > bottom) {
 	    			return height - bottom;
 	    		} else {
-	    			repaint();
+	    			this.repaint();
 	    		}
 		     } else {
 		    	 return Item.OUTOFITEM;
@@ -607,7 +607,7 @@ public class ChoiceGroup extends Item implements Choice
 	    if (gameKeyCode == Canvas.UP) {
 	      if (this.highlightedItemIndex > 0) {
 					if (action) {
-						highlightedItemIndex--;
+						this.highlightedItemIndex--;
 					}
 					int height = super.getHeight();
 					for (int i = 0; i < this.highlightedItemIndex; i++) {
@@ -616,7 +616,7 @@ public class ChoiceGroup extends Item implements Choice
 					if (height < top) {
 						return height - top;
 					} else {
-						repaint();
+						this.repaint();
 					}
 	      } else {
 					if (top > 0) {
@@ -628,7 +628,7 @@ public class ChoiceGroup extends Item implements Choice
 	    }
 	    if (gameKeyCode == Canvas.DOWN) {
 	      if ((!action && this.highlightedItemIndex < this.numOfItems)
-	      		|| (action && highlightedItemIndex < (numOfItems - 1))) {
+	      		|| (action && highlightedItemIndex < (this.numOfItems - 1))) {
 					if (action) {
 						highlightedItemIndex++;
 					}
@@ -639,7 +639,7 @@ public class ChoiceGroup extends Item implements Choice
 					if (height > bottom) {
 						return height - bottom;
 					} else {
-						repaint();
+						this.repaint();
 					}
 	      } else {
 					return Item.OUTOFITEM;
@@ -669,12 +669,12 @@ public class ChoiceGroup extends Item implements Choice
     ChoiceItem(String label, Image image, String text)
     {
       super(label, image, text);
-      setSelectedState(false);
+      this.setSelectedState(false);
       font = Font.getDefaultFont();
     }
 
     Font getFont() {
-    	return font;
+    	return this.font;
     }
     
     @Override
@@ -683,7 +683,7 @@ public class ChoiceGroup extends Item implements Choice
                 this.img = img;
 		
                 int width = 0;
-                if (box != null) width+=box.getWidth();
+                if (this.box != null) width+=this.box.getWidth();
                 if (this.img != NullCanvas.NULL_IMAGE) width+=img.getWidth();
                 if (width > 0) width+=2;
                 stringComponent.setWidthDecreaser(width);
@@ -694,7 +694,7 @@ public class ChoiceGroup extends Item implements Choice
 	public int getHeight()
 	{
                 int height =  0;
-                if (box != null) height = box.getHeight();                
+                if (this.box != null) height = this.box.getHeight();                
 		if (img != NullCanvas.NULL_IMAGE && img.getHeight() > height) {
 			height = img.getHeight();
                 }
@@ -713,7 +713,7 @@ public class ChoiceGroup extends Item implements Choice
 		}
 
                 int widthAddition = 0;
-		if (box != null) {
+		if (this.box != null) {
 			g.drawImage(box, 0, 0, Graphics.LEFT | Graphics.TOP);
 			if (img != NullCanvas.NULL_IMAGE) {
                             widthAddition = box.getWidth();
@@ -745,7 +745,7 @@ public class ChoiceGroup extends Item implements Choice
     
     boolean isSelected()
     {
-      return selected;
+      return this.selected;
     }
 
     void setFont(Font f) {
@@ -753,8 +753,8 @@ public class ChoiceGroup extends Item implements Choice
 			throw new NullPointerException();
     	// only allow fonts of the same height
     	// for now (to simplify the layout)
-    	if (f.getHeight() == font.getHeight())
-    		font = f;
+    	if (f.getHeight() == this.font.getHeight())
+    		this.font = f;
     }
     
     void setSelectedState(boolean state)
@@ -763,7 +763,7 @@ public class ChoiceGroup extends Item implements Choice
       
       if (choiceType != Choice.IMPLICIT && choiceType != Choice.POPUP) {
           final ChoiceGroupImageFactory choiceGroupFactory = ChoiceGroupImageFactory.getInstance();
-            box = (Choice.EXCLUSIVE  == choiceType ? (state? choiceGroupFactory.imgRadioOn:choiceGroupFactory.imgRadioOff) : (state? choiceGroupFactory.imgMultiOn:choiceGroupFactory.imgMultiOff));
+            this.box = (Choice.EXCLUSIVE  == choiceType ? (state? choiceGroupFactory.imgRadioOn:choiceGroupFactory.imgRadioOff) : (state? choiceGroupFactory.imgMultiOn:choiceGroupFactory.imgMultiOff));
       }
     }
   }

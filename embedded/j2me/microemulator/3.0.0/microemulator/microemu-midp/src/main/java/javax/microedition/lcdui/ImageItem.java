@@ -55,17 +55,17 @@ public class ImageItem extends Item {
 
 		// may throw IllegalArgumentException
 		// (that is the intentended behaviour)
-		setLayout(layout);
+		this.setLayout(layout);
 		if (appearanceMode != ImageItem.PLAIN && appearanceMode != ImageItem.HYPERLINK
 				&& appearanceMode != ImageItem.BUTTON) {
 			throw new IllegalArgumentException();
 		}
 
-		setImage(img);
+		this.setImage(img);
 	}
 
 	public String getAltText() {
-		return altText;
+		return this.altText;
 	}
 
 	public int getAppearanceMode() {
@@ -73,7 +73,7 @@ public class ImageItem extends Item {
 	}
 
 	public Image getImage() {
-		return img;
+		return this.img;
 	}
 
         @Override
@@ -117,11 +117,11 @@ public class ImageItem extends Item {
 
 		if (this.img != null) {
 			g.translate(0, super.getHeight());
-			if (layout == LAYOUT_DEFAULT || layout == LAYOUT_LEFT) {
+			if (layout == ImageItem.LAYOUT_DEFAULT || layout == ImageItem.LAYOUT_LEFT) {
 				g.drawImage(this.img, 0, 0, Graphics.LEFT | Graphics.TOP);
-			} else if (layout == LAYOUT_RIGHT) {
+			} else if (layout == ImageItem.LAYOUT_RIGHT) {
 				g.drawImage(img, owner.getWidth(), 0, Graphics.RIGHT | Graphics.TOP);
-			} else if (layout == LAYOUT_CENTER) {
+			} else if (layout == ImageItem.LAYOUT_CENTER) {
 				g.drawImage(img, owner.getWidth() / 2, 0, Graphics.HCENTER | Graphics.TOP);
 			} else {
 				g.drawImage(this.img, 0, 0, Graphics.LEFT | Graphics.TOP);
@@ -129,7 +129,7 @@ public class ImageItem extends Item {
 			g.translate(0, -super.getHeight());
 		}
 
-		return getHeight();
+		return this.getHeight();
 	}
 
         //TWB - made public
@@ -151,7 +151,7 @@ public class ImageItem extends Item {
 		if (gameKeyCode == Canvas.DOWN) {
 			if (bottom < getHeight()) {
 				if (getHeight() - bottom < f.getHeight()) {
-					return getHeight() - bottom;
+					return this.getHeight() - bottom;
 				} else {
 					return f.getHeight();
 				}

@@ -30,9 +30,9 @@ import java.io.PrintStream;
  */
 public class OutputStreamRedirector extends PrintStream {
 
-	public final static PrintStream out = outPrintStream();
+	public final static PrintStream out = OutputStreamRedirector.outPrintStream();
 
-	public final static PrintStream err = errPrintStream();
+	public final static PrintStream err = OutputStreamRedirector.errPrintStream();
 
 	private static class OutputStream2Log extends OutputStream {
 
@@ -44,12 +44,12 @@ public class OutputStreamRedirector extends PrintStream {
 
 		public void write(int b) throws IOException {
 			if ((b == '\n') || (b == '\r')) {
-				if (buffer.length() > 0) {
+				if (this.buffer.length() > 0) {
 					System.out.println("redirected:[" + buffer.toString() + "]");
-					buffer = new StringBuffer();
+					this.buffer = new StringBuffer();
 				}
 			} else {
-				buffer.append((char) b);
+				this.buffer.append((char) b);
 			}
 		}
 

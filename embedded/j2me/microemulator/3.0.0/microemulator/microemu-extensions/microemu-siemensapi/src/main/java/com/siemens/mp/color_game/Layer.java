@@ -47,11 +47,11 @@ public abstract class Layer {
     }
     
     protected void setLayerImage(Image img) {
-        image=img;
+        this.image=img;
     }
     
     protected  javax.microedition.lcdui.Image getLayerImage() {
-        return image;
+        return this.image;
     }
     
     public void setPosition(int x, int y) {
@@ -67,21 +67,21 @@ public abstract class Layer {
     
     
     public final int getX() {
-        return x;
+        return this.x;
     }
     
     
     public final int getY() {
-        return y;
+        return this.y;
     }
     
     public final int getWidth() {
-        return width;
+        return this.width;
     }
     
     
     public final int getHeight() {
-        return height;
+        return this.height;
     }
     
     
@@ -91,17 +91,17 @@ public abstract class Layer {
     
     
     public final boolean isVisible() {
-        return visible;
+        return this.visible;
     }
     
     public abstract void paint(Graphics g);
     
     void setWidthImpl(int w){
-        width=w;
+        this.width=w;
     }
     
     void setHeightImpl(int h){
-        height=h;
+        this.height=h;
     }
     
     int x; // = 0;

@@ -210,13 +210,13 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
         String operand = operands[transition >>> 8];
 
         switch (transition & 0XFF) {
-          case endStartName:
+          case MinML.endStartName:
           // end of start element name
             elementName = buffer.getString();
             if (currentChar != '>' && currentChar != '/') break;  // change state to operand
             // drop through to emit start element (we have no attributes)
 
-          case emitStartElement:
+          case MinML.emitStartElement:
           // emit start element
 
           final Writer newWriter = this.extDocumentHandler.startElement(elementName, attrs,
@@ -237,7 +237,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
             // <element/> drop through
 
-          case emitEndElement:
+          case MinML.emitEndElement:
           // emit end element
 
             try {
@@ -269,13 +269,13 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
             break;  // change state to operand
 
-          case emitCharacters:
+          case MinML.emitCharacters:
           // emit characters
 
             buffer.flush();
             break;  // change state to operand
 
-          case emitCharactersSave:
+          case MinML.emitCharactersSave:
           // emit characters and save current character
 
             if (mixedContentLevel == -1) mixedContentLevel = 0;
@@ -286,26 +286,26 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
             break;  // change state to operand
 
-          case saveAttributeName:
+          case MinML.saveAttributeName:
           // save attribute name
 
             attributeNames.addElement(buffer.getString());
             break;  // change state to operand
 
-          case saveAttributeValue:
+          case MinML.saveAttributeValue:
           // save attribute value
 
             attributeValues.addElement(buffer.getString());
             break;  // change state to operand
 
-          case startComment:
+          case MinML.startComment:
           // change state if we have found "<!--"
 
             if (buffer.read() != '-') continue; // not "<!--"
 
             break;  // change state to operand
 
-          case endComment:
+          case MinML.endComment:
           // change state if we find "-->"
 
             if ((currentChar = buffer.read()) == '-') {
@@ -320,13 +320,13 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
             continue;   // not end of comment, don't change state
 
-          case incLevel:
+          case MinML.incLevel:
 
             level++;
 
             break;
 
-          case decLevel:
+          case MinML.decLevel:
 
             if (level == 0) break; // outer level <> change state
 
@@ -334,7 +334,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
             continue; // in nested <>, don't change state
 
-          case startCDATA:
+          case MinML.startCDATA:
           // change state if we have found "<![CDATA["
 
             if (buffer.read() != 'C') continue;   // don't change state
@@ -345,7 +345,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
             if (buffer.read() != '[') continue;   // don't change state
             break;  // change state to operand
 
-          case endCDATA:
+          case MinML.endCDATA:
           // change state if we find "]]>"
 
             if ((currentChar = buffer.read()) == ']') {
@@ -361,7 +361,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
             buffer.write(currentChar);
             continue;   // not end of CDATA section, don't change state
 
-          case processCharRef:
+          case MinML.processCharRef:
           // process character entity
 
             int crefState = 0;
@@ -430,44 +430,44 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
             break;
 
-          case parseError:
+          case MinML.parseError:
           // report fatal error
 
             buffer.reset();
             this.fatalError(operand + " ParseError", this.lineNumber, this.columnNumber);
             // drop through to exit parser
 
-          case exitParser:
+          case MinML.exitParser:
           // exit parser
 
             return;
 
-          case writeCdata:
+          case MinML.writeCdata:
           // write character data
           // this will also write any skipped whitespace
 
             buffer.write(currentChar);
             break;  // change state to operand
 
-          case discardAndChange:
+          case MinML.discardAndChange:
           // throw saved characters away and change state
 
             buffer.reset();
             break;  // change state to operand
 
-          case discardSaveAndChange:
+          case MinML.discardSaveAndChange:
           // throw saved characters away, save character and change state
 
             buffer.reset();
             // drop through to save character and change state
 
-          case saveAndChange:
+          case MinML.saveAndChange:
           // save character and change state
 
             buffer.saveChar((char)currentChar);
             break;  // change state to operand
 
-          case change:
+          case MinML.change:
           // change state to operand
 
             break;  // change state to operand
@@ -653,7 +653,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
       }
       finally {
         this.writer = (Writer)MinML.this.tags.pop();
-        this.flushed = written = false;
+        this.flushed = this.written = false;
       }
     }
 

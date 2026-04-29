@@ -58,7 +58,7 @@ public class Image {
     
     public static javax.microedition.lcdui.Image createImageFromBitmap(byte[] imageData, int imageWidth, int imageHeight) {
         
-        return createImageFromBitmap(imageData,null,imageWidth,imageHeight);
+        return Image.createImageFromBitmap(imageData,null,imageWidth,imageHeight);
     }
     
     //not in siemens real siemens api!!!
@@ -76,7 +76,7 @@ public class Image {
         for (int y=0;y<imageHeight;y++) {
             for(int x=0;x<imageWidth/8;x++) {
                 for(int b=7;b>=0;b--) {
-                    c=doAlpha(imageData, alpha, y*imageWidth/8+x,b);
+                    c=Image.doAlpha(imageData, alpha, y*imageWidth/8+x,b);
                     g.setColor(c);
                     g.drawLine(x*8+7-b, y, x*8+7-b, y);
                     

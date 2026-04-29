@@ -55,7 +55,7 @@ public class JMRUMenu extends JMenu implements MRUListListener {
 		}
 
 		public Object getSourceMRU() {
-			return sourceMRU;
+			return this.sourceMRU;
 		}
 
 	}

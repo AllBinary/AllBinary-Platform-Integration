@@ -49,13 +49,13 @@ public class Color
     
     public int getBlue()
     {
-        return value & 0xff;
+        return this.value & 0xff;
     }
     
     
     public int getRGB()
     {
-        return value;
+        return this.value;
     }
     
 }

@@ -209,7 +209,7 @@ public class SwtInputMethod extends InputMethodImpl {
 			return true;
 		}
 
-                final int gameKeyActionCode = getGameAction(keyCode);
+                final int gameKeyActionCode = this.getGameAction(keyCode);
 		if (gameKeyActionCode == Canvas.UP || gameKeyActionCode == Canvas.DOWN) {
 			MIDletBridge.getMIDletAccess().getDisplayAccess().keyPressed(gameKeyActionCode);
 			return true;
@@ -335,7 +335,7 @@ public class SwtInputMethod extends InputMethodImpl {
 
 		// invoke any associated commands, but send the raw key codes instead
 		boolean rawSoftKeys = DeviceFactory.getDevice().getDeviceDisplay().isFullScreenMode();
-		SwtButton pressedButton = getButton(ev);
+		SwtButton pressedButton = this.getButton(ev);
 		if (pressedButton != null) {
 			if (pressedButton instanceof SoftButton && !rawSoftKeys) {
 				Command cmd = ((SoftButton) pressedButton).getCommand();

@@ -78,7 +78,7 @@ public class DirectGraphicsImp implements DirectGraphics{
         if(anchor >= 64 || transform == -1) {
             throw new IllegalArgumentException();
         } else {
-            graphics.drawRegion(
+            this.graphics.drawRegion(
                     img, 
                     x + graphics.getTranslateX(), y + graphics.getTranslateY(), 
                     img.getWidth(), img.getHeight(), 
@@ -92,7 +92,7 @@ public class DirectGraphicsImp implements DirectGraphics{
      * @param argb
      */
     public void setARGBColor(int argb) {
-        alphaComponent=(argb >> 24 & 0xff);
+        this.alphaComponent=(argb >> 24 & 0xff);
         this.graphics.setColor(argb & 0xffffff);
     }
     
@@ -100,7 +100,7 @@ public class DirectGraphicsImp implements DirectGraphics{
      * @return
      */
     public int getAlphaComponent() {
-        return alphaComponent;
+        return this.alphaComponent;
     }
     
     /**
@@ -193,7 +193,7 @@ public class DirectGraphicsImp implements DirectGraphics{
                 int line = off + yj * scanlen;
                 int ypos = yj * width;
                 for (int xj = 0; xj < width; xj++) {
-                    c=doAlpha(pix, alpha, (line + xj) /8,b);
+                    c=DirectGraphicsImp.doAlpha(pix, alpha, (line + xj) /8,b);
                     if((c >> 24 & 0xff)!=0)//alpha
                     {
                         if (g.getColor()!=c) g.setColor(c);
@@ -212,7 +212,7 @@ public class DirectGraphicsImp implements DirectGraphics{
                 int ypos = yj * width;
                 int tmp = (ods + yj) /8 * scanlen+oms;
                 for (int xj = 0; xj < width; xj++) {
-                    c=doAlpha(pix, alpha, tmp + xj, b);
+                    c=DirectGraphicsImp.doAlpha(pix, alpha, tmp + xj, b);
                     if (g.getColor()!=c) g.setColor(c);
                     if((c >> 24 & 0xff)!=0) //alpha
                         g.drawLine(xj+x,yj+y,xj+x,yj+y);
@@ -247,7 +247,7 @@ public class DirectGraphicsImp implements DirectGraphics{
         
         for (int iy = 0; iy < height; iy++) {
             for (int ix = 0; ix < width; ix ++) {
-                int c=toARGB(pix[off + ix + iy * scanlen],TYPE_USHORT_4444_ARGB);
+                int c=DirectGraphicsImp.toARGB(pix[off + ix + iy * scanlen],TYPE_USHORT_4444_ARGB);
                 if (!isTransparent(c)) {
                     g.setColor(c);
                     g.drawLine(x + ix, y + iy,x + ix, y + iy);

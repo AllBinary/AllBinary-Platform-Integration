@@ -36,8 +36,8 @@ public class Screen extends Displayable
 
     
     void scroll(int gameKeyCode) {
-    	viewPortY += traverse(gameKeyCode, viewPortY, viewPortY + viewPortHeight);
-    	repaint();
+    	viewPortY += this.traverse(gameKeyCode, viewPortY, viewPortY + viewPortHeight);
+    	this.repaint();
     }
     
 	
@@ -51,8 +51,8 @@ public class Screen extends Displayable
 		int gameKeyCode = Display.getGameAction(keyCode);
 
 		if (gameKeyCode == Canvas.UP || gameKeyCode == Canvas.DOWN) {
-			viewPortY += traverse(gameKeyCode, viewPortY, viewPortY + viewPortHeight);
-			repaint();
+			viewPortY += this.traverse(gameKeyCode, viewPortY, viewPortY + viewPortHeight);
+			this.repaint();
 		}
 	}
 
@@ -65,7 +65,7 @@ public class Screen extends Displayable
 	@Override
 	void keyRepeated(int keyCode) 
 	{
-		keyPressed(keyCode);
+		this.keyPressed(keyCode);
 	}
         
         @Override
@@ -108,7 +108,7 @@ public class Screen extends Displayable
 
 		g.setClip(0, 0, getWidth(), getHeight() - contentHeight);
 		g.translate(0, -viewPortY);
-		contentHeight += paintContent(g);
+		contentHeight += this.paintContent(g);
 		g.translate(0, viewPortY);
 
 		if (contentHeight - viewPortY > getHeight()) {

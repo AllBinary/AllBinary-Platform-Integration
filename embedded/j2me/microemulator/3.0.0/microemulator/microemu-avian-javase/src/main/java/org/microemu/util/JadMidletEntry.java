@@ -43,20 +43,20 @@ public class JadMidletEntry
   
   public String getClassName()
   {
-    return className;
+    return this.className;
   }
   
   
   public String getName()
   {
-    return name;
+    return this.name;
   }
   
   
   // remove it later
   public String toString()
   {
-    return name +"+"+ this.icon +"+"+ this.className;
+    return this.name +"+"+ this.icon +"+"+ this.className;
   }
   
 }

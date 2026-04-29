@@ -35,7 +35,7 @@ public class TestStaticInitializer implements Runnable {
 	
 	public void run() {
 		
-		if (count != 1) {
+		if (TestStaticInitializer.count != 1) {
 			throw new RuntimeException("Same class is used again " + count);
 		}
 		

@@ -46,12 +46,12 @@ public class ChangeCallsClassVisitor extends ClassAdapter {
 	static final Map javaVersion = new HashMap();
 
 	static {
-		javaVersion.put(new Integer(0x3002D), "1.1");
-		javaVersion.put(new Integer(0x3002E), "1.2");
-		javaVersion.put(new Integer(47), "1.3");
-		javaVersion.put(new Integer(48), "1.4");
-		javaVersion.put(new Integer(49), "1.5");
-		javaVersion.put(new Integer(50), "1.6");
+		ChangeCallsClassVisitor.javaVersion.put(new Integer(0x3002D), "1.1");
+		ChangeCallsClassVisitor.javaVersion.put(new Integer(0x3002E), "1.2");
+		ChangeCallsClassVisitor.javaVersion.put(new Integer(47), "1.3");
+		ChangeCallsClassVisitor.javaVersion.put(new Integer(48), "1.4");
+		ChangeCallsClassVisitor.javaVersion.put(new Integer(49), "1.5");
+		ChangeCallsClassVisitor.javaVersion.put(new Integer(50), "1.6");
 	}
 
 	public ChangeCallsClassVisitor(ClassVisitor cv, InstrumentationConfig config) {

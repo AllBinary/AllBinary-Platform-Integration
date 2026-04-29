@@ -50,7 +50,7 @@ public class ExtensionFileFilter extends FileFilter
 	    if(file.isDirectory()) {
         return true;
 	    }
-      String ext = getExtension(file);
+      String ext = this.getExtension(file);
       if(ext != null && this.extensions.get(ext) != null) {
         return true;
       }
@@ -68,7 +68,7 @@ public class ExtensionFileFilter extends FileFilter
   
   public String getDescription() 
   {
-    return description;
+    return this.description;
   }
 
   

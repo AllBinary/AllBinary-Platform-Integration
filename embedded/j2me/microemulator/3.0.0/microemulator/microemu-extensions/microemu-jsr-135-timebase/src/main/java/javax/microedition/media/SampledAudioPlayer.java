@@ -118,7 +118,7 @@ class SampledAudioPlayer implements Player, LineListener
 	}
 
 	public String getContentType() {
-		return strType;
+		return this.strType;
 	}
 
 	public long getDuration() {
@@ -128,7 +128,7 @@ class SampledAudioPlayer implements Player, LineListener
 
 	public long getMediaTime() {
 		if( this.clip != null )
-			return clip.getMicrosecondPosition();
+			return this.clip.getMicrosecondPosition();
 		return 0;
 	}
 
@@ -198,7 +198,7 @@ class SampledAudioPlayer implements Player, LineListener
 	{
 		if (event.getType().equals(LineEvent.Type.STOP))
 		{
-			close();
+			this.close();
 			if( this.vListeners != null )
 			{
                             final int size = this.vListeners.size();

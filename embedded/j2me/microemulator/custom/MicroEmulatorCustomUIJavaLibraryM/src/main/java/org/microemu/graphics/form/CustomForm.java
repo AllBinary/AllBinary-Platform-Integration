@@ -461,7 +461,7 @@ public class CustomForm extends CustomScreen
 						bottomItemIndex = this.getTopVisibleIndex(bottom + traverse);
 						if (getSelectedIndex() != -1
 							&& getSelectedIndex() > bottomItemIndex) {
-							this.items[getSelectedIndex()].setFocus(false);
+							this.items[this.getSelectedIndex()].setFocus(false);
 							this.setSelectedIndex(-1);
 						}
 						return traverse;
@@ -544,7 +544,7 @@ public class CustomForm extends CustomScreen
 						topItemIndex = this.getTopVisibleIndex(top + traverse);
 						if (getSelectedIndex() != -1
 							&& getSelectedIndex() < topItemIndex) {
-							this.items[getSelectedIndex()].setFocus(false);
+							this.items[this.getSelectedIndex()].setFocus(false);
 							this.setSelectedIndex(-1);
 						}
 						return traverse;

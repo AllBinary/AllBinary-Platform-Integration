@@ -49,7 +49,7 @@ public final class Font
 
 	private static final Font DEFAULT_FONT = new Font(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM);
 	
-	private static Font[] fontsBySpecifier = {DEFAULT_FONT, DEFAULT_FONT};
+	private static Font[] fontsBySpecifier = {Font.DEFAULT_FONT, Font.DEFAULT_FONT};
 	
 	private static Hashtable fonts = new Hashtable();
 	
@@ -66,7 +66,7 @@ public final class Font
 
 	private Font(int face, int style, int size)
 	{
-		if ((face != FACE_SYSTEM) && (face != FACE_MONOSPACE) && (face != FACE_PROPORTIONAL)) {
+		if ((face != Font.FACE_SYSTEM) && (face != Font.FACE_MONOSPACE) && (face != Font.FACE_PROPORTIONAL)) {
 			throw new IllegalArgumentException();
 		}
 		if (!(isPlain() || isBold() || isItalic() || isUnderlined())) {
@@ -84,7 +84,7 @@ public final class Font
 
 	public static Font getDefaultFont()
 	{
-		return DEFAULT_FONT;
+		return Font.DEFAULT_FONT;
 	}
 	
 	
@@ -92,7 +92,7 @@ public final class Font
 		if (specifier != Font.FONT_INPUT_TEXT &&
 					specifier != Font.FONT_STATIC_TEXT)
 			throw new IllegalArgumentException("Bad specifier");
-		return fontsBySpecifier[specifier];
+		return Font.fontsBySpecifier[specifier];
 	}
 
 	
@@ -103,7 +103,7 @@ public final class Font
 		if (result == null) {
                         //System.out.println("javax.microedition.lcdui.Font: " + face + " style: " + style + " size: " + size);
 			result = new Font(face, style, size);
-			fonts.put(key, result);
+			Font.fonts.put(key, result);
 		}
 		return result;
 	}
@@ -111,25 +111,25 @@ public final class Font
 	
 	public int getStyle()
 	{
-		return style;
+		return this.style;
 	}
 
 
 	public int getSize()
 	{
-		return size;
+		return this.size;
 	}
 
 	
 	public int getFace()
 	{
-		return face;
+		return this.face;
 	}
 
 
 	public boolean isPlain()
 	{
-		if (this.style == STYLE_PLAIN) {
+		if (this.style == Font.STYLE_PLAIN) {
 			return true;
 		} else {
 			return false;
@@ -139,7 +139,7 @@ public final class Font
 
 	public boolean isBold()
 	{
-		if ((this.style & STYLE_BOLD) != 0) {
+		if ((this.style & Font.STYLE_BOLD) != 0) {
 			return true;
 		} else {
 			return false;
@@ -149,7 +149,7 @@ public final class Font
 
 	public boolean isItalic()
 	{
-		if ((this.style & STYLE_ITALIC) != 0) {
+		if ((this.style & Font.STYLE_ITALIC) != 0) {
 			return true;
 		} else {
 			return false;
@@ -159,7 +159,7 @@ public final class Font
 	
 	public boolean isUnderlined()
 	{
-		if ((this.style & STYLE_UNDERLINED) != 0) {
+		if ((this.style & Font.STYLE_UNDERLINED) != 0) {
 			return true;
 		} else {
 			return false;
@@ -173,7 +173,7 @@ public final class Font
 			this.height = DeviceFactory.getDevice().getFontManager().getHeight(this);
 		}
 		
-		return height;
+		return this.height;
 	}
 
 	
@@ -183,7 +183,7 @@ public final class Font
 			this.baselinePosition = DeviceFactory.getDevice().getFontManager().getBaselinePosition(this);
 		}
 		
-		return baselinePosition;
+		return this.baselinePosition;
 	}
 
 	
@@ -212,7 +212,7 @@ public final class Font
 
 
 	public int hashCode() {
-		return style + this.size + this.face;
+		return this.style + this.size + this.face;
 	}	
 	
 }

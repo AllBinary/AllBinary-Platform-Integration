@@ -65,7 +65,7 @@ class PCToneRunnable extends PCToneHelper implements RunnableInterface
    
    public synchronized boolean isRunning()
    {
-      return running;
+      return this.running;
    }
    
    public synchronized void setRunning(boolean running)

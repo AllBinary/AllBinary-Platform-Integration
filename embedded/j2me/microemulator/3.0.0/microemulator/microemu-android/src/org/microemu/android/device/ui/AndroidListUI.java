@@ -130,7 +130,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 	}
 
 	public String getString(int elementNum) {
-		return listAdapter.getItem(elementNum).text;
+		return this.listAdapter.getItem(elementNum).text;
 	}
 
 	public void setSelectCommand(Command command) {
@@ -261,7 +261,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 			ViewHolder vh = new ViewHolder();
 			vh.image = image;
 			vh.text = stringPart;
-			objects.add(vh);
+			this.objects.add(vh);
 			
                         final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 			activity2.post(new ARunnable() {
@@ -270,14 +270,14 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 				}
 			});
 			
-			return objects.lastIndexOf(vh);
+			return this.objects.lastIndexOf(vh);
 		}
 		
 		public void insert(int elementNum, String stringPart, Object image) {
 			ViewHolder vh = new ViewHolder();
 			vh.image = image;
 			vh.text = stringPart;
-			objects.add(elementNum, vh);
+			this.objects.add(elementNum, vh);
 			
                         final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 			activity2.post(new ARunnable() {
@@ -288,17 +288,17 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		}
 
 		public void set(int elementNum, String stringPart, Image imagePart) {
-			ViewHolder vh = getItem(elementNum);
+			ViewHolder vh = this.getItem(elementNum);
 			vh.image = imagePart;
 			vh.text = stringPart;
 		}
 
 		public int getCount() {
-			return objects.size();
+			return this.objects.size();
 		}
 
 		public ViewHolder getItem(int position) {
-			return objects.get(position);
+			return this.objects.get(position);
 		}
 
 		public long getItemId(int position) {
@@ -324,7 +324,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 
 			LinearLayout ll = (LinearLayout)convertView;
 
-			ViewHolder vh = (ViewHolder) getItem(position);
+			ViewHolder vh = (ViewHolder) this.getItem(position);
 
 			TextView tv = (TextView) ll.getChildAt(1);
 			tv.setText(vh.text);
@@ -343,7 +343,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		}
 		
 		public void delete(int elementNum) {
-			objects.remove(elementNum);		
+			this.objects.remove(elementNum);		
 			
                         final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 			activity2.post(new ARunnable() {
@@ -354,7 +354,7 @@ public class AndroidListUI extends AndroidDisplayableUI implements ListUI {
 		}
 
 		public void deleteAll() {
-			objects.clear();
+			this.objects.clear();
 			
                         final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 			activity2.post(new ARunnable() {

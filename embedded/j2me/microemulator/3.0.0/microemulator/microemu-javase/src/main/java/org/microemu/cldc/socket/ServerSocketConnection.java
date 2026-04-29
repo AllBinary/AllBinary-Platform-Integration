@@ -50,7 +50,7 @@ public class ServerSocketConnection implements
 	}
 
 	public int getLocalPort() throws IOException {
-		return serverSocket.getLocalPort();
+		return this.serverSocket.getLocalPort();
 	}
 
 	public StreamConnection acceptAndOpen() throws IOException {
@@ -58,7 +58,7 @@ public class ServerSocketConnection implements
 	}
 
 	public void close() throws IOException {
-		serverSocket.close();
+		this.serverSocket.close();
 	}
 
 }

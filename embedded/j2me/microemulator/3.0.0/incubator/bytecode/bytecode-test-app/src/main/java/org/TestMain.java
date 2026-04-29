@@ -10,8 +10,8 @@ public class TestMain implements Runnable {
 		
 		System.out.println("ClassLoader " + this.getClass().getClassLoader().hashCode() +  " TestMain");
 		
-		assertProperty("microedition.io.file.FileConnection.version", "1.0");
-		assertProperty("microedition.platform", "MicroEmulator-Test");
+		this.assertProperty("microedition.io.file.FileConnection.version", "1.0");
+		this.assertProperty("microedition.platform", "MicroEmulator-Test");
 		
 		System.out.println("System.getProperty OK");
 		

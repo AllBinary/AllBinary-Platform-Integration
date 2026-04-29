@@ -40,10 +40,10 @@ public class Sprite extends Layer {
     public Sprite(Image image) {
         super(image.getWidth(), image.getHeight());
         
-        initializeFrames(image, image.getWidth(), image.getHeight(), false);
+        this.initializeFrames(image, image.getWidth(), image.getHeight(), false);
         
         // initialize collision rectangle
-        initCollisionRectBounds();
+        this.initCollisionRectBounds();
     }
     
     public Sprite(Image image, int frameWidth, int frameHeight) {
@@ -75,10 +75,10 @@ public class Sprite extends Layer {
         // construct the array of images that
         // we use as "frames" for the sprite.
         // use default frame , sequence index = 0
-        initializeFrames(image, frameWidth, frameHeight, false);
+        this.initializeFrames(image, frameWidth, frameHeight, false);
         
         // initialize collision rectangle
-        initCollisionRectBounds();
+        this.initCollisionRectBounds();
         
     }
     
@@ -143,19 +143,19 @@ public class Sprite extends Layer {
     public void setRefPixelPosition(int x, int y) {
         
         // update this.x and this.y
-        this.x = x - dRefX;
-        this.y = y - dRefY;
+        this.x = x - this.dRefX;
+        this.y = y - this.dRefY;
         
     }
     
     
     public int getRefPixelX() {
-        return this.x + dRefX;
+        return this.x + this.dRefX;
     }
     
     
     public int getRefPixelY() {
-        return this.y + dRefY;
+        return this.y + this.dRefY;
     }
     
     public void setFrame(int sequenceIndex) {
@@ -167,17 +167,17 @@ public class Sprite extends Layer {
     
     
     public final int getFrame() {
-        return sequenceIndex;
+        return this.this.sequenceIndex;
     }
     
     
     public int getRawFrameCount() {
-        return numberFrames;
+        return this.numberFrames;
     }
     
     
     public int getFrameSequenceLength() {
-        return frameSequence.length;
+        return this.frameSequence.length;
     }
     
     
@@ -187,10 +187,10 @@ public class Sprite extends Layer {
     
     
     public void prevFrame() {
-        if (sequenceIndex == 0) {
-            sequenceIndex = this.frameSequence.length - 1;
+        if (this.this.sequenceIndex == 0) {
+            this.this.sequenceIndex = this.frameSequence.length - 1;
         } else {
-            sequenceIndex--;
+            this.this.sequenceIndex--;
         }
     }
     
@@ -210,7 +210,7 @@ public class Sprite extends Layer {
             g.setClip(this.x, this.y, this.srcFrameWidth, this.srcFrameHeight);
             
             g.drawImage(sourceImage, this.x-frameCoordsX[frameSequence[sequenceIndex]],
-            this.y-frameCoordsY[frameSequence[sequenceIndex]],Graphics.TOP | Graphics.LEFT);
+            this.y-this.frameCoordsY[this.frameSequence[this.this.sequenceIndex]],Graphics.TOP | Graphics.LEFT);
             
             g.setClip(clipX, clipY, clipW, clipH);
         }
@@ -223,8 +223,8 @@ public class Sprite extends Layer {
         if (sequence == null) {
             // revert to the default sequence
             sequenceIndex = 0;
-            customSequenceDefined = false;
-            this.frameSequence = new int[numberFrames];
+            this.customSequenceDefined = false;
+            this.frameSequence = new int[this.numberFrames];
             // copy frames indices into frameSequence
             for (int i = 0; i < numberFrames; i++) {
                 this.frameSequence[i] = i;
@@ -241,7 +241,7 @@ public class Sprite extends Layer {
                 throw new ArrayIndexOutOfBoundsException();
             }
         }
-        customSequenceDefined = true;
+        this.customSequenceDefined = true;
         this.frameSequence = new int[sequence.length];
         System.arraycopy(sequence, 0, frameSequence, 0, sequence.length);
         sequenceIndex = 0;
@@ -261,14 +261,14 @@ public class Sprite extends Layer {
         (img.getWidth() / frameWidth)*(img.getHeight() / frameHeight);
         
         boolean maintainCurFrame = true;
-        if (noOfFrames < numberFrames) {
+        if (noOfFrames < this.numberFrames) {
             // use default frame , sequence index = 0
             maintainCurFrame = false;
-            customSequenceDefined = false;
+            this.customSequenceDefined = false;
         }
         
         if (! ((this.srcFrameWidth == frameWidth) &&
-        (srcFrameHeight == frameHeight))) {
+        (this.srcFrameHeight == frameHeight))) {
             
             // computing is the location
             // of the reference pixel in the painter's coordinate system.
@@ -281,10 +281,10 @@ public class Sprite extends Layer {
             setWidthImpl(frameWidth);
             setHeightImpl(frameHeight);
             
-            initializeFrames(img, frameWidth, frameHeight, maintainCurFrame);
+            this.initializeFrames(img, frameWidth, frameHeight, maintainCurFrame);
             
             // initialize collision rectangle
-            initCollisionRectBounds();
+            this.initCollisionRectBounds();
             
             // set the new x and y position of the Sprite
             this.x = oldX - dRefX;
@@ -479,7 +479,7 @@ public class Sprite extends Layer {
             sequenceIndex = 0;
         }
         
-        if (!customSequenceDefined) {
+        if (!this.customSequenceDefined) {
             this.frameSequence = new int[numberFrames];
         }
         
@@ -537,7 +537,7 @@ public class Sprite extends Layer {
     int srcFrameWidth;
     int srcFrameHeight;
     int[] frameSequence;
-    private int sequenceIndex; // = 0
+    private int this.sequenceIndex; // = 0
     private boolean customSequenceDefined; // = false;
     
     

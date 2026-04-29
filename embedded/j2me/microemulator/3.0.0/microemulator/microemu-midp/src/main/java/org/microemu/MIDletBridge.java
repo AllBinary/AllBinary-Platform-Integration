@@ -65,11 +65,11 @@ public class MIDletBridge {
 	}
 	
 	public static MicroEmulator getMicroEmulator() {
-		return emulator;
+		return MIDletBridge.emulator;
 	}
 	
 	public static void setThreadMIDletContext(MIDletContext midletContext) {
-		threadMIDletContexts.set(midletContext);
+		MIDletBridge.threadMIDletContexts.set(midletContext);
 	}
 	
 	public static void registerMIDletAccess(MIDletAccess accessor) {
@@ -77,18 +77,18 @@ public class MIDletBridge {
 		if (c == null) {
 			//throw new Error("setThreadMIDletContext should be called");
 			c = new MIDletContext();
-			setThreadMIDletContext(c);
+			MIDletBridge.setThreadMIDletContext(c);
 		}
 		c.setMIDletAccess(accessor);
-		registerMIDletContext(c);
+		MIDletBridge.registerMIDletContext(c);
 	}
 	
 	public static void registerMIDletContext(MIDletContext midletContext) {
-		midletContexts.put(midletContext.getMIDlet(), midletContext);
+		MIDletBridge.midletContexts.put(midletContext.getMIDlet(), midletContext);
 	}
 
 	public static MIDletContext getMIDletContext(MIDlet midlet) {
-		return (MIDletContext)midletContexts.get(midlet);
+		return (MIDletContext)MIDletBridge.midletContexts.get(midlet);
 	}
 	
 	public static MIDletContext getMIDletContext() {
@@ -96,7 +96,7 @@ public class MIDletBridge {
 		if (c != null) {
 			return c;
 		}
-		return getMIDletContext(currentMIDlet);
+		return MIDletBridge.getMIDletContext(currentMIDlet);
 	}
 
 	public static void setCurrentMIDlet(MIDlet midlet) {
@@ -104,7 +104,7 @@ public class MIDletBridge {
 	}
 
 	public static MIDlet getCurrentMIDlet() {
-		MIDletContext c = getMIDletContext();
+		MIDletContext c = MIDletBridge.getMIDletContext();
 		if (c == null) {
 			return null;
 		}
@@ -112,7 +112,7 @@ public class MIDletBridge {
 	}
 	
 	public static MIDletAccess getMIDletAccess() {
-		MIDletContext c = getMIDletContext();
+		MIDletContext c = MIDletBridge.getMIDletContext();
 		if (c == null) {
 			return null;
 		}
@@ -120,39 +120,39 @@ public class MIDletBridge {
 	}
 
 	public static MIDletAccess getMIDletAccess(MIDlet midlet) {
-		return getMIDletContext(midlet).getMIDletAccess();
+		return MIDletBridge.getMIDletContext(midlet).getMIDletAccess();
 	}
 
 	
 	public static RecordStoreManager getRecordStoreManager() {
-		return emulator.getRecordStoreManager();
+		return MIDletBridge.emulator.getRecordStoreManager();
 	}
 
 	public static String getAppProperty(String key) {
-		return emulator.getAppProperty(key);
+		return MIDletBridge.emulator.getAppProperty(key);
 	}
 	
 	public static InputStream getResourceAsStream(Class origClass, String name) {
-		return emulator.getResourceAsStream(origClass, name);
+		return MIDletBridge.emulator.getResourceAsStream(origClass, name);
 	}
 
 
 	public static void notifyDestroyed() {
-		MIDletContext midletContext = getMIDletContext();
-		emulator.notifyDestroyed(midletContext);
-		destroyMIDletContext(midletContext);
+		MIDletContext midletContext = MIDletBridge.getMIDletContext();
+		MIDletBridge.emulator.notifyDestroyed(midletContext);
+		MIDletBridge.destroyMIDletContext(midletContext);
 	}
 
 	public static void destroyMIDletContext(MIDletContext midletContext) {
 		if (midletContext == null) {
 			return;
 		}
-		emulator.destroyMIDletContext(midletContext);
-		if (midletContexts.containsValue(midletContext)) {
-			for (Iterator i = midletContexts.entrySet().iterator(); i.hasNext();) {
+		MIDletBridge.emulator.destroyMIDletContext(midletContext);
+		if (MIDletBridge.midletContexts.containsValue(midletContext)) {
+			for (Iterator i = MIDletBridge.midletContexts.entrySet().iterator(); i.hasNext();) {
 				Map.Entry entry = (Map.Entry) i.next();
 				if (entry.getValue() == midletContext) {
-					midletContexts.remove(entry.getKey());
+					MIDletBridge.midletContexts.remove(entry.getKey());
 					break;
 				}
 			}
@@ -160,11 +160,11 @@ public class MIDletBridge {
 	}
 	
 	public static int checkPermission(String permission) {
-		return emulator.checkPermission(permission);
+		return MIDletBridge.emulator.checkPermission(permission);
 	}
 	
 	public static boolean platformRequest(String URL) throws ConnectionNotFoundException {
-		return emulator.platformRequest(URL);
+		return MIDletBridge.emulator.platformRequest(URL);
 	}
 
 	public static void clear() {
@@ -172,27 +172,27 @@ public class MIDletBridge {
 		currentMIDlet = null;
 		
 		// Preserve only Launcher Context
-		for (Iterator i = midletContexts.entrySet().iterator(); i.hasNext();) {
+		for (Iterator i = MIDletBridge.midletContexts.entrySet().iterator(); i.hasNext();) {
 			Map.Entry entry = (Map.Entry) i.next();
 			MIDlet test = ((MIDletContext) entry.getValue()).getMIDlet();
 			if (test instanceof Launcher) {
-				midletContexts.clear();
-				midletContexts.put(entry.getKey(), entry.getValue());
+				MIDletBridge.midletContexts.clear();
+				MIDletBridge.midletContexts.put(entry.getKey(), entry.getValue());
 				return;
 			}
 		}
 		// No Launcher found
-		midletContexts.clear();
+		MIDletBridge.midletContexts.clear();
 	}
 	
 	static Map /*<GameCanvas, GameCanvasKeyAccess>*/ gameCanvasAccesses = new WeakHashMap();	
 
 	public static GameCanvasKeyAccess getGameCanvasKeyAccess(GameCanvas gameCanvas) {
-		return (GameCanvasKeyAccess) gameCanvasAccesses.get(gameCanvas);
+		return (GameCanvasKeyAccess) MIDletBridge.gameCanvasAccesses.get(gameCanvas);
 	}
 
 	public static void registerGameCanvasKeyAccess(GameCanvas gameCanvas, GameCanvasKeyAccess access) {
-		gameCanvasAccesses.put(gameCanvas, access);
+		MIDletBridge.gameCanvasAccesses.put(gameCanvas, access);
 	}
 
 

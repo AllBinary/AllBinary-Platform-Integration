@@ -83,7 +83,7 @@ public class NoUiDisplayComponent implements DisplayComponent {
 				}
 			}
 
-			fireDisplayRepaint(this.graphicsSurface);
+			this.fireDisplayRepaint(this.graphicsSurface);
 		}	
 	}
 

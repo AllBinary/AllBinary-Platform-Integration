@@ -50,7 +50,7 @@ public class MIDletContext {
 	}
 	
 	public MIDletAccess getMIDletAccess() {
-		return midletAccess;
+		return this.midletAccess;
 	}
 	
 	protected void setMIDletAccess(MIDletAccess midletAccess) {
@@ -61,7 +61,7 @@ public class MIDletContext {
 		if (this.midletAccess == null) {
 			return null;
 		}
-		return midletAccess.midlet;
+		return this.midletAccess.midlet;
 	}
 	
 	public boolean isLauncher() {

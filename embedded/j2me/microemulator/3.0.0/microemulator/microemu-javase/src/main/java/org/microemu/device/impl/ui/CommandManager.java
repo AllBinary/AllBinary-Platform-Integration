@@ -92,7 +92,7 @@ public class CommandManager
 	public void commandAction(Command command)
 	{
 		if (this.menuList == null) {
-			lateInit();
+			this.lateInit();
 		}
 
 		this.previous = MIDletBridge.getMIDletAccess().getDisplayAccess().getCurrent();
@@ -103,7 +103,7 @@ public class CommandManager
 	public void updateCommands(Vector commands)
 	{
 		if (this.menuList == null) {
-			lateInit();
+			this.lateInit();
 		}
 		
 		Vector buttons = DeviceFactory.getDevice().getSoftButtons();
@@ -147,13 +147,13 @@ public class CommandManager
 		}
 		
 		if (commandsTable.size() <= numOfButtons) {
-			fillPossibleCommands(buttons, commandsTable);			
+			this.fillPossibleCommands(buttons, commandsTable);			
 			return;
 		}
 		
 		// Menu is needed
 		commandsTable.insertElementAt(CMD_MENU, 0);
-		fillPossibleCommands(buttons, commandsTable);
+		this.fillPossibleCommands(buttons, commandsTable);
 		while (this.menuList.size() > 0) {
 	        this.menuList.delete(0);
 	    }

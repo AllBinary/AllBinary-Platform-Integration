@@ -85,7 +85,7 @@ public class DeviceClass {
 	 */
 
 	public int getServiceClasses() {
-		return record & SERVICE_MASK;
+		return this.record & DeviceClass.SERVICE_MASK;
 	}
 
     /**
@@ -96,7 +96,7 @@ public class DeviceClass {
 	 */
 
 	public int getMajorDeviceClass() {
-		return record & MAJOR_MASK;
+		return this.record & DeviceClass.MAJOR_MASK;
 	}
 
     /**
@@ -106,7 +106,7 @@ public class DeviceClass {
 	 */
 
 	public int getMinorDeviceClass() {
-		return record & MINOR_MASK;
+		return this.record & DeviceClass.MINOR_MASK;
 	}
 
 }

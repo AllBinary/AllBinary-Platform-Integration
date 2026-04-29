@@ -48,7 +48,7 @@ public class XYLayout implements LayoutManager2 {
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public void setWidth(int width) {
@@ -56,7 +56,7 @@ public class XYLayout implements LayoutManager2 {
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public void setHeight(int height) {
@@ -64,7 +64,7 @@ public class XYLayout implements LayoutManager2 {
 	}
 
 	public String toString() {
-		return "XYLayout" + "[width=" + width + ",height=" + height + "]";
+		return "XYLayout" + "[width=" + this.width + ",height=" + this.height + "]";
 	}
 
 	// LayoutManager interface
@@ -77,11 +77,11 @@ public class XYLayout implements LayoutManager2 {
 	}
 
 	public Dimension preferredLayoutSize(Container target) {
-		return getLayoutSize(target, true);
+		return this.getLayoutSize(target, true);
 	}
 
 	public Dimension minimumLayoutSize(Container target) {
-		return getLayoutSize(target, false);
+		return this.getLayoutSize(target, false);
 	}
 
 	public void layoutContainer(Container target) {
@@ -90,7 +90,7 @@ public class XYLayout implements LayoutManager2 {
 		for (int i = 0; i < count; i++) {
 			Component component = target.getComponent(i);
 			if (component.isVisible()) {
-				Rectangle r = getComponentBounds(component, true);
+				Rectangle r = this.getComponentBounds(component, true);
 				component.setBounds(insets.left + r.x, insets.top + r.y, r.width, r.height);
 			}
 		}
@@ -147,7 +147,7 @@ public class XYLayout implements LayoutManager2 {
 			for (int i = 0; i < count; i++) {
 				Component component = target.getComponent(i);
 				if (component.isVisible()) {
-					Rectangle r = getComponentBounds(component, doPreferred);
+					Rectangle r = this.getComponentBounds(component, doPreferred);
 					dim.width = Math.max(dim.width, r.x + r.width);
 					dim.height = Math.max(dim.height, r.y + r.height);
 				}

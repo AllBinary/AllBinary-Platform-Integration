@@ -95,7 +95,7 @@ public class JadAttributes extends Task
 			if (attribues == null)
 			{
 				log("Creating a new attributes set : " + this.m_attribName);
-				s_jad2attribMap.put(this.m_attribName, attribues = new AttributesSet(this.m_attribName));
+				JadAttributes.s_jad2attribMap.put(this.m_attribName, attribues = new AttributesSet(this.m_attribName));
 			}
 			
 			if (this.m_fileName == null) // file is null, we need key and value
@@ -118,7 +118,7 @@ public class JadAttributes extends Task
 					File file = new File(this.m_fileName);
 					if (file.exists())
 					{
-						String pairs[][] = getPairs(file, "#", m_encoding);
+						String pairs[][] = JadAttributes.getPairs(file, "#", m_encoding);
 						log("Loaded properties from " + file);
 						for (int i = 0; i < pairs.length; i++)
 						{
@@ -215,7 +215,7 @@ public class JadAttributes extends Task
 
 		try
 		{
-			return getPairs(in = new FileInputStream(file), commentPrefix, encoding);
+			return JadAttributes.getPairs(in = new FileInputStream(file), commentPrefix, encoding);
 		}
 		finally
 		{
@@ -268,7 +268,7 @@ public class JadAttributes extends Task
 			
 			if (line.length() > 0)
 			{
-				int sepIndex = getSepIndex(line);
+				int sepIndex = JadAttributes.getSepIndex(line);
 				
 				boolean willContOnNext = (line.endsWith("\\"));
 				if (willContOnNext) 
@@ -285,8 +285,8 @@ public class JadAttributes extends Task
 				else
 				if (sepIndex != -1)					
 				{
-					String key = loadConvert(line.substring(0, sepIndex));
-					String value = loadConvert(line.substring(sepIndex + 1));
+					String key = JadAttributes.loadConvert(line.substring(0, sepIndex));
+					String value = JadAttributes.loadConvert(line.substring(sepIndex + 1));
 					result.addElement(new String[]{key, value});
 				}
 				contOnNext = willContOnNext;

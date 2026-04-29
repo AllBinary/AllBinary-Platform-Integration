@@ -154,7 +154,7 @@ public class AndroidDisplayGraphicsBase
     @Override
     public int getColor()
     {
-        return colorP;
+        return this.colorP;
     }
 
     /*
@@ -191,7 +191,7 @@ public class AndroidDisplayGraphicsBase
     @Override
     public javax.microedition.lcdui.Font getFont()
     {
-        return currentFont;
+        return this.currentFont;
     }
 
     @Override

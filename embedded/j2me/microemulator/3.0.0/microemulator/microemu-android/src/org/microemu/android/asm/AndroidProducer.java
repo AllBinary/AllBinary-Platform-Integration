@@ -68,7 +68,7 @@ public class AndroidProducer {
 			}
 		}
 
-		fieldTranslations.put(className, classFieldTranslations);
+		AndroidProducer.fieldTranslations.put(className, classFieldTranslations);
     }
 
 	private static byte[] instrument(String name, final InputStream classInputStream, boolean isMidlet) throws IOException {
@@ -126,7 +126,7 @@ public class AndroidProducer {
 				byte[] inBuffer = resources.get(name);
 				byte[] outBuffer = inBuffer;
 				if (name.endsWith(".class")) {					
-			        outBuffer = instrument(name, new ByteArrayInputStream(inBuffer), isMidlet);
+			        outBuffer = AndroidProducer.instrument(name, new ByteArrayInputStream(inBuffer), isMidlet);
 				}
 				jos.putNextEntry(new JarEntry(name));
 				jos.write(outBuffer);
@@ -150,7 +150,7 @@ public class AndroidProducer {
 				isMidlet = true;
 			}
 			try {
-				processJar(new File(args[0]), new File(args[1]), isMidlet);
+				AndroidProducer.processJar(new File(args[0]), new File(args[1]), isMidlet);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

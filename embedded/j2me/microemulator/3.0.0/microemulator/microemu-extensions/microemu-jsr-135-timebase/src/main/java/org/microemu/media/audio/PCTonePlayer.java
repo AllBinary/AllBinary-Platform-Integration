@@ -113,7 +113,7 @@ public class PCTonePlayer extends BasicPlayer
    
    public boolean isRunning()
    {
-      return running;
+      return this.running;
    }
    
    public void setRunning(boolean running)
@@ -157,9 +157,9 @@ public class PCTonePlayer extends BasicPlayer
             //logUtil.put(toneInfo.toString(), this, "playBlock");
             
             Manager.playTone(
-               toneInfo.getFrequency(),
-               toneInfo.getLengthOfTime(),
-               toneInfo.getVolume());
+               this.toneInfo.getFrequency(),
+               this.toneInfo.getLengthOfTime(),
+               this.toneInfo.getVolume());
             
             Thread.sleep(this.toneInfo.getLengthOfTime() + 20);
             }

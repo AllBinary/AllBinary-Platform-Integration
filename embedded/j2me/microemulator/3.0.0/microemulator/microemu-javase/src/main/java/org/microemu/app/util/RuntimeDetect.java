@@ -48,8 +48,8 @@ public class RuntimeDetect {
 			return;
 		}
 		if (detectJava14()) {
-			detectJava15();
-			detectEclipse();
+			RuntimeDetect.detectJava15();
+			RuntimeDetect.detectEclipse();
 		}
 		runtimeDetected = true;
 	}
@@ -57,19 +57,19 @@ public class RuntimeDetect {
 	private static synchronized boolean detectJava14() {
 		try {
 			Class.forName("java.lang.StackTraceElement");
-			java14 = true;
+			RuntimeDetect.java14 = true;
 		} catch (Throwable ignore) {
 		}
-		return java14;
+		return RuntimeDetect.java14;
 	}
 
 	private static boolean detectJava15() {
 		try {
-			java5Function();
-			java15 = true;
+			RuntimeDetect.java5Function();
+			RuntimeDetect.java15 = true;
 		} catch (Throwable ignore) {
 		}
-		return java15;
+		return RuntimeDetect.java15;
 	}
 
 	private static boolean java5Function() {
@@ -81,29 +81,29 @@ public class RuntimeDetect {
 		for (int i = 0; i < ste.length; i++) {
 			StackTraceElement s = ste[i];
 			if (s.getClassName().startsWith("org.eclipse.jdt")) {
-				inEclipseUnitTests = true;
+				RuntimeDetect.inEclipseUnitTests = true;
 				break;
 			}
 		}
 	}
 
 	public static boolean isJava13() {
-		detect();
-		return java13;
+		RuntimeDetect.detect();
+		return RuntimeDetect.java13;
 	}
 
 	public static boolean isJava14() {
-		detect();
-		return java14;
+		RuntimeDetect.detect();
+		return RuntimeDetect.java14;
 	}
 
 	public static boolean isJava15() {
-		detect();
-		return java15;
+		RuntimeDetect.detect();
+		return RuntimeDetect.java15;
 	}
 
 	public static boolean isInEclipseUnitTests() {
-		detect();
-		return inEclipseUnitTests;
+		RuntimeDetect.detect();
+		return RuntimeDetect.inEclipseUnitTests;
 	}
 }

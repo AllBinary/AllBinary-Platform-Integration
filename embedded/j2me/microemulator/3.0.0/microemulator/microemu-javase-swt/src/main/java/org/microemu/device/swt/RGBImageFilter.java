@@ -94,7 +94,7 @@ public final class RGBImageFilter implements ImageFilter
 	{
     int r, g, b;
 
-    if (Rr > 0) {
+    if (this.Rr > 0) {
       r = (int) (rgb.rgb.red * Rr) / 255 + this.backgroundColor.getRed();
     } else {
       r = (int) (rgb.rgb.red * -Rr) / 255 + this.foregroundColor.getRed();

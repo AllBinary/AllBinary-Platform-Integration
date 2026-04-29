@@ -59,7 +59,7 @@ public class ThreadTestsForm extends BaseTestsForm {
 	}
 
 	public static void onMIDletInit() {
-		if (testTimeronInit) {
+		if (ThreadTestsForm.testTimeronInit) {
 			Timer runAwayTimer = new Timer();
 			runAwayTimer.scheduleAtFixedRate(new TimerTask() {
 				public void run() {
@@ -71,8 +71,8 @@ public class ThreadTestsForm extends BaseTestsForm {
 	}
 
 	public void commandAction(Command c, Displayable d) {
-		if (c == startThreadCommand) {
-			thread = new Thread() {
+		if (c == ThreadTestsForm.startThreadCommand) {
+			this.thread = new Thread() {
 				public void run() {
 					while (true) {
 						try {

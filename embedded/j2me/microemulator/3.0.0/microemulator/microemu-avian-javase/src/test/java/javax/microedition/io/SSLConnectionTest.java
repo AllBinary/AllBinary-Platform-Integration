@@ -87,14 +87,14 @@ public class SSLConnectionTest extends BaseGCFTestCase {
 		sc.setSocketOption(SocketConnection.LINGER, 5);
 
 		OutputStream os = sc.openOutputStream();
-		write(os, "GET /robots.txt HTTP/1.0");
-		write(os, "User-Agent: UNTRUSTED/1.0");
-		write(os, "Host: " + TEST_HOST);
+		this.write(os, "GET /robots.txt HTTP/1.0");
+		this.write(os, "User-Agent: UNTRUSTED/1.0");
+		this.write(os, "Host: " + TEST_HOST);
 		os.write(CRLF.getBytes());
 		os.flush();
 		
 		InputStream is = sc.openInputStream();
-		validateHTTPReply(is);
+		this.validateHTTPReply(is);
 		sc.close();
 	}
 

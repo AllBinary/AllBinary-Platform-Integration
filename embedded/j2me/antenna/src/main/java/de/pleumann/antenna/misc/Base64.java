@@ -193,7 +193,7 @@ public class Base64
      */
     private static byte[] encode3to4( byte[] b4, byte[] threeBytes, int numSigBytes )
     {
-        encode3to4( threeBytes, 0, numSigBytes, b4, 0 );
+        Base64.encode3to4( threeBytes, 0, numSigBytes, b4, 0 );
         return b4;
     }   // end encode3to4
 
@@ -241,24 +241,24 @@ public class Base64
         switch( numSigBytes )
         {
             case 3:
-                destination[ destOffset     ] = ALPHABET[ (inBuff >>> 18)        ];
-                destination[ destOffset + 1 ] = ALPHABET[ (inBuff >>> 12) & 0x3f ];
-                destination[ destOffset + 2 ] = ALPHABET[ (inBuff >>>  6) & 0x3f ];
-                destination[ destOffset + 3 ] = ALPHABET[ (inBuff       ) & 0x3f ];
+                destination[ destOffset     ] = Base64.ALPHABET[ (inBuff >>> 18)        ];
+                destination[ destOffset + 1 ] = Base64.ALPHABET[ (inBuff >>> 12) & 0x3f ];
+                destination[ destOffset + 2 ] = Base64.ALPHABET[ (inBuff >>>  6) & 0x3f ];
+                destination[ destOffset + 3 ] = Base64.ALPHABET[ (inBuff       ) & 0x3f ];
                 return destination;
                 
             case 2:
-                destination[ destOffset     ] = ALPHABET[ (inBuff >>> 18)        ];
-                destination[ destOffset + 1 ] = ALPHABET[ (inBuff >>> 12) & 0x3f ];
-                destination[ destOffset + 2 ] = ALPHABET[ (inBuff >>>  6) & 0x3f ];
-                destination[ destOffset + 3 ] = EQUALS_SIGN;
+                destination[ destOffset     ] = Base64.ALPHABET[ (inBuff >>> 18)        ];
+                destination[ destOffset + 1 ] = Base64.ALPHABET[ (inBuff >>> 12) & 0x3f ];
+                destination[ destOffset + 2 ] = Base64.ALPHABET[ (inBuff >>>  6) & 0x3f ];
+                destination[ destOffset + 3 ] = Base64.EQUALS_SIGN;
                 return destination;
                 
             case 1:
-                destination[ destOffset     ] = ALPHABET[ (inBuff >>> 18)        ];
-                destination[ destOffset + 1 ] = ALPHABET[ (inBuff >>> 12) & 0x3f ];
-                destination[ destOffset + 2 ] = EQUALS_SIGN;
-                destination[ destOffset + 3 ] = EQUALS_SIGN;
+                destination[ destOffset     ] = Base64.ALPHABET[ (inBuff >>> 18)        ];
+                destination[ destOffset + 1 ] = Base64.ALPHABET[ (inBuff >>> 12) & 0x3f ];
+                destination[ destOffset + 2 ] = Base64.EQUALS_SIGN;
+                destination[ destOffset + 3 ] = Base64.EQUALS_SIGN;
                 return destination;
                 
             default:
@@ -281,7 +281,7 @@ public class Base64
      */
     public static String encodeObject( java.io.Serializable serializableObject )
     {
-        return encodeObject( serializableObject, NO_OPTIONS );
+        return Base64.encodeObject( serializableObject, NO_OPTIONS );
     }   // end encodeObject
     
 
@@ -328,7 +328,7 @@ public class Base64
             b64os = new Base64.OutputStream( baos, ENCODE | dontBreakLines );
     
             // GZip?
-            if( gzip == GZIP )
+            if( gzip == Base64.GZIP )
             {
                 gzos = new java.util.zip.GZIPOutputStream( b64os );
                 oos  = new java.io.ObjectOutputStream( gzos );
@@ -374,7 +374,7 @@ public class Base64
      */
     public static String encodeBytes( byte[] source )
     {
-        return encodeBytes( source, 0, source.length, NO_OPTIONS );
+        return Base64.encodeBytes( source, 0, source.length, NO_OPTIONS );
     }   // end encodeBytes
     
 
@@ -401,7 +401,7 @@ public class Base64
      */
     public static String encodeBytes( byte[] source, int options )
     {   
-        return encodeBytes( source, 0, source.length, options );
+        return Base64.encodeBytes( source, 0, source.length, options );
     }   // end encodeBytes
     
     
@@ -416,7 +416,7 @@ public class Base64
      */
     public static String encodeBytes( byte[] source, int off, int len )
     {
-        return encodeBytes( source, off, len, NO_OPTIONS );
+        return Base64.encodeBytes( source, off, len, NO_OPTIONS );
     }   // end encodeBytes
     
     
@@ -450,7 +450,7 @@ public class Base64
         int gzip           = ( options & GZIP   );
         
         // Compress?
-        if( gzip == GZIP )
+        if( gzip == Base64.GZIP )
         {
             java.io.ByteArrayOutputStream  baos  = null;
             java.util.zip.GZIPOutputStream gzos  = null;
@@ -499,19 +499,19 @@ public class Base64
             int    len43   = len * 4 / 3;
             byte[] outBuff = new byte[   ( len43 )                      // Main 4:3
                                        + ( (len % 3) > 0 ? 4 : 0 )      // Account for padding
-                                       + (breakLines ? ( len43 / MAX_LINE_LENGTH ) : 0) ]; // New lines      
+                                       + (breakLines ? ( len43 / Base64.MAX_LINE_LENGTH ) : 0) ]; // New lines      
             int d = 0;
             int e = 0;
             int len2 = len - 2;
             int lineLength = 0;
             for( ; d < len2; d+=3, e+=4 )
             {
-                encode3to4( source, d+off, 3, outBuff, e );
+                Base64.encode3to4( source, d+off, 3, outBuff, e );
 
                 lineLength += 4;
-                if( breakLines && lineLength == MAX_LINE_LENGTH )
+                if( breakLines && lineLength == Base64.MAX_LINE_LENGTH )
                 {   
-                    outBuff[e+4] = NEW_LINE;
+                    outBuff[e+4] = Base64.NEW_LINE;
                     e++;
                     lineLength = 0;
                 }   // end if: end of line
@@ -519,7 +519,7 @@ public class Base64
 
             if( d < len )
             {
-                encode3to4( source, d+off, len - d, outBuff, e );
+                Base64.encode3to4( source, d+off, len - d, outBuff, e );
                 e += 4;
             }   // end if: some padding needed
 
@@ -570,28 +570,28 @@ public class Base64
     private static int decode4to3( byte[] source, int srcOffset, byte[] destination, int destOffset )
     {
         // Example: Dk==
-        if( source[ srcOffset + 2] == EQUALS_SIGN )
+        if( source[ srcOffset + 2] == Base64.EQUALS_SIGN )
         {
             // Two ways to do the same thing. Don't know which way I like best.
             //int outBuff =   ( ( DECODABET[ source[ srcOffset    ] ] << 24 ) >>>  6 )
             //              | ( ( DECODABET[ source[ srcOffset + 1] ] << 24 ) >>> 12 );
             int outBuff =   ( ( DECODABET[ source[ srcOffset    ] ] & 0xFF ) << 18 )
-                          | ( ( DECODABET[ source[ srcOffset + 1] ] & 0xFF ) << 12 );
+                          | ( ( Base64.DECODABET[ source[ srcOffset + 1] ] & 0xFF ) << 12 );
             
             destination[ destOffset ] = (byte)( outBuff >>> 16 );
             return 1;
         }
         
         // Example: DkL=
-        else if( source[ srcOffset + 3 ] == EQUALS_SIGN )
+        else if( source[ srcOffset + 3 ] == Base64.EQUALS_SIGN )
         {
             // Two ways to do the same thing. Don't know which way I like best.
             //int outBuff =   ( ( DECODABET[ source[ srcOffset     ] ] << 24 ) >>>  6 )
             //              | ( ( DECODABET[ source[ srcOffset + 1 ] ] << 24 ) >>> 12 )
             //              | ( ( DECODABET[ source[ srcOffset + 2 ] ] << 24 ) >>> 18 );
             int outBuff =   ( ( DECODABET[ source[ srcOffset     ] ] & 0xFF ) << 18 )
-                          | ( ( DECODABET[ source[ srcOffset + 1 ] ] & 0xFF ) << 12 )
-                          | ( ( DECODABET[ source[ srcOffset + 2 ] ] & 0xFF ) <<  6 );
+                          | ( ( Base64.DECODABET[ source[ srcOffset + 1 ] ] & 0xFF ) << 12 )
+                          | ( ( Base64.DECODABET[ source[ srcOffset + 2 ] ] & 0xFF ) <<  6 );
             
             destination[ destOffset     ] = (byte)( outBuff >>> 16 );
             destination[ destOffset + 1 ] = (byte)( outBuff >>>  8 );
@@ -608,9 +608,9 @@ public class Base64
             //              | ( ( DECODABET[ source[ srcOffset + 2 ] ] << 24 ) >>> 18 )
             //              | ( ( DECODABET[ source[ srcOffset + 3 ] ] << 24 ) >>> 24 );
             int outBuff =   ( ( DECODABET[ source[ srcOffset     ] ] & 0xFF ) << 18 )
-                          | ( ( DECODABET[ source[ srcOffset + 1 ] ] & 0xFF ) << 12 )
-                          | ( ( DECODABET[ source[ srcOffset + 2 ] ] & 0xFF ) <<  6)
-                          | ( ( DECODABET[ source[ srcOffset + 3 ] ] & 0xFF )      );
+                          | ( ( Base64.DECODABET[ source[ srcOffset + 1 ] ] & 0xFF ) << 12 )
+                          | ( ( Base64.DECODABET[ source[ srcOffset + 2 ] ] & 0xFF ) <<  6)
+                          | ( ( Base64.DECODABET[ source[ srcOffset + 3 ] ] & 0xFF )      );
 
             
             destination[ destOffset     ] = (byte)( outBuff >> 16 );
@@ -713,7 +713,7 @@ public class Base64
 		//</change>
         
         // Decode
-        bytes = decode( bytes, 0, bytes.length );
+        bytes = Base64.decode( bytes, 0, bytes.length );
         
         
         // Check to see if it's gzip-compressed
@@ -776,7 +776,7 @@ public class Base64
     public static Object decodeToObject( String encodedObject )
     {
         // Decode and gunzip if necessary
-        byte[] objBytes = decode( encodedObject );
+        byte[] objBytes = Base64.decode( encodedObject );
         
         java.io.ByteArrayInputStream  bais = null;
         java.io.ObjectInputStream     ois  = null;

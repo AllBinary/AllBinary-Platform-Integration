@@ -42,11 +42,11 @@ public class StringItem extends Item {
 		super.setUI(DeviceFactory.getDevice().getUIFactory().createImageStringItemUI(this));
 		
 		this.stringComponent = new StringComponent();
-		setText(text);
+		this.setText(text);
 	}
 	
 	public int getAppearanceMode() {
-		return appearanceMode;
+		return this.appearanceMode;
 	}
 	
 	public Font getFont() {
@@ -64,7 +64,7 @@ public class StringItem extends Item {
 	}
 	
 	public String getText() {
-		return stringComponent.getText();
+		return this.stringComponent.getText();
 	}
 
 	public void setText(String text) {
@@ -91,7 +91,7 @@ public class StringItem extends Item {
 		this.stringComponent.paint(g);
 		g.translate(0, -super.getHeight());
 
-		return getHeight();
+		return this.getHeight();
 	}
 
         //TWB - made public
@@ -113,7 +113,7 @@ public class StringItem extends Item {
 		if (gameKeyCode == Canvas.DOWN) {
 			if (bottom < getHeight()) {
 				if (getHeight() - bottom < f.getHeight()) {
-					return getHeight() - bottom;
+					return this.getHeight() - bottom;
 				} else {
 					return f.getHeight();
 				}

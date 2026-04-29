@@ -46,12 +46,12 @@ public class BaseProps implements Cloneable
 			{				
 				Element e = (Element) item;
 				String tagName = e.getTagName();
-				if (FEATURES.equals(tagName))
+				if (BaseProps.FEATURES.equals(tagName))
 				{
 					this.parseGroup(e, m_features);
 				}
 				else
-				if (CAPABILITY.equals(tagName))
+				if (BaseProps.CAPABILITY.equals(tagName))
 				{
 					String name = e.getAttribute("name");
 					String value = e.getAttribute("value");

@@ -47,9 +47,9 @@ public final class Injected {
 	/**
 	 * This allow redirection of stdout to MicroEmulator console
 	 */
-	public final static PrintStream out = outPrintStream();
+	public final static PrintStream out = Injected.outPrintStream();
 
-	public final static PrintStream err = errPrintStream();
+	public final static PrintStream err = Injected.errPrintStream();
 
 	/**
 	 * We don't need to instantiate the class, all access is static

@@ -60,7 +60,7 @@ public class FirstPassVisitor implements ClassVisitor {
 		ArrayList<String> list = new ArrayList<String>();
 		list.add(name);
 		list.add(superName);
-		classesHierarchy.put(name, list);
+		this.classesHierarchy.put(name, list);
 	}
 
 	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
@@ -79,11 +79,11 @@ public class FirstPassVisitor implements ClassVisitor {
 	}
 
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
-		if (fieldTranslations.get(name) == null) {
-			fieldTranslations.put(name, 
+		if (this.fieldTranslations.get(name) == null) {
+			this.fieldTranslations.put(name, 
 					new FieldNodeExt(null));
 		} else {
-			fieldTranslations.put((TRANSLATED_PREFIX + name + fieldTranslationsCounter++), 
+			this.fieldTranslations.put((TRANSLATED_PREFIX + name + fieldTranslationsCounter++), 
 					new FieldNodeExt(new FieldNode(access, name, desc, signature, value)));
 		}
 		return null;
@@ -95,11 +95,11 @@ public class FirstPassVisitor implements ClassVisitor {
 	}
 
 	public MethodVisitor visitMethod(final int access, final String name, String desc, final String signature, final String[] exceptions) {
-		if (methodTranslations.get(name) == null || name.equals("<init>")) {
-			methodTranslations.put(name, 
+		if (this.methodTranslations.get(name) == null || name.equals("<init>")) {
+			this.methodTranslations.put(name, 
 					new MethodNodeExt(null));
 		} else {
-			methodTranslations.put((TRANSLATED_PREFIX + name + methodTranslationsCounter++), 
+			this.methodTranslations.put((TRANSLATED_PREFIX + name + methodTranslationsCounter++), 
 					new MethodNodeExt(new MethodNode(access, name, desc, signature, exceptions)));
 //System.out.println("visitMethod: " + name + " > " + (TRANSLATED_PREFIX + name + methodTranslationsCounter));		
 		}

@@ -61,7 +61,7 @@ public class FileSystemRegistryImpl implements FileSystemRegistryDelegate, Imple
 				public Object run() {
 					return FileSystemFileConnection.listRoots(fsRoot, fsSingle);
 				}
-			}, acc);
+			}, this.acc);
 		default:
 			throw new RuntimeException("Invalid connectionType configuration");
 		}

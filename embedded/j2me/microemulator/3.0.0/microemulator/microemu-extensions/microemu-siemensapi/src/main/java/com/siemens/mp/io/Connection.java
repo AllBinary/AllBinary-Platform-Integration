@@ -32,7 +32,7 @@ public class Connection extends com.siemens.mp.misc.NativeMem {
     
     public ConnectionListener getListener() 
     {
-        return listener;
+        return this.listener;
     }
     
     public void send(byte[] data) 

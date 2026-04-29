@@ -71,14 +71,14 @@ public class FileRecordStoreManager implements RecordStoreManager {
 
 	static {
             final CommonSeps commonSeps = CommonSeps.getInstance();
-		replaceChars.add(commonSeps.COLON);
-		replaceChars.add("*");
-		replaceChars.add(commonSeps.QUESTION);
-		replaceChars.add(commonSeps.EQUALS);
-		replaceChars.add("|");
-		replaceChars.add(commonSeps.FORWARD_SLASH);
-		replaceChars.add(commonSeps.BACK_SLASH);
-		replaceChars.add(commonSeps.QUOTE);
+		FileRecordStoreManager.replaceChars.add(commonSeps.COLON);
+		FileRecordStoreManager.replaceChars.add("*");
+		FileRecordStoreManager.replaceChars.add(commonSeps.QUESTION);
+		FileRecordStoreManager.replaceChars.add(commonSeps.EQUALS);
+		FileRecordStoreManager.replaceChars.add("|");
+		FileRecordStoreManager.replaceChars.add(commonSeps.FORWARD_SLASH);
+		FileRecordStoreManager.replaceChars.add(commonSeps.BACK_SLASH);
+		FileRecordStoreManager.replaceChars.add(commonSeps.QUOTE);
 	}
 
 	private FilenameFilter filter = new FilenameFilter() {
@@ -109,22 +109,22 @@ public class FileRecordStoreManager implements RecordStoreManager {
 	}
 
 	static String recordStoreName2FileName(String recordStoreName) {
-		for (Iterator iterator = replaceChars.iterator(); iterator.hasNext();) {
+		for (Iterator iterator = FileRecordStoreManager.replaceChars.iterator(); iterator.hasNext();) {
 			String c = (String) iterator.next();
-			String newValue = escapeCharacter(c);
+			String newValue = FileRecordStoreManager.escapeCharacter(c);
 			if (c.equals("\\")) {
 				c = "\\\\";
 			}
 			c = "[" + c + "]";
 			recordStoreName = recordStoreName.replaceAll(c, newValue);
 		}
-		return recordStoreName + RECORD_STORE_SUFFIX;
+		return recordStoreName + FileRecordStoreManager.RECORD_STORE_SUFFIX;
 	}
 
 	static String fileName2RecordStoreName(String fileName) {
-		for (Iterator iterator = replaceChars.iterator(); iterator.hasNext();) {
+		for (Iterator iterator = FileRecordStoreManager.replaceChars.iterator(); iterator.hasNext();) {
 			String c = (String) iterator.next();
-			String newValue = escapeCharacter(c);
+			String newValue = FileRecordStoreManager.escapeCharacter(c);
 			if (c.equals("\\")) {
 				c = "\\\\";
 			}
@@ -143,7 +143,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 		}
 
 		try {
-			recordStoreImpl = loadFromDisk(storeFile);
+			recordStoreImpl = this.loadFromDisk(storeFile);
 		} catch (FileNotFoundException ex) {
 			throw new RecordStoreNotFoundException(recordStoreName);
 		}
@@ -152,7 +152,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 //			AccessController.doPrivileged(new PrivilegedExceptionAction() {
 //				public Object run() throws FileNotFoundException {
 					storeFile.delete();
-					fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, recordStoreName);
+					this.fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, recordStoreName);
 //					return null;
 //				}
 //			}, acc);
@@ -167,7 +167,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 
 		RecordStoreImpl recordStoreImpl;
 		try {
-			recordStoreImpl = loadFromDisk(storeFile);
+			recordStoreImpl = this.loadFromDisk(storeFile);
 			recordStoreImpl.setOpen(true);
 		} catch (FileNotFoundException e) {
 			if (!createIfNecessary) {
@@ -175,7 +175,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 			}
 			recordStoreImpl = new RecordStoreImpl(this, recordStoreName);
 			recordStoreImpl.setOpen(true);
-			saveToDisk(storeFile, recordStoreImpl);
+			this.saveToDisk(storeFile, recordStoreImpl);
 		}
 		if (this.recordListener != null) {
 			recordStoreImpl.addRecordListener(this.recordListener);
@@ -183,7 +183,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 
 		this.testOpenRecordStores.put(storeFile.getName(), recordStoreImpl);
 
-		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
+		this.fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
 
 		return recordStoreImpl;
 	}
@@ -195,7 +195,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 //                            (String[]) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 //				public Object run() {
 //					return 
-                            getSuiteFolder().list(filter);
+                            this.getSuiteFolder().list(filter);
 //				}
 //			}, acc);
 		} catch (Exception e) {
@@ -207,7 +207,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 				result = null;
 			} else {
 				for (int i = 0; i < result.length; i++) {
-					result[i] = fileName2RecordStoreName(result[i]);
+					result[i] = FileRecordStoreManager.fileName2RecordStoreName(result[i]);
 				}
 			}
 		}
@@ -216,7 +216,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 
 	public void deleteRecord(RecordStoreImpl recordStoreImpl, int recordId) throws RecordStoreNotOpenException, RecordStoreException 
 	{
-		saveRecord(recordStoreImpl, recordId);
+		this.saveRecord(recordStoreImpl, recordId);
 	}
 	
 	public void loadRecord(RecordStoreImpl recordStoreImpl, int recordId)
@@ -229,18 +229,18 @@ public class FileRecordStoreManager implements RecordStoreManager {
 	{
 		File storeFile = new File(getSuiteFolder(), recordStoreName2FileName(recordStoreImpl.getName()));
 
-		saveToDisk(storeFile, recordStoreImpl);
+		this.saveToDisk(storeFile, recordStoreImpl);
 	}
 
 	public void init() {
 	}
 
 	public void deleteStores() {
-		String[] stores = listRecordStores();
+		String[] stores = this.listRecordStores();
 		for (int i = 0; i < stores.length; i++) {
 			String store = stores[i];
 			try {
-				deleteRecordStore(store);
+				this.deleteRecordStore(store);
 			} catch (RecordStoreException e) {
 				Logger.debug("deleteRecordStore", e);
 			}
@@ -251,7 +251,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 		try {
 //			return (RecordStoreImpl) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 //				public Object run() throws FileNotFoundException {
-					return loadFromDiskSecure(recordStoreFile);
+					return this.loadFromDiskSecure(recordStoreFile);
 //				}
 //			}, acc);
 		} catch (Exception e) {
@@ -285,7 +285,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 		try {
 //			AccessController.doPrivileged(new PrivilegedExceptionAction() {
 //				public Object run() throws RecordStoreException {
-					saveToDiskSecure(recordStoreFile, recordStore);
+					this.saveToDiskSecure(recordStoreFile, recordStore);
 //					return null;
 //				}
 //			}, acc);

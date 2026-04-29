@@ -39,10 +39,10 @@ public class GetKeyMIDletTest extends MIDlet implements CommandListener, GetKeyH
 	
 	public GetKeyMIDletTest()
 	{
-		menu.append("Menu item 1", null);
-		menu.append("Menu item 2", null);
-		menu.addCommand(CMD_EXIT);
-		menu.setCommandListener(this);
+		this.menu.append("Menu item 1", null);
+		this.menu.append("Menu item 2", null);
+		this.menu.addCommand(CMD_EXIT);
+		this.menu.setCommandListener(this);
 	}
 
 	
@@ -67,9 +67,9 @@ public class GetKeyMIDletTest extends MIDlet implements CommandListener, GetKeyH
 	public void commandAction(Command c, Displayable d) 
 	{
 		if (d == this.menu) {
-			if (c == CMD_EXIT) {
+			if (c == GetKeyMIDletTest.CMD_EXIT) {
 		        try {
-					destroyApp(true);
+					this.destroyApp(true);
 			        notifyDestroyed();
 				} catch (MIDletStateChangeException ex) {
 					ex.printStackTrace();
@@ -81,7 +81,7 @@ public class GetKeyMIDletTest extends MIDlet implements CommandListener, GetKeyH
 
 	public void getKeyPressed() 
 	{
-		Display.getDisplay(this).setCurrent(this.alert, menu);
+		Display.getDisplay(this).setCurrent(this.alert, this.menu);
 	}
 
 }

@@ -48,15 +48,15 @@ public class IPhoneFontManager implements FontManager {
 	}
 	
 	public UIFont getUIFont(Font font){
-		return uifont;
+		return this.uifont;
 	}
 	
 	public int charWidth(Font f, char ch) {
-		return stringWidth(f, String.valueOf(ch));
+		return this.stringWidth(f, String.valueOf(ch));
 	}
 
 	public int charsWidth(Font f, char[] ch, int offset, int length) {
-		return stringWidth(f, String.valueOf(ch, offset, length));
+		return this.stringWidth(f, String.valueOf(ch, offset, length));
 	}
 
 	public int getBaselinePosition(Font f) {

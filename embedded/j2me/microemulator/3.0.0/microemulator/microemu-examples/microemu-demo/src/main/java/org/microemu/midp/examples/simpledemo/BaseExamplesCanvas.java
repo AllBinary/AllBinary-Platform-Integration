@@ -57,8 +57,8 @@ public abstract class BaseExamplesCanvas extends Canvas implements CommandListen
 		if (d == this) {
 			if (c == BaseExamplesForm.backCommand) {
 				SimpleDemoMIDlet.showMenu();
-			} else if (c == fullScreenModeCommand) {
-				setFullScreenMode(!fullScreenMode);
+			} else if (c == BaseExamplesCanvas.fullScreenModeCommand) {
+				this.setFullScreenMode(!fullScreenMode);
 				repaint();
 			}
 		}

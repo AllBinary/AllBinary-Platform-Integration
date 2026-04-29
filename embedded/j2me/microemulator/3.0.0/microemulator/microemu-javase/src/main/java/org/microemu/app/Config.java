@@ -73,10 +73,10 @@ public class Config {
 	private static File initMEHomePath() {
 		try {
 			File meHome = new File(System.getProperty("user.home") + "/.microemulator/");
-			if (emulatorID != null) {
+			if (Config.emulatorID != null) {
 				return new File(meHome, emulatorID);
 			} else {
-				return meHome;
+				return Config.meHome;
 			}
 		} catch (SecurityException e) {
 			Logger.error("Cannot access user.home", e);
@@ -91,12 +91,12 @@ public class Config {
 		File configFile = new File(getConfigPath(), "config2.xml");
 		try {
 			if (configFile.exists()) {
-				loadConfigFile("config2.xml");
+				Config.loadConfigFile("config2.xml");
 			} else {
 				configFile = new File(getConfigPath(), "config.xml");
 				if (configFile.exists()) {
 					// migrate from config.xml
-					loadConfigFile("config.xml");
+					Config.loadConfigFile("config.xml");
 
 					for (Enumeration e = getDeviceEntries().elements(); e.hasMoreElements();) {
 						DeviceEntry entry = (DeviceEntry) e.nextElement();
@@ -104,29 +104,29 @@ public class Config {
 							continue;
 						}
 
-						removeDeviceEntry(entry);
+						Config.removeDeviceEntry(entry);
 						File src = new File(getConfigPath(), entry.getFileName());
 						File dst = File.createTempFile("dev", ".jar", getConfigPath());
 						IOUtils.copyFile(src, dst);
 						entry.setFileName(dst.getName());
-						addDeviceEntry(entry);
+						Config.addDeviceEntry(entry);
 					}
 				} else {
-					createDefaultConfigXml();
+					Config.createDefaultConfigXml();
 				}
-				saveConfig();
+				Config.saveConfig();
 			}
 		} catch (IOException ex) {
 			Logger.error(ex);
-			createDefaultConfigXml();
+			Config.createDefaultConfigXml();
 		} finally {
 			// Happens in webstart untrusted environment
-			if (configXml == null) {
-				createDefaultConfigXml();
+			if (Config.configXml == null) {
+				Config.createDefaultConfigXml();
 			}
 		}
-		urlsMRU.read(configXml.getChildOrNew("files").getChildOrNew("recent"));
-		initSystemProperties();
+		Config.urlsMRU.read(configXml.getChildOrNew("files").getChildOrNew("recent"));
+		Config.initSystemProperties();
 	}
 
 	private static void loadConfigFile(String configFileName) throws IOException {
@@ -140,11 +140,11 @@ public class Config {
 				dis.read(b);
 				xml += new String(b);
 			}
-			configXml = new XMLElement();
-			configXml.parseString(xml);
+			Config.configXml = new XMLElement();
+			Config.configXml.parseString(xml);
 		} catch (XMLParseException e) {
 			Logger.error(e);
-			createDefaultConfigXml();
+			Config.createDefaultConfigXml();
 		} finally {
 			IOUtils.closeQuietly(is);
 		}
@@ -157,15 +157,15 @@ public class Config {
 
 	public static void saveConfig() {
 
-		urlsMRU.save(configXml.getChildOrNew("files").getChildOrNew("recent"));
+		Config.urlsMRU.save(configXml.getChildOrNew("files").getChildOrNew("recent"));
 
 		File configFile = new File(getConfigPath(), "config2.xml");
 
-		getConfigPath().mkdirs();
+		Config.getConfigPath().mkdirs();
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(configFile);
-			configXml.write(fw);
+			Config.configXml.write(fw);
 			fw.close();
 		} catch (IOException ex) {
 			Logger.error(ex);
@@ -213,7 +213,7 @@ public class Config {
 	private static void initSystemProperties() {
 		Map systemProperties = null;
 
-		for (Enumeration e = configXml.enumerateChildren(); e.hasMoreElements();) {
+		for (Enumeration e = Config.configXml.enumerateChildren(); e.hasMoreElements();) {
 			XMLElement tmp = (XMLElement) e.nextElement();
 			if (tmp.getName().equals("system-properties")) {
 				// Permits null values.
@@ -243,31 +243,31 @@ public class Config {
 				xmlProperty.setAttribute("name", (String) e.getKey());
 			}
 
-			saveConfig();
+			Config.saveConfig();
 		}
 
 		MIDletSystemProperties.setProperties(systemProperties);
 	}
 
 	public static File getConfigPath() {
-		if (meHome == null) {
-			meHome = initMEHomePath();
+		if (Config.meHome == null) {
+			Config.meHome = Config.initMEHomePath();
 		}
-		return meHome;
+		return Config.meHome;
 	}
 
 	public static Vector getDeviceEntries() {
 		Vector result = new Vector();
 
-		if (defaultDevice == null) {
-			defaultDevice = new DeviceEntry("Default device", null, DeviceImpl.DEFAULT_LOCATION, true, false);
+		if (Config.defaultDevice == null) {
+			Config.defaultDevice = new DeviceEntry("Default device", null, DeviceImpl.DEFAULT_LOCATION, true, false);
 		}
-		defaultDevice.setDefaultDevice(true);
+		Config.defaultDevice.setDefaultDevice(true);
 		result.add(defaultDevice);
 		
-		if (resizableDevice == null) {
-			resizableDevice = new DeviceEntry("Resizable device", null, DeviceImpl.RESIZABLE_LOCATION, false, false);
-			addDeviceEntry(resizableDevice);
+		if (Config.resizableDevice == null) {
+			Config.resizableDevice = new DeviceEntry("Resizable device", null, DeviceImpl.RESIZABLE_LOCATION, false, false);
+			Config.addDeviceEntry(resizableDevice);
 		}
 
 		XMLElement devicesXml = configXml.getChild("devices");
@@ -282,7 +282,7 @@ public class Config {
 				if (tmp_device.getStringAttribute("default") != null
 						&& tmp_device.getStringAttribute("default").equals("true")) {
 					devDefault = true;
-					defaultDevice.setDefaultDevice(false);
+					Config.defaultDevice.setDefaultDevice(false);
 				}
 				String devName = tmp_device.getChildString("name", null);
 				String devFile = tmp_device.getChildString("filename", null);
@@ -318,7 +318,7 @@ public class Config {
 		deviceXml.addChild("filename", entry.getFileName());
 		deviceXml.addChild("descriptor", entry.getDescriptorLocation());
 
-		saveConfig();
+		Config.saveConfig();
 	}
 
 	public static void removeDeviceEntry(DeviceEntry entry) {
@@ -335,13 +335,13 @@ public class Config {
 				if (testDescriptor == null) {
 					devicesXml.removeChild(tmp_device);
 
-					saveConfig();
+					Config.saveConfig();
 					continue;
 				}
 				if (testDescriptor.equals(entry.getDescriptorLocation())) {
 					devicesXml.removeChild(tmp_device);
 
-					saveConfig();
+					Config.saveConfig();
 					break;
 				}
 			}
@@ -365,7 +365,7 @@ public class Config {
 						tmp_device.removeAttribute("default");
 					}
 
-					saveConfig();
+					Config.saveConfig();
 					break;
 				}
 			}
@@ -423,7 +423,7 @@ public class Config {
 					xml = mainXml.getChildOrNew("height");
 					xml.setContent(String.valueOf(rect.height));
 
-					saveConfig();
+					Config.saveConfig();
 					break;
 				}
 			}
@@ -443,7 +443,7 @@ public class Config {
 		XMLElement recordStoreManagerXml = configXml.getChildOrNew("recordStoreManager");
 		recordStoreManagerXml.setAttribute("class", className);
 
-		saveConfig();
+		Config.saveConfig();
 	}
 
 	public static boolean isLogConsoleLocationEnabled() {
@@ -463,7 +463,7 @@ public class Config {
 			logConsoleXml.setAttribute("locationEnabled", "false");
 		}
 
-		saveConfig();
+		Config.saveConfig();
 	}
 
 	public static boolean isWindowOnStart(String name) {
@@ -522,7 +522,7 @@ public class Config {
 		xml = mainXml.getChildOrNew("height");
 		xml.setContent(String.valueOf(window.height));
 
-		saveConfig();
+		Config.saveConfig();
 	}
 
 	public static String getRecentDirectory(String key) {
@@ -541,15 +541,15 @@ public class Config {
 		XMLElement recentJadDirectoryXml = filesXml.getChildOrNew(key);
 		recentJadDirectoryXml.setContent(recentJadDirectory);
 
-		saveConfig();
+		Config.saveConfig();
 	}
 
 	public static MRUList getUrlsMRU() {
-		return urlsMRU;
+		return Config.urlsMRU;
 	}
 
 	public static String getEmulatorID() {
-		return emulatorID;
+		return Config.emulatorID;
 	}
 
 	public static void setEmulatorID(String emulatorID) {

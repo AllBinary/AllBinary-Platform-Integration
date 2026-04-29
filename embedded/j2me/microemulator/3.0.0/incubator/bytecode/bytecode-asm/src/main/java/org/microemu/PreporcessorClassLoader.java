@@ -41,7 +41,7 @@ public class PreporcessorClassLoader extends URLClassLoader {
 	}
 	
 	private void debug(String message) {
-		if (debug) {
+		if (PreporcessorClassLoader.debug) {
 			System.out.println("ppcl " + this.hashCode() + " " + message);
 		}
 	}
@@ -53,20 +53,20 @@ public class PreporcessorClassLoader extends URLClassLoader {
      * @param Class Name
      */
 	public void addClassURL(String className) throws MalformedURLException {
-		String resource = getClassResourceName(className);
+		String resource = PreporcessorClassLoader.getClassResourceName(className);
 		URL url = getParent().getResource(resource);
 		if (url == null) {
 			throw new MalformedURLException("Unable to find class " + className + " URL");
 		}
 		String path = url.toExternalForm();
-		if (debug) {
-			debug("addClassURL " + path);
+		if (PreporcessorClassLoader.debug) {
+			this.debug("addClassURL " + path);
 		}
-		addURL(new URL(path.substring(0, path.length() - resource.length())));
+		this.addURL(new URL(path.substring(0, path.length() - resource.length())));
     }
 	
 	public static URL getClassURL(ClassLoader parent, String className) throws MalformedURLException {
-		String resource = getClassResourceName(className);
+		String resource = PreporcessorClassLoader.getClassResourceName(className);
 		URL url = parent.getResource(resource);
 		if (url == null) {
 			throw new MalformedURLException("Unable to find class " + className + " URL");
@@ -76,8 +76,8 @@ public class PreporcessorClassLoader extends URLClassLoader {
     }
 	
 	public void addURL(URL url) {
-		if (debug) {
-			debug("addURL " + url);
+		if (PreporcessorClassLoader.debug) {
+			this.debug("addURL " + url);
 		}
 		super.addURL(url);
 	}
@@ -106,20 +106,20 @@ public class PreporcessorClassLoader extends URLClassLoader {
 	 *
 	 */
 	protected synchronized Class loadClass(String name, boolean resolve) throws ClassNotFoundException {
-		if (debug) {
-			debug("loadClass " + name);
+		if (PreporcessorClassLoader.debug) {
+			this.debug("loadClass " + name);
 		}
 		// First, check if the class has already been loaded
 		Class result = findLoadedClass(name);
 		if (result == null) {
 			if (allowClassLoad(name)) {
-				result = findClass(name);
-				if (debug && (result == null)) {
-					debug("loadClass not found " + name);
+				result = this.findClass(name);
+				if (PreporcessorClassLoader.debug && (result == null)) {
+					this.debug("loadClass not found " + name);
 				}
 			}
 			if (result == null) {
-				if (traceSystemClassLoading) {
+				if (PreporcessorClassLoader.traceSystemClassLoading) {
 					System.out.println("Load system class " + name);
 				}
 				// This will call our findClass again if Class is not found in parent
@@ -163,10 +163,10 @@ public class PreporcessorClassLoader extends URLClassLoader {
 				public Object run() {
 					return findResource(name);
 				}
-			}, acc);
+			}, this.acc);
 		} catch (PrivilegedActionException e) {
-			if (debug) {
-				debug("Unable to find resource " + name + " " + e.toString());
+			if (PreporcessorClassLoader.debug) {
+				this.debug("Unable to find resource " + name + " " + e.toString());
 			}
 			return null;
 		}
@@ -176,7 +176,7 @@ public class PreporcessorClassLoader extends URLClassLoader {
 	 * Allow access to resources
 	 */
 	public InputStream getResourceAsStream(String name) {
-		final URL url = getResource(name);
+		final URL url = this.getResource(name);
 		if (url == null) {
 			return null;
 		}
@@ -186,10 +186,10 @@ public class PreporcessorClassLoader extends URLClassLoader {
 				public Object run() throws IOException {
 					return url.openStream();
 				}
-			}, acc);
+			}, this.acc);
 		} catch (PrivilegedActionException e) {
-			if (debug) {
-				debug("Unable to find resource for class " + name + " " + e.toString());
+			if (PreporcessorClassLoader.debug) {
+				this.debug("Unable to find resource for class " + name + " " + e.toString());
 			}
 			return null;
 		}
@@ -219,11 +219,11 @@ public class PreporcessorClassLoader extends URLClassLoader {
 	 * @param klass
 	 */
 	public void disableClassLoad(Class klass) {
-		disableClassLoad(klass.getName());
+		this.disableClassLoad(klass.getName());
 	}
 	
 	public void disableClassLoad(String className) {
-		notLoadableNames.add(className);
+		this.notLoadableNames.add(className);
 	}
 
 	public static String getClassResourceName(String className) {
@@ -231,8 +231,8 @@ public class PreporcessorClassLoader extends URLClassLoader {
 	}
 
 	protected Class findClass(final String name) {
-		if (debug) {
-			debug("findClass " + name);
+		if (PreporcessorClassLoader.debug) {
+			this.debug("findClass " + name);
 		}
 		InputStream is;
 		//is = getResourceAsStream(getClassResourceName(name));
@@ -241,17 +241,17 @@ public class PreporcessorClassLoader extends URLClassLoader {
 				public Object run() throws ClassNotFoundException {
 					return getResourceAsStream(getClassResourceName(name));
 				}
-			}, acc);
+			}, this.acc);
 		} catch (PrivilegedActionException e) {
-			if (debug) {
-				debug("Unable to find resource for class " + name + " " + e.toString());
+			if (PreporcessorClassLoader.debug) {
+				this.debug("Unable to find resource for class " + name + " " + e.toString());
 			}
 			return null;
 		}
 		
 		if (is == null) {
-			if (debug) {
-				debug("Unable to find resource for class " + name);
+			if (PreporcessorClassLoader.debug) {
+				this.debug("Unable to find resource for class " + name);
 			}
 			return null;
 		}
@@ -271,8 +271,8 @@ public class PreporcessorClassLoader extends URLClassLoader {
 			} catch (IOException ignore) {
 			}
 		}
-		if (debug) {
-			debug("instrumented " + name);
+		if (PreporcessorClassLoader.debug) {
+			this.debug("instrumented " + name);
 		}
 		return defineClass(name, b, 0, b.length);
 	}

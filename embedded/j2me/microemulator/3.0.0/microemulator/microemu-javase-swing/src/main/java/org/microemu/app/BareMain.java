@@ -187,7 +187,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
         */
 
     public static void main(final String args[]) {
-        main2(args, "MiniSpaceWars", "/minispacewar_icon.ico");
+        BareMain.main2(args, "MiniSpaceWars", "/minispacewar_icon.ico");
     }
         
     public static void main2(final String args[], final String name, final String iconPath) {
@@ -1301,7 +1301,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
                 this.setExtendedState(Frame.NORMAL);
             }
 
-            if(widthBeforeFullScreen != 0 && heightBeforeFullScreen != 0)
+            if(this.widthBeforeFullScreen != 0 && this.heightBeforeFullScreen != 0)
             {
                 this.setSize(widthBeforeFullScreen, heightBeforeFullScreen);
             }
@@ -1323,8 +1323,8 @@ implements ScreenListenerInterface, ResizableListenerInterface
         {
             Logger.debug("startFullScreen", "Trying to go Full-Screen");
             
-            widthBeforeFullScreen = this.getWidth();
-            heightBeforeFullScreen = this.getHeight();
+            this.widthBeforeFullScreen = this.getWidth();
+            this.heightBeforeFullScreen = this.getHeight();
 
             //this.setVisible(false);
 
@@ -1454,11 +1454,11 @@ implements ScreenListenerInterface, ResizableListenerInterface
                     if (deviceDisplay.isResizable()) {
                             Rectangle size = Config.getDeviceEntryDisplaySize(entry);
                             if (size != null) {
-                                setDeviceSize(deviceDisplay, size.width, size.height);
+                                this.setDeviceSize(deviceDisplay, size.width, size.height);
                             }
                     }
                     this.common.setDevice(device);
-                    updateDevice();
+                    this.updateDevice();
                     return true;
             } catch (MalformedURLException e) {
                     Message.error(errorTitle, errorTitle + ", " + Message.getCauseMessage(e), e);

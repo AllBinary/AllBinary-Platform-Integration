@@ -71,7 +71,7 @@ public class SwtMessageDialog extends SwtDialog
 	public static boolean openQuestion(Shell parent, String title, String message) 
 	{
 		SwtMessageDialog dialog = 
-				new SwtMessageDialog(parent, title, message, QUESTION, new String[] {"Yes", "No"}, 0);
+				new SwtMessageDialog(parent, title, message, SwtMessageDialog.QUESTION, new String[] {"Yes", "No"}, 0);
 		return dialog.open() == 0;
 	}
 	

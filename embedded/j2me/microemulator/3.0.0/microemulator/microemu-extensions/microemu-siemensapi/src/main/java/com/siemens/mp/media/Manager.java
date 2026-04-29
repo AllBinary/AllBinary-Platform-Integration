@@ -60,9 +60,9 @@ public final class Manager {
     }
     
     public static TimeBase getSystemTimeBase() {
-        if(sysTimeBase == null)
-            sysTimeBase = new SystemTimeBase();
-        return sysTimeBase;
+        if(Manager.sysTimeBase == null)
+            Manager.sysTimeBase = new SystemTimeBase();
+        return Manager.sysTimeBase;
     }
     
     private static SystemTimeBase sysTimeBase;

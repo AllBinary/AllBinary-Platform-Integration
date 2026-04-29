@@ -228,11 +228,11 @@ public class DataElement {
 
 	public DataElement(int valueType) {
 		switch (valueType) {
-		case NULL:
+		case DataElement.NULL:
 			this.value = null;
 			break;
-		case DATALT:
-		case DATSEQ:
+		case DataElement.DATALT:
+		case DataElement.DATSEQ:
 			this.value = new Vector();
 			break;
 		default:
@@ -254,7 +254,7 @@ public class DataElement {
 
 	public DataElement(boolean bool) {
 		value = bool?Boolean.TRUE:Boolean.FALSE;
-		this.valueType = BOOL;
+		this.valueType = DataElement.BOOL;
 	}
 
     /**
@@ -313,31 +313,31 @@ public class DataElement {
 
 	public DataElement(int valueType, long value) {
 		switch (valueType) {
-		case U_INT_1:
+		case DataElement.U_INT_1:
 			if (value < 0 || value > 0xff)
 				throw new IllegalArgumentException(value + " not U_INT_1");
 			break;
-		case U_INT_2:
+		case DataElement.U_INT_2:
 			if (value < 0 || value > 0xffff)
 				throw new IllegalArgumentException(value + " not U_INT_2");
 			break;
-		case U_INT_4:
+		case DataElement.U_INT_4:
 			if (value < 0 || value > 0xffffffffl)
 				throw new IllegalArgumentException(value + " not U_INT_4");
 			break;
-		case INT_1:
+		case DataElement.INT_1:
 			if (value < -0x80 || value > 0x7f)
 				throw new IllegalArgumentException(value + " not INT_1");
 			break;
-		case INT_2:
+		case DataElement.INT_2:
 			if (value < -0x8000 || value > 0x7fff)
 				throw new IllegalArgumentException(value + " not INT_2");
 			break;
-		case INT_4:
+		case DataElement.INT_4:
 			if (value < -0x80000000 || value > 0x7fffffff)
 				throw new IllegalArgumentException(value + " not INT_4");
 			break;
-		case INT_8:
+		case DataElement.INT_8:
 			break;
 		default:
 			throw new IllegalArgumentException();
@@ -402,21 +402,21 @@ public class DataElement {
 			throw new IllegalArgumentException();
 
 		switch (valueType) {
-		case URL:
-		case STRING:
+		case DataElement.URL:
+		case DataElement.STRING:
 			if (!(value instanceof String))
 				throw new IllegalArgumentException();
 			break;
-		case UUID:
+		case DataElement.UUID:
 			if (!(value instanceof UUID))
 				throw new IllegalArgumentException();
 			break;
-		case U_INT_8:
+		case DataElement.U_INT_8:
 			if (!(value instanceof byte[]) || ((byte[]) value).length != 8)
 				throw new IllegalArgumentException();
 			break;
-		case U_INT_16:
-		case INT_16:
+		case DataElement.U_INT_16:
+		case DataElement.INT_16:
 			if (!(value instanceof byte[]) || ((byte[]) value).length != 16)
 				throw new IllegalArgumentException();
 			break;
@@ -457,8 +457,8 @@ public class DataElement {
 			throw new NullPointerException();
 
 		switch (this.valueType) {
-		case DATALT:
-		case DATSEQ:
+		case DataElement.DATALT:
+		case DataElement.DATSEQ:
 			((Vector) this.value).addElement(elem);
 			break;
 		default:
@@ -509,8 +509,8 @@ public class DataElement {
 			throw new NullPointerException();
 
 		switch (this.valueType) {
-		case DATALT:
-		case DATSEQ:
+		case DataElement.DATALT:
+		case DataElement.DATSEQ:
 			((Vector) this.value).insertElementAt(elem, index);
 			break;
 		default:
@@ -532,8 +532,8 @@ public class DataElement {
 
 	public int getSize() {
 		switch (this.valueType) {
-		case DATALT:
-		case DATSEQ:
+		case DataElement.DATALT:
+		case DataElement.DATSEQ:
 			return ((Vector) this.value).size();
 		default:
 			throw new ClassCastException();
@@ -578,8 +578,8 @@ public class DataElement {
 			throw new NullPointerException();
 
 		switch (this.valueType) {
-		case DATALT:
-		case DATSEQ:
+		case DataElement.DATALT:
+		case DataElement.DATSEQ:
 			return ((Vector) this.value).removeElement(elem);
 		default:
 			throw new ClassCastException();
@@ -613,7 +613,7 @@ public class DataElement {
 	 */
 
 	public int getDataType() {
-		return valueType;
+		return this.valueType;
 	}
 
 
@@ -642,13 +642,13 @@ public class DataElement {
 
 	public long getLong() {
 		switch (this.valueType) {
-		case U_INT_1:
-		case U_INT_2:
-		case U_INT_4:
-		case INT_1:
-		case INT_2:
-		case INT_4:
-		case INT_8:
+		case DataElement.U_INT_1:
+		case DataElement.U_INT_2:
+		case DataElement.U_INT_4:
+		case DataElement.INT_1:
+		case DataElement.INT_2:
+		case DataElement.INT_4:
+		case DataElement.INT_8:
 			return ((Long) this.value).longValue();
 		default:
 			throw new ClassCastException();
@@ -670,7 +670,7 @@ public class DataElement {
 	 */
 
 	public boolean getBoolean() {
-		if (this.valueType == BOOL)
+		if (this.valueType == DataElement.BOOL)
 			return ((Boolean) this.value).booleanValue();
 		else
 			throw new ClassCastException();

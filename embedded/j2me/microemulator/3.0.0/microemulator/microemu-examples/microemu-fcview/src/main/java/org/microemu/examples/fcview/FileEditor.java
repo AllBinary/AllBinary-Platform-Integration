@@ -61,7 +61,7 @@ public class FileEditor extends TextBox  implements CommandListener {
 		setCommandListener(this);
 		
 		file = fc;
-		load();
+		this.load();
 	}
 
 	private void load() {
@@ -102,14 +102,14 @@ public class FileEditor extends TextBox  implements CommandListener {
 	 * @see javax.microedition.lcdui.CommandListener#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
 	 */
 	public void commandAction(Command c, Displayable d) {
-		if (c == backCommand) {
+		if (c == FileEditor.backCommand) {
 			try {
 				this.file.close();
 			} catch (IOException ignore) {
 			}
 			FCViewMIDlet.setCurrentDisplayable(back);
-		} else if (c == saveCommand) {
-			save();
+		} else if (c == FileEditor.saveCommand) {
+			this.save();
 		}
 		
 	}

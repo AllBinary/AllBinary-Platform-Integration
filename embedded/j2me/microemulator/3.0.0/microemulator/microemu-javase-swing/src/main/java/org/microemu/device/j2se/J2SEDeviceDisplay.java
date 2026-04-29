@@ -107,23 +107,23 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	}
 
 	public int getHeight() {
-		return displayPaintable.height;
+		return this.displayPaintable.height;
 	}
 
 	public int getWidth() {
-		return displayPaintable.width;
+		return this.displayPaintable.width;
 	}
 
 	public int getFullHeight() {
-		return displayRectangle.height;
+		return this.displayRectangle.height;
 	}
 
 	public int getFullWidth() {
-		return displayRectangle.width;
+		return this.displayRectangle.width;
 	}
 
 	public boolean isColor() {
-		return isColor;
+		return this.isColor;
 	}
 
 	public boolean isFullScreenMode() {
@@ -141,11 +141,11 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	}
 
 	public int numAlphaLevels() {
-		return numAlphaLevels;
+		return this.numAlphaLevels;
 	}
 
 	public int numColors() {
-		return numColors;
+		return this.numColors;
 	}
 
 	public void paintControls(Graphics g) {
@@ -155,9 +155,9 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		g.fillRect(0, 0, displayRectangle.width, displayPaintable.y);
 		g.fillRect(0, displayPaintable.y, displayPaintable.x, displayPaintable.height);
 		g.fillRect(displayPaintable.x + displayPaintable.width, displayPaintable.y, displayRectangle.width
-				- displayPaintable.x - displayPaintable.width, displayPaintable.height);
+				- this.displayPaintable.x - this.displayPaintable.width, this.displayPaintable.height);
 		g.fillRect(0, displayPaintable.y + displayPaintable.height, displayRectangle.width, displayRectangle.height
-				- displayPaintable.y - displayPaintable.height);
+				- this.displayPaintable.y - this.displayPaintable.height);
 
 		g.setColor(this.foregroundColor);
 		for (Enumeration s = device.getSoftButtons().elements(); s.hasMoreElements();) {
@@ -168,13 +168,13 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
                 //J2SEImmutableImage
 		if (inputMode == InputMethod.INPUT_123) {
 			g.drawImage((java.awt.Image) mode123Image.getImage().getImage(), mode123Image.getRectangle().x,
-					mode123Image.getRectangle().y, null);
+					this.mode123Image.getRectangle().y, null);
 		} else if (inputMode == InputMethod.INPUT_ABC_UPPER) {
 			g.drawImage((java.awt.Image) modeAbcUpperImage.getImage().getImage(), modeAbcUpperImage
-					.getRectangle().x, modeAbcUpperImage.getRectangle().y, null);
+					.getRectangle().x, this.modeAbcUpperImage.getRectangle().y, null);
 		} else if (inputMode == InputMethod.INPUT_ABC_LOWER) {
 			g.drawImage((java.awt.Image) modeAbcLowerImage.getImage().getImage(), modeAbcLowerImage
-					.getRectangle().x, modeAbcLowerImage.getRectangle().y, null);
+					.getRectangle().x, this.modeAbcLowerImage.getRectangle().y, null);
 		}
 	}
 
@@ -196,7 +196,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		g.setColor(this.foregroundColor);
 		java.awt.Shape oldclip = g.getClip();
 		if (!(current instanceof Canvas) || ((Canvas) current).getWidth() != this.displayRectangle.width
-				|| ((Canvas) current).getHeight() != displayRectangle.height) {
+				|| ((Canvas) current).getHeight() != this.displayRectangle.height) {
 			g.translate(displayPaintable.x, displayPaintable.y);
 		}
 		g.setClip(x, y, width, height);
@@ -204,14 +204,14 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		ma.getDisplayAccess().paint(new J2SEDisplayGraphics(graphicsSurface));
 		g.setFont(oldf);
 		if (!(current instanceof Canvas) || ((Canvas) current).getWidth() != this.displayRectangle.width
-				|| ((Canvas) current).getHeight() != displayRectangle.height) {
+				|| ((Canvas) current).getHeight() != this.displayRectangle.height) {
 			g.translate(-displayPaintable.x, -displayPaintable.y);
 		}
 		g.setClip(oldclip);
 	}
 
 	public void repaint(int x, int y, int width, int height) {
-		context.getDisplayComponent().repaintRequest(x, y, width, height);
+		this.context.getDisplayComponent().repaintRequest(x, y, width, height);
 	}
 
 	public void setScrollDown(boolean state) {
@@ -235,7 +235,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	}
 
 	public boolean isResizable() {
-		return resizable;
+		return this.resizable;
 	}
 
 	public void setResizable(boolean state) {
@@ -243,11 +243,11 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	}
 
 	public Rectangle getDisplayRectangle() {
-		return displayRectangle;
+		return this.displayRectangle;
 	}
 
 	public Rectangle getDisplayPaintable() {
-		return displayPaintable;
+		return this.displayPaintable;
 	}
 
 	public Color getBackgroundColor() {
@@ -267,7 +267,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	}
 
 	public Image createImage(String name) throws IOException {
-		return getImage(name);
+		return this.getImage(name);
 	}
 
 	public Image createImage(javax.microedition.lcdui.Image source) {
@@ -283,7 +283,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		if (is == null) {
 			throw new IOException();
 		}
-		return getImage(is);
+		return this.getImage(is);
 	}
 
         public Image createImageLater(final String name, final int width, final int height)
@@ -317,8 +317,8 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		ImageFilter filter = null;
 		if (isColor()) {
 			if (this.backgroundColor.getRed() != 255 || this.backgroundColor.getGreen() != 255
-					|| backgroundColor.getBlue() != 255 || foregroundColor.getRed() != 0
-					|| foregroundColor.getGreen() != 0 || foregroundColor.getBlue() != 0) {
+					|| this.backgroundColor.getBlue() != 255 || this.foregroundColor.getRed() != 0
+					|| this.foregroundColor.getGreen() != 0 || this.foregroundColor.getBlue() != 0) {
 				filter = new RGBImageFilter();
 			}
 		} else {
@@ -437,7 +437,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 	public Image createImage(byte[] imageData, int imageOffset, int imageLength) {
 		ByteArrayInputStream is = new ByteArrayInputStream(imageData, imageOffset, imageLength);
 		try {
-			return getImage(is);
+			return this.getImage(is);
 		} catch (IOException ex) {
 			throw new IllegalArgumentException(ex.toString());
 		}
@@ -446,10 +446,10 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
     public javax.microedition.lcdui.Graphics getGraphics(GameCanvas gameCanvas)
     {
         if (this.gameCanvasImage == null) {
-            this.gameCanvasImage = createImage(gameCanvas.getWidth(), gameCanvas.getHeight(), true, 0x00000000);
+            this.gameCanvasImage = this.createImage(gameCanvas.getWidth(), gameCanvas.getHeight(), true, 0x00000000);
         }
         
-        return gameCanvasImage.getGraphics();
+        return this.gameCanvasImage.getGraphics();
     }
     
     public void flushGraphics(GameCanvas gameCanvas, int x, int y, int width, int height) {
@@ -457,7 +457,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
             J2SEGraphicsSurface surface = ((SwingDisplayComponent) this.context.getDisplayComponent()).getGraphicsSurface();
             if (surface != null) {
                 surface.getGraphics().drawImage(
-                        (java.awt.Image) gameCanvasImage.getImage(), 
+                        (java.awt.Image) this.gameCanvasImage.getImage(), 
                         x, y, x + width, y + height, 
                         x, y, x + width, y + height, 
                         null);
@@ -584,7 +584,7 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 			throw new IOException(str + " could not be found.");
 		}
 		try {
-			return getImage(is);
+			return this.getImage(is);
 		} finally {
 			IOUtils.closeQuietly(is);
 		}
@@ -603,8 +603,8 @@ public class J2SEDeviceDisplay extends DeviceDisplayImpl
 		ImageFilter filter = null;
 		if (isColor()) {
 			if (this.backgroundColor.getRed() != 255 || this.backgroundColor.getGreen() != 255
-					|| backgroundColor.getBlue() != 255 || foregroundColor.getRed() != 0
-					|| foregroundColor.getGreen() != 0 || foregroundColor.getBlue() != 0) {
+					|| this.backgroundColor.getBlue() != 255 || this.foregroundColor.getRed() != 0
+					|| this.foregroundColor.getGreen() != 0 || this.foregroundColor.getBlue() != 0) {
 				filter = new RGBImageFilter();
 			}
 		} else {

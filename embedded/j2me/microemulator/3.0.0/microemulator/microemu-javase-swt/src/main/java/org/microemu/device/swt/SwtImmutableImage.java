@@ -99,7 +99,7 @@ public class SwtImmutableImage extends javax.microedition.lcdui.Image {
     
     private int depth;
     public int getDepth() {
-        return depth;
+        return this.depth;
     }
     
     public void getRGB(final int[] argb, final int offset, final int scanlength, final int x, final int y, final int width, final int height) {
@@ -178,34 +178,34 @@ public class SwtImmutableImage extends javax.microedition.lcdui.Image {
     }
 
     public void setRGB2(final int[] argb, final int offset, final int scanlength, final int x, final int y, final int width, final int height) {
-        if (width <= 0 || height <= 0) {
+        if (this.width <= 0 || this.height <= 0) {
             return;
         }
-        if (x < 0 || y < 0 || x + width > getWidth() || y + height > getHeight()) {
+        if (x < 0 || y < 0 || x + this.width > getWidth() || y + this.height > getHeight()) {
             throw new IllegalArgumentException("Specified area exceeds bounds of image");
         }
-        if ((scanlength < 0 ? -scanlength : scanlength) < width) {
+        if ((scanlength < 0 ? -scanlength : scanlength) < this.width) {
             throw new IllegalArgumentException("abs value of scanlength is less than width");
         }
         if (argb == null) {
             throw new NullPointerException("null rgbData");
         }
-        if (offset < 0 || offset + width > argb.length) {
+        if (offset < 0 || offset + this.width > argb.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
         if (scanlength < 0) {
-            if (offset + scanlength * (height - 1) < 0) {
+            if (offset + scanlength * (this.height - 1) < 0) {
                 throw new ArrayIndexOutOfBoundsException();
             }
         } else {
-            if (offset + scanlength * (height - 1) + width > argb.length) {
+            if (offset + scanlength * (this.height - 1) + this.width > argb.length) {
                 throw new ArrayIndexOutOfBoundsException();
             }
         }
 
         final ImageData imageData = this.image.getImageData();
         this.depth = imageData.depth;
-        for (int i = 0; i < height; i++) {
+        for (int i = 0; i < this.height; i++) {
             imageData.setPixels(x, y + i, width, argb, offset + i * scanlength);
         }
     }

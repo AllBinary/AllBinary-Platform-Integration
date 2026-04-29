@@ -63,7 +63,7 @@ public class RecordStore
     		throws RecordStoreException, RecordStoreFullException, RecordStoreNotFoundException
     {
 		// TODO Not yet implemented
-    	return openRecordStore(recordStoreName, createIfNecessary);
+    	return RecordStore.openRecordStore(recordStoreName, createIfNecessary);
     }
 	
     
@@ -71,7 +71,7 @@ public class RecordStore
     		throws RecordStoreException, RecordStoreNotFoundException
 	{
 		// TODO Not yet implemented
-    	return openRecordStore(recordStoreName, false);
+    	return RecordStore.openRecordStore(recordStoreName, false);
 	}
 	
     public void closeRecordStore() 

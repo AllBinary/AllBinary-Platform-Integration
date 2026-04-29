@@ -73,44 +73,44 @@ public class MIDletTimer extends Timer implements Runnable {
 
 	// TODO exceptions
 	public void schedule(TimerTask task, Date time) {
-		register(this);
-		schedule(task, time.getTime(), -1, false);
+		MIDletTimer.register(this);
+		this.schedule(task, time.getTime(), -1, false);
 	}
 
 	// TODO exceptions
 	public void schedule(TimerTask task, Date firstTime, long period) {
-		register(this);
-		schedule(task, firstTime.getTime(), period, false);
+		MIDletTimer.register(this);
+		this.schedule(task, firstTime.getTime(), period, false);
 	}
 
 	// TODO exceptions
 	public void schedule(TimerTask task, long delay) {
-		register(this);
-		schedule(task, System.currentTimeMillis() + delay, -1, false);
+		MIDletTimer.register(this);
+		this.schedule(task, System.currentTimeMillis() + delay, -1, false);
 	}
 
 	// TODO exceptions
 	public void schedule(TimerTask task, long delay, long period) {
-		register(this);
-		schedule(task, System.currentTimeMillis() + delay, period, false);
+		MIDletTimer.register(this);
+		this.schedule(task, System.currentTimeMillis() + delay, period, false);
 	}
 
 	// TODO exceptions
 	public void scheduleAtFixedRate(TimerTask task, Date firstTime, long period) {
-		register(this);
-		schedule(task, firstTime.getTime(), period, true);
+		MIDletTimer.register(this);
+		this.schedule(task, firstTime.getTime(), period, true);
 	}
 
 	// TODO exceptions
 	public void scheduleAtFixedRate(TimerTask task, long delay, long period) {
-		register(this);
-		schedule(task, System.currentTimeMillis() + delay, period, true);
+		MIDletTimer.register(this);
+		this.schedule(task, System.currentTimeMillis() + delay, period, true);
 	}
 
 	public void cancel() {
-		unregister(this);
+		MIDletTimer.unregister(this);
 		
-		terminate();
+		this.terminate();
 	}
 	
 	public void run() {
@@ -209,7 +209,7 @@ public class MIDletTimer extends Timer implements Runnable {
 		if (timers == null) {
 			// Can't use WeakHashMap Timers are disposed by JVM
 			timers = new HashMap();
-			midlets.put(timer.midletContext, timers);
+			MIDletTimer.midlets.put(timer.midletContext, timers);
 		}
 		// Logger.debug("Register timer created from [" + timer.name + "]");
 		timers.put(timer, timer.midletContext);
@@ -237,8 +237,8 @@ public class MIDletTimer extends Timer implements Runnable {
 		}
 		Map timers = (Map) midlets.get(midletContext);
 		if (timers != null) {
-			terminateTimers(timers);
-			midlets.remove(midletContext);
+			MIDletTimer.terminateTimers(timers);
+			MIDletTimer.midlets.remove(midletContext);
 		}
 	}
 

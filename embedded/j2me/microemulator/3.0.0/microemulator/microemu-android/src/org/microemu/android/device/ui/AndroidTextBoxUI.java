@@ -140,7 +140,7 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 	//
 	
 	public int getCaretPosition() {
-		return editView.getSelectionStart();
+		return this.editView.getSelectionStart();
 	}
 	
 	private String getStringTransfer;
@@ -171,7 +171,7 @@ public class AndroidTextBoxUI extends AndroidDisplayableUI implements TextBoxUI 
 			}
 		}
 		
-		return getStringTransfer;
+		return this.getStringTransfer;
 	}
 
 	public void setString(final String text) {

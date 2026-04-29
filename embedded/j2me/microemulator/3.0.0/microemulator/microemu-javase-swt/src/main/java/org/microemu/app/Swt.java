@@ -360,8 +360,8 @@ public class Swt extends Common {
 			Device device = DeviceImpl.create(emulatorContext, classLoader, entry.getDescriptorLocation(),
 					SwtDevice.class);
 			this.deviceEntry = entry;
-			setDevice(device);
-			updateDevice();
+			this.setDevice(device);
+			this.updateDevice();
 //		} catch (MalformedURLException ex) {
 //			System.err.println(ex);
 		} catch (IOException ex) {
@@ -370,7 +370,7 @@ public class Swt extends Common {
 	}
 
 	protected void updateDevice() {
-		shell.setSize(shell.computeSize(SWT.DEFAULT, SWT.DEFAULT, true));
+		Swt.shell.setSize(shell.computeSize(SWT.DEFAULT, SWT.DEFAULT, true));
 	}
 
 	public static void main(String args[]) {

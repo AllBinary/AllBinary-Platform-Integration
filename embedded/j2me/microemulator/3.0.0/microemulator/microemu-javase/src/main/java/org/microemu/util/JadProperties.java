@@ -55,30 +55,30 @@ public class JadProperties extends Manifest {
 	}
 
 	public String getSuiteName() {
-		return getProperty("MIDlet-Name");
+		return this.getProperty("MIDlet-Name");
 	}
 
 	public String getVersion() {
-		return getProperty("MIDlet-Version");
+		return this.getProperty("MIDlet-Version");
 	}
 
 	public String getVendor() {
-		return getProperty("MIDlet-Vendor");
+		return this.getProperty("MIDlet-Vendor");
 	}
 
 	public String getProfile() {
-		return getProperty("MicroEdition-Profile");
+		return this.getProperty("MicroEdition-Profile");
 	}
 
 	public String getConfiguration() {
-		return getProperty("MicroEdition-Configuration");
+		return this.getProperty("MicroEdition-Configuration");
 	}
 
 	public String getJarURL() {
 		if (this.correctedJarURL != null) {
-			return correctedJarURL;
+			return this.correctedJarURL;
 		} else {
-			return getProperty("MIDlet-Jar-URL");
+			return this.getProperty("MIDlet-Jar-URL");
 		}
 	}
 
@@ -100,10 +100,10 @@ public class JadProperties extends Manifest {
 			Attributes attributes = super.getMainAttributes();
 			for (Iterator it = attributes.keySet().iterator(); it.hasNext();) {
 				Attributes.Name key = (Attributes.Name) it.next();
-				if (key.toString().startsWith(MIDLET_PREFIX)) {
+				if (key.toString().startsWith(JadProperties.MIDLET_PREFIX)) {
 					try {
 						Integer.parseInt(key.toString().substring(MIDLET_PREFIX.length()));
-						String test = getProperty(key.toString());
+						String test = this.getProperty(key.toString());
 						pos = test.indexOf(',');
 						name = test.substring(0, pos).trim();
 						icon = test.substring(pos + 1, test.indexOf(',', pos + 1)).trim();
@@ -115,7 +115,7 @@ public class JadProperties extends Manifest {
 			}
 		}
 
-		return midletEntries;
+		return this.midletEntries;
 	}
 
 	public String getProperty(String key, String defaultValue) {
@@ -133,7 +133,7 @@ public class JadProperties extends Manifest {
 	}
 
 	public String getProperty(String key) {
-		return getProperty(key, null);
+		return this.getProperty(key, null);
 	}
 	
 	/* (non-Javadoc)
@@ -164,7 +164,7 @@ public class JadProperties extends Manifest {
 	        super.read(bin);
 	    } catch (IOException e) {
 	        // didnt like the format, try our own jad parser
-	        readJad(bin2);
+	        this.readJad(bin2);
 	    } finally {
 	        bin.close();
 	        bin2.close();

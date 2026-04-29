@@ -767,7 +767,7 @@ tryAgain:
 			{
 			_loop37:
 			do {
-				if ((_tokenSet_0.member(LA(1)))) {
+				if ((APPLexer._tokenSet_0.member(LA(1)))) {
 					matchNot('"');
 				}
 				else {
@@ -789,7 +789,7 @@ tryAgain:
 			{
 			_loop39:
 			do {
-				if ((_tokenSet_1.member(LA(1)))) {
+				if ((APPLexer._tokenSet_1.member(LA(1)))) {
 					matchNot('\'');
 				}
 				else {

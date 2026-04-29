@@ -85,7 +85,7 @@ public class PreprocessorException extends Exception {
 		}
 		else
 		{
-			if (this.m_lineNumber != UNKNOWN_LINE)
+			if (this.m_lineNumber != PreprocessorException.UNKNOWN_LINE)
 			{
 				return m_lineNumber + " : " + super.getMessage();
 			}

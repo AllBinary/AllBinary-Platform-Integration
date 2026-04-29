@@ -75,15 +75,15 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	
 	private synchronized void initializeIfNecessary()
 	{
-		if (recordStores == null) {
-			recordStores = new ConcurrentHashMap<String, Object>();
+		if (this.recordStores == null) {
+			this.recordStores = new ConcurrentHashMap<String, Object>();
 			String[] list = this.activity.fileList();
 			if (list != null && list.length > 0) {
 				for (int i = 0; i < list.length; i++) {	
-					if (list[i].endsWith(RECORD_STORE_HEADER_SUFFIX)) {
-						recordStores.put(
+					if (list[i].endsWith(AndroidRecordStoreManager.RECORD_STORE_HEADER_SUFFIX)) {
+						this.recordStores.put(
 								list[i].substring(0, list[i].length() - RECORD_STORE_HEADER_SUFFIX.length()),
-								NULL_STORE);
+								AndroidRecordStoreManager.NULL_STORE);
 					}
 				}
 			}
@@ -93,7 +93,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	public void deleteRecordStore(final String recordStoreName) 
 			throws RecordStoreNotFoundException, RecordStoreException 
 	{
-		initializeIfNecessary();
+		this.initializeIfNecessary();
 		
 		Object value = recordStores.get(recordStoreName);
 		if (value == null) {
@@ -124,13 +124,13 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 		
 		recordStores.remove(recordStoreName);
 		
-		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, recordStoreName);
+		this.fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, recordStoreName);
 	}
 
 	public RecordStore openRecordStore(String recordStoreName, boolean createIfNecessary) 
 			throws RecordStoreException 
 	{
-		initializeIfNecessary();
+		this.initializeIfNecessary();
 		
 		RecordStoreImpl recordStoreImpl;
 		try {
@@ -146,7 +146,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 			}
 			recordStoreImpl = new RecordStoreImpl(this, recordStoreName);
 			recordStoreImpl.setOpen(true);
-			saveToDisk(recordStoreImpl, -1);
+			this.saveToDisk(recordStoreImpl, -1);
 		} catch (IOException e) {
 			throw new RecordStoreException();
 		}
@@ -154,15 +154,15 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 			recordStoreImpl.addRecordListener(this.recordListener);
 		}
 
-		recordStores.put(recordStoreName, recordStoreImpl);
+		this.recordStores.put(recordStoreName, recordStoreImpl);
 
-		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
+		this.fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
 
 		return recordStoreImpl;
 	}
 
 	public String[] listRecordStores() {
-		initializeIfNecessary();
+		this.initializeIfNecessary();
 		
 		String[] result = recordStores.keySet().toArray(new String[0]);
 		
@@ -176,7 +176,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	public void deleteRecord(RecordStoreImpl recordStoreImpl, int recordId) 
 			throws RecordStoreNotOpenException, RecordStoreException 
 	{
-		deleteFromDisk(recordStoreImpl, recordId);
+		this.deleteFromDisk(recordStoreImpl, recordId);
 	}
 	
 	public void loadRecord(RecordStoreImpl recordStoreImpl, int recordId)
@@ -198,18 +198,18 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	public void saveRecord(RecordStoreImpl recordStoreImpl, int recordId) 
 			throws RecordStoreNotOpenException, RecordStoreException 
 	{
-		saveToDisk(recordStoreImpl, recordId);
+		this.saveToDisk(recordStoreImpl, recordId);
 	}
 
 	public void init() {
 	}
 
 	public void deleteStores() {
-		String[] stores = listRecordStores();
+		String[] stores = this.listRecordStores();
 		for (int i = 0; i < stores.length; i++) {
 			String store = stores[i];
 			try {
-				deleteRecordStore(store);
+				this.deleteRecordStore(store);
 			} catch (RecordStoreException e) {
 				Logger.debug("deleteRecordStore", e);
 			}
@@ -278,12 +278,12 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 	
 	private String getHeaderFileName(String recordStoreName)
 	{
-		return recordStoreName + RECORD_STORE_HEADER_SUFFIX;
+		return recordStoreName + AndroidRecordStoreManager.RECORD_STORE_HEADER_SUFFIX;
 	}
 	
 	private String getRecordFileName(String recordStoreName, int recordId) 
 	{
-		return recordStoreName + "." + recordId + RECORD_STORE_RECORD_SUFFIX;
+		return recordStoreName + "." + recordId + AndroidRecordStoreManager.RECORD_STORE_RECORD_SUFFIX;
 	}
 
 }

@@ -74,7 +74,7 @@ public class Cookie {
         
         JSONTokener x = new JSONTokener(string);
         
-        name = unescape(x.nextTo('=').trim());
+        name = Cookie.unescape(x.nextTo('=').trim());
         //per RFC6265, if the name is blank, the cookie should be ignored.
         if("".equals(name)) {
             throw new JSONException("Cookies must have a 'name'");
@@ -88,7 +88,7 @@ public class Cookie {
         x.next();
         // parse the remaining cookie attributes
         while (x.more()) {
-            name = unescape(x.nextTo("=;")).trim().toLowerCase(Locale.ROOT);
+            name = Cookie.unescape(x.nextTo("=;")).trim().toLowerCase(Locale.ROOT);
             // don't allow a cookies attributes to overwrite its name or value.
             if("name".equalsIgnoreCase(name)) {
                 throw new JSONException("Illegal attribute name: 'name'");
@@ -100,7 +100,7 @@ public class Cookie {
             if (x.next() != '=') {
                 value = Boolean.TRUE;
             } else {
-                value = unescape(x.nextTo(';')).trim();
+                value = Cookie.unescape(x.nextTo(';')).trim();
                 x.next();
             }
             // only store non-blank attributes

@@ -89,11 +89,11 @@ public abstract class AndroidDisplayableUI implements DisplayableUI {
 	}
 	
 	public Vector<AndroidCommandUI> getCommandsUI() {
-		return commands;
+		return this.commands;
 	}
 	
 	public CommandListener getCommandListener() {
-		return commandListener;
+		return this.commandListener;
 	}
 	
 	//

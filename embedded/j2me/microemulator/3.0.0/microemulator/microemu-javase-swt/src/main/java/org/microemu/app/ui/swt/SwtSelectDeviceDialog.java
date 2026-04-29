@@ -357,7 +357,7 @@ public class SwtSelectDeviceDialog extends SwtDialog {
 	}
 
 	public DeviceEntry getSelectedDeviceEntry() {
-		return selectedEntry;
+		return this.selectedEntry;
 	}
 
 }

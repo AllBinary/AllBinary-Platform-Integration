@@ -71,15 +71,15 @@ public class DisplayableImplUI implements DisplayableUI {
 		}		
 
 		if (this.displayable.isShown()) {
-			updateCommands();
+			this.updateCommands();
 		}
 	}
 
 	public void removeCommandUI(CommandUI cmd) {
-		commands.removeElement(cmd);
+		this.commands.removeElement(cmd);
 		
 		if (this.displayable.isShown()) {
-			updateCommands();
+			this.updateCommands();
 		}
 	}
 
@@ -94,7 +94,7 @@ public class DisplayableImplUI implements DisplayableUI {
 	}
 
 	public void showNotify() {
-		updateCommands();
+		this.updateCommands();
 	}
 
 	public void invalidate() {
@@ -103,7 +103,7 @@ public class DisplayableImplUI implements DisplayableUI {
 	
 	public Vector getCommandsUI()
 	{
-		return commands;
+		return this.commands;
 	}
 
 	private void updateCommands() {

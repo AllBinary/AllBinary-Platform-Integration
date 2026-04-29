@@ -83,7 +83,7 @@ public class CDL {
     public static JSONArray rowToJSONArray(JSONTokener x) throws JSONException {
         JSONArray ja = new JSONArray();
         for (;;) {
-            String value = getValue(x);
+            String value = CDL.getValue(x);
             char c = x.next();
             if (value == null ||
                     (ja.length() == 0 && value.length() == 0 && c != ',')) {
@@ -118,7 +118,7 @@ public class CDL {
      */
     public static JSONObject rowToJSONObject(JSONArray names, JSONTokener x)
             throws JSONException {
-        JSONArray ja = rowToJSONArray(x);
+        JSONArray ja = CDL.rowToJSONArray(x);
         return ja != null ? ja.toJSONObject(names) :  null;
     }
 
@@ -167,7 +167,7 @@ public class CDL {
      * @throws JSONException if a called function fails
      */
     public static JSONArray toJSONArray(String string) throws JSONException {
-        return toJSONArray(new JSONTokener(string));
+        return CDL.toJSONArray(new JSONTokener(string));
     }
 
     /**
@@ -178,7 +178,7 @@ public class CDL {
      * @throws JSONException if a called function fails
      */
     public static JSONArray toJSONArray(JSONTokener x) throws JSONException {
-        return toJSONArray(rowToJSONArray(x), x);
+        return CDL.toJSONArray(rowToJSONArray(x), x);
     }
 
     /**
@@ -191,7 +191,7 @@ public class CDL {
      */
     public static JSONArray toJSONArray(JSONArray names, String string)
             throws JSONException {
-        return toJSONArray(names, new JSONTokener(string));
+        return CDL.toJSONArray(names, new JSONTokener(string));
     }
 
     /**
@@ -209,7 +209,7 @@ public class CDL {
         }
         JSONArray ja = new JSONArray();
         for (;;) {
-            JSONObject jo = rowToJSONObject(names, x);
+            JSONObject jo = CDL.rowToJSONObject(names, x);
             if (jo == null) {
                 break;
             }
@@ -235,7 +235,7 @@ public class CDL {
         if (jo != null) {
             JSONArray names = jo.names();
             if (names != null) {
-                return rowToString(names) + toString(names, ja);
+                return CDL.rowToString(names) + CDL.toString(names, ja);
             }
         }
         return null;

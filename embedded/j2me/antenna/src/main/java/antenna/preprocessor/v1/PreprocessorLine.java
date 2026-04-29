@@ -161,23 +161,23 @@ class PreprocessorLine {
             this.type = this.parseCommand(s);
         }
         else {
-            this.type = TYPE_VISIBLE;
+            this.type = PreprocessorLine.TYPE_VISIBLE;
             this.text = s;
         }
     }
 
     public String toString() {
-        return types[this.type] + "[" + this.source + "]";
+        return PreprocessorLine.types[this.type] + "[" + this.source + "]";
     }
 
     private int parseCommand(String s) throws PreprocessorException {
         if (s.startsWith("//# ") || s.startsWith("//#\t")) {
             this.text = s.substring(4);
-            return TYPE_HIDDEN;
+            return PreprocessorLine.TYPE_HIDDEN;
         }
         else if (s.equals("//#")) {
             this.text = "";
-            return TYPE_HIDDEN;
+            return PreprocessorLine.TYPE_HIDDEN;
         }
         else {
             /**
@@ -197,40 +197,40 @@ class PreprocessorLine {
             }
 
             if ("//#define".equals(this.text)) {
-                return TYPE_DEFINE;
+                return PreprocessorLine.TYPE_DEFINE;
             }
             else if ("//#undef".equals(this.text)) {
-                return TYPE_UNDEF;
+                return PreprocessorLine.TYPE_UNDEF;
             }
             else if ("//#ifdef".equals(this.text)) {
-                return TYPE_IFDEF;
+                return PreprocessorLine.TYPE_IFDEF;
             }
             else if ("//#ifndef".equals(this.text)) {
-                return TYPE_IFNDEF;
+                return PreprocessorLine.TYPE_IFNDEF;
             }
             else if ("//#elifdef".equals(this.text)) {
-                return TYPE_ELIFDEF;
+                return PreprocessorLine.TYPE_ELIFDEF;
             }
             else if ("//#elifndef".equals(this.text)) {
-                return TYPE_ELIFNDEF;
+                return PreprocessorLine.TYPE_ELIFNDEF;
             }
             else if ("//#else".equals(this.text)) {
-                return TYPE_ELSE;
+                return PreprocessorLine.TYPE_ELSE;
             }
             else if ("//#endif".equals(this.text)) {
-                return TYPE_ENDIF;
+                return PreprocessorLine.TYPE_ENDIF;
             }
             else if ("//#if".equals(this.text)) {
-                return TYPE_IF;
+                return PreprocessorLine.TYPE_IF;
             }
             else if ("//#elif".equals(this.text)) {
-                return TYPE_ELIF;
+                return PreprocessorLine.TYPE_ELIF;
             }
             else if ("//#include".equals(this.text)) {
-                return TYPE_INCLUDE;
+                return PreprocessorLine.TYPE_INCLUDE;
             }
             else if ("//#endinclude".equals(this.text)) {
-                return TYPE_ENDINCLUDE;
+                return PreprocessorLine.TYPE_ENDINCLUDE;
             }
             else {
                 throw new PreprocessorException("Unknown directive \"" + this.text + "\"");

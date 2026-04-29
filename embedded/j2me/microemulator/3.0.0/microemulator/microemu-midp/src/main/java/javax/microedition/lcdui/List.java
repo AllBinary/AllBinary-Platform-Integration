@@ -45,15 +45,15 @@ public class List extends Screen implements Choice {
             throw new IllegalArgumentException("Illegal list type");
 
         if (listType == Choice.IMPLICIT) {
-            choiceGroup = new ChoiceGroup(null, Choice.IMPLICIT, false);
+            this.choiceGroup = new ChoiceGroup(null, Choice.IMPLICIT, false);
         } else {
-            choiceGroup = new ChoiceGroup(null, listType);
+            this.choiceGroup = new ChoiceGroup(null, listType);
         }
 
-        choiceGroup.setOwner(this);
-        choiceGroup.setFocus(true);
+        this.choiceGroup.setOwner(this);
+        this.choiceGroup.setFocus(true);
 
-        this.selCommand = SELECT_COMMAND;
+        this.selCommand = List.SELECT_COMMAND;
         this.initialPressedItem = -1;
     }
 
@@ -64,9 +64,9 @@ public class List extends Screen implements Choice {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			for (int i = 0; i < stringElements.length; i++) {
 				if (imageElements == null) {
-					append(stringElements[i], null);
+					this.append(stringElements[i], null);
 				} else {
-					append(stringElements[i], imageElements[i]);
+					this.append(stringElements[i], imageElements[i]);
 				}
 			}
 			this.choiceGroup = new ChoiceGroup(null, listType, stringElements, imageElements, false);
@@ -74,7 +74,7 @@ public class List extends Screen implements Choice {
 	        if (listType == Choice.IMPLICIT) {
 	            this.choiceGroup = new ChoiceGroup(null, Choice.IMPLICIT, stringElements, imageElements, false);
 	            for (int i = 0; i < size(); i++) {
-	                set(i, getString(i), null);
+	                this.set(i, getString(i), null);
 	            }
 	        } else {
 	            this.choiceGroup = new ChoiceGroup(null, listType, stringElements, imageElements);
@@ -83,7 +83,7 @@ public class List extends Screen implements Choice {
         this.choiceGroup.setOwner(this);
         this.choiceGroup.setFocus(true);
 
-        this.selCommand = SELECT_COMMAND;
+        this.selCommand = List.SELECT_COMMAND;
         this.initialPressedItem = -1;
     }
 
@@ -92,7 +92,7 @@ public class List extends Screen implements Choice {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			return ((ListUI) ui).append(stringPart, imagePart);
 		} else {
-			return choiceGroup.append(stringPart, imagePart);
+			return this.choiceGroup.append(stringPart, imagePart);
 		}
     }
 
@@ -116,22 +116,22 @@ public class List extends Screen implements Choice {
 
     @Override
     public int getFitPolicy() {
-        return choiceGroup.getFitPolicy();
+        return this.choiceGroup.getFitPolicy();
     }
 
     @Override
     public Font getFont(int elementNum) {
-        return choiceGroup.getFont(elementNum);
+        return this.choiceGroup.getFont(elementNum);
     }
 
     @Override
     public Image getImage(int elementNum) {
-        return choiceGroup.getImage(elementNum);
+        return this.choiceGroup.getImage(elementNum);
     }
 
     @Override
     public int getSelectedFlags(boolean[] selectedArray_return) {
-        return choiceGroup.getSelectedFlags(selectedArray_return);
+        return this.choiceGroup.getSelectedFlags(selectedArray_return);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class List extends Screen implements Choice {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			return ((ListUI) ui).getSelectedIndex();
 		} else {
-			return choiceGroup.getSelectedIndex();
+			return this.choiceGroup.getSelectedIndex();
 		}
     }
 
@@ -148,7 +148,7 @@ public class List extends Screen implements Choice {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			return ((ListUI) ui).getString(elementNum);
 		} else {
-        	return choiceGroup.getString(elementNum);
+        	return this.choiceGroup.getString(elementNum);
 		}
     }
 
@@ -163,7 +163,7 @@ public class List extends Screen implements Choice {
 
     @Override
     public boolean isSelected(int elementNum) {
-        return choiceGroup.isSelected(elementNum);
+        return this.choiceGroup.isSelected(elementNum);
     }
 
     @Override
@@ -183,12 +183,12 @@ public class List extends Screen implements Choice {
 
     @Override
     public void setFitPolicy(int policy) {
-        choiceGroup.setFitPolicy(policy);
+        this.choiceGroup.setFitPolicy(policy);
     }
 
     @Override
     public void setFont(int elementNum, Font font) {
-        choiceGroup.setFont(elementNum, font);
+        this.choiceGroup.setFont(elementNum, font);
     }
 
     public void setSelectCommand(Command command) {
@@ -199,7 +199,7 @@ public class List extends Screen implements Choice {
 
     @Override
     public void setSelectedFlags(boolean[] selectedArray) {
-        choiceGroup.setSelectedFlags(selectedArray);
+        this.choiceGroup.setSelectedFlags(selectedArray);
     }
 
     @Override
@@ -247,9 +247,9 @@ public class List extends Screen implements Choice {
             int pressedItem = this.choiceGroup.getItemIndexAt(x, y + viewPortY);
             if (pressedItem != -1) {
                 if (this.choiceGroup.choiceType == Choice.MULTIPLE) {
-                    setSelectedIndex(pressedItem, !isSelected(pressedItem));
+                    this.setSelectedIndex(pressedItem, !isSelected(pressedItem));
                 } else {
-                    setSelectedIndex(pressedItem, true);
+                    this.setSelectedIndex(pressedItem, true);
                 }
                 this.initialPressedItem = pressedItem;
             }
@@ -271,7 +271,7 @@ public class List extends Screen implements Choice {
             if (releasedItem != -1) {
                 if (releasedItem == this.initialPressedItem && super.getCommandListener() != null
                         && this.choiceGroup.choiceType == Choice.IMPLICIT) {
-                	MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(SELECT_COMMAND, this);
+                	MIDletBridge.getMIDletAccess().getDisplayAccess().commandAction(List.SELECT_COMMAND, this);
                 }
             }
         }
@@ -279,7 +279,7 @@ public class List extends Screen implements Choice {
 
     @Override
     int paintContent(Graphics g) {
-        return choiceGroup.paint(g);
+        return this.choiceGroup.paint(g);
     }
 
     @Override
@@ -287,7 +287,7 @@ public class List extends Screen implements Choice {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 			return ((ListUI) ui).size();
 		} else {
-			return choiceGroup.size();
+			return this.choiceGroup.size();
 		}
     }
 
@@ -297,7 +297,7 @@ public class List extends Screen implements Choice {
 
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidListUI")) {
 		} else {
-	        int selectedItemIndex = getSelectedIndex();
+	        int selectedItemIndex = this.getSelectedIndex();
 	        int heightToItem = this.choiceGroup.getHeightToItem(selectedItemIndex);
 	        int heightAfterItem = heightToItem;
 	        if (selectedItemIndex >= 0) {

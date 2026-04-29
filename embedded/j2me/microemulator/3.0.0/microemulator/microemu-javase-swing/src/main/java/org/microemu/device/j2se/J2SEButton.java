@@ -100,7 +100,7 @@ public class J2SEButton implements Button {
 		if (keyboardKeys != null) {
 			StringTokenizer st = new StringTokenizer(keyboardKeys, " ");
 			while (st.hasMoreTokens()) {
-				int key = parseKeyboardKey(st.nextToken());
+				int key = J2SEButton.parseKeyboardKey(st.nextToken());
 				if (key == -1) {
 					continue;
 				}
@@ -133,19 +133,19 @@ public class J2SEButton implements Button {
 		if (this.keyboardKeys.length == 0) {
 			return 0;
 		}
-		return keyboardKeys[0];
+		return this.keyboardKeys[0];
 	}
 
 	public int getKeyCode() {
-		return keyCode;
+		return this.keyCode;
 	}
 
 	public ButtonName getFunctionalName() {
-		return functionalName;
+		return this.functionalName;
 	}
 
 	public int[] getKeyboardKeyCodes() {
-		return keyboardKeys;
+		return this.keyboardKeys;
 	}
 
 	/**
@@ -156,11 +156,11 @@ public class J2SEButton implements Button {
 		if (this.keyboardCharCodes == null) {
 			return new char[0];
 		}
-		return keyboardCharCodes.toCharArray();
+		return this.keyboardCharCodes.toCharArray();
 	}
 
 	public boolean isModeChange() {
-		return modeChange;
+		return this.modeChange;
 	}
 
 	void setModeChange() {
@@ -208,11 +208,11 @@ public class J2SEButton implements Button {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public Shape getShape() {
-		return shape;
+		return this.shape;
 	}
 
 	private static int parseKeyboardKey(String keyName) {

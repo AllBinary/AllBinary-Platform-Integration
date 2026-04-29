@@ -49,7 +49,7 @@ class PCToneHelper
 
    public SourceDataLine getSourceDataLine()
    {
-      return sourceDataLine;
+      return this.sourceDataLine;
    }
 
    public void setSourceDataLine(SourceDataLine sourceDataLine)
@@ -59,7 +59,7 @@ class PCToneHelper
 
    public AudioInputStream getAudioInputStream()
    {
-      return audioInputStream;
+      return this.audioInputStream;
    }
 
    public void setAudioInputStream(AudioInputStream audioInputStream)
@@ -69,7 +69,7 @@ class PCToneHelper
 
    public AudioFormat getAudioFormat()
    {
-      return audioFormat;
+      return this.audioFormat;
    }
 
    public void setAudioFormat(AudioFormat audioFormat)

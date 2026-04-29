@@ -80,7 +80,7 @@ public abstract class BaseTestHttpConnection extends BaseGCFTestCase {
     }
     
     public void testResponseCode() throws IOException {
-    	HttpConnection hc = openHttpConnection(testFile + ".gone");
+    	HttpConnection hc = this.openHttpConnection(testFile + ".gone");
         try {
 			assertEquals("getResponseCode()", HttpConnection.HTTP_NOT_FOUND, hc.getResponseCode());
 		} finally {
@@ -89,10 +89,10 @@ public abstract class BaseTestHttpConnection extends BaseGCFTestCase {
     }
     
     public void testInputStream() throws IOException {
-    	HttpConnection hc = openHttpConnection(testFile);
+    	HttpConnection hc = this.openHttpConnection(testFile);
         try {
 			assertEquals("getResponseCode()", HttpConnection.HTTP_OK, hc.getResponseCode());
-			String data = getData(hc);
+			String data = this.getData(hc);
 			assertTrue("data recived", data.startsWith("User-agent: *"));
 		} finally {
 			hc.close();
@@ -120,10 +120,10 @@ public abstract class BaseTestHttpConnection extends BaseGCFTestCase {
     }
     
     public void testDataInputStream() throws IOException {
-    	HttpConnection hc = openHttpConnection(testFile);
+    	HttpConnection hc = this.openHttpConnection(testFile);
         try {
 			assertEquals("getResponseCode()", HttpConnection.HTTP_OK, hc.getResponseCode());
-			String data = getDataVIADataInputStream(hc.openDataInputStream());
+			String data = this.getDataVIADataInputStream(hc.openDataInputStream());
 			assertTrue("data recived", data.startsWith("User-agent: *"));
 		} finally {
 			hc.close();
@@ -131,13 +131,13 @@ public abstract class BaseTestHttpConnection extends BaseGCFTestCase {
     }
     
     public void testContentConnection() throws IOException {
-    	HttpConnection hc = openHttpConnection(testFile);
+    	HttpConnection hc = this.openHttpConnection(testFile);
         try {
 			assertEquals("getResponseCode()", HttpConnection.HTTP_OK, hc.getResponseCode());
 			ContentConnection c = hc;
 			 int len = (int)c.getLength();
 			 assertTrue("getLength()", len > 10);
-			String data = getDataVIADataInputStream(hc.openDataInputStream());
+			String data = this.getDataVIADataInputStream(hc.openDataInputStream());
 			assertTrue("data recived", data.startsWith("User-agent: *"));
 		} finally {
 			hc.close();
@@ -145,7 +145,7 @@ public abstract class BaseTestHttpConnection extends BaseGCFTestCase {
     }
     
     public void testHeaders() throws IOException {
-		HttpConnection hc = openHttpConnection(testServlet + "header");
+		HttpConnection hc = this.openHttpConnection(testServlet + "header");
 		try {
 			hc.setRequestMethod(HttpConnection.POST);
 			Hashtable r = new Hashtable();
@@ -170,7 +170,7 @@ public abstract class BaseTestHttpConnection extends BaseGCFTestCase {
 			hc.close();
 
 			// Test GET
-			hc = openHttpConnection(testServlet + "header");
+			hc = this.openHttpConnection(testServlet + "header");
 			hc.setRequestMethod(HttpConnection.GET);
 			for (Enumeration e = r.keys(); e.hasMoreElements();) {
 				String name = (String) e.nextElement();
@@ -210,17 +210,17 @@ public abstract class BaseTestHttpConnection extends BaseGCFTestCase {
     
     public void testBody() throws IOException {
 		String msg;
-		HttpConnection hc = openHttpConnection(testServlet + "body");
+		HttpConnection hc = this.openHttpConnection(testServlet + "body");
 		try {
-			msg = sendData(hc);
+			msg = this.sendData(hc);
 			assertEquals(HttpConnection.HTTP_OK, hc.getResponseCode());
 			assertNull("No Data error", hc.getHeaderField("Test-data-crc-error"));
 			assertEquals("Data crc", String.valueOf(msg.hashCode()), hc.getHeaderField("Test-data-crc"));
 			assertEquals(msg, getData(hc));
 			hc.close();
 
-			hc = openHttpConnection(testServlet + "body");
-			msg = sendData(hc);
+			hc = this.openHttpConnection(testServlet + "body");
+			msg = this.sendData(hc);
 			assertEquals(HttpConnection.HTTP_OK, hc.getResponseCode());
 			assertNull("No Data error", hc.getHeaderField("Test-data-crc-error"));
 			assertEquals("Data crc", String.valueOf(msg.hashCode()), hc.getHeaderField("Test-data-crc"));

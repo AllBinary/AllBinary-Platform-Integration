@@ -94,7 +94,7 @@ public class J2SEMutableImage extends MutableImage
                         final int width = this.getWidth();
                         final int height = this.getHeight();
 			this.pixels = new int[width * height];
-			this.grabber = new PixelGrabber(this.graphicsSurface.getImage(), 0, 0, width, height, pixels, 0, width);
+			this.grabber = new PixelGrabber(this.graphicsSurface.getImage(), 0, 0, width, height, this.pixels, 0, width);
 		}
 
 		try {
@@ -103,7 +103,7 @@ public class J2SEMutableImage extends MutableImage
 			Logger.error(e);
 		}
 
-		return pixels;
+		return this.pixels;
 	}
 
         public void getRGB(final int[] argb, final int offset, final int scanlength, final int x, final int y, final int width, final int height) {

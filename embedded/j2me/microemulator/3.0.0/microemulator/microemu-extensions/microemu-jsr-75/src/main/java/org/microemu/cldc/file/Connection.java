@@ -42,15 +42,15 @@ public class Connection implements ConnectionImplementation {
 
 	public static final int CONNECTIONTYPE_SYSTEM_FS = 0;
 
-	private static int connectionType = CONNECTIONTYPE_SYSTEM_FS;
+	private static int connectionType = Connection.CONNECTIONTYPE_SYSTEM_FS;
 
 	public javax.microedition.io.Connection openConnection(String name, int mode, boolean timeouts) throws IOException {
 		// file://<host>/<path>
-		if (!name.startsWith(PROTOCOL)) {
+		if (!name.startsWith(Connection.PROTOCOL)) {
 			throw new IOException("Invalid Protocol " + name);
 		}
-		switch (connectionType) {
-		case CONNECTIONTYPE_SYSTEM_FS:
+		switch (Connection.connectionType) {
+		case Connection.CONNECTIONTYPE_SYSTEM_FS:
 			return new FileSystemFileConnection(null, name.substring(PROTOCOL.length()), null);
 		default:
 			throw new IOException("Invalid connectionType configuration");
@@ -58,7 +58,7 @@ public class Connection implements ConnectionImplementation {
 	}
 
 	static int getConnectionType() {
-		return connectionType;
+		return Connection.connectionType;
 	}
 
 	static void setConnectionType(int connectionType) {

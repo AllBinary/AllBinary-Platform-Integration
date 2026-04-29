@@ -62,9 +62,9 @@ public class SwtSystemFont implements SwtFont {
 	}
 
 	public Font getFont() {
-		checkInitialized();
+		this.checkInitialized();
 
-		return font;
+		return this.font;
 	}
 
 	private synchronized void checkInitialized() {
@@ -82,7 +82,7 @@ public class SwtSystemFont implements SwtFont {
 			if (this.style.indexOf("underlined") != -1) {
 				// TODO underlined style not implemented
 			}
-			this.font = SwtDeviceComponent.getFont(this.name, size, swtStyle, antialiasing);
+			this.font = SwtDeviceComponent.getFont(this.name, this.size, swtStyle, this.antialiasing);
 			this.initialized = true;
 		}
 	}
@@ -99,19 +99,19 @@ public class SwtSystemFont implements SwtFont {
 	}
 
 	public int getBaselinePosition() {
-		checkInitialized();
+		this.checkInitialized();
 		
 		return SwtDeviceComponent.getFontMetrics(this.font).getAscent();
 	}
 
 	public int getHeight() {
-		checkInitialized();
+		this.checkInitialized();
 		
 		return SwtDeviceComponent.getFontMetrics(this.font).getHeight();
 	}
 
 	public int stringWidth(String str) {
-		checkInitialized();
+		this.checkInitialized();
 		
 		return SwtDeviceComponent.stringWidth(this.font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize);
 	}

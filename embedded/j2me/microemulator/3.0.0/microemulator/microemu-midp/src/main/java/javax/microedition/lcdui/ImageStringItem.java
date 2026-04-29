@@ -36,13 +36,13 @@ class ImageStringItem extends Item
   {
     super(label);
 		this.stringComponent = new StringComponent(text);
-    setImage(img);
+    this.setImage(img);
   }
 
 
 	public Image getImage()
 	{
-    return img;
+    return this.img;
   }
     
     
@@ -57,7 +57,7 @@ class ImageStringItem extends Item
 
 	public String getText()
 	{
-		return stringComponent.getText();
+		return this.stringComponent.getText();
 	}
 
 
@@ -71,9 +71,9 @@ class ImageStringItem extends Item
 	public int getHeight()
 	{
 		if (this.img != NullCanvas.NULL_IMAGE && this.img.getHeight() > this.stringComponent.getHeight()) {
-			return img.getHeight();
+			return this.img.getHeight();
 		} else {
-			return stringComponent.getHeight();
+			return this.stringComponent.getHeight();
 		}
 	}
 

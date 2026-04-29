@@ -82,10 +82,10 @@ public class Literal {
 
         switch (type) {
 
-        case SYMBOL:
+        case Literal.SYMBOL:
             break;
 
-        case NUMBER: {
+        case Literal.NUMBER: {
             try {
                 Double.parseDouble(value);
             } catch (NumberFormatException e1) {
@@ -95,7 +95,7 @@ public class Literal {
             break;
         }
 
-        case STRING: {
+        case Literal.STRING: {
 
             /* Remove " and ' from the string */
             if (value.startsWith("\"") || value.startsWith("\'")) {
@@ -105,13 +105,13 @@ public class Literal {
                 value = value.substring(0, value.length() - 1);
             }
 
-            if (value.toLowerCase().equals(BOOLEAN_FALSE)
-                    || value.toLowerCase().equals(BOOLEAN_TRUE)) {
+            if (value.toLowerCase().equals(Literal.BOOLEAN_FALSE)
+                    || value.toLowerCase().equals(Literal.BOOLEAN_TRUE)) {
                 m_type = BOOLEAN;
             } else {
                 try {
                     Double.parseDouble(value);
-                    this.m_type = NUMBER;
+                    this.m_type = Literal.NUMBER;
                 } catch (NumberFormatException e) {
                 }
             }
@@ -120,11 +120,11 @@ public class Literal {
 
         case APPLexer.FALSE:
         case APPLexer.TRUE:
-        case BOOLEAN: {
+        case Literal.BOOLEAN: {
 
-            this.m_type = BOOLEAN;
-            if (!value.toLowerCase().equals(BOOLEAN_FALSE)
-                    && !value.toLowerCase().equals(BOOLEAN_TRUE))
+            this.m_type = Literal.BOOLEAN;
+            if (!value.toLowerCase().equals(Literal.BOOLEAN_FALSE)
+                    && !value.toLowerCase().equals(Literal.BOOLEAN_TRUE))
                 throw new IllegalArgumentException("Invalid boolean value : "
                         + value);
             value = value.toLowerCase();
@@ -136,9 +136,9 @@ public class Literal {
         case APPLexer.WARN:
         case APPLexer.ERROR:
         case APPLexer.FATAL:
-        case DEBUG_LEVEL: {
+        case Literal.DEBUG_LEVEL: {
 
-            this.m_type = DEBUG_LEVEL;
+            this.m_type = Literal.DEBUG_LEVEL;
             break;
         }
 
@@ -156,12 +156,12 @@ public class Literal {
      */
     public String toString() {
         switch (this.m_type) {
-        case STRING:
+        case Literal.STRING:
             return "\"" + this.m_value + "\"";
-        case NUMBER:
-        case BOOLEAN:
-        case SYMBOL:
-        case DEBUG_LEVEL:
+        case Literal.NUMBER:
+        case Literal.BOOLEAN:
+        case Literal.SYMBOL:
+        case Literal.DEBUG_LEVEL:
         default:
             return this.m_value;
 
@@ -187,7 +187,7 @@ public class Literal {
      * @return if the literal value is <code>false</code>
      */
     public boolean isFalse() {
-        return this.m_type == BOOLEAN && this.m_value.equals(BOOLEAN_FALSE);
+        return this.m_type == Literal.BOOLEAN && this.m_value.equals(Literal.BOOLEAN_FALSE);
     }
 
     /**
@@ -196,7 +196,7 @@ public class Literal {
      * @return if the literal value is <code>true</code>
      */
     public boolean isTrue() {
-        return this.m_type == BOOLEAN && this.m_value.equals(BOOLEAN_TRUE);
+        return this.m_type == Literal.BOOLEAN && this.m_value.equals(Literal.BOOLEAN_TRUE);
     }
 
     /**
@@ -214,7 +214,7 @@ public class Literal {
      * @return if the literal is a debug level
      */
     public boolean isDebugLevel() {
-        return this.m_type == DEBUG_LEVEL;
+        return this.m_type == Literal.DEBUG_LEVEL;
     }
 
     /**
@@ -223,7 +223,7 @@ public class Literal {
      * @return if the literal is a number
      */
     public boolean isNumber() {
-        return this.m_type == NUMBER;
+        return this.m_type == Literal.NUMBER;
     }
 
     /**
@@ -232,7 +232,7 @@ public class Literal {
      * @return if the literal is a String
      */
     public boolean isString() {
-        return this.m_type == STRING;
+        return this.m_type == Literal.STRING;
     }
 
     /**
@@ -241,7 +241,7 @@ public class Literal {
      * @return if the literal is a Symbol
      */
     public boolean isSymbol() {
-        return this.m_type == SYMBOL;
+        return this.m_type == Literal.SYMBOL;
     }
 
     /**
@@ -250,7 +250,7 @@ public class Literal {
      * @return if the literal is a Boolean
      */
     public boolean isBoolean() {
-        return this.m_type == BOOLEAN;
+        return this.m_type == Literal.BOOLEAN;
     }
 
 }

@@ -40,73 +40,73 @@ public abstract class PatternMethodAdapter extends MethodAdapter {
 
 	@Override
 	public void visitFieldInsn(int opcode, String owner, String name, String desc) {
-		visitInsn();
+		this.visitInsn();
 		super.visitFieldInsn(opcode, owner, name, desc);
 	}
 
 	@Override
 	public void visitIincInsn(int var, int increment) {
-		visitInsn();
+		this.visitInsn();
 		super.visitIincInsn(var, increment);
 	}
 
 	@Override
 	public void visitInsn(int opcode) {
-		visitInsn();
+		this.visitInsn();
 		super.visitInsn(opcode);
 	}
 
 	@Override
 	public void visitIntInsn(int opcode, int operand) {
-		visitInsn();
+		this.visitInsn();
 		super.visitIntInsn(opcode, operand);
 	}
 
 	@Override
 	public void visitJumpInsn(int opcode, Label label) {
-		visitInsn();
+		this.visitInsn();
 		super.visitJumpInsn(opcode, label);
 	}
 
 	@Override
 	public void visitLdcInsn(Object cst) {
-		visitInsn();
+		this.visitInsn();
 		super.visitLdcInsn(cst);
 	}
 
 	@Override
 	public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
-		visitInsn();
+		this.visitInsn();
 		super.visitLookupSwitchInsn(dflt, keys, labels);
 	}
 
 	@Override
 	public void visitMethodInsn(int opcode, String owner, String name, String desc) {
-		visitInsn();
+		this.visitInsn();
 		super.visitMethodInsn(opcode, owner, name, desc);
 	}
 
 	@Override
 	public void visitMultiANewArrayInsn(String desc, int dims) {
-		visitInsn();
+		this.visitInsn();
 		super.visitMultiANewArrayInsn(desc, dims);
 	}
 
 	@Override
 	public void visitTableSwitchInsn(int min, int max, Label dflt, Label[] labels) {
-		visitInsn();
+		this.visitInsn();
 		super.visitTableSwitchInsn(min, max, dflt, labels);
 	}
 
 	@Override
 	public void visitTypeInsn(int opcode, String type) {
-		visitInsn();
+		this.visitInsn();
 		super.visitTypeInsn(opcode, type);
 	}
 
 	@Override
 	public void visitVarInsn(int opcode, int var) {
-		visitInsn();
+		this.visitInsn();
 		super.visitVarInsn(opcode, var);
 	}
 

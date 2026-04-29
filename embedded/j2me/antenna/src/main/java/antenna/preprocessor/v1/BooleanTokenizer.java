@@ -127,47 +127,47 @@ class BooleanTokenizer {
 
 		/* Check for end of source */
 		if (this.sourcePos >= this.sourceText.length()) {
-			this.tokenType = TYPE_STOP;
+			this.tokenType = BooleanTokenizer.TYPE_STOP;
 			return this.tokenType;
 		}
 
 		/* Check for other kinds of tokens */
 		char c = this.sourceText.charAt(this.sourcePos);
 		if (Character.isJavaIdentifierStart(c)) {
-			this.tokenType = TYPE_ID;
+			this.tokenType = BooleanTokenizer.TYPE_ID;
 			sourcePos++;
 			while (isIdentifierPart(this.sourceText.charAt(this.sourcePos))) {
 				sourcePos++;
 			}
 		}
 		else if (c == '(') {
-			this.tokenType = TYPE_LPAR;
+			this.tokenType = BooleanTokenizer.TYPE_LPAR;
 			sourcePos++;
 		}
 		else if (c == ')') {
-			this.tokenType = TYPE_RPAR;
+			this.tokenType = BooleanTokenizer.TYPE_RPAR;
 			sourcePos++;
 		}
 		else if (c == '&') {
-			this.tokenType = TYPE_AND;
+			this.tokenType = BooleanTokenizer.TYPE_AND;
 			sourcePos++;
 			if (this.sourceText.charAt(this.sourcePos) == '&') {
 				sourcePos++;
 			}
 		}
 		else if (c == '|') {
-			this.tokenType = TYPE_OR;
+			this.tokenType = BooleanTokenizer.TYPE_OR;
 			sourcePos++;
 			if (this.sourceText.charAt(this.sourcePos) == '|') {
 				sourcePos++;
 			}
 		}
 		else if (c == '^') {
-			this.tokenType = TYPE_XOR;
+			this.tokenType = BooleanTokenizer.TYPE_XOR;
 			sourcePos++;
 		}
 		else if (c == '!') {
-			this.tokenType = TYPE_NOT;
+			this.tokenType = BooleanTokenizer.TYPE_NOT;
 			sourcePos++;
 		}
 		else
@@ -194,7 +194,7 @@ class BooleanTokenizer {
 	 * Usually called to find out the name of an identifier.
 	 */
 	public String getTokenText() {
-		if (this.tokenType == TYPE_STOP) {
+		if (this.tokenType == BooleanTokenizer.TYPE_STOP) {
 			return "";
 		}
 		else {

@@ -27,7 +27,7 @@ class SystemTimeBase
 implements TimeBase {
     
     public long getTime() {
-        return System.currentTimeMillis() * 1000L - offset;
+        return System.currentTimeMillis() * 1000L - SystemTimeBase.offset;
     }
     
     private static long offset = System.currentTimeMillis() * 1000L;

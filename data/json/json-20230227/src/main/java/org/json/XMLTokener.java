@@ -131,7 +131,7 @@ public class XMLTokener extends JSONTokener {
             }
         }
         String string = sb.toString();
-        return unescapeEntity(string);
+        return XMLTokener.unescapeEntity(string);
     }
     
     /**

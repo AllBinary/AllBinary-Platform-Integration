@@ -76,7 +76,7 @@ public class ConnectionInvocationHandler implements InvocationHandler {
 				public Object run() throws InvocationTargetException, IllegalAccessException {
 					return method.invoke(originalConnection, args);
 				}
-			}, acc);
+			}, this.acc);
 			} else {
 				return method.invoke(this.originalConnection, args);
 			}

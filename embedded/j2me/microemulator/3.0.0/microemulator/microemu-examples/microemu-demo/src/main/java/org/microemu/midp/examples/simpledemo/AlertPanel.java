@@ -44,7 +44,7 @@ public class AlertPanel extends BaseExamplesList {
 			new Alert("Error alert", "This is error alert", null, AlertType.ERROR),
 			new Alert("Info alert", "This is info alert with 5 sec timeout", null, AlertType.INFO),
 			new Alert("Warning alert", "This is warning alert", null, AlertType.WARNING),
-			alertCmd = new Alert("Command alert", "This is alert with command", null, AlertType.INFO)};
+			this.alertCmd = new Alert("Command alert", "This is alert with command", null, AlertType.INFO)};
 
 	public AlertPanel() {
 		super("Alert", List.IMPLICIT);
@@ -60,7 +60,7 @@ public class AlertPanel extends BaseExamplesList {
 	public void commandAction(Command c, Displayable d) {
 		if (d == this) {
 			if (c == List.SELECT_COMMAND) {
-				if (this.alertCmd == alerts[getSelectedIndex()]) {
+				if (this.alertCmd == this.alerts[getSelectedIndex()]) {
 					this.alertCmd.addCommand(okCommand);
 				}
 				SimpleDemoMIDlet.setCurrentDisplayable(alerts[getSelectedIndex()]);

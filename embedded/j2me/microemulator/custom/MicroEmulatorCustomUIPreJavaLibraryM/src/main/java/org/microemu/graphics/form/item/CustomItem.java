@@ -209,8 +209,8 @@ public class CustomItem
         // layout policies can't generate conflict
         // because the center is the or of the two
         // others (ie VCENTER == (LEFT | RIGHT))
-        if ((((layout & LAYOUT_SHRINK) != 0) && ((layout & LAYOUT_EXPAND) != 0))
-                || (((layout & LAYOUT_VSHRINK) != 0) && (layout & LAYOUT_VEXPAND) != 0)) {
+        if ((((layout & CustomItem.LAYOUT_SHRINK) != 0) && ((layout & CustomItem.LAYOUT_EXPAND) != 0))
+                || (((layout & CustomItem.LAYOUT_VSHRINK) != 0) && (layout & CustomItem.LAYOUT_VEXPAND) != 0)) {
             throw new IllegalArgumentException("Bad combination of layout policies");
         }
         

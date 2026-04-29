@@ -41,7 +41,7 @@ import org.objectweb.asm.tree.FieldNode;
 
 public class AndroidClassVisitor extends ClassAdapter {
 	
-	private static final String INJECTED_CLASS = codeName(Injected.class);
+	private static final String INJECTED_CLASS = AndroidClassVisitor.codeName(Injected.class);
 
 	private static boolean enhanceCatchBlock = false;
 	
@@ -89,7 +89,7 @@ public class AndroidClassVisitor extends ClassAdapter {
 			if (isMidlet && 
 					(opcode == Opcodes.GETFIELD || opcode == Opcodes.GETSTATIC || opcode == Opcodes.PUTFIELD || opcode == Opcodes.PUTSTATIC)) {
 							
-				String targetName = getTargetName(owner, name, desc);
+				String targetName = this.getTargetName(owner, name, desc);
 				if (targetName != null) {
 					mv.visitFieldInsn(opcode, owner, targetName, desc);
 					return;
@@ -117,7 +117,7 @@ public class AndroidClassVisitor extends ClassAdapter {
 				for (int i = 0; i < classHierarchy.size(); i++) {
 					String searchInClass = classHierarchy.get(i);
 					if (!owner.equals(searchInClass)) {
-						String targetName = getTargetName(searchInClass, name, desc);
+						String targetName = this.getTargetName(searchInClass, name, desc);
 						if (targetName != null) {
 //System.out.println("a2: " + owner +"+"+ searchInClass +"+"+ name +"+"+ targetName);							
 							return targetName;
@@ -132,20 +132,20 @@ public class AndroidClassVisitor extends ClassAdapter {
 		@Override
 		public void visitInsn(int opcode) {
 			if (opcode == Opcodes.BASTORE) {
-				if (state != SEEN_I2B) {
+				if (this.state != AndroidMethodVisitor.SEEN_I2B) {
 //System.out.println("I2B opcode needed !!!");
 //					mv.visitInsn(Opcodes.I2B);
 				}
 			}
-			visitInsn();
+			this.visitInsn();
 			if (opcode == Opcodes.I2B) {
-				state = SEEN_I2B;
+				this.state = SEEN_I2B;
 			}
 			mv.visitInsn(opcode);
 		}
 
 		public void visitMethodInsn(int opcode, String owner, String name, String desc) {
-			visitInsn();
+			this.visitInsn();
 			if (isMidlet && opcode == Opcodes.INVOKEVIRTUAL) {
 				if ((name.equals("getResourceAsStream")) && (owner.equals("java/lang/Class"))) {							
 					mv.visitMethodInsn(Opcodes.INVOKESTATIC, "org/microemu/MIDletBridge", name, "(Ljava/lang/Class;Ljava/lang/String;)Ljava/io/InputStream;");

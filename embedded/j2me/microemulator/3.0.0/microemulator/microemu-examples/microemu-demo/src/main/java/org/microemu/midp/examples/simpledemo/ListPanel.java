@@ -34,9 +34,9 @@ public class ListPanel extends BaseExamplesList {
 
 	String options[] = { "Option A", "Option B", "Option C", "Option D" };
 
-	List lists[] = { new List("Exclusive", List.EXCLUSIVE, options, null),
-			new List("Implicit", List.IMPLICIT, options, null),
-			new List("Multiple", List.MULTIPLE, options, null) };
+	List lists[] = { new List("Exclusive", List.EXCLUSIVE, this.options, null),
+			new List("Implicit", List.IMPLICIT, this.options, null),
+			new List("Multiple", List.MULTIPLE, this.options, null) };
 
 	public ListPanel() {
 		super("List", List.IMPLICIT);

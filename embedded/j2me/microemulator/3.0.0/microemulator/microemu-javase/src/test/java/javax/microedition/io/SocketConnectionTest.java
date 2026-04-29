@@ -79,7 +79,7 @@ public class SocketConnectionTest extends BaseGCFTestCase {
 	}
 	
 	public void testLoopback() throws IOException {
-		runLoopbackTest("socket://" + loopbackHost + ":" + loopbackPort);
+		this.runLoopbackTest("socket://" + loopbackHost + ":" + loopbackPort);
 	}
 	
 	private class ServerThread extends Thread {
@@ -117,7 +117,7 @@ public class SocketConnectionTest extends BaseGCFTestCase {
 			} catch(IOException e) {
 				e.printStackTrace();
 			} finally {
-				finished = true;
+				this.finished = true;
 			}
 		}
 	}
@@ -136,11 +136,11 @@ public class SocketConnectionTest extends BaseGCFTestCase {
 				Thread.sleep(20);
 			}
 			assertEquals("Server Port", Integer.valueOf(serverPort).intValue(), scn.getLocalPort());
-			assertNotEquals("Server Host", "0.0.0.0", scn.getLocalAddress());
-			assertNotEquals("Server Host", "localhost", scn.getLocalAddress());
+			SocketConnectionTest.assertNotEquals("Server Host", "0.0.0.0", scn.getLocalAddress());
+			SocketConnectionTest.assertNotEquals("Server Host", "localhost", scn.getLocalAddress());
 			//assertNotEquals("Server Host", "127.0.0.1", scn.getLocalAddress());
 			
-			runLoopbackTest("socket://" + scn.getLocalAddress() + ":" + scn.getLocalPort());
+			this.runLoopbackTest("socket://" + scn.getLocalAddress() + ":" + scn.getLocalPort());
 		} finally {
 			scn.close();
 		}

@@ -46,19 +46,19 @@ public class VideoCapturePlayer implements Player {
 	}
 
 	public synchronized void addPlayerListener(PlayerListener playerListener) {
-		m_listeners.add(playerListener);
+		this.m_listeners.add(playerListener);
 	}
 
 	public synchronized void close() {
-		deallocate();
+		this.deallocate();
 		this.m_state = CLOSED;
-		notifyListeners(PlayerListener.CLOSED, null);
+		this.notifyListeners(PlayerListener.CLOSED, null);
 	}
 
 	public synchronized void deallocate() {
 		if (this.m_state == STARTED) {
 			try {
-				stop();
+				this.stop();
 			} catch (MediaException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -66,34 +66,34 @@ public class VideoCapturePlayer implements Player {
 		}
 		if (this.m_state == PREFETCHED) {
 			this.m_state = REALIZED;
-		} else if (m_state == REALIZED) {
+		} else if (this.m_state == REALIZED) {
 			this.m_state = UNREALIZED;
 		}
 	}
 
 	public String getContentType() {
-		ensureNotClosed();
+		this.ensureNotClosed();
 		return "video/mpeg";
 	}
 
 	public long getDuration() {
-		ensureNotClosed();
+		this.ensureNotClosed();
 		return TIME_UNKNOWN;
 	}
 
 	public long getMediaTime() {
-		ensureNotClosed();
+		this.ensureNotClosed();
 		return TIME_UNKNOWN;
 	}
 
 	public synchronized int getState() {
-		return m_state;
+		return this.m_state;
 	}
 
 	public synchronized void prefetch() throws MediaException {
-		ensureNotClosed();
+		this.ensureNotClosed();
 		if (this.m_state == UNREALIZED) {
-			realize();
+			this.realize();
 		}
 		if (this.m_state > PREFETCHED) {
 			return;
@@ -108,7 +108,7 @@ public class VideoCapturePlayer implements Player {
 	}
 
 	public synchronized void realize() throws MediaException {
-		ensureNotClosed();
+		this.ensureNotClosed();
 		if (this.m_state >= REALIZED) {
 			return;
 		}
@@ -116,11 +116,11 @@ public class VideoCapturePlayer implements Player {
 	}
 
 	public synchronized void removePlayerListener(PlayerListener playerListener) {
-		m_listeners.remove(playerListener);
+		this.m_listeners.remove(playerListener);
 	}
 
 	public void setLoopCount(int count) {
-		ensureNotClosed();
+		this.ensureNotClosed();
 	}
 
 	public long setMediaTime(long now) throws MediaException {
@@ -128,15 +128,15 @@ public class VideoCapturePlayer implements Player {
 	}
 
 	public synchronized void start() throws MediaException {
-		ensureNotClosed();
+		this.ensureNotClosed();
 		if (this.m_state > PREFETCHED) {
-			prefetch();
+			this.prefetch();
 		}
 		if (this.m_state == STARTED) {
 			return;
 		}
 		this.m_state = STARTED;
-		notifyListeners(PlayerListener.STARTED, new Long(0));
+		this.notifyListeners(PlayerListener.STARTED, new Long(0));
 		if (this.m_videoControl != null) {
 			this.m_videoControl.startVideo();
 		}
@@ -149,7 +149,7 @@ public class VideoCapturePlayer implements Player {
 	}
 
 	public synchronized void stop() throws MediaException {
-		ensureNotClosed();
+		this.ensureNotClosed();
 		if (this.m_state <= REALIZED) {
 			throw new IllegalStateException("Cannot stop an unrealized player.");
 		}
@@ -160,27 +160,27 @@ public class VideoCapturePlayer implements Player {
 		if (this.m_videoControl != null) {
 			this.m_videoControl.stopVideo();
 		}
-		notifyListeners(PlayerListener.STOPPED, new Long(0));
+		this.notifyListeners(PlayerListener.STOPPED, new Long(0));
 	}
 
 	public Control getControl(String controlType) {
-		ensureNotClosed();
+		this.ensureNotClosed();
 		if ("VideoControl".equals(controlType) || VideoControl.class.getName().equals(controlType)) {
-			return getVideoControl();
+			return this.getVideoControl();
 		}
 		return null;
 	}
 
 	private synchronized Control getVideoControl() {
 		if (this.m_videoControl == null) {
-			this.m_videoControl = new VideoCaptureControl(this, m_locator);
+			this.m_videoControl = new VideoCaptureControl(this, this.m_locator);
 		}
-		return m_videoControl;
+		return this.m_videoControl;
 	}
 
 	public Control[] getControls() {
-		ensureNotClosed();
-		return new Control[] { getVideoControl() };
+		this.ensureNotClosed();
+		return new Control[] { this.getVideoControl() };
 	}
 
 }

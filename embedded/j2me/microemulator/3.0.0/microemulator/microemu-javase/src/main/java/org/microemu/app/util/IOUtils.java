@@ -67,7 +67,7 @@ public class IOUtils {
 	}
 	
 	public static String getCanonicalFileClassLoaderURL(File file) {
-		String url = getCanonicalFileURL(file);
+		String url = IOUtils.getCanonicalFileURL(file);
 		if ((file.isDirectory()) && (!url.endsWith("/"))) {
 			url += "/";
 		}
@@ -78,9 +78,9 @@ public class IOUtils {
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(src);
-			copyToFile(fis, dst);
+			IOUtils.copyToFile(fis, dst);
 		} finally {
-			closeQuietly(fis); 
+			IOUtils.closeQuietly(fis); 
 		}
 	}
 	
@@ -94,7 +94,7 @@ public class IOUtils {
 				fos.write(buf, 0, i);
 			}
 		} finally {
-			closeQuietly(fos);	
+			IOUtils.closeQuietly(fos);	
 		}
 	}
 	

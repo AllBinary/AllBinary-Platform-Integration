@@ -68,7 +68,7 @@ public class XMLParserConfiguration {
     /**
      * The maximum nesting depth when parsing a XML document to JSON.
      */
-    private int maxNestingDepth = DEFAULT_MAXIMUM_NESTING_DEPTH;
+    private int maxNestingDepth = XMLParserConfiguration.DEFAULT_MAXIMUM_NESTING_DEPTH;
 
     /**
      * Default parser configuration. Does not keep strings (tries to implicitly convert
@@ -339,7 +339,7 @@ public class XMLParserConfiguration {
     public XMLParserConfiguration withMaxNestingDepth(int maxNestingDepth) {
         XMLParserConfiguration newConfig = this.clone();
 
-        if (maxNestingDepth > UNDEFINED_MAXIMUM_NESTING_DEPTH) {
+        if (maxNestingDepth > XMLParserConfiguration.UNDEFINED_MAXIMUM_NESTING_DEPTH) {
             newConfig.maxNestingDepth = maxNestingDepth;
         } else {
             newConfig.maxNestingDepth = UNDEFINED_MAXIMUM_NESTING_DEPTH;

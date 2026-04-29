@@ -69,39 +69,39 @@ public class J2SETrueTypeFont implements J2SEFont {
 	}
 
 	public int charWidth(char ch) {
-		checkInitialized();
+		this.checkInitialized();
 
-		return fontMetrics.charWidth(ch);
+		return this.fontMetrics.charWidth(ch);
 	}
 
 	public int charsWidth(char[] ch, int offset, int length) {
-		checkInitialized();
+		this.checkInitialized();
 
-		return fontMetrics.charsWidth(ch, offset, length);
+		return this.fontMetrics.charsWidth(ch, offset, length);
 	}
 
 	public int getBaselinePosition() {
-		checkInitialized();
+		this.checkInitialized();
 
-		return fontMetrics.getAscent();
+		return this.fontMetrics.getAscent();
 	}
 
 	public int getHeight() {
-		checkInitialized();
+		this.checkInitialized();
 
-		return fontMetrics.getHeight();
+		return this.fontMetrics.getHeight();
 	}
 
 	public int stringWidth(String str) {
-		checkInitialized();
+		this.checkInitialized();
 
-		return fontMetrics.stringWidth(str);
+		return this.fontMetrics.stringWidth(str);
 	}
 
 	public Font getFont() {
-		checkInitialized();
+		this.checkInitialized();
 
-		return fontMetrics.getFont();
+		return this.fontMetrics.getFont();
 	}
 
 	private synchronized void checkInitialized() {
@@ -120,14 +120,14 @@ public class J2SETrueTypeFont implements J2SEFont {
 				// TODO underlined style not implemented
 			}
 			if (this.antialiasing) {
-				graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				J2SETrueTypeFont.graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			} else {
-				graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+				J2SETrueTypeFont.graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 			}
 
 			try {
 				Font baseFont = Font.createFont(Font.TRUETYPE_FONT, url.openStream());
-				this.fontMetrics = graphics.getFontMetrics(baseFont.deriveFont(awtStyle, size));
+				this.fontMetrics = J2SETrueTypeFont.graphics.getFontMetrics(baseFont.deriveFont(awtStyle, this.size));
 				this.initialized = true;
 			} catch (FontFormatException ex) {
 				Logger.error(ex);

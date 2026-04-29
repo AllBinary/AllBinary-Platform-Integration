@@ -44,7 +44,7 @@ public abstract class BaseExamplesForm extends Form implements CommandListener {
 
 	public void commandAction(Command c, Displayable d) {
 		if (d == this) {
-			if (c == backCommand) {
+			if (c == BaseExamplesForm.backCommand) {
 				SimpleDemoMIDlet.showMenu();
 			}
 		}

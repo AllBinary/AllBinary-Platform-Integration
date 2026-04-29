@@ -50,7 +50,7 @@ public class AndroidCommandUI implements CommandUI {
 	}
 
 	public Command getCommand() {
-		return command;
+		return this.command;
 	}
 
 	public void setImage(Image image) {
@@ -58,7 +58,7 @@ public class AndroidCommandUI implements CommandUI {
 	}
 	
 	public Drawable getDrawable() {
-		return drawable;
+		return this.drawable;
 	}
 
 }

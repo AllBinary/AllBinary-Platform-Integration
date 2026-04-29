@@ -42,9 +42,9 @@ public class MIDletOutputStreamRedirector extends PrintStream {
 
 	private final static boolean keepMultiLinePrint = true;
 
-	public final static PrintStream out = outPrintStream();
+	public final static PrintStream out = MIDletOutputStreamRedirector.outPrintStream();
 
-	public final static PrintStream err = errPrintStream();
+	public final static PrintStream err = MIDletOutputStreamRedirector.errPrintStream();
 
 	private boolean isErrorStream;
 
@@ -65,7 +65,7 @@ public class MIDletOutputStreamRedirector extends PrintStream {
 
 		public void flush() {
 			if (this.buffer.length() > 0) {
-				write('\n');
+				this.write('\n');
 			}
 		}
 
@@ -171,7 +171,7 @@ public class MIDletOutputStreamRedirector extends PrintStream {
 	}
 
 	public void println(Object x) {
-		if (keepMultiLinePrint) {
+		if (MIDletOutputStreamRedirector.keepMultiLinePrint) {
 			super.flush();
 			if (this.isErrorStream) {
 				Logger.error(x);
@@ -184,7 +184,7 @@ public class MIDletOutputStreamRedirector extends PrintStream {
 	}
 
 	public void println(String x) {
-		if (keepMultiLinePrint) {
+		if (MIDletOutputStreamRedirector.keepMultiLinePrint) {
 			super.flush();
 			if (this.isErrorStream) {
 				Logger.error(x);

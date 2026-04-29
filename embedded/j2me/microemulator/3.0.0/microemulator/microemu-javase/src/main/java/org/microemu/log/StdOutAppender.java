@@ -57,7 +57,7 @@ public class StdOutAppender implements LoggerAppender {
 	 * @see org.microemu.log.LoggerAppender#append(org.microemu.log.LoggingEvent)
 	 */
 	public void append(LoggingEvent event) {
-		if (!enabled) {
+		if (!StdOutAppender.enabled) {
 			return;
 		}
 		PrintStream out = System.out; 
@@ -69,7 +69,7 @@ public class StdOutAppender implements LoggerAppender {
     	if (event.hasData()) {
     		data = stringBuilder.append(this.OPEN).append(event.getFormatedData()).append(this.CLOSE).toString();
     	}
-    	String location = formatLocation(event.getLocation());
+    	String location = StdOutAppender.formatLocation(event.getLocation());
     	if (location.length() > 0) {
             stringBuilder.delete(0, stringBuilder.length());
     		location = stringBuilder.append(this.LOCATION).append(location).toString();

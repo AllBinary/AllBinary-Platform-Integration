@@ -97,7 +97,7 @@ public class RecordStoreForm extends BaseTestsForm {
 			e.printStackTrace();
 			this.messageItem.setText(e.toString());
 		} finally {
-			closeQuietly(recordStore);
+			RecordStoreForm.closeQuietly(recordStore);
 		}
 	}
 	
@@ -126,7 +126,7 @@ public class RecordStoreForm extends BaseTestsForm {
 			e.printStackTrace();
 			this.messageItem.setText(e.toString());
 		} finally {
-			closeQuietly(recordStore);
+			RecordStoreForm.closeQuietly(recordStore);
 		}
 	}
 	
@@ -177,14 +177,14 @@ public class RecordStoreForm extends BaseTestsForm {
 	
 	public void commandAction(Command c, Displayable d) {
 		if (d == this) {
-			if (c == loadCommand) {
-				load();
-			} else if (c == storeCommand) {
-				store();
-			} else if (c == deleteCommand) {
-				delete();
-			} else if (c == listCommand) {
-				list();
+			if (c == RecordStoreForm.loadCommand) {
+				this.load();
+			} else if (c == RecordStoreForm.storeCommand) {
+				this.store();
+			} else if (c == RecordStoreForm.deleteCommand) {
+				this.delete();
+			} else if (c == RecordStoreForm.listCommand) {
+				this.list();
 			}
 		}
 		super.commandAction(c, d);

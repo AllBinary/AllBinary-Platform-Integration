@@ -46,13 +46,13 @@ public class InputMethodEvent
 
 	public int getCaret()
 	{
-		return caret;
+		return this.caret;
 	}
 
 
 	public String getText()
 	{
-		return text;
+		return this.text;
 	}
 
 }

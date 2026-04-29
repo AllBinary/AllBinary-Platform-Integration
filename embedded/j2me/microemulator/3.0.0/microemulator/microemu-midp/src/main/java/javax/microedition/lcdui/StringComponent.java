@@ -48,7 +48,7 @@ class StringComponent {
 		synchronized (this) {
 			this.width = -1;
 			this.widthDecreaser = 0;
-			setText(text);
+			this.setText(text);
 		}
 	}
 
@@ -58,8 +58,8 @@ class StringComponent {
 
     private final boolean[] HAS_NOT_CHANGED_ARRAY = new boolean[0];
     private final int[] LAST_WIDTH_ARRAY = new int[0];
-    private boolean[] hasNotChanged = HAS_NOT_CHANGED_ARRAY;
-    private int[] lastWidth = LAST_WIDTH_ARRAY;
+    private boolean[] hasNotChanged = this.HAS_NOT_CHANGED_ARRAY;
+    private int[] lastWidth = this.LAST_WIDTH_ARRAY;
 	public int getCharPositionX(int num) {
 		synchronized (this) {
 			if (this.numOfBreaks == -1) {
@@ -88,13 +88,13 @@ class StringComponent {
 		int y = 0;
 		synchronized (this) {
 			if (this.numOfBreaks == -1) {
-				updateBreaks();
+				this.updateBreaks();
 			}
 	
 			Font f = Font.getDefaultFont();
 	
 			for (int i = 0; i < this.numOfBreaks; i++) {
-				if (num < breaks[i]) {
+				if (num < this.breaks[i]) {
 					break;
 				}
 				y += f.getHeight();
@@ -108,7 +108,7 @@ class StringComponent {
 		int height;
 		synchronized (this) {
 			if (this.numOfBreaks == -1) {
-				updateBreaks();
+				this.updateBreaks();
 			}
 
 			Font f = Font.getDefaultFont();
@@ -123,8 +123,8 @@ class StringComponent {
 
 			height = this.numOfBreaks * f.getHeight();
 
-			if (breaks[this.numOfBreaks - 1] == this.text.length() - 1
-					&& text.charAt(text.length() - 1) == '\n') {
+			if (this.breaks[this.numOfBreaks - 1] == this.text.length() - 1
+					&& this.text.charAt(text.length() - 1) == '\n') {
 			} else {
 				height += f.getHeight();
 			}
@@ -134,7 +134,7 @@ class StringComponent {
 	}
 
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
 	public void invertPaint(boolean state) {
@@ -151,7 +151,7 @@ class StringComponent {
 		int y;
 		synchronized (this) {
 			if (this.numOfBreaks == -1) {
-				updateBreaks();
+				this.updateBreaks();
 			}
 	
 			int i, prevIndex;
@@ -226,11 +226,11 @@ class StringComponent {
 		int i;
 
 		for (i = 0; i < this.numOfBreaks; i++) {
-			if (pos < breaks[i]) {
+			if (pos < this.breaks[i]) {
 				break;
 			}
 		}
-		if (this.numOfBreaks + 1 == breaks.length) {
+		if (this.numOfBreaks + 1 == this.breaks.length) {
 			int newbreaks[] = new int[breaks.length + 4];
 			System.arraycopy(breaks, 0, newbreaks, 0, numOfBreaks);
 			breaks = newbreaks;
@@ -259,18 +259,18 @@ class StringComponent {
 				canBreak = i + 1;
 			}
 			if (this.text.charAt(i) == '\n') {
-				insertBreak(i);
+				this.insertBreak(i);
 				canBreak = 0;
 				prevIndex = i + 1;
 				continue;
 			}
 			if (f.substringWidth(this.text, prevIndex, i - prevIndex + 1) > this.width) {
 				if (canBreak != 0) {
-					insertBreak(canBreak);
+					this.insertBreak(canBreak);
 					i = canBreak;
 					prevIndex = i;
 				} else {
-					insertBreak(i);
+					this.insertBreak(i);
 					prevIndex = i + 1;
 				}
 				canBreak = 0;

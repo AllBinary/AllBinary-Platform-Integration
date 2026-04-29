@@ -127,7 +127,7 @@ public abstract class BasicPlayer implements Player
 
    protected Vector getListenersVector()
    {
-      return listenersVector;
+      return this.listenersVector;
    }
 
    protected synchronized void setListenersVector(Vector listenersVector)

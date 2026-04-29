@@ -62,16 +62,16 @@ public class FileSystemConnectorImpl extends ConnectorAdapter implements Impleme
 
 	public Connection open(final String name, int mode, boolean timeouts) throws IOException {
 		// file://<host>/<path>
-		if (!name.startsWith(PROTOCOL)) {
+		if (!name.startsWith(FileSystemConnectorImpl.PROTOCOL)) {
 			throw new IOException("Invalid Protocol " + name);
 		}
 
-		Connection con = (Connection) doPrivilegedIO(new PrivilegedExceptionAction() {
+		Connection con = (Connection) FileSystemConnectorImpl.doPrivilegedIO(new PrivilegedExceptionAction() {
 			public Object run() throws IOException {
 				return new FileSystemFileConnection(fsRoot, name.substring(PROTOCOL.length()),
 						FileSystemConnectorImpl.this);
 			}
-		}, acc);
+		}, this.acc);
 		this.openConnection.add(con);
 		return con;
 	}
@@ -103,7 +103,7 @@ public class FileSystemConnectorImpl extends ConnectorAdapter implements Impleme
 	}
 
 	void notifyClosed(FileSystemFileConnection con) {
-		openConnection.remove(con);
+		this.openConnection.remove(con);
 	}
 
 }

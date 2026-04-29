@@ -103,7 +103,7 @@ public class DeviceImpl implements Device {
 	public static DeviceImpl create(EmulatorContext context, ClassLoader classLoader, String descriptorLocation,
 			Class defaultDeviceClass) throws IOException {
             //System.out.println("create");
-		XMLElement doc = loadDeviceDescriptor(classLoader, descriptorLocation);
+		XMLElement doc = DeviceImpl.loadDeviceDescriptor(classLoader, descriptorLocation);
 		// saveDevice(doc);
 		DeviceImpl device = null;
 		for (Enumeration e = doc.enumerateChildren(); e.hasMoreElements();) {
@@ -154,7 +154,7 @@ public class DeviceImpl implements Device {
 	 *             classLoader, String descriptorLocation);
 	 */
 	public void init(EmulatorContext context) {
-		init(context, DEFAULT_LOCATION);
+		this.init(context, DEFAULT_LOCATION);
 	}
 
 	/**
@@ -172,8 +172,8 @@ public class DeviceImpl implements Device {
 
 		try {
 			String base = descriptorLocation.substring(0, descriptorLocation.lastIndexOf("/"));
-			XMLElement doc = loadDeviceDescriptor(getClass().getClassLoader(), descriptorLocation);
-			loadConfig(getClass().getClassLoader(), base, doc);
+			XMLElement doc = DeviceImpl.loadDeviceDescriptor(getClass().getClassLoader(), descriptorLocation);
+			this.loadConfig(getClass().getClassLoader(), base, doc);
 		} catch (IOException ex) {
 			System.out.println("Cannot load config: " + ex);
 		}
@@ -183,7 +183,7 @@ public class DeviceImpl implements Device {
 	 * @deprecated
 	 */
 	public String getDescriptorLocation() {
-		return descriptorLocation;
+		return this.descriptorLocation;
 	}
 
 	/*
@@ -200,11 +200,11 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getName()
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public static EmulatorContext getEmulatorContext() {
-		return context;
+		return DeviceImpl.context;
 	}
 
 	/*
@@ -213,7 +213,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getInputMethod()
 	 */
 	public InputMethod getInputMethod() {
-		return context.getDeviceInputMethod();
+		return DeviceImpl.context.getDeviceInputMethod();
 	}
 
 	/*
@@ -222,7 +222,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getFontManager()
 	 */
 	public FontManager getFontManager() {
-		return context.getDeviceFontManager();
+		return DeviceImpl.context.getDeviceFontManager();
 	}
 
 	/*
@@ -231,7 +231,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getDeviceDisplay()
 	 */
 	public DeviceDisplay getDeviceDisplay() {
-		return context.getDeviceDisplay();
+		return DeviceImpl.context.getDeviceDisplay();
 	}
 
 	/*
@@ -240,7 +240,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getNormalImage()
 	 */
 	public Image getNormalImage() {
-		return normalImage;
+		return this.normalImage;
 	}
 
 	/*
@@ -249,7 +249,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getOverImage()
 	 */
 	public Image getOverImage() {
-		return overImage;
+		return this.overImage;
 	}
 
 	/*
@@ -258,7 +258,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getPressedImage()
 	 */
 	public Image getPressedImage() {
-		return pressedImage;
+		return this.pressedImage;
 	}
 
 	/*
@@ -267,7 +267,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getSoftButtons()
 	 */
 	public Vector getSoftButtons() {
-		return softButtons;
+		return this.softButtons;
 	}
 
 	/*
@@ -276,7 +276,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#getButtons()
 	 */
 	public Vector getButtons() {
-		return buttons;
+		return this.buttons;
 	}
 
 	protected void loadConfig(ClassLoader classLoader, String base, XMLElement doc) throws IOException {
@@ -288,43 +288,43 @@ public class DeviceImpl implements Device {
 			this.name = base;
 		}
 
-		loadSkinVersion(doc);
+		this.loadSkinVersion(doc);
 
 		this.hasPointerEvents = false;
 		this.hasPointerMotionEvents = false;
 		this.hasRepeatEvents = false;
 
-		((FontManagerImpl) getFontManager()).setAntialiasing(false);
+		((FontManagerImpl) this.getFontManager()).setAntialiasing(false);
 
 		/*
 		 * parseDisplay have to be performed first to check if device display
 		 * has resizable flag set, parseInput skips rectangle or polygon element
 		 * then, also normalImage, overImage and pressedImage aren't needed
 		 */
-		parseDisplay(classLoader, base, doc.getChild("display"));
+		this.parseDisplay(classLoader, base, doc.getChild("display"));
 
 		for (Enumeration e = doc.enumerateChildren(); e.hasMoreElements();) {
 			XMLElement tmp = (XMLElement) e.nextElement();
 			if (tmp.getName().equals("system-properties")) {
-				parseSystemProperties(tmp);
+				this.parseSystemProperties(tmp);
 			} else if (tmp.getName().equals("img") && !((DeviceDisplayImpl) getDeviceDisplay()).isResizable()) {
 				try {
 					if (tmp.getStringAttribute("name").equals("normal")) {
-						this.normalImage = loadImage(classLoader, base, tmp.getStringAttribute("src"));
+						this.normalImage = this.loadImage(classLoader, base, tmp.getStringAttribute("src"));
 					} else if (tmp.getStringAttribute("name").equals("over")) {
-						overImage = loadImage(classLoader, base, tmp.getStringAttribute("src"));
+						this.overImage = this.loadImage(classLoader, base, tmp.getStringAttribute("src"));
 					} else if (tmp.getStringAttribute("name").equals("pressed")) {
-						pressedImage = loadImage(classLoader, base, tmp.getStringAttribute("src"));
+						this.pressedImage = this.loadImage(classLoader, base, tmp.getStringAttribute("src"));
 					}
 				} catch (IOException ex) {
 					System.out.println("Cannot load " + tmp.getStringAttribute("src"));
 					return;
 				}
 			} else if (tmp.getName().equals("fonts")) {
-				parseFonts(classLoader, base, tmp);
+				this.parseFonts(classLoader, base, tmp);
 			} else if (tmp.getName().equals("input") || tmp.getName().equals("keyboard")) {
 				// "keyboard" is for backward compatibility
-				parseInput(tmp);
+				this.parseInput(tmp);
 			}
 		}
 	}
@@ -343,7 +343,7 @@ public class DeviceImpl implements Device {
 	}
 
 	private void parseDisplay(ClassLoader classLoader, String base, XMLElement tmp) throws IOException {
-		DeviceDisplayImpl deviceDisplay = (DeviceDisplayImpl) getDeviceDisplay();
+		DeviceDisplayImpl deviceDisplay = (DeviceDisplayImpl) this.getDeviceDisplay();
 
 		String resizable = tmp.getStringAttribute("resizable", "false");
 		if (resizable.equalsIgnoreCase("true")) {
@@ -365,7 +365,7 @@ public class DeviceImpl implements Device {
 			} else if (tmp_display.getName().equals("foreground")) {
 				deviceDisplay.setForegroundColor(new Color(Integer.parseInt(tmp_display.getContent(), 16)));
 			} else if (tmp_display.getName().equals("rectangle")) {
-				Rectangle rect = getRectangle(tmp_display);
+				Rectangle rect = this.getRectangle(tmp_display);
 				if (deviceDisplay.isResizable()) {
 					rect.x = 0;
 					rect.y = 0;
@@ -379,13 +379,13 @@ public class DeviceImpl implements Device {
 			XMLElement tmp_display = (XMLElement) e_display.nextElement();
 			if (tmp_display.getName().equals("img")) {
 				if (tmp_display.getStringAttribute("name").equals(this.commonStrings.UP)
-						|| tmp_display.getStringAttribute("name").equals(commonStrings.DOWN)) {
+						|| tmp_display.getStringAttribute("name").equals(this.commonStrings.DOWN)) {
 					// deprecated, moved to icon
 					SoftButton icon = deviceDisplay.createSoftButton(skinVersion, tmp_display
 							.getStringAttribute("name"), getRectangle(tmp_display.getChild("paintable")), loadImage(
 							classLoader, base, tmp_display.getStringAttribute("src")), loadImage(classLoader, base,
 							tmp_display.getStringAttribute("src")));
-					getSoftButtons().addElement(icon);
+					this.getSoftButtons().addElement(icon);
 				} else if (tmp_display.getStringAttribute("name").equals("mode")) {
 					// deprecated, moved to status
 					if (tmp_display.getStringAttribute("type").equals("123")) {
@@ -406,18 +406,18 @@ public class DeviceImpl implements Device {
 					XMLElement tmp_icon = (XMLElement) e_icon.nextElement();
 					if (tmp_icon.getName().equals("img")) {
 						if (tmp_icon.getStringAttribute("name").equals("normal")) {
-							iconNormalImage = loadImage(classLoader, base, tmp_icon.getStringAttribute("src"));
+							iconNormalImage = this.loadImage(classLoader, base, tmp_icon.getStringAttribute("src"));
 						} else if (tmp_icon.getStringAttribute("name").equals("pressed")) {
-							iconPressedImage = loadImage(classLoader, base, tmp_icon.getStringAttribute("src"));
+							iconPressedImage = this.loadImage(classLoader, base, tmp_icon.getStringAttribute("src"));
 						}
 					}
 				}
 				SoftButton icon = deviceDisplay.createSoftButton(this.skinVersion, tmp_display.getStringAttribute("name"),
 						getRectangle(tmp_display.getChild("paintable")), iconNormalImage, iconPressedImage);
-				getSoftButtons().addElement(icon);
+				this.getSoftButtons().addElement(icon);
 			} else if (tmp_display.getName().equals("status")) {
 				if (tmp_display.getStringAttribute("name").equals("input")) {
-					Rectangle paintable = getRectangle(tmp_display.getChild("paintable"));
+					Rectangle paintable = this.getRectangle(tmp_display.getChild("paintable"));
 					for (Enumeration e_status = tmp_display.enumerateChildren(); e_status.hasMoreElements();) {
 						XMLElement tmp_status = (XMLElement) e_status.nextElement();
 						if (tmp_status.getName().equals("img")) {
@@ -439,7 +439,7 @@ public class DeviceImpl implements Device {
 	}
 
 	private void parseFonts(ClassLoader classLoader, String base, XMLElement tmp) throws IOException {
-		FontManagerImpl fontManager = (FontManagerImpl) getFontManager();
+		FontManagerImpl fontManager = (FontManagerImpl) this.getFontManager();
 
 		String hint = tmp.getStringAttribute("hint");
 		boolean antialiasing = false;
@@ -488,17 +488,17 @@ public class DeviceImpl implements Device {
 	}
 
 	private void parseInput(XMLElement tmp) {
-		DeviceDisplayImpl deviceDisplay = (DeviceDisplayImpl) getDeviceDisplay();
+		DeviceDisplayImpl deviceDisplay = (DeviceDisplayImpl) this.getDeviceDisplay();
 		boolean resizable = deviceDisplay.isResizable();
 
 		for (Enumeration e_keyboard = tmp.enumerateChildren(); e_keyboard.hasMoreElements();) {
 			XMLElement tmp_keyboard = (XMLElement) e_keyboard.nextElement();
 			if (tmp_keyboard.getName().equals("haspointerevents")) {
-				this.hasPointerEvents = parseBoolean(tmp_keyboard.getContent());
+				this.hasPointerEvents = this.parseBoolean(tmp_keyboard.getContent());
 			} else if (tmp_keyboard.getName().equals("haspointermotionevents")) {
-				hasPointerMotionEvents = parseBoolean(tmp_keyboard.getContent());
+				this.hasPointerMotionEvents = this.parseBoolean(tmp_keyboard.getContent());
 			} else if (tmp_keyboard.getName().equals("hasrepeatevents")) {
-				hasRepeatEvents = parseBoolean(tmp_keyboard.getContent());
+				this.hasRepeatEvents = this.parseBoolean(tmp_keyboard.getContent());
 			} else if (tmp_keyboard.getName().equals("button")) {
 				Shape shape = null;
 				Hashtable inputToChars = new Hashtable();
@@ -524,13 +524,13 @@ public class DeviceImpl implements Device {
 						}
 						inputToChars.put(input, charArray);
 					} else if (tmp_button.getName().equals("rectangle") && !resizable) {
-						shape = getRectangle(tmp_button);
+						shape = this.getRectangle(tmp_button);
 					} else if (tmp_button.getName().equals("polygon") && !resizable) {
-						shape = getPolygon(tmp_button);
+						shape = this.getPolygon(tmp_button);
 					}
 				}
 				int keyCode = tmp_keyboard.getIntAttribute("keyCode", Integer.MIN_VALUE);
-				getButtons().addElement(
+				this.getButtons().addElement(
 						deviceDisplay.createButton(skinVersion, tmp_keyboard.getStringAttribute("name"), shape,
 								keyCode, tmp_keyboard.getStringAttribute("key"), tmp_keyboard
 										.getStringAttribute("keyboardChars"), inputToChars, tmp_keyboard
@@ -543,15 +543,15 @@ public class DeviceImpl implements Device {
 				for (Enumeration e_button = tmp_keyboard.enumerateChildren(); e_button.hasMoreElements();) {
 					XMLElement tmp_button = (XMLElement) e_button.nextElement();
 					if (tmp_button.getName().equals("rectangle") && !resizable) {
-						shape = getRectangle(tmp_button);
+						shape = this.getRectangle(tmp_button);
 					} else if (tmp_button.getName().equals("polygon") && !resizable) {
-						shape = getPolygon(tmp_button);
+						shape = this.getPolygon(tmp_button);
 					} else if (tmp_button.getName().equals("paintable")) {
-						paintable = getRectangle(tmp_button);
+						paintable = this.getRectangle(tmp_button);
 					} else if (tmp_button.getName().equals("command")) {
 						commands.addElement(tmp_button.getContent());
 					} else if (tmp_button.getName().equals("font")) {
-						font = getFont(tmp_button.getStringAttribute("face"), tmp_button.getStringAttribute("style"),
+						font = DeviceImpl.getFont(tmp_button.getStringAttribute("face"), tmp_button.getStringAttribute("style"),
 								tmp_button.getStringAttribute("size"));
 					}
 				}
@@ -560,8 +560,8 @@ public class DeviceImpl implements Device {
 						tmp_keyboard.getStringAttribute("name"), shape, keyCode,
 						tmp_keyboard.getStringAttribute("key"), paintable,
 						tmp_keyboard.getStringAttribute("alignment"), commands, font);
-				getButtons().addElement(button);
-				getSoftButtons().addElement(button);
+				this.getButtons().addElement(button);
+				this.getSoftButtons().addElement(button);
 			}
 		}
 	}
@@ -659,7 +659,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#hasPointerEvents()
 	 */
 	public boolean hasPointerEvents() {
-		return hasPointerEvents;
+		return this.hasPointerEvents;
 	}
 
 	/*
@@ -668,7 +668,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#hasPointerMotionEvents()
 	 */
 	public boolean hasPointerMotionEvents() {
-		return hasPointerMotionEvents;
+		return this.hasPointerMotionEvents;
 	}
 
 	/*
@@ -677,7 +677,7 @@ public class DeviceImpl implements Device {
 	 * @see org.microemu.device.DeviceA#hasRepeatEvents()
 	 */
 	public boolean hasRepeatEvents() {
-		return hasRepeatEvents;
+		return this.hasRepeatEvents;
 	}
 
 	/*
@@ -726,7 +726,7 @@ public class DeviceImpl implements Device {
 //                }
 		XMLElement doc;
 		try {
-                    doc = loadXmlDocument(descriptor);
+                    doc = DeviceImpl.loadXmlDocument(descriptor);
                     //System.out.println("loadDeviceDescriptor: " + doc);
 
                     String parent = doc.getStringAttribute("extends");
@@ -746,9 +746,9 @@ public class DeviceImpl implements Device {
 	}
 
 	private static void inheritanceConstInit() {
-		if (specialInheritanceAttributeSet == null) {
-			specialInheritanceAttributeSet = new Hashtable();
-			specialInheritanceAttributeSet.put("//FONTS/FONT", new String[] { "face", "style", "size" });
+		if (DeviceImpl.specialInheritanceAttributeSet == null) {
+			DeviceImpl.specialInheritanceAttributeSet = new Hashtable();
+			DeviceImpl.specialInheritanceAttributeSet.put("//FONTS/FONT", new String[] { "face", "style", "size" });
 		}
 	}
 
@@ -841,7 +841,7 @@ public class DeviceImpl implements Device {
 	}
 
 	private URL getResourceUrl(ClassLoader classLoader, String base, String src) throws IOException {
-		String expandedSource = expandResourcePath(base, src);
+		String expandedSource = DeviceImpl.expandResourcePath(base, src);
 
 		URL result = classLoader.getResource(expandedSource);
 
@@ -853,7 +853,7 @@ public class DeviceImpl implements Device {
 	}
 
 	private Image loadImage(ClassLoader classLoader, String base, String src) throws IOException {
-		URL url = getResourceUrl(classLoader, base, src);
+		URL url = this.getResourceUrl(classLoader, base, src);
 
 		return ((DeviceDisplayImpl) getDeviceDisplay()).createSystemImage(url);
 	}

@@ -74,9 +74,9 @@ public class RecordStoreManagerDialog extends JFrame {
 
 	private DefaultTableModel modelTable = new DefaultTableModel();
 
-	private JTable logTable = new JTable(modelTable);
+	private JTable logTable = new JTable(this.modelTable);
 
-	private JScrollPane logScrollPane = new JScrollPane(logTable);
+	private JScrollPane logScrollPane = new JScrollPane(this.logTable);
 
 	private ActionListener recordStoreTypeChangeListener = new ActionListener() {
 
@@ -126,7 +126,7 @@ public class RecordStoreManagerDialog extends JFrame {
 
 		setLayout(new BorderLayout());
 
-		refresh();
+		this.refresh();
 
 		JButton recordStoreTypeChangeButton = new JButton("Change...");
 		recordStoreTypeChangeButton.addActionListener(recordStoreTypeChangeListener);
@@ -185,7 +185,7 @@ public class RecordStoreManagerDialog extends JFrame {
 		this.modelTable.addColumn("Action type");
 		this.modelTable.addColumn("Record store name");
 		this.modelTable.addColumn("Details");
-		logTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+		this.logTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
 			private Color SUPER_LIGHT_GRAY = new Color(240, 240, 240);
 
@@ -215,11 +215,11 @@ public class RecordStoreManagerDialog extends JFrame {
 	}
 
 	public void refresh() {
-		recordStoreTypeLabel.setText(common.getRecordStoreManager().getName());
+		this.recordStoreTypeLabel.setText(common.getRecordStoreManager().getName());
 
 		this.suiteNameLabel.setText(this.common.getSuiteName());
 
-		common.getRecordStoreManager().setRecordListener(new ExtendedRecordListener() {
+		this.common.getRecordStoreManager().setRecordListener(new ExtendedRecordListener() {
 
 			public void recordEvent(int type, long timestamp, RecordStore recordStore, int recordId) {
 				String eventMessageType = null;

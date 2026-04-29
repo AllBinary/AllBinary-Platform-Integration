@@ -56,7 +56,7 @@ public class Connection implements DatagramConnection, UDPDatagramConnection, Co
 	private String address;
 
 	public void close() throws IOException {
-		socket.close();
+		this.socket.close();
 	}
 
 	public int getMaximumLength() throws IOException {
@@ -64,23 +64,23 @@ public class Connection implements DatagramConnection, UDPDatagramConnection, Co
 	}
 
 	public int getNominalLength() throws IOException {
-		return getMaximumLength();
+		return this.getMaximumLength();
 	}
 
 	public void send(Datagram dgram) throws IOException {
-		socket.send(((DatagramImpl) dgram).getDatagramPacket());
+		this.socket.send(((DatagramImpl) dgram).getDatagramPacket());
 	}
 
 	public void receive(Datagram dgram) throws IOException {
-		socket.receive(((DatagramImpl) dgram).getDatagramPacket());
+		this.socket.receive(((DatagramImpl) dgram).getDatagramPacket());
 	}
 
 	public Datagram newDatagram(int size) throws IOException {
-		return newDatagram(size, address);
+		return this.newDatagram(size, address);
 	}
 
 	public Datagram newDatagram(int size, String addr) throws IOException {
-		if (!addr.startsWith(PROTOCOL)) {
+		if (!addr.startsWith(Connection.PROTOCOL)) {
 			throw new IllegalArgumentException("Invalid Protocol " + addr);
 		}
 		Datagram datagram = new DatagramImpl(size);
@@ -89,11 +89,11 @@ public class Connection implements DatagramConnection, UDPDatagramConnection, Co
 	}
 
 	public Datagram newDatagram(byte[] buf, int size) throws IOException {
-		return newDatagram(buf, size, address);
+		return this.newDatagram(buf, size, address);
 	}
 
 	public Datagram newDatagram(byte[] buf, int size, String addr) throws IOException {
-		if (!addr.startsWith(PROTOCOL)) {
+		if (!addr.startsWith(Connection.PROTOCOL)) {
 			throw new IllegalArgumentException("Invalid Protocol " + addr);
 		}
 		Datagram datagram = new DatagramImpl(buf, size);
@@ -119,18 +119,18 @@ public class Connection implements DatagramConnection, UDPDatagramConnection, Co
 	}
 
 	public int getLocalPort() throws IOException {
-		return socket.getLocalPort();
+		return this.socket.getLocalPort();
 	}
 
 	public javax.microedition.io.Connection openConnection(String name, int mode, boolean timeouts) throws IOException {
 		if (!org.microemu.cldc.http.Connection.isAllowNetworkConnection()) {
 			throw new IOException("No network");
 		}
-		if (!name.startsWith(PROTOCOL)) {
+		if (!name.startsWith(Connection.PROTOCOL)) {
 			throw new IOException("Invalid Protocol " + name);
 		}
 		// TODO currently we ignore the mode
-		this.address = name.substring(PROTOCOL.length());
+		this.address = name.substring(Connection.PROTOCOL.length());
 		int port = -1;
 		int index = this.address.indexOf(':');
 		if (index == -1) {

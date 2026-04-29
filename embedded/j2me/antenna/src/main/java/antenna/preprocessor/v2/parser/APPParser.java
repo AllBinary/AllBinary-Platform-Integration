@@ -403,7 +403,7 @@ public APPParser(ParserSharedInputState state) {
 		{
 		_loop74:
 		do {
-			if ((_tokenSet_0.member(LA(1)))) {
+			if ((APPParser._tokenSet_0.member(LA(1)))) {
 				AST tmp19_AST = null;
 				tmp19_AST = astFactory.create(LT(1));
 				astFactory.addASTChild(currentAST, tmp19_AST);
@@ -688,7 +688,7 @@ inputState.guessing--;
 				int _cnt88=0;
 				_loop88:
 				do {
-					if ((_tokenSet_0.member(LA(1)))) {
+					if ((APPParser._tokenSet_0.member(LA(1)))) {
 						AST tmp41_AST = null;
 						tmp41_AST = astFactory.create(LT(1));
 						astFactory.addASTChild(currentAST, tmp41_AST);
@@ -715,7 +715,7 @@ inputState.guessing--;
 				int _cnt91=0;
 				_loop91:
 				do {
-					if ((_tokenSet_0.member(LA(1)))) {
+					if ((APPParser._tokenSet_0.member(LA(1)))) {
 						AST tmp43_AST = null;
 						tmp43_AST = astFactory.create(LT(1));
 						astFactory.addASTChild(currentAST, tmp43_AST);
@@ -800,7 +800,7 @@ inputState.guessing--;
 			}
 			}
 		}
-		else if ((_tokenSet_1.member(LA(1)))) {
+		else if ((APPParser._tokenSet_1.member(LA(1)))) {
 			this.anything();
 			astFactory.addASTChild(currentAST, returnAST);
 		}

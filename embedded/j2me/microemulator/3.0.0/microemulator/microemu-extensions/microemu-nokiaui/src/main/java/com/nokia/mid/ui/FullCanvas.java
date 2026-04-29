@@ -132,7 +132,7 @@ class NokiaCommand extends Command
     
 	int getKey()
 	{
-		return key;
+		return this.key;
 	}
 	
 }

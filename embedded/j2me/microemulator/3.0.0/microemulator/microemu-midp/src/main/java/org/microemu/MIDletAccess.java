@@ -50,7 +50,7 @@ public class MIDletAccess {
 	}
 
 	public DisplayAccess getDisplayAccess() {
-		return displayAccess;
+		return this.displayAccess;
 	}
 
 	public void setDisplayAccess(DisplayAccess adisplayAccess) {

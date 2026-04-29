@@ -65,7 +65,7 @@ public class Sound
     
     public int getState() 
     {
-        return SOUND_STOPPED;
+        return Sound.SOUND_STOPPED;
     }
     
     

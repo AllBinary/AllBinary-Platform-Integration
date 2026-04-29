@@ -118,7 +118,7 @@ public class Polygon extends Shape {
 	}
 
 	public Rectangle getBounds() {
-		return bounds;
+		return this.bounds;
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class Polygon extends Shape {
 			boolean c = false;
 			for (int i = 0, j = this.npoints - 1; i < this.npoints; j = i++) {
 				if ((((this.ypoints[i] <= y) && (y < this.ypoints[j])) || ((this.ypoints[j] <= y) && (y < this.ypoints[i])))
-						&& (x < ((double)(xpoints[j] - xpoints[i]) * (y - ypoints[i])) / (ypoints[j] - ypoints[i]) + xpoints[i])) {
+						&& (x < ((double)(this.xpoints[j] - this.xpoints[i]) * (y - this.ypoints[i])) / (this.ypoints[j] - this.ypoints[i]) + this.xpoints[i])) {
 					c = !c;
 				}
 			}

@@ -68,7 +68,7 @@ public class SwingDialogPanel extends JPanel
   }
   
   public boolean isExtraButtonPressed() {
-	  return extra;
+	  return this.extra;
   }
 
 }

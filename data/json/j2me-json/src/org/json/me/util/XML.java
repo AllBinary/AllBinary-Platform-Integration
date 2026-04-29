@@ -130,7 +130,7 @@ public class XML {
 
 // <!
 
-        if (t == BANG) {
+        if (t == XML.BANG) {
             c = x.next();
             if (c == '-') {
                 if (x.next() == '-') {
@@ -156,27 +156,27 @@ public class XML {
                 t = x.nextMeta();
                 if (t == null) {
                     throw x.syntaxError("Missing '>' after '<!'.");
-                } else if (t == LT) {
+                } else if (t == XML.LT) {
                     i += 1;
-                } else if (t == GT) {
+                } else if (t == XML.GT) {
                     i -= 1;
                 }
             } while (i > 0);
             return false;
-        } else if (t == QUEST) {
+        } else if (t == XML.QUEST) {
 
 // <?
 
             x.skipPast("?>");
             return false;
-        } else if (t == SLASH) {
+        } else if (t == XML.SLASH) {
 
 // Close tag </
 
             if (name == null || !x.nextToken().equals(name)) {
                 throw x.syntaxError("Mismatched close tag");
             }
-            if (x.nextToken() != GT) {
+            if (x.nextToken() != XML.GT) {
                 throw x.syntaxError("Misshaped close tag");
             }
             return true;
@@ -200,7 +200,7 @@ public class XML {
                 if (t instanceof String) {
                     s = (String)t;
                     t = x.nextToken();
-                    if (t == EQ) {
+                    if (t == XML.EQ) {
                         t = x.nextToken();
                         if (!(t instanceof String)) {
                             throw x.syntaxError("Missing value");
@@ -213,8 +213,8 @@ public class XML {
 
 // Empty tag <.../>
 
-                } else if (t == SLASH) {
-                    if (x.nextToken() != GT) {
+                } else if (t == XML.SLASH) {
+                    if (x.nextToken() != XML.GT) {
                         throw x.syntaxError("Misshaped tag");
                     }
                     context.accumulate(n, o);
@@ -222,7 +222,7 @@ public class XML {
 
 // Content, between <...> and </...>
 
-                } else if (t == GT) {
+                } else if (t == XML.GT) {
                     for (;;) {
                         t = x.nextContent();
                         if (t == null) {
@@ -238,7 +238,7 @@ public class XML {
 
 // Nested element
 
-                        } else if (t == LT) {
+                        } else if (t == XML.LT) {
                             if (parse(x, o, n)) {
                                 if (o.length() == 0) {
                                     context.accumulate(n, "");
@@ -279,7 +279,7 @@ public class XML {
         XMLTokener x = new XMLTokener(string);
         while (x.more()) {
             x.skipPast("<");
-            parse(x, o, null);
+            XML.parse(x, o, null);
         }
         return o;
     }
@@ -292,7 +292,7 @@ public class XML {
      * @throws  JSONException
      */
     public static String toString(Object o) throws JSONException {
-        return toString(o, null);
+        return XML.toString(o, null);
     }
 
 
@@ -394,7 +394,7 @@ public class XML {
             }
             return b.toString();
         } else {
-            s = (o == null) ? "null" : escape(o.toString());
+            s = (o == null) ? "null" : XML.escape(o.toString());
             return (tagName == null) ? "\"" + s + "\"" :
                 (s.length() == 0) ? "<" + tagName + "/>" :
                 "<" + tagName + ">" + s + "</" + tagName + ">";

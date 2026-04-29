@@ -41,7 +41,7 @@ public class ExtendedImage extends com.siemens.mp.misc.NativeMem {
     
     
     public Image getImage() {
-        return image;
+        return this.image;
     }
     
     

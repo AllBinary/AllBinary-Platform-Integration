@@ -68,9 +68,9 @@ public class ExtensionsClassLoader extends URLClassLoader {
 			try {
 				String path = st.nextToken();
 				if (path.startsWith("file:")) {
-					addURL(new URL(path));	
+					this.addURL(new URL(path));	
 				} else {
-					addURL(new URL(IOUtils.getCanonicalFileURL(new File(path))));
+					this.addURL(new URL(IOUtils.getCanonicalFileURL(new File(path))));
 				}
 			} catch (MalformedURLException e) {
 				throw new Error(e);
@@ -112,12 +112,12 @@ public class ExtensionsClassLoader extends URLClassLoader {
 				public Object run() {
 					return findResource(name);
 				}
-			}, acc);
+			}, this.acc);
 			if (url != null) {
 				return url;
 			}
 		} catch (PrivilegedActionException e) {
-			if (debug) {
+			if (ExtensionsClassLoader.debug) {
 				Logger.error("Unable to find resource " + name + " ", e);
 			}
 		}

@@ -39,7 +39,7 @@ public class AndroidFont implements Font {
 	public FontMetricsInt metrics;
 	
 	public AndroidFont(Typeface typeface, float size, boolean underlined) {
-		paint.setTypeface(typeface);
+		this.paint.setTypeface(typeface);
 		this.paint.setTextSize(size);
 		this.paint.setUnderlineText(underlined);
 		this.metrics = this.paint.getFontMetricsInt();
@@ -58,7 +58,7 @@ public class AndroidFont implements Font {
 	}
 
 	public int getHeight() {
-		return paint.getFontMetricsInt(this.metrics);
+		return this.paint.getFontMetricsInt(this.metrics);
 	}
 
 	public int stringWidth(String str) {

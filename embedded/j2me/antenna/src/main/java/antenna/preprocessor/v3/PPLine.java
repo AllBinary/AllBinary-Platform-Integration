@@ -116,7 +116,7 @@ public class PPLine {
         s = ws[1];
 
         // Default to visible line, in case we can't match the type.
-        this.m_type = TYPE_VISIBLE;
+        this.m_type = PPLine.TYPE_VISIBLE;
         this.m_text = s;
         this.m_prefixChar = '?';
 
@@ -130,14 +130,14 @@ public class PPLine {
                 s = s.substring(1);
 
                 // Maintain backward compatibility with //$ and //#
-                if (c == '#' || c == '$' || c == HIDDEN_LINE_COMMENT_CHAR) {
+                if (c == '#' || c == '$' || c == PPLine.HIDDEN_LINE_COMMENT_CHAR) {
                     this.m_prefixChar = c;
-                    if (c == HIDDEN_LINE_COMMENT_CHAR || c == '$'
+                    if (c == PPLine.HIDDEN_LINE_COMMENT_CHAR || c == '$'
                             || s.length() == 0
                             || (s.charAt(0) == ' ' || s.charAt(0) == '\t')) {
-                        this.m_type = TYPE_HIDDEN;
+                        this.m_type = PPLine.TYPE_HIDDEN;
                     } else {
-                        this.m_type = TYPE_COMMAND;
+                        this.m_type = PPLine.TYPE_COMMAND;
                     }
                     this.m_text = s;
                 }

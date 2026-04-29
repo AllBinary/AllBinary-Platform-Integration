@@ -48,7 +48,7 @@ public abstract class GameCanvas extends Canvas {
     
     
     protected Graphics getGraphics() {
-        return offscreen_buffer.getGraphics();
+        return this.offscreen_buffer.getGraphics();
     }
     
     
@@ -76,7 +76,7 @@ public abstract class GameCanvas extends Canvas {
 
     protected void keyPressed(int keyCode) {
         //super.keyPressed(keyCode);
-        keyMask=keyMask|(1<<getGameAction(keyCode));
+        this.keyMask=this.keyMask|(1<<getGameAction(keyCode));
     }
     
     /**
@@ -94,6 +94,6 @@ public abstract class GameCanvas extends Canvas {
     }
     
     protected void hideNotify() {
-        keyMask=0;
+        this.keyMask=0;
     }
 }

@@ -74,49 +74,49 @@ public class J2SEButtonDefaultKeyCodes {
 	}
 
 	static {
-		code(ButtonName.SOFT1, KeyEvent.VK_F1);
-		code(ButtonName.SOFT2, KeyEvent.VK_F2);
-		code(ButtonName.SELECT, KeyEvent.VK_ENTER);
-		code(ButtonName.UP, KeyEvent.VK_UP, KeyEvent.VK_KP_UP);
-		code(ButtonName.DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_KP_DOWN);
-		code(ButtonName.LEFT, KeyEvent.VK_LEFT, KeyEvent.VK_KP_LEFT);
-		code(ButtonName.RIGHT, KeyEvent.VK_RIGHT, KeyEvent.VK_KP_RIGHT);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.SOFT1, KeyEvent.VK_F1);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.SOFT2, KeyEvent.VK_F2);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.SELECT, KeyEvent.VK_ENTER);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.UP, KeyEvent.VK_UP, KeyEvent.VK_KP_UP);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_KP_DOWN);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.LEFT, KeyEvent.VK_LEFT, KeyEvent.VK_KP_LEFT);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.RIGHT, KeyEvent.VK_RIGHT, KeyEvent.VK_KP_RIGHT);
 
 		// code(ButtonName.BACK, KeyEvent.VK_HOME);
-		code(ButtonName.BACK_SPACE, KeyEvent.VK_BACK_SPACE);
-		code(ButtonName.DELETE, KeyEvent.VK_CLEAR, KeyEvent.VK_DELETE);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.BACK_SPACE, KeyEvent.VK_BACK_SPACE);
+		J2SEButtonDefaultKeyCodes.code(ButtonName.DELETE, KeyEvent.VK_CLEAR, KeyEvent.VK_DELETE);
 
-		code(ButtonName.KEY_NUM0, KeyEvent.VK_0, KeyEvent.VK_NUMPAD0).charCodes = "0";
-		code(ButtonName.KEY_NUM1, KeyEvent.VK_1, KeyEvent.VK_NUMPAD1).charCodes = "1";
-		code(ButtonName.KEY_NUM2, KeyEvent.VK_2, KeyEvent.VK_NUMPAD2).charCodes = "2";
-		code(ButtonName.KEY_NUM3, KeyEvent.VK_3, KeyEvent.VK_NUMPAD3).charCodes = "3";
-		code(ButtonName.KEY_NUM4, KeyEvent.VK_4, KeyEvent.VK_NUMPAD4).charCodes = "4";
-		code(ButtonName.KEY_NUM5, KeyEvent.VK_5, KeyEvent.VK_NUMPAD5).charCodes = "5";
-		code(ButtonName.KEY_NUM6, KeyEvent.VK_6, KeyEvent.VK_NUMPAD6).charCodes = "6";
-		code(ButtonName.KEY_NUM7, KeyEvent.VK_7, KeyEvent.VK_NUMPAD7).charCodes = "7";
-		code(ButtonName.KEY_NUM8, KeyEvent.VK_8, KeyEvent.VK_NUMPAD8).charCodes = "8";
-		code(ButtonName.KEY_NUM9, KeyEvent.VK_9, KeyEvent.VK_NUMPAD9).charCodes = "9";
-		code(ButtonName.KEY_STAR, KeyEvent.VK_MULTIPLY, KeyEvent.VK_ASTERISK).charCodes = "*";
-		code(ButtonName.KEY_POUND, KeyEvent.VK_MODECHANGE, KeyEvent.VK_SUBTRACT).charCodes = "#";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM0, KeyEvent.VK_0, KeyEvent.VK_NUMPAD0).charCodes = "0";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM1, KeyEvent.VK_1, KeyEvent.VK_NUMPAD1).charCodes = "1";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM2, KeyEvent.VK_2, KeyEvent.VK_NUMPAD2).charCodes = "2";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM3, KeyEvent.VK_3, KeyEvent.VK_NUMPAD3).charCodes = "3";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM4, KeyEvent.VK_4, KeyEvent.VK_NUMPAD4).charCodes = "4";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM5, KeyEvent.VK_5, KeyEvent.VK_NUMPAD5).charCodes = "5";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM6, KeyEvent.VK_6, KeyEvent.VK_NUMPAD6).charCodes = "6";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM7, KeyEvent.VK_7, KeyEvent.VK_NUMPAD7).charCodes = "7";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM8, KeyEvent.VK_8, KeyEvent.VK_NUMPAD8).charCodes = "8";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_NUM9, KeyEvent.VK_9, KeyEvent.VK_NUMPAD9).charCodes = "9";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_STAR, KeyEvent.VK_MULTIPLY, KeyEvent.VK_ASTERISK).charCodes = "*";
+		J2SEButtonDefaultKeyCodes.code(ButtonName.KEY_POUND, KeyEvent.VK_MODECHANGE, KeyEvent.VK_SUBTRACT).charCodes = "#";
 	}
 
 	private static KeyInformation code(ButtonName name, int code) {
 		KeyInformation info = new KeyInformation();
 		info.keyCodes = new int[] { code };
-		codes.put(name, info);
-		backwardCompatibleNames.put(new Integer(code), name);
+		J2SEButtonDefaultKeyCodes.codes.put(name, info);
+		J2SEButtonDefaultKeyCodes.backwardCompatibleNames.put(new Integer(code), name);
 		return info;
 	}
 
 	private static KeyInformation code(ButtonName name, int code1, int code2) {
 		KeyInformation info = new KeyInformation();
 		info.keyCodes = new int[] { code1, code2 };
-		codes.put(name, info);
-		backwardCompatibleNames.put(new Integer(code1), name);
+		J2SEButtonDefaultKeyCodes.codes.put(name, info);
+		J2SEButtonDefaultKeyCodes.backwardCompatibleNames.put(new Integer(code1), name);
 		return info;
 	}
 
 	public static ButtonName getBackwardCompatibleName(int keyboardKey) {
-		return (ButtonName) backwardCompatibleNames.get(new Integer(keyboardKey));
+		return (ButtonName) J2SEButtonDefaultKeyCodes.backwardCompatibleNames.get(new Integer(keyboardKey));
 	}
 }

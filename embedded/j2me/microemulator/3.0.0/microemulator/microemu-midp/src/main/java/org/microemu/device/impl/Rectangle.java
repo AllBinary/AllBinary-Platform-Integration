@@ -66,14 +66,14 @@ public class Rectangle extends Shape {
 			if (newx < this.x) {
 				this.width += this.x - newx;
 				this.x = newx;			
-			} else if (newx > x + width) {
-				width = newx - x;
+			} else if (newx > this.x + this.width) {
+				this.width = newx - x;
 			}
 			if (newy < this.y) {
 				this.height += this.y - newy;
 				this.y = newy;
-			} else if (newy > y + height) {
-				height = newy - y;
+			} else if (newy > this.y + this.height) {
+				this.height = newy - y;
 			}
 		} else {
 			this.x = newx;

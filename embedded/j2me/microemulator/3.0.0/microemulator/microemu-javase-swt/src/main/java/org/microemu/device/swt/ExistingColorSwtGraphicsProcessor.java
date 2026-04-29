@@ -22,7 +22,7 @@ public class ExistingColorSwtGraphicsProcessor extends SwtGraphicsProcessor {
     }
     
     public Color getColor(final SwtGraphics g, final RGBA rgba) {
-         return color;
+         return this.color;
     }
     
 }

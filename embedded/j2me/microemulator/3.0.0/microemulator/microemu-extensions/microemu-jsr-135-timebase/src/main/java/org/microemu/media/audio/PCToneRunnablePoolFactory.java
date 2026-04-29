@@ -50,7 +50,7 @@ public class PCToneRunnablePoolFactory
       try
       {
          PCToneRunnable pcToneRunnable = 
-            (PCToneRunnable) pcToneRunnableStack.pop();
+            (PCToneRunnable) PCToneRunnablePoolFactory.pcToneRunnableStack.pop();
 
          pcToneRunnable.setSourceDataLine(sourceDataLine);
          pcToneRunnable.setAudioInputStream(audioInputStream);
@@ -71,7 +71,7 @@ public class PCToneRunnablePoolFactory
    
    public static synchronized void push(PCToneRunnable pcToneRunnable)
    {
-     pcToneRunnableStack.push(pcToneRunnable); 
+     PCToneRunnablePoolFactory.pcToneRunnableStack.push(pcToneRunnable); 
    }
 
 }

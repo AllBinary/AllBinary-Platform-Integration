@@ -37,7 +37,7 @@ public class Expander {
                     String value = define.getLiteral().getValue();
                     String macro2 = "%" + macro + "%";
                     int delta = value.length() - macro2.length();
-                    text = replaceAll(text, macro2, value);
+                    text = Expander.replaceAll(text, macro2, value);
                     macroEnd += delta;
                     macroStart += delta;
                 }

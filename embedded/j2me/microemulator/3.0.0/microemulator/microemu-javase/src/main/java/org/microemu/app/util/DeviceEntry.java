@@ -72,15 +72,15 @@ public class DeviceEntry {
 	}
 
 	public boolean canRemove() {
-		return canRemove;
+		return this.canRemove;
 	}
 
 	public String getDescriptorLocation() {
-		return descriptorLocation;
+		return this.descriptorLocation;
 	}
 
 	public String getFileName() {
-		return fileName;
+		return this.fileName;
 	}
 
 	/**
@@ -91,11 +91,11 @@ public class DeviceEntry {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public boolean isDefaultDevice() {
-		return defaultDevice;
+		return this.defaultDevice;
 	}
 
 	public void setDefaultDevice(boolean b) {
@@ -115,9 +115,9 @@ public class DeviceEntry {
 
 	public String toString() {
 		if (this.defaultDevice) {
-			return name + " (default)";
+			return this.name + " (default)";
 		} else {
-			return name;
+			return this.name;
 		}
 	}
 

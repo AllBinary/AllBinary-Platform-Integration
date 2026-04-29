@@ -53,7 +53,7 @@ public class AndroidEmulatorContext implements EmulatorContext {
     }
 
     public static AndroidEmulatorContext getInstance() {
-        return androidEmulatorContext;
+        return AndroidEmulatorContext.androidEmulatorContext;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class AndroidEmulatorContext implements EmulatorContext {
 
     @Override
     public InputMethod getDeviceInputMethod() {
-        return inputMethod;
+        return this.inputMethod;
     }
 
     @Override
     public FontManager getDeviceFontManager() {
-        return fontManager;
+        return this.fontManager;
     }
 
     public DisplayComponent getDisplayComponent() {

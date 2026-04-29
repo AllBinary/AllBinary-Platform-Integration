@@ -96,7 +96,7 @@ public class RecordStoreImpl extends RecordStore
 			throws IOException
 	{
 		for (int i = 0; i < fileIdentifier.length; i++) {
-			if (dis.read() != fileIdentifier[i]) {
+			if (dis.read() != RecordStoreImpl.fileIdentifier[i]) {
 				throw new IOException();
 			}
 		}
@@ -152,7 +152,7 @@ public class RecordStoreImpl extends RecordStore
 		dos.writeInt(recordId);
 		dos.writeInt(0); // TODO Tag
 		try {
-			byte[] data = getRecord(recordId);
+			byte[] data = this.getRecord(recordId);
 			if (data == null) {
 				dos.writeInt(0);
 			} else {
@@ -167,7 +167,7 @@ public class RecordStoreImpl extends RecordStore
 	
 	public boolean isOpen() 
 	{
-		return open;
+		return this.open;
 	}
 
 
@@ -204,7 +204,7 @@ public class RecordStoreImpl extends RecordStore
 		    throw new RecordStoreNotOpenException();
 		}
 
-		return recordStoreName;
+		return this.recordStoreName;
 	}
     
 	
@@ -217,7 +217,7 @@ public class RecordStoreImpl extends RecordStore
 		}
 		
 		synchronized (this) {
-		    return version;
+		    return this.version;
 		}
 	}
 
@@ -230,7 +230,7 @@ public class RecordStoreImpl extends RecordStore
 		    throw new RecordStoreNotOpenException();
 		}
 		
-		return size;
+		return this.size;
 	}
 
 
@@ -245,14 +245,14 @@ public class RecordStoreImpl extends RecordStore
 		// TODO include size overhead such as the data structures used to hold the state of the record store
 		
 		// Preload all records
-		enumerateRecords(null, null, false);
+		this.enumerateRecords(null, null, false);
 		
 		int result = 0;
 		Enumeration keys = this.records.keys();
 		while (keys.hasMoreElements()) {
 			int key = ((Integer) keys.nextElement()).intValue();
 			try {
-			    byte[] data = getRecord(key);
+			    byte[] data = this.getRecord(key);
 			    if (data != null) {
 			        result += data.length;
 			    }
@@ -273,7 +273,7 @@ public class RecordStoreImpl extends RecordStore
 		    throw new RecordStoreNotOpenException();
 		}
 		
-		return recordStoreManager.getSizeAvailable(this); 
+		return this.recordStoreManager.getSizeAvailable(this); 
 	}
 
 
@@ -286,7 +286,7 @@ public class RecordStoreImpl extends RecordStore
 		}
 		
 		synchronized (this) {
-		    return lastModified;
+		    return this.lastModified;
 		}
 	}
 
@@ -315,10 +315,10 @@ public class RecordStoreImpl extends RecordStore
 		}
 		
 		// lastRecordId needs to hold correct number, all records have to be preloaded
-		enumerateRecords(null, null, false);
+		this.enumerateRecords(null, null, false);
 
 		synchronized (this) {
-		    return lastRecordId + 1;
+		    return this.lastRecordId + 1;
 		}
 	}
 
@@ -337,20 +337,20 @@ public class RecordStoreImpl extends RecordStore
 		}		
 		
 		// lastRecordId needs to hold correct number, all records have to be preloaded
-		enumerateRecords(null, null, false);
+		this.enumerateRecords(null, null, false);
 		
 		byte[] recordData = new byte[numBytes];
 		if (data != null) {
 		    System.arraycopy(data, offset, recordData, 0, numBytes);
 		}
 		
-		int nextRecordID = getNextRecordID();
+		int nextRecordID = this.getNextRecordID();
 		synchronized (this) {
 		    this.records.put(new Integer(nextRecordID), recordData);
-		    version++;
+		    this.version++;
 		    this.lastModified = System.currentTimeMillis();
-		    lastRecordId++;
-		    size++;
+		    this.lastRecordId++;
+		    this.size++;
 		}
 		
         this.recordStoreManager.saveRecord(this, nextRecordID);
@@ -371,16 +371,16 @@ public class RecordStoreImpl extends RecordStore
 		
 		synchronized (this) {
 			// throws InvalidRecordIDException when no record found
-			getRecord(recordId);
+			this.getRecord(recordId);
 		    this.records.remove(new Integer(recordId));
-		    version++;
+		    this.version++;
 		    this.lastModified = System.currentTimeMillis();
-		    size--;
+		    this.size--;
 		}
 		
         this.recordStoreManager.deleteRecord(this, recordId);
 		
-		fireRecordListener(ExtendedRecordListener.RECORD_DELETE, recordId);
+		this.fireRecordListener(ExtendedRecordListener.RECORD_DELETE, recordId);
 	}
 
     @Override
@@ -412,11 +412,11 @@ public class RecordStoreImpl extends RecordStore
 	{
 		int recordSize;
 		synchronized (this) {
-		    recordSize = getRecordSize(recordId);
+		    recordSize = this.getRecordSize(recordId);
 		    System.arraycopy(this.records.get(new Integer(recordId)), 0, buffer, offset, recordSize);
 		}
 		
-		fireRecordListener(ExtendedRecordListener.RECORD_READ, recordId);
+		this.fireRecordListener(ExtendedRecordListener.RECORD_READ, recordId);
 		
 		return recordSize;
 	}
@@ -432,8 +432,8 @@ public class RecordStoreImpl extends RecordStore
 		byte[] data;
 		
 		synchronized (this) {
-		    data = new byte[getRecordSize(recordId)];
-		    getRecord(recordId, data, 0);
+		    data = new byte[this.getRecordSize(recordId)];
+		    this.getRecord(recordId, data, 0);
 		}
 		
 		return data.length < 1 ? null : data;
@@ -457,15 +457,15 @@ public class RecordStoreImpl extends RecordStore
 		
 		synchronized (this) {
 			// throws InvalidRecordIDException when no record found
-			getRecord(recordId);
+			this.getRecord(recordId);
 		    this.records.put(new Integer(recordId), recordData);
-		    version++;
+		    this.version++;
 		    this.lastModified = System.currentTimeMillis();
 		}
 		
         this.recordStoreManager.saveRecord(this, recordId);
 		
-		fireRecordListener(ExtendedRecordListener.RECORD_CHANGE, recordId);
+		this.fireRecordListener(ExtendedRecordListener.RECORD_CHANGE, recordId);
 	}
 
     @Override
@@ -483,7 +483,7 @@ public class RecordStoreImpl extends RecordStore
     public int getHeaderSize() 
     {
     	// TODO fixit
-    	return recordStoreName.length() + 4 + 8 + 4;
+    	return this.recordStoreName.length() + 4 + 8 + 4;
     }
     
     

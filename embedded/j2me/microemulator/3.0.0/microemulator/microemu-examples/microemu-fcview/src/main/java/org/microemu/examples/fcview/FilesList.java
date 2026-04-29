@@ -68,15 +68,15 @@ public class FilesList extends List implements CommandListener {
 
 	public void changeDir(String name) {
 		if (this.currentDir == null) {
-			setDir(name);
+			this.setDir(name);
 		} else if (name.equals("..")) {
 			if (this.currentDir.getName().length() == 0) {
-				setDir(null);
+				this.setDir(null);
 			} else {
-				setDir(this.currentDir.getPath());
+				this.setDir(this.currentDir.getPath());
 			}
 		} else {
-			setDir(this.currentDir.getPath() + this.currentDir.getName() + name);
+			this.setDir(this.currentDir.getPath() + this.currentDir.getName() + name);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class FilesList extends List implements CommandListener {
 			} else {
 				System.out.println("cd " + location);
 				String sep = "";
-				if (location.charAt(0) != DIR_SEP) {
+				if (location.charAt(0) != FilesList.DIR_SEP) {
 					sep = String.valueOf(DIR_SEP);
 				}
 				dir = (FileConnection) Connector.open("file://localhost" + sep + location);
@@ -109,7 +109,7 @@ public class FilesList extends List implements CommandListener {
 			}
 			while (fsEnum.hasMoreElements()) {
 				String fileName = (String) fsEnum.nextElement();
-				if (fileName.charAt(fileName.length() - 1) == DIR_SEP) {
+				if (fileName.charAt(fileName.length() - 1) == FilesList.DIR_SEP) {
 					this.append(fileName, dirIcon);
 				} else {
 					this.append(fileName, fileIcon);
@@ -120,7 +120,7 @@ public class FilesList extends List implements CommandListener {
 			}
 			this.currentDir = dir;
 		} catch (IOException e) {
-			showError(e.getMessage());
+			this.showError(e.getMessage());
 		}
 	}
 
@@ -146,7 +146,7 @@ public class FilesList extends List implements CommandListener {
 			alert.setTimeout(Alert.FOREVER);
 			FCViewMIDlet.setCurrentDisplayable(alert);
 		} catch (IOException e) {
-			showError(e.getMessage());
+			this.showError(e.getMessage());
 		}
 	}
 

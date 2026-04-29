@@ -72,7 +72,7 @@ public class TimerTaskCancelRunner implements Runnable {
 				throw new RuntimeException(e);
 			}
 
-			if (timerTaskExecuted) {
+			if (TimerTaskCancelRunner.timerTaskExecuted) {
 				throw new RuntimeException("Timer should have been cancelled");
 			} else {
 				System.out.println("Timer was cancelled - OK");

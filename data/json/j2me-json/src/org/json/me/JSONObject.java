@@ -269,7 +269,7 @@ public class JSONObject {
      */
     public JSONObject accumulate(String key, Object value)
             throws JSONException {
-        testValidity(value);
+        JSONObject.testValidity(value);
         Object o = this.opt(key);
         if (o == null) {
             this.put(key, value);
@@ -295,7 +295,7 @@ public class JSONObject {
      */
     public JSONObject append(String key, Object value)
             throws JSONException {
-        testValidity(value);
+        JSONObject.testValidity(value);
         Object o = this.opt(key);
         if (o == null) {
             this.put(key, new JSONArray().put(value));
@@ -604,8 +604,8 @@ public class JSONObject {
         if (n == null) {
             throw new JSONException("Null pointer");
         }
-        testValidity(n);
-        return trimNumber(n.toString());
+        JSONObject.testValidity(n);
+        return JSONObject.trimNumber(n.toString());
     }
 
     /**
@@ -904,7 +904,7 @@ public class JSONObject {
             throw new JSONException("Null key.");
         }
         if (value != null) {
-            testValidity(value);
+            JSONObject.testValidity(value);
             this.myHashMap.put(key, value);
         } else {
             this.remove(key);
@@ -1191,13 +1191,13 @@ public class JSONObject {
         if (value instanceof Float || value instanceof Double ||
             value instanceof Byte || value instanceof Short || 
             value instanceof Integer || value instanceof Long) {
-            return numberToString(value);
+            return JSONObject.numberToString(value);
         }
         if (value instanceof Boolean || value instanceof JSONObject ||
                 value instanceof JSONArray) {
             return value.toString();
         }
-        return quote(value.toString());
+        return JSONObject.quote(value.toString());
     }
 
 
@@ -1233,7 +1233,7 @@ public class JSONObject {
         if (value instanceof Float || value instanceof Double ||
             value instanceof Byte || value instanceof Short || 
             value instanceof Integer || value instanceof Long) {
-            return numberToString(value);
+            return JSONObject.numberToString(value);
         }
         if (value instanceof Boolean) {
             return value.toString();
@@ -1244,7 +1244,7 @@ public class JSONObject {
         if (value instanceof JSONArray) {
             return ((JSONArray)value).toString(indentFactor, indent);
         }
-        return quote(value.toString());
+        return JSONObject.quote(value.toString());
     }
 
 

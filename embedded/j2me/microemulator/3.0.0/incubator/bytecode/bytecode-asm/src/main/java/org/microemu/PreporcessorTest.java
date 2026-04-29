@@ -10,9 +10,9 @@ public class PreporcessorTest {
 
 	public static void main(String[] args) throws Exception {
 		
-		saveToFile();
+		PreporcessorTest.saveToFile();
 		
-		runClass();
+		PreporcessorTest.runClass();
 		
 	}
 	

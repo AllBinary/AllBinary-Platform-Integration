@@ -22,8 +22,8 @@ public class Toolkit {
     public Toolkit(String filename) {
         props = new Properties();
         this.loadProps(filename);
-        this.name = this.props.getProperty(NAME, "invalid");
-        if (this.props.containsKey(INCLUDE)) {
+        this.name = this.props.getProperty(Toolkit.NAME, "invalid");
+        if (this.props.containsKey(Toolkit.INCLUDE)) {
             this.loadProps(this.props.getProperty(INCLUDE));
         }
     }

@@ -47,7 +47,7 @@ public class SSLContextSetup {
 	private static boolean initialized = false;
 	
 	public static synchronized void setUp() {
-    	if (initialized) {
+    	if (SSLContextSetup.initialized) {
     		return;
     	}
     	InputStream is = null;
@@ -66,7 +66,7 @@ public class SSLContextSetup {
             SSLContext context = SSLContext.getInstance("TLS");
             context.init(null, trustManagers, secureRandom);
             HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
-            initialized = true;
+            SSLContextSetup.initialized = true;
         } catch (Throwable e) {
             throw new Error(e);
         } finally {

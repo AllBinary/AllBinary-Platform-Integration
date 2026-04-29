@@ -95,44 +95,44 @@ public class Preprocessor implements IPreprocessor{
 		this.pushState();
 		if (!isBlind()) {
 			if (condition) {
-				this.state = STATE_IS_TRUE;
+				this.state = Preprocessor.STATE_IS_TRUE;
 			}
 			else {
-				this.state = STATE_CAN_BECOME_TRUE;
+				this.state = Preprocessor.STATE_CAN_BECOME_TRUE;
 			}
 		}
 		else {
-			this.state = STATE_HAS_BEEN_TRUE;
+			this.state = Preprocessor.STATE_HAS_BEEN_TRUE;
 		}
 	}
 
 	private void handleElseIf(boolean condition) throws PreprocessorException {
-		if (this.state == STATE_NO_CONDITIONAL) {
+		if (this.state == Preprocessor.STATE_NO_CONDITIONAL) {
 			throw new PreprocessorException("Unexpected #elif", file, currentLine);
 		}
-		else if (this.state == STATE_CAN_BECOME_TRUE) {
+		else if (this.state == Preprocessor.STATE_CAN_BECOME_TRUE) {
 			if (condition)
-				this.state = STATE_IS_TRUE;
+				this.state = Preprocessor.STATE_IS_TRUE;
 		}
-		else if (this.state == STATE_IS_TRUE) {
-			this.state = STATE_HAS_BEEN_TRUE;
+		else if (this.state == Preprocessor.STATE_IS_TRUE) {
+			this.state = Preprocessor.STATE_HAS_BEEN_TRUE;
 		}
 	}
 
 	private void handleElse() throws PreprocessorException {
-		if (this.state == STATE_NO_CONDITIONAL) {
+		if (this.state == Preprocessor.STATE_NO_CONDITIONAL) {
 			throw new PreprocessorException("Unexpected #else",file,  currentLine);
 		}
-		else if (this.state == STATE_CAN_BECOME_TRUE) {
-			this.state = STATE_IS_TRUE;
+		else if (this.state == Preprocessor.STATE_CAN_BECOME_TRUE) {
+			this.state = Preprocessor.STATE_IS_TRUE;
 		}
-		else if (this.state == STATE_IS_TRUE) {
-			this.state = STATE_HAS_BEEN_TRUE;
+		else if (this.state == Preprocessor.STATE_IS_TRUE) {
+			this.state = Preprocessor.STATE_HAS_BEEN_TRUE;
 		}
 	}
 
 	private void handleEndIf() throws PreprocessorException {
-		if (this.state == STATE_NO_CONDITIONAL) {
+		if (this.state == Preprocessor.STATE_NO_CONDITIONAL) {
 			throw new PreprocessorException("Unexpected #endif",file,  currentLine);
 		}
 		else {
@@ -291,7 +291,7 @@ public class Preprocessor implements IPreprocessor{
 	public boolean preprocess(Strings lines, String encoding) throws PreprocessorException, IOException
 	{
 		this.stack.clear();
-		this.state = STATE_NO_CONDITIONAL;
+		this.state = Preprocessor.STATE_NO_CONDITIONAL;
 		//this.mode = mode;
 
 		Strings oldLines = new Strings();
@@ -387,7 +387,7 @@ public class Preprocessor implements IPreprocessor{
 				throw new PreprocessorException(error.getMessage() + " in line " + (i + 1) + " : " + line, file, currentLine);
 			}
 		}
-		if (this.state != STATE_NO_CONDITIONAL) {
+		if (this.state != Preprocessor.STATE_NO_CONDITIONAL) {
 			throw new PreprocessorException("Missing #endif", file, currentLine);
 		}
 

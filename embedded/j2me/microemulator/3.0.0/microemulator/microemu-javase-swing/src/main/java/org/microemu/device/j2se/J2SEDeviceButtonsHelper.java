@@ -86,7 +86,7 @@ public class J2SEDeviceButtonsHelper {
 	}
 
 	public static J2SEButton getButton(KeyEvent ev) {
-		DeviceInformation inf = getDeviceInformation();
+		DeviceInformation inf = J2SEDeviceButtonsHelper.getDeviceInformation();
 		J2SEButton button = (J2SEButton) inf.keyboardCharCodes.get(new Integer(ev.getKeyChar()));
 		if (button != null) {
 			return button;
@@ -95,7 +95,7 @@ public class J2SEDeviceButtonsHelper {
 	}
 
 	public static J2SEButton getButton(ButtonName functionalName) {
-		DeviceInformation inf = getDeviceInformation();
+		DeviceInformation inf = J2SEDeviceButtonsHelper.getDeviceInformation();
 		return (J2SEButton) inf.functions.get(functionalName);
 	}
 
@@ -105,7 +105,7 @@ public class J2SEDeviceButtonsHelper {
 		synchronized (J2SEDeviceButtonsHelper.class) {
 			inf = (DeviceInformation) devices.get(dev);
 			if (inf == null) {
-				inf = createDeviceInformation(dev);
+				inf = J2SEDeviceButtonsHelper.createDeviceInformation(dev);
 			}
 		}
 		return inf;

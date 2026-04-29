@@ -52,7 +52,7 @@ public class CustomCustomItem extends CustomItem {
 	}
 	
 	protected final int getInteractionModes() {
-		return NONE;
+		return CustomCustomItem.NONE;
 	}
 	
 	protected int getMinContentHeight()

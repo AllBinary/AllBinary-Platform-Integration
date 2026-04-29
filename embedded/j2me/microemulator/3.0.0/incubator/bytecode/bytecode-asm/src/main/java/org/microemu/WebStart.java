@@ -160,8 +160,8 @@ public class WebStart extends JFrame {
 
 	
 	private void openJar(URL path) {
-		println("Open [" + path + "]");
-		runApp(path);
+		this.println("Open [" + path + "]");
+		this.runApp(path);
 	}
 
 	private void println(String text) {
@@ -171,9 +171,9 @@ public class WebStart extends JFrame {
 	}
 	
 	public void runApp(URL path) {
-		println("Start Class loader test...");
+		this.println("Start Class loader test...");
 		
-		println("ClassLoader " + this.getClass().getClassLoader().hashCode() +  " WebStart");
+		this.println("ClassLoader " + this.getClass().getClassLoader().hashCode() +  " WebStart");
 		
 		try {
 			SystemProperties.setProperty("microedition.platform", "MicroEmulator-Test");
@@ -189,7 +189,7 @@ public class WebStart extends JFrame {
 				} finally {
 					is.close();
 				}
-				println("Read OK " + path);
+				this.println("Read OK " + path);
 			}
 			URL[] urls = new URL[]{path};
 			
@@ -198,7 +198,7 @@ public class WebStart extends JFrame {
 			cl.disableClassLoad(ResourceLoader.class);
 			ResourceLoader.classLoader = cl;
 			
-			println("ClassLoader " + cl.hashCode() +  " <-- PreporcessorClassLoader");
+			this.println("ClassLoader " + cl.hashCode() +  " <-- PreporcessorClassLoader");
 
 //			if (path != null) {
 //				cl.addURL(path);
@@ -206,11 +206,11 @@ public class WebStart extends JFrame {
 //				cl.addClassURL(PreporcessorTest.TEST_CLASS);
 //			}
 
-			println("ClassLoader created...");
-			acessResource(cl, PreporcessorClassLoader.getClassResourceName(PreporcessorTest.TEST_CLASS));
-			acessResource(cl, "org/TestResourceLoad.class");			
-			acessResource(cl, PreporcessorClassLoader.getClassResourceName(this.getClass().getName()));
-			acessResource(cl, "app-data.txt");
+			this.println("ClassLoader created...");
+			this.acessResource(cl, PreporcessorClassLoader.getClassResourceName(PreporcessorTest.TEST_CLASS));
+			this.acessResource(cl, "org/TestResourceLoad.class");			
+			this.acessResource(cl, PreporcessorClassLoader.getClassResourceName(this.getClass().getName()));
+			this.acessResource(cl, "app-data.txt");
 
 //			Class instrumentedClassX = cl.loadClass("org.TestResourceLoad");
 //			tx.append("Test if file is there org.TestResourceLoad - OK\n");
@@ -219,10 +219,10 @@ public class WebStart extends JFrame {
 			Runnable instrumentedInstance = (Runnable) instrumentedClass.newInstance();
 			instrumentedInstance.run();
 
-			println("Looks good!\n");
+			this.println("Looks good!\n");
 
 		} catch (Throwable e) {
-			println("Error " + e.toString());
+			this.println("Error " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -230,16 +230,16 @@ public class WebStart extends JFrame {
 	void acessResource(ClassLoader cl, String resource) throws IOException {
 		URL url = cl.getResource(resource);
 		if (url == null) {
-			println("Ups can't find resource " + resource);
+			this.println("Ups can't find resource " + resource);
 		} else {
-			println("URL OK " + resource + " ->" + url);
+			this.println("URL OK " + resource + " ->" + url);
 			InputStream is = url.openStream();
 			try {
 				is.read();
 			} finally {
 				is.close();
 			}
-			println("Read OK " + resource + " ->" + url);
+			this.println("Read OK " + resource + " ->" + url);
 		}
 	}
 	

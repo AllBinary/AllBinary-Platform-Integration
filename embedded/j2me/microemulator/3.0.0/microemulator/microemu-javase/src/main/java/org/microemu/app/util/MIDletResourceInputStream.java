@@ -42,11 +42,11 @@ public class MIDletResourceInputStream extends InputStream {
 	}
 
 	public int available() throws IOException {
-		return is.available();
+		return this.is.available();
 	}
 
 	public int read() throws IOException {
-		return is.read();
+		return this.is.read();
 	}
 
 	public int read(byte[] b) throws IOException {

@@ -35,7 +35,7 @@ public class CommonAST extends CommonTree {
     public static void fillParentInfo(CommonAST ast) {
 
         if (ast != null) {
-            fillParentInfo(ast, null, 0);
+            CommonAST.fillParentInfo(ast, null, 0);
         }
 
     }
@@ -60,7 +60,7 @@ public class CommonAST extends CommonTree {
             int childCount = ast.getChildCount();
             if (childCount > 0) {
                 for (int i = 0; i < childCount; i++) {
-                    fillParentInfo((CommonAST) ast.getChild(i), ast, i);
+                    CommonAST.fillParentInfo((CommonAST) ast.getChild(i), ast, i);
                 }
             }
         }

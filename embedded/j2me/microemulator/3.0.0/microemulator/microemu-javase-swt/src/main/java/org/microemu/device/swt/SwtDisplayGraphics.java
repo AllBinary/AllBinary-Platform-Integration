@@ -89,13 +89,13 @@ public class SwtDisplayGraphics extends javax.microedition.lcdui.Graphics //impl
 	
 	public MutableImage getImage() 
 	{
-		return image;
+		return this.image;
 	}
 
 	
 	public int getColor() 
 	{
-		return color;
+		return this.color;
 	}
 
 	
@@ -112,7 +112,7 @@ public class SwtDisplayGraphics extends javax.microedition.lcdui.Graphics //impl
 	
 	public javax.microedition.lcdui.Font getFont() 
 	{
-		return currentFont;
+		return this.currentFont;
 	}
 
 	
@@ -129,26 +129,26 @@ public class SwtDisplayGraphics extends javax.microedition.lcdui.Graphics //impl
 		Rectangle rect = new Rectangle(x, y, width, height);
 
 		if (rect.x < getClipX()) {
-			rect.x = getClipX();
+			rect.x = this.getClipX();
 		}
 
 		if (rect.y < getClipY()) {
-			rect.y = getClipY();
+			rect.y = this.getClipY();
 		}
 
 		if (x + width > getClipX() + getClipWidth()) {
-			rect.width = getClipX() + getClipWidth() - rect.x;
+			rect.width = this.getClipX() + this.getClipWidth() - rect.x;
 		} else {
 			rect.width = x + width - rect.x;
 		}
 
 		if (y + height > getClipY() + getClipHeight()) {
-			rect.height = getClipY() + getClipHeight() - rect.y;
+			rect.height = this.getClipY() + this.getClipHeight() - rect.y;
 		} else {
 			rect.height = y + height - rect.y;
 		}
 
-		setClip(rect.x, rect.y, rect.width, rect.height);
+		this.setClip(rect.x, rect.y, rect.width, rect.height);
 	}
 
 	
@@ -212,7 +212,7 @@ public class SwtDisplayGraphics extends javax.microedition.lcdui.Graphics //impl
 	
 	public void drawImage(Image img, int x, int y, int anchor) 
 	{
-            img.getPlatformImage().drawImage(img, x, y, anchor, this, g);
+            img.getPlatformImage().drawImage(img, x, y, anchor, this, this.g);
 	}
 
 	
@@ -225,10 +225,10 @@ public class SwtDisplayGraphics extends javax.microedition.lcdui.Graphics //impl
 	public void drawRect(int x, int y, int width, int height) 
 	{
             //g.drawRectangle(x, y, width, height);
-		drawLine(x, y, x + width, y);
-		drawLine(x + width, y, x + width, y + height);
-		drawLine(x + width, y + height, x, y + height);
-		drawLine(x, y + height, x, y);
+		this.drawLine(x, y, x + width, y);
+		this.drawLine(x + width, y, x + width, y + height);
+		this.drawLine(x + width, y + height, x, y + height);
+		this.drawLine(x, y + height, x, y);
 	}
 
 

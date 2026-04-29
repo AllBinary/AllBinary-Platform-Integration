@@ -41,7 +41,7 @@ public class PCToneControl implements ToneControl
 
    public byte[] getSequence()
    {
-      return sequence;
+      return this.sequence;
    }
 
 }

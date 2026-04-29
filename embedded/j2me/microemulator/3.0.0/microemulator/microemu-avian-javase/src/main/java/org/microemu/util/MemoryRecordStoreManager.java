@@ -56,7 +56,7 @@ public class MemoryRecordStoreManager implements RecordStoreManager {
 		}
 		this.recordStores.remove(recordStoreName);
 
-		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, recordStoreName);
+		this.fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_DELETE, recordStoreName);
 	}
 
 	public RecordStore openRecordStore(String recordStoreName, boolean createIfNecessary)
@@ -74,7 +74,7 @@ public class MemoryRecordStoreManager implements RecordStoreManager {
 			recordStoreImpl.addRecordListener(this.recordListener);
 		}
 
-		fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
+		this.fireRecordStoreListener(ExtendedRecordListener.RECORDSTORE_OPEN, recordStoreName);
 
 		return recordStoreImpl;
 	}
@@ -104,7 +104,7 @@ public class MemoryRecordStoreManager implements RecordStoreManager {
 	}
 
 	public void init() {
-		deleteStores();
+		this.deleteStores();
 	}
 
 	public void deleteStores() {

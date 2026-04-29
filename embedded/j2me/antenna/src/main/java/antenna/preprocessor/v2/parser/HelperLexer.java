@@ -66,7 +66,7 @@ tryAgain:
 					this.mWS(true);
 					theRetToken=_returnToken;
 				}
-				else if ((_tokenSet_0.member(LA(1))) && (true) && (true)) {
+				else if ((HelperLexer._tokenSet_0.member(LA(1))) && (true) && (true)) {
 					this.mFILE(true);
 					theRetToken=_returnToken;
 				}

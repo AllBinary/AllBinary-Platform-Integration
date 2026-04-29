@@ -82,7 +82,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
     
     private static SwtDeviceDisplay DEFAULT_INSTANCE = 
         new SwtDeviceDisplay(SwtEmulatorContext.getInstance());
-    private static SwtDeviceDisplay instance = DEFAULT_INSTANCE;
+    private static SwtDeviceDisplay instance = SwtDeviceDisplay.DEFAULT_INSTANCE;
         
 
     /**
@@ -170,12 +170,12 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 
         public void scale(final float ratio)
         {       
-            if(lastRatio != ratio)
+            if(this.lastRatio != ratio)
             {
                 logUtil.putF(new StringMaker().append(RATIO_LABEL).appendfloat(ratio).toString(), this, SCALE_VIEW_METHOD_NAME);
                 //set the scale value here
                 SwtDeviceDisplay.this.ratio = ratio;
-                lastRatio = ratio;
+                this.lastRatio = ratio;
             } else {
                 //logUtil.putF(new StringMaker().append("Unchanged").append(RATIO_LABEL).append(ratio).toString(), this, SCALE_VIEW_METHOD_NAME);
             }
@@ -217,23 +217,23 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 
 	public int getHeight() {
             //System.out.println(this + " - getHeight: " + displayPaintable);
-		return displayPaintable.height;
+		return this.displayPaintable.height;
 	}
 
 	public int getWidth() {
-		return displayPaintable.width;
+		return this.displayPaintable.width;
 	}
 
 	public int getFullHeight() {
-		return displayRectangle.height;
+		return this.displayRectangle.height;
 	}
 
 	public int getFullWidth() {
-		return displayRectangle.width;
+		return this.displayRectangle.width;
 	}
 
 	public boolean isColor() {
-		return isColor;
+		return this.isColor;
 	}
 
 	public boolean isFullScreenMode() {
@@ -251,11 +251,11 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 	}
 
 	public int numAlphaLevels() {
-		return numAlphaLevels;
+		return this.numAlphaLevels;
 	}
 
 	public int numColors() {
-		return numColors;
+		return this.numColors;
 	}
 
 	public void paintControls(SwtGraphics g) {
@@ -280,13 +280,13 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
                 //SwtImmutableImage
 		if (inputMode == InputMethod.INPUT_123) {
 			g.drawImage((org.eclipse.swt.graphics.Image) mode123Image.getImage().getImage(), mode123Image.getRectangle().x,
-					mode123Image.getRectangle().y);
+					this.mode123Image.getRectangle().y);
 		} else if (inputMode == InputMethod.INPUT_ABC_UPPER) {
 			g.drawImage((org.eclipse.swt.graphics.Image) modeAbcUpperImage.getImage().getImage(),
-					modeAbcUpperImage.getRectangle().x, modeAbcUpperImage.getRectangle().y);
+					this.modeAbcUpperImage.getRectangle().x, this.modeAbcUpperImage.getRectangle().y);
 		} else if (inputMode == InputMethod.INPUT_ABC_LOWER) {
 			g.drawImage((org.eclipse.swt.graphics.Image) modeAbcLowerImage.getImage().getImage(),
-					modeAbcLowerImage.getRectangle().x, modeAbcLowerImage.getRectangle().y);
+					this.modeAbcLowerImage.getRectangle().x, this.modeAbcLowerImage.getRectangle().y);
 		}
 	}
 
@@ -336,7 +336,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 //                g.setClipping(new org.eclipse.swt.graphics.Rectangle(x, y, width, height));
 		
 		final Font oldf = g.getFont();
-                final SwtMutableImage displayImage = getDisplayImage();
+                final SwtMutableImage displayImage = this.getDisplayImage();
                 final SwtDisplayGraphics swtDisplayGraphics = new SwtDisplayGraphics(g, displayImage);
 //                if(swtDisplayGraphics == null) {
 //                    swtDisplayGraphics = new SwtDisplayGraphics(g, displayImage);
@@ -358,7 +358,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
         }
 
 	public void repaint(int x, int y, int width, int height) {
-            repaintProcessor.repaint(context, x, y, width, height);
+            this.repaintProcessor.repaint(context, x, y, width, height);
 	}
 
 	public void setScrollDown(boolean state) {
@@ -382,19 +382,19 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 	}
 
 	public Rectangle getDisplayRectangle() {
-		return displayRectangle;
+		return this.displayRectangle;
 	}
 
 	public Rectangle getDisplayPaintable() {
-		return displayPaintable;
+		return this.displayPaintable;
 	}
 
 	public Color getBackgroundColor() {
-		return backgroundColor;
+		return this.backgroundColor;
 	}
 
 	public Color getForegroundColor() {
-		return foregroundColor;
+		return this.foregroundColor;
 	}
 
 	public Image createImage(int width, int height) {
@@ -406,7 +406,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 	}
 
 	public Image createImage(String name) throws IOException {
-		return getImage(name);
+		return this.getImage(name);
 	}
 
 	public Image createImage(javax.microedition.lcdui.Image source) {
@@ -421,7 +421,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 	public Image createImage(byte[] imageData, int imageOffset, int imageLength) {
 		ByteArrayInputStream is = new ByteArrayInputStream(imageData, imageOffset, imageLength);
 		try {
-			return getImage(is);
+			return this.getImage(is);
 		} catch (IOException ex) {
 			throw new IllegalArgumentException(ex.toString());
 		}
@@ -432,7 +432,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 			throw new IOException();
 		}
 
-		return getImage(is);
+		return this.getImage(is);
 	}
 
         public Image createImageLater(final String name, final int width, final int height)
@@ -479,7 +479,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 	 */
 	public void setForegroundColor(Color color) {
 		this.foregroundColor = color;
-                this.foregroundColorRBGA = new RGBA(foregroundColor.getRed(), foregroundColor.getGreen(), foregroundColor.getBlue(), 255);
+                this.foregroundColorRBGA = new RGBA(this.foregroundColor.getRed(), this.foregroundColor.getGreen(), this.foregroundColor.getBlue(), 255);
                 this.foregroundGraphicsProcessor = new NewColorSwtGraphicsProcessor(this);
 	}
 
@@ -549,7 +549,7 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
 			throw new IOException(str + " could not be found.");
 		}
 		try {
-			return getImage(is);
+			return this.getImage(is);
 		} finally {
 			IOUtils.closeQuietly(is);
 		}

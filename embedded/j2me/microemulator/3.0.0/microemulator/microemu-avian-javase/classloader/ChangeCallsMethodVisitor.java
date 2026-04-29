@@ -41,13 +41,13 @@ import org.objectweb.asm.Opcodes;
  */
 public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
 
-	private static final String INJECTED_CLASS = codeName(Injected.class);
+	private static final String INJECTED_CLASS = ChangeCallsMethodVisitor.codeName(Injected.class);
 	
-	static String NEW_SYSTEM_OUT_CLASS = INJECTED_CLASS;
+	static String NEW_SYSTEM_OUT_CLASS = ChangeCallsMethodVisitor.INJECTED_CLASS;
 	
-	static String NEW_SYSTEM_PROPERTIES_CLASS = INJECTED_CLASS;
+	static String NEW_SYSTEM_PROPERTIES_CLASS = ChangeCallsMethodVisitor.INJECTED_CLASS;
 	
-	static String NEW_RESOURCE_LOADER_CLASS = INJECTED_CLASS;
+	static String NEW_RESOURCE_LOADER_CLASS = ChangeCallsMethodVisitor.INJECTED_CLASS;
 	
 	private HashMap catchInfo;
 	
@@ -127,7 +127,7 @@ public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
 //					owner = codeName(MIDletTimerTask.class);
 //				} else 
                                 if (owner.equals("java/lang/Thread")) {
-					owner = codeName(MIDletThread.class);
+					owner = ChangeCallsMethodVisitor.codeName(MIDletThread.class);
 				}
 			}
 			break;
@@ -144,7 +144,7 @@ public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
 //    			desc = codeName(MIDletTimerTask.class);
 //    		} else 
                 if ("java/lang/Thread".equals(desc)) {
-    			desc = codeName(MIDletThread.class);
+    			desc = ChangeCallsMethodVisitor.codeName(MIDletThread.class);
     		}
     	} 
     	mv.visitTypeInsn(opcode, desc);

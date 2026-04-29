@@ -85,8 +85,8 @@ public class AndroidFontManager implements FontManager
 	    	result = new AndroidFont(Typeface.create(family, style), TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_SP,
                             size,
-                            metrics), underlined);
-	    	fonts.put(meFont, result);
+                            AndroidFontManager.metrics), underlined);
+	    	AndroidFontManager.fonts.put(meFont, result);
 	    }
 	    
 	    return result;
@@ -95,41 +95,41 @@ public class AndroidFontManager implements FontManager
 	
 	public void init()
 	{
-		fonts.clear();
+		AndroidFontManager.fonts.clear();
 	}
   
 
 	public int charWidth(Font f, char ch)
 	{
-		return getFont(f).charWidth(ch);
+		return AndroidFontManager.getFont(f).charWidth(ch);
 	}
 
 
 	public int charsWidth(Font f, char[] ch, int offset, int length) 
 	{
-		return getFont(f).charsWidth(ch, offset, length);
+		return AndroidFontManager.getFont(f).charsWidth(ch, offset, length);
 	}
 
 	public int getBaselinePosition(Font f) 
 	{
-		return getFont(f).getBaselinePosition();
+		return AndroidFontManager.getFont(f).getBaselinePosition();
 	}
 
 
 	public int getHeight(Font f)
 	{
-		return getFont(f).getHeight();
+		return AndroidFontManager.getFont(f).getHeight();
 	}
 
 
 	public int stringWidth(Font f, String str)
 	{
-		return getFont(f).stringWidth(str);
+		return AndroidFontManager.getFont(f).stringWidth(str);
 	}
 
 	public int substringWidth(Font f, String str, int offset, int len)
 	{
-		return getFont(f).substringWidth(str, offset, len);
+		return AndroidFontManager.getFont(f).substringWidth(str, offset, len);
 	}
 
 }

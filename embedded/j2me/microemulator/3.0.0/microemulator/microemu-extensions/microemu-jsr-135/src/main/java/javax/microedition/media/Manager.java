@@ -74,7 +74,7 @@ public final class Manager
     	  	SampledAudioPlayer audPlayer = new SampledAudioPlayer();
         	audPlayer.open( stream, type );
         	
-        	vMedia.add( audPlayer );
+        	Manager.vMedia.add( audPlayer );
             return audPlayer;
         }
     	else if( type.equals( "audio/midi" ) )
@@ -82,7 +82,7 @@ public final class Manager
     	  	MidiAudioPlayer midiPlayer = new MidiAudioPlayer();
         	midiPlayer.open( stream, type );
         	
-        	vMedia.add( midiPlayer );
+        	Manager.vMedia.add( midiPlayer );
             return midiPlayer;
     	}
     	
@@ -98,7 +98,7 @@ public final class Manager
     static void mediaDone(Object objMedia)
 	{
     	//remove the media from our list of media to cleanup
-        vMedia.remove(objMedia);
+        Manager.vMedia.remove(objMedia);
 	}
     
     // TODO reduce visibility

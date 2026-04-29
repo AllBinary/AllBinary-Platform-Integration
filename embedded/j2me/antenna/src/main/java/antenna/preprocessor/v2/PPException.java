@@ -63,7 +63,7 @@ public class PPException extends Exception {
 		}
 		else
 		{
-			if (this.m_lineNumber != UNKNOWN_LINE)
+			if (this.m_lineNumber != PPException.UNKNOWN_LINE)
 			{
 				return "Line #" + this.m_lineNumber + " : " + super.getMessage();
 			}

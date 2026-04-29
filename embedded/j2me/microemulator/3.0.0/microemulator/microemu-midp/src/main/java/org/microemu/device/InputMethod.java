@@ -36,7 +36,7 @@ public class InputMethod
 	public static final int INPUT_ABC_LOWER = 3;
 
 	static InputMethod inputMethod = null;
-	int inputMode = INPUT_NONE;
+	int inputMode = InputMethod.INPUT_NONE;
 
 	protected InputMethodListener inputMethodListener = null;
 	protected int maxSize;
@@ -64,7 +64,7 @@ public class InputMethod
 	{
 		if (l == this.inputMethodListener) {
 			this.inputMethodListener = null;
-			setInputMode(INPUT_NONE);
+			this.setInputMode(INPUT_NONE);
 		}
 	}
 
@@ -76,12 +76,12 @@ public class InputMethod
 	        case TextField.ANY :
 	        case TextField.EMAILADDR :
 	        case TextField.URL :
-	            setInputMode(INPUT_ABC_LOWER);
+	            this.setInputMode(INPUT_ABC_LOWER);
 	            break;
 	        case TextField.NUMERIC :
 	        case TextField.PHONENUMBER :
 	        case TextField.DECIMAL :
-	            setInputMode(INPUT_123);
+	            this.setInputMode(INPUT_123);
 	            break;
 	    }
 	}
@@ -89,7 +89,7 @@ public class InputMethod
   
 	public int getInputMode()
 	{
-		return inputMode;
+		return this.inputMode;
 	}
 
 

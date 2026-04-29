@@ -53,95 +53,95 @@ public class Graphics {
 	private int translateY = 0;
 
 	public void clipRect(int x, int y, int width, int height) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
-        implementationError();
+        this.implementationError();
     }
 
 	public void drawChar(char character, int x, int y, int anchor) {
 		char[] carr = new char[1];
 		carr[0] = character;
-		drawString(new String(carr), x, y, anchor);
+		this.drawString(new String(carr), x, y, anchor);
 	}
 
 	public void drawChars(char[] data, int offset, int length, int x, int y, int anchor) {
-        drawString(new String(data, offset, length), x, y, anchor);
+        this.drawString(new String(data, offset, length), x, y, anchor);
     }
 
 	public void drawImage(Image img, int x, int y, int anchor) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void drawLine(int x1, int y1, int x2, int y2) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void drawRect(int x, int y, int width, int height) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
-        implementationError();
+        this.implementationError();
     }
 
 	public void drawString(String str, int x, int y, int anchor) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void drawSubstring(String str, int offset, int len, int x, int y, int anchor) {
-		implementationError();
+		this.implementationError();
     }
 
     public void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
-        implementationError();
+        this.implementationError();
     }
 
 	public void fillRect(int x, int y, int width, int height) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void fillRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
-        implementationError();
+        this.implementationError();
     }
 
 	public int getBlueComponent() {
-		return getColor() & 255;
+		return this.getColor() & 255;
 	}
 
 	public int getClipHeight() {
-		implementationError();
+		this.implementationError();
 
 		return -1;
 	}
 
 	public int getClipWidth() {
-		implementationError();
+		this.implementationError();
 
 		return -1;
 	}
 
 	public int getClipX() {
-		implementationError();
+		this.implementationError();
 
 		return -1;
 	}
 
 	public int getClipY() {
-		implementationError();
+		this.implementationError();
 
 		return -1;
 	}
 
 	public int getColor() {
-		implementationError();
+		this.implementationError();
 
 		return -1;
 	}
 
 	public Font getFont() {
-		implementationError();
+		this.implementationError();
 
 		return null;
 	}
@@ -161,36 +161,36 @@ public class Graphics {
 	}
 
 	public int getStrokeStyle() {
-		implementationError();
+		this.implementationError();
 
 		return -1;
 	}
 
 	public int getTranslateX() {
-		return translateX;
+		return this.translateX;
 	}
 
 	public int getTranslateY() {
-		return translateY;
+		return this.translateY;
 	}
 
 	public void setClip(int x, int y, int width, int height) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void setColor(int RGB) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void setColor(int red, int green, int blue) {
 		int rgb = blue; // 0XRRGGBB
 		rgb += green << 8;
 		rgb += red << 16;
-		setColor(rgb);
+		this.setColor(rgb);
 	}
 
 	public void setFont(Font font) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void setGrayScale(int grey) {
@@ -201,7 +201,7 @@ public class Graphics {
 	}
 
 	public void setStrokeStyle(int style) {
-		implementationError();
+		this.implementationError();
 	}		
 
 	public void translate(int x, int y) {
@@ -213,25 +213,25 @@ public class Graphics {
 
 	public void drawRegion(Image src, int x_src, int y_src, int width,
 			int height, int transform, int x_dst, int y_dst, int anchor) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void drawRGB(int[] rgbData, int offset, int scanlength, int x,
 			int y, int width, int height, boolean processAlpha) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public void copyArea(int x_src, int y_src, int width, int height,
 			int x_dest, int y_dest, int anchor) {
-		implementationError();
+		this.implementationError();
 	}
 
 	public int getDisplayColor(int color) {
-		implementationError();
+		this.implementationError();
 
 		return -1;
 	}

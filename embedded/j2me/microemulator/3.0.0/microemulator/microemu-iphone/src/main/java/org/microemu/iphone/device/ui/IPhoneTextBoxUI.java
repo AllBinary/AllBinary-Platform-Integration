@@ -90,15 +90,15 @@ public class IPhoneTextBoxUI extends AbstractUI<TextBox> implements TextBoxUI {
 	}
 
 	public int getCaretPosition() {
-		return textField.getCaretPosition();
+		return this.textField.getCaretPosition();
 	}
 
 	public String getString() {
-		return textField.getString();
+		return this.textField.getString();
 	}
 
 	public void setString(String text) {
-		textField.setString(text);
+		this.textField.setString(text);
 	}
 
 	public void hideNotify() {
@@ -122,7 +122,7 @@ public class IPhoneTextBoxUI extends AbstractUI<TextBox> implements TextBoxUI {
 			title.setBackButtonTitle$("Done");
 			this.navigtionBar.pushNavigationItem$(title);
 			this.view.addSubview$(this.navigtionBar);
-			navigtionBar.setDelegate$(new NSObject() {
+			this.navigtionBar.setDelegate$(new NSObject() {
 				@SuppressWarnings("unused")
 				@Message(name = "navigationBar:shouldPopItem:")
 				public boolean navigationBar$shouldPopItem$(UINavigationBar bar, UINavigationItem item) {
@@ -132,7 +132,7 @@ public class IPhoneTextBoxUI extends AbstractUI<TextBox> implements TextBoxUI {
 				}
 			});
 
-			textView = new UITextView() {
+			this.textView = new UITextView() {
 				@Override
 				@Message(name = "becomeFirstResponder", types = "B8@0:4")
 				public boolean becomeFirstResponder() {
@@ -146,7 +146,7 @@ public class IPhoneTextBoxUI extends AbstractUI<TextBox> implements TextBoxUI {
 					.getWindow().bounds().size.height
 					- NAVIGATION_HEIGHT - TOOLBAR_HEIGHT));
 			this.textView.setText$(this.textField.getString());
-			textView.setDelegate$(new NSObject(){
+			this.textView.setDelegate$(new NSObject(){
 				@SuppressWarnings("unused")
 				@Message(name="textViewDidChange:")
 				public void textViewDidChange$(UITextView textView) {

@@ -68,7 +68,7 @@ public class Sprite {
 
         private String name = null;
         private int id = -1;
-        private int flags = KEY_LOOP;
+        private int flags = KeyFrame.KEY_LOOP;
         private float frameRate = 1.0f;   //one fps
         private Tile[] frames;
 

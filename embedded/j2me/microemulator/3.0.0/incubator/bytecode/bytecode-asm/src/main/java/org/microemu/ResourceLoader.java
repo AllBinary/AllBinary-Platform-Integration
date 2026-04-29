@@ -15,19 +15,19 @@ public class ResourceLoader {
 		if (resourceName.startsWith("/")) {
 			resourceName = resourceName.substring(1);
 		}
-		if (classLoader != origClass.getClassLoader()) {
+		if (ResourceLoader.classLoader != origClass.getClassLoader()) {
 			// showWarning
-			if (!java13) {
+			if (!ResourceLoader.java13) {
 				try {
 					StackTraceElement[] ste = new Throwable().getStackTrace();
 					for (int i = 0; i < ste.length - 1; i++) {
-						if (FQCN.equals(ste[i].getClassName())) {
+						if (ResourceLoader.FQCN.equals(ste[i].getClassName())) {
 							StackTraceElement callLocation = ste[i + 1];
 							System.out.println("WARN attempt to load resource [" + resourceName + "] using System ClasslLoader from " + callLocation.toString());
 						}
 					}
 				} catch (Throwable e) {
-					java13 = true;
+					ResourceLoader.java13 = true;
 				}
 			}
 		}

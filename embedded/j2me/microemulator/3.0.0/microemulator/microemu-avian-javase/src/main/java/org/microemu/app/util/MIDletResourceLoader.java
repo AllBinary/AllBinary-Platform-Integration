@@ -63,15 +63,15 @@ public class MIDletResourceLoader {
 //		if (traceResourceLoading) {
 //			Logger.debug("Loading MIDlet resource", resourceName);
 //		}
-		if (classLoader != origClass.getClassLoader()) {
+		if (MIDletResourceLoader.classLoader != origClass.getClassLoader()) {
 			// showWarning
 			String callLocation = ThreadUtils.getCallLocation(FQCN);
-			if (traceResourceLoading && callLocation != null) {
+			if (MIDletResourceLoader.traceResourceLoading && callLocation != null) {
 				Logger.warn("attempt to load resource [" + resourceName + "] using System ClasslLoader from "
 						+ callLocation);
 			}
 		}
-		resourceName = resolveName(origClass, resourceName);
+		resourceName = MIDletResourceLoader.resolveName(origClass, resourceName);
 
 		InputStream is = classLoader.getResourceAsStream(resourceName);
 		if (is == null) {

@@ -43,13 +43,13 @@ import org.objectweb.asm.Opcodes;
  */
 public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
 
-	private static final String INJECTED_CLASS = codeName(Injected.class);
+	private static final String INJECTED_CLASS = ChangeCallsMethodVisitor.codeName(Injected.class);
 	
-	static String NEW_SYSTEM_OUT_CLASS = INJECTED_CLASS;
+	static String NEW_SYSTEM_OUT_CLASS = ChangeCallsMethodVisitor.INJECTED_CLASS;
 	
-	static String NEW_SYSTEM_PROPERTIES_CLASS = INJECTED_CLASS;
+	static String NEW_SYSTEM_PROPERTIES_CLASS = ChangeCallsMethodVisitor.INJECTED_CLASS;
 	
-	static String NEW_RESOURCE_LOADER_CLASS = INJECTED_CLASS;
+	static String NEW_RESOURCE_LOADER_CLASS = ChangeCallsMethodVisitor.INJECTED_CLASS;
 	
 	private HashMap catchInfo;
 	
@@ -124,11 +124,11 @@ public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
 		case INVOKESPECIAL:
 			if  ((this.config.isEnhanceThreadCreation()) && (name.equals("<init>"))) {
 				if (owner.equals("java/util/Timer")) {
-					owner = codeName(MIDletTimer.class);
+					owner = ChangeCallsMethodVisitor.codeName(MIDletTimer.class);
 				} else if (owner.equals("java/util/TimerTask")) {
-					owner = codeName(MIDletTimerTask.class);
+					owner = ChangeCallsMethodVisitor.codeName(MIDletTimerTask.class);
 				} else if (owner.equals("java/lang/Thread")) {
-					owner = codeName(MIDletThread.class);
+					owner = ChangeCallsMethodVisitor.codeName(MIDletThread.class);
 				}
 			}
 			break;
@@ -140,11 +140,11 @@ public class ChangeCallsMethodVisitor extends MethodAdapter implements Opcodes {
     public void visitTypeInsn(final int opcode, String desc) {
     	if ((opcode == NEW) && (this.config.isEnhanceThreadCreation())) {
     		if ("java/util/Timer".equals(desc)) {
-    			desc = codeName(MIDletTimer.class);
+    			desc = ChangeCallsMethodVisitor.codeName(MIDletTimer.class);
     		} else if ("java/util/TimerTask".equals(desc)) {
-    			desc = codeName(MIDletTimerTask.class);
+    			desc = ChangeCallsMethodVisitor.codeName(MIDletTimerTask.class);
     		} else if ("java/lang/Thread".equals(desc)) {
-    			desc = codeName(MIDletThread.class);
+    			desc = ChangeCallsMethodVisitor.codeName(MIDletThread.class);
     		}
     	} 
     	mv.visitTypeInsn(opcode, desc);

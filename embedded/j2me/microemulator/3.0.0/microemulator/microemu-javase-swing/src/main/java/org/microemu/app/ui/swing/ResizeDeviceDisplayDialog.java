@@ -89,10 +89,10 @@ public class ResizeDeviceDisplayDialog extends SwingDialogPanel {
     private IntegerField heightField = new IntegerField(5, 1, 9999);
 
     public ResizeDeviceDisplayDialog() {
-        add(new JLabel("Width:"));
-        add(this.widthField);
-        add(new JLabel("Height:"));
-        add(this.heightField);
+        this.add(new JLabel("Width:"));
+        this.add(this.widthField);
+        this.add(new JLabel("Height:"));
+        this.add(this.heightField);
         JButton swapButton = new JButton("Swap");
         swapButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -105,7 +105,7 @@ public class ResizeDeviceDisplayDialog extends SwingDialogPanel {
     }
 
     public void setDeviceDisplaySize(int width, int height) {
-        widthField.setText("" + width);
+        this.widthField.setText("" + width);
         this.heightField.setText("" + height);
     }
     

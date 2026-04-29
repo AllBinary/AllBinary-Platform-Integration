@@ -60,7 +60,7 @@ public class TextBoxPanel extends BaseExamplesList {
 			if (c == List.SELECT_COMMAND) {
 				SimpleDemoMIDlet.setCurrentDisplayable(textBoxes[getSelectedIndex()]);
 			}
-		} else if ((c == BaseExamplesForm.backCommand) || (c == okCommand)) {
+		} else if ((c == BaseExamplesForm.backCommand) || (c == this.okCommand)) {
 			for (int i = 0; i < textBoxes.length; i++) {
 				if (d == textBoxes[i]) {
 					SimpleDemoMIDlet.setCurrentDisplayable(this);

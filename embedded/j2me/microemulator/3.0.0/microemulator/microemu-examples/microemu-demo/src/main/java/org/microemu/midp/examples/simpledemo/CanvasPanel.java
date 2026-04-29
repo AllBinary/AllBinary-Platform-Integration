@@ -124,21 +124,21 @@ public class CanvasPanel extends BaseExamplesCanvas implements HasRunnable {
 	public void commandAction(Command c, Displayable d) {
 		if (d == this) {
 			synchronized (this) {
-				if (c == nwCommand) {
+				if (c == CanvasPanel.nwCommand) {
 					this.moveX = -1;
-					moveY = -1;
+					this.moveY = -1;
 					this.moving = true;
-				} else if (c == neCommand) {
+				} else if (c == CanvasPanel.neCommand) {
 					this.moveX = 1;
-					moveY = -1;
+					this.moveY = -1;
 					this.moving = true;
-				} else if (c == swCommand) {
+				} else if (c == CanvasPanel.swCommand) {
 					this.moveX = -1;
-					moveY = 1;
+					this.moveY = 1;
 					this.moving = true;
-				} else if (c == seCommand) {
+				} else if (c == CanvasPanel.seCommand) {
 					this.moveX = 1;
-					moveY = 1;
+					this.moveY = 1;
 					this.moving = true;
 				} 
 			}
@@ -149,35 +149,35 @@ public class CanvasPanel extends BaseExamplesCanvas implements HasRunnable {
 	public void keyPressed(int keyCode) {
 		if (keyCode == '1' /*nwCommand*/) {
 			this.moveX = -1;
-			moveY = -1;
+			this.moveY = -1;
 			this.moving = true;
 		} else if (keyCode == '2') {
 			this.moveX = 0;
-			moveY = -1;
+			this.moveY = -1;
 			this.moving = true;
 		} else if (keyCode == '3' /*neCommand*/) {
 			this.moveX = 1;
-			moveY = -1;
+			this.moveY = -1;
 			this.moving = true;
 		} else if (keyCode == '4') {
 			this.moveX = -1;
-			moveY = 0;
+			this.moveY = 0;
 			this.moving = true;
 		} else if (keyCode == '6') {
 			this.moveX = 1;
-			moveY = 0;
+			this.moveY = 0;
 			this.moving = true;
 		} else if (keyCode == '7' /*swCommand*/) {
 			this.moveX = -1;
-			moveY = 1;
+			this.moveY = 1;
 			this.moving = true;
 		} else if (keyCode == '8') {
 			this.moveX = 0;
-			moveY = 1;
+			this.moveY = 1;
 			this.moving = true;
 		} else if (keyCode == '9' /*seCommand*/) {
 			this.moveX = 1;
-			moveY = 1;
+			this.moveY = 1;
 			this.moving = true;
 		} else if (keyCode == '5' /*fullScreenModeCommand*/) {
 			super.setFullScreenMode(!fullScreenMode);

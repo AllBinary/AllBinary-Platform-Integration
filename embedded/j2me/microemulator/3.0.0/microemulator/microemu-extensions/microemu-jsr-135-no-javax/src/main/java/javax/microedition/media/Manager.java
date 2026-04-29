@@ -76,7 +76,7 @@ public final class Manager
     static void mediaDone(Object objMedia)
 	{
     	//remove the media from our list of media to cleanup
-        vMedia.remove(objMedia);
+        Manager.vMedia.remove(objMedia);
 	}
     
     // TODO reduce visibility

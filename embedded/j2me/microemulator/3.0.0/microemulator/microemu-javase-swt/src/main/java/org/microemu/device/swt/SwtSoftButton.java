@@ -96,7 +96,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 		for (Enumeration e = commands.elements(); e.hasMoreElements();) {
 			String tmp = (String) e.nextElement();
 			try {
-				addCommandType(Command.class.getField(tmp).getInt(null));
+				this.addCommandType(Command.class.getField(tmp).getInt(null));
 			} catch (Exception ex) {
 				System.err.println("a3" + ex);
 			}
@@ -118,7 +118,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 
 	
 	public int getType() {
-		return type;
+		return this.type;
 	}
 
 	/**
@@ -139,11 +139,11 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 	 * @return The command value
 	 */
 	public Command getCommand() {
-		return command;
+		return this.command;
 	}
 
 	public boolean isVisible() {
-		return visible;
+		return this.visible;
 	}
 
 	public void setVisible(boolean state) {
@@ -151,7 +151,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 	}
 
 	public boolean isPressed() {
-		return pressed;
+		return this.pressed;
 	}
 
 	public void setPressed(boolean state) {
@@ -159,7 +159,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 	}
 
 	public Rectangle getPaintable() {
-		return paintable;
+		return this.paintable;
 	}
 
 	public void paint(SwtGraphics g) {
@@ -186,7 +186,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 						.getBackgroundColor().getBlue(), 255)));
 			}
 			g.fillRectangle(paintable.x, paintable.y, paintable.width,
-					paintable.height);
+					this.paintable.height);
 			synchronized (this) {
 				if (this.command != null) {
 					if (this.font != null) {
@@ -194,7 +194,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 						SwtFont buttonFont = (SwtFont) fontManager.getFont(this.font);
 						g.setFont(buttonFont.getFont());
 					}
-					if (this.alignment == RIGHT) {
+					if (this.alignment == SwtSoftButton.RIGHT) {
 						xoffset = paintable.width
 								- g.stringWidth(this.command.getLabel());
 					}
@@ -215,7 +215,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 											.getHeight()), true);
 				}
 			}
-		} else if (type == TYPE_ICON) {
+		} else if (this.type == TYPE_ICON) {
                         //SwtImmutableImage
 			if (this.pressed) {
 				g.drawImage((org.eclipse.swt.graphics.Image) this.pressedImage.getImage(), paintable.x, paintable.y);
@@ -237,7 +237,7 @@ public class SwtSoftButton extends SwtButton implements SoftButton {
 	}
 
 	public void addCommandType(int commandType) {
-		commandTypes.addElement(new Integer(commandType));
+		this.commandTypes.addElement(new Integer(commandType));
 	}
 
 }

@@ -216,35 +216,35 @@ public class Sprite extends Layer {
         int height = getHeight();
 
         switch(this.transform) {
-            case TRANS_NONE:
+            case Sprite.TRANS_NONE:
                 curRefX = this.refX;
                 curRefY = this.refY;
                 break;
-            case TRANS_MIRROR_ROT180:
+            case Sprite.TRANS_MIRROR_ROT180:
                 curRefX = width - this.refX;
                 curRefY = height - this.refY;
                 break;
-            case TRANS_MIRROR:
+            case Sprite.TRANS_MIRROR:
                 curRefX = width - this.refX;
                 curRefY = this.refY;
                 break;
-            case TRANS_ROT180:
+            case Sprite.TRANS_ROT180:
                 curRefX = this.refX;
                 curRefY = height - this.refY;
                 break;
-            case TRANS_MIRROR_ROT270:
+            case Sprite.TRANS_MIRROR_ROT270:
                 curRefX = height - this.refY;
                 curRefY = this.refX;
                 break;
-            case TRANS_ROT90:
+            case Sprite.TRANS_ROT90:
                 curRefX = height - this.refY;
                 curRefY = width - this.refX;
                 break;
-            case TRANS_ROT270:
+            case Sprite.TRANS_ROT270:
                 curRefX = this.refY;
                 curRefY = this.refX;
                 break;
-            case TRANS_MIRROR_ROT90:
+            case Sprite.TRANS_MIRROR_ROT90:
                 curRefX = this.refY;
                 curRefY = width - this.refX;
                 break;
@@ -292,7 +292,7 @@ public class Sprite extends Layer {
     }
     
     public final int getFrame() {
-		return frame;
+		return this.frame;
     }
     
     public int getFrameSequenceLength() {
@@ -311,14 +311,14 @@ public class Sprite extends Layer {
         if (this.frame == ((this.sequence == null)? this.rows*this.cols : this.sequence.length) - 1)
             this.frame = 0;
         else
-            frame++;
+            this.frame++;
     }
     
     public void prevFrame() {
         if (this.frame == 0)
             this.frame = ((this.sequence == null)? this.rows*this.cols : this.sequence.length) - 1;
         else
-            frame--;
+            this.frame--;
     }
  
     public void setImage(Image img, int frameWidth, int frameHeight) {
@@ -350,39 +350,39 @@ public class Sprite extends Layer {
 	        if (frameWidth != getWidth() || frameHeight != getHeight()) {
 	            // size changed
 	            // reset collision rectangle and collision detection array
-	            defineCollisionRectangle(0, 0, frameWidth, frameHeight);
+	            this.defineCollisionRectangle(0, 0, frameWidth, frameHeight);
 //	            rgbData = rgbDataAux = null;
 	            
 	            // if necessary change position to keep the reference pixel in place
 	            
-	            if (this.transform != TRANS_NONE) {
+	            if (this.transform != Sprite.TRANS_NONE) {
 	                int dx, dy;
 	                switch(this.transform) {
-	                    case TRANS_MIRROR_ROT180:
+	                    case Sprite.TRANS_MIRROR_ROT180:
 	                        dx = newW - oldW;
 	                        dy = newH - oldH;
 	                        break;
-	                    case TRANS_MIRROR:
+	                    case Sprite.TRANS_MIRROR:
 	                        dx = newW - oldW;
 	                        dy = 0;
 	                        break;
-	                    case TRANS_ROT180:
+	                    case Sprite.TRANS_ROT180:
 	                        dx = 0;
 	                        dy = newH - oldH;
 	                        break;
-	                    case TRANS_MIRROR_ROT270:
+	                    case Sprite.TRANS_MIRROR_ROT270:
 	                        dx = newH - oldH;
 	                        dy = 0;
 	                        break;
-	                    case TRANS_ROT90:
+	                    case Sprite.TRANS_ROT90:
 	                        dx = newH - oldH;
 	                        dy = newW - oldW;
 	                        break;
-	                    case TRANS_ROT270:
+	                    case Sprite.TRANS_ROT270:
 	                        dx = 0;
 	                        dy = 0;
 	                        break;
-	                    case TRANS_MIRROR_ROT90:
+	                    case Sprite.TRANS_MIRROR_ROT90:
 	                        dx = 0;
 	                        dy = newW - oldW;
 	                        break;
@@ -413,7 +413,7 @@ public class Sprite extends Layer {
     }
     
     public int getRawFrameCount() {
-        return cols * this.rows;
+        return this.cols * this.rows;
     }
     
     public void setTransform (int transform) {
@@ -430,35 +430,35 @@ public class Sprite extends Layer {
         int newRefX, newRefY;
 
         switch(transform) {
-            case TRANS_NONE:
+            case Sprite.TRANS_NONE:
                 newRefX = this.refX;
                 newRefY = this.refY;
                 break;
-            case TRANS_MIRROR_ROT180:
+            case Sprite.TRANS_MIRROR_ROT180:
                 newRefX = width - this.refX;
                 newRefY = height - this.refY;
                 break;
-            case TRANS_MIRROR:
+            case Sprite.TRANS_MIRROR:
                 newRefX = width - this.refX;
                 newRefY = this.refY;
                 break;
-            case TRANS_ROT180:
+            case Sprite.TRANS_ROT180:
                 newRefX = this.refX;
                 newRefY = height - this.refY;
                 break;
-            case TRANS_MIRROR_ROT270:
+            case Sprite.TRANS_MIRROR_ROT270:
                 newRefX = height - this.refY;
                 newRefY = this.refX;
                 break;
-            case TRANS_ROT90:
+            case Sprite.TRANS_ROT90:
                 newRefX = height - this.refY;
                 newRefY = width - this.refX;
                 break;
-            case TRANS_ROT270:
+            case Sprite.TRANS_ROT270:
                 newRefX = this.refY;
                 newRefY = this.refX;
                 break;
-            case TRANS_MIRROR_ROT90:
+            case Sprite.TRANS_MIRROR_ROT90:
                 newRefX = this.refY;
                 newRefY = width - this.refX;
                 break;
@@ -472,35 +472,35 @@ public class Sprite extends Layer {
         int curRefX, curRefY;
 
         switch(currentTransform) {
-            case TRANS_NONE:
+            case Sprite.TRANS_NONE:
                 curRefX = this.refX;
                 curRefY = this.refY;
                 break;
-            case TRANS_MIRROR_ROT180:
+            case Sprite.TRANS_MIRROR_ROT180:
                 curRefX = width - this.refX;
                 curRefY = height - this.refY;
                 break;
-            case TRANS_MIRROR:
+            case Sprite.TRANS_MIRROR:
                 curRefX = width - this.refX;
                 curRefY = this.refY;
                 break;
-            case TRANS_ROT180:
+            case Sprite.TRANS_ROT180:
                 curRefX = this.refX;
                 curRefY = height - this.refY;
                 break;
-            case TRANS_MIRROR_ROT270:
+            case Sprite.TRANS_MIRROR_ROT270:
                 curRefX = height - this.refY;
                 curRefY = this.refX;
                 break;
-            case TRANS_ROT90:
+            case Sprite.TRANS_ROT90:
                 curRefX = height - this.refY;
                 curRefY = width - this.refX;
                 break;
-            case TRANS_ROT270:
+            case Sprite.TRANS_ROT270:
                 curRefX = this.refY;
                 curRefY = this.refX;
                 break;
-            case TRANS_MIRROR_ROT90:
+            case Sprite.TRANS_MIRROR_ROT90:
                 curRefX = this.refY;
                 curRefY = width - this.refX;
                 break;

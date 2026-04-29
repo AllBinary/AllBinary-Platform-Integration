@@ -114,7 +114,7 @@ public class TextField extends Item
 		if (maxSize <= 0) {
 			throw new IllegalArgumentException();
 		}
-		setConstraints(constraints);
+		this.setConstraints(constraints);
         if (!InputMethod.validate(text, constraints)) {
             throw new IllegalArgumentException();
         }
@@ -124,9 +124,9 @@ public class TextField extends Item
         this.maxSize = maxSize;
 		this.stringComponent = new StringComponent();
 		if (text != null) {
-			setString(text);
+			this.setString(text);
 		} else {
-			setString("");
+			this.setString("");
 		}
 		this.stringComponent.setWidthDecreaser(8);
 	}
@@ -138,7 +138,7 @@ public class TextField extends Item
 			return ((TextFieldUI) ui).getString();
 		}
 
-		return field;
+		return this.field;
 	}
 
 	
@@ -149,7 +149,7 @@ public class TextField extends Item
 		}
 		
 		int caret = (text == null ? 0 : text.length());
-		setString(text, caret);
+		this.setString(text, caret);
 	}
     
     
@@ -166,7 +166,7 @@ public class TextField extends Item
                 throw new IllegalArgumentException("text exceeds the current maximum capacity");
             }
             this.field = text;
-            if ((constraints & PASSWORD) == 0) {
+            if ((this.constraints & TextField.PASSWORD) == 0) {
                 this.stringComponent.setText(text);
             } else {
                 final StringMaker sb = new StringMaker();
@@ -177,8 +177,8 @@ public class TextField extends Item
                 this.stringComponent.setText(sb.toString());
             }
         }
-        setCaretPosition(caret);
-        setCaretVisible(false);
+        this.setCaretPosition(caret);
+        this.setCaretVisible(false);
         repaint();
     }
 
@@ -188,16 +188,16 @@ public class TextField extends Item
 		if (data.length < this.field.length()) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
-		getString().getChars(0, field.length(), data, 0);
+		this.getString().getChars(0, this.field.length(), data, 0);
 
-		return field.length();
+		return this.field.length();
 	}
 
 	
 	public void setChars(char[] data, int offset, int length) 
 	{
 		if (data == null) {
-			setString("");
+			this.setString("");
 		} else {
 			if (length > this.maxSize) {
 				throw new IllegalArgumentException();
@@ -206,7 +206,7 @@ public class TextField extends Item
 			if (!InputMethod.validate(newtext, this.constraints)) {
                 throw new IllegalArgumentException();
             }
-			setString(newtext);
+			this.setString(newtext);
 		}
 		repaint();
 	}
@@ -225,7 +225,7 @@ public class TextField extends Item
 			if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextFieldUI")) {
 				newtext = ((TextFieldUI) ui).getString();
 			} else {
-				newtext = getString().substring(0, position);
+				newtext = this.getString().substring(0, position);
 			}
 		}
 		newtext += src;
@@ -233,13 +233,13 @@ public class TextField extends Item
 			if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextFieldUI")) {
 				newtext += ((TextFieldUI) ui).getString().substring(position + 1);
 			} else {
-				newtext += getString().substring(position + 1);
+				newtext += this.getString().substring(position + 1);
 			}
 		}	
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextFieldUI")) {
 			((TextFieldUI) ui).setString(newtext);
 		} else {
-			setString(newtext);
+			this.setString(newtext);
 			repaint();
 		}
 	}
@@ -250,7 +250,7 @@ public class TextField extends Item
 		if (offset + length > data.length) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
-		insert(new String(data, offset, length), position);
+		this.insert(new String(data, offset, length), position);
 	}
 
 	
@@ -261,19 +261,19 @@ public class TextField extends Item
 		}
 		String newtext = "";
 		if (offset > 0) {
-			newtext = getString().substring(0, offset);
+			newtext = this.getString().substring(0, offset);
 		}
 		if (offset + length < this.field.length()) {
-			newtext += getString().substring(offset + length);
+			newtext += this.getString().substring(offset + length);
 		}
-		setString(newtext);
+		this.setString(newtext);
 		repaint();
 	}
 
 	
 	public int getMaxSize() 
 	{
-		return maxSize;
+		return this.maxSize;
 	}
 
 	
@@ -283,7 +283,7 @@ public class TextField extends Item
 			throw new IllegalArgumentException();
 		}
 		if (getString().length() > maxSize) {
-			setString(getString().substring(0, maxSize));
+			this.setString(getString().substring(0, maxSize));
 		}
 		this.maxSize = maxSize;
 		return maxSize;
@@ -292,25 +292,25 @@ public class TextField extends Item
 	
 	public int size() 
 	{
-		return getString().length();
+		return this.getString().length();
 	}
 
 	
 	public int getCaretPosition() 
 	{
-		return caret;
+		return this.caret;
 	}
 
 	
 	public void setConstraints(int constraints) 
 	{
-		if ((constraints & TextField.CONSTRAINT_MASK) < ANY
-			|| (constraints & TextField.CONSTRAINT_MASK) > DECIMAL) {
+		if ((constraints & TextField.CONSTRAINT_MASK) < TextField.ANY
+			|| (constraints & TextField.CONSTRAINT_MASK) > TextField.DECIMAL) {
 			throw new IllegalArgumentException("constraints " + constraints + " is an illegal value");
 		}
 		this.constraints = constraints;
         if (!InputMethod.validate(getString(), constraints)) {
-            setString("");
+            this.setString("");
         }
         ((TextFieldUI) ui).setConstraints(constraints);
 	}
@@ -318,7 +318,7 @@ public class TextField extends Item
 	
 	public int getConstraints() 
 	{
-		return constraints;
+		return this.constraints;
 	}
 	
 	
@@ -356,16 +356,16 @@ public class TextField extends Item
 		}                
 		g.drawRect(
 		        1, 1, 
-				owner.getWidth() - 3, stringComponent.getHeight() + 4);
+				owner.getWidth() - 3, this.stringComponent.getHeight() + 4);
 		if (!hasFocus()) {
 		    g.setColor(savedColor);
 		}
 		g.translate(3, 3);
-		paintContent(g);
+		this.paintContent(g);
 		g.translate(-3, -3);
 		g.translate(0, -super.getHeight());
 
-		return getHeight();
+		return this.getHeight();
 	}
 
 	@Override
@@ -404,7 +404,7 @@ public class TextField extends Item
 		}
 		if (gameKeyCode == Canvas.DOWN) {
 			if (getHeight() > bottom) {
-				return getHeight() - bottom;
+				return this.getHeight() - bottom;
 			} else {
 				return Item.OUTOFITEM;
 			}
@@ -423,11 +423,11 @@ public class TextField extends Item
 			InputMethod inputMethod = DeviceFactory.getDevice().getInputMethod();
 			inputMethod.setInputMethodListener(inputMethodListener);
 			inputMethod.setMaxSize(getMaxSize());
-			setCaretVisible(true);
+			this.setCaretVisible(true);
 		} else {
 			// unregister input listener
 			DeviceFactory.getDevice().getInputMethod().removeInputMethodListener(inputMethodListener);
-			setCaretVisible(false);
+			this.setCaretVisible(false);
 		}
 	}	
 

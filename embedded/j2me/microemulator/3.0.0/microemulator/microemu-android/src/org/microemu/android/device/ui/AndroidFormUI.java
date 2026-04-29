@@ -76,7 +76,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 	public int append(final ItemUI item) {
             final MicroEmulatorActivity activity2 = (MicroEmulatorActivity) activity;
 		if (activity2.isActivityThread()) {
-			this.appendTransfer = doAppend(item);
+			this.appendTransfer = this.doAppend(item);
 		} else {
 			this.appendTransfer = Integer.MIN_VALUE;
 			activity2.post(new ARunnable() {
@@ -113,7 +113,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 		}
 		this.listView.addView((View) item);
 		
-		return listView.getChildCount() - 1;
+		return this.listView.getChildCount() - 1;
 	}
 	 
 	public void delete(final int itemNum) {
@@ -152,7 +152,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 	}
 	
 	public ItemStateListener getItemStateListener() {
-		return itemStateListener;
+		return this.itemStateListener;
 	}
 	
 	class AndroidListView extends LinearLayout {
@@ -166,7 +166,7 @@ public class AndroidFormUI extends AndroidDisplayableUI implements FormUI {
 		}
 	
 		public AndroidFormUI getUI() {
-			return ui;
+			return this.ui;
 		}
 		
 	}

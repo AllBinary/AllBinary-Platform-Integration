@@ -21,30 +21,30 @@ public class Literal
 		this.m_type = type;
 		switch (type)
 		{
-			case SYMBOL:
+			case Literal.SYMBOL:
 				break;
-			case NUMBER:
+			case Literal.NUMBER:
 				Double.parseDouble(value);
 				break;
-			case STRING:
+			case Literal.STRING:
 				if (value.toLowerCase().equals("false") || value.toLowerCase().equals("true"))
 				{
-					this.m_type = BOOLEAN;
+					this.m_type = Literal.BOOLEAN;
 				}
 				else
 				{
 					try
 					{
 						Double.parseDouble(value);
-						this.m_type = NUMBER;
+						this.m_type = Literal.NUMBER;
 					}
 					catch (NumberFormatException e){}
 				}
 				break;
 			case APPLexerTokenTypes.LITERAL_false:
 			case APPLexerTokenTypes.LITERAL_true:
-			case BOOLEAN:
-				this.m_type = BOOLEAN;
+			case Literal.BOOLEAN:
+				this.m_type = Literal.BOOLEAN;
 				if (!value.toLowerCase().equals("false") && !value.toLowerCase().equals("true")) throw new IllegalArgumentException("Invalid boolean value");
 				value = value.toLowerCase();
 				break;
@@ -53,8 +53,8 @@ public class Literal
 			case APPLexerTokenTypes.LITERAL_warn:
 			case APPLexerTokenTypes.LITERAL_error:
 			case APPLexerTokenTypes.LITERAL_fatal:
-			case DEBUG_LEVEL:
-				this.m_type = DEBUG_LEVEL;
+			case Literal.DEBUG_LEVEL:
+				this.m_type = Literal.DEBUG_LEVEL;
 				break;
 			default:
 				throw new IllegalArgumentException("unsupported type " + type + " for value " + value);
@@ -66,12 +66,12 @@ public class Literal
 	{
 		switch (this.m_type)
 		{
-			case STRING:
+			case Literal.STRING:
 				return "\""+this.m_value+"\"";
-			case NUMBER:
-			case BOOLEAN:
-			case SYMBOL:
-			case DEBUG_LEVEL:
+			case Literal.NUMBER:
+			case Literal.BOOLEAN:
+			case Literal.SYMBOL:
+			case Literal.DEBUG_LEVEL:
 			default:
 				return this.m_value;
 			
@@ -90,12 +90,12 @@ public class Literal
 
 	public boolean isFalse()
 	{
-		return this.m_type == BOOLEAN && this.m_value.equals("false");
+		return this.m_type == Literal.BOOLEAN && this.m_value.equals("false");
 	}
 
 	public boolean isTrue()
 	{
-		return this.m_type == BOOLEAN && this.m_value.equals("true");
+		return this.m_type == Literal.BOOLEAN && this.m_value.equals("true");
 	}
 	
 	public String getValue()
@@ -105,27 +105,27 @@ public class Literal
 	
 	public boolean isDebugLevel()
 	{
-		return this.m_type == DEBUG_LEVEL;
+		return this.m_type == Literal.DEBUG_LEVEL;
 	}
 	
 	public boolean isNumber()
 	{
-		return this.m_type == NUMBER;
+		return this.m_type == Literal.NUMBER;
 	}
 	
 	public boolean isString()
 	{
-		return this.m_type == STRING;
+		return this.m_type == Literal.STRING;
 	}
 	
 	public boolean isSymbol()
 	{
-		return this.m_type == SYMBOL;
+		return this.m_type == Literal.SYMBOL;
 	}
 	
 	public boolean isBoolean()
 	{
-		return this.m_type == BOOLEAN;
+		return this.m_type == Literal.BOOLEAN;
 	}
 	
 }

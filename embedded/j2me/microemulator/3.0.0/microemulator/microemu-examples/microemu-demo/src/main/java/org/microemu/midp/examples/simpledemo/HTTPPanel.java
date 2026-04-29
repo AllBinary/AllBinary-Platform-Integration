@@ -64,9 +64,9 @@ public class HTTPPanel extends BaseExamplesForm {
 		
 		String host = SimpleDemoMIDlet.instance.getAppProperty("microemu.accessible.host");
 		if (host == null) {
-			demoLocation = "http://www.microemu.org/test/";
+			HTTPPanel.demoLocation = "http://www.microemu.org/test/";
 		} else {
-			demoLocation = "http://" + host + "/test/";
+			HTTPPanel.demoLocation = "http://" + host + "/test/";
 		}
 		
 		append(url = new TextField("URL:", demoLocation, 128, TextField.URL));
@@ -155,8 +155,8 @@ public class HTTPPanel extends BaseExamplesForm {
 	}
 	
 	public void commandAction(Command c, Displayable d) {
-		if (c == goCommand) {
-			makeConnection();
+		if (c == HTTPPanel.goCommand) {
+			this.makeConnection();
 		}
 		super.commandAction(c, d);
 	}

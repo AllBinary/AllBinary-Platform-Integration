@@ -41,12 +41,12 @@ public class PositionedImage
 
     public Image getImage()
     {
-        return image;
+        return this.image;
     }
 
     public Rectangle getRectangle()
     {
-        return rectangle;
+        return this.rectangle;
     }
 
 }

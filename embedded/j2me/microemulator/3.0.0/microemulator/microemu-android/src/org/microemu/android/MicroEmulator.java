@@ -176,7 +176,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
             }
         }
         
-        initializeExtensions();
+        this.initializeExtensions();
         
         this.common.setSuiteName(midletClassName);
         this.midlet = this.common.initMIDlet(false);
@@ -254,7 +254,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			List<AndroidCommandUI> commands = ui.getCommandsUI();
 			
-			CommandUI cmd = getFirstCommandOfType(commands, Command.BACK);
+			CommandUI cmd = this.getFirstCommandOfType(commands, Command.BACK);
 			if (cmd != null) {
 				if (ui.getCommandListener() != null) {
 					this.ignoreBackKeyUp = true;
@@ -263,7 +263,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
 				return true;
 			}
 
-			cmd = getFirstCommandOfType(commands, Command.EXIT);
+			cmd = this.getFirstCommandOfType(commands, Command.EXIT);
 			if (cmd != null) {
 				if (ui.getCommandListener() != null) {
 					this.ignoreBackKeyUp = true;
@@ -272,7 +272,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
 				return true;
 			}
 			
-			cmd = getFirstCommandOfType(commands, Command.CANCEL);
+			cmd = this.getFirstCommandOfType(commands, Command.CANCEL);
 			if (cmd != null) {
 				if (ui.getCommandListener() != null) {
 					this.ignoreBackKeyUp = true;
@@ -390,32 +390,32 @@ public class MicroEmulator extends MicroEmulatorActivity{
 			if (ui instanceof AndroidCanvasUI) {
 				float x = event.getX();
 				float y = event.getY();
-				if ((x > 0 && accumulatedTrackballX < 0) || (x < 0 && accumulatedTrackballX > 0)) {
-					accumulatedTrackballX = 0;
+				if ((x > 0 && this.accumulatedTrackballX < 0) || (x < 0 && this.accumulatedTrackballX > 0)) {
+					this.accumulatedTrackballX = 0;
 				}
-				if ((y > 0 && accumulatedTrackballY < 0) || (y < 0 && accumulatedTrackballY > 0)) {
-					accumulatedTrackballY = 0;
+				if ((y > 0 && this.accumulatedTrackballY < 0) || (y < 0 && this.accumulatedTrackballY > 0)) {
+					this.accumulatedTrackballY = 0;
 				}
-				if (accumulatedTrackballX + x > TRACKBALL_THRESHOLD) {
-					accumulatedTrackballX -= TRACKBALL_THRESHOLD;
-					KEY_RIGHT_DOWN_EVENT.dispatch(this);
-					KEY_RIGHT_UP_EVENT.dispatch(this);
-				} else if (accumulatedTrackballX + x < -TRACKBALL_THRESHOLD) {
-					accumulatedTrackballX += TRACKBALL_THRESHOLD;
-					KEY_LEFT_DOWN_EVENT.dispatch(this);
-					KEY_LEFT_UP_EVENT.dispatch(this);
+				if (this.accumulatedTrackballX + x > MicroEmulator.TRACKBALL_THRESHOLD) {
+					this.accumulatedTrackballX -= TRACKBALL_THRESHOLD;
+					MicroEmulator.KEY_RIGHT_DOWN_EVENT.dispatch(this);
+					MicroEmulator.KEY_RIGHT_UP_EVENT.dispatch(this);
+				} else if (this.accumulatedTrackballX + x < -MicroEmulator.TRACKBALL_THRESHOLD) {
+					this.accumulatedTrackballX += TRACKBALL_THRESHOLD;
+					MicroEmulator.KEY_LEFT_DOWN_EVENT.dispatch(this);
+					MicroEmulator.KEY_LEFT_UP_EVENT.dispatch(this);
 				}
-				if (accumulatedTrackballY + y > TRACKBALL_THRESHOLD) {
-					accumulatedTrackballY -= TRACKBALL_THRESHOLD;
-					KEY_DOWN_DOWN_EVENT.dispatch(this);
-					KEY_DOWN_UP_EVENT.dispatch(this);
-				} else if (accumulatedTrackballY + y < -TRACKBALL_THRESHOLD) {
-					accumulatedTrackballY += TRACKBALL_THRESHOLD;
-					KEY_UP_DOWN_EVENT.dispatch(this);
-					KEY_UP_UP_EVENT.dispatch(this);
+				if (this.accumulatedTrackballY + y > MicroEmulator.TRACKBALL_THRESHOLD) {
+					this.accumulatedTrackballY -= TRACKBALL_THRESHOLD;
+					MicroEmulator.KEY_DOWN_DOWN_EVENT.dispatch(this);
+					MicroEmulator.KEY_DOWN_UP_EVENT.dispatch(this);
+				} else if (this.accumulatedTrackballY + y < -MicroEmulator.TRACKBALL_THRESHOLD) {
+					this.accumulatedTrackballY += TRACKBALL_THRESHOLD;
+					MicroEmulator.KEY_UP_DOWN_EVENT.dispatch(this);
+					MicroEmulator.KEY_UP_UP_EVENT.dispatch(this);
 				}
-				accumulatedTrackballX += x;
-				accumulatedTrackballY += y;
+				this.accumulatedTrackballX += x;
+				this.accumulatedTrackballY += y;
 				
 				return true;
 			}

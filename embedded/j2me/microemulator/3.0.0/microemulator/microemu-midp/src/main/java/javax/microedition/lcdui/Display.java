@@ -66,7 +66,7 @@ public class Display {
 	public static final int COLOR_HIGHLIGHTED_BORDER = 5;
 
         private final Displayable DISPLAYABLE = new Canvas();
-	private Displayable current = DISPLAYABLE;
+	private Displayable current = this.DISPLAYABLE;
 
 	private DisplayAccessor accessor = null;
 
@@ -219,7 +219,7 @@ public class Display {
 				//});
 			} else {
 				// item contained command
-				commandAction(c.getOriginalCommand(), c.getFocusedItem());
+				this.commandAction(c.getOriginalCommand(), c.getFocusedItem());
 			}
 		}
 
@@ -243,7 +243,7 @@ public class Display {
 		
                 @Override
 		public Display getDisplay() {
-			return display;
+			return this.display;
 		}
 
 		// Andres Navarro
@@ -286,7 +286,7 @@ public class Display {
 //TWB - optimized
 //            if (display.isCanvas)
 //            {
-                display.current.keyPressed(keyCode);
+                this.display.current.keyPressed(keyCode);
 //            }
 //            else
 //            {
@@ -308,7 +308,7 @@ public class Display {
 //TWB - optimized
 //            if (display.isCanvas)
 //            {
-                display.current.keyRepeated(keyCode);
+                this.display.current.keyRepeated(keyCode);
 //            }
 //            else
 //            {
@@ -325,7 +325,7 @@ public class Display {
 //TWB - optimized
 //            if (display.isCanvas)
 //            {
-                display.current.keyReleased(keyCode);
+                this.display.current.keyReleased(keyCode);
 //            }
 //            else
 //            {
@@ -401,7 +401,7 @@ public class Display {
 
                 @Override
 		public Displayable getCurrent() {
-			return display.getCurrent();
+			return this.display.getCurrent();
 		}
 
                 @Override
@@ -416,7 +416,7 @@ public class Display {
 
         @Override
 		public boolean isFullScreenMode() {
-			Displayable current = getCurrent();
+			Displayable current = this.getCurrent();
 
 //			if (current.getTypeAsInt() == Canvas.TYPE) {
 				return ((Displayable) current).fullScreenMode;
@@ -427,7 +427,7 @@ public class Display {
 
                 @Override
 		public void hideNotify() {
-            Displayable current = getCurrent();
+            Displayable current = this.getCurrent();
             if (current != null) {
                 current.hideNotify();
             }
@@ -435,7 +435,7 @@ public class Display {
 
                 @Override
         public void setCurrent(Displayable d) {
-			getDisplay().setCurrent(d);
+			this.getDisplay().setCurrent(d);
 		}
 
         @Override
@@ -564,9 +564,9 @@ public class Display {
 	public int getColor(int colorSpecifier) {
 		// TODO implement better
 		switch (colorSpecifier) {
-		case COLOR_BACKGROUND:
-		case COLOR_HIGHLIGHTED_FOREGROUND:
-		case COLOR_HIGHLIGHTED_BORDER:
+		case Display.COLOR_BACKGROUND:
+		case Display.COLOR_HIGHLIGHTED_FOREGROUND:
+		case Display.COLOR_HIGHLIGHTED_BORDER:
 			return 0xFFFFFF;
 		default:
 			return 0x000000;
@@ -590,7 +590,7 @@ public class Display {
 	}
 
 	public Displayable getCurrent() {
-		return current;
+		return this.current;
 	}
 
 	public boolean isColor() {
@@ -615,7 +615,7 @@ public class Display {
 	}
         
 	public void setCurrent(final Displayable nextDisplayable) {
-		if (nextDisplayable == current) {
+		if (nextDisplayable == this.current) {
 			return;
 		}
 		if (nextDisplayable != null) {
@@ -719,8 +719,8 @@ public class Display {
 //                        this.isCanvas = false;
 //                    }
 
-                    setScrollUp(false);
-                    setScrollDown(false);
+                    this.setScrollUp(false);
+                    this.setScrollDown(false);
 
                     nextDisplayable.repaint();
 
@@ -775,12 +775,12 @@ public class Display {
 
 		Alert.nextDisplayable = nextDisplayable;
 
-		setCurrent(alert);
+		this.setCurrent(alert);
 	}
 
 	public void setCurrentItem(Item item) {
-		if (item.owner != current) {
-			setCurrent(item.owner);
+		if (item.owner != this.current) {
+			this.setCurrent(item.owner);
 		}
 	}
 
@@ -801,7 +801,7 @@ public class Display {
 	}
 
 	boolean isShown(Displayable d) {
-		if (current != d) {
+		if (this.current != d) {
 			return false;
 		} else {
 			return true;
@@ -825,7 +825,7 @@ public class Display {
         //DeviceFactory.getDevice().getDeviceDisplay().repaint(x, y, width, height);
 	void repaint(final Displayable d, final int x, final int y, final int width, final int height) {
 
-		if (current == d) {
+		if (this.current == d) {
                     
                     //System.out.println(new StringMaker().append(current).append("TWB:repaint").toString());
                     DeviceFactory.getDevice().getDeviceDisplay().repaint(x, y, width, height);

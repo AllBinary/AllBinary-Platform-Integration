@@ -62,20 +62,20 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	}
 
 	public Image createImage(String name) throws IOException {
-		return createImage(this.emulator.getResourceAsStream(name));
+		return this.createImage(this.emulator.getResourceAsStream(name));
 	}
 
 	public Image createImage(Image source) {
 		if (source.isMutable()) {
-			return new IPhoneImmutableImage((IPhoneMutableImage) source);
+			return new this.IPhoneImmutableImage((IPhoneMutableImage) source);
 		} else {
 			return source;
 		}
 	}
 
 	public Image createImage(InputStream is) throws IOException {
-        byte[] imageData=getStreamAsByteArray(is);
-        return createImage(imageData, 0, imageData.length);
+        byte[] imageData=IPhoneDeviceDisplay.getStreamAsByteArray(is);
+        return this.createImage(imageData, 0, imageData.length);
 	}
 	
     /**
@@ -85,7 +85,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
      * @return the stream content as byte array
      */
     private static byte[] getStreamAsByteArray(InputStream stream) throws IOException {
-        return getStreamAsByteArray(stream, -1);
+        return IPhoneDeviceDisplay.getStreamAsByteArray(stream, -1);
     }
 
     /**
@@ -122,7 +122,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	}
 
 	public Image createImage(byte[] imageData, int imageOffset, int imageLength) {
-		return new IPhoneImmutableImage(imageData, imageOffset, imageLength);
+		return new this.IPhoneImmutableImage(imageData, imageOffset, imageLength);
 	}
 
 	public Image createImage(Image image, int x, int y, int width, int height, int transform) {
@@ -250,21 +250,21 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	}
 
 	public int getFullHeight() {
-		return displayRectangleHeight;
+		return this.displayRectangleHeight;
 	}
 
 	public int getFullWidth() {
-		return displayRectangleWidth;
+		return this.displayRectangleWidth;
 	}
 
 	public int getHeight() {
 		// TODO Auto-generated method stub
-		return displayRectangleHeight;
+		return this.displayRectangleHeight;
 	}
 
 	public int getWidth() {
 		// TODO Auto-generated method stub
-		return displayRectangleWidth;
+		return this.displayRectangleWidth;
 	}
 
 	public boolean isColor() {
@@ -285,7 +285,7 @@ public class IPhoneDeviceDisplay implements DeviceDisplay {
 	}
 
 	public void repaint(int x, int y, int width, int height) {
-		paintDisplayable(x, y, width, height);
+		this.paintDisplayable(x, y, width, height);
 	}
 
 	public void setScrollDown(boolean arg0) {

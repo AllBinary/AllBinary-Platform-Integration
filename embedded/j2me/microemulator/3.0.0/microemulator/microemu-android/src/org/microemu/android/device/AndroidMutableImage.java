@@ -67,7 +67,7 @@ public class AndroidMutableImage extends MutableImage implements AndroidImageInt
 	}
 
 	public Bitmap getBitmap() {
-		return bitmap;
+		return this.bitmap;
 	}
 
 	public android.graphics.Canvas getCanvas() {
@@ -76,12 +76,12 @@ public class AndroidMutableImage extends MutableImage implements AndroidImageInt
         
 	@Override
 	public int getWidth() {
-		return bitmap.getWidth();
+		return this.bitmap.getWidth();
 	}
 	
 	@Override
 	public int getHeight() {
-		return bitmap.getHeight();
+		return this.bitmap.getHeight();
 	}
 
 	@Override

@@ -136,21 +136,21 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
 
         if (d == this) {
             synchronized (this) {
-                if (c == nwCommand) {
+                if (c == GameCanvasPanel.nwCommand) {
                     this.moveX = -1;
-                    moveY = -1;
+                    this.moveY = -1;
                     this.moving = true;
-                } else if (c == neCommand) {
+                } else if (c == GameCanvasPanel.neCommand) {
                     this.moveX = 1;
-                    moveY = -1;
+                    this.moveY = -1;
                     this.moving = true;
-                } else if (c == swCommand) {
+                } else if (c == GameCanvasPanel.swCommand) {
                     this.moveX = -1;
-                    moveY = 1;
+                    this.moveY = 1;
                     this.moving = true;
-                } else if (c == seCommand) {
+                } else if (c == GameCanvasPanel.seCommand) {
                     this.moveX = 1;
-                    moveY = 1;
+                    this.moveY = 1;
                     this.moving = true;
                 }
             }
@@ -159,8 +159,8 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
         if (d == this) {
             if (c == BaseExamplesForm.backCommand) {
                 SimpleDemoMIDlet.showMenu();
-            } else if (c == fullScreenModeCommand) {
-                setFullScreenMode(!fullScreenMode);
+            } else if (c == GameCanvasPanel.fullScreenModeCommand) {
+                this.setFullScreenMode(!fullScreenMode);
                 repaint();
             }
         }
@@ -170,44 +170,44 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
         int actionCode = getGameAction(keyCode);
         if (keyCode == '1' /* nwCommand */) {
             this.moveX = -1;
-            moveY = -1;
+            this.moveY = -1;
             this.moving = true;
         } else if (keyCode == '2') {
             this.moveX = 0;
-            moveY = -1;
+            this.moveY = -1;
             this.moving = true;
         } else if (keyCode == '3' /* neCommand */) {
             this.moveX = 1;
-            moveY = -1;
+            this.moveY = -1;
             this.moving = true;
         } else if (keyCode == '4') {
             this.moveX = -1;
-            moveY = 0;
+            this.moveY = 0;
             this.moving = true;
         } else if (keyCode == '6') {
             this.moveX = 1;
-            moveY = 0;
+            this.moveY = 0;
             this.moving = true;
         } else if (keyCode == '7' /* swCommand */) {
             this.moveX = -1;
-            moveY = 1;
+            this.moveY = 1;
             this.moving = true;
         } else if (keyCode == '8') {
             this.moveX = 0;
-            moveY = 1;
+            this.moveY = 1;
             this.moving = true;
         } else if (keyCode == '9' /* seCommand */) {
             this.moveX = 1;
-            moveY = 1;
+            this.moveY = 1;
             this.moving = true;
         } else if (keyCode == '5' /* fullScreenModeCommand */) {
-            setFullScreenMode(!fullScreenMode);
+            this.setFullScreenMode(!fullScreenMode);
             repaint();
         } else if (keyCode == KEY_POUND) {
             this.moving = !this.moving;
         } else if (actionCode == UP) {
-            if (ballMoveY > 0) {
-                ballMoveY = -ballMoveY;
+            if (this.ballMoveY > 0) {
+                this.ballMoveY = -ballMoveY;
             }
         } else if (actionCode == DOWN) {
             if (ballMoveY < 0) {
@@ -223,8 +223,8 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
             }
         } else if (keyCode == '0' /* backCommand */) {
             SimpleDemoMIDlet.showMenu();
-        } else if (fullScreenMode) {
-            setFullScreenMode(false);
+        } else if (this.fullScreenMode) {
+            this.setFullScreenMode(false);
         }
     }
 

@@ -71,11 +71,11 @@ public class Connection extends org.microemu.cldc.http.Connection implements Htt
 			}
 			this.securityInfo = new SecurityInfoImpl(
 					https.getCipherSuite(),
-					sslContext.getProtocol(),
+					this.sslContext.getProtocol(),
 					new CertificateImpl((X509Certificate) certs[0]));
 		}
 
-		return securityInfo;
+		return this.securityInfo;
 	}
 
 	public String getProtocol() {

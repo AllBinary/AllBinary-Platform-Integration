@@ -40,7 +40,7 @@ public class QueueAppender implements LoggerAppender {
 	}
 
 	public void append(LoggingEvent event) {
-		queue.add(event);
+		this.queue.add(event);
 		if (this.queue.size() > this.buferSize) {
 			this.queue.remove(0);
 		}

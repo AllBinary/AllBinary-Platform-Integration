@@ -69,7 +69,7 @@ public class LoggingEvent {
 	
 	public LoggingEvent(int level, String message, StackTraceElement location, Throwable throwable, Object data) {
 		this(level, message, location, throwable);
-		setData(data);
+		this.setData(data);
 	}
 
 	public Object getData() {
@@ -90,7 +90,7 @@ public class LoggingEvent {
 			if (getData() == null) {
 				return "{null}";
 			} else {
-				return getData().toString();
+				return this.getData().toString();
 			}
 		} else {
 			return "";

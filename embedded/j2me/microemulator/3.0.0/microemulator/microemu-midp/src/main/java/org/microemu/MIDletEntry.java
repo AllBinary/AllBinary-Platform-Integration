@@ -43,13 +43,13 @@ public class MIDletEntry
   
   public String getName()
   {
-    return name;
+    return this.name;
   }
   
   
   public Class getMIDletClass()
   {
-    return midletClass;
+    return this.midletClass;
   }
 
 }

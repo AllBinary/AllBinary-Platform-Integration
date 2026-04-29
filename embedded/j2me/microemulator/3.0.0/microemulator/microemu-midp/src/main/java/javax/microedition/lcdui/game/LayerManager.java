@@ -55,7 +55,7 @@ public class LayerManager {
     
     public int getSize() {
         // needs not be synchronized
-        return layers.size();
+        return this.layers.size();
     }
     
     public void insert(Layer layer, int i) {
@@ -78,10 +78,10 @@ public class LayerManager {
     	synchronized (this) {
 	        if (width < 0 || height < 0)
 	            throw new IllegalArgumentException();
-	        viewX = x;
-	        viewY = y;
-	        viewW = width;
-	        viewH = height;
+	        this.viewX = x;
+	        this.viewY = y;
+	        this.viewW = width;
+	        this.viewH = height;
     	}
     }
     
@@ -97,7 +97,7 @@ public class LayerManager {
 			g.translate(x - viewX, y - viewY);
 			g.clipRect(viewX, viewY, viewW, viewH);
 			for (int i = getSize(); --i >= 0;) {
-				Layer comp = getLayerAt(i);
+				Layer comp = this.getLayerAt(i);
 				if (comp.isVisible()) {
 					comp.paint(g);
 				}

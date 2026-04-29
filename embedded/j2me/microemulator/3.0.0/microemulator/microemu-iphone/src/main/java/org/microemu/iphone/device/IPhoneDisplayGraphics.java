@@ -86,7 +86,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 		CoreGraphics.CGContextScaleCTM(context, 1.0f, -1.0f);
 		CoreGraphics.CGContextSaveGState(context);
 
-		setFont(Font.getDefaultFont());
+		this.setFont(Font.getDefaultFont());
 	}
 
 	public void clipRect(final int x, final int y, final int width, final int height) {
@@ -102,12 +102,12 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 		// y, width, height));
 		// }
 		// });
-		setClip(x, y, width, height);
+		this.setClip(x, y, width, height);
 	}
 
 	public void drawArc(final int x, final int y, final int width, final int height, final int startAngle,
 			final int arcAngle) {
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				CoreGraphics.CGContextAddArc(context, x, y, 10, startAngle, arcAngle, 1);
 				CoreGraphics.CGContextDrawPath(context, CGPathDrawingMode.kCGPathStroke);
@@ -116,7 +116,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 	}
 
 	public void drawImage(final Image img, final int x, final int y, final int anchor) {
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				int newx = x;
 				int newy = y;
@@ -167,7 +167,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 		// y2++;
 		// }
 
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				CoreGraphics.CGContextMoveToPoint(context, x1, y1);
 				CoreGraphics.CGContextAddLineToPoint(context, x2, y2);
@@ -177,7 +177,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 	}
 
 	public void drawRect(final int x, final int y, final int width, final int height) {
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				CoreGraphics.CGContextAddRect(context, CoreGraphics.CGRectMake(x, y, width, height));
 				CoreGraphics.CGContextDrawPath(context, CGPathDrawingMode.kCGPathStroke);
@@ -187,11 +187,11 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
 	public void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
 		// TODO implement round rect
-		drawRect(x, y, width, height);
+		this.drawRect(x, y, width, height);
 	}
 
 	public void drawString(final String str, final int x, final int y, final int anchor) {
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				int newx = x;
 				int newy = y;
@@ -227,7 +227,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
 	public void fillArc(final int x, final int y, final int width, final int height, final int startAngle,
 			final int arcAngle) {
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				CoreGraphics.CGContextAddArc(context, x, y, 10, startAngle, arcAngle, 1);
 				CoreGraphics.CGContextDrawPath(context, CGPathDrawingMode.kCGPathFill);
@@ -236,7 +236,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 	}
 
 	public void fillRect(final int x, final int y, final int width, final int height) {
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				CoreGraphics.CGContextFillRect(context, CoreGraphics.CGRectMake(x, y, width, height));
 			}
@@ -245,35 +245,35 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
 	public void fillRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
 		// TODO implement round rect
-		fillRect(x, y, width, height);
+		this.fillRect(x, y, width, height);
 	}
 
 	public int getClipHeight() {
-		return clip.height;
+		return this.clip.height;
 	}
 
 	public int getClipWidth() {
-		return clip.width;
+		return this.clip.width;
 	}
 
 	public int getClipX() {
-		return clip.x;
+		return this.clip.x;
 	}
 
 	public int getClipY() {
-		return clip.y;
+		return this.clip.y;
 	}
 
 	public int getColor() {
-		return color;
+		return this.color;
 	}
 
 	public Font getFont() {
-		return font;
+		return this.font;
 	}
 
 	public int getStrokeStyle() {
-		return strokeStyle;
+		return this.strokeStyle;
 	}
 
 	public void setStrokeStyle(int style) {
@@ -286,7 +286,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
 	public void setClip(final int x, final int y, final int width, final int height) {
 		clip = new Rectangle(x, y, width, height);
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				// reset clip and all other state
 				CoreGraphics.CGContextRestoreGState(context);
@@ -303,7 +303,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
 	public void setColor(final int RGB) {
 		this.color = 0xff000000 | RGB;
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				int r = (RGB >> 16) & 0xFF;
 				int g = (RGB >> 8) & 0xFF;
@@ -318,7 +318,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 
 	public void setFont(final Font font) {
 		this.font = font;
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				currentfont = font;
 			}
@@ -330,7 +330,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 		this.clip.x -= x;
 		this.clip.y -= y;
 
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				CoreGraphics.CGContextTranslateCTM(context, x, y);
 				currentTranslateX += x;
@@ -343,7 +343,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 			final int transform, final int x_dst, final int y_dst, final int anchor) {
 		// may throw NullPointerException, this is ok
 		System.out.println("IPhoneDisplayGraphics.drawRegion()");
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				Pointer<CGRect> clipRect = CoreGraphics.CGRectMake(x_dst, y_dst, width, height);
 
@@ -519,7 +519,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 			System.arraycopy(rgbData, offset + scanlength * yi, data, (height - yi - 1) * width, width);
 		}
 
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 
 			public void render() {
 				Pointer<CGColorSpace> colorSpace = CoreGraphics.CGColorSpaceCreateDeviceRGB();
@@ -548,7 +548,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 	}
 
 	public void fillTriangle(final int x1, final int y1, final int x2, final int y2, final int x3, final int y3) {
-		queue(new Renderable() {
+		this.queue(new Renderable() {
 			public void render() {
 				CoreGraphics.CGContextMoveToPoint(context, x1, y1);
 				CoreGraphics.CGContextAddLineToPoint(context, x2, y2);
@@ -568,7 +568,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 	}
 
 	final synchronized void queue(Renderable renderable) {
-		renderQueue.offer(renderable);
+		this.renderQueue.offer(renderable);
 		// flushRenderQueue();
 	}
 

@@ -57,8 +57,8 @@ public abstract class BaseTestsCanvas extends Canvas implements CommandListener,
 		if (d == this) {
 			if (c == DisplayableUnderTests.backCommand) {
 				Manager.midletInstance.showMainPage();
-			} else if (c == fullScreenModeCommand) {
-				setFullScreenMode(!fullScreenMode);
+			} else if (c == BaseTestsCanvas.fullScreenModeCommand) {
+				this.setFullScreenMode(!fullScreenMode);
 				repaint();
 			}
 		}

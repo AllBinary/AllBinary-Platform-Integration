@@ -45,14 +45,14 @@ public class ErrorHandlingForm extends BaseTestsForm {
 	private void tryCatchTest() {
 		System.out.println("test Exception catch bytcode injection");
 		try {
-			throwExceptionFunction();		
+			this.throwExceptionFunction();		
 		} catch (IllegalArgumentException e) {
-			handleCatchIllegalArgumentException(e);
+			ErrorHandlingForm.handleCatchIllegalArgumentException(e);
 		}
 		try {
-			throwExceptionFunction();		
+			this.throwExceptionFunction();		
 		} catch (Throwable e) {
-			handleCatchThrowable(e);
+			ErrorHandlingForm.handleCatchThrowable(e);
 		}
 	}
 
@@ -74,10 +74,10 @@ public class ErrorHandlingForm extends BaseTestsForm {
 
 	public void commandAction(Command c, Displayable d) {
 		if (d == this) {
-			if (c == makeErrorCommand) {
+			if (c == ErrorHandlingForm.makeErrorCommand) {
 				throw new IllegalArgumentException("Emulator Should still work");
-			} else if (c == catchExceptionCommand) {
-				tryCatchTest();
+			} else if (c == ErrorHandlingForm.catchExceptionCommand) {
+				this.tryCatchTest();
 			}
 		}
 		super.commandAction(c, d);

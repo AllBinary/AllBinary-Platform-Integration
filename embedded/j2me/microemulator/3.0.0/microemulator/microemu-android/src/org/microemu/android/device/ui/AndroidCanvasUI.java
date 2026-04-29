@@ -107,7 +107,7 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
     
 	public AndroidDisplayGraphics getGraphics() {
 		gameCanvasGraphics = new AndroidDisplayGraphics();
-        if (gameCanvasBitmap != null) {
+        if (AndroidCanvasUI.gameCanvasBitmap != null) {
         	this.gameCanvasGraphics.reset(new android.graphics.Canvas(gameCanvasBitmap));
         }
 		
@@ -126,9 +126,9 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
         
         private AndroidCanvasUI ui;
         
-        private int pressedX = -FIRST_DRAG_SENSITIVITY_X;
+        private int pressedX = -CanvasView.FIRST_DRAG_SENSITIVITY_X;
         
-        private int pressedY = -FIRST_DRAG_SENSITIVITY_Y;
+        private int pressedY = -CanvasView.FIRST_DRAG_SENSITIVITY_Y;
         
         private Overlay overlay = null;
         
@@ -146,15 +146,15 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
         }
         
         public AndroidCanvasUI getUI() {
-            return ui;
+            return this.ui;
         }             
 
         public void flushGraphics(int x, int y, int width, int height) {
             // TODO handle x, y, width and height
-            if (repaintListener == null) {
+            if (this.repaintListener == null) {
                 postInvalidate();
             } else {
-                repaintListener.flushGraphics();
+                this.repaintListener.flushGraphics();
             }
         }
 
@@ -163,8 +163,8 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
         }
         
         public void setScale(float sx, float sy) {
-            scale.reset();
-            scale.postScale(sx, sy);
+            this.scale.reset();
+            this.scale.postScale(sx, sy);
         }
 
         public void setKeyListener(AndroidKeyListener keyListener, int inputType) {
@@ -239,10 +239,10 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
 			AndroidDeviceDisplay deviceDisplay = (AndroidDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay();
             androidCanvas.clipRect(0, 0, deviceDisplay.getFullWidth(), deviceDisplay.getFullHeight(), Region.Op.REPLACE);
             ma.getDisplayAccess().paint(graphics);
-            if (overlay != null) {
+            if (this.overlay != null) {
             	androidCanvas.setMatrix(originalMatrix);
             	androidCanvas.clipRect(0, 0, getWidth(), getHeight(), Region.Op.REPLACE);
-                overlay.onDraw(androidCanvas);
+                this.overlay.onDraw(androidCanvas);
             }
         }   
         
@@ -275,7 +275,7 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            if (overlay != null && overlay.onTouchEvent(event)) {
+            if (this.overlay != null && this.overlay.onTouchEvent(event)) {
                 return true;
             }
             Device device = DeviceFactory.getDevice();
@@ -285,18 +285,18 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
             switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN :
                 inputMethod.pointerPressed(x, y);
-                pressedX = x;
-                pressedY = y;
+                this.pressedX = x;
+                this.pressedY = y;
                 break;
             case MotionEvent.ACTION_UP :
                 inputMethod.pointerReleased(x, y);
                 break;
             case MotionEvent.ACTION_MOVE :
-                if (x > (pressedX - FIRST_DRAG_SENSITIVITY_X) &&  x < (pressedX + FIRST_DRAG_SENSITIVITY_X)
-                        && y > (pressedY - FIRST_DRAG_SENSITIVITY_Y) &&  y < (pressedY + FIRST_DRAG_SENSITIVITY_Y)) {
+                if (x > (this.pressedX - CanvasView.FIRST_DRAG_SENSITIVITY_X) &&  x < (this.pressedX + CanvasView.FIRST_DRAG_SENSITIVITY_X)
+                        && y > (pressedY - FIRST_DRAG_SENSITIVITY_Y) &&  y < (this.pressedY + CanvasView.FIRST_DRAG_SENSITIVITY_Y)) {
                 } else {
-                    pressedX = -FIRST_DRAG_SENSITIVITY_X;
-                    pressedY = -FIRST_DRAG_SENSITIVITY_Y;
+                    this.pressedX = -FIRST_DRAG_SENSITIVITY_X;
+                    this.pressedY = -FIRST_DRAG_SENSITIVITY_Y;
                     inputMethod.pointerDragged(x, y);
                 }
                 break;
@@ -314,7 +314,7 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
         public void repaintInvoked(Object repaintObject)
         {
             Rect r = (Rect) repaintObject;
-            flushGraphics(r.left, r.top, r.width(), r.height());
+            this.flushGraphics(r.left, r.top, r.width(), r.height());
         }       
         
         private AndroidRepaintListener repaintListener;

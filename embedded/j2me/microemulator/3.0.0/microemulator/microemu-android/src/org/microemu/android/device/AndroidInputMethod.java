@@ -42,7 +42,7 @@ public class AndroidInputMethod extends InputMethod {
 	private int repeatModeKeyCode = Integer.MAX_VALUE;
 
 	public void buttonPressed(KeyEvent keyEvent) {
-	    buttonPressed(getKeyCode(keyEvent));		
+	    this.buttonPressed(getKeyCode(keyEvent));		
 	}
 	
         public boolean commonKeyPressed(int keyCode, int deviceId, Displayable displayable)
@@ -68,11 +68,11 @@ public class AndroidInputMethod extends InputMethod {
 			}
 		}
 
-		fireInputMethodListener(keyCode);
+		this.fireInputMethodListener(keyCode);
 	}
 
 	public void buttonReleased(KeyEvent keyEvent) {
-	    buttonReleased(getKeyCode(keyEvent));
+	    this.buttonReleased(getKeyCode(keyEvent));
 	}
 	
 	public void buttonReleased(int keyCode) {

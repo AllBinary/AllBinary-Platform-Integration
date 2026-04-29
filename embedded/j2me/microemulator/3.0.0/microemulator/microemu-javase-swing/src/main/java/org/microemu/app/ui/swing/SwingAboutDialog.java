@@ -62,7 +62,7 @@ public class SwingAboutDialog extends SwingDialogPanel {
 		this.iconLabel = new JLabel();
 		add(this.iconLabel, c);
 
-		iconLabel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(
+		this.iconLabel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(
 				Main.class.getResource("/org/microemu/icon.png"))));
 
 		c.gridx = 1;

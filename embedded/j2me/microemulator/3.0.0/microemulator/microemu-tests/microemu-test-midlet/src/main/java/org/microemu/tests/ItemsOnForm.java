@@ -52,7 +52,7 @@ public class ItemsOnForm extends Form implements CommandListener, DisplayableUnd
 		if (d == this) {
 			if (c == DisplayableUnderTests.backCommand) {
 				Manager.midletInstance.showMainPage();
-			} if (c == addCommand) {
+			} if (c == ItemsOnForm.addCommand) {
 				append(new StringItem("si:", "StringItem" + Manager.sequenceNext()));
 			}
 		}

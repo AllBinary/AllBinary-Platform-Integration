@@ -137,15 +137,15 @@ public class IPhoneDevice implements Device {
 	}
 
 	public DeviceDisplay getDeviceDisplay() {
-		return microEmulator.getDeviceDisplay();
+		return this.microEmulator.getDeviceDisplay();
 	}
 
 	public FontManager getFontManager() {
-		return microEmulator.getFontManager();
+		return this.microEmulator.getFontManager();
 	}
 
 	public InputMethod getInputMethod() {
-		return microEmulator.getInputMethod();
+		return this.microEmulator.getInputMethod();
 	}
 
 	public String getName() {
@@ -169,11 +169,11 @@ public class IPhoneDevice implements Device {
 	}
 
 	public Vector getSoftButtons() {
-		return softButtons;
+		return this.softButtons;
 	}
 
 	public Map getSystemProperties() {
-		return systemProperties;
+		return this.systemProperties;
 	}
 
 	public UIFactory getUIFactory() {

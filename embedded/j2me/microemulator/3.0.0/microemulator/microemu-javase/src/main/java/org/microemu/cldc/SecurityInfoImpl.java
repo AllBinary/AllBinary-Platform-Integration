@@ -41,13 +41,13 @@ public class SecurityInfoImpl implements SecurityInfo {
 	}
 
 	public String getCipherSuite() {
-		return cipherSuite;
+		return this.cipherSuite;
 	}
 
 	public String getProtocolName() {
 		if (this.protocolName.startsWith("TLS")) {
 			return "TLS";
-		} else if (protocolName.startsWith("SSL")) {
+		} else if (this.protocolName.startsWith("SSL")) {
 			return "SSL";
 		} else {
 			// TODO Auto-generated method stub
@@ -77,7 +77,7 @@ public class SecurityInfoImpl implements SecurityInfo {
 	}
 
 	public Certificate getServerCertificate() {
-		return certificate;
+		return this.certificate;
 	}
 
 }

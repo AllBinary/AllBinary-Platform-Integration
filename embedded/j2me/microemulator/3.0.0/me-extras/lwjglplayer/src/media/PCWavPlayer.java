@@ -56,7 +56,7 @@ public class PCWavPlayer implements Player
       this.wavefile = WaveData.create(inputStream);
       
       AL10.alBufferData(this.buffers.get(0), wavefile.format, wavefile.data, wavefile.samplerate);
-      wavefile.dispose();
+      this.wavefile.dispose();
       OpenALManager.log();
 
       AL10.alSourcei(this.sources.get(0), AL10.AL_BUFFER, buffers.get(0));

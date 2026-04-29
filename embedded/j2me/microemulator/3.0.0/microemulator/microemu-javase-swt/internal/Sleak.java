@@ -151,7 +151,7 @@ public class Sleak {
         canvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
         text = new Text(right, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
-        setVisible(text, false);
+        this.setVisible(text, false);
 
         // Left side
         enableTracking = new Button(left, SWT.CHECK);
@@ -206,7 +206,7 @@ public class Sleak {
         list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         stackTrace.setSelection(false);
-        filterNonDisposedWidgetTypes();
+        this.filterNonDisposedWidgetTypes();
     }
 
     private void toggleEnableTracking() {
@@ -214,7 +214,7 @@ public class Sleak {
         boolean tracking = true;
         //display.isTracking();
         //display.setTracking(!tracking);
-        setWidgetTrackingEnabled(tracking);
+        this.setWidgetTrackingEnabled(tracking);
     }
 
     void refreshLabel(java.util.List<ObjectWithError> createdObjects, java.util.List<ObjectWithError> deletedObjects) {
@@ -231,7 +231,7 @@ public class Sleak {
         deletedAndCreated.distinct().sorted().forEach(type -> addCounts(sb, type, deleted.get(type), created.get(type)));
 
         String description = sb.length() > 0 ? sb.toString() : "0 object(s)";
-        list.setToolTipText(description);
+        this.list.setToolTipText(description);
     }
 
     private void addCounts(StringBuilder string, String type, Long deleted, Long created) {
@@ -254,19 +254,19 @@ public class Sleak {
 
     void refreshDifference() {
         Display display = canvas.getDisplay();
-        DeviceData info = getDeviceData(display);
+        DeviceData info = this.getDeviceData(display);
 
         boolean hasOldData = !oldObjects.isEmpty();
 
         java.util.List<ObjectWithError> old = new ArrayList<>(oldObjects);
         java.util.List<ObjectWithError> disposed = new ArrayList<>();
         java.util.List<ObjectWithError> created = new ArrayList<>();
-        java.util.List<ObjectWithError> same = collectNewObjects(info, old, disposed, created);
-        java.util.List<ObjectWithError> nonDisposedWidgets = getNonDisposedWidgets();
+        java.util.List<ObjectWithError> same = this.collectNewObjects(info, old, disposed, created);
+        java.util.List<ObjectWithError> nonDisposedWidgets = this.getNonDisposedWidgets();
         created.addAll(nonDisposedWidgets);
-        resetNonDisposedWidgets();
+        this.resetNonDisposedWidgets();
 
-        if (diffType.getSelectionIndex() > 0) {
+        if (this.diffType.getSelectionIndex() > 0) {
             old.removeAll(same);
             if (!old.isEmpty()) {
                 Iterator<ObjectWithError> createdIter = created.iterator();
@@ -285,25 +285,25 @@ public class Sleak {
             }
         }
 
-        objects.clear();
-        objects.addAll(created);
+        this.objects.clear();
+        this.objects.addAll(created);
 
         oldObjects.clear();
         oldObjects.addAll(same);
         oldObjects.addAll(created);
 
-        list.removeAll();
-        text.setText("");
+        this.list.removeAll();
+        this.text.setText("");
         canvas.redraw();
         if (hasOldData) {
             for (ObjectWithError object : created) {
-                list.add(object.object.toString());
+                this.list.add(object.object.toString());
             }
         }
         if (hasOldData) {
-            refreshLabel(created, disposed);
+            this.refreshLabel(created, disposed);
         } else {
-            refreshLabel(Collections.emptyList(), Collections.emptyList());
+            this.refreshLabel(Collections.emptyList(), Collections.emptyList());
         }
     }
 
@@ -346,15 +346,15 @@ public class Sleak {
             dialog.setText(shell.getText());
             dialog.setMessage("Warning: Device is not tracking resource allocation\nWould you like to enable tracking now for future created resources?");
             if (SWT.YES == dialog.open()) {
-                enableTracking.setSelection(true);
-                toggleEnableTracking();
+                this.enableTracking.setSelection(true);
+                this.toggleEnableTracking();
             }
         }
         return info;
     }
 
     boolean creatorEquals(StackTraceElement first, StackTraceElement second) {
-        switch (diffType.getSelectionIndex()) {
+        switch (this.diffType.getSelectionIndex()) {
             case 1:
                 return first.equals(second);
             case 2:
@@ -365,49 +365,49 @@ public class Sleak {
     }
 
     private void saveToFile(boolean prompt) {
-        if (prompt || selectedName == null) {
+        if (prompt || this.selectedName == null) {
             FileDialog dialog = new FileDialog(saveAs.getShell(), SWT.SAVE);
             dialog.setFilterPath(filterPath);
             dialog.setFileName(fileName);
             dialog.setOverwrite(true);
-            selectedName = dialog.open();
-            fileCount = 0;
-            if (selectedName == null) {
+            this.selectedName = dialog.open();
+            this.fileCount = 0;
+            if (this.selectedName == null) {
                 return;
             }
-            filterPath = dialog.getFilterPath();
-            fileName = dialog.getFileName();
+            this.filterPath = dialog.getFilterPath();
+            this.fileName = dialog.getFileName();
 
             MessageBox msg = new MessageBox(saveAs.getShell(), SWT.ICON_QUESTION | SWT.YES | SWT.NO);
             msg.setText("Append incrementing file counter?");
             msg.setMessage("Append an incrementing file count to the file name on each save, starting at 000?");
-            incrementFileNames = msg.open() == SWT.YES;
+            this.incrementFileNames = msg.open() == SWT.YES;
 
             msg = new MessageBox(saveAs.getShell(), SWT.ICON_QUESTION | SWT.YES | SWT.NO);
             msg.setText("Save images for each resource?");
             msg.setMessage("Save an image (png) for each resource?");
-            saveImages = msg.open() == SWT.YES;
+            this.saveImages = msg.open() == SWT.YES;
         }
 
         String fileName = selectedName;
-        if (incrementFileNames) {
+        if (this.incrementFileNames) {
             fileName = String.format("%s_%03d", fileName, fileCount++);
         }
         try (PrintWriter file = new PrintWriter(new FileOutputStream(fileName))) {
 
             int i = 0;
-            for (ObjectWithError o : objects) {
+            for (ObjectWithError o : this.objects) {
                 Object object = o.object;
                 Error error = o.error;
                 file.print(object.toString());
-                if (saveImages) {
+                if (this.saveImages) {
                     String suffix = String.format("%05d.png", i++);
                     String pngName = String.format("%s_%s", fileName, suffix);
                     Image image = new Image(saveAs.getDisplay(), 100, 100);
                     try {
                         GC gc = new GC(image);
                         try {
-                            draw(gc, object);
+                            this.draw(gc, object);
                         } finally {
                             gc.dispose();
                         }
@@ -422,7 +422,7 @@ public class Sleak {
                     file.print(suffix);
                 }
                 file.println();
-                if (stackTrace.getSelection()) {
+                if (this.stackTrace.getSelection()) {
                     error.printStackTrace(file);
                     System.out.println();
                 }
@@ -436,19 +436,19 @@ public class Sleak {
     }
 
     void toggleStackTrace() {
-        refreshObject();
-        canvas.getParent().layout();
+        this.refreshObject();
+        this.canvas.getParent().layout();
     }
 
     void paintCanvas(Event event) {
-        canvas.setCursor(null);
+        this.canvas.setCursor(null);
         int index = list.getSelectionIndex();
         if (index == -1) {
             return;
         }
         GC gc = event.gc;
         Object object = objects.get(index).object;
-        draw(gc, object);
+        this.draw(gc, object);
     }
 
     void draw(GC gc, Object object) {
@@ -456,7 +456,7 @@ public class Sleak {
             if (((Cursor) object).isDisposed()) {
                 return;
             }
-            canvas.setCursor((Cursor) object);
+            this.canvas.setCursor((Cursor) object);
             return;
         }
         if (object instanceof Font) {
@@ -541,15 +541,15 @@ public class Sleak {
         if (index == -1) {
             return;
         }
-        if (stackTrace.getSelection()) {
-            text.setText(objects.get(index).getStack());
-            setVisible(text, true);
-            setVisible(canvas, false);
-            text.getParent().layout();
+        if (this.stackTrace.getSelection()) {
+            this.text.setText(objects.get(index).getStack());
+            this.setVisible(text, true);
+            this.setVisible(canvas, false);
+            this.text.getParent().layout();
         } else {
-            setVisible(canvas, true);
-            setVisible(text, false);
-            canvas.redraw();
+            this.setVisible(canvas, true);
+            this.setVisible(text, false);
+            this.canvas.redraw();
         }
     }
 
@@ -562,21 +562,21 @@ public class Sleak {
         final java.util.List<Class<? extends Widget>> trackedTypes = Arrays.asList( //		Composite.class, 
             //		Menu.class
             );
-        nonDisposedWidgetTracker.setTrackedTypes(trackedTypes);
+        this.nonDisposedWidgetTracker.setTrackedTypes(trackedTypes);
     }
 
     private void setWidgetTrackingEnabled(boolean tracking) {
-        nonDisposedWidgetTracker.setTrackingEnabled(tracking);
+        this.nonDisposedWidgetTracker.setTrackingEnabled(tracking);
     }
 
     private java.util.List<ObjectWithError> getNonDisposedWidgets() {
         final java.util.List<ObjectWithError> nonDisposedWidgets = new ArrayList<>();
-        nonDisposedWidgetTracker.getNonDisposedWidgets().forEach((w, e) -> nonDisposedWidgets.add(new ObjectWithError(w, e)));
+        this.nonDisposedWidgetTracker.getNonDisposedWidgets().forEach((w, e) -> nonDisposedWidgets.add(new ObjectWithError(w, e)));
         return nonDisposedWidgets;
     }
 
     private void resetNonDisposedWidgets() {
-        nonDisposedWidgetTracker.startTracking();
+        this.nonDisposedWidgetTracker.startTracking();
     }
 
     private final class ObjectWithError {
@@ -592,28 +592,28 @@ public class Sleak {
         }
 
         StackTraceElement getCreator() {
-            if (creator == null) {
+            if (this.creator == null) {
                 String objectType = object.getClass().getName();
                 Iterator<StackTraceElement> stack = Arrays.asList(error.getStackTrace()).iterator();
                 while (stack.hasNext()) {
                     StackTraceElement element = stack.next();
                     if (element.getClassName().equals(objectType) && element.getMethodName().equals("<init>")) {
-                        creator = stack.hasNext() ? stack.next() : null;
+                        this.creator = stack.hasNext() ? stack.next() : null;
                         break;
                     }
                 }
             }
-            return creator;
+            return this.creator;
         }
 
         String getStack() {
-            if (stack == null) {
+            if (this.stack == null) {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 PrintStream s = new PrintStream(stream);
-                error.printStackTrace(s);
-                stack = stream.toString();
+                this.error.printStackTrace(s);
+                this.stack = stream.toString();
             }
-            return stack;
+            return this.stack;
         }
     }
 }

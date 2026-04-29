@@ -53,18 +53,18 @@ public class PCTone
    
    private final static AudioFormat audioFormat =
       new AudioFormat(
-      sampleRate,
-      sampleSizeInBits,
-      channels,
-      signed,
-      bigEndian);
+      PCTone.sampleRate,
+      PCTone.sampleSizeInBits,
+      PCTone.channels,
+      PCTone.signed,
+      PCTone.bigEndian);
    
    private final static DataLine.Info dataLineInfo =
       new DataLine.Info(
       SourceDataLine.class,
-      audioFormat);
+      PCTone.audioFormat);
    
-   private final byte audioData[] = new byte[sampleRate * MAX_TIME];
+   private final byte audioData[] = new byte[PCTone.sampleRate * PCTone.MAX_TIME];
    
    public PCTone()
    {
@@ -75,16 +75,16 @@ public class PCTone
       try
       {
          InputStream byteArrayInputStream =
-            new ByteArrayInputStream(audioData);
+            new ByteArrayInputStream(this.audioData);
          
          AudioInputStream audioInputStream =
             new AudioInputStream(
             byteArrayInputStream,
-            audioFormat,
-            audioData.length/audioFormat.getFrameSize());
+            PCTone.audioFormat,
+            this.audioData.length/PCTone.audioFormat.getFrameSize());
 
          SourceDataLine sourceDataLine =
-            (SourceDataLine) AudioSystem.getLine(dataLineInfo);
+            (SourceDataLine) AudioSystem.getLine(PCTone.dataLineInfo);
          
 //         final ByteBuffer byteBuffer = ByteBuffer.wrap(audioData);
 //         final ShortBuffer shortBuffer = byteBuffer.asShortBuffer();
@@ -109,8 +109,8 @@ public class PCTone
             PCToneRunnablePoolFactory.getInstance(
             sourceDataLine,
             audioInputStream,
-            audioFormat,
-            sampleRate * MAX_TIME);
+            PCTone.audioFormat,
+            PCTone.sampleRate * MAX_TIME);
          
          new Thread(pcToneRunnable).start();
       }

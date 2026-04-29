@@ -49,7 +49,7 @@ public class AndroidImmutableImage extends javax.microedition.lcdui.Image implem
     }
 
     public Bitmap getBitmap() {
-		return bitmap;
+		return this.bitmap;
 	}
 
 	public android.graphics.Canvas getCanvas() {
@@ -58,12 +58,12 @@ public class AndroidImmutableImage extends javax.microedition.lcdui.Image implem
     
 	@Override
 	public int getWidth() {
-		return bitmap.getWidth();
+		return this.bitmap.getWidth();
 	}
 	
 	@Override
 	public int getHeight() {
-		return bitmap.getHeight();
+		return this.bitmap.getHeight();
 	}
 
 	@Override

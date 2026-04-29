@@ -51,7 +51,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 			throw new IOException();
 		}
 
-		return socket.getInetAddress().toString();
+		return this.socket.getInetAddress().toString();
 	}
 
 	public String getLocalAddress() throws IOException {
@@ -59,7 +59,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 			throw new IOException();
 		}
 
-		return socket.getLocalAddress().toString();
+		return this.socket.getLocalAddress().toString();
 	}
 
 	public int getLocalPort() throws IOException {
@@ -67,7 +67,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 			throw new IOException();
 		}
 
-		return socket.getLocalPort();
+		return this.socket.getLocalPort();
 	}
 
 	public int getPort() throws IOException {
@@ -75,7 +75,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 			throw new IOException();
 		}
 
-		return socket.getPort();
+		return this.socket.getPort();
 	}
 
 	public int getSocketOption(byte option) throws IllegalArgumentException,
@@ -162,11 +162,11 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 	public void close() throws IOException {
 		// TODO fix differences between Java ME and Java SE
 		
-		socket.close();
+		this.socket.close();
 	}
 
 	public InputStream openInputStream() throws IOException {
-		return socket.getInputStream();
+		return this.socket.getInputStream();
 	}
 
 	public DataInputStream openDataInputStream() throws IOException {
@@ -174,7 +174,7 @@ public class SocketConnection implements javax.microedition.io.SocketConnection 
 	}
 
 	public OutputStream openOutputStream() throws IOException {
-		return socket.getOutputStream();
+		return this.socket.getOutputStream();
 	}
 
 	public DataOutputStream openDataOutputStream() throws IOException {

@@ -74,7 +74,7 @@ public abstract class MicroEmulatorActivity extends Activity {
 	}
     
     public EmulatorContext getEmulatorContext() {
-        return emulatorContext;
+        return this.emulatorContext;
     }
 
 	public boolean post(Runnable r) {
@@ -82,7 +82,7 @@ public abstract class MicroEmulatorActivity extends Activity {
 			r.run();
 			return true;
 		} else {
-			return handler.post(r);
+			return this.handler.post(r);
 		}
 	}
 	
@@ -91,7 +91,7 @@ public abstract class MicroEmulatorActivity extends Activity {
 			r.run();
 			return true;
 		} else {
-			return handler.postDelayed(r, delayMillis);
+			return this.handler.postDelayed(r, delayMillis);
 		}
 	}
 	
@@ -123,7 +123,7 @@ public abstract class MicroEmulatorActivity extends Activity {
 	}
 	
 	public View getContentView() {
-		return contentView;
+		return this.contentView;
 	}
 
 	@Override
@@ -159,11 +159,11 @@ Log.d("AndroidCanvasUI", "set content view: " + view);
 	}
 	
 	public void addActivityResultListener(ActivityResultListener listener) {
-		activityResultListeners.add(listener);
+		this.activityResultListeners.add(listener);
 	}
 	
 	public void removeActivityResultListener(ActivityResultListener listener) {
-		activityResultListeners.remove(listener);
+		this.activityResultListeners.remove(listener);
 	}
 	
 	@Override
@@ -188,7 +188,7 @@ Log.d("AndroidCanvasUI", "set content view: " + view);
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		return dialog;
+		return this.dialog;
 	}
 	
 }

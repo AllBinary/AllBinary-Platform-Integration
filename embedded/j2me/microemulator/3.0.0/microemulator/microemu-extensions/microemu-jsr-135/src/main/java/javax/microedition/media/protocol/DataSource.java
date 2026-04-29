@@ -32,7 +32,7 @@ public abstract class DataSource implements Controllable {
 	}
 
 	public String getLocator() {
-		return sourceLocator;
+		return this.sourceLocator;
 	}
 
 	public abstract String getContentType();

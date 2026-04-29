@@ -74,7 +74,7 @@ public class TextBox extends Screen {
 		
 		super.setUI(DeviceFactory.getDevice().getUIFactory().createTextBoxUI(this));
 		
-		setString(text);
+		this.setString(text);
 	}
 
 	public void delete(int offset, int length) {
@@ -89,32 +89,32 @@ public class TextBox extends Screen {
 		if (ui != null && ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextBoxUI")) {
 			return ((TextBoxUI) ui).getCaretPosition();
 		} else {
-			return tf.getCaretPosition();
+			return this.tf.getCaretPosition();
 		}
 	}
 
 	public int getChars(char[] data) {
-		return tf.getChars(data);
+		return this.tf.getChars(data);
 	}
 
 	public int getConstraints() {
-		return tf.getConstraints();
+		return this.tf.getConstraints();
 	}
 
 	public int getMaxSize() {
-		return tf.getMaxSize();
+		return this.tf.getMaxSize();
 	}
 
 	public String getString() {
 		if (ui != null && ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextBoxUI")) {
 			return ((TextBoxUI) ui).getString();
 		} else {
-			return tf.getString();
+			return this.tf.getString();
 		}
 	}
 
 	public void insert(char[] data, int offset, int length, int position) {
-		tf.insert(data, offset, length, position);
+		this.tf.insert(data, offset, length, position);
 	}
 
 	public void insert(String src, int position) {
@@ -126,11 +126,11 @@ public class TextBox extends Screen {
 	}
 
 	public void setChars(char[] data, int offset, int length) {
-		tf.setChars(data, offset, length);
+		this.tf.setChars(data, offset, length);
 	}
 
 	public void setConstraints(int constraints) {
-		tf.setConstraints(constraints);
+		this.tf.setConstraints(constraints);
 	}
 
 	public void setInitialInputMode(String characterSubset) {
@@ -138,7 +138,7 @@ public class TextBox extends Screen {
 	}
 
 	public int setMaxSize(int maxSize) {
-		return tf.setMaxSize(maxSize);
+		return this.tf.setMaxSize(maxSize);
 	}
 
 	public void setString(String text) {
@@ -163,7 +163,7 @@ public class TextBox extends Screen {
 		if (ui != null && ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidTextBoxUI")) {
 			return ((TextBoxUI) ui).getString().length();
 		} else {
-			return tf.size();
+			return this.tf.size();
 		}
 	}
 
@@ -185,12 +185,12 @@ public class TextBox extends Screen {
 			g.translate(0, -viewPortY);
 			this.tf.paintContent(g);
 	
-			return tf.stringComponent.getHeight() + 6;
+			return this.tf.stringComponent.getHeight() + 6;
 		}
 	}
 
 	void setCaretPosition(int position) {
-		tf.setCaretPosition(position);
+		this.tf.setCaretPosition(position);
 
 		StringComponent tmp = this.tf.stringComponent;
 		if (tmp.getCharPositionY(position) < viewPortY) {
@@ -206,7 +206,7 @@ public class TextBox extends Screen {
 		InputMethod inputMethod = DeviceFactory.getDevice().getInputMethod();
 		inputMethod.setInputMethodListener(inputMethodListener);
 		inputMethod.setMaxSize(getMaxSize());
-		setCaretPosition(getString().length());
+		this.setCaretPosition(getString().length());
 		this.tf.setCaretVisible(true);
 	}
 

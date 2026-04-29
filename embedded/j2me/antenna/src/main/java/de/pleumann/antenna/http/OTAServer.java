@@ -148,7 +148,7 @@ public class OTAServer extends HttpServlet {
                 response.setContentLength(new Long(file.length()).intValue());
                 InputStream input = new FileInputStream(file);
                 OutputStream output = response.getOutputStream();
-                copyStreams(input, output);
+                OTAServer.copyStreams(input, output);
                 input.close();
                 output.flush();
 
@@ -159,7 +159,7 @@ public class OTAServer extends HttpServlet {
                 response.setContentLength(new Long(file.length()).intValue());
                 InputStream input = new FileInputStream(file);
                 OutputStream output = response.getOutputStream();
-                copyStreams(input, output);
+                OTAServer.copyStreams(input, output);
                 input.close();
                 output.flush();
 
@@ -206,7 +206,7 @@ public class OTAServer extends HttpServlet {
             File file = new File(this.files + name);
             OutputStream output = new FileOutputStream(file);
             InputStream input = request.getInputStream();
-            copyStreams(input, output);
+            OTAServer.copyStreams(input, output);
             output.flush();
             output.close();
         }

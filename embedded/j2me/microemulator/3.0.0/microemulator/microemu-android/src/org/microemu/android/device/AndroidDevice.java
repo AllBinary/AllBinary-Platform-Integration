@@ -168,15 +168,15 @@ public class AndroidDevice implements Device {
 	}
 
 	public DeviceDisplay getDeviceDisplay() {
-		return emulatorContext.getDeviceDisplay();
+		return this.emulatorContext.getDeviceDisplay();
 	}
 
 	public FontManager getFontManager() {
-		return emulatorContext.getDeviceFontManager();
+		return this.emulatorContext.getDeviceFontManager();
 	}
 
 	public InputMethod getInputMethod() {
-		return emulatorContext.getDeviceInputMethod();
+		return this.emulatorContext.getDeviceInputMethod();
 	}
 	
 	public UIFactory getUIFactory() {
@@ -204,11 +204,11 @@ public class AndroidDevice implements Device {
 	}
 
 	public Vector getSoftButtons() {
-		return softButtons;
+		return this.softButtons;
 	}
 
 	public Map getSystemProperties() {
-		return systemProperties;
+		return this.systemProperties;
 	}
 
 	public boolean hasPointerEvents() {

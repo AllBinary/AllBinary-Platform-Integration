@@ -112,7 +112,7 @@ public class Connection extends org.microemu.cldc.socket.SocketConnection implem
 					new CertificateImpl((X509Certificate) certs[0]));
 		}
 
-		return securityInfo;
+		return this.securityInfo;
 	}
 
 }

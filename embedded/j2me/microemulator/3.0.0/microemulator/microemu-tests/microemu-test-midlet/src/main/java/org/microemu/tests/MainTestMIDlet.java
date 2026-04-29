@@ -85,16 +85,16 @@ public class MainTestMIDlet extends MIDlet implements CommandListener, MIDletUnd
 			this.menuList.addCommand(exitCommand);
 			this.menuList.setCommandListener(this);
 		}
-		setCurrentDisplayable(this.menuList);
+		this.setCurrentDisplayable(this.menuList);
 	}
 
 	public void commandAction(Command c, Displayable d) {
 		if (d == this.menuList) {
 			if (c == List.SELECT_COMMAND) {
-				setCurrentDisplayable((Displayable) this.testPanels.elementAt(this.menuList.getSelectedIndex()));
+				this.setCurrentDisplayable((Displayable) this.testPanels.elementAt(this.menuList.getSelectedIndex()));
 			} else if (c == exitCommand) {
 				try {
-					destroyApp(true);
+					this.destroyApp(true);
 				} catch (MIDletStateChangeException e) {
 				}
 				notifyDestroyed();
@@ -103,7 +103,7 @@ public class MainTestMIDlet extends MIDlet implements CommandListener, MIDletUnd
 	}
 
 	public void showMainPage() {
-		setCurrentDisplayable(menuList);
+		this.setCurrentDisplayable(menuList);
 	}
 
 	public void setCurrentDisplayable(Displayable nextDisplayable) {

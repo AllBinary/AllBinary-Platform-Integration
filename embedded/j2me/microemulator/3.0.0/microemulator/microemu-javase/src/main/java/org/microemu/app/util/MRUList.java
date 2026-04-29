@@ -45,7 +45,7 @@ public class MRUList implements XMLItem {
 
 	private static final int MAXCAPACITY_DEFAULT = 10;
 
-	protected int maxCapacity = MAXCAPACITY_DEFAULT;
+	protected int maxCapacity = MRUList.MAXCAPACITY_DEFAULT;
 
 	private Stack items = new Stack/* <XMLItem> */();
 
@@ -76,7 +76,7 @@ public class MRUList implements XMLItem {
 		} else {
 			this.items.insertElementAt(item, 0);
 		}
-		fireListener(item);
+		this.fireListener(item);
 		return item;
 	}
 
@@ -95,7 +95,7 @@ public class MRUList implements XMLItem {
 	}
 
 	public int getMaxCapacity() {
-		return maxCapacity;
+		return this.maxCapacity;
 	}
 
 	public void setMaxCapacity(int maxCapacity) {
@@ -118,7 +118,7 @@ public class MRUList implements XMLItem {
 	public void read(XMLElement xml) {
 		this.modified = false;
 		this.items.removeAllElements();
-		this.maxCapacity = xml.getIntAttribute("maxCapacity", MAXCAPACITY_DEFAULT);
+		this.maxCapacity = xml.getIntAttribute("maxCapacity", MRUList.MAXCAPACITY_DEFAULT);
 		for (Enumeration en = xml.enumerateChildren(); en.hasMoreElements();) {
 			XMLElement xmlChild = (XMLElement) en.nextElement();
 			if (xmlChild.getName().equals(this.itemsName)) {
@@ -138,7 +138,7 @@ public class MRUList implements XMLItem {
 			// Fire Listener in reverse order
 			for (ListIterator iter = this.items.listIterator(this.items.size()); iter.hasPrevious();) {
 				XMLItem element = (XMLItem) iter.previous();
-				fireListener(element);
+				this.fireListener(element);
 			}
 		}
 	}

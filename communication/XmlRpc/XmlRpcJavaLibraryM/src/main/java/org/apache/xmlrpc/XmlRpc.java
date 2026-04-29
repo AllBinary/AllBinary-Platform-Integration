@@ -120,13 +120,13 @@ public abstract class XmlRpc extends HandlerBase
         // here, increase the size of the saxDrivers Map used to store
         // them.
         saxDrivers.put("xerces", "org.apache.xerces.parsers.SAXParser");
-        saxDrivers.put("xp", "com.jclark.xml.sax.Driver");
-        saxDrivers.put("ibm1", "com.ibm.xml.parser.SAXDriver");
-        saxDrivers.put("ibm2", "com.ibm.xml.parsers.SAXParser");
-        saxDrivers.put("aelfred", "com.microstar.xml.SAXDriver");
-        saxDrivers.put("oracle1", "oracle.xml.parser.XMLParser");
-        saxDrivers.put("oracle2", "oracle.xml.parser.v2.SAXParser");
-        saxDrivers.put("openxml", "org.openxml.parser.XMLSAXParser");
+        XmlRpc.saxDrivers.put("xp", "com.jclark.xml.sax.Driver");
+        XmlRpc.saxDrivers.put("ibm1", "com.ibm.xml.parser.SAXDriver");
+        XmlRpc.saxDrivers.put("ibm2", "com.ibm.xml.parsers.SAXParser");
+        XmlRpc.saxDrivers.put("aelfred", "com.microstar.xml.SAXDriver");
+        XmlRpc.saxDrivers.put("oracle1", "oracle.xml.parser.XMLParser");
+        XmlRpc.saxDrivers.put("oracle2", "oracle.xml.parser.v2.SAXParser");
+        XmlRpc.saxDrivers.put("openxml", "org.openxml.parser.XMLSAXParser");
     }
 
     // the stack we're parsing our values into.
@@ -293,7 +293,7 @@ public abstract class XmlRpc extends HandlerBase
                 parserClassName = driver;
                 //System.out.println("Using driver: " + driver + " parserClass: saxDriver: " + parserClassName);
             }
-            parserClass = Class.forName(parserClassName);
+            XmlRpc.parserClass = Class.forName(parserClassName);
         }
         catch (ClassNotFoundException x)
         {
@@ -337,7 +337,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public static int getMaxThreads()
     {
-        return maxThreads;
+        return XmlRpc.maxThreads;
     }
 
     /**
@@ -369,7 +369,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public static boolean getKeepAlive()
     {
-        return keepalive;
+        return XmlRpc.keepalive;
     }
 
     /**
@@ -381,7 +381,7 @@ public abstract class XmlRpc extends HandlerBase
        try
        {           
         // reset values (XmlRpc objects are reusable)
-        this.errorLevel = NONE;
+        this.errorLevel = XmlRpc.NONE;
         this.errorMsg = null;
         this.values = new Stack ();
         if (this.cdata == null)
@@ -397,7 +397,7 @@ public abstract class XmlRpc extends HandlerBase
         this.currentValue = null;
 
         long now = System.currentTimeMillis();
-        if (parserClass == null)
+        if (XmlRpc.parserClass == null)
         {
             // try to get the name of the SAX driver from the System properties
             String driver;
@@ -405,22 +405,22 @@ public abstract class XmlRpc extends HandlerBase
             {
                 //TWB - Hack to deal with not having access to files
                 //driver = System.getProperty("sax.driver", DEFAULT_PARSER);
-                driver = DEFAULT_PARSER;
+                driver = XmlRpc.DEFAULT_PARSER;
             }
             catch (SecurityException e)
             {
                 // An unsigned applet may not access system properties.
-                driver = DEFAULT_PARSER;
+                driver = XmlRpc.DEFAULT_PARSER;
             }
             //System.out.println("Using default driver: " + driver);
-            setDriver(driver);
+            XmlRpc.setDriver(driver);
         }
 
         Parser parser = null;
 
         try
         {
-            parser = (Parser) parserClass.newInstance();
+            parser = (Parser) XmlRpc.parserClass.newInstance();
         }
         catch (NoSuchMethodError nsm)
         {
@@ -432,7 +432,7 @@ public abstract class XmlRpc extends HandlerBase
         parser.setDocumentHandler(this);
         parser.setErrorHandler(this);
 
-        if (debug)
+        if (XmlRpc.debug)
         {
             System.out.println("Beginning parsing XML input stream");
         }
@@ -450,7 +450,7 @@ public abstract class XmlRpc extends HandlerBase
                 this.cdata = null;
             }
         }
-        if (debug)
+        if (XmlRpc.debug)
         {
             System.out.println ("Spent " + (System.currentTimeMillis() - now) + " millis parsing");
         }
@@ -493,7 +493,7 @@ public abstract class XmlRpc extends HandlerBase
     public void endElement(String name) throws SAXException
     {
 
-        if (debug)
+        if (XmlRpc.debug)
         {
             System.out.println("endElement: " + name);
         }
@@ -512,7 +512,7 @@ public abstract class XmlRpc extends HandlerBase
             // arrays here.  For objects contained in structs, wait
             // for </member> (see code below).
             int depth = this.values.size ();
-            if (depth < 2 || this.values.elementAt(depth - 2).hashCode() != STRUCT)
+            if (depth < 2 || this.values.elementAt(depth - 2).hashCode() != XmlRpc.STRUCT)
             {
                 Value v = this.currentValue;
                 this.values.pop();
@@ -555,7 +555,7 @@ public abstract class XmlRpc extends HandlerBase
     public void startElement(String name, AttributeList atts)
             throws SAXException
     {
-        if (debug)
+        if (XmlRpc.debug)
         {
             System.out.println("startElement: " + name);
         }
@@ -633,7 +633,7 @@ public abstract class XmlRpc extends HandlerBase
     public void error(SAXParseException e) throws SAXException
     {
         System.err.println("Error parsing XML: " + e);
-        this.errorLevel = RECOVERABLE;
+        this.errorLevel = XmlRpc.RECOVERABLE;
         this.errorMsg = e.toString();
     }
 
@@ -645,7 +645,7 @@ public abstract class XmlRpc extends HandlerBase
     public void fatalError(SAXParseException e) throws SAXException
     {
         System.err.println("Fatal error parsing XML: " + e);
-        this.errorLevel = FATAL;
+        this.errorLevel = XmlRpc.FATAL;
         this.errorMsg = e.toString();
     }
 
@@ -696,10 +696,10 @@ public abstract class XmlRpc extends HandlerBase
             switch (type)
             {
                 case ARRAY:
-                    this.value = array = new Vector ();
+                    this.value = this.array = new Vector ();
                     break;
                 case STRUCT:
-                    this.value = struct = new Hashtable ();
+                    this.value = this.struct = new Hashtable ();
                     break;
             }
         }

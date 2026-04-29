@@ -38,6 +38,6 @@ public abstract class Manager {
 	}
 	
 	public static int sequenceValue() {
-		return sequence;
+		return Manager.sequence;
 	}
 }

@@ -62,9 +62,9 @@ public class SwtTrueTypeFont implements SwtFont {
 	}
 
 	public Font getFont() {
-		checkInitialized();
+		this.checkInitialized();
 
-		return font;
+		return this.font;
 	}
 
 	private synchronized void checkInitialized() {

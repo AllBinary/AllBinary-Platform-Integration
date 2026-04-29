@@ -636,7 +636,7 @@ public class XMLElement {
 	}
 
 	public XMLElement addChild(String name, String value) {
-		XMLElement xml = addChild(name);
+		XMLElement xml = this.addChild(name);
 		xml.setContent(value);
 		return xml;
 	}
@@ -1003,9 +1003,9 @@ public class XMLElement {
 	}
 
 	public XMLElement getChildOrNew(String name) {
-		XMLElement c = getChild(name);
+		XMLElement c = this.getChild(name);
 		if (c == null) {
-			c = addChild(name);
+			c = this.addChild(name);
 		}
 		return c;
 	}
@@ -1764,7 +1764,7 @@ public class XMLElement {
 	}
 
 	public boolean getBooleanAttribute(String name, boolean defaultValue) {
-		return getBooleanAttribute(name, "true", "false", defaultValue);
+		return this.getBooleanAttribute(name, "true", "false", defaultValue);
 	}
 
 	/**
@@ -2028,7 +2028,7 @@ public class XMLElement {
 			dis = new BufferedReader(new InputStreamReader(in, encoding));
 		}
 		try {
-			parseFromReader(dis, 1);
+			this.parseFromReader(dis, 1);
 		} finally {
 			dis.close();
 			in.close();
@@ -2534,7 +2534,7 @@ public class XMLElement {
 	 * @see nanoxml.XMLElement#toString()
 	 */
 	public void write(Writer writer) throws IOException {
-		writeIdented(writer, 0);
+		this.writeIdented(writer, 0);
 	}
 
 	private void writeTabs(Writer writer, int level) throws IOException {
@@ -2552,7 +2552,7 @@ public class XMLElement {
 		final boolean ident = true;
 
 		if (ident) {
-			writeTabs(writer, level);
+			this.writeTabs(writer, level);
 		}
 
 		writer.write('<');
@@ -2600,7 +2600,7 @@ public class XMLElement {
 				child.writeIdented(writer, level + 1);
 			}
 			if (ident) {
-				writeTabs(writer, level);
+				this.writeTabs(writer, level);
 			}
 			writer.write('<');
 			writer.write('/');

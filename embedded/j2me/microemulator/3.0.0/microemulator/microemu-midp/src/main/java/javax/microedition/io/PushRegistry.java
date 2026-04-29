@@ -42,28 +42,28 @@ public class PushRegistry {
 
 	public static void registerConnection(String connection, String midlet, String filter)
 			throws ClassNotFoundException, IOException {
-		impl.registerConnection(connection, midlet, filter);
+		PushRegistry.impl.registerConnection(connection, midlet, filter);
 	}
 
 	public static boolean unregisterConnection(String connection) {
-		return impl.unregisterConnection(connection);
+		return PushRegistry.impl.unregisterConnection(connection);
 	}
 
 	public static String[] listConnections(boolean available) {
-		return impl.listConnections(available);
+		return PushRegistry.impl.listConnections(available);
 	}
 
 	public static String getMIDlet(String connection) {
-		return impl.getMIDlet(connection);
+		return PushRegistry.impl.getMIDlet(connection);
 	}
 
 	public static String getFilter(String connection) {
-		return impl.getFilter(connection);
+		return PushRegistry.impl.getFilter(connection);
 	}
 
 	public static long registerAlarm(String midlet, long time) throws ClassNotFoundException,
 			ConnectionNotFoundException {
-		return impl.registerAlarm(midlet, time);
+		return PushRegistry.impl.registerAlarm(midlet, time);
 	}
 
 }

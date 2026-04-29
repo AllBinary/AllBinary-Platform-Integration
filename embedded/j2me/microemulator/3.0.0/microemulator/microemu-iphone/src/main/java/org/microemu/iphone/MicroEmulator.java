@@ -108,7 +108,7 @@ public class MicroEmulator extends UIApplication {
 		}
 
 		public Launcher getLauncher() {
-			return launcher;
+			return this.launcher;
 		}
 
 		public RecordStoreManager getRecordStoreManager() {
@@ -123,7 +123,7 @@ public class MicroEmulator extends UIApplication {
 		public void notifyDestroyed(MIDletContext midletContext) {
 			System.out.println("IPhoneCommon.notifyDestroyed()");
 			this.launcher = null;
-			initMIDlet(true);
+			this.initMIDlet(true);
 		}
 
 		public int checkPermission(String permission) {
@@ -161,7 +161,7 @@ public class MicroEmulator extends UIApplication {
 		this.window.orderFront$(this);
 		this.window.makeKeyAndVisible();
 
-		init(Arrays.asList("--usesystemclassloader"));
+		this.init(Arrays.asList("--usesystemclassloader"));
 	}
 
 	@Message
@@ -199,8 +199,8 @@ public class MicroEmulator extends UIApplication {
 	public void init(List<String> params) {
 		common = new IPhoneCommon(new IPhoneDevice(this));
 		this.deviceDisplay = new IPhoneDeviceDisplay(common);
-		this.deviceDisplay.displayRectangleWidth = (int) getWindow().bounds().size.width;
-		this.deviceDisplay.displayRectangleHeight = (int) getWindow().bounds().size.height - AbstractUI.TOOLBAR_HEIGHT;
+		this.deviceDisplay.displayRectangleWidth = (int) this.getWindow().bounds().size.width;
+		this.deviceDisplay.displayRectangleHeight = (int) this.getWindow().bounds().size.height - AbstractUI.TOOLBAR_HEIGHT;
 
 		System.setProperty("microedition.platform", "microemulator-iphone");
 		System.setProperty("microedition.locale", Locale.getDefault().toString());
@@ -215,21 +215,21 @@ public class MicroEmulator extends UIApplication {
 
 
 	public static CommonInterface getCommon() {
-		return common;
+		return MicroEmulator.common;
 	}
 
 
 	public UIWindow getWindow() {
-		return window;
+		return this.window;
 	}
 
 	public IPhoneFontManager getFontManager() {
-		return fontManager;
+		return this.fontManager;
 	}
 	public IPhoneInputMethod getInputMethod() {
-		return inputMethod;
+		return this.inputMethod;
 	}
 	public IPhoneDeviceDisplay getDeviceDisplay() {
-		return deviceDisplay;
+		return this.deviceDisplay;
 	}
 }

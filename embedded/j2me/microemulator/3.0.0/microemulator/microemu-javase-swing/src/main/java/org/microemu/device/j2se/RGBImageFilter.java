@@ -58,7 +58,7 @@ public class RGBImageFilter extends java.awt.image.RGBImageFilter
     int g = (rgb & 0x0000FF00) >>> 8;
     int b = (rgb & 0x000000FF);
 
-    if (Rr > 0) {
+    if (this.Rr > 0) {
       r = (int) (r * Rr) / 255 + this.backgroundColor.getRed();
     } else {
       r = (int) (r * -Rr) / 255 + this.foregroundColor.getRed();

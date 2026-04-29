@@ -53,7 +53,7 @@ public class ThreadUtils {
 //	}
 
 	public static String getCallLocation(String fqn) {
-		if (!java13) {
+		if (!ThreadUtils.java13) {
 			try {
 				StackTraceElement[] ste = new Throwable().getStackTrace();
 				for (int i = 0; i < ste.length - 1; i++) {
@@ -67,14 +67,14 @@ public class ThreadUtils {
 					}
 				}
 			} catch (Throwable e) {
-				java13 = true;
+				ThreadUtils.java13 = true;
 			}
 		}
 		return null;
 	}
 	
 	public static String getTreadStackTrace(Thread t) {
-		if (java14) {
+		if (ThreadUtils.java14) {
 			return "";
 		}
 		try {
@@ -88,7 +88,7 @@ public class ThreadUtils {
 			}
 			return b.toString();
 		} catch (Throwable e) {
-			java14 = true;
+			ThreadUtils.java14 = true;
 			return "";
 		}
 	}

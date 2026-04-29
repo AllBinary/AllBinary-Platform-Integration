@@ -17,8 +17,8 @@ public class StringComponentProperties {
     
     public static final boolean[] HAS_NOT_CHANGED_ARRAY = new boolean[1];
     public static final int[] LAST_WIDTH_ARRAY = new int[1];
-    public boolean[] hasNotChanged = HAS_NOT_CHANGED_ARRAY;
-    public int[] lastWidth = LAST_WIDTH_ARRAY;
+    public boolean[] hasNotChanged = StringComponentProperties.HAS_NOT_CHANGED_ARRAY;
+    public int[] lastWidth = StringComponentProperties.LAST_WIDTH_ARRAY;
     
     public String text = StringUtil.getInstance().EMPTY_STRING;
 

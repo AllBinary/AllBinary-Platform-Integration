@@ -52,7 +52,7 @@ public class FieldNodeExt implements Comparable<FieldNodeExt> {
 
 	@Override
 	public String toString() {
-		return fieldNode.access +"+"+ fieldNode.name +"+"+ fieldNode.desc +"+"+ fieldNode.signature +"+"+ fieldNode.value;
+		return this.fieldNode.access +"+"+ this.fieldNode.name +"+"+ this.fieldNode.desc +"+"+ this.fieldNode.signature +"+"+ this.fieldNode.value;
 	}	
 
 }

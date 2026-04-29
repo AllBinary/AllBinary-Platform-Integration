@@ -43,15 +43,15 @@ public class FileSystemRegistry {
 	}
 
 	public static boolean addFileSystemListener(FileSystemListener listener) {
-		return impl.addFileSystemListener(listener);
+		return FileSystemRegistry.impl.addFileSystemListener(listener);
 	}
 
 	public static boolean removeFileSystemListener(FileSystemListener listener) {
-		return impl.removeFileSystemListener(listener);
+		return FileSystemRegistry.impl.removeFileSystemListener(listener);
 	}
 
 	public static Enumeration listRoots() {
-		return impl.listRoots();
+		return FileSystemRegistry.impl.listRoots();
 	}
 
 }

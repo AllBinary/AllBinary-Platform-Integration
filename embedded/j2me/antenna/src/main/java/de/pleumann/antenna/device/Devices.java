@@ -36,7 +36,7 @@ public class Devices
 	{
 		try
 		{
-			initialize();
+			Devices.initialize();
 		}
 		catch (Exception e)
 		{
@@ -61,7 +61,7 @@ public class Devices
 		String command = args[0];
 		if ("-list".equalsIgnoreCase(command))
 		{
-			DeviceProps[] allDevices = getAllDevices();
+			DeviceProps[] allDevices = Devices.getAllDevices();
 			for (int i = 0; i < allDevices.length; i++)
 			{
 				System.out.println(allDevices[i].getIdentifier());
@@ -92,7 +92,7 @@ public class Devices
 		{
 			return null;
 		}
-		return (DeviceProps) s_devices.get(deviceName);
+		return (DeviceProps) Devices.s_devices.get(deviceName);
 	}
 
 	public static DeviceProps[] getAllDevices()
@@ -111,19 +111,19 @@ public class Devices
 	{
 		synchronized (Devices.class)
 		{
-			if (s_capablities == null)
+			if (Devices.s_capablities == null)
 			{
-				parseCapabilitiesFile();
+				Devices.parseCapabilitiesFile();
 			}
 			
-			if (s_groups == null)
+			if (Devices.s_groups == null)
 			{
-				parseGroupsFile();
+				Devices.parseGroupsFile();
 			}
 
-			if (s_devices == null)
+			if (Devices.s_devices == null)
 			{
-				parseDevicesFile();
+				Devices.parseDevicesFile();
 			}
 		}
 	}
@@ -131,11 +131,11 @@ public class Devices
 	private static InputStream openStream(String cpFile) throws FileNotFoundException, IOException
 	{
 		File dirs[];
-		if (s_baseDir != null)
+		if (Devices.s_baseDir != null)
 		{
 			dirs = new File[]
 			{
-				new File(s_baseDir),new File("lib/"), new File("./")
+				new File(Devices.s_baseDir),new File("lib/"), new File("./")
 			};
 		}
 		else
@@ -174,7 +174,7 @@ public class Devices
 			else
 			{
 				String msg = "Devices: can't find " + cpFile
-						+ " in classpath or in file default file system locations (" + toString(dirs) + ")";
+						+ " in classpath or in file default file system locations (" + Devices.toString(dirs) + ")";
 				System.out.println(msg);
 				throw new IOException(msg);
 			}
@@ -197,7 +197,7 @@ public class Devices
 	private static void parseGroupsFile() throws IOException, ParserConfigurationException, SAXException
 	{
 		s_groups = new Hashtable();
-		InputStream in = openStream("groups.xml");
+		InputStream in = Devices.openStream("groups.xml");
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try
@@ -240,7 +240,7 @@ public class Devices
 	private static void parseDevicesFile() throws IOException, ParserConfigurationException, SAXException
 	{
 		s_devices = new Hashtable();
-		parseDevices(openStream("devices.xml"));
+		Devices.parseDevices(openStream("devices.xml"));
 		
 		try
 		{
@@ -286,7 +286,7 @@ public class Devices
 									while(toks.hasMoreTokens())
 									{
 										String id = toks.nextToken().trim();
-										if (s_devices.containsKey(id))
+										if (Devices.s_devices.containsKey(id))
 										{
 											DeviceProps d = (DeviceProps) s_devices.get(id);
 											d.parseBase(e1);
@@ -308,7 +308,7 @@ public class Devices
 														throw new RuntimeException(e2);
 													}
 												}
-												s_devices.put(id, dev2);
+												Devices.s_devices.put(id, dev2);
 											}
 										}
 									}
@@ -330,7 +330,7 @@ public class Devices
 	{
 		s_capablities = new Hashtable();
 		String cpFile = "capabilities.xml";
-		InputStream in = openStream(cpFile);
+		InputStream in = Devices.openStream(cpFile);
 
 		try
 		{
@@ -381,16 +381,16 @@ public class Devices
 	{
 		synchronized (Devices.class)
 		{
-			s_groups = null;
-			s_capablities = null;
-			s_devices = null;
+			Devices.s_groups = null;
+			Devices.s_capablities = null;
+			Devices.s_devices = null;
 		}
-		initialize();
+		Devices.initialize();
 	}
 	
 	public static void setDatabaseDir(String dir) throws IOException, ParserConfigurationException, SAXException
 	{
 		s_baseDir = dir;
-		reload();
+		Devices.reload();
 	}
 }

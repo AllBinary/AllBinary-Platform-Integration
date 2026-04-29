@@ -193,7 +193,7 @@ public class Canvas extends Displayable
                 
     		if (currentDisplay != null) {
                     ScreenListenerHandler.getInstance().fireWithState(mode);
-                    sizeChanged(currentDisplay);
+                    this.sizeChanged(currentDisplay);
     		}
     	}
     }
@@ -210,7 +210,7 @@ public class Canvas extends Displayable
 
     @Override
     public int getTypeAsInt() {
-        return TYPE;
+        return Canvas.TYPE;
     }
     
 }

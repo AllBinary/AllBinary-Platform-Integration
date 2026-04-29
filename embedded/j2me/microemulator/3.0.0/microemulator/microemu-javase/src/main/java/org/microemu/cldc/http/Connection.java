@@ -88,7 +88,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			return null;
 		}
 
-		return cn.getURL().toString();
+		return this.cn.getURL().toString();
 	}
 
 	public String getProtocol() {
@@ -100,7 +100,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			return null;
 		}
 
-		return cn.getURL().getHost();
+		return this.cn.getURL().getHost();
 	}
 
 	public String getFile() {
@@ -108,7 +108,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			return null;
 		}
 
-		return cn.getURL().getFile();
+		return this.cn.getURL().getFile();
 	}
 
 	public String getRef() {
@@ -116,7 +116,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			return null;
 		}
 
-		return cn.getURL().getRef();
+		return this.cn.getURL().getRef();
 	}
 
 	public String getQuery() {
@@ -171,7 +171,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			return null;
 		}
 
-		return cn.getRequestProperty(key);
+		return this.cn.getRequestProperty(key);
 	}
 
 	public void setRequestProperty(String key, String value) throws IOException {
@@ -223,7 +223,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			this.connected = true;
 		}
 
-		return cn.getExpiration();
+		return this.cn.getExpiration();
 	}
 
 	public long getDate() throws IOException {
@@ -235,7 +235,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			this.connected = true;
 		}
 
-		return cn.getDate();
+		return this.cn.getDate();
 	}
 
 	public long getLastModified() throws IOException {
@@ -247,7 +247,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			this.connected = true;
 		}
 
-		return cn.getLastModified();
+		return this.cn.getLastModified();
 	}
 
 	public String getHeaderField(String name) throws IOException {
@@ -259,7 +259,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			this.connected = true;
 		}
 
-		return cn.getHeaderField(name);
+		return this.cn.getHeaderField(name);
 	}
 
 	public int getHeaderFieldInt(String name, int def) throws IOException {
@@ -271,7 +271,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			this.connected = true;
 		}
 
-		return cn.getHeaderFieldInt(name, def);
+		return this.cn.getHeaderFieldInt(name, def);
 	}
 
 	public long getHeaderFieldDate(String name, long def) throws IOException {
@@ -283,7 +283,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			this.connected = true;
 		}
 
-		return cn.getHeaderFieldDate(name, def);
+		return this.cn.getHeaderFieldDate(name, def);
 	}
 
 	public String getHeaderField(int n) throws IOException {
@@ -295,7 +295,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			this.connected = true;
 		}
 
-		return cn.getHeaderField(getImplIndex(n));
+		return this.cn.getHeaderField(getImplIndex(n));
 	}
 
 	public String getHeaderFieldKey(int n) throws IOException {
@@ -307,7 +307,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 			this.connected = true;
 		}
 
-		return cn.getHeaderFieldKey(getImplIndex(n));
+		return this.cn.getHeaderFieldKey(getImplIndex(n));
 	}
 
 	private int getImplIndex(int index){
@@ -324,7 +324,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 
 		this.connected = true;
 
-		return cn.getInputStream();
+		return this.cn.getInputStream();
 	}
 
 	public DataInputStream openDataInputStream() throws IOException {
@@ -338,7 +338,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 
 		this.connected = true;
 
-		return cn.getOutputStream();
+		return this.cn.getOutputStream();
 	}
 
 	public DataOutputStream openDataOutputStream() throws IOException {
@@ -347,7 +347,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 
 	public String getType() {
 		try {
-			return getHeaderField("content-type");
+			return this.getHeaderField("content-type");
 		} catch (IOException ex) {
 			return null;
 		}
@@ -355,7 +355,7 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 
 	public String getEncoding() {
 		try {
-			return getHeaderField("content-encoding");
+			return this.getHeaderField("content-encoding");
 		} catch (IOException ex) {
 			return null;
 		}
@@ -363,14 +363,14 @@ public class Connection implements HttpConnection, ConnectionImplementation {
 
 	public long getLength() {
 		try {
-			return getHeaderFieldInt("content-length", -1);
+			return this.getHeaderFieldInt("content-length", -1);
 		} catch (IOException ex) {
 			return -1;
 		}
 	}
 
 	public static boolean isAllowNetworkConnection() {
-		return allowNetworkConnection;
+		return Connection.allowNetworkConnection;
 	}
 
 	public static void setAllowNetworkConnection(boolean allowNetworkConnection) {

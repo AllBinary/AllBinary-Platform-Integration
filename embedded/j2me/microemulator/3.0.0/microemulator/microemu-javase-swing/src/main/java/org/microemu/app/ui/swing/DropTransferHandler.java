@@ -64,27 +64,27 @@ public class DropTransferHandler extends TransferHandler {
 			Class representationclass = transferFlavors[i].getRepresentationClass();
 			// URL from Explorer or Firefox, KDE
         	if ((representationclass != null) && URL.class.isAssignableFrom(representationclass)) {
-        		if (debugImport) {
+        		if (DropTransferHandler.debugImport) {
         			Logger.debug("acepted ", transferFlavors[i]);
         		}
         		return true;
         	}
         	// Drop from Windows Explorer
         	if (DataFlavor.javaFileListFlavor.equals(transferFlavors[i])) {
-        		if (debugImport) {
+        		if (DropTransferHandler.debugImport) {
         			Logger.debug("acepted ", transferFlavors[i]);
         		}
         		return true;
             }
         	// Drop from GNOME
             if (DataFlavor.stringFlavor.equals(transferFlavors[i])) {
-            	if (debugImport) {
+            	if (DropTransferHandler.debugImport) {
         			Logger.debug("acepted ", transferFlavors[i]);
         		}
                 return true;
             }
-			if (uriListFlavor.equals(transferFlavors[i])) {
-				if (debugImport) {
+			if (DropTransferHandler.uriListFlavor.equals(transferFlavors[i])) {
+				if (DropTransferHandler.debugImport) {
         			Logger.debug("acepted ", transferFlavors[i]);
         		}
 				return true;
@@ -97,11 +97,11 @@ public class DropTransferHandler extends TransferHandler {
 //					return true;
 //				}
 //			}
-			if (debugImport) {
+			if (DropTransferHandler.debugImport) {
 				Logger.debug(i + " unknown import ", transferFlavors[i]);
 			}
 		}
-		if (debugImport) {
+		if (DropTransferHandler.debugImport) {
 			Logger.debug("import rejected");
 		}
         return false;
@@ -146,7 +146,7 @@ public class DropTransferHandler extends TransferHandler {
 				}
             	if (data instanceof String) {
                 	Logger.debug("importing", transferFlavors[i]);
-                	String path = getPathString((String) data);
+                	String path = this.getPathString((String) data);
           			if (Common.isMIDletUrlExtension(path)) {
                                     throw new RuntimeException();
 						//Common.openMIDletUrlSafe(path);
@@ -157,7 +157,7 @@ public class DropTransferHandler extends TransferHandler {
               	}
             }
             // Drop from GNOME Nautilus
-            if (uriListFlavor.equals(transferFlavors[i])) {
+            if (DropTransferHandler.uriListFlavor.equals(transferFlavors[i])) {
 				Object data;
 				try {
 					data = t.getTransferData(uriListFlavor);
@@ -168,7 +168,7 @@ public class DropTransferHandler extends TransferHandler {
 				}
 				if (data instanceof String) {
 					Logger.debug("importing", transferFlavors[i]);
-					String path = getPathString((String) data);
+					String path = this.getPathString((String) data);
 					if (Common.isMIDletUrlExtension(path)) {
                                             throw new RuntimeException();
 						//Common.openMIDletUrlSafe(path);
@@ -178,7 +178,7 @@ public class DropTransferHandler extends TransferHandler {
 					return true;
 				}
 			}
-            if (debugImport) {
+            if (DropTransferHandler.debugImport) {
             	Logger.debug(i + " unknown importData ", transferFlavors[i]);
             }
         }

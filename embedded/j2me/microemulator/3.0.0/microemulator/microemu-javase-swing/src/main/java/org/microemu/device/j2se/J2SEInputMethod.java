@@ -70,7 +70,7 @@ public class J2SEInputMethod extends InputMethodImpl {
 		}
 
 		public void run() {
-			if (repeatModeKeyCode != Integer.MIN_VALUE) {
+			if (this.repeatModeKeyCode != Integer.MIN_VALUE) {
 				MIDletAccess ma = MIDletBridge.getMIDletAccess();
 				if (ma == null) {
 					return;
@@ -83,7 +83,7 @@ public class J2SEInputMethod extends InputMethodImpl {
 
 				da.keyReleased(repeatModeKeyCode);
 				eventAlreadyConsumed = false;
-				repeatModeKeyCode = Integer.MIN_VALUE;
+				this.repeatModeKeyCode = Integer.MIN_VALUE;
 			}
 		}
 	};
@@ -351,7 +351,7 @@ public class J2SEInputMethod extends InputMethodImpl {
 		this.eventAlreadyConsumed = false;
 		this.ignoreButtonRelease = null;
 		if (DeviceFactory.getDevice().hasRepeatEvents()) {
-			if (repeatModeKeyCodes.contains(new Integer(keyCode))) {
+			if (this.repeatModeKeyCodes.contains(new Integer(keyCode))) {
 				MIDletAccess ma = MIDletBridge.getMIDletAccess();
 				if (ma == null) {
 					return;
@@ -361,10 +361,10 @@ public class J2SEInputMethod extends InputMethodImpl {
 					return;
 				}
 				da.keyRepeated(keyCode1);
-				eventAlreadyConsumed = true;
+				this.eventAlreadyConsumed = true;
 				return;
 			} else {
-				repeatModeKeyCodes.add(new Integer(keyCode));
+				this.repeatModeKeyCodes.add(new Integer(keyCode));
 			}
 		}
 

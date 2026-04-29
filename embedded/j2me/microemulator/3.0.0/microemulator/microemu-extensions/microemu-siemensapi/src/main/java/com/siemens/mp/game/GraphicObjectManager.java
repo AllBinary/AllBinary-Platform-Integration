@@ -36,7 +36,7 @@ public class GraphicObjectManager  extends com.siemens.mp.misc.NativeMem{
     
     public void addObject(GraphicObject gobject) {
         //System.out.println("void addObject(GraphicObject "+gobject+")");
-        v.addElement(gobject);
+        this.v.addElement(gobject);
     }
     
     public static byte[] createTextureBits(int width, int height, byte[] texture) {
@@ -47,13 +47,13 @@ public class GraphicObjectManager  extends com.siemens.mp.misc.NativeMem{
     
     public void deleteObject(GraphicObject gobject) {
         //System.out.println("void deleteObject(GraphicObject gobject)");
-        v.removeElement(gobject);
+        this.v.removeElement(gobject);
     }
     
     
     public void deleteObject(int position) {
         //System.out.println("void deleteObject(int position)");
-        v.removeElementAt(position);
+        this.v.removeElementAt(position);
     }
     
     
@@ -66,13 +66,13 @@ public class GraphicObjectManager  extends com.siemens.mp.misc.NativeMem{
     
     public int getObjectPosition(GraphicObject gobject) {
         //System.out.println("int getObjectPosition(GraphicObject gobject)");
-        return v.indexOf(gobject);
+        return this.v.indexOf(gobject);
     }
     
     
     public void insertObject(GraphicObject gobject, int position) {
         //System.out.println("void insertObject(GraphicObject gobject, int position)");
-        v.insertElementAt(gobject, position);
+        this.v.insertElementAt(gobject, position);
     }
     
     

@@ -136,7 +136,7 @@ public class SwtMutableImage extends MutableImage {
 
     //org.eclipse.swt.graphics.Image
     public Object getImage() {
-        return image;
+        return this.image;
     }
 
     public int getWidth() {
@@ -242,7 +242,7 @@ public class SwtMutableImage extends MutableImage {
     }
     
     public org.eclipse.swt.graphics.GC getGc() {
-        return gc;
+        return this.gc;
     }
 
     protected void finalize() throws Throwable {
@@ -255,7 +255,7 @@ public class SwtMutableImage extends MutableImage {
     public static final int TYPE = 2;
 
     public int getType() {
-        return TYPE;
+        return SwtMutableImage.TYPE;
     }
     
 }

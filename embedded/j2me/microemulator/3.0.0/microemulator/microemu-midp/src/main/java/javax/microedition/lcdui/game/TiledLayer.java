@@ -110,7 +110,7 @@ public class TiledLayer extends Layer {
                 //System.out.println("getAnimatedTile: " + index);
 	        if (index < 0 || index >= this.numAnimatedTiles)
 	            throw new IndexOutOfBoundsException();
-	        return animatedTiles[index];
+	        return this.animatedTiles[index];
     	//}
     }
     
@@ -119,10 +119,10 @@ public class TiledLayer extends Layer {
 	        index = -index-1;
 	        if (index < 0 || index >= this.numAnimatedTiles)
 	            throw new IndexOutOfBoundsException();
-	        if (staticTileIndex < 0 || staticTileIndex > numStaticTiles)
+	        if (staticTileIndex < 0 || staticTileIndex > this.numStaticTiles)
 	            throw new IndexOutOfBoundsException();
 	        
-	        animatedTiles[index] = staticTileIndex;
+	        this.animatedTiles[index] = staticTileIndex;
     	//}
     }
     
@@ -133,13 +133,13 @@ public class TiledLayer extends Layer {
 //    boolean found;
     public void setCell(int col, int row, int index) {
     	//synchronized (this) {
-	        if (-index-1 >= this.numAnimatedTiles || index > numStaticTiles)
+	        if (-index-1 >= this.numAnimatedTiles || index > this.numStaticTiles)
 	            throw new IndexOutOfBoundsException();
 //                if(!found && index < 0) {
 //                    found = true;
 //                    System.out.println("AnimationTile: found: " + index);
 //                }
-	        tiles[row][col] = index;
+	        this.tiles[row][col] = index;
     	//}
     }
     
@@ -152,8 +152,8 @@ public class TiledLayer extends Layer {
 	        if (this.img.getWidth() % tileWidth != 0 || this.img.getHeight() % tileHeight != 0)
 	            throw new IllegalArgumentException();
 	
-	        int newNumStaticTiles = (this.img.getWidth() / getCellWidth()) * 
-	                                    (this.img.getHeight() / getCellHeight());
+	        int newNumStaticTiles = (this.img.getWidth() / this.getCellWidth()) * 
+	                                    (this.img.getHeight() / this.getCellHeight());
 	        
 	        
 	        // recalculate size
@@ -166,7 +166,7 @@ public class TiledLayer extends Layer {
 	        this.tileWidth = tileWidth;
 	        this.tileHeight = tileHeight;
 	        
-	        if (newNumStaticTiles >= numStaticTiles) {
+	        if (newNumStaticTiles >= this.numStaticTiles) {
 	            this.numStaticTiles = newNumStaticTiles;
 	            return;
 	        }
@@ -187,14 +187,14 @@ public class TiledLayer extends Layer {
 	            throw new IllegalArgumentException();
 	        if (row < 0 || col < 0 || col + numCols > this.columnTotal || row + numRows > this.rowTotal)    
 	            throw new IndexOutOfBoundsException();
-	        if (-index-1 >= this.numAnimatedTiles || index > numStaticTiles)
+	        if (-index-1 >= this.numAnimatedTiles || index > this.numStaticTiles)
 	            throw new IndexOutOfBoundsException();
 	        
 	        int maxRow = row + numRows;
 	        int maxColumn = col + numCols;
 	        for (int r = row; r < maxRow; r++) {
 	            for (int c = col; c < maxColumn; c++) {
-	                tiles[r][c] = index; 
+	                this.tiles[r][c] = index; 
 	            }
 	        }
     	//}
@@ -203,21 +203,21 @@ public class TiledLayer extends Layer {
     // dont need for synch here as columns are a constant
     // after creation
     public final int getColumns() {
-        return columnTotal;
+        return this.columnTotal;
     }
     
     // dont need for synch here as rows are a constant
     // after creation
     public final int getRows() {
-        return rowTotal;
+        return this.rowTotal;
     }
     
     public final int getCellWidth() {
-        return tileWidth;
+        return this.tileWidth;
     }
     
     public final int getCellHeight() {
-        return tileHeight;
+        return this.tileHeight;
     }
     
 //    private int lastRow0 = Integer.MIN_VALUE;
@@ -279,7 +279,7 @@ public class TiledLayer extends Layer {
             int clipX = graphics.getClipX();
 
             int diff = clipX - x;
-            if (diff > tileWidth)
+            if (diff > this.tileWidth)
             {
                 column0 = (diff / tileWidth) - 1;
                 
@@ -317,7 +317,7 @@ public class TiledLayer extends Layer {
             int clipY = graphics.getClipY();
 
             int diff = clipY - y;
-            if (diff > tileHeight)
+            if (diff > this.tileHeight)
             {
                 row0 = diff / tileHeight - 1;
 
@@ -359,7 +359,7 @@ public class TiledLayer extends Layer {
 	            for (int c = column0; c < maxColumn; c++, x += tileWidth) {
 	                tile = this.tiles[r][c];
 	                if (tile < 0)
-	                    tile = getAnimatedTile(tile);
+	                    tile = this.getAnimatedTile(tile);
 	                if (tile == 0)
 	                    continue;
 	                

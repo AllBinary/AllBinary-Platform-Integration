@@ -40,7 +40,7 @@ public class ToneInfo
 
    public int getSleepDelay()
    {
-      return sleepDelay;
+      return this.sleepDelay;
    }
 
    public void setSleepDelay(int sleepDelay)
@@ -50,7 +50,7 @@ public class ToneInfo
 
    public int getFrequency()
    {
-      return frequency;
+      return this.frequency;
    }
 
    public void setFrequency(int frequency)
@@ -60,7 +60,7 @@ public class ToneInfo
 
    public int getLengthOfTime()
    {
-      return lengthOfTime;
+      return this.lengthOfTime;
    }
 
    public void setLengthOfTime(int lengthOfTime)
@@ -70,7 +70,7 @@ public class ToneInfo
    
    public int getVolume()
    {
-      return volume;
+      return this.volume;
    }
 
    public void setVolume(int volume)

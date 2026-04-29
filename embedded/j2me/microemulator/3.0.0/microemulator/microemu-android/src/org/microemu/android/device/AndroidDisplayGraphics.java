@@ -78,10 +78,10 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 	public AndroidDisplayGraphics() {
         this.delegate = null;
         
-		strokePaint.setAntiAlias(true);
-		strokePaint.setStyle(Paint.Style.STROKE);
-		fillPaint.setAntiAlias(true);
-		fillPaint.setStyle(Paint.Style.FILL);
+		this.strokePaint.setAntiAlias(true);
+		this.strokePaint.setStyle(Paint.Style.STROKE);
+		this.fillPaint.setAntiAlias(true);
+		this.fillPaint.setStyle(Paint.Style.FILL);
 	}
 	
     public AndroidDisplayGraphics(Bitmap bitmap) {
@@ -94,7 +94,7 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 		this.fillPaint.setAntiAlias(true);
 		this.fillPaint.setStyle(Paint.Style.FILL);
         
-        reset(this.canvas);
+        this.reset(this.canvas);
     }
 	
 	public void reset(Canvas canvas) {
@@ -108,11 +108,11 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 		// setMatrix changes the clipping too
 		this.canvas.clipRect(tmp, Region.Op.REPLACE);
 		this.clip = this.canvas.getClipBounds();
-		setFont(Font.getDefaultFont());
+		this.setFont(Font.getDefaultFont());
 	}
 	
 	public Canvas getCanvas() {
-		return canvas;
+		return this.canvas;
 	}
 	
     public void setDelegate(GraphicsDelegate delegate) {
@@ -120,7 +120,7 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
     }
 
 	public void clipRect(int x, int y, int width, int height) {
-		canvas.clipRect(x, y, x + width, y + height);
+		this.canvas.clipRect(x, y, x + width, y + height);
 		this.clip = this.canvas.getClipBounds();
 		
         if (this.delegate != null) {
@@ -170,7 +170,7 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
     		if (x1 == x2) {
     			this.canvas.drawLine(x1, y1, x2, y2 + 1, strokePaint);
     		} else if (y1 == y2) {
-    			canvas.drawLine(x1, y1, x2 + 1, y2, strokePaint);
+    			this.canvas.drawLine(x1, y1, x2 + 1, y2, strokePaint);
     		} else { 
     			this.canvas.drawLine(x1, y1, x2 + 1, y2 + 1, strokePaint);
     		}
@@ -186,11 +186,11 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 	}
 
 	public void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
-		canvas.drawRoundRect(new RectF(x, y, x + width, y + height), (float) arcWidth, (float) arcHeight, strokePaint);
+		this.canvas.drawRoundRect(new RectF(x, y, x + width, y + height), (float) arcWidth, (float) arcHeight, strokePaint);
    }
 
 	public void drawString(String str, int x, int y, int anchor) {
-		drawSubstring(str, 0, str.length(), x, y, anchor);
+		this.drawSubstring(str, 0, str.length(), x, y, anchor);
 	}
 
 	public void drawSubstring(String str, int offset, int len, int x, int y, int anchor) {
@@ -235,35 +235,35 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 	}
 
 	public void fillRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
-		canvas.drawRoundRect(new RectF(x, y, x + width, y + height), (float) arcWidth, (float) arcHeight, fillPaint);
+		this.canvas.drawRoundRect(new RectF(x, y, x + width, y + height), (float) arcWidth, (float) arcHeight, fillPaint);
     }
 
 	public int getClipHeight() {
-		return clip.bottom - clip.top;
+		return this.clip.bottom - this.clip.top;
 	}
 
 	public int getClipWidth() {
-		return clip.right - clip.left;
+		return this.clip.right - this.clip.left;
 	}
 
 	public int getClipX() {
-		return clip.left;
+		return this.clip.left;
 	}
 
 	public int getClipY() {
-		return clip.top;
+		return this.clip.top;
 	}
 
 	public int getColor() {
-		return strokePaint.getColor();
+		return this.strokePaint.getColor();
 	}
 
 	public Font getFont() {
-		return font;
+		return this.font;
 	}
 	
 	public int getStrokeStyle() {
-		return strokeStyle;
+		return this.strokeStyle;
 	}
 
 	public void setClip(int x, int y, int width, int height) {
@@ -306,7 +306,7 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 	}
 
 	public void setColor(int RGB) {
-		strokePaint.setColor(0xff000000 | RGB);
+		this.strokePaint.setColor(0xff000000 | RGB);
 		this.fillPaint.setColor(0xff000000 | RGB);
 	}
 

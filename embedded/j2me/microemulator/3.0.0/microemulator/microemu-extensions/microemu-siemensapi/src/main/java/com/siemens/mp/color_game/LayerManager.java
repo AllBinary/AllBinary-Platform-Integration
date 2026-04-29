@@ -29,16 +29,16 @@ import javax.microedition.lcdui.Graphics;
 public class LayerManager {
     
     public LayerManager() {
-        setViewWindow(0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE);
+        this.setViewWindow(0, 0, Integer.MAX_VALUE, Integer.MAX_VALUE);
         this.layers=new Vector();
     }
     
     public void append(Layer l) {
-        layers.addElement(l);
+        this.layers.addElement(l);
     }
     
     public void insert(Layer l, int index) {
-        layers.insertElementAt(l,index);
+        this.layers.insertElementAt(l,index);
     }
     
     public Layer getLayerAt(int index) {
@@ -46,11 +46,11 @@ public class LayerManager {
     }
     
     public int getSize() {
-        return layers.size();
+        return this.layers.size();
     }
     
     public void remove(Layer l) {
-        layers.removeElement(l);
+        this.layers.removeElement(l);
     }
     
     
@@ -71,10 +71,10 @@ public class LayerManager {
         for (int i = this.layers.size(); --i >= 0; ) {
             Layer comp = (Layer)this.layers.elementAt(i);
             if (comp.visible
-            &&comp.x+comp.width>=viewX
-            &&comp.x<=viewX+clipW
-            &&comp.y+comp.height>=viewY
-            &&comp.y<=viewY+clipH) {
+            &&comp.x+comp.width>=this.viewX
+            &&comp.x<=this.viewX+clipW
+            &&comp.y+comp.height>=this.viewY
+            &&comp.y<=this.viewY+clipH) {
                 comp.paint(g);
             }
         }

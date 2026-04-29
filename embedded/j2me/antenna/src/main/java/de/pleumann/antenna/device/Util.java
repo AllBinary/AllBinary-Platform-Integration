@@ -32,7 +32,7 @@ public class Util
 				{
 					String macro2 = "%" + macro + "%";
 					int delta = value.length() - macro2.length();
-					text = replaceAll(text, macro2, value);
+					text = Util.replaceAll(text, macro2, value);
 					macroEnd += delta;
 					macroStart += delta;
 				}

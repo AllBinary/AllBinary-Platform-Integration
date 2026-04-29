@@ -193,7 +193,7 @@ public class JSONPointer {
             if (current instanceof JSONObject) {
                 current = ((JSONObject) current).opt(unescape(token));
             } else if (current instanceof JSONArray) {
-                current = readByIndexToken(current, token);
+                current = JSONPointer.readByIndexToken(current, token);
             } else {
                 throw new JSONPointerException(format(
                         "value [%s] is not an array or object therefore its key %s cannot be resolved", current,
@@ -264,7 +264,7 @@ public class JSONPointer {
         try {
             StringBuilder rval = new StringBuilder("#");
             for (String token : this.refTokens) {
-                rval.append('/').append(URLEncoder.encode(token, ENCODING));
+                rval.append('/').append(URLEncoder.encode(token, JSONPointer.ENCODING));
             }
             return rval.toString();
         } catch (UnsupportedEncodingException e) {

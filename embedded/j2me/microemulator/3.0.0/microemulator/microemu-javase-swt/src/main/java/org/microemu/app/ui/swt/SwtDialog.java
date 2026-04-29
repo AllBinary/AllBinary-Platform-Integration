@@ -62,7 +62,7 @@ public class SwtDialog
 	private Control contents;
 	private int shellStyle = SWT.SHELL_TRIM;
 	private boolean block = false;
-	private int returnCode = OK;
+	private int returnCode = SwtDialog.OK;
 
 
 	public SwtDialog(Shell parentShell)
@@ -75,11 +75,11 @@ public class SwtDialog
 	
 	public void create() 
 	{
-		this.shell = createShell();
-		this.contents = createContents(this.shell);
+		this.shell = this.createShell();
+		this.contents = this.createContents(this.shell);
 
 		//initialize the bounds of the shell to that appropriate for the contents
-		initializeBounds();
+		this.initializeBounds();
 	}
 
 
@@ -87,7 +87,7 @@ public class SwtDialog
 	{
 		Shell newShell = new Shell(this.parentShell, shellStyle);
 
-		resizeListener = new Listener() {
+		this.resizeListener = new Listener() {
 			public void handleEvent(Event e) {
 				resizeHasOccurred = true;
 			}
@@ -124,8 +124,8 @@ public class SwtDialog
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		composite.setFont(parent.getFont());
 
-		this.dialogArea = createDialogArea(composite);
-		this.buttonBar = createButtonBar(composite);
+		this.dialogArea = this.createDialogArea(composite);
+		this.buttonBar = this.createButtonBar(composite);
 
 		return composite;
 	}
@@ -153,7 +153,7 @@ public class SwtDialog
 
 		this.btOk = new Button(composite, SWT.PUSH);
 		this.btOk.setText("OK");		
-		btOk.addSelectionListener(new SelectionAdapter() 
+		this.btOk.addSelectionListener(new SelectionAdapter() 
 		{
 			public void widgetSelected(SelectionEvent event) 
 			{
@@ -163,7 +163,7 @@ public class SwtDialog
 		
 		this.btCancel = new Button(composite, SWT.PUSH);
 		this.btCancel.setText("Cancel");		
-		btCancel.addSelectionListener(new SelectionAdapter() 
+		this.btCancel.addSelectionListener(new SelectionAdapter() 
 		{
 			public void widgetSelected(SelectionEvent event) 
 			{
@@ -185,16 +185,16 @@ public class SwtDialog
 			return;
 		}
 
-		Point size = getInitialSize();
-		Point location = getInitialLocation(size);
+		Point size = this.getInitialSize();
+		Point location = this.getInitialLocation(size);
 
-		shell.setBounds(location.x, location.y, size.x, size.y);
+		this.shell.setBounds(location.x, location.y, size.x, size.y);
 	}
 	
 	
 	protected Point getInitialSize() 
 	{
-		return shell.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+		return this.shell.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
 	}
 
 
@@ -210,30 +210,30 @@ public class SwtDialog
 	
 	protected void buttonPressed(int buttonId) 
 	{
-		if (buttonId == OK) {
-			okPressed();
-		} else if (buttonId == CANCEL) {
-			cancelPressed();
+		if (buttonId == SwtDialog.OK) {
+			this.okPressed();
+		} else if (buttonId == SwtDialog.CANCEL) {
+			this.cancelPressed();
 		}
 	}
 
 
 	protected void okPressed() 
 	{
-		setReturnCode(OK);
-		close();
+		this.setReturnCode(OK);
+		this.close();
 	}
 	
 	
 	protected void cancelPressed() {
-		setReturnCode(CANCEL);
-		close();
+		this.setReturnCode(CANCEL);
+		this.close();
 	}
 	
 	
 	protected int getReturnCode() 
 	{
-		return returnCode;
+		return this.returnCode;
 	}
 	
 	
@@ -274,7 +274,7 @@ public class SwtDialog
 
 	public Shell getShell() 
 	{
-		return shell;
+		return this.shell;
 	}
 
 
@@ -282,16 +282,16 @@ public class SwtDialog
 	{
 
 		if (this.shell == null) {
-			create();
+			this.create();
 		}
 
 		this.shell.open();
 
 		if (this.block) { 
-			runEventLoop(this.shell);
+			this.runEventLoop(this.shell);
 		}	
 
-		return returnCode;
+		return this.returnCode;
 	}
 
 

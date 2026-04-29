@@ -51,7 +51,7 @@ public class IPhoneMutableImage extends MutableImage implements IPhoneImage {
 		this.width = width;
 		this.height = height;
 		this.colorSpace = CoreGraphics.CGColorSpaceCreateDeviceRGB();
-		this.imageContext = CoreGraphics.CGBitmapContextCreate(null, width, height, 8, width * 4, colorSpace,
+		this.imageContext = CoreGraphics.CGBitmapContextCreate(null, width, height, 8, width * 4, this.colorSpace,
 				CoreGraphicsConstants.kCGBitmapByteOrder32Little | CGImageAlphaInfo.kCGImageAlphaNoneSkipFirst);
 		this.displayGraphics = new IPhoneDisplayGraphics(this.imageContext, getWidth(), getHeight(), true);
 	}
@@ -63,7 +63,7 @@ public class IPhoneMutableImage extends MutableImage implements IPhoneImage {
 
 	@Override
 	public Graphics getGraphics() {
-		return displayGraphics;
+		return this.displayGraphics;
 	}
 
 	@Override
@@ -72,18 +72,18 @@ public class IPhoneMutableImage extends MutableImage implements IPhoneImage {
 	}
 
 	public Pointer<CGImage> getBitmap() {
-		displayGraphics.flushRenderQueue();
+		this.displayGraphics.flushRenderQueue();
 		return CoreGraphics.CGBitmapContextCreateImage(this.imageContext);
 	}
 
 	@Override
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	@Override
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	@Override

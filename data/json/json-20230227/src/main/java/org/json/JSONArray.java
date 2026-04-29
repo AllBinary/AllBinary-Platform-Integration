@@ -268,7 +268,7 @@ public class JSONArray implements Iterable<Object> {
                         .equalsIgnoreCase("true"))) {
             return true;
         }
-        throw wrongValueFormatException(index, "boolean", object, null);
+        throw JSONArray.wrongValueFormatException(index, "boolean", object, null);
     }
 
     /**
@@ -289,7 +289,7 @@ public class JSONArray implements Iterable<Object> {
         try {
             return Double.parseDouble(object.toString());
         } catch (Exception e) {
-            throw wrongValueFormatException(index, "double", object, e);
+            throw JSONArray.wrongValueFormatException(index, "double", object, e);
         }
     }
 
@@ -311,7 +311,7 @@ public class JSONArray implements Iterable<Object> {
         try {
             return Float.parseFloat(object.toString());
         } catch (Exception e) {
-            throw wrongValueFormatException(index, "float", object, e);
+            throw JSONArray.wrongValueFormatException(index, "float", object, e);
         }
     }
 
@@ -333,7 +333,7 @@ public class JSONArray implements Iterable<Object> {
             }
             return JSONObject.stringToNumber(object.toString());
         } catch (Exception e) {
-            throw wrongValueFormatException(index, "number", object, e);
+            throw JSONArray.wrongValueFormatException(index, "number", object, e);
         }
     }
 
@@ -357,7 +357,7 @@ public class JSONArray implements Iterable<Object> {
             // JSONException should really take a throwable argument.
             // If it did, I would re-implement this with the Enum.valueOf
             // method and place any thrown exception in the JSONException
-            throw wrongValueFormatException(index, "enum of type "
+            throw JSONArray.wrongValueFormatException(index, "enum of type "
                     + JSONObject.quote(clazz.getSimpleName()), opt(index), null);
         }
         return val;
@@ -380,7 +380,7 @@ public class JSONArray implements Iterable<Object> {
         Object object = this.get(index);
         BigDecimal val = JSONObject.objectToBigDecimal(object, null);
         if(val == null) {
-            throw wrongValueFormatException(index, "BigDecimal", object, null);
+            throw JSONArray.wrongValueFormatException(index, "BigDecimal", object, null);
         }
         return val;
     }
@@ -399,7 +399,7 @@ public class JSONArray implements Iterable<Object> {
         Object object = this.get(index);
         BigInteger val = JSONObject.objectToBigInteger(object, null);
         if(val == null) {
-            throw wrongValueFormatException(index, "BigInteger", object, null);
+            throw JSONArray.wrongValueFormatException(index, "BigInteger", object, null);
         }
         return val;
     }
@@ -421,7 +421,7 @@ public class JSONArray implements Iterable<Object> {
         try {
             return Integer.parseInt(object.toString());
         } catch (Exception e) {
-            throw wrongValueFormatException(index, "int", object, e);
+            throw JSONArray.wrongValueFormatException(index, "int", object, e);
         }
     }
 
@@ -440,7 +440,7 @@ public class JSONArray implements Iterable<Object> {
         if (object instanceof JSONArray) {
             return (JSONArray) object;
         }
-        throw wrongValueFormatException(index, "JSONArray", object, null);
+        throw JSONArray.wrongValueFormatException(index, "JSONArray", object, null);
     }
 
     /**
@@ -458,7 +458,7 @@ public class JSONArray implements Iterable<Object> {
         if (object instanceof JSONObject) {
             return (JSONObject) object;
         }
-        throw wrongValueFormatException(index, "JSONObject", object, null);
+        throw JSONArray.wrongValueFormatException(index, "JSONObject", object, null);
     }
 
     /**
@@ -479,7 +479,7 @@ public class JSONArray implements Iterable<Object> {
         try {
             return Long.parseLong(object.toString());
         } catch (Exception e) {
-            throw wrongValueFormatException(index, "long", object, e);
+            throw JSONArray.wrongValueFormatException(index, "long", object, e);
         }
     }
 
@@ -497,7 +497,7 @@ public class JSONArray implements Iterable<Object> {
         if (object instanceof String) {
             return (String) object;
         }
-        throw wrongValueFormatException(index, "String", object, null);
+        throw JSONArray.wrongValueFormatException(index, "String", object, null);
     }
 
     /**

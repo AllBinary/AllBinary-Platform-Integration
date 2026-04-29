@@ -983,11 +983,11 @@ public class Main extends JFrame {
 			if (deviceDisplay.isResizable()) {
 				Rectangle size = Config.getDeviceEntryDisplaySize(entry);
 				if (size != null) {
-				    setDeviceSize(deviceDisplay, size.width, size.height);
+				    this.setDeviceSize(deviceDisplay, size.width, size.height);
 				}
 			}
 			this.common.setDevice(device);
-			updateDevice();
+			this.updateDevice();
 			return true;
 		} catch (MalformedURLException e) {
 			Message.error(errorTitle, errorTitle + ", " + Message.getCauseMessage(e), e);
@@ -1026,7 +1026,7 @@ public class Main extends JFrame {
 	}
 
 	protected void updateDevice() {
-		devicePanel.init();
+		this.devicePanel.init();
 		if (((DeviceDisplayImpl) DeviceFactory.getDevice().getDeviceDisplay()).isResizable()) {
 			setResizable(true);
 			this.resizeButton.setVisible(true);

@@ -96,9 +96,9 @@ public final class GrayImageFilter implements ImageFilter
     }
     
     return new RGBA(    
-    		(int) (Rr * Y) + foregroundColor.getRed(),
-    		(int) (Rg * Y) + foregroundColor.getGreen(),
-    		(int) (Rb * Y) + foregroundColor.getBlue(), rgb.alpha);
+    		(int) (this.Rr * Y) + foregroundColor.getRed(),
+    		(int) (this.Rg * Y) + foregroundColor.getGreen(),
+    		(int) (this.Rb * Y) + foregroundColor.getBlue(), rgb.alpha);
   }
   
 }

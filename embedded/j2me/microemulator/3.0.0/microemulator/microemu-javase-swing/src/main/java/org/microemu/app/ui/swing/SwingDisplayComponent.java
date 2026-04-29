@@ -327,12 +327,12 @@ public class SwingDisplayComponent extends JComponent implements DisplayComponen
                     J2SEGraphicsSurface aGraphicsSurface = this.graphicsSurface;
                     if (aGraphicsSurface != null) {
                         if (deviceDisplay.isFullScreenMode()) {
-                            fireDisplayRepaint(
+                            this.fireDisplayRepaint(
                                     aGraphicsSurface, x, y, width, height);
                         } else {
                             BufferedImage image = aGraphicsSurface.getImage();
                             if (image != null) {
-                                fireDisplayRepaint(
+                                this.fireDisplayRepaint(
                                         aGraphicsSurface, 0, 0, image.getWidth(), image.getHeight());
                             }
                         }
@@ -362,7 +362,7 @@ public class SwingDisplayComponent extends JComponent implements DisplayComponen
 	}
 
 	public J2SEGraphicsSurface getGraphicsSurface() {
-		return graphicsSurface;
+		return this.graphicsSurface;
 }
 
 	public MouseAdapter getMouseListener() {

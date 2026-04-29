@@ -113,41 +113,41 @@ public class J2SEFontManager implements FontManagerImpl
 
 	public int charWidth(Font f, char ch)
 	{
-		return getFont(f).charWidth(ch);
+		return this.getFont(f).charWidth(ch);
 	}
 
 
 	public int charsWidth(Font f, char[] ch, int offset, int length) 
 	{
-		return getFont(f).charsWidth(ch, offset, length);
+		return this.getFont(f).charsWidth(ch, offset, length);
 	}
 
 	public int getBaselinePosition(Font f) 
 	{
-		return getFont(f).getBaselinePosition();
+		return this.getFont(f).getBaselinePosition();
 	}
 
 
 	public int getHeight(Font f)
 	{
-		return getFont(f).getHeight();
+		return this.getFont(f).getHeight();
 	}
 
 
 	public int stringWidth(Font f, String str)
 	{
-		return getFont(f).stringWidth(str);
+		return this.getFont(f).stringWidth(str);
 	}
 	
 	
 	public int substringWidth(Font f, String str, int offset, int len)
 	{
-		return getFont(f).stringWidth(str.substring(offset, offset + len));
+		return this.getFont(f).stringWidth(str.substring(offset, offset + len));
 	}
 	
 	
 	public boolean getAntialiasing() {
-		return antialiasing;
+		return this.antialiasing;
 	}
 
 

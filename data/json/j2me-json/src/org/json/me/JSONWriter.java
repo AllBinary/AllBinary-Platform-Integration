@@ -96,7 +96,7 @@ public class JSONWriter {
     public JSONWriter(Writer w) {
         this.comma = false;
         this.mode = 'i';
-        this.stack = new char[maxdepth];
+        this.stack = new char[JSONWriter.maxdepth];
         this.top = 0;
         this.writer = w;
     }
@@ -263,7 +263,7 @@ public class JSONWriter {
      * @throws JSONException If nesting is too deep.
      */
     private void push(char c) throws JSONException {
-        if (this.top >= maxdepth) {
+        if (this.top >= JSONWriter.maxdepth) {
             throw new JSONException("Nesting too deep.");
         }
         this.stack[this.top] = c;

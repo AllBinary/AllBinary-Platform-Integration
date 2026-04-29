@@ -62,17 +62,17 @@ public class TiledBackground extends GraphicObject{
         this.heightInTiles=heightInTiles;
         this.widthInTiles=widthInTiles;
         
-        pixels=new Image[tilePixels.getHeight()/8+3];
-        pixels[0]=Image.createImage(8,8);
-        pixels[1]=Image.createImage(8,8);
-        pixels[2]=Image.createImage(8,8);
-        pixels[2].getGraphics().fillRect(0,0,8,8);
+        this.pixels=new Image[tilePixels.getHeight()/8+3];
+        this.pixels[0]=Image.createImage(8,8);
+        this.pixels[1]=Image.createImage(8,8);
+        this.pixels[2]=Image.createImage(8,8);
+        this.pixels[2].getGraphics().fillRect(0,0,8,8);
         
         for (int i=0;i<this.pixels.length-3;i++) {
             Image img=Image.createImage(8,8);
             
             img.getGraphics().drawImage(tilePixels, 0, -i*8,0);
-            pixels[i+3]=img;
+            this.pixels[i+3]=img;
         }
         
         /*for (int y=0;y<heightInTiles;y++) {
@@ -87,7 +87,7 @@ public class TiledBackground extends GraphicObject{
     
     
     public void setPositionInMap(int x, int y) {
-        posx=x;
+        this.posx=x;
         this.posy=y;
     }
     

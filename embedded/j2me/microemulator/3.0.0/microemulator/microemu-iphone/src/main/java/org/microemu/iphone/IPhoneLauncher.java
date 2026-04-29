@@ -61,11 +61,11 @@ public class IPhoneLauncher extends Launcher {
 	private TextBox textBox;
 
 	static {
-		MIDLET_FOLDER.mkdirs();
-		for (File file : MIDLET_FOLDER.listFiles()) {
+		IPhoneLauncher.MIDLET_FOLDER.mkdirs();
+		for (File file : IPhoneLauncher.MIDLET_FOLDER.listFiles()) {
 			System.out.println("Loading: " + file);
 			try {
-				addJar(file);
+				IPhoneLauncher.addJar(file);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -108,7 +108,7 @@ public class IPhoneLauncher extends Launcher {
 		menuList.addCommand(CMD_ADD);
 		menuList.setCommandListener(this);
 
-		fillList();
+		this.fillList();
 
 		this.textBox = new TextBox("Add MIDlet", "http://www.pyx4me.com/maven2-snapshot/org/microemu/microemu-demo/2.0.3-SNAPSHOT/microemu-demo-2.0.3-20081126.080125-55-me.jar", 255, TextField.URL);
 		this.textBox.addCommand(CMD_ADD);
@@ -130,18 +130,18 @@ public class IPhoneLauncher extends Launcher {
 
 	@Override
 	public void commandAction(Command c, Displayable d) {
-		if (c == CMD_ADD) {
+		if (c == IPhoneLauncher.CMD_ADD) {
 			if (d == menuList) {
 				Display.getDisplay(this).setCurrent(this.textBox);
-			} else if (d == textBox) {
+			} else if (d == this.textBox) {
 				System.out.println(textBox.getString());
 				try {
 					URL url = new URL(this.textBox.getString());
 					File file = new File(MIDLET_FOLDER, URLEncoder.encode(url.toString(),
 							"UTF-8").replace('%', '_'));
-					copyToFile(url.openStream(), file);
-					addJar(file);
-					fillList();
+					IPhoneLauncher.copyToFile(url.openStream(), file);
+					IPhoneLauncher.addJar(file);
+					this.fillList();
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException(e);
@@ -162,7 +162,7 @@ private static void copyToFile(InputStream is, File dst) throws IOException {
 			fos.write(buf, 0, i);
 		}
 	} finally {
-		closeQuietly(fos);	
+		IPhoneLauncher.closeQuietly(fos);	
 	}
 }
 

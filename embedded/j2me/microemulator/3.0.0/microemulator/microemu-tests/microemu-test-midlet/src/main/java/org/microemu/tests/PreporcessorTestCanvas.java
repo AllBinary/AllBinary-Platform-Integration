@@ -66,7 +66,7 @@ public class PreporcessorTestCanvas extends BaseTestsCanvas {
 			String resourceName = "/app-data.txt";
 			String expected = "private app-data";
 
-			String result = verifyLoadStrings(String.class.getResourceAsStream(resourceName), "String.class. "
+			String result = this.verifyLoadStrings(String.class.getResourceAsStream(resourceName), "String.class. "
 					+ resourceName, expected);
 
 			writeln(g, line++, "loaded " + result);
@@ -79,7 +79,7 @@ public class PreporcessorTestCanvas extends BaseTestsCanvas {
 			String resourceName = "resource-path-text.txt";
 			String expected = null;
 
-			String result = verifyLoadStrings(PreporcessorTestCanvas.class.getResourceAsStream(resourceName),
+			String result = this.verifyLoadStrings(PreporcessorTestCanvas.class.getResourceAsStream(resourceName),
 					"App.class. " + resourceName, expected);
 
 			writeln(g, line++, "loaded " + result);
@@ -92,7 +92,7 @@ public class PreporcessorTestCanvas extends BaseTestsCanvas {
 			String resourceName = "resource-package.txt";
 			String expected = "package relative";
 
-			String result = verifyLoadStrings(PreporcessorTestCanvas.class.getResourceAsStream(resourceName),
+			String result = this.verifyLoadStrings(PreporcessorTestCanvas.class.getResourceAsStream(resourceName),
 					"App.class. " + resourceName, expected);
 
 			writeln(g, line++, "loaded " + result);

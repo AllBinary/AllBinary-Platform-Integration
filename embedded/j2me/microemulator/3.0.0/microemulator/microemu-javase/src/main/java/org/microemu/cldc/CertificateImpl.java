@@ -37,31 +37,31 @@ public class CertificateImpl implements Certificate {
 	}
 
 	public String getIssuer() {
-		return cert.getIssuerDN().getName();
+		return this.cert.getIssuerDN().getName();
 	}
 
 	public long getNotAfter() {
-		return cert.getNotAfter().getTime();
+		return this.cert.getNotAfter().getTime();
 	}
 
 	public long getNotBefore() {
-		return cert.getNotBefore().getTime();
+		return this.cert.getNotBefore().getTime();
 	}
 
 	public String getSerialNumber() {
-		return cert.getSerialNumber().toString();
+		return this.cert.getSerialNumber().toString();
 	}
 
 	public String getSigAlgName() {
-		return cert.getSigAlgName();
+		return this.cert.getSigAlgName();
 	}
 
 	public String getSubject() {
-		return cert.getSubjectDN().getName();
+		return this.cert.getSubjectDN().getName();
 	}
 
 	public String getType() {
-		return cert.getType();
+		return this.cert.getType();
 	}
 
 	public String getVersion() {

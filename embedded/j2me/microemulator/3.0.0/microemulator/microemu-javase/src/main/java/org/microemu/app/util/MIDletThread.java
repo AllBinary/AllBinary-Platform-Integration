@@ -57,32 +57,32 @@ public class MIDletThread extends Thread {
     private String callLocation;
     
     private static synchronized int nextThreadNum() {
-    	return threadInitNumber++;
+    	return MIDletThread.threadInitNumber++;
     }
     
 	public MIDletThread() {
 		super(THREAD_NAME_PREFIX + nextThreadNum());
-		register(this);
+		MIDletThread.register(this);
 	}
 	
 	public MIDletThread(Runnable target) {
 		super(target, THREAD_NAME_PREFIX + nextThreadNum());
-		register(this);
+		MIDletThread.register(this);
 	}
 	
 	public MIDletThread(Runnable target, String name) {
 		super(target, THREAD_NAME_PREFIX + name);
-		register(this);
+		MIDletThread.register(this);
 	}
 	
 	public MIDletThread(String name) {
 		super(THREAD_NAME_PREFIX + name);
-		register(this);
+		MIDletThread.register(this);
 	}
 	
 	private static void register(MIDletThread thread) {
 		MIDletContext midletContext = MIDletBridge.getMIDletContext();
-		if (midletContext == null && debug) {
+		if (midletContext == null && MIDletThread.debug) {
 			Logger.error("Creating thread with no MIDlet context", new Throwable());
 			return;
 		}
@@ -90,7 +90,7 @@ public class MIDletThread extends Thread {
 		Map threads = (Map)midlets.get(midletContext);
 		if (threads == null) {
 			threads = new WeakHashMap();
-			midlets.put(midletContext, threads);
+			MIDletThread.midlets.put(midletContext, threads);
 		}
 		threads.put(thread, midletContext);
 	}
@@ -100,7 +100,7 @@ public class MIDletThread extends Thread {
 		 try {
 			super.run();
 		} catch (Throwable e) {
-		    if (debug) {
+		    if (MIDletThread.debug) {
 		        Logger.debug("MIDletThread throws", e);
 		    }
 		}
@@ -117,7 +117,7 @@ public class MIDletThread extends Thread {
 		}
 		final Map threads = (Map)midlets.remove(midletContext);
 		if ((threads != null) && (threads.size() != 0)) {
-			terminator = true;
+			MIDletThread.terminator = true;
 			Thread terminator = new Thread("MIDletThreadsTerminator") {
 				public void run() {
 					terminateThreads(threads);
@@ -130,7 +130,7 @@ public class MIDletThread extends Thread {
 	
 	public static boolean hasRunningThreads(MIDletContext midletContext) {
 		//return (midlets.get(midletContext) != null);
-		return terminator;
+		return MIDletThread.terminator;
 	}
 	
 	private static void terminateThreads(Map threads) {

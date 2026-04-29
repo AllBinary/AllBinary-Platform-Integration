@@ -47,11 +47,11 @@ public abstract class ConnectorAdapter implements ConnectorDelegate {
 	public abstract Connection open(String name, int mode, boolean timeouts) throws IOException;
 
 	public Connection open(String name) throws IOException {
-		return open(name, Connector.READ_WRITE, false);
+		return this.open(name, Connector.READ_WRITE, false);
 	}
 
 	public Connection open(String name, int mode) throws IOException {
-		return open(name, mode, false);
+		return this.open(name, mode, false);
 	}
 
 	public DataInputStream openDataInputStream(String name) throws IOException {

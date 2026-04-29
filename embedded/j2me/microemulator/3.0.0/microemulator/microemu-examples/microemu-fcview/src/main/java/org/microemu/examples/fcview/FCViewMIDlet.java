@@ -54,11 +54,11 @@ public class FCViewMIDlet extends MIDlet {
 		try {
 			System.out.println("FileConnection " + System.getProperty("microedition.io.file.FileConnection.version"));
 			this.list.setDir(null);
-			setCurrentDisplayable(this.list);
+			FCViewMIDlet.setCurrentDisplayable(this.list);
 		} catch (SecurityException e) {
 			Alert alert = new Alert("Error",  "Unable to access the restricted API", null, AlertType.ERROR);
 	        alert.setTimeout(Alert.FOREVER);
-	        setCurrentDisplayable(alert);
+	        FCViewMIDlet.setCurrentDisplayable(alert);
 		}
 	}
 
@@ -78,8 +78,8 @@ public class FCViewMIDlet extends MIDlet {
 
 
 	public static void exit2() {
-		instance.destroyApp(true);
-		instance.notifyDestroyed();
+		FCViewMIDlet.instance.destroyApp(true);
+		FCViewMIDlet.instance.notifyDestroyed();
 	}
 
 }

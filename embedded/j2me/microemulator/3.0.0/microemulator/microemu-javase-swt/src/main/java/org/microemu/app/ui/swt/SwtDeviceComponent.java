@@ -585,7 +585,7 @@ public class SwtDeviceComponent extends Canvas {
 	}
 
 	public DisplayComponent getDisplayComponent() {
-		return dc;
+		return this.dc;
 	}
 
 	public Point computeSize(int wHint, int hHint, boolean changed) {
@@ -600,7 +600,7 @@ public class SwtDeviceComponent extends Canvas {
 		if (size.x <= 0 || size.y <= 0)
 			return;
 
-		if (fBuffer != null) {
+		if (this.fBuffer != null) {
 			org.eclipse.swt.graphics.Rectangle r = fBuffer.getBounds();
 			if (r.width != size.x || r.height != size.y) {
 				fBuffer.dispose();
@@ -620,29 +620,29 @@ public class SwtDeviceComponent extends Canvas {
 
 			org.microemu.device.impl.Rectangle displayRectangle = ((SwtDeviceDisplay) device.getDeviceDisplay()).getDisplayRectangle();
 			gc.translate(displayRectangle.x, displayRectangle.y);
-			dc.paint(gc);
+			this.dc.paint(gc);
 			gc.translate(-displayRectangle.x, -displayRectangle.y);
 
-			if (prevOverButton != null) {
+			if (this.prevOverButton != null) {
 				org.microemu.device.impl.Shape shape = prevOverButton.getShape();
 				if (shape != null) {
                                         //SwtImmutableImage
-					drawImageInShape(gc, (org.eclipse.swt.graphics.Image) device.getNormalImage().getImage(), shape);
+					this.drawImageInShape(gc, (org.eclipse.swt.graphics.Image) device.getNormalImage().getImage(), shape);
 				}
 				prevOverButton = null;
 			}
-			if (overButton != null) {
+			if (this.overButton != null) {
 				org.microemu.device.impl.Shape shape = overButton.getShape();
 				if (shape != null) {
                                         //SwtImmutableImage
-					drawImageInShape(gc, (org.eclipse.swt.graphics.Image) device.getOverImage().getImage(), shape);
+					this.drawImageInShape(gc, (org.eclipse.swt.graphics.Image) device.getOverImage().getImage(), shape);
 				}
 			}
-			if (pressedButton != null) {
+			if (this.pressedButton != null) {
 				org.microemu.device.impl.Shape shape = pressedButton.getShape();
 				if (shape != null) {
                                         //SwtImmutableImage
-					drawImageInShape(gc, (org.eclipse.swt.graphics.Image) device.getPressedImage().getImage(), shape);
+					this.drawImageInShape(gc, (org.eclipse.swt.graphics.Image) device.getPressedImage().getImage(), shape);
 				}
 			}
 
@@ -720,7 +720,7 @@ public class SwtDeviceComponent extends Canvas {
 		}
 
 		Image getImage() {
-			return image;
+			return this.image;
 		}
 
 		public void run() {
@@ -742,7 +742,7 @@ public class SwtDeviceComponent extends Canvas {
 
 	public static Image createImage(ImageData data) {
 		CreateImageRunnable createImageRunnable = instance.new CreateImageRunnable(data);
-		instance.getDisplay().syncExec(createImageRunnable);
+		SwtDeviceComponent.instance.getDisplay().syncExec(createImageRunnable);
 
 		return createImageRunnable.getImage();
 	}
@@ -769,7 +769,7 @@ public class SwtDeviceComponent extends Canvas {
             }
             
 		CreateImageRunnable createImageRunnable = instance.new CreateImageRunnable(data);
-		instance.getDisplay().syncExec(createImageRunnable);
+		SwtDeviceComponent.instance.getDisplay().syncExec(createImageRunnable);
 
 		return createImageRunnable.getImage();
 	}
@@ -778,7 +778,7 @@ public class SwtDeviceComponent extends Canvas {
 		ImageData data = new ImageData(is);
 
 		CreateImageRunnable createImageRunnable = instance.new CreateImageRunnable(data);
-		instance.getDisplay().syncExec(createImageRunnable);
+		SwtDeviceComponent.instance.getDisplay().syncExec(createImageRunnable);
 
 		return createImageRunnable.getImage();
 	}
@@ -857,7 +857,7 @@ public class SwtDeviceComponent extends Canvas {
 			}
 
 			CreateImageRunnable createImageRunnable = instance.new CreateImageRunnable(data);
-			instance.getDisplay().syncExec(createImageRunnable);
+			SwtDeviceComponent.instance.getDisplay().syncExec(createImageRunnable);
 
 			return createImageRunnable.getImage();
 		} catch (SWTException ex) {
@@ -894,7 +894,7 @@ public class SwtDeviceComponent extends Canvas {
 		}
 
 		Color getColor() {
-			return color;
+			return this.color;
 		}
 
 		public void run() {
@@ -921,9 +921,9 @@ public class SwtDeviceComponent extends Canvas {
 
 		if (result == null) {
 			CreateColorRunnableA createColorRunnable = instance.new CreateColorRunnableA(rgb);
-			instance.getDisplay().syncExec(createColorRunnable);
+			SwtDeviceComponent.instance.getDisplay().syncExec(createColorRunnable);
 			result = createColorRunnable.getColor();
-			colors.put(rgb, result);
+			SwtDeviceComponent.colors.put(rgb, result);
 		}
 
 		return result;
@@ -939,7 +939,7 @@ public class SwtDeviceComponent extends Canvas {
 		}
 
 		FontMetrics getFontMetrics() {
-			return fontMetrics;
+			return this.fontMetrics;
 		}
 
 		public void run() {
@@ -968,7 +968,7 @@ public class SwtDeviceComponent extends Canvas {
 		}
 
 		Font getFont() {
-			return font;
+			return this.font;
 		}
 
 		public void run() {
@@ -993,7 +993,7 @@ public class SwtDeviceComponent extends Canvas {
 		}
 
 		int stringWidth() {
-			return stringWidth;
+			return this.stringWidth;
 		}
 
 		public void run() {
@@ -1007,7 +1007,7 @@ public class SwtDeviceComponent extends Canvas {
 	public static Font getFont(String name, int size, int style, boolean antialiasing) {
 		GetFontRunnable getFontRunnable = instance.new GetFontRunnable(name, size, style, antialiasing);
 
-		instance.getDisplay().syncExec(getFontRunnable);
+		SwtDeviceComponent.instance.getDisplay().syncExec(getFontRunnable);
 
 		return getFontRunnable.getFont();
 	}
@@ -1015,7 +1015,7 @@ public class SwtDeviceComponent extends Canvas {
 	public static FontMetrics getFontMetrics(Font font) {
 		GetFontMetricsRunnable getFontMetricsRunnable = instance.new GetFontMetricsRunnable(font);
 
-		instance.getDisplay().syncExec(getFontMetricsRunnable);
+		SwtDeviceComponent.instance.getDisplay().syncExec(getFontMetricsRunnable);
 
 		return getFontMetricsRunnable.getFontMetrics();
 	}
@@ -1023,7 +1023,7 @@ public class SwtDeviceComponent extends Canvas {
 	public static int stringWidth(Font font, String str) {
 		StringWidthRunnable stringWidthRunnable = instance.new StringWidthRunnable(font, str);
 
-		instance.getDisplay().syncExec(stringWidthRunnable);
+		SwtDeviceComponent.instance.getDisplay().syncExec(stringWidthRunnable);
 
 		return stringWidthRunnable.stringWidth();
 	}

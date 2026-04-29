@@ -57,9 +57,9 @@ public class EventDispatcher implements Runnable {
 				if (this.head != null) {
 					event = this.head;
 
-					if (maxFps > 0 && event instanceof PaintEvent) {
+					if (EventDispatcher.maxFps > 0 && event instanceof PaintEvent) {
 						long difference = System.currentTimeMillis() - this.lastPaintEventTime;
-						if (difference < (1000 / maxFps)) {
+						if (difference < (1000 / EventDispatcher.maxFps)) {
 							event = null;
 							try {
 								wait((1000 / maxFps) - difference);
@@ -92,11 +92,11 @@ public class EventDispatcher implements Runnable {
 							this.scheduledPaintEvent = null;
 						}
 						this.lastPaintEventTime = System.currentTimeMillis();
-						post(event);
+						this.post(event);
 						this.serviceRepaintsLock.notifyAll();
 					}					
 				} else {
-					post(event);
+					this.post(event);
 				}
 			}
 		}
@@ -116,7 +116,7 @@ public class EventDispatcher implements Runnable {
 		synchronized (this) {
 			if (event instanceof PaintEvent && this.scheduledPaintEvent != null) {
 				this.scheduledPaintEvent.merge((PaintEvent) event);
-			} else if (event instanceof PointerEvent && scheduledPointerDraggedEvent != null
+			} else if (event instanceof PointerEvent && this.scheduledPointerDraggedEvent != null
 					&& ((PointerEvent) event).type == PointerEvent.POINTER_DRAGGED) {
 				this.scheduledPointerDraggedEvent.x = ((PointerEvent) event).x;
 				this.scheduledPointerDraggedEvent.y = ((PointerEvent) event).y;
@@ -140,7 +140,7 @@ public class EventDispatcher implements Runnable {
 	}
 
 	public void put(Runnable runnable) {
-		put(new RunnableEvent(runnable));
+		this.put(new RunnableEvent(runnable));
 	}
 
 	public void serviceRepaints() {
@@ -188,7 +188,7 @@ public class EventDispatcher implements Runnable {
 
 		public void run() {
                     System.out.println(REPAINT + Thread.currentThread());
-			DeviceFactory.getDevice().getDeviceDisplay().repaint(this.x, y, width, height);
+			DeviceFactory.getDevice().getDeviceDisplay().repaint(this.x, this.y, this.width, this.height);
 		}
 
 		/**
@@ -236,7 +236,7 @@ public class EventDispatcher implements Runnable {
 		}
 
 		public void run() {
-			runnable.run();
+			this.runnable.run();
 		}
 	}
 	
@@ -249,7 +249,7 @@ public class EventDispatcher implements Runnable {
 		}
 
 		public void run() {
-			runnable.run();
+			this.runnable.run();
 		}
 
 	}

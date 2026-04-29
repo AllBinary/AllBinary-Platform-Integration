@@ -18,8 +18,8 @@ public class TestResourceLoad implements Runnable {
 		
 		resourceName = "/app-data.txt";
 		expected = "private app-data";
-		verifyLoadStrings("".getClass().getResourceAsStream(resourceName), "\"\".getClass() " +  resourceName, expected);
-		verifyLoadStrings(String.class.getResourceAsStream(resourceName), "String.class. " +  resourceName, expected);
+		this.verifyLoadStrings("".getClass().getResourceAsStream(resourceName), "\"\".getClass() " +  resourceName, expected);
+		this.verifyLoadStrings(String.class.getResourceAsStream(resourceName), "String.class. " +  resourceName, expected);
 		
 	}
 	
@@ -28,21 +28,21 @@ public class TestResourceLoad implements Runnable {
 		String expected;
 		
 		resourceName = "/container-internal.txt";
-		verifyLoadStrings(this.getClass().getResourceAsStream(resourceName), "this.getClass() " + resourceName, null);
-		verifyLoadStrings("".getClass().getResourceAsStream(resourceName), "\"\".getClass() " +  resourceName, null);
+		this.verifyLoadStrings(this.getClass().getResourceAsStream(resourceName), "this.getClass() " + resourceName, null);
+		this.verifyLoadStrings("".getClass().getResourceAsStream(resourceName), "\"\".getClass() " +  resourceName, null);
 		
 		resourceName = "/app-data.txt";
 		expected = "private app-data";
-		verifyLoadStrings(this.getClass().getResourceAsStream(resourceName), "this.getClass() " + resourceName, expected);
-		verifyLoadStrings("".getClass().getResourceAsStream(resourceName), "\"\".getClass() " +  resourceName, expected);
+		this.verifyLoadStrings(this.getClass().getResourceAsStream(resourceName), "this.getClass() " + resourceName, expected);
+		this.verifyLoadStrings("".getClass().getResourceAsStream(resourceName), "\"\".getClass() " +  resourceName, expected);
 	}
 
 	public void multipleResources() {
 		
 		String resourceName = "/strings.txt";
 		String expected = "proper MIDlet resources strings";
-		verifyLoadStrings(this.getClass().getResourceAsStream(resourceName), "this.getClass() " + resourceName, expected);
-		verifyLoadStrings("".getClass().getResourceAsStream(resourceName), "\"\".getClass() " +  resourceName, expected);
+		this.verifyLoadStrings(this.getClass().getResourceAsStream(resourceName), "this.getClass() " + resourceName, expected);
+		this.verifyLoadStrings("".getClass().getResourceAsStream(resourceName), "\"\".getClass() " +  resourceName, expected);
 		
 	}
 
@@ -79,9 +79,9 @@ public class TestResourceLoad implements Runnable {
 		
 		System.out.println("ClassLoader " + this.getClass().getClassLoader().hashCode() +  " TestResourceLoad");
 		
-		loadStringsUsingSystemClassLoaded();
-		multipleResources();
-		accessTest();
+		this.loadStringsUsingSystemClassLoaded();
+		this.multipleResources();
+		this.accessTest();
 		
 	}
 	

@@ -63,11 +63,11 @@ public class CertificateException extends IOException {
 	}
 	
 	public Certificate getCertificate() {
-		return certificate;
+		return this.certificate;
 	}
 	
 	public byte getReason() {
-		return status;
+		return this.status;
 	}
 	
 }

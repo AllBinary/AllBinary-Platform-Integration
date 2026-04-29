@@ -57,7 +57,7 @@ class MidiAudioPlayer implements Player, MetaEventListener
     		// First, get a Sequencer to play sequences of MIDI events
     		//That is, to send events to a Synthesizer at the right time.
     		this.sequencer = MidiSystem.getSequencer( ); // Used to play sequences
-    		sequencer.open(); // Turn it on.
+    		this.sequencer.open(); // Turn it on.
     		//Get a Synthesizer for the Sequencer to send notes to
     		Synthesizer synth = MidiSystem.getSynthesizer( );
     		synth.open( ); // acquire whatever resources it needs
@@ -86,7 +86,7 @@ class MidiAudioPlayer implements Player, MetaEventListener
 
 	protected void dispose() 
 	{
-        close();
+        this.close();
 	}
 	
 	public void addPlayerListener(PlayerListener playerListener) 
@@ -117,12 +117,12 @@ class MidiAudioPlayer implements Player, MetaEventListener
 	public long getMediaTime() 
 	{
 		if( this.sequencer != null )
-			return sequencer.getMicrosecondPosition();
+			return this.sequencer.getMicrosecondPosition();
 		return 0;
 	}
 
 	public int getState() {
-		return state;
+		return this.state;
 	}
 
 	public void prefetch() throws MediaException {
@@ -195,17 +195,17 @@ class MidiAudioPlayer implements Player, MetaEventListener
         {
             if (this.iLoopCount > 0) 
             {
-                iLoopCount--;
+                this.iLoopCount--;
             }
             if( this.iLoopCount > 0 || this.iLoopCount == -1)
         	{
         		this.sequencer.setMicrosecondPosition( 0 );
-        		try{ start(); } 
+        		try{ this.start(); } 
         		catch( MediaException e ) { e.printStackTrace(); }
         	}
         	else
         	{
-    			close();
+    			this.close();
     			if( this.vListeners != null )
     			{
     				for( Iterator it = this.vListeners.iterator (); it.hasNext (); ) 

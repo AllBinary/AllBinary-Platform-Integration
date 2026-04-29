@@ -91,7 +91,7 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
     }
 
     public int getColor() {
-        return color;
+        return this.color;
     }
 
     public void setColor(int RGB) {
@@ -109,13 +109,13 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
             } else {
                 awtColor = new Color(RGB);
             }
-            colorCache.put(new Integer(RGB), awtColor);
+            J2SEDisplayGraphics.colorCache.put(new Integer(RGB), awtColor);
         }
         this.g.setColor(awtColor);
     }
 
     public javax.microedition.lcdui.Font getFont() {
-        return currentFont;
+        return this.currentFont;
     }
 
     public void setFont(javax.microedition.lcdui.Font font) {
@@ -127,7 +127,7 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
     
 	
 	public int getStrokeStyle() {
-		return strokeStyle;
+		return this.strokeStyle;
 	}
 
 	public void setStrokeStyle(int style) {
@@ -139,12 +139,12 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
 	}
 
     public void clipRect(int x, int y, int width, int height) {
-        g.clipRect(x, y, width, height);
+        this.g.clipRect(x, y, width, height);
         this.clip = this.g.getClipBounds();
     }
 
     public void setClip(int x, int y, int width, int height) {
-        g.setClip(x, y, width, height);
+        this.g.setClip(x, y, width, height);
         this.clip.x = x;
         this.clip.y = y;
         this.clip.width = width;
@@ -152,44 +152,44 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
     }
 
     public int getClipX() {
-        return clip.x;
+        return this.clip.x;
     }
 
     public int getClipY() {
-        return clip.y;
+        return this.clip.y;
     }
 
     public int getClipHeight() {
-        return clip.height;
+        return this.clip.height;
     }
 
     public int getClipWidth() {
-        return clip.width;
+        return this.clip.width;
     }
 
     public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
-        g.drawArc(x, y, width, height, startAngle, arcAngle);
+        this.g.drawArc(x, y, width, height, startAngle, arcAngle);
     }
 
     public void drawImage(Image image, int x, int y, int anchor) {
         
-        image.getPlatformImage().drawImage(image, x, y, anchor, this, g);
+        image.getPlatformImage().drawImage(image, x, y, anchor, this, this.g);
         
     }
 
     public void drawLine(int x1, int y1, int x2, int y2) {
-        g.drawLine(x1, y1, x2, y2);
+        this.g.drawLine(x1, y1, x2, y2);
     }
 
     public void drawRect(int x, int y, int width, int height) {
-        drawLine(x, y, x + width, y);
-        drawLine(x + width, y, x + width, y + height);
-        drawLine(x + width, y + height, x, y + height);
-        drawLine(x, y + height, x, y);
+        this.drawLine(x, y, x + width, y);
+        this.drawLine(x + width, y, x + width, y + height);
+        this.drawLine(x + width, y + height, x, y + height);
+        this.drawLine(x, y + height, x, y);
     }
 
     public void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
-        g.drawRoundRect(x, y, width, height, arcWidth, arcHeight);
+        this.g.drawRoundRect(x, y, width, height, arcWidth, arcHeight);
     }
 
     public void drawString(String str, int x, int y, int anchor) {
@@ -219,19 +219,19 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
     }
 
     public void drawSubstring(String str, int offset, int len, int x, int y, int anchor) {
-    	drawString(str.substring(offset, offset + len), x, y, anchor);
+    	this.drawString(str.substring(offset, offset + len), x, y, anchor);
     }
 
     public void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
-        g.fillArc(x, y, width, height, startAngle, arcAngle);
+        this.g.fillArc(x, y, width, height, startAngle, arcAngle);
     }
 
     public void fillRect(int x, int y, int width, int height) {
-        g.fillRect(x, y, width, height);
+        this.g.fillRect(x, y, width, height);
     }
 
     public void fillRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
-        g.fillRoundRect(x, y, width, height, arcWidth, arcHeight);
+        this.g.fillRoundRect(x, y, width, height, arcWidth, arcHeight);
     }
 
     public void translate(int x, int y) {
@@ -281,7 +281,7 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
                     if (col + x > surfaceWidth - 1)
                         break;
                     else if (imageDataStart + col + x < imageData.length) {
-                        blendPixel(imageData, imageDataStart + x + col, rgbData[rgbStart + col]);
+                        this.blendPixel(imageData, imageDataStart + x + col, rgbData[rgbStart + col]);
                     } else {
                         return;
                     }
@@ -360,7 +360,7 @@ public class J2SEDisplayGraphics extends javax.microedition.lcdui.Graphics {
     }
 
     public J2SEGraphicsSurface getGraphicsSurface() {
-        return graphicsSurface;
+        return this.graphicsSurface;
     }
 
     private void blendPixel(int[] destData, int destOffset, int srcARGB) {

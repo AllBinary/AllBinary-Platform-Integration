@@ -105,32 +105,32 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 		static MouseRepeatedTimerTask task;
 
 		static void schedule(Component source, J2SEButton button, J2SEInputMethod inputMethod) {
-			if (task != null) {
-				task.cancel();
+			if (MouseRepeatedTimerTask.task != null) {
+				MouseRepeatedTimerTask.task.cancel();
 			}
-			task = new MouseRepeatedTimerTask();
-			task.source = source;
-			task.button = button;
-			task.inputMethod = inputMethod;
-			task.timer = new Timer();
-			task.timer.scheduleAtFixedRate(task, 5 * DELAY, DELAY);
+			MouseRepeatedTimerTask.task = new MouseRepeatedTimerTask();
+			MouseRepeatedTimerTask.task.source = source;
+			MouseRepeatedTimerTask.task.button = button;
+			MouseRepeatedTimerTask.task.inputMethod = inputMethod;
+			MouseRepeatedTimerTask.task.timer = new Timer();
+			MouseRepeatedTimerTask.task.timer.scheduleAtFixedRate(task, 5 * DELAY, DELAY);
 		}
 
 		static void stop() {
-			if (task != null) {
-				task.inputMethod = null;
-				if (task.timer != null) {
-					task.timer.cancel();
+			if (MouseRepeatedTimerTask.task != null) {
+				MouseRepeatedTimerTask.task.inputMethod = null;
+				if (MouseRepeatedTimerTask.task.timer != null) {
+					MouseRepeatedTimerTask.task.timer.cancel();
 				}
-				task.cancel();
-				task = null;
+				MouseRepeatedTimerTask.task.cancel();
+				MouseRepeatedTimerTask.task = null;
 			}
 		}
 
 		public static void mouseReleased() {
-			if ((task != null) && (task.inputMethod != null)) {
-				task.inputMethod.buttonReleased(task.button, '\0', -1);
-				stop();
+			if ((MouseRepeatedTimerTask.task != null) && (MouseRepeatedTimerTask.task.inputMethod != null)) {
+				MouseRepeatedTimerTask.task.inputMethod.buttonReleased(task.button, '\0', -1);
+				MouseRepeatedTimerTask.stop();
 			}
 
 		}
@@ -286,11 +286,11 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 	}
 
 	public DisplayComponent getDisplayComponent() {
-		return dc;
+		return this.dc;
 	}
 
 	public void init() {
-		dc.init();
+		this.dc.init();
 
 		remove(this.dc);
 
@@ -301,13 +301,13 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 	}
 
 	private void repaint(Rectangle r) {
-		repaint(r.x, r.y, r.width, r.height);
+		this.repaint(r.x, r.y, r.width, r.height);
 	}
 
 	public void switchShowMouseCoordinates() {
 		// TODO skin editing mode.
 		// showMouseCoordinates = !showMouseCoordinates;
-		dc.switchShowMouseCoordinates();
+		this.dc.switchShowMouseCoordinates();
 	}
 	
  	//Input method support begin
@@ -315,7 +315,7 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
  	private static final AttributedCharacterIterator EMPTY_TEXT = new AttributedString("").getIterator();
  	
  	public void caretPositionChanged(InputMethodEvent event) {
- 		repaint();
+ 		this.repaint();
  	}
  	
  	public void inputMethodTextChanged(InputMethodEvent event) {
@@ -334,7 +334,7 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
  				inputMethod.clipboardPaste(committedText.toString());
  			}
  		}
- 		repaint();
+ 		this.repaint();
  	}
  	
  	public InputMethodRequests getInputMethodRequests() {
@@ -346,7 +346,7 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
  	}
  	
  	public int getInsertPositionOffset() {
- 		return getCommittedTextLength();
+ 		return this.getCommittedTextLength();
  	}
  	
  	public AttributedCharacterIterator getCommittedText(int beginIndex, int endIndex, AttributedCharacterIterator.Attribute[] attributes) {
@@ -362,7 +362,7 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
  	}
  	
  	public AttributedCharacterIterator getSelectedText(AttributedCharacterIterator.Attribute[] attributes) {
- 		return EMPTY_TEXT;
+ 		return SwingDeviceComponent.EMPTY_TEXT;
  	}
  	
  	public AttributedCharacterIterator cancelLatestCommittedText(AttributedCharacterIterator.Attribute[] attributes) {
@@ -468,7 +468,7 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 			}
 			org.microemu.device.impl.Shape shape = button.getShape();
 			if (shape != null) {
-				repaint(shape.getBounds());
+				this.repaint(shape.getBounds());
 			}
 		} else {
 			// Logger.debug0x("no button for KeyCode", keyCode1);
@@ -524,7 +524,7 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 		if (this.prevOverButton != null) {
 			org.microemu.device.impl.Shape shape = this.prevOverButton.getShape();
 			if (shape != null) {
-				repaint(shape.getBounds());
+				this.repaint(shape.getBounds());
 			}
 		}
 	}
@@ -566,20 +566,20 @@ public class SwingDeviceComponent extends JPanel implements KeyListener, InputMe
 		if (this.prevOverButton != null) {
 			org.microemu.device.impl.Shape shape = this.prevOverButton.getShape();
 			if (shape != null) {
-				drawImageInShape(this.offg, (java.awt.Image) device.getNormalImage().getImage(), shape);
+				this.drawImageInShape(this.offg, (java.awt.Image) device.getNormalImage().getImage(), shape);
 			}
 			this.prevOverButton = null;
 		}
 		if (this.overButton != null) {
 			org.microemu.device.impl.Shape shape = this.overButton.getShape();
 			if (shape != null) {
-				drawImageInShape(this.offg, (java.awt.Image) device.getOverImage().getImage(), shape);
+				this.drawImageInShape(this.offg, (java.awt.Image) device.getOverImage().getImage(), shape);
 			}
 		}
 		if (this.pressedButton != null) {
 			org.microemu.device.impl.Shape shape = this.pressedButton.getShape();
 			if (shape != null) {
-				drawImageInShape(this.offg, (java.awt.Image) device.getPressedImage().getImage(), shape);
+				this.drawImageInShape(this.offg, (java.awt.Image) device.getPressedImage().getImage(), shape);
 			}
 		}
 

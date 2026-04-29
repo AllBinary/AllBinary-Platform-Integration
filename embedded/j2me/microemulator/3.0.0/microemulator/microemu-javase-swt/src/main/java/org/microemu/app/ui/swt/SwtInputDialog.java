@@ -54,7 +54,7 @@ public class SwtInputDialog extends SwtDialog
 
 	public String getValue() 
 	{
-		return value;
+		return this.value;
 	}
 
 

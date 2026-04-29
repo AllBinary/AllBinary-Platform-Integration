@@ -68,7 +68,7 @@ public abstract class AbstractUI<T extends Displayable> extends NSObject impleme
 	}
 
 	public void addCommandUI(CommandUI cmd) {
-		commands.add(cmd);
+		this.commands.add(cmd);
 		ThreadDispatcher.dispatchOnMainThread(new ARunnable() {
 			public void run() {
 				updateToolbar();
@@ -90,7 +90,7 @@ public abstract class AbstractUI<T extends Displayable> extends NSObject impleme
 	}
 
 	public void removeCommandUI(CommandUI cmd) {
-		commands.remove(cmd);
+		this.commands.remove(cmd);
 		ThreadDispatcher.dispatchOnMainThread(new ARunnable() {
 			public void run() {
 				updateToolbar();
@@ -117,6 +117,6 @@ public abstract class AbstractUI<T extends Displayable> extends NSObject impleme
 	}
 	
 	public Vector getCommandsUI() {
-		return commands;
+		return this.commands;
 	}
 }

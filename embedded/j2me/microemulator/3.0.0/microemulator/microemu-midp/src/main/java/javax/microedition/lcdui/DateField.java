@@ -92,7 +92,7 @@ public class DateField extends Item
 
 		this.label = label;
 		// TODO this is ignoring TimeZone!!
-		setInputMode(mode);
+		this.setInputMode(mode);
 
 		this.dateCanvas = new DateCanvas();
 		this.dateCanvas.addCommand(saveCommand);
@@ -110,7 +110,7 @@ public class DateField extends Item
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidDateFieldUI")) {
 			return ((DateFieldUI) ui).getDate();
 		} else {
-			return date;
+			return this.date;
 		}
 	}
 
@@ -121,14 +121,14 @@ public class DateField extends Item
 		} else {
 			this.date = date;
 			// TODO change the Canvas!!
-			updateDateTimeString();
+			this.updateDateTimeString();
 		}
 	}
 
 
   public int getInputMode()
   {
-    return mode;
+    return this.mode;
   }
 
 
@@ -143,10 +143,10 @@ public class DateField extends Item
 			((DateFieldUI) ui).setInputMode(mode);
 		} else {
 			this.dateTime = new ChoiceGroup(this.label, Choice.IMPLICIT, false);
-			if ((mode & DATE) != 0) {
+			if ((mode & DateField.DATE) != 0) {
 				this.dateTime.append("[date]", null);
 			}
-			if ((mode & TIME) != 0) {
+			if ((mode & DateField.TIME) != 0) {
 				this.dateTime.append("[time]", null);
 			}
 		}
@@ -179,7 +179,7 @@ public class DateField extends Item
 		g.translate(0, -super.getHeight());
 
     
-    return getHeight();
+    return this.getHeight();
   }
 
   //TWB - made public
@@ -199,7 +199,7 @@ public class DateField extends Item
   {
     this.dateTime.select();
 
-    if (this.dateTime.getSelectedIndex() == 0 && (this.mode & DATE) != 0) {
+    if (this.dateTime.getSelectedIndex() == 0 && (this.mode & DateField.DATE) != 0) {
       if (this.date != null) {
           this.dateCanvas.setTime(this.date);
       } else {
@@ -229,7 +229,7 @@ public class DateField extends Item
   @Override
   public int traverse(int gameKeyCode, int top, int bottom, boolean action)
 	{
-		return dateTime.traverse(gameKeyCode, top, bottom, action);
+		return this.dateTime.traverse(gameKeyCode, top, bottom, action);
 	}
   
   private String formatDate() {
@@ -259,10 +259,10 @@ public class DateField extends Item
 
   void updateDateTimeString()
   {
-    if ((this.mode & DATE) != 0) {
+    if ((this.mode & DateField.DATE) != 0) {
       this.dateTime.set(0, formatDate(), null);
     }
-    if ((this.mode & TIME) != 0) {
+    if ((this.mode & DateField.TIME) != 0) {
         this.dateTime.set((((this.mode & DATE) != 0)? 1 : 0), formatTime(), null);
     }
   } 
@@ -280,10 +280,10 @@ class DateCanvas extends Canvas {
 	}
 
 	public Date getTime() {
-		cal.set(Calendar.YEAR, year);
-		cal.set(Calendar.MONTH, month);
-		cal.set(Calendar.DAY_OF_MONTH, day);
-		return cal.getTime();
+		this.cal.set(Calendar.YEAR, year);
+		this.cal.set(Calendar.MONTH, month);
+		this.cal.set(Calendar.DAY_OF_MONTH, day);
+		return this.cal.getTime();
 	}
 
 	public void setTime(Date time) {
@@ -340,7 +340,7 @@ class DateCanvas extends Canvas {
         // colors  
         int colorR, colorT;
 
-        if (selected == 0) {
+        if (this.selected == 0) {
             colorR = 0x000000;
             colorT = 0xffffff;
         } else {
@@ -353,7 +353,7 @@ class DateCanvas extends Canvas {
         g.setColor(colorT);
         g.drawString(dayStr, dOff, y, Graphics.LEFT | Graphics.TOP);
 
-        if (selected == 1) {
+        if (this.selected == 1) {
             colorR = 0x000000;
             colorT = 0xffffff;
         } else {
@@ -366,7 +366,7 @@ class DateCanvas extends Canvas {
         g.setColor(colorT);
         g.drawString(monthStr, mOff, y, Graphics.LEFT | Graphics.TOP);
 
-        if (selected == 2) {
+        if (this.selected == 2) {
             colorR = 0x000000;
             colorT = 0xffffff;
         } else {
@@ -384,16 +384,16 @@ class DateCanvas extends Canvas {
 	public synchronized void keyPressed(int keycode) {
         int k = getGameAction(keycode);
         
-        if (k == Canvas.LEFT && selected > 0) {
-            selected--;
+        if (k == Canvas.LEFT && this.selected > 0) {
+            this.selected--;
             repaint();
-        } else if (k == Canvas.RIGHT && selected < 2) {
-            selected++;
+        } else if (k == Canvas.RIGHT && this.selected < 2) {
+            this.selected++;
             repaint();
         } else if (k == Canvas.UP) {
             Calendar cal = Calendar.getInstance();
 
-            switch (selected) {
+            switch (this.selected) {
                 case 0:  // day
                 	cal.set(Calendar.YEAR, year);
                 	cal.set(Calendar.MONTH, month);
@@ -402,16 +402,16 @@ class DateCanvas extends Canvas {
                 	
                 	cal.setTime(cal.getTime());
                 	cal.add(Calendar.DAY_OF_MONTH, 1);
-                	if(cal.get(Calendar.MONTH) == month)
-                		day++;
+                	if(cal.get(Calendar.MONTH) == this.month)
+                		this.day++;
                 	else 
-                		day = 1;
+                		this.day = 1;
                 	break;
                 case 1: // month
-                	if (month == Calendar.DECEMBER)
-                		month = Calendar.JANUARY;
+                	if (this.month == Calendar.DECEMBER)
+                		this.month = Calendar.JANUARY;
                 	else 
-                		month++;
+                		this.month++;
 
                 	cal.set(Calendar.YEAR, year);
                 	cal.set(Calendar.MONTH, month);
@@ -422,19 +422,19 @@ class DateCanvas extends Canvas {
                 	cal.add(Calendar.DAY_OF_MONTH, 4);
                 	int daysInMonth = 28+(4-cal.get(Calendar.DAY_OF_MONTH));
                 	
-                	if (day > daysInMonth)
-                		day = daysInMonth;
+                	if (this.day > daysInMonth)
+                		this.day = daysInMonth;
                 	break;
                 case 2: // year
                 	// arbitrary limit
-                	if (year < 5000) {
-                		year++;
+                	if (this.year < 5000) {
+                		this.year++;
                 		
                 		// here i simply use the fact that there
                 		// were nor will be two lenient years in
                 		// a row
-	                	if (day == 29 && month == Calendar.FEBRUARY)
-	                		day = 28;
+	                	if (this.day == 29 && this.month == Calendar.FEBRUARY)
+	                		this.day = 28;
                 	}
                 	break;
             }
@@ -442,10 +442,10 @@ class DateCanvas extends Canvas {
         } else if (k == Canvas.DOWN) {
             Calendar cal = Calendar.getInstance();
 
-            switch (selected) {
+            switch (this.selected) {
                 case 0:  // day
-                	if(day > 1)
-                		day--;
+                	if(this.day > 1)
+                		this.day--;
                 	else {
                     	cal.set(Calendar.YEAR, year);
                     	cal.set(Calendar.MONTH, month);
@@ -455,14 +455,14 @@ class DateCanvas extends Canvas {
                     	cal.setTime(cal.getTime());
                     	cal.add(Calendar.DAY_OF_MONTH, 4);
                     	int daysInMonth = 28+(4-cal.get(Calendar.DAY_OF_MONTH));
-                    	day = daysInMonth;
+                    	this.day = daysInMonth;
                 	}
                 	break;
                 case 1: // month
-                	if (month == Calendar.JANUARY)
-                		month = Calendar.DECEMBER;
+                	if (this.month == Calendar.JANUARY)
+                		this.month = Calendar.DECEMBER;
                 	else 
-                		month--;
+                		this.month--;
 
                 	cal.set(Calendar.YEAR, year);
                 	cal.set(Calendar.MONTH, month);
@@ -473,18 +473,18 @@ class DateCanvas extends Canvas {
                 	cal.add(Calendar.DAY_OF_MONTH, 1);
                 	int daysInMonth = 28+(4-cal.get(Calendar.DAY_OF_MONTH));
                 	
-                	if (day > daysInMonth)
-                		day = daysInMonth;
+                	if (this.day > daysInMonth)
+                		this.day = daysInMonth;
                 	break;
                 case 2: // year
                 	// arbitrary limit
-                	if (year > 1000) {
-                		year--;
+                	if (this.year > 1000) {
+                		this.year--;
                 		// here i simply use the fact that there
                 		// were nor will be two lenient years in
                 		// a row
-	                	if (day == 29 && month == Calendar.FEBRUARY)
-	                		day = 28;
+	                	if (this.day == 29 && this.month == Calendar.FEBRUARY)
+	                		this.day = 28;
                 	}
                 	break;
             }
@@ -505,13 +505,13 @@ class TimeCanvas extends Canvas {
 	public Date getTime() {
 		this.cal.set(Calendar.HOUR_OF_DAY, hours);
 		this.cal.set(Calendar.MINUTE, minutes);
-		return cal.getTime();
+		return this.cal.getTime();
 	}
 
 	public void setTime(Date time) {
 		this.cal.setTime(time);
-		this.hours = cal.get(Calendar.HOUR_OF_DAY);
-		this.minutes = cal.get(Calendar.MINUTE);
+		this.hours = this.cal.get(Calendar.HOUR_OF_DAY);
+		this.minutes = this.cal.get(Calendar.MINUTE);
 		repaint();
 	}
 
@@ -556,7 +556,7 @@ class TimeCanvas extends Canvas {
         // colors  
         int colorR, colorT;
 
-        if (selected == 0) {
+        if (this.selected == 0) {
             colorR = 0x000000;
             colorT = 0xffffff;
         } else {
@@ -569,7 +569,7 @@ class TimeCanvas extends Canvas {
         g.setColor(colorT);
         g.drawString(hoursStr, hOff, y, Graphics.LEFT | Graphics.TOP);
 
-        if (selected == 1) {
+        if (this.selected == 1) {
             colorR = 0x000000;
             colorT = 0xffffff;
         } else {
@@ -587,37 +587,37 @@ class TimeCanvas extends Canvas {
     public synchronized void keyPressed(int keycode) {
         int k = getGameAction(keycode);
         
-        if (k == Canvas.LEFT && selected > 0) {
-            selected--;
+        if (k == Canvas.LEFT && this.selected > 0) {
+            this.selected--;
             repaint();
-        } else if (k == Canvas.RIGHT && selected < 1) {
-            selected++;
+        } else if (k == Canvas.RIGHT && this.selected < 1) {
+            this.selected++;
             repaint();
         } else if (k == Canvas.UP) {
-            switch (selected) {
+            switch (this.selected) {
                 case 0:  // hours
-                    hours++;
-                    if (hours > 23)
-                        hours = 0;
+                    this.hours++;
+                    if (this.hours > 23)
+                        this.hours = 0;
                     break;
                 case 1: // minutes
-                    minutes++;
-                    if (minutes > 59)
-                        minutes = 0;
+                    this.minutes++;
+                    if (this.minutes > 59)
+                        this.minutes = 0;
                     break;
             }
             repaint();
         } else if (k == Canvas.DOWN) {
-            switch (selected) {
+            switch (this.selected) {
                 case 0:  // hours
-                    hours--;
-                    if (hours < 0)
-                        hours = 23;
+                    this.hours--;
+                    if (this.hours < 0)
+                        this.hours = 23;
                     break;
                 case 1: // minutes
-                    minutes--;
-                    if (minutes < 0)
-                        minutes = 59;
+                    this.minutes--;
+                    if (this.minutes < 0)
+                        this.minutes = 59;
                     break;
             }
             repaint();

@@ -49,38 +49,38 @@ public abstract class ConnectorAdapter implements ConnectorDelegate {
 
         @Override
 	public Connection open(String name) throws IOException {
-		return open(name, Connector.READ_WRITE, false);
+		return this.open(name, Connector.READ_WRITE, false);
 	}
 
         @Override
 	public Connection open(String name, int mode) throws IOException {
-		return open(name, mode, false);
+		return this.open(name, mode, false);
 	}
 
         @Override
 	public DataInputStream openDataInputStream(String name) throws IOException {
-            final InputConnection inputConnection = ((InputConnection) open(name));
+            final InputConnection inputConnection = ((InputConnection) this.open(name));
             final DataInputStream dataInputStream = inputConnection.openDataInputStream();
 		return dataInputStream;
 	}
 
         @Override
 	public DataOutputStream openDataOutputStream(String name) throws IOException {
-            final OutputConnection outputConnection = ((OutputConnection) open(name));
+            final OutputConnection outputConnection = ((OutputConnection) this.open(name));
             final DataOutputStream dataOutputStream = outputConnection.openDataOutputStream();
 		return dataOutputStream;
 	}
 
         @Override
 	public InputStream openInputStream(String name) throws IOException {
-            final InputConnection inputConnection = ((InputConnection) open(name));
+            final InputConnection inputConnection = ((InputConnection) this.open(name));
             final InputStream inputStream = inputConnection.openInputStream();
 		return inputStream;
 	}
 
         @Override
 	public OutputStream openOutputStream(String name) throws IOException {
-            final OutputConnection outputConnection = ((OutputConnection) open(name));
+            final OutputConnection outputConnection = ((OutputConnection) this.open(name));
             final OutputStream outputStream = outputConnection.openOutputStream();
 		return outputStream;
 	}

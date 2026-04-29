@@ -79,10 +79,10 @@ public class MIDletSystemProperties {
 			return;
 		}
 		initialized = true;
-		setProperty("microedition.configuration", "CLDC-1.1");
-		setProperty("microedition.profiles", "MIDP-2.0");
-		setProperty("microedition.platform", "MicroEmulator");
-		setProperty("microedition.encoding", getSystemProperty("file.encoding"));
+		MIDletSystemProperties.setProperty("microedition.configuration", "CLDC-1.1");
+		MIDletSystemProperties.setProperty("microedition.profiles", "MIDP-2.0");
+		MIDletSystemProperties.setProperty("microedition.platform", "MicroEmulator");
+		MIDletSystemProperties.setProperty("microedition.encoding", getSystemProperty("file.encoding"));
 	}
 
 	/**
@@ -101,16 +101,16 @@ public class MIDletSystemProperties {
 	 * @return
 	 */
 	public static String getProperty(String key) {
-		initOnce();
-		if (props.containsKey(key)) {
-			return (String) props.get(key);
+		MIDletSystemProperties.initOnce();
+		if (MIDletSystemProperties.props.containsKey(key)) {
+			return (String) MIDletSystemProperties.props.get(key);
 		}
-		String v = getDynamicProperty(key);
+		String v = MIDletSystemProperties.getDynamicProperty(key);
 		if (v != null) {
 			return v;
 		}
 		try {
-			return getSystemProperty(key);
+			return MIDletSystemProperties.getSystemProperty(key);
 		} catch (SecurityException e) {
 			return null;
 		}
@@ -118,8 +118,8 @@ public class MIDletSystemProperties {
 
 	public static String getSystemProperty(String key) {
 		try {
-			if (acc != null) {
-				return getSystemPropertySecure(key);
+			if (MIDletSystemProperties.acc != null) {
+				return MIDletSystemProperties.getSystemPropertySecure(key);
 			} else {
 				return System.getProperty(key);
 			}
@@ -134,7 +134,7 @@ public class MIDletSystemProperties {
 				public Object run() {
 					return System.getProperty(key);
 				}
-			}, acc);
+			}, MIDletSystemProperties.acc);
 		} catch (Throwable e) {
 			return null;
 		}
@@ -148,13 +148,13 @@ public class MIDletSystemProperties {
 	}
 
 	public static Set getPropertiesSet() {
-		initOnce();
-		return props.entrySet();
+		MIDletSystemProperties.initOnce();
+		return MIDletSystemProperties.props.entrySet();
 	}
 
 	public static String setProperty(String key, String value) {
-		initOnce();
-		if (applyToJavaSystemProperties) {
+		MIDletSystemProperties.initOnce();
+		if (MIDletSystemProperties.applyToJavaSystemProperties) {
 			try {
 				if (value == null) {
 					System.getProperties().remove(key);
@@ -162,35 +162,35 @@ public class MIDletSystemProperties {
 					System.setProperty(key, value);
 				}
 			} catch (SecurityException e) {
-				if (wanrOnce) {
-					wanrOnce = false;
+				if (MIDletSystemProperties.wanrOnce) {
+					MIDletSystemProperties.wanrOnce = false;
 					Logger.error("Cannot update Java System.Properties", e);
 					Logger.debug("Continue ME2 operations with no updates to system Properties");
 				}
 			}
 		}
-		return (String) props.put(key, value);
+		return (String) MIDletSystemProperties.props.put(key, value);
 	}
 
 	public static String clearProperty(String key) {
-		if (applyToJavaSystemProperties) {
+		if (MIDletSystemProperties.applyToJavaSystemProperties) {
 			try {
 				System.getProperties().remove(key);
 			} catch (SecurityException e) {
-				if (wanrOnce) {
-					wanrOnce = false;
+				if (MIDletSystemProperties.wanrOnce) {
+					MIDletSystemProperties.wanrOnce = false;
 					Logger.error("Cannot update Java System.Properties", e);
 				}
 			}
 		}
-		return (String) props.remove(key);
+		return (String) MIDletSystemProperties.props.remove(key);
 	}
 
 	public static void setProperties(Map properties) {
-		initOnce();
+		MIDletSystemProperties.initOnce();
 		for (Iterator i = properties.entrySet().iterator(); i.hasNext();) {
 			Map.Entry e = (Map.Entry) i.next();
-			setProperty((String) e.getKey(), (String) e.getValue());
+			MIDletSystemProperties.setProperty((String) e.getKey(), (String) e.getValue());
 		}
 	}
 	
@@ -204,34 +204,34 @@ public class MIDletSystemProperties {
 	}
 	
 	public static void setPermission(String permission, int value) {
-		permissions.put(permission, new Integer(value));
+		MIDletSystemProperties.permissions.put(permission, new Integer(value));
 	}
 
 	public static void setDevice(Device newDevice) {
-		initOnce();
+		MIDletSystemProperties.initOnce();
 		// Restore System Properties from previous device activation.
-		if (systemPropertiesDevice != null) {
-			for (Iterator iter = systemPropertiesDevice.iterator(); iter.hasNext();) {
-				clearProperty((String) iter.next());
+		if (MIDletSystemProperties.systemPropertiesDevice != null) {
+			for (Iterator iter = MIDletSystemProperties.systemPropertiesDevice.iterator(); iter.hasNext();) {
+				MIDletSystemProperties.clearProperty((String) iter.next());
 			}
 		}
 		if (systemPropertiesPreserve != null) {
 			for (Iterator i = systemPropertiesPreserve.entrySet().iterator(); i.hasNext();) {
 				Map.Entry e = (Map.Entry) i.next();
-				setProperty((String) e.getKey(), (String) e.getValue());
+				MIDletSystemProperties.setProperty((String) e.getKey(), (String) e.getValue());
 			}
 		}
-		systemPropertiesDevice = new Vector();
+		MIDletSystemProperties.systemPropertiesDevice = new Vector();
 		systemPropertiesPreserve = new HashMap();
 		for (Iterator i = newDevice.getSystemProperties().entrySet().iterator(); i.hasNext();) {
 			Map.Entry e = (Map.Entry) i.next();
 			String key = (String) e.getKey();
-			if (props.containsKey(key)) {
+			if (MIDletSystemProperties.props.containsKey(key)) {
 				systemPropertiesPreserve.put(key, props.get(key));
 			} else {
-				systemPropertiesDevice.add(key);
+				MIDletSystemProperties.systemPropertiesDevice.add(key);
 			}
-			setProperty(key, (String) e.getValue());
+			MIDletSystemProperties.setProperty(key, (String) e.getValue());
 		}
 	}
 }

@@ -132,21 +132,21 @@ public final class ButtonName {
 	}
 
 	private ButtonName(String name) {
-		altNames.put(name, this);
+		ButtonName.altNames.put(name, this);
 	}
 
 	private ButtonName(String[] names) {
 		for (int i = 0; i < names.length; i++) {
-			altNames.put(names[i], this);
+			ButtonName.altNames.put(names[i], this);
 		}
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String toString() {
-		return name;
+		return this.name;
 	}
 
 }

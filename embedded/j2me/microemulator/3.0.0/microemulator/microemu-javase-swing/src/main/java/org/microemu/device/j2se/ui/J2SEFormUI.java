@@ -67,7 +67,7 @@ public class J2SEFormUI extends DisplayableImplUI implements FormUI {
 	}
 	
 	public ItemStateListener getItemStateListener() {
-		return itemStateListener;
+		return this.itemStateListener;
 	}
 
 }

@@ -220,7 +220,7 @@ public class Preprocessor {
             throws IOException, PPException {
         Vector lines = new Vector();
         loadStrings(lines, in, encoding);
-        boolean changed = preprocess(lines, encoding);
+        boolean changed = this.preprocess(lines, encoding);
         saveStrings(lines, out, encoding);
         return changed;
     }
@@ -276,7 +276,7 @@ public class Preprocessor {
     public boolean preprocess(Vector lines, String encoding)
             throws IOException, PPException {
         try {
-            return preprocessImpl(lines, encoding);
+            return this.preprocessImpl(lines, encoding);
         } catch (IOException e) {
             if (this.m_listener != null) {
                 this.m_listener.error(e, -1, -1, -1);
@@ -328,19 +328,19 @@ public class Preprocessor {
                 if ((lp.getType() == PPLine.TYPE_VISIBLE)
                         || (lp.getType() == PPLine.TYPE_HIDDEN)) {
                     if (isBlind()) {
-                        String l = commentLine(lp);
+                        String l = this.commentLine(lp);
                         if (!l.equals(line)) {
                             this.m_modified = true;
                         }
 
                         lines.set(i, l);
                         if (isVerbose()) {
-                            log("(+)" + l);
+                            this.log("(+)" + l);
                         }
                     } else {
                         // true to replace the current line, false to insert it.
                         boolean replace = true;
-                        String str = uncommentLine(lp);
+                        String str = this.uncommentLine(lp);
 
                         if (!str.equals(line)) {
                             this.m_modified = true;
@@ -353,14 +353,14 @@ public class Preprocessor {
                         }
 
                         if (isVerbose()) {
-                            log("(-)" + str);
+                            this.log("(-)" + str);
                         }
                     }
                     // reset debug hide for next line.
                     this.m_debugHideNextLine = false;
                 } else {
 
-                    PPLineAST ast = getAST(lp);
+                    PPLineAST ast = this.getAST(lp);
                     int includeLine = i; // for error handling
 
                     // if type is include,
@@ -375,7 +375,7 @@ public class Preprocessor {
                                     .get(i), currentLine);
                             if (lp2.getType() == PPLine.TYPE_COMMAND) {
 
-                                CommonTree ast2 = getAST(lp2);
+                                CommonTree ast2 = this.getAST(lp2);
                                 if (ast2.getType() == APPLexer.ENDINCLUDE) { // LITERAL_endinclude
                                     foundEndInclude = true;
                                     break;
@@ -391,8 +391,8 @@ public class Preprocessor {
                                     this.m_file, includeLine);
                         }
 
-                        String file = getIncludeName(lp);
-                        Vector includeLines = loadIncludedFile(includeLine,
+                        String file = this.getIncludeName(lp);
+                        Vector includeLines = this.loadIncludedFile(includeLine,
                                 file, encoding);
                         if (includeLines != null) {
                             Preprocessor includePreprocessor = new Preprocessor(
@@ -409,7 +409,7 @@ public class Preprocessor {
                                 String s = (String) includeLines.get(k);
                                 PPLine lp2 = new PPLine(this.m_file, s, k);
                                 if (isBlind()) {
-                                    s = commentLine(lp2);
+                                    s = this.commentLine(lp2);
                                 }
                                 lines.insertElementAt(s, i);
                                 i++;
@@ -417,7 +417,7 @@ public class Preprocessor {
                             }
                         }
                     } else {
-                        handleCommand(lines, lp, ast, eval, encoding,
+                        this.handleCommand(lines, lp, ast, eval, encoding,
                                 i + 1 == lines.size());
                     }
                 }
@@ -440,7 +440,7 @@ public class Preprocessor {
                     this.m_currentMdebugBlockStart);
         }
 
-        return m_modified;
+        return this.m_modified;
     }
 
     /**
@@ -602,7 +602,7 @@ public class Preprocessor {
      * Push a State into the stack.
      */
     private void pushState() {
-        m_statsStack.push(new Integer(m_currentState));
+        this.m_statsStack.push(new Integer(m_currentState));
     }
 
     /**
@@ -617,16 +617,16 @@ public class Preprocessor {
      */
     public boolean isBlind() {
         return (this.m_currentState == STATE_CAN_BECOME_TRUE)
-                || (m_currentState == STATE_HAS_BEEN_TRUE)
-                || m_disabledByCondition || m_debugHideNextLine
-                || m_insideHiddenMdebugBlock;
+                || (this.m_currentState == STATE_HAS_BEEN_TRUE)
+                || this.m_disabledByCondition || this.m_debugHideNextLine
+                || this.m_insideHiddenMdebugBlock;
     }
 
     /**
      * @return
      */
     public boolean isVerbose() {
-        return m_verbose;
+        return this.m_verbose;
     }
 
     /**
@@ -664,7 +664,7 @@ public class Preprocessor {
      * new "scope" is entered.
      */
     private void handleIf(boolean condition) {
-        pushState();
+        this.pushState();
         if (!isBlind()) {
             if (condition) {
                 this.m_currentState = STATE_IS_TRUE;
@@ -682,11 +682,11 @@ public class Preprocessor {
     private void handleElseIf(boolean condition) {
         if (this.m_currentState == STATE_NO_CONDITIONAL) {
             throw new IllegalStateException("Unexpected #elif");
-        } else if (m_currentState == STATE_CAN_BECOME_TRUE) {
+        } else if (this.m_currentState == STATE_CAN_BECOME_TRUE) {
             if (condition) {
                 this.m_currentState = STATE_IS_TRUE;
             }
-        } else if (m_currentState == STATE_IS_TRUE) {
+        } else if (this.m_currentState == STATE_IS_TRUE) {
             this.m_currentState = STATE_HAS_BEEN_TRUE;
         }
     }
@@ -697,9 +697,9 @@ public class Preprocessor {
     private void handleElse() {
         if (this.m_currentState == STATE_NO_CONDITIONAL) {
             throw new IllegalStateException("Unexpected #else");
-        } else if (m_currentState == STATE_CAN_BECOME_TRUE) {
+        } else if (this.m_currentState == STATE_CAN_BECOME_TRUE) {
             this.m_currentState = STATE_IS_TRUE;
-        } else if (m_currentState == STATE_IS_TRUE) {
+        } else if (this.m_currentState == STATE_IS_TRUE) {
             this.m_currentState = STATE_HAS_BEEN_TRUE;
         }
     }
@@ -711,7 +711,7 @@ public class Preprocessor {
         if (this.m_currentState == STATE_NO_CONDITIONAL) {
             throw new IllegalStateException("Unexpected #endif");
         } else {
-            popState();
+            this.popState();
         }
     }
 
@@ -731,7 +731,7 @@ public class Preprocessor {
             throws Exception, PPException, UnsupportedEncodingException {
 
         if (isVerbose()) {
-            log("(?)" + ppl.getSource());
+            this.log("(?)" + ppl.getSource());
         }
 
         int type = ast.getType();
@@ -750,7 +750,7 @@ public class Preprocessor {
         case APPLexer.IFDEF:
         case APPLexer.IFNDEF: {
             boolean r = evaluator.evaluate(ppl, ast, m_listener);
-            handleIf(r);
+            this.handleIf(r);
             break;
         }
 
@@ -761,7 +761,7 @@ public class Preprocessor {
                         this.m_file, ppl.getLineNumber());
             }
             boolean r = evaluator.evaluate(ppl, ast, m_listener);
-            handleCondition(r);
+            this.handleCondition(r);
 
             break;
         }
@@ -770,17 +770,17 @@ public class Preprocessor {
         case APPLexer.ELIFDEF:
         case APPLexer.ELIFNDEF: {
             boolean r = evaluator.evaluate(ppl, ast, m_listener);
-            handleElseIf(r);
+            this.handleElseIf(r);
             break;
         }
 
         case APPLexer.ELSE: {
-            handleElse();
+            this.handleElse();
             break;
         }
 
         case APPLexer.ENDIF: {
-            handleEndIf();
+            this.handleEndIf();
             break;
         }
 
@@ -792,24 +792,24 @@ public class Preprocessor {
 
         case APPLexer.MDEBUG: {
             boolean show = evaluator.evaluate(ppl, ast, m_listener);
-            handleMdebug(show, ppl.getLineNumber());
+            this.handleMdebug(show, ppl.getLineNumber());
             break;
         }
 
         case APPLexer.ENDDEBUG: {
-            handleEnddebug();
+            this.handleEnddebug();
             break;
         }
 
         case APPLexer.EXPAND: {
-            handleExpand(ppl, lines);
+            this.handleExpand(ppl, lines);
             break;
         }
 
         default:
             throw new PPException("Unexpected token "
                     + APPParser.tokenNames[type] + " at \"" + ppl.getSource()
-                    + "\"", m_file, ppl.getLineNumber());
+                    + "\"", this.m_file, ppl.getLineNumber());
         }
 
         if (type != APPLexer.DEBUG) {
@@ -823,14 +823,14 @@ public class Preprocessor {
      * @param lines
      */
     private void handleExpand(PPLine ppl, Vector lines) {
-        String expLine = getExpandLine(ppl);
-        String template = toTemplate(expLine);
+        String expLine = this.getExpandLine(ppl);
+        String template = this.toTemplate(expLine);
         int nextIndex = ppl.getLineNumber() + 1;
         String str = lines.size() > nextIndex ? (String) lines.get(nextIndex)
                 : "";
         PPLine nextPPline = new PPLine(this.m_file, str, nextIndex);
 
-        String nextLine = uncommentLine(nextPPline);
+        String nextLine = this.uncommentLine(nextPPline);
         boolean replace = nextLine.matches(template);
 
         String expanded = Expander.expandMacros(expLine, m_defines);
@@ -875,14 +875,14 @@ public class Preprocessor {
      * @return the Defines list
      */
     public Defines getDefines() {
-        return m_defines;
+        return this.m_defines;
     }
 
     /**
      * Clear the Defines list
      */
     public void clearDefines() {
-        m_defines.clear();
+        this.m_defines.clear();
     }
 
 }

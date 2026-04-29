@@ -61,7 +61,7 @@ public class ImageLayer
      */
     
     public ImageData getImage() {
-        return image;
+        return this.image;
     }
 
     /**

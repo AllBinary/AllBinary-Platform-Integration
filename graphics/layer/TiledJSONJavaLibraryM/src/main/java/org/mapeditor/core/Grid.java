@@ -79,7 +79,7 @@ public class Grid {
      */
     
     public Orientation getOrientation() {
-        return orientation;
+        return this.orientation;
     }
 
     /**
@@ -106,7 +106,7 @@ public class Grid {
      */
     
     public Integer getWidth() {
-        return width;
+        return this.width;
     }
 
     /**
@@ -132,7 +132,7 @@ public class Grid {
      */
     
     public Integer getHeight() {
-        return height;
+        return this.height;
     }
 
     /**

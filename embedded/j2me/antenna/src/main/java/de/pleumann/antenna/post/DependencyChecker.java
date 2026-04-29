@@ -36,8 +36,8 @@ public class DependencyChecker {
     private Hashtable bootclasses = new Hashtable();
 
     public DependencyChecker(String classpath, String bootclasspath) {
-        splitPath(classpath, this.classpath);
-        splitPath(bootclasspath, this.bootclasspath);
+        this.splitPath(classpath, this.classpath);
+        this.splitPath(bootclasspath, this.bootclasspath);
     }
 
     public void destroy() {
@@ -93,11 +93,11 @@ public class DependencyChecker {
             Object o = classpath.elementAt(i);
             
             if (o instanceof File) {
-                ClassFile cf = loadClassFromDir((File)o, name);
+                ClassFile cf = this.loadClassFromDir((File)o, name);
                 if (cf != null) return cf;
             }
             else {
-                ClassFile cf = loadClassFromZip((ZipFile)o, name);
+                ClassFile cf = this.loadClassFromZip((ZipFile)o, name);
                 if (cf != null) return cf;
             }
         }
@@ -123,17 +123,17 @@ public class DependencyChecker {
         
         // System.out.println("Loading class: " + name);
 
-        c = loadClass(this.classpath, name);
+        c = this.loadClass(this.classpath, name);
         if (c != null) {
             this.classes.put(name, c);
-            resolveClass(c);
+            this.resolveClass(c);
             return c;
         }
         
-        c = loadClass(this.bootclasspath, name);
+        c = this.loadClass(this.bootclasspath, name);
         if (c != null) {
             this.bootclasses.put(name, c);
-            resolveClass(c);
+            this.resolveClass(c);
             return c;
         }
 
@@ -173,7 +173,7 @@ public class DependencyChecker {
     }
 
     public void addRootClass(String name) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-        loadClass(name);
+        this.loadClass(name);
     }
     
     public Vector getClassNames() {
@@ -189,7 +189,7 @@ public class DependencyChecker {
     
     public void resolveClass(ClassFile cf) throws ClassNotFoundException {
         for (int i = 0; i < cf.getRequiredClassCount(); i++) {
-            loadClass(cf.getRequiredClass(i));
+            this.loadClass(cf.getRequiredClass(i));
         }
     }
     

@@ -101,7 +101,7 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @return the object group this object is part of
      */
     public ObjectGroup getObjectGroup() {
-        return objectGroup;
+        return this.objectGroup;
     }
 
     /**
@@ -159,7 +159,7 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @return a {@link java.lang.String} object.
      */
     public String getImageSource() {
-        return imageSource;
+        return this.imageSource;
     }
 
     /**
@@ -195,7 +195,7 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @return a {@link org.mapeditor.core.Tile} object.
      */
     public Tile getTile() {
-        return tile;
+        return this.tile;
     }
 
     /**
@@ -207,13 +207,13 @@ public class MapObject extends MapObjectData implements Cloneable {
         this.tile = tile;
     }
 
-    public boolean getFlipHorizontal() { return flipHorizontal; }
+    public boolean getFlipHorizontal() { return this.flipHorizontal; }
     public void setFlipHorizontal(boolean flip) { this.flipHorizontal = flip; }
 
-    public boolean getFlipVertical() { return flipVertical; }
+    public boolean getFlipVertical() { return this.flipVertical; }
     public void setFlipVertical(boolean flip) { this.flipVertical = flip; }
 
-    public boolean getFlipDiagonal() { return flipDiagonal; }
+    public boolean getFlipDiagonal() { return this.flipDiagonal; }
     public void setFlipDiagonal(boolean flip) { this.flipDiagonal = flip; }
 
     /**
@@ -232,12 +232,12 @@ public class MapObject extends MapObjectData implements Cloneable {
         final int zoomedHeight = (int) (getHeight() * zoom);
 
         if (this.scaledImage == null || this.scaledImage.getWidth() != zoomedWidth
-                || scaledImage.getHeight() != zoomedHeight) {
+                || this.scaledImage.getHeight() != zoomedHeight) {
             //scaledImage = image.getScaledInstance(zoomedWidth, zoomedHeight, Image.SCALE_SMOOTH);
             throw new RuntimeException();
         }
 
-        return scaledImage;
+        return this.scaledImage;
     }
 
     /**

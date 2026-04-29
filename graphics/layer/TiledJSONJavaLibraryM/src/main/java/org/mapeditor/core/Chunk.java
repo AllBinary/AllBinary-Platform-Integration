@@ -99,7 +99,7 @@ public class Chunk {
      */
     
     public Integer getX() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -125,7 +125,7 @@ public class Chunk {
      */
     
     public Integer getY() {
-        return y;
+        return this.y;
     }
 
     /**
@@ -151,7 +151,7 @@ public class Chunk {
      */
     
     public Integer getWidth() {
-        return width;
+        return this.width;
     }
 
     /**
@@ -177,7 +177,7 @@ public class Chunk {
      */
     
     public Integer getHeight() {
-        return height;
+        return this.height;
     }
 
     /**

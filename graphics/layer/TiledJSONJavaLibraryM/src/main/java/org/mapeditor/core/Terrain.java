@@ -72,7 +72,7 @@ public class Terrain {
      */
     
     public PropertiesData getProperties() {
-        return properties;
+        return this.properties;
     }
 
     /**
@@ -97,7 +97,7 @@ public class Terrain {
      */
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -124,7 +124,7 @@ public class Terrain {
      */
     
     public Integer getTile() {
-        return tile;
+        return this.tile;
     }
 
     /**

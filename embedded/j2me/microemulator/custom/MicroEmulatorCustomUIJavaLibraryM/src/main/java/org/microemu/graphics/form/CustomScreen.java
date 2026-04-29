@@ -109,7 +109,7 @@ public class CustomScreen extends CustomDisplayable
 		
 		//g.translate(0, -viewPortY);
 		
-		contentHeight += paintContent(g);
+		contentHeight += this.paintContent(g);
 		
 		/*
 		g.translate(0, viewPortY);

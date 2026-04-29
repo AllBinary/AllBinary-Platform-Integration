@@ -76,7 +76,7 @@ public class StringWriter extends Writer {
      * Write a single character.
      */
     public void write(int c) {
-        buf.append((char) c);
+        this.buf.append((char) c);
     }
 
     /**
@@ -100,7 +100,7 @@ public class StringWriter extends Writer {
      * Write a string.
      */
     public void write(String str) {
-        buf.append(str);
+        this.buf.append(str);
     }
 
     /**
@@ -111,7 +111,7 @@ public class StringWriter extends Writer {
      * @param  len  Number of characters to write
      */
     public void write(String str, int off, int len)  {
-        buf.append(str.substring(off, off + len));
+        this.buf.append(str.substring(off, off + len));
     }
 
     /**
@@ -140,9 +140,9 @@ public class StringWriter extends Writer {
      */
     public StringWriter append(CharSequence csq) {
         if (csq == null)
-            write("null");
+            this.write("null");
         else
-            write(csq.toString());
+            this.write(csq.toString());
         return this;
     }
 
@@ -180,7 +180,7 @@ public class StringWriter extends Writer {
      */
     public StringWriter append(CharSequence csq, int start, int end) {
         CharSequence cs = (csq == null ? "null" : csq);
-        write(cs.subSequence(start, end).toString());
+        this.write(cs.subSequence(start, end).toString());
         return this;
     }
 
@@ -201,7 +201,7 @@ public class StringWriter extends Writer {
      * @since 1.5
      */
     public StringWriter append(char c) {
-        write(c);
+        this.write(c);
         return this;
     }
 
@@ -209,7 +209,7 @@ public class StringWriter extends Writer {
      * Return the buffer's current value as a string.
      */
     public String toString() {
-        return buf.toString();
+        return this.buf.toString();
     }
 
     /**
@@ -218,7 +218,7 @@ public class StringWriter extends Writer {
      * @return StringBuffer holding the current buffer value.
      */
     public StringBuffer getBuffer() {
-        return buf;
+        return this.buf;
     }
 
     /**

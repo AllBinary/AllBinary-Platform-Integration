@@ -31,7 +31,7 @@ public class CommandEvaluator
 	public boolean evaluate(PPLine ppl, AST ast, IPreprocessorListener listener) throws ANTLRException, PPException
 	{
 		Eval eval = new Eval(ppl, ast, listener);
-		return evaluate(eval);
+		return this.evaluate(eval);
 	}
 	
 	private boolean evaluate(Eval ast) throws ANTLRException, PPException
@@ -41,17 +41,17 @@ public class CommandEvaluator
 		{
 			case APPLexerTokenTypes.LITERAL_ifdef:
 			case APPLexerTokenTypes.LITERAL_elifdef:
-				return evalDefined(ast.getNextSibling());
+				return this.evalDefined(ast.getNextSibling());
 			case APPLexerTokenTypes.LITERAL_if:
 			case APPLexerTokenTypes.LITERAL_elif:
 			case APPLexerTokenTypes.LITERAL_condition:
-				return evaluate(ast.getNextSibling());
+				return this.evaluate(ast.getNextSibling());
 			case APPLexerTokenTypes.LITERAL_debug:
 			case APPLexerTokenTypes.LITERAL_mdebug:
-				return evaluateDebug(ast);
+				return this.evaluateDebug(ast);
 			case APPLexerTokenTypes.LITERAL_ifndef:
 			case APPLexerTokenTypes.LITERAL_elifndef:
-				return !evaluate(ast.getNextSibling());
+				return !this.evaluate(ast.getNextSibling());
 			case APPLexerTokenTypes.SYMBOL:
 			{
 				Define define = this.m_defines.getDefine(ast.getText());
@@ -63,53 +63,53 @@ public class CommandEvaluator
 			}
 			case APPLexerTokenTypes.EQ:
 			{
-				return EQ(ast);
+				return this.EQ(ast);
 			}
 			case APPLexerTokenTypes.NEQ:
 			{
-				return NEQ(ast);
+				return this.NEQ(ast);
 			}
 			case APPLexerTokenTypes.GT:
 			{
-				return GT(ast);
+				return this.GT(ast);
 			}
 			case APPLexerTokenTypes.LT:
 			{
-				return LT(ast);
+				return this.LT(ast);
 			}
 			case APPLexerTokenTypes.GTE:
 			{
-				return GTE(ast);
+				return this.GTE(ast);
 			}
 			case APPLexerTokenTypes.LTE:
 			{
-				return LTE(ast);
+				return this.LTE(ast);
 			}
 			case APPLexerTokenTypes.AT:
 			{
-				return AT(ast);
+				return this.AT(ast);
 			}
 			case APPLexerTokenTypes.AND:
 			{
 				Eval left = ast.getFirstChild();
 				Eval right = left.getNextSibling();
-				return evaluate(left) && evaluate(right);
+				return this.evaluate(left) && this.evaluate(right);
 			}
 			case APPLexerTokenTypes.OR:
 			{
 				Eval left = ast.getFirstChild();
 				Eval right = left.getNextSibling();
-				return evaluate(left) || evaluate(right);
+				return this.evaluate(left) || this.evaluate(right);
 			}
 			case APPLexerTokenTypes.XOR:
 			{
 				Eval left = ast.getFirstChild();
 				Eval right = left.getNextSibling();
-				return evaluate(left) ^ evaluate(right);
+				return this.evaluate(left) ^ this.evaluate(right);
 			}
 			case APPLexerTokenTypes.NOT:
 			{
-				return !evaluate(ast.getFirstChild());
+				return !this.evaluate(ast.getFirstChild());
 			}
 			case APPLexerTokenTypes.LITERAL_define:
 				this.m_defines.define(ast.getNextSibling().ast);
@@ -133,7 +133,7 @@ public class CommandEvaluator
 
 	private boolean evalDefined(Eval eval)
 	{
-		return m_defines.isDefined(eval.getText());
+		return this.m_defines.isDefined(eval.getText());
 	}
 
 	private boolean evaluateDebug(Eval eval) throws PPException
@@ -151,12 +151,12 @@ public class CommandEvaluator
 		{
 			Define define = this.m_defines.getDefine(DEBUG_KEY);
 			String currentValue = define.m_value.getValue();
-			int currentLevel = getDebugLevelNumber(currentValue);
+			int currentLevel = this.getDebugLevelNumber(currentValue);
 			if (currentLevel == -1)
 				throw new PPException("Unknown debug value " + currentValue);
 			// line level:
 			String level = nextSibling.getText();
-			int lineLevel = getDebugLevelNumber(level);
+			int lineLevel = this.getDebugLevelNumber(level);
 			if (lineLevel == -1)
 				throw new PPException("Unknown debug value " + level);
 			return lineLevel >= currentLevel;
@@ -178,8 +178,8 @@ public class CommandEvaluator
 	{
 		Eval left = ast.getFirstChild();
 		Eval right = left.getNextSibling();
-		Literal llist[] = values(left);
-		Literal rlist[] = values(right);
+		Literal llist[] = this.values(left);
+		Literal rlist[] = this.values(right);
 		for (int i = 0; i < llist.length; i++)
 		{
 			Literal literal = llist[i];
@@ -196,51 +196,51 @@ public class CommandEvaluator
 	{
 		Eval left = ast.getFirstChild();
 		Eval right = left.getNextSibling();
-		Literal lval = singleValue(left);
-		Literal rval = singleValue(right);
-		return !ltImpl(lval, rval);
+		Literal lval = this.singleValue(left);
+		Literal rval = this.singleValue(right);
+		return !this.ltImpl(lval, rval);
 	}
 
 	private boolean LTE(Eval ast) throws ANTLRException
 	{
 		Eval left = ast.getFirstChild();
 		Eval right = left.getNextSibling();
-		Literal lval = singleValue(left);
-		Literal rval = singleValue(right);
-		return !gtImpl(lval, rval);
+		Literal lval = this.singleValue(left);
+		Literal rval = this.singleValue(right);
+		return !this.gtImpl(lval, rval);
 	}
 
 	private boolean LT(Eval ast) throws RecognitionException
 	{
 		Eval left = ast.getFirstChild();
 		Eval right = left.getNextSibling();
-		Literal lval = singleValue(left);
-		Literal rval = singleValue(right);
-		return ltImpl(lval, rval);
+		Literal lval = this.singleValue(left);
+		Literal rval = this.singleValue(right);
+		return this.ltImpl(lval, rval);
 	}
 
 	private boolean GT(Eval ast) throws RecognitionException
 	{
 		Eval left = ast.getFirstChild();
 		Eval right = left.getNextSibling();
-		Literal lval = singleValue(left);
-		Literal rval = singleValue(right);
-		return gtImpl(lval, rval);
+		Literal lval = this.singleValue(left);
+		Literal rval = this.singleValue(right);
+		return this.gtImpl(lval, rval);
 	}
 
 	private boolean EQ(Eval ast) throws RecognitionException
 	{
-		return eqImpl(ast);
+		return this.eqImpl(ast);
 	}
 
 	private boolean NEQ(Eval ast) throws RecognitionException
 	{
-		return !eqImpl(ast);
+		return !this.eqImpl(ast);
 	}
 
 	private Literal[] values(Eval ast) throws ANTLRException
 	{
-		return values(ast, true);
+		return this.values(ast, true);
 	}
 		
 	private Literal[] values(Eval ast, boolean warnIfNotDefined) throws ANTLRException
@@ -254,20 +254,20 @@ public class CommandEvaluator
 				if (v != null)
 				{
 					Literal lit = v.m_value;
-					return getValues(lit.getValue());
+					return this.getValues(lit.getValue());
 				}
 				else
 				{
 					ast.warning(emptySymbolWarning(text));
-					return literals(new Literal(Literal.STRING, ""));
+					return this.literals(new Literal(Literal.STRING, ""));
 				}
 			case APPLexerTokenTypes.STRING:
 			{
 				String str = text;
-				return getValues(str);
+				return this.getValues(str);
 			}
 			case APPLexerTokenTypes.NUMBER:
-				return literals(new Literal(type, text));
+				return this.literals(new Literal(type, text));
 		}
 		throw new RecognitionException("Unsupported type : " + type);
 	}
@@ -328,8 +328,8 @@ public class CommandEvaluator
 		Eval left = ast.getFirstChild();
 		Eval right = left.getNextSibling();
 		
-		Literal lval = singleValue(left);
-		Literal rval = singleValue(right);
+		Literal lval = this.singleValue(left);
+		Literal rval = this.singleValue(right);
 		
 		if ((lval.isNumber() ^ rval.isNumber()))
 		{
@@ -403,12 +403,12 @@ public class CommandEvaluator
 
 		public String getText()
 		{
-			return ast.getText();
+			return this.ast.getText();
 		}
 
 		public int getType()
 		{
-			return ast.getType();
+			return this.ast.getType();
 		}
 
 		public Eval getFirstChild()
@@ -423,12 +423,12 @@ public class CommandEvaluator
 		
 		public String toString()
 		{
-			return ast.toString();
+			return this.ast.toString();
 		}
 
 		public int getColumn()
 		{
-			return ast.getColumn();
+			return this.ast.getColumn();
 		}
 	}
 }

@@ -118,7 +118,7 @@ public class PPException extends Exception {
      * @return line number
      */
     public int getLineNumber() {
-        return m_lineNumber;
+        return this.m_lineNumber;
     }
 
     /**
@@ -127,7 +127,7 @@ public class PPException extends Exception {
      * @return the file
      */
     public File getFile() {
-        return m_file;
+        return this.m_file;
     }
 
     /*
@@ -138,7 +138,7 @@ public class PPException extends Exception {
     public String getMessage() {
         if (this.m_file != null) {
             String ln = this.m_lineNumber != UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
-            return m_file + ln + " : " + super.getMessage();
+            return this.m_file + ln + " : " + super.getMessage();
         } else {
             if (this.m_lineNumber != UNKNOWN_LINE) {
                 return "Line #" + this.m_lineNumber + " : " + super.getMessage();

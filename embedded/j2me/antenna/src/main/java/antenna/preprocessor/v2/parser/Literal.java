@@ -90,12 +90,12 @@ public class Literal
 
 	public boolean isFalse()
 	{
-		return m_type == BOOLEAN && this.m_value.equals("false");
+		return this.m_type == BOOLEAN && this.m_value.equals("false");
 	}
 
 	public boolean isTrue()
 	{
-		return m_type == BOOLEAN && this.m_value.equals("true");
+		return this.m_type == BOOLEAN && this.m_value.equals("true");
 	}
 	
 	public String getValue()
@@ -105,27 +105,27 @@ public class Literal
 	
 	public boolean isDebugLevel()
 	{
-		return m_type == DEBUG_LEVEL;
+		return this.m_type == DEBUG_LEVEL;
 	}
 	
 	public boolean isNumber()
 	{
-		return m_type == NUMBER;
+		return this.m_type == NUMBER;
 	}
 	
 	public boolean isString()
 	{
-		return m_type == STRING;
+		return this.m_type == STRING;
 	}
 	
 	public boolean isSymbol()
 	{
-		return m_type == SYMBOL;
+		return this.m_type == SYMBOL;
 	}
 	
 	public boolean isBoolean()
 	{
-		return m_type == BOOLEAN;
+		return this.m_type == BOOLEAN;
 	}
 	
 }

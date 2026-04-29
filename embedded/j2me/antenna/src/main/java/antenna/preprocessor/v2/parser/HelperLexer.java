@@ -59,15 +59,15 @@ tryAgain:
 		try {   // for char stream error handling
 			try {   // for lexical error handling
 				if ((LA(1)=='/') && (LA(2)=='/') && (LA(3)=='\t'||LA(3)==' '||LA(3)=='#')) {
-					mPREFIX(true);
+					this.mPREFIX(true);
 					theRetToken=_returnToken;
 				}
 				else if ((LA(1)=='\t'||LA(1)==' ')) {
-					mWS(true);
+					this.mWS(true);
 					theRetToken=_returnToken;
 				}
 				else if ((_tokenSet_0.member(LA(1))) && (true) && (true)) {
-					mFILE(true);
+					this.mFILE(true);
 					theRetToken=_returnToken;
 				}
 				else {
@@ -161,12 +161,12 @@ tryAgain:
 		switch ( LA(1)) {
 		case '/':
 		{
-			mFSLASH(false);
+			this.mFSLASH(false);
 			break;
 		}
 		case '\\':
 		{
-			mBSLASH(false);
+			this.mBSLASH(false);
 			break;
 		}
 		default:
@@ -272,7 +272,7 @@ tryAgain:
 		_loop13:
 		do {
 			if ((LA(1)=='\t'||LA(1)==' ')) {
-				mWS(false);
+				this.mWS(false);
 			}
 			else {
 				break _loop13;
@@ -312,14 +312,14 @@ tryAgain:
 			case 's':  case 't':  case 'u':  case 'v':
 			case 'w':  case 'x':  case 'y':  case 'z':
 			{
-				mCHAR(false);
+				this.mCHAR(false);
 				break;
 			}
 			case '0':  case '1':  case '2':  case '3':
 			case '4':  case '5':  case '6':  case '7':
 			case '8':  case '9':
 			{
-				mDIGIT_0(false);
+				this.mDIGIT_0(false);
 				break;
 			}
 			case '_':
@@ -344,17 +344,17 @@ tryAgain:
 			}
 			case '\\':
 			{
-				mBSLASH(false);
+				this.mBSLASH(false);
 				break;
 			}
 			case '/':
 			{
-				mFSLASH(false);
+				this.mFSLASH(false);
 				break;
 			}
 			case ':':
 			{
-				mCOLON(false);
+				this.mCOLON(false);
 				break;
 			}
 			default:

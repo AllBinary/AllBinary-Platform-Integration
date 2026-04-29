@@ -35,7 +35,7 @@ public class StringComponent
     
     private StringComponentProperties stringComponentProperties = new StringComponentProperties();
     private StringComponentProperties updatingComponentProperties = new StringComponentProperties();
-    private StringComponentProperties tempComponentProperties = updatingComponentProperties;
+    private StringComponentProperties tempComponentProperties = this.updatingComponentProperties;
 
     // 0xFFe07718;
 
@@ -60,7 +60,7 @@ public class StringComponent
 
         this.stringComponentProperties.width = -1;
         this.stringComponentProperties.widthDecreaser = 0;
-        setText(text);
+        this.setText(text);
     }
 
     public int getCharHeight()
@@ -74,7 +74,7 @@ public class StringComponent
         //{
             if (this.stringComponentProperties.numOfBreaks == -1)
             {
-                updateBreaks();
+                this.updateBreaks();
             }
 
             int i, prevIndex = 0;
@@ -105,7 +105,7 @@ public class StringComponent
         //{
             if (this.stringComponentProperties.numOfBreaks == -1)
             {
-                updateBreaks();
+                this.updateBreaks();
             }
 
             for (int i = 0; i < this.stringComponentProperties.numOfBreaks; i++)
@@ -128,7 +128,7 @@ public class StringComponent
         //{
             if (this.stringComponentProperties.numOfBreaks == -1)
             {
-                updateBreaks();
+                this.updateBreaks();
             }
 
             if (this.stringComponentProperties.text == null)
@@ -158,7 +158,7 @@ public class StringComponent
 
     public String getText()
     {
-        return stringComponentProperties.text;
+        return this.stringComponentProperties.text;
     }
 
     public void invertPaint(boolean state)
@@ -187,7 +187,7 @@ public class StringComponent
         //{
             if (this.paintComponentProperties.numOfBreaks == -1)
             {
-                updateBreaks();
+                this.updateBreaks();
             }
 
             int prevIndex = 0;
@@ -333,7 +333,7 @@ public class StringComponent
             }
             if (this.stringComponentProperties.text.charAt(i) == '\n')
             {
-                insertBreak(i);
+                this.insertBreak(i);
                 canBreak = 0;
                 prevIndex = i + 1;
                 continue;
@@ -342,13 +342,13 @@ public class StringComponent
             {
                 if (canBreak != 0)
                 {
-                    insertBreak(canBreak);
+                    this.insertBreak(canBreak);
                     i = canBreak;
                     prevIndex = i;
                 }
                 else
                 {
-                    insertBreak(i);
+                    this.insertBreak(i);
                     prevIndex = i + 1;
                 }
                 canBreak = 0;

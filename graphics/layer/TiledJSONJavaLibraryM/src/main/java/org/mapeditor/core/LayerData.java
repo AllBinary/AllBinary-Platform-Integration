@@ -140,7 +140,7 @@ public abstract class LayerData {
      */
     
     public Properties getProperties() {
-        return properties;
+        return this.properties;
     }
 
     /**
@@ -169,7 +169,7 @@ public abstract class LayerData {
      */
     
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -199,7 +199,7 @@ public abstract class LayerData {
      */
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -229,7 +229,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public Integer getX() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -263,7 +263,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public Integer getY() {
-        return y;
+        return this.y;
     }
 
     /**
@@ -293,7 +293,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     /**
@@ -319,7 +319,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public int getHeight() {
-        return height;
+        return this.height;
     }
 
     /**
@@ -346,7 +346,7 @@ public abstract class LayerData {
      */
     
     public Float getOpacity() {
-        return opacity;
+        return this.opacity;
     }
 
     /**
@@ -373,7 +373,7 @@ public abstract class LayerData {
      */
     
     public Boolean isVisible() {
-        return visible;
+        return this.visible;
     }
 
     /**
@@ -401,7 +401,7 @@ public abstract class LayerData {
      */
     
     public Integer getOffsetX() {
-        return offsetX;
+        return this.offsetX;
     }
 
     /**
@@ -431,7 +431,7 @@ public abstract class LayerData {
      */
     
     public Integer getOffsetY() {
-        return offsetY;
+        return this.offsetY;
     }
 
     /**
@@ -459,7 +459,7 @@ public abstract class LayerData {
      */
     
     public Integer getLocked() {
-        return locked;
+        return this.locked;
     }
 
     /**

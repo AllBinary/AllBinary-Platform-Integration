@@ -33,7 +33,7 @@ public class BaseProps implements Cloneable
 		this.m_bugs = new TreeSet();
 		this.m_capabilities = new Properties();
 		
-		parseBase(dev);
+		this.parseBase(dev);
 	}
 
 	public void parseBase(Element dev)
@@ -48,7 +48,7 @@ public class BaseProps implements Cloneable
 				String tagName = e.getTagName();
 				if (FEATURES.equals(tagName))
 				{
-					parseGroup(e, m_features);
+					this.parseGroup(e, m_features);
 				}
 				else
 				if (CAPABILITY.equals(tagName))

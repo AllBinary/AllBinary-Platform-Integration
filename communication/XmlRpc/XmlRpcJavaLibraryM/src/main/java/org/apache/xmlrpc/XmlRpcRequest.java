@@ -77,16 +77,16 @@ public class XmlRpcRequest
 
     public Vector getParameters()
     {
-        return parameters;
+        return this.parameters;
     }
 
     public Object getParameter(int index)
     {
-        return parameters.elementAt(index);
+        return this.parameters.elementAt(index);
     }
 
     public String getMethodName()
     {
-        return methodName;
+        return this.methodName;
     }
 }

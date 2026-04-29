@@ -58,7 +58,7 @@ public class WtkPackage extends Jar {
         }
 
         public String toString() {
-            return value;
+            return this.value;
         }
     }
     public class Preserve extends Conditional {
@@ -74,7 +74,7 @@ public class WtkPackage extends Jar {
         }
 
         public String toString() {
-            return value;
+            return this.value;
         }
     }
 
@@ -248,11 +248,11 @@ public class WtkPackage extends Jar {
         if (this.bootclasspath == null) {
             this.bootclasspath = new Path(getProject());
         }
-        return bootclasspath.createPath();
+        return this.bootclasspath.createPath();
     }
 
     public void setBootclasspathref(Reference r) {
-        createBootclasspath().setRefid(r);
+        this.createBootclasspath().setRefid(r);
     }
 
     public void setClasspath(Path classpath) {
@@ -263,11 +263,11 @@ public class WtkPackage extends Jar {
         if (this.classpath == null) {
             this.classpath = new Path(getProject());
         }
-        return classpath.createPath();
+        return this.classpath.createPath();
     }
 
     public void setClasspathref(Reference r) {
-        createClasspath().setRefid(r);
+        this.createClasspath().setRefid(r);
     }
 
     public void setLibclasspath(Path libclasspath) {
@@ -278,11 +278,11 @@ public class WtkPackage extends Jar {
         if (this.libclasspath == null) {
             this.libclasspath = new Path(getProject());
         }
-        return libclasspath.createPath();
+        return this.libclasspath.createPath();
     }
 
     public void setLibclasspathref(Reference r) {
-        createLibclasspath().setRefid(r);
+        this.createLibclasspath().setRefid(r);
     }
 
     public void setManifest(File manifest) {
@@ -309,11 +309,11 @@ public class WtkPackage extends Jar {
     }
 
     public void setIf(String s) {
-        condition.setIf(s);
+        this.condition.setIf(s);
     }
 
     public void setUnless(String s) {
-        condition.setUnless(s);
+        this.condition.setUnless(s);
     }
 
     public void setKeepManifestOrder(boolean keep) {
@@ -321,7 +321,7 @@ public class WtkPackage extends Jar {
     }
 
     public boolean isActive() {
-        return condition.isActive();
+        return this.condition.isActive();
     }
 
     private void addManifest(File tmpDir, File manFile) {
@@ -391,7 +391,7 @@ public class WtkPackage extends Jar {
         try {
             if (this.bootclasspath == null) {
                 String bcp = this.utility.getMidpApi(); // was: getEmptyApi()
-                setBootclasspath(new Path(getProject(), bcp));
+                this.setBootclasspath(new Path(getProject(), bcp));
             }
 
             if (this.jadFile == null) {
@@ -409,7 +409,7 @@ public class WtkPackage extends Jar {
             if (this.jarFile == null) {
                 String jar = jad.getValue("MIDlet-JAR-URL");
                 if (jar != null) {
-                    setJarfile(new File(this.jadFile.getParent() + "/" + new File(jar).getName()));
+                    this.setJarfile(new File(this.jadFile.getParent() + "/" + new File(jar).getName()));
                 }
             }
 
@@ -484,7 +484,7 @@ public class WtkPackage extends Jar {
                             FileSet dir = new FileSet();
                             dir.setDir(lib);
                             dir.createExclude().setName("META-INF/**");
-                            addFileset(dir);
+                            this.addFileset(dir);
                         }
                     }
                 }
@@ -520,7 +520,7 @@ public class WtkPackage extends Jar {
 
             //re-create do the file with the non ordered manifest.
             if (this.keepManifestOrder) {
-                addManifest(tmpDir, manFile);
+                this.addManifest(tmpDir, manFile);
             }
 
             if (jad.getValue("MIDlet-Jar-URL") == null) {

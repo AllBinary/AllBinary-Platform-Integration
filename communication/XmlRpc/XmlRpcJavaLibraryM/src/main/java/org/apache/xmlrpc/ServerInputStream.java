@@ -96,12 +96,12 @@ class ServerInputStream extends InputStream
     {
         if (this.available > 0)
         {
-            available--;
-            return in.read();
+            this.available--;
+            return this.in.read();
         }
         else if (this.available == -1)
         {
-            return in.read ();
+            return this.in.read ();
         }
         return -1;
     }
@@ -114,7 +114,7 @@ class ServerInputStream extends InputStream
      */
     public int read(byte b[]) throws IOException
     {
-        return read(b, 0, b.length);
+        return this.read(b, 0, b.length);
     }
 
     /**

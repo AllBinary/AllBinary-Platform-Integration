@@ -115,7 +115,7 @@ public class ImageData {
      */
     
     public Data getData() {
-        return data;
+        return this.data;
     }
 
     /**
@@ -145,7 +145,7 @@ public class ImageData {
      */
     
     public String getFormat() {
-        return format;
+        return this.format;
     }
 
     /**
@@ -178,7 +178,7 @@ public class ImageData {
     //@Deprecated
     
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -210,7 +210,7 @@ public class ImageData {
      */
     
     public String getSource() {
-        return source;
+        return this.source;
     }
 
     /**
@@ -242,7 +242,7 @@ public class ImageData {
      */
     
     public String getTrans() {
-        return trans;
+        return this.trans;
     }
 
     /**
@@ -272,7 +272,7 @@ public class ImageData {
      */
     
     public Integer getWidth() {
-        return width;
+        return this.width;
     }
 
     /**
@@ -299,7 +299,7 @@ public class ImageData {
      */
     
     public Integer getHeight() {
-        return height;
+        return this.height;
     }
 
     /**

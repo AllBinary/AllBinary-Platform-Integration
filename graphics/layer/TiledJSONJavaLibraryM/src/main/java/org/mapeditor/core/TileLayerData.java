@@ -63,7 +63,7 @@ public class TileLayerData
      */
     
     public Data getData() {
-        return data;
+        return this.data;
     }
 
     /**

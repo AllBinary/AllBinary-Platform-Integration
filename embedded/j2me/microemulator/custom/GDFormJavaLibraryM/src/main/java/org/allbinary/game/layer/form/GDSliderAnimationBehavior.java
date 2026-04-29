@@ -85,20 +85,20 @@ implements GDGameLayerItemStateListener {
             final SliderAnimation sliderAnimation = ((SliderAnimation) this.animationArray[0]);
             
             if (this.rectangleCollisionUtil.isInside(this.gameLayer.getXP() + sliderAnimation.getThumbDx(), this.gameLayer.getYP() - 2, 
-                gameLayer.getXP() + sliderAnimation.getThumbDx() + sliderAnimation.getThumbWidth(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
+                this.gameLayer.getXP() + sliderAnimation.getThumbDx() + sliderAnimation.getThumbWidth(), this.gameLayer.getY2() + 2, point.getX(), point.getY())) {
                 this.point = point;
                 this.deltaFromPointToStartOfThumb = this.point.getX() - (this.gameLayer.getXP() + sliderAnimation.getThumbDx());
                 //logUtil.putF("deltaFromPointToStartOfThumb: " + deltaFromPointToStartOfThumb, this, "onMotionGestureEvent");
                 this.draggingThumb = true;
-            } else if (rectangleCollisionUtil.isInside(gameLayer.getXP(), gameLayer.getYP() - 2, 
-                gameLayer.getX2(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
+            } else if (this.rectangleCollisionUtil.isInside(this.gameLayer.getXP(), this.gameLayer.getYP() - 2, 
+                this.gameLayer.getX2(), this.gameLayer.getY2() + 2, point.getX(), point.getY())) {
                 final int value2 = point.getX() - this.gameLayer.getXP() - (sliderAnimation.getThumbWidth() / 2);
                 //logUtil.putF("moveThumbTo: " + value2, this, "onMotionGestureEvent");
                 this.setValue2(value2);
             }
         } else if(motionGestureInput == touchMotionGestureFactory.RELEASED) {
             this.draggingThumb = false;
-        } else if((motionGestureInput == touchMotionGestureFactory.LEFT || motionGestureInput == touchMotionGestureFactory.RIGHT) && draggingThumb) {
+        } else if((motionGestureInput == touchMotionGestureFactory.LEFT || motionGestureInput == touchMotionGestureFactory.RIGHT) && this.draggingThumb) {
             final int value2 = point.getX() - this.deltaFromPointToStartOfThumb - gameLayer.getXP();
             this.setValue2(value2);
         }

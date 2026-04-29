@@ -136,7 +136,7 @@ public class XmlRpcClient implements XmlRpcHandler
      */
     public URL getURL()
     {
-        return url;
+        return this.url;
     }
 
     /**
@@ -311,14 +311,14 @@ public class XmlRpcClient implements XmlRpcHandler
             AsyncCallback callback)
     {
         CallData call = new CallData(method, params, callback);
-        if (last == null)
+        if (this.last == null)
         {
-            first = last = call;
+            this.first = this.last = call;
         }
         else
         {
-            last.next = call;
-            last = call;
+            this.last.next = call;
+            this.last = call;
         }
     }
 
@@ -328,18 +328,18 @@ public class XmlRpcClient implements XmlRpcHandler
      */
     synchronized CallData dequeue()
     {
-        if (first == null)
+        if (this.first == null)
         {
             return null;
         }
-        CallData call = first;
-        if (first == last)
+        CallData call = this.first;
+        if (this.first == this.last)
         {
-            first = last = null;
+            this.first = this.last = null;
         }
         else
         {
-            first = first.next;
+            this.first = this.first.next;
         }
         return call;
     }
@@ -388,10 +388,10 @@ public class XmlRpcClient implements XmlRpcHandler
          */
         public void run()
         {
-            while (call != null)
+            while (this.call != null)
             {
-                executeAsync(call.method, call.params, call.callback);
-                call = dequeue();
+                this.executeAsync(call.method, call.params, call.callback);
+                this.call = dequeue();
             }
             releaseWorker(this, true);
         }
@@ -404,7 +404,7 @@ public class XmlRpcClient implements XmlRpcHandler
             Object res = null;
             try
             {
-                res = execute(method, params);
+                res = this.execute(method, params);
                 // notify callback object
                 if (callback != null)
                 {
@@ -442,17 +442,17 @@ public class XmlRpcClient implements XmlRpcHandler
 
             try
             {
-                if (buffer == null)
+                if (this.buffer == null)
                 {
-                    buffer = new ByteArrayOutputStream();
+                    this.buffer = new ByteArrayOutputStream();
                 }
                 else
                 {
-                    buffer.reset();
+                    this.buffer.reset();
                 }
 
                 final XmlWriter writer = new XmlWriter(buffer, XmlRpc.encoding);
-                writeRequest(writer, method, params);
+                this.writeRequest(writer, method, params);
                 writer.flush();
                 byte[] request = buffer.toByteArray();
 
@@ -527,17 +527,17 @@ public class XmlRpcClient implements XmlRpcHandler
             {
                 //ByteArrayOutputStream bout = new ByteArrayOutputStream();
 
-                if (buffer == null)
+                if (this.buffer == null)
                 {
-                    buffer = new ByteArrayOutputStream();
+                    this.buffer = new ByteArrayOutputStream();
                 }
                 else
                 {
-                    buffer.reset();
+                    this.buffer.reset();
                 }
 
                 XmlWriter writer = new XmlWriter(buffer, XmlRpc.encoding);
-                writeRequest(writer, method, params);
+                this.writeRequest(writer, method, params);
                 writer.flush();
                 byte[] request = buffer.toByteArray();
                 URLConnection con = url.openConnection();

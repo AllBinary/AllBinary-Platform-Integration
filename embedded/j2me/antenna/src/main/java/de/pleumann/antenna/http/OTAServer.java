@@ -98,7 +98,7 @@ public class OTAServer extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("" + new Date() + " GET " + request.getPathInfo());
 
-        showInfo(request);
+        this.showInfo(request);
 
         String name = request.getPathInfo();
         if (name == null || "/".equals(name)) {
@@ -121,12 +121,12 @@ public class OTAServer extends HttpServlet {
         if ("/index.html".equals(name)) {
             response.setContentType("text/html");
             PrintWriter writer = response.getWriter();
-            listFiles(request, htmlpage, writer);
+            this.listFiles(request, htmlpage, writer);
         }
         else if ("/index.wml".equals(name) || "/wap".equals(name)) {
             response.setContentType("text/vnd.wap.wml");
             PrintWriter writer = response.getWriter();
-            listFiles(request, wmlpage, writer);
+            this.listFiles(request, wmlpage, writer);
         }
         else {
             File file = new File(this.files + name);
@@ -152,7 +152,7 @@ public class OTAServer extends HttpServlet {
                 input.close();
                 output.flush();
 
-                increaseCounter(file.getName());
+                this.increaseCounter(file.getName());
             }
             else if (file.getName().endsWith(".cod")) {
                 response.setContentType("application/vnd.rim.cod");
@@ -163,7 +163,7 @@ public class OTAServer extends HttpServlet {
                 input.close();
                 output.flush();
 
-                increaseCounter(file.getName());
+                this.increaseCounter(file.getName());
             }
             else {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -263,7 +263,7 @@ public class OTAServer extends HttpServlet {
                             }
 
                             if ("File".equals(key)) {
-                                value = getBaseURL(request) + "/" + list[i].getName();
+                                value = this.getBaseURL(request) + "/" + list[i].getName();
                             }
                             else if ("Date".equals(key)) {
                                 Calendar calendar = Calendar.getInstance();
@@ -280,13 +280,13 @@ public class OTAServer extends HttpServlet {
                                 if (value == null) value = "0";
                             }
                             else if ("MIDlet-Jar-URL".equals(key)) {
-                                value = getBaseURL(request) + "/" + new File(value).getName();
+                                value = this.getBaseURL(request) + "/" + new File(value).getName();
                             }
 			    else if ("RIM-COD-URL".equals(key)) {
-                                value = getBaseURL(request) + "/" + new File(value).getName();
+                                value = this.getBaseURL(request) + "/" + new File(value).getName();
                             }
 
-                            value = encode(value);
+                            value = this.encode(value);
 
                             s.replace(p, q + 1, value);
                             p = s.indexOf("${");

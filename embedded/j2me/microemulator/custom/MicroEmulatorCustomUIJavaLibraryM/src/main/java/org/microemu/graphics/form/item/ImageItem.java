@@ -65,19 +65,19 @@ public class ImageItem extends CustomItem
 
 		// may throw IllegalArgumentException
 		// (that is the intentended behaviour)
-		setLayout(layout);
+		this.setLayout(layout);
 		if (appearanceMode != ImageItem.PLAIN && appearanceMode != ImageItem.HYPERLINK
 				&& appearanceMode != ImageItem.BUTTON) {
 			throw new IllegalArgumentException();
 		}
 
-		setImage(img);
+		this.setImage(img);
 		this.altTextP = altText;
 		this.appearanceMode = appearanceMode;
 	}
 
 	public String getAltText() {
-		return altTextP;
+		return this.altTextP;
 	}
 
 	public int getAppearanceMode() {
@@ -85,7 +85,7 @@ public class ImageItem extends CustomItem
 	}
 
 	public Image getImage() {
-		return img;
+		return this.img;
 	}
 
         @Override
@@ -160,7 +160,7 @@ public class ImageItem extends CustomItem
 		if (gameKeyCode == Canvas.DOWN) {
 			if (bottom < getHeight()) {
 				if (getHeight() - bottom < f.getHeight()) {
-					return getHeight() - bottom;
+					return this.getHeight() - bottom;
 				} else {
 					return f.getHeight();
 				}

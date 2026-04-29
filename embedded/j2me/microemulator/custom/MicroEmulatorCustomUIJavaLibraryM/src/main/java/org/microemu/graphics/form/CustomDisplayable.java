@@ -79,7 +79,7 @@ public class CustomDisplayable extends Paintable
 
     public String getTitle()
     {
-        return title.getText();
+        return this.title.getText();
     }
 
     public void setTitle(String s)
@@ -93,7 +93,7 @@ public class CustomDisplayable extends Paintable
 
     public Vector<Object> getCommands()
     {
-        return commands;
+        return this.commands;
     }
 
     void hideNotify()
@@ -102,7 +102,7 @@ public class CustomDisplayable extends Paintable
 
     final void hideNotify(Display d)
     {
-        hideNotify();
+        this.hideNotify();
     }
 
     public void keyPressed(int keyCode)

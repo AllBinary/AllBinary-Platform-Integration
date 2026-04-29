@@ -117,7 +117,7 @@ public class WangSet {
      */
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -143,7 +143,7 @@ public class WangSet {
      */
     
     public Integer getTile() {
-        return tile;
+        return this.tile;
     }
 
     /**

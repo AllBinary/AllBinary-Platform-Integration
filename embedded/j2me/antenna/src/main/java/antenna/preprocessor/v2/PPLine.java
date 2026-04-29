@@ -64,7 +64,7 @@ public class PPLine
 	{
 		this.m_fileName = fileName;
 		this.m_lineNumber = lineNumber;
-		processLine(s);
+		this.processLine(s);
 	}
 
 	private void processLine(String s) 
@@ -72,7 +72,7 @@ public class PPLine
 		// keep original text
 		this.m_source = s;
 
-		String ws[] = getWhites(s);
+		String ws[] = this.getWhites(s);
 		// keep whitespace and strip it from the string
 		this.m_spaces = ws[0];
 		s = ws[1];
@@ -86,7 +86,7 @@ public class PPLine
 		if (s.startsWith("//"))
 		{
 			s = s.substring(2);
-			ws = getWhites(s);
+			ws = this.getWhites(s);
 			s = ws[1];
 			if (s.length() > 0)
 			{
@@ -137,32 +137,32 @@ public class PPLine
 
 	public String getSpace()
 	{
-		return m_spaces;
+		return this.m_spaces;
 	}
 
 	public String getText()
 	{
-		return m_text;
+		return this.m_text;
 	}
 
 	public String getType()
 	{
-		return m_type;
+		return this.m_type;
 	}
 
 	public int getLineNumber()
 	{
-		return m_lineNumber;
+		return this.m_lineNumber;
 	}
 
 	public File getFileName()
 	{
-		return m_fileName;
+		return this.m_fileName;
 	}
 	
 	public char prefixChar()
 	{
-		return m_prefixChar;
+		return this.m_prefixChar;
 	}
 
 }

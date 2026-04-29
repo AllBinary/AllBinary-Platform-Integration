@@ -86,7 +86,7 @@ public class APPLexer extends Lexer {
      * @return list of Exceptions
      */
     public List getExceptions() {
-        return exceptions;
+        return this.exceptions;
     }
     
     /*
@@ -1169,7 +1169,7 @@ public class APPLexer extends Lexer {
             // src/antenna/preprocessor/v3/parser/APP.g:143:3: ( CHAR ( CHAR | DIGIT_0 | '_' | '-' | '+' | '.' | BSLASH | FSLASH | SEMI | COLON )* )
             // src/antenna/preprocessor/v3/parser/APP.g:144:3: CHAR ( CHAR | DIGIT_0 | '_' | '-' | '+' | '.' | BSLASH | FSLASH | SEMI | COLON )*
             {
-            mCHAR(); 
+            this.mCHAR(); 
             // src/antenna/preprocessor/v3/parser/APP.g:144:8: ( CHAR | DIGIT_0 | '_' | '-' | '+' | '.' | BSLASH | FSLASH | SEMI | COLON )*
             loop3:
             do {
@@ -1264,7 +1264,7 @@ public class APPLexer extends Lexer {
             	case 1 :
             	    // src/antenna/preprocessor/v3/parser/APP.g:146:22: DIGIT_0
             	    {
-            	    mDIGIT_0(); 
+            	    this.mDIGIT_0(); 
 
             	    }
             	    break;
@@ -1312,7 +1312,7 @@ public class APPLexer extends Lexer {
                     	case 1 :
                     	    // src/antenna/preprocessor/v3/parser/APP.g:146:39: DIGIT_0
                     	    {
-                    	    mDIGIT_0(); 
+                    	    this.mDIGIT_0(); 
 
                     	    }
                     	    break;
@@ -2749,364 +2749,364 @@ public class APPLexer extends Lexer {
             case 1 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:10: DOT
                 {
-                mDOT(); 
+                this.mDOT(); 
 
                 }
                 break;
             case 2 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:14: COMMA
                 {
-                mCOMMA(); 
+                this.mCOMMA(); 
 
                 }
                 break;
             case 3 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:20: SEMI
                 {
-                mSEMI(); 
+                this.mSEMI(); 
 
                 }
                 break;
             case 4 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:25: PERCENT
                 {
-                mPERCENT(); 
+                this.mPERCENT(); 
 
                 }
                 break;
             case 5 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:33: LPAR
                 {
-                mLPAR(); 
+                this.mLPAR(); 
 
                 }
                 break;
             case 6 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:38: RPAR
                 {
-                mRPAR(); 
+                this.mRPAR(); 
 
                 }
                 break;
             case 7 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:43: BLPAR
                 {
-                mBLPAR(); 
+                this.mBLPAR(); 
 
                 }
                 break;
             case 8 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:49: BRPAR
                 {
-                mBRPAR(); 
+                this.mBRPAR(); 
 
                 }
                 break;
             case 9 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:55: NOT
                 {
-                mNOT(); 
+                this.mNOT(); 
 
                 }
                 break;
             case 10 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:59: XOR
                 {
-                mXOR(); 
+                this.mXOR(); 
 
                 }
                 break;
             case 11 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:63: AT
                 {
-                mAT(); 
+                this.mAT(); 
 
                 }
                 break;
             case 12 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:66: NEQ
                 {
-                mNEQ(); 
+                this.mNEQ(); 
 
                 }
                 break;
             case 13 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:70: LT
                 {
-                mLT(); 
+                this.mLT(); 
 
                 }
                 break;
             case 14 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:73: GT
                 {
-                mGT(); 
+                this.mGT(); 
 
                 }
                 break;
             case 15 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:76: LTE
                 {
-                mLTE(); 
+                this.mLTE(); 
 
                 }
                 break;
             case 16 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:80: GTE
                 {
-                mGTE(); 
+                this.mGTE(); 
 
                 }
                 break;
             case 17 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:84: DEBUG
                 {
-                mDEBUG(); 
+                this.mDEBUG(); 
 
                 }
                 break;
             case 18 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:90: INFO
                 {
-                mINFO(); 
+                this.mINFO(); 
 
                 }
                 break;
             case 19 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:95: WARN
                 {
-                mWARN(); 
+                this.mWARN(); 
 
                 }
                 break;
             case 20 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:100: ERROR
                 {
-                mERROR(); 
+                this.mERROR(); 
 
                 }
                 break;
             case 21 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:106: FATAL
                 {
-                mFATAL(); 
+                this.mFATAL(); 
 
                 }
                 break;
             case 22 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:112: DEFINE
                 {
-                mDEFINE(); 
+                this.mDEFINE(); 
 
                 }
                 break;
             case 23 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:119: UNDEFINE
                 {
-                mUNDEFINE(); 
+                this.mUNDEFINE(); 
 
                 }
                 break;
             case 24 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:128: IF
                 {
-                mIF(); 
+                this.mIF(); 
 
                 }
                 break;
             case 25 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:131: ELIF
                 {
-                mELIF(); 
+                this.mELIF(); 
 
                 }
                 break;
             case 26 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:136: CONDITION
                 {
-                mCONDITION(); 
+                this.mCONDITION(); 
 
                 }
                 break;
             case 27 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:146: IFDEF
                 {
-                mIFDEF(); 
+                this.mIFDEF(); 
 
                 }
                 break;
             case 28 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:152: IFNDEF
                 {
-                mIFNDEF(); 
+                this.mIFNDEF(); 
 
                 }
                 break;
             case 29 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:159: ELIFDEF
                 {
-                mELIFDEF(); 
+                this.mELIFDEF(); 
 
                 }
                 break;
             case 30 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:167: ELIFNDEF
                 {
-                mELIFNDEF(); 
+                this.mELIFNDEF(); 
 
                 }
                 break;
             case 31 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:176: ENDIF
                 {
-                mENDIF(); 
+                this.mENDIF(); 
 
                 }
                 break;
             case 32 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:182: ELSE
                 {
-                mELSE(); 
+                this.mELSE(); 
 
                 }
                 break;
             case 33 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:187: ENDINCLUDE
                 {
-                mENDINCLUDE(); 
+                this.mENDINCLUDE(); 
 
                 }
                 break;
             case 34 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:198: INCLUDE
                 {
-                mINCLUDE(); 
+                this.mINCLUDE(); 
 
                 }
                 break;
             case 35 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:206: EXPAND
                 {
-                mEXPAND(); 
+                this.mEXPAND(); 
 
                 }
                 break;
             case 36 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:213: MDEBUG
                 {
-                mMDEBUG(); 
+                this.mMDEBUG(); 
 
                 }
                 break;
             case 37 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:220: ENDDEBUG
                 {
-                mENDDEBUG(); 
+                this.mENDDEBUG(); 
 
                 }
                 break;
             case 38 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:229: UNSET
                 {
-                mUNSET(); 
+                this.mUNSET(); 
 
                 }
                 break;
             case 39 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:235: ADD_IF_NEW
                 {
-                mADD_IF_NEW(); 
+                this.mADD_IF_NEW(); 
 
                 }
                 break;
             case 40 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:246: TRUE
                 {
-                mTRUE(); 
+                this.mTRUE(); 
 
                 }
                 break;
             case 41 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:251: FALSE
                 {
-                mFALSE(); 
+                this.mFALSE(); 
 
                 }
                 break;
             case 42 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:257: T60
                 {
-                mT60(); 
+                this.mT60(); 
 
                 }
                 break;
             case 43 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:261: T61
                 {
-                mT61(); 
+                this.mT61(); 
 
                 }
                 break;
             case 44 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:265: WS
                 {
-                mWS(); 
+                this.mWS(); 
 
                 }
                 break;
             case 45 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:268: ASLASH
                 {
-                mASLASH(); 
+                this.mASLASH(); 
 
                 }
                 break;
             case 46 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:275: EOL
                 {
-                mEOL(); 
+                this.mEOL(); 
 
                 }
                 break;
             case 47 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:279: SYMBOL
                 {
-                mSYMBOL(); 
+                this.mSYMBOL(); 
 
                 }
                 break;
             case 48 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:286: NUMBER
                 {
-                mNUMBER(); 
+                this.mNUMBER(); 
 
                 }
                 break;
             case 49 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:293: STRING
                 {
-                mSTRING(); 
+                this.mSTRING(); 
 
                 }
                 break;
             case 50 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:300: AND
                 {
-                mAND(); 
+                this.mAND(); 
 
                 }
                 break;
             case 51 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:304: OR
                 {
-                mOR(); 
+                this.mOR(); 
 
                 }
                 break;
             case 52 :
                 // src/antenna/preprocessor/v3/parser/APP.g:1:307: EQ
                 {
-                mEQ(); 
+                this.mEQ(); 
 
                 }
                 break;

@@ -118,7 +118,7 @@ public class CustomCustomItem extends CustomItem {
 	}
 	
 	protected final void repaint(int x, int y, int w, int h) {
-		repaint();
+		this.repaint();
 	}
 	
 	protected void showNotify() {

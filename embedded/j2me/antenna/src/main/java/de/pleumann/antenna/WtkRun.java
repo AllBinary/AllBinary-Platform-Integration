@@ -55,7 +55,7 @@ public class WtkRun extends Task {
 			StringBuffer s = new StringBuffer("");
 
 			try {
-				while (((c = input.read()) != -1)) {
+				while (((c = this.input.read()) != -1)) {
 					if (c == '\n') {
 						log(s.toString());
 						s = new StringBuffer("");
@@ -64,7 +64,7 @@ public class WtkRun extends Task {
 						s.append((char) c);
 					}
 				}
-				input.close();
+				this.input.close();
 
 				if (s.length() != 0) {
 					log(s.toString());
@@ -110,18 +110,18 @@ public class WtkRun extends Task {
 	}
 
 	public Path getClasspath() {
-		return classpath;
+		return this.classpath;
 	}
 
 	public Path createClasspath() {
 		if (this.classpath == null) {
 			this.classpath = new Path(getProject());
 		}
-		return classpath.createPath();
+		return this.classpath.createPath();
 	}
 
 	public void setClasspathref(Reference r) {
-		createClasspath().setRefid(r);
+		this.createClasspath().setRefid(r);
 	}
 
 	public void setDevice(String device) {
@@ -166,15 +166,15 @@ public class WtkRun extends Task {
 	}
 
     public void setIf(String s) {
-        condition.setIf(s);
+        this.condition.setIf(s);
     }
     
     public void setUnless(String s) {
-        condition.setUnless(s);
+        this.condition.setUnless(s);
     }
 
     public boolean isActive() {
-        return condition.isActive();
+        return this.condition.isActive();
     }
     
     public void setJadDirectory(File jadDirectory)
@@ -301,7 +301,7 @@ public class WtkRun extends Task {
         
         if (this.m_eclipseDebugger)
         {
-        	startEclipseRemoteDebugger();
+        	this.startEclipseRemoteDebugger();
         }
         
 
@@ -370,11 +370,11 @@ public class WtkRun extends Task {
             }
             
             log("Running " + this.jadFile + " on Siemens " + (this.device == null ? "phone" : this.device));
-            executeSiemensEmulator(this.device);
+            this.executeSiemensEmulator(this.device);
         }
          else if (this.utility.getEmulator().endsWith(".jar")) {
             log("Running " + this.jadFile + " on java emulator");
-            executeMPowerEmulator(this.device);
+            this.executeMPowerEmulator(this.device);
         }
         else {
             if (this.device == null) {
@@ -382,7 +382,7 @@ public class WtkRun extends Task {
             }
             
 			log("Running " + this.jadFile + " on " + this.device);
-            executeDefaultEmulator(this.device);
+            this.executeDefaultEmulator(this.device);
         }
     }
 

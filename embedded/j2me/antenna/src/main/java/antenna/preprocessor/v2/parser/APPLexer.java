@@ -88,61 +88,61 @@ tryAgain:
 				switch ( LA(1)) {
 				case '\t':  case ' ':
 				{
-					mWS(true);
+					this.mWS(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '.':
 				{
-					mDOT(true);
+					this.mDOT(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case ',':
 				{
-					mCOMMA(true);
+					this.mCOMMA(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case ';':
 				{
-					mSEMI(true);
+					this.mSEMI(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '%':
 				{
-					mPERCENT(true);
+					this.mPERCENT(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '(':
 				{
-					mLPAR(true);
+					this.mLPAR(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case ')':
 				{
-					mRPAR(true);
+					this.mRPAR(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '[':
 				{
-					mBLPAR(true);
+					this.mBLPAR(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case ']':
 				{
-					mBRPAR(true);
+					this.mBRPAR(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '\n':  case '\r':
 				{
-					mEOL(true);
+					this.mEOL(true);
 					theRetToken=_returnToken;
 					break;
 				}
@@ -160,7 +160,7 @@ tryAgain:
 				case 's':  case 't':  case 'u':  case 'v':
 				case 'w':  case 'x':  case 'y':  case 'z':
 				{
-					mSYMBOL(true);
+					this.mSYMBOL(true);
 					theRetToken=_returnToken;
 					break;
 				}
@@ -168,77 +168,77 @@ tryAgain:
 				case '2':  case '3':  case '4':  case '5':
 				case '6':  case '7':  case '8':  case '9':
 				{
-					mNUMBER(true);
+					this.mNUMBER(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '"':  case '\'':
 				{
-					mSTRING(true);
+					this.mSTRING(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '&':
 				{
-					mAND(true);
+					this.mAND(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '|':
 				{
-					mOR(true);
+					this.mOR(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '^':
 				{
-					mXOR(true);
+					this.mXOR(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '@':
 				{
-					mAT(true);
+					this.mAT(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				case '=':
 				{
-					mEQ(true);
+					this.mEQ(true);
 					theRetToken=_returnToken;
 					break;
 				}
 				default:
 					if ((LA(1)=='/') && (LA(2)=='/')) {
-						mPREFIX(true);
+						this.mPREFIX(true);
 						theRetToken=_returnToken;
 					}
 					else if ((LA(1)=='!') && (LA(2)=='=')) {
-						mNEQ(true);
+						this.mNEQ(true);
 						theRetToken=_returnToken;
 					}
 					else if ((LA(1)=='<') && (LA(2)=='=')) {
-						mLTE(true);
+						this.mLTE(true);
 						theRetToken=_returnToken;
 					}
 					else if ((LA(1)=='>') && (LA(2)=='=')) {
-						mGTE(true);
+						this.mGTE(true);
 						theRetToken=_returnToken;
 					}
 					else if ((LA(1)=='/'||LA(1)=='\\') && (true)) {
-						mASLASH(true);
+						this.mASLASH(true);
 						theRetToken=_returnToken;
 					}
 					else if ((LA(1)=='!') && (true)) {
-						mNOT(true);
+						this.mNOT(true);
 						theRetToken=_returnToken;
 					}
 					else if ((LA(1)=='<') && (true)) {
-						mLT(true);
+						this.mLT(true);
 						theRetToken=_returnToken;
 					}
 					else if ((LA(1)=='>') && (true)) {
-						mGT(true);
+						this.mGT(true);
 						theRetToken=_returnToken;
 					}
 				else {
@@ -383,12 +383,12 @@ tryAgain:
 		switch ( LA(1)) {
 		case '/':
 		{
-			mFSLASH(false);
+			this.mFSLASH(false);
 			break;
 		}
 		case '\\':
 		{
-			mBSLASH(false);
+			this.mBSLASH(false);
 			break;
 		}
 		default:
@@ -574,7 +574,7 @@ tryAgain:
 		_loop23:
 		do {
 			if ((LA(1)=='\t'||LA(1)==' ')) {
-				mWS(false);
+				this.mWS(false);
 			}
 			else {
 				break _loop23;
@@ -595,7 +595,7 @@ tryAgain:
 		_ttype = SYMBOL;
 		int _saveIndex;
 		
-		mCHAR(false);
+		this.mCHAR(false);
 		{
 		_loop26:
 		do {
@@ -614,14 +614,14 @@ tryAgain:
 			case 's':  case 't':  case 'u':  case 'v':
 			case 'w':  case 'x':  case 'y':  case 'z':
 			{
-				mCHAR(false);
+				this.mCHAR(false);
 				break;
 			}
 			case '0':  case '1':  case '2':  case '3':
 			case '4':  case '5':  case '6':  case '7':
 			case '8':  case '9':
 			{
-				mDIGIT_0(false);
+				this.mDIGIT_0(false);
 				break;
 			}
 			case '_':
@@ -646,22 +646,22 @@ tryAgain:
 			}
 			case '\\':
 			{
-				mBSLASH(false);
+				this.mBSLASH(false);
 				break;
 			}
 			case '/':
 			{
-				mFSLASH(false);
+				this.mFSLASH(false);
 				break;
 			}
 			case ';':
 			{
-				mSEMI(false);
+				this.mSEMI(false);
 				break;
 			}
 			case ':':
 			{
-				mCOLON(false);
+				this.mCOLON(false);
 				break;
 			}
 			default:
@@ -713,7 +713,7 @@ tryAgain:
 		_loop30:
 		do {
 			if (((LA(1) >= '0' && LA(1) <= '9'))) {
-				mDIGIT_0(false);
+				this.mDIGIT_0(false);
 			}
 			else {
 				if ( _cnt30>=1 ) { break _loop30; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}
@@ -732,7 +732,7 @@ tryAgain:
 			_loop34:
 			do {
 				if (((LA(1) >= '0' && LA(1) <= '9'))) {
-					mDIGIT_0(false);
+					this.mDIGIT_0(false);
 				}
 				else {
 					if ( _cnt34>=1 ) { break _loop34; } else {throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());}

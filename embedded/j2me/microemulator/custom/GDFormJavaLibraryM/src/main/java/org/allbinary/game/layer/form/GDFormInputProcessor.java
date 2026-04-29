@@ -98,7 +98,7 @@ public class GDFormInputProcessor
     public void reset() {
         
         try {
-            virtualKeyboardEventHandler.close();
+            this.virtualKeyboardEventHandler.close();
         } catch(Exception e) {
             final CommonStrings commonStrings = CommonStrings.getInstance();
             this.logUtil.put(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e);

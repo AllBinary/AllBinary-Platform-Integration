@@ -137,7 +137,7 @@ public class Text {
      */
     
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     /**
@@ -162,7 +162,7 @@ public class Text {
      */
     
     public String getFontfamily() {
-        return fontfamily;
+        return this.fontfamily;
     }
 
     /**
@@ -190,7 +190,7 @@ public class Text {
      */
     
     public Integer getPixelsize() {
-        return pixelsize;
+        return this.pixelsize;
     }
 
     /**
@@ -219,7 +219,7 @@ public class Text {
      */
     
     public Boolean isWrap() {
-        return wrap;
+        return this.wrap;
     }
 
     /**
@@ -247,7 +247,7 @@ public class Text {
      */
     
     public String getColor() {
-        return color;
+        return this.color;
     }
 
     /**
@@ -275,7 +275,7 @@ public class Text {
      */
     
     public Boolean isBold() {
-        return bold;
+        return this.bold;
     }
 
     /**
@@ -303,7 +303,7 @@ public class Text {
      */
     
     public Boolean isItalic() {
-        return italic;
+        return this.italic;
     }
 
     /**
@@ -331,7 +331,7 @@ public class Text {
      */
     
     public Boolean isUnderline() {
-        return underline;
+        return this.underline;
     }
 
     /**
@@ -359,7 +359,7 @@ public class Text {
      */
     
     public Boolean isStrikeout() {
-        return strikeout;
+        return this.strikeout;
     }
 
     /**
@@ -387,7 +387,7 @@ public class Text {
      */
     
     public Boolean isKerning() {
-        return kerning;
+        return this.kerning;
     }
 
     /**
@@ -415,7 +415,7 @@ public class Text {
      */
     
     public HorizontalAlignment getHalign() {
-        return halign;
+        return this.halign;
     }
 
     /**
@@ -443,7 +443,7 @@ public class Text {
      */
     
     public VerticalAlignment getValign() {
-        return valign;
+        return this.valign;
     }
 
     /**

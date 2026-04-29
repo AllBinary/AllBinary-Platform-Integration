@@ -67,7 +67,7 @@ public class TiledMapLoaderFromJSONFactory {
             return map;
 
         } catch (Exception e) {
-            logUtil.put(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e);
+            this.logUtil.put(commonStrings.EXCEPTION, this, commonStrings.PROCESS, e);
             return null;
         }
 

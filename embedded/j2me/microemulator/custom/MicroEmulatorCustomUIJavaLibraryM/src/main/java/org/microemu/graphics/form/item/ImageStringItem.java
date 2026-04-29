@@ -39,12 +39,12 @@ public class ImageStringItem extends CustomItem
         super(label, backgroundBasicColor, foregroundBasicColor);
         
         this.stringComponent = new StringComponent(text, backgroundBasicColor, foregroundBasicColor);
-        setImage(img);
+        this.setImage(img);
     }
 
     public Image getImage()
     {
-        return img;
+        return this.img;
     }
 
     public void setImage(Image img)
@@ -58,7 +58,7 @@ public class ImageStringItem extends CustomItem
 
     public String getText()
     {
-        return stringComponent.getText();
+        return this.stringComponent.getText();
     }
 
     public void setText(String text)
@@ -71,10 +71,10 @@ public class ImageStringItem extends CustomItem
     {
         if (this.img != null && this.img.getHeight() > this.stringComponent.getHeight())
         {
-            return img.getHeight();
+            return this.img.getHeight();
         } else
         {
-            return stringComponent.getHeight();
+            return this.stringComponent.getHeight();
         }
     }
 
@@ -109,7 +109,7 @@ public class ImageStringItem extends CustomItem
 
     protected StringComponent getStringComponent()
     {
-        return stringComponent;
+        return this.stringComponent;
     }
 
 }

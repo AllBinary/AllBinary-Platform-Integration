@@ -184,7 +184,7 @@ public class JadAttributes extends Task
 			{
 				log(m_attribName + " <- " + key + "=" + value2 + " (was " + value + ")");
 			}
-			m_pairs.addElement(new String[]{key, value2});
+			this.m_pairs.addElement(new String[]{key, value2});
 		}
 	}
 	

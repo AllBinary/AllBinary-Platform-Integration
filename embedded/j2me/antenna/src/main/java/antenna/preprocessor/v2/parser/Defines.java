@@ -32,27 +32,27 @@ public class Defines
 	public Defines()
 	{
 		this.m_lineFilter = null;
-		clear();
+		this.clear();
 	}
 	
 	public Defines(ILineFilter lineFilter) 
 	{
 		this.m_lineFilter = lineFilter;
-		clear();
+		this.clear();
 	}
 	
 	public Defines(String defines) throws ANTLRException
 	{
 		this.m_lineFilter = null;
-		clear();
-		addDefines(defines);
+		this.clear();
+		this.addDefines(defines);
 	}
 
 	public Defines(String defines, ILineFilter lineFilter) throws ANTLRException
 	{
 		this.m_lineFilter = lineFilter;
-		clear();
-		addDefines(defines);
+		this.clear();
+		this.addDefines(defines);
 	}
 
 	public void addDefines(String defines) throws RecognitionException, TokenStreamException
@@ -69,7 +69,7 @@ public class Defines
 //		new DumpASTVisitor().visit(ast);
 		for (AST node = ast; node != null && node.getType() != APPLexerTokenTypes.EOF; node = node.getNextSibling())
 		{
-			define(node);
+			this.define(node);
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class Defines
 		FileInputStream in = new FileInputStream(file);
 		try
 		{
-			loadDefines(in);
+			this.loadDefines(in);
 		}
 		finally
 		{
@@ -107,7 +107,7 @@ public class Defines
 					parser.define();
 					AST ast = parser.getAST();
 //					new DumpASTVisitor().visit(ast);
-					define(ast);
+					this.define(ast);
 				}
 			}
 		}
@@ -130,7 +130,7 @@ public class Defines
 
 	public void define(String key) throws RecognitionException, TokenStreamException
 	{
-		define(key, null);
+		this.define(key, null);
 	}
 	
 	public void define(String key, String value) throws RecognitionException, TokenStreamException
@@ -148,7 +148,7 @@ public class Defines
 		APPLexer lexer = new APPLexer(new StringReader(def));
 		APPParser parser = new APPParser(lexer);
 		parser.define();
-		define((CommonAST) parser.getAST());
+		this.define((CommonAST) parser.getAST());
 	}
 
 	public void define(AST node) throws RecognitionException
@@ -203,7 +203,7 @@ public class Defines
 
 	public boolean isDefined(String text)
 	{
-		return m_defines.containsKey(text);
+		return this.m_defines.containsKey(text);
 	}
 
 	public Define getDefine(String text)
@@ -213,7 +213,7 @@ public class Defines
 	
 	public boolean undefine(String key)
 	{
-		return m_defines.remove(key) != null;
+		return this.m_defines.remove(key) != null;
 	}
 	
 	public String toString()

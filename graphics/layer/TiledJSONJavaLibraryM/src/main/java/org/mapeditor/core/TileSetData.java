@@ -168,7 +168,7 @@ public class TileSetData {
      */
     
     public TileOffset getTileoffset() {
-        return tileoffset;
+        return this.tileoffset;
     }
 
     /**
@@ -194,7 +194,7 @@ public class TileSetData {
      */
     
     public Grid getGrid() {
-        return grid;
+        return this.grid;
     }
 
     /**
@@ -220,7 +220,7 @@ public class TileSetData {
      */
     
     public Properties getProperties() {
-        return properties;
+        return this.properties;
     }
 
     /**
@@ -245,7 +245,7 @@ public class TileSetData {
      */
     
     public ImageData getImageData() {
-        return imageData;
+        return this.imageData;
     }
 
     /**
@@ -270,7 +270,7 @@ public class TileSetData {
      */
     
     public TerrainTypes getTerraintypes() {
-        return terraintypes;
+        return this.terraintypes;
     }
 
     /**
@@ -307,7 +307,7 @@ public class TileSetData {
      */
     
     public WangSets getWangsets() {
-        return wangsets;
+        return this.wangsets;
     }
 
     /**
@@ -334,7 +334,7 @@ public class TileSetData {
      */
     
     public Integer getFirstgid() {
-        return firstgid;
+        return this.firstgid;
     }
 
     /**
@@ -361,7 +361,7 @@ public class TileSetData {
      */
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -392,7 +392,7 @@ public class TileSetData {
      */
     
     public String getSource() {
-        return source;
+        return this.source;
     }
 
     /**
@@ -419,7 +419,7 @@ public class TileSetData {
      */
     
     public int getTileWidth() {
-        return tileWidth;
+        return this.tileWidth;
     }
 
     /**
@@ -437,7 +437,7 @@ public class TileSetData {
      */
     
     public int getTileHeight() {
-        return tileHeight;
+        return this.tileHeight;
     }
 
     /**
@@ -460,7 +460,7 @@ public class TileSetData {
      */
     
     public Integer getTileSpacing() {
-        return tileSpacing;
+        return this.tileSpacing;
     }
 
     /**
@@ -488,7 +488,7 @@ public class TileSetData {
      */
     
     public Integer getTileMargin() {
-        return tileMargin;
+        return this.tileMargin;
     }
 
     /**
@@ -517,7 +517,7 @@ public class TileSetData {
      */
     
     public Integer getTilecount() {
-        return tilecount;
+        return this.tilecount;
     }
 
     /**
@@ -545,7 +545,7 @@ public class TileSetData {
      */
     
     public int getColumns() {
-        return columns;
+        return this.columns;
     }
 
     /**

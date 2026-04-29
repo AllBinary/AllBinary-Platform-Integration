@@ -73,7 +73,7 @@ public class AnimatedTile extends Tile {
      */
     public AnimatedTile(Sprite s) {
         this();
-        setSprite(s);
+        this.setSprite(s);
     }
 
     /**
@@ -91,7 +91,7 @@ public class AnimatedTile extends Tile {
      * @return a int.
      */
     public int countAnimationFrames() {
-        return sprite.getTotalFrames();
+        return this.sprite.getTotalFrames();
     }
 
     /**
@@ -100,7 +100,7 @@ public class AnimatedTile extends Tile {
      * @return a int.
      */
     public int countKeys() {
-        return sprite.getTotalKeys();
+        return this.sprite.getTotalKeys();
     }
 
     /**
@@ -109,6 +109,6 @@ public class AnimatedTile extends Tile {
      * @return a {@link org.mapeditor.core.Sprite} object.
      */
     public Sprite getSprite() {
-        return sprite;
+        return this.sprite;
     }
 }

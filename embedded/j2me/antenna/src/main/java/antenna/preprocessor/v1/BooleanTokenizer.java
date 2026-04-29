@@ -122,13 +122,13 @@ class BooleanTokenizer {
 	 * the token code of the new token.
 	 */
 	public int nextToken() throws PreprocessorException {
-		skipBlanks();
+		this.skipBlanks();
 		this.tokenPos = this.sourcePos;
 
 		/* Check for end of source */
 		if (this.sourcePos >= this.sourceText.length()) {
 			this.tokenType = TYPE_STOP;
-			return tokenType;
+			return this.tokenType;
 		}
 
 		/* Check for other kinds of tokens */
@@ -173,7 +173,7 @@ class BooleanTokenizer {
 		else
 			throw new PreprocessorException("Syntax Error");
 
-		return tokenType;
+		return this.tokenType;
 	}
 
 	private boolean isIdentifierPart(char c)
@@ -186,7 +186,7 @@ class BooleanTokenizer {
 	 * scanned.
 	 */
 	public int getTokenType() {
-		return tokenType;
+		return this.tokenType;
 	}
 
 	/**
@@ -198,7 +198,7 @@ class BooleanTokenizer {
 			return "";
 		}
 		else {
-			return sourceText.substring(this.tokenPos, sourcePos);
+			return this.sourceText.substring(this.tokenPos, sourcePos);
 		}
 	}
 }

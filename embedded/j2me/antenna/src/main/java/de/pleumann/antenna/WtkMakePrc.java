@@ -112,11 +112,11 @@ public class WtkMakePrc extends Task {
     }
 
     public void setIf(String s) {
-        condition.setIf(s);
+        this.condition.setIf(s);
     }
     
     public void setUnless(String s) {
-        condition.setUnless(s);
+        this.condition.setUnless(s);
     }
     
     public void setConverter(String s) {
@@ -128,7 +128,7 @@ public class WtkMakePrc extends Task {
     }
 
     public boolean isActive() {
-        return condition.isActive();
+        return this.condition.isActive();
     }
 
 	public void executeWtk() throws BuildException {
@@ -289,10 +289,10 @@ public class WtkMakePrc extends Task {
         }
 
         if ("wme".equalsIgnoreCase(this.converter)) {
-        	executeWme();
+        	this.executeWme();
         }
         else {
-        	executeWtk();
+        	this.executeWtk();
         }
     }
 }

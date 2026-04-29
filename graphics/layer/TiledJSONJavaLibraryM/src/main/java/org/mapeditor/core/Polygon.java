@@ -67,7 +67,7 @@ public class Polygon {
      */
     
     public String getPoints() {
-        return points;
+        return this.points;
     }
 
     /**

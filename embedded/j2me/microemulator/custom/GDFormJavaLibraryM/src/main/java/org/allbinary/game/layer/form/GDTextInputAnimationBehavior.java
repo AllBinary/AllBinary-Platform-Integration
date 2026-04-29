@@ -48,7 +48,7 @@ public class GDTextInputAnimationBehavior extends GDItemAnimationBehavior
     private GDGameLayer gameLayer;
     
     public GDTextInputAnimationBehavior() {
-        virtualKeyboardEventHandler.open();
+        this.virtualKeyboardEventHandler.open();
     }
 
     public IndexedAnimation[] init(final GDObject gdObject, final AnimationInterfaceFactoryInterface[] animationInterfaceFactoryInterfaceArray) {
@@ -83,8 +83,8 @@ public class GDTextInputAnimationBehavior extends GDItemAnimationBehavior
         if(motionGestureInput == touchMotionGestureFactory.PRESSED) {
             
             if (this.rectangleCollisionUtil.isInside(this.gameLayer.getXP(), this.gameLayer.getYP() - 2, 
-                gameLayer.getX2(), gameLayer.getY2() + 2, point.getX(), point.getY())) {
-                virtualKeyboardEventHandler.open();
+                this.gameLayer.getX2(), this.gameLayer.getY2() + 2, point.getX(), point.getY())) {
+                this.virtualKeyboardEventHandler.open();
             }
         } else if(motionGestureInput == touchMotionGestureFactory.RELEASED) {
         } else if((motionGestureInput == touchMotionGestureFactory.LEFT || motionGestureInput == touchMotionGestureFactory.RIGHT)) {

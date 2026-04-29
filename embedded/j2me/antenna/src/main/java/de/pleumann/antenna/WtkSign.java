@@ -166,31 +166,31 @@ public class WtkSign extends Task
 		}
 		catch (IOException e)
 		{
-			error(e);
+			this.error(e);
 		}
 		catch (KeyStoreException e)
 		{
-			error(e);
+			this.error(e);
 		}
 		catch (NoSuchAlgorithmException e)
 		{
-			error(e);
+			this.error(e);
 		}
 		catch (CertificateException e)
 		{
-			error(e);
+			this.error(e);
 		}
 		catch (UnrecoverableKeyException e)
 		{
-			error(e);
+			this.error(e);
 		}
 		catch (InvalidKeyException e)
 		{
-			error(e);
+			this.error(e);
 		}
 		catch (SignatureException e)
 		{
-			error(e);
+			this.error(e);
 		}
 		finally
 		{

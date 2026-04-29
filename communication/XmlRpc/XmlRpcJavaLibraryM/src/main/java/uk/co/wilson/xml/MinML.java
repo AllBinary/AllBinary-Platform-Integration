@@ -183,7 +183,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           if (charClass == -1)
           {
              buffer.reset();
-             fatalError("Document contains illegal control character with value " + currentChar, this.lineNumber, this.columnNumber);
+             this.fatalError("Document contains illegal control character with value " + currentChar, this.lineNumber, this.columnNumber);
           }
 
           if (charClass == 12) {
@@ -248,7 +248,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
               if (currentChar != '/' && !elementName.equals(begin)) {
                  buffer.reset();
-                fatalError("end tag </" + elementName + "> does not match begin tag <" + begin + ">",
+                this.fatalError("end tag </" + elementName + "> does not match begin tag <" + begin + ">",
                            this.lineNumber, this.columnNumber);
               } else {
                 this.documentHandler.endElement(begin);
@@ -261,7 +261,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
             }
             catch (final EmptyStackException e) {
                buffer.reset();
-              fatalError("end tag at begining of document", this.lineNumber, this.columnNumber);
+              this.fatalError("end tag at begining of document", this.lineNumber, this.columnNumber);
             }
 
             if (mixedContentLevel != -1 && --mixedContentLevel == 0)
@@ -405,7 +405,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
                     break;
                   }
 
-                  fatalError("invalid Character Entity", this.lineNumber, this.columnNumber);
+                  this.fatalError("invalid Character Entity", this.lineNumber, this.columnNumber);
                 } else {
                   currentChar = buffer.read();
                 }
@@ -423,7 +423,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
                 if (crefState == 255)
                 {
                    buffer.reset();
-                   fatalError("invalid Character Entitiy", this.lineNumber, this.columnNumber);
+                   this.fatalError("invalid Character Entitiy", this.lineNumber, this.columnNumber);
                 }
               }
             }
@@ -434,7 +434,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           // report fatal error
 
             buffer.reset();
-            fatalError(operand + " ParseError", this.lineNumber, this.columnNumber);
+            this.fatalError(operand + " ParseError", this.lineNumber, this.columnNumber);
             // drop through to exit parser
 
           case exitParser:
@@ -491,11 +491,11 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
       try {
           
     if (source.getCharacterStream() != null)
-      parse(source.getCharacterStream());
+      this.parse(source.getCharacterStream());
     else if (source.getByteStream() != null)
-      parse(new InputStreamReader(source.getByteStream()));
+      this.parse(new InputStreamReader(source.getByteStream()));
     else
-     parse(new InputStreamReader(new URL(source.getSystemId()).openStream()));
+     this.parse(new InputStreamReader(new URL(source.getSystemId()).openStream()));
           
     //Avian does not extend IOException
       } catch(MalformedURLException e) {
@@ -504,7 +504,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   }
 
   public void parse(final String systemId) throws SAXException, IOException {
-    parse(new InputSource(systemId));
+    this.parse(new InputSource(systemId));
   }
 
   public void setLocale(final Locale locale) throws SAXException {
@@ -606,22 +606,22 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     }
 
     public void close() throws IOException {
-      flush();
+      this.flush();
     }
 
     public void flush() throws IOException {
       try {
-        _flush();
-        if (writer != this) writer.flush();
+        this._flush();
+        if (this.writer != this) this.writer.flush();
       }
       finally {
-        flushed = true;
+        this.flushed = true;
       }
     }
 
     public void write(final int c) throws IOException {
       written = true;
-      chars[count++] = (char)c;
+      this.chars[this.count++] = (char)c;
     }
 
     public void write(final char[] cbuf, final int off, final int len) throws IOException {
@@ -632,7 +632,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
     public void saveChar(final char c) {
       written = false;
-      chars[count++] = c;
+      this.chars[this.count++] = c;
     }
 
     public void pushWriter(final Writer writer) {
@@ -644,16 +644,16 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     }
 
     public Writer getWriter() {
-      return writer;
+      return this.writer;
     }
 
     public void popWriter() throws IOException {
       try {
-        if (!flushed && writer != this) writer.flush();
+        if (!this.flushed && this.writer != this) this.writer.flush();
       }
       finally {
-        writer = (Writer)MinML.this.tags.pop();
-        flushed = written = false;
+        this.writer = (Writer)MinML.this.tags.pop();
+        this.flushed = written = false;
       }
     }
 
@@ -669,11 +669,11 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     }
 
     public int read() throws IOException {
-      if (nextIn == lastIn) {
-        if (count != 0) {
-          if (written) {
-            _flush();
-          } else if (count >= (chars.length - MinML.this.bufferIncrement)) {
+      if (this.nextIn == this.lastIn) {
+        if (this.count != 0) {
+          if (this.written) {
+            this._flush();
+          } else if (this.count >= (this.chars.length - MinML.this.bufferIncrement)) {
           final char[] newChars = new char[chars.length + MinML.this.bufferIncrement];
 
             System.arraycopy(chars, 0, newChars, 0, count);
@@ -685,17 +685,17 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
         if (numRead == -1) return -1;
 
-        nextIn = count;
-        lastIn = count + numRead;
+        this.nextIn = count;
+        this.lastIn = count + numRead;
       }
 
-      return chars[nextIn++];
+      return chars[this.nextIn++];
     }
 
     private void _flush() throws IOException {
-      if (count != 0) {
+      if (this.count != 0) {
         try {
-          if (writer == this) {
+          if (this.writer == this) {
             try {
               MinML.this.documentHandler.characters(chars, 0, count);
             }
@@ -703,11 +703,11 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
               throw new IOException(e.toString());
             }
           } else {
-            writer.write(chars, 0, count);
+            this.writer.write(chars, 0, count);
           }
         }
         finally {
-          count = 0;
+          this.count = 0;
         }
       }
     }

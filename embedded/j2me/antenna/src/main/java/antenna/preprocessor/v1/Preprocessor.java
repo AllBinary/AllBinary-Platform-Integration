@@ -75,11 +75,11 @@ public class Preprocessor implements IPreprocessor{
 	}
 
 	public String getPackageName() {
-		return packageName;
+		return this.packageName;
 	}
 
 	private void pushState() {
-		stack.push(new Integer(state));
+		this.stack.push(new Integer(state));
 	}
 
 	private void popState() {
@@ -92,7 +92,7 @@ public class Preprocessor implements IPreprocessor{
 	 * is entered.
 	 */
 	private void handleIf(boolean condition) {
-		pushState();
+		this.pushState();
 		if (!isBlind()) {
 			if (condition) {
 				this.state = STATE_IS_TRUE;
@@ -136,7 +136,7 @@ public class Preprocessor implements IPreprocessor{
 			throw new PreprocessorException("Unexpected #endif",file,  currentLine);
 		}
 		else {
-			popState();
+			this.popState();
 		}
 	}
 
@@ -154,28 +154,28 @@ public class Preprocessor implements IPreprocessor{
 			}
 		}
 		else if (type == PreprocessorLine.TYPE_IF) {
-			handleIf(this.eval.evaluate(l.getArgs()));
+			this.handleIf(this.eval.evaluate(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_IFDEF) {
-			handleIf(this.eval.isDefined(l.getArgs()));
+			this.handleIf(this.eval.isDefined(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_IFNDEF) {
-			handleIf(!this.eval.isDefined(l.getArgs()));
+			this.handleIf(!this.eval.isDefined(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_ELIF) {
-			handleElseIf(this.eval.evaluate(l.getArgs()));
+			this.handleElseIf(this.eval.evaluate(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_ELIFDEF) {
-			handleElseIf(this.eval.isDefined(l.getArgs()));
+			this.handleElseIf(this.eval.isDefined(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_ELIFNDEF) {
-			handleElseIf(!this.eval.isDefined(l.getArgs()));
+			this.handleElseIf(!this.eval.isDefined(l.getArgs()));
 		}
 		else if (type == PreprocessorLine.TYPE_ELSE) {
-			handleElse();
+			this.handleElse();
 		}
 		else if (type == PreprocessorLine.TYPE_ENDIF) {
-			handleEndIf();
+			this.handleEndIf();
 		}
 	}
 
@@ -243,7 +243,7 @@ public class Preprocessor implements IPreprocessor{
 			this.pl.processLine(s);
 		}
 		
-		return pl;
+		return this.pl;
 	}
 
 	String commentLine(PreprocessorLine l) {
@@ -306,7 +306,7 @@ public class Preprocessor implements IPreprocessor{
 			String line = lines.get(i);
 			try {
 				//System.out.println(lines.get(i));
-				PreprocessorLine l = analyzeLine(line);
+				PreprocessorLine l = this.analyzeLine(line);
 				
 
 				/**
@@ -314,14 +314,14 @@ public class Preprocessor implements IPreprocessor{
 				 */
 				if (l.getType() == PreprocessorLine.TYPE_INCLUDE) {
 
-					Strings include = isBlind() ? null : getIncludeData(l);
+					Strings include = this.isBlind() ? null : this.getIncludeData(l);
 
 					/**
 					 * Find end of include marker in source code
 					 */
 					i++;
 					while (i < lines.size()) {
-						l = analyzeLine(lines.get(i));
+						l = this.analyzeLine(lines.get(i));
 						if (l.getType() == PreprocessorLine.TYPE_ENDINCLUDE)
 							break;
 						lines.delete(i);
@@ -346,7 +346,7 @@ public class Preprocessor implements IPreprocessor{
 
 						for (int k = 0; k < include.size(); k++) {
 							String s = include.get(k);
-							PreprocessorLine ln = analyzeLine(s);
+							PreprocessorLine ln = this.analyzeLine(s);
 							if (ln.getType() == PreprocessorLine.TYPE_VISIBLE) {
 								lines.insert(i, s);
 								i++;
@@ -378,7 +378,7 @@ public class Preprocessor implements IPreprocessor{
 						}
 					}
 					else {
-						handleCommand(l);
+						this.handleCommand(l);
 					}
 					i++;
 				}
@@ -395,7 +395,7 @@ public class Preprocessor implements IPreprocessor{
 		    // Cleanup all directives and uncommented stuff.
 		    
 		    for (int j = lines.size() - 1; j >= 0; j--) {
-				PreprocessorLine l = analyzeLine(lines.get(j));
+				PreprocessorLine l = this.analyzeLine(lines.get(j));
 				
 				if (l.getType() != PreprocessorLine.TYPE_VISIBLE) {
 				    lines.delete(j);
@@ -425,7 +425,7 @@ public class Preprocessor implements IPreprocessor{
 	
 	public void addSymbols(String defines) throws PreprocessorException
 	{
-		setSymbols(defines);
+		this.setSymbols(defines);
 	}
 
 

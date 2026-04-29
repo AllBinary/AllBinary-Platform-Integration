@@ -190,9 +190,9 @@ public class XmlRpcClientLite extends XmlRpcClient
                 byte[] request = buffer.toByteArray();
 
                 // and send it to the server
-                if (client == null)
+                if (this.client == null)
                 {
-                    client = new HttpClient(url);
+                    this.client = new HttpClient(url);
                 }
 
                 InputStream in = null;
@@ -328,8 +328,8 @@ public class XmlRpcClientLite extends XmlRpcClient
             {
                 uri = CommonSeps.getInstance().FORWARD_SLASH;
             }
-            host = port == 80 ? hostname : hostname + CommonSeps.getInstance().COLON + port;
-            initConnection();
+            this.host = port == 80 ? hostname : hostname + CommonSeps.getInstance().COLON + port;
+            this.initConnection();
         }
 
         /**
@@ -350,7 +350,7 @@ public class XmlRpcClientLite extends XmlRpcClient
         {
             try
             {
-                socket.close();
+                this.socket.close();
             }
             catch (Exception ignore)
             {
@@ -365,27 +365,27 @@ public class XmlRpcClientLite extends XmlRpcClient
          */
         public InputStream sendRequest(byte[] request) throws IOException
         {
-            output.write(("POST " + uri + " HTTP/1.0\r\n").getBytes());
-            output.write(("User-Agent: " + XmlRpc.version + "\r\n").getBytes());
-            output.write(("Host: " + host + "\r\n").getBytes());
+            this.output.write(("POST " + uri + " HTTP/1.0\r\n").getBytes());
+            this.output.write(("User-Agent: " + XmlRpc.version + "\r\n").getBytes());
+            this.output.write(("Host: " + host + "\r\n").getBytes());
             if (XmlRpc.getKeepAlive())
             {
-                output.write("Connection: Keep-Alive\r\n".getBytes());
+                this.output.write("Connection: Keep-Alive\r\n".getBytes());
             }
-            output.write("Content-Type: text/xml\r\n".getBytes());
+            this.output.write("Content-Type: text/xml\r\n".getBytes());
             if (auth != null)
             {
-                output.write(("Authorization: Basic " + auth + "\r\n")
+                this.output.write(("Authorization: Basic " + auth + "\r\n")
                         .getBytes());
             }
-            output.write(("Content-Length: " + request.length)
+            this.output.write(("Content-Length: " + request.length)
                     .getBytes());
-            output.write("\r\n\r\n".getBytes());
-            output.write(request);
-            output.flush();
+            this.output.write("\r\n\r\n".getBytes());
+            this.output.write(request);
+            this.output.flush();
 
             // start reading  server response headers
-            String line = readLine();
+            String line = this.readLine();
             if (XmlRpc.debug)
             {
                 System.out.println(line);
@@ -397,7 +397,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 String httpversion = tokens.nextToken();
                 String statusCode = tokens.nextToken();
                 String statusMsg = tokens.nextToken("\n\r");
-                keepalive = XmlRpc.getKeepAlive()
+                this.keepalive = XmlRpc.getKeepAlive()
                         && "HTTP/1.1".equals(httpversion);
                 if (! "200".equals(statusCode))
                 {
@@ -416,7 +416,7 @@ public class XmlRpcClientLite extends XmlRpcClient
             }
             do
             {
-                line = readLine ();
+                line = this.readLine ();
                 if (line != null)
                 {
                     if (XmlRpc.debug)
@@ -431,7 +431,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                     }
                     if (line.startsWith("connection:"))
                     {
-                        keepalive = XmlRpc.getKeepAlive()
+                        this.keepalive = XmlRpc.getKeepAlive()
                                 && line.indexOf("keep-alive") > -1;
                     }
                 }
@@ -447,9 +447,9 @@ public class XmlRpcClientLite extends XmlRpcClient
          */
         private String readLine() throws IOException
         {
-            if (buffer == null)
+            if (this.buffer == null)
             {
-                buffer = new byte[2048];
+                this.buffer = new byte[2048];
             }
             int next;
             int count = 0;
@@ -478,7 +478,7 @@ public class XmlRpcClientLite extends XmlRpcClient
          */
         protected void finalize() throws Throwable
         {
-            closeConnection ();
+            this.closeConnection ();
         }
     }
 

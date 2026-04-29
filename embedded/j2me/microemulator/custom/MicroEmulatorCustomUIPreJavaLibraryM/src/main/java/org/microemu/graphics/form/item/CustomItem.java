@@ -111,18 +111,18 @@ public class CustomItem
 
     public String getLabel()
     {
-        return getLabelStringComponent().getText();
+        return this.getLabelStringComponent().getText();
     }
 
     public int getLayout()
     {
-        return layout;
+        return this.layout;
     }
 
     public int getMinimumHeight()
     {
         if (getLabelStringComponent() != null) {
-            return getLabelStringComponent().getHeight();
+            return this.getLabelStringComponent().getHeight();
         } else {
             return 0;
         }
@@ -130,14 +130,14 @@ public class CustomItem
 
     public int getMinimumWidth()
     {
-        return getMaximumWidth();
+        return this.getMaximumWidth();
     }
 
     public int getPreferredHeight()
     {
         int ret = prefHeight;
-        final int min = getMinimumHeight();
-        final int max = getMaximumHeight();
+        final int min = this.getMinimumHeight();
+        final int max = this.getMaximumHeight();
 
         if (ret == -1) {
             return min;
@@ -154,8 +154,8 @@ public class CustomItem
     public int getPreferredWidth()
     {
         int ret = prefWidth;
-        final int min = getMinimumWidth();
-        final int max = getMaximumWidth();
+        final int min = this.getMinimumWidth();
+        final int max = this.getMaximumWidth();
 
         if (ret == -1) {
             return max;
@@ -197,7 +197,7 @@ public class CustomItem
 
     public void setLabel(String label)
     {
-        getLabelStringComponent().setText(label);
+        this.getLabelStringComponent().setText(label);
     }
 
     public void setLayout(int layout)
@@ -229,7 +229,7 @@ public class CustomItem
 
     public int getHeight()
     {
-        return getLabelStringComponent().getHeight() + 4;
+        return this.getLabelStringComponent().getHeight() + 4;
     }
 
     public boolean isFocusable()
@@ -257,7 +257,7 @@ public class CustomItem
 
     public boolean hasFocus()
     {
-        return focus;
+        return this.focus;
     }
 
     public void setFocus(boolean state)
@@ -267,7 +267,7 @@ public class CustomItem
 
     Displayable getOwner()
     {
-        return owner;
+        return this.owner;
     }
 
     public void setOwner(Screen owner)
@@ -277,7 +277,7 @@ public class CustomItem
 
         if (owner == null)
         {
-            setFocus(false);
+            this.setFocus(false);
         }
     }
 
@@ -306,7 +306,7 @@ public class CustomItem
     {
         if (this.owner != null)
         {
-            return owner.getHeight() * 10;
+            return this.owner.getHeight() * 10;
         }
         else
         {
@@ -318,7 +318,7 @@ public class CustomItem
     {
         if (this.owner != null)
         {
-            return owner.getWidth() - 3;
+            return this.owner.getWidth() - 3;
         }
         else
         {
@@ -338,6 +338,6 @@ public class CustomItem
 
     public StringComponent getLabelStringComponent()
     {
-        return labelStringComponent;
+        return this.labelStringComponent;
     }
 }

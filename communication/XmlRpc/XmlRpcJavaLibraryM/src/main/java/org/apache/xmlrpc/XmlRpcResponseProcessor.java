@@ -94,7 +94,7 @@ public class XmlRpcResponseProcessor
         {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             XmlWriter writer = new XmlWriter(buffer, encoding);
-            writeResponse(responseParam, writer);
+            this.writeResponse(responseParam, writer);
             writer.flush();
             return buffer.toByteArray();
         }
@@ -153,7 +153,7 @@ public class XmlRpcResponseProcessor
                ((XmlRpcException) x).code : 0;
         try
         {
-            writeError(code, message, writer);
+            this.writeError(code, message, writer);
             writer.flush();
         }
         catch (Exception e)

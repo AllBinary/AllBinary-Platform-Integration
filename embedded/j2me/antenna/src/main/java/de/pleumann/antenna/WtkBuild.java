@@ -88,15 +88,15 @@ public class WtkBuild extends Javac {
 	}
 
 	public void setIf(String s) {
-		condition.setIf(s);
+		this.condition.setIf(s);
 	}
 
 	public void setUnless(String s) {
-		condition.setUnless(s);
+		this.condition.setUnless(s);
 	}
 
 	public boolean isActive() {
-		return condition.isActive();
+		return this.condition.isActive();
 	}
 
 	public void execute() throws BuildException {

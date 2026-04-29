@@ -124,7 +124,7 @@ public class Tile extends TileData {
      * @return TileSet
      */
     public TileSet getTileSet() {
-        return tileset;
+        return this.tileset;
     }
 
     /**
@@ -134,7 +134,7 @@ public class Tile extends TileData {
      */
     public int getWidth() {
         if (this.image != null) {
-            return image.getWidth();
+            return this.image.getWidth();
         }
         return 0;
     }
@@ -146,7 +146,7 @@ public class Tile extends TileData {
      */
     public int getHeight() {
         if (this.image != null) {
-            return image.getHeight();
+            return this.image.getHeight();
         }
         return 0;
     }
@@ -156,7 +156,7 @@ public class Tile extends TileData {
      *
      */
     public Image getImage() {
-        return image;
+        return this.image;
     }
 
     /**
@@ -165,7 +165,7 @@ public class Tile extends TileData {
      * @return a {@link java.lang.String} object.
      */
     public String getSource() {
-        return source;
+        return this.source;
     }
 
     /**

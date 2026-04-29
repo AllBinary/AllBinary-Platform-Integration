@@ -79,7 +79,7 @@ public class TextFieldItemHelper
                 if (gameKey == this.gameKeyFactory.LEFT || platformKeyFactory.isLeft(input)) {
                     PreLogUtil.put("Position Change", this, gameInputStrings.KEY_PRESSED);
                     this.caretPositionChanged(this.textFieldItem.getCaretPosition() - 1);
-                } else if (gameKey == gameKeyFactory.RIGHT || platformKeyFactory.isRight(input)) {
+                } else if (gameKey == this.gameKeyFactory.RIGHT || platformKeyFactory.isRight(input)) {
                     PreLogUtil.put("Position Change", this, gameInputStrings.KEY_PRESSED);
                     this.caretPositionChanged(this.textFieldItem.getCaretPosition() + 1);
                 } else if (this.textItemVisitor.visit(name) == BooleanFactory.getInstance().TRUE) {

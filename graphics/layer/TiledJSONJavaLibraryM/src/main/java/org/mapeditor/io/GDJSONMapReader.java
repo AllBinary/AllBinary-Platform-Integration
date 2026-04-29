@@ -259,7 +259,7 @@ public class GDJSONMapReader {
     }
 
     public void processTilesets(final TiledMap map, final JSONArray jsonArray, final JSONObject[] tileSetJSONObjectArray, final JSONObject[] actualTileSetJSONObjectArray, final int[] tileSetImageHeightArray) throws Exception {
-        logUtil.putF("Tileset JSON:" + jsonArray.toString(3), this, commonStrings.PROCESS);
+        this.logUtil.putF("Tileset JSON:" + jsonArray.toString(3), this, commonStrings.PROCESS);
 
         final String LOADING_TILESET = "Loading Tileset: ";
         final int size = jsonArray.length();
@@ -532,7 +532,7 @@ public class GDJSONMapReader {
 //                                    logUtil.put(stringMaker.toString(), this, commonStrings.PROCESS);
 //                                }
                                 
-                                setTileAtFromTileId(tiledTileLayer, y, x, tileId);
+                                this.setTileAtFromTileId(tiledTileLayer, y, x, tileId);
                             }
                         }
                         
@@ -658,7 +658,7 @@ public class GDJSONMapReader {
      */
     private Tile getTileForTileGID(final int tileId) {
         Tile tile = null;
-        final java.util.Map.Entry<Integer, TileSet> ts = findTileSetForTileGID(tileId);
+        final java.util.Map.Entry<Integer, TileSet> ts = this.findTileSetForTileGID(tileId);
         if (ts != null) {
             final TileSet tileSet = ts.getValue();
             //logUtil.putF("tileId: " + tileId, this, "getTile");
@@ -752,7 +752,7 @@ public class GDJSONMapReader {
             TileLayer layer;
             for(int index = 0; index < size2; index++) {
                 this.logUtil.putF(LOADING_LAYER + index, this, commonStrings.PROCESS);
-                layer = readLayer(tildeBehavior, layerJSONArray.getJSONObject(index));
+                layer = this.readLayer(tildeBehavior, layerJSONArray.getJSONObject(index));
                 if (layer != null) {
                     map.addLayer(layer);
                 }
@@ -779,7 +779,7 @@ public class GDJSONMapReader {
             this.processTileset(jsonObject);
         }
 
-        tilesetPerFirstGid = null;
+        this.tilesetPerFirstGid = null;
         return map;
     }
 
@@ -823,11 +823,11 @@ public class GDJSONMapReader {
         }
 
         public K getKey() {
-            return key;
+            return this.key;
         }
 
         public V getValue() {
-            return value;
+            return this.value;
         }
 
         public V setValue(V value) {
@@ -841,7 +841,7 @@ public class GDJSONMapReader {
                 return false;
             java.util.Map.Entry<?,?> e = (java.util.Map.Entry<?,?>)o;
 
-            return valEquals(key,e.getKey()) && valEquals(value,e.getValue());
+            return valEquals(key,e.getKey()) && valEquals(this.value,e.getValue());
         }
 
         public int hashCode() {

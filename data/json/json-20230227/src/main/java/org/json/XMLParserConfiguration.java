@@ -324,7 +324,7 @@ public class XMLParserConfiguration {
      * @return the maximum nesting depth set for this configuration
      */
     public int getMaxNestingDepth() {
-        return maxNestingDepth;
+        return this.maxNestingDepth;
     }
 
     /**

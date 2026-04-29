@@ -352,7 +352,7 @@ public class JSONArray implements Iterable<Object> {
      *            to an enum.
      */
     public <E extends Enum<E>> E getEnum(Class<E> clazz, int index) throws JSONException {
-        E val = optEnum(clazz, index);
+        E val = this.optEnum(clazz, index);
         if(val==null) {
             // JSONException should really take a throwable argument.
             // If it did, I would re-implement this with the Enum.valueOf
@@ -1262,7 +1262,7 @@ public class JSONArray implements Iterable<Object> {
      * @return the item matched by the JSONPointer, otherwise null
      */
     public Object query(String jsonPointer) {
-        return query(new JSONPointer(jsonPointer));
+        return this.query(new JSONPointer(jsonPointer));
     }
     
     /**
@@ -1297,7 +1297,7 @@ public class JSONArray implements Iterable<Object> {
      * @throws IllegalArgumentException if {@code jsonPointer} has invalid syntax
      */
     public Object optQuery(String jsonPointer) {
-    	return optQuery(new JSONPointer(jsonPointer));
+    	return this.optQuery(new JSONPointer(jsonPointer));
     }
     
     /**

@@ -49,22 +49,22 @@ public class SimpleTiledLayer extends Layer
     
     public final int getColumns()
     {
-        return totalColumns;
+        return this.totalColumns;
     }
 
     public final int getRows()
     {
-        return totalRows;
+        return this.totalRows;
     }
 
     public final int getCellWidth()
     {
-        return tileWidth;
+        return this.tileWidth;
     }
 
     public final int getCellHeight()
     {
-        return tileHeight;
+        return this.tileHeight;
     }
 
     private final int color = BasicColorFactory.getInstance().TRANSPARENT_BLACK.intValue();

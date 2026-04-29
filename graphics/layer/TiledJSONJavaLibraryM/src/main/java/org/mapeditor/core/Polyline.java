@@ -64,7 +64,7 @@ public class Polyline {
      */
     
     public String getPoints() {
-        return points;
+        return this.points;
     }
 
     /**

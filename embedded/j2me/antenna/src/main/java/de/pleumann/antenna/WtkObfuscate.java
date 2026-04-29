@@ -45,7 +45,7 @@ public class WtkObfuscate extends PostProcessor {
 		}
 
 		public String toString() {
-			return value;
+			return this.value;
 		}
 	}
 
@@ -101,7 +101,7 @@ public class WtkObfuscate extends PostProcessor {
 
 				Vector preserve = getPreserve();
 				getUtility().getPreserveList(getJad(), preserve);
-				getUtility().obfuscate(getJarFile(), tmpFile, getFullClasspath(), getVerbose(), preserve, obfuscator, getArguments(), getJad());
+				getUtility().obfuscate(getJarFile(), tmpFile, getFullClasspath(), getVerbose(), preserve, this.obfuscator, getArguments(), getJad());
 
 				if (getToJarFile() == null) {
 					setTojarfile(getJarFile());

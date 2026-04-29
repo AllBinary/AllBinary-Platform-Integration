@@ -80,7 +80,7 @@ public class PreprocessorBridge implements IPreprocessor
 	{
 		try
 		{
-			return m_preprocessor.preprocess(in, out, encoding);
+			return this.m_preprocessor.preprocess(in, out, encoding);
 		}
 		catch (PPException e)
 		{
@@ -93,7 +93,7 @@ public class PreprocessorBridge implements IPreprocessor
 	{
 		try
 		{
-			return m_preprocessor.preprocess(lines.getVector(), encoding);
+			return this.m_preprocessor.preprocess(lines.getVector(), encoding);
 		}
 		catch (PPException e)
 		{
@@ -103,7 +103,7 @@ public class PreprocessorBridge implements IPreprocessor
 
 	public boolean isVerbose()
 	{
-		return m_preprocessor.isVerbose();
+		return this.m_preprocessor.isVerbose();
 	}
 
 	public void addSymbols(String defines) throws PreprocessorException

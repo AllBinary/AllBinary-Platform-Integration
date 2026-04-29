@@ -67,7 +67,7 @@ public class Template {
      */
     
     public TileSetData getTileset() {
-        return tileset;
+        return this.tileset;
     }
 
     /**
@@ -91,7 +91,7 @@ public class Template {
      */
     
     public MapObjectData getObject() {
-        return object;
+        return this.object;
     }
 
     /**

@@ -170,7 +170,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
         for(int index2 = 0; index2 < size2; index2 += this.tileHeight) {
             for(int index = 0; index < size; index++) {
                 tile = new Tile();
-                addNewTile(tile);
+                this.addNewTile(tile);
             }
             row++;
         }
@@ -295,7 +295,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
 
         //logUtil.putF(t.toString(), this, "addTile");
         
-        tiles.put(t.getId(), t);
+        this.tiles.put(t.getId(), t);
         this.lastKey = t.getId();
 
         t.setTileSet(this);
@@ -312,7 +312,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      */
     public void addNewTile(Tile t) {
         t.setId(-1);
-        addTile(t);
+        this.addTile(t);
     }
 
     /**
@@ -323,7 +323,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      * @param i the index to remove
      */
     public void removeTile(int i) {
-        tiles.remove(i);
+        this.tiles.remove(i);
     }
 
     /**
@@ -333,7 +333,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      * @since 0.13
      */
     public int size() {
-        return tiles.size();
+        return this.tiles.size();
     }
 
     /**
@@ -343,7 +343,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      */
     public int getMaxTileId() {
         try {
-            return lastKey;
+            return this.lastKey;
         } catch (NoSuchElementException e) {
             return -1;
         }
@@ -375,7 +375,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
             }
             return tile;
         } catch (IndexOutOfBoundsException e) {
-            logUtil.put(CommonStrings.getInstance().EXCEPTION, this, "getTile", e);
+            this.logUtil.put(CommonStrings.getInstance().EXCEPTION, this, "getTile", e);
         }
         return null;
     }
@@ -390,7 +390,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
         Tile ret = null;
         int i = 0;
         while (ret == null && i <= getMaxTileId()) {
-            ret = getTile(i);
+            ret = this.getTile(i);
             i++;
         }
         return ret;
@@ -420,7 +420,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      * @return Color - The transparent color of the set
      */
     public BasicColor getTransparentColor() {
-        return transparentColor;
+        return this.transparentColor;
     }
 
     /** {@inheritDoc} */

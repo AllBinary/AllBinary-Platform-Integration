@@ -51,7 +51,7 @@ public class Defines {
      */
     public Defines() {
         this.m_lineFilter = null;
-        clear();
+        this.clear();
     }
 
     /**
@@ -59,7 +59,7 @@ public class Defines {
      */
     public Defines(ILineFilter lineFilter) {
         this.m_lineFilter = lineFilter;
-        clear();
+        this.clear();
     }
 
     /**
@@ -69,8 +69,8 @@ public class Defines {
      */
     public Defines(String defines) throws RecognitionException, IOException  {
         this.m_lineFilter = null;
-        clear();
-        addDefines(defines);
+        this.clear();
+        this.addDefines(defines);
     }
 
     /**
@@ -81,8 +81,8 @@ public class Defines {
      */
     public Defines(String defines, ILineFilter lineFilter) throws RecognitionException, IOException  {
         this.m_lineFilter = lineFilter;
-        clear();
-        addDefines(defines);
+        this.clear();
+        this.addDefines(defines);
     }
 
     /**
@@ -113,7 +113,7 @@ public class Defines {
                             && t.getType() != APPLexer.EOF; t = (PPLineAST) t
                             .getParent().getChild(t.getIndex() + 1)) {
 
-                        define(t);
+                        this.define(t);
 
                     }
                 }
@@ -121,7 +121,7 @@ public class Defines {
                 for (PPLineAST node = returnAST; node != null
                         && node.getType() != APPLexer.EOF; node = (PPLineAST) node
                         .getParent().getChild(node.getIndex() + 1)) {
-                    define(node);
+                    this.define(node);
                 }
             }
         } catch (Exception e) {
@@ -138,7 +138,7 @@ public class Defines {
     public void loadDefines(File file) throws IOException, RecognitionException {
         FileInputStream in = new FileInputStream(file);
         try {
-            loadDefines(in);
+            this.loadDefines(in);
         } finally {
             in.close();
         }
@@ -173,7 +173,7 @@ public class Defines {
                 PPLineAST returnAST = (PPLineAST) define_return.getTree();
                 PPLineAST.fillParentInfo(returnAST);
 
-                define(returnAST);
+                this.define(returnAST);
             }
         } catch (RecognitionException e) {
             this.m_defines = backup;
@@ -190,7 +190,7 @@ public class Defines {
      * @throws IOException
      */
     public void define(String key) throws RecognitionException, IOException {
-        define(key, null);
+        this.define(key, null);
     }
 
     /**
@@ -222,7 +222,7 @@ public class Defines {
         PPLineAST returnAST = (PPLineAST) define_return.getTree();
         PPLineAST.fillParentInfo(returnAST);
 
-        define(returnAST);
+        this.define(returnAST);
 
     }
 
@@ -283,7 +283,7 @@ public class Defines {
      * @return
      */
     public boolean isDefined(String text) {
-        return m_defines.containsKey(text);
+        return this.m_defines.containsKey(text);
     }
 
     /**
@@ -299,7 +299,7 @@ public class Defines {
      * @return
      */
     public boolean undefine(String key) {
-        return m_defines.remove(key) != null;
+        return this.m_defines.remove(key) != null;
     }
 
     /*

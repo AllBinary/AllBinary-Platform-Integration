@@ -71,7 +71,7 @@ public class TileOffset {
      */
     
     public Integer getX() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -97,7 +97,7 @@ public class TileOffset {
      */
     
     public Integer getY() {
-        return y;
+        return this.y;
     }
 
     /**

@@ -44,7 +44,7 @@ public abstract class PostProcessor extends Task {
 		}
 
 		public String toString() {
-			return value;
+			return this.value;
 		}
 	}
 
@@ -130,7 +130,7 @@ public abstract class PostProcessor extends Task {
 
 	/** Gets the classpath to be used for this compilation. */
 	public Path getClasspath() {
-		return classpath;
+		return this.classpath;
 	}
 
 	/**
@@ -140,14 +140,14 @@ public abstract class PostProcessor extends Task {
 		if (this.classpath == null) {
 			this.classpath = new Path(getProject());
 		}
-		return classpath.createPath();
+		return this.classpath.createPath();
 	}
 
 	/**
 	* Adds a reference to a classpath defined elsewhere.
 	*/
 	public void setClasspathref(Reference r) {
-		createClasspath().setRefid(r);
+		this.createClasspath().setRefid(r);
 	}
 
 	public void setBootclasspath(Path classpath) {
@@ -161,7 +161,7 @@ public abstract class PostProcessor extends Task {
 
 	/** Gets the classpath to be used for this compilation. */
 	public Path getBootclasspath() {
-		return bootclasspath;
+		return this.bootclasspath;
 	}
 
 	/**
@@ -171,18 +171,18 @@ public abstract class PostProcessor extends Task {
 		if (this.bootclasspath == null) {
 			this.bootclasspath = new Path(getProject());
 		}
-		return bootclasspath.createPath();
+		return this.bootclasspath.createPath();
 	}
 
 	/**
 	* Adds a reference to a bootclasspath defined elsewhere.
 	*/
 	public void setBootclasspathref(Reference r) {
-		createBootclasspath().setRefid(r);
+		this.createBootclasspath().setRefid(r);
 	}
 
    public boolean getVerbose() {
-      return verbose;
+      return this.verbose;
    }
 
 	public Vector getPreserve() {
@@ -198,45 +198,45 @@ public abstract class PostProcessor extends Task {
 	}
 
     public void setIf(String s) {
-        condition.setIf(s);
+        this.condition.setIf(s);
     }
     
     public void setUnless(String s) {
-        condition.setUnless(s);
+        this.condition.setUnless(s);
     }
 
     public boolean isActive() {
-        return condition.isActive();
+        return this.condition.isActive();
     }
         
 	public File getJarFile() {
-		return jarFile;
+		return this.jarFile;
 	}
 
 	public File getToJarFile() {
-		return toJarFile;
+		return this.toJarFile;
 	}
 
 	public JadFile getJad() throws IOException {
 		if (this.jad != null) {
-			return jad;
+			return this.jad;
 		}
 		else {
 			if (this.jadFile != null) {
-				jad = new JadFile();
-				jad.load("" + this.jadFile, encoding);
+				this.jad = new JadFile();
+				this.jad.load("" + this.jadFile, encoding);
 			}
 
-			return jad;
+			return this.jad;
 		}
 	}
 
 	public Utility getUtility() {
-		return utility;
+		return this.utility;
 	}
 
 	public void updateJad() throws IOException {
-		JadFile jad = getJad();
+		JadFile jad = this.getJad();
 
 		if ((jad != null) && (this.jarFile != null)) {
 			if ((this.toJarFile == null) || (this.jarFile.equals(this.toJarFile))) {

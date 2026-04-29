@@ -99,7 +99,7 @@ public class PPLine {
     public PPLine(File fileName, String s, int lineNumber) {
         this.m_fileName = fileName;
         this.m_lineNumber = lineNumber;
-        processLine(s);
+        this.processLine(s);
     }
 
     /**
@@ -110,7 +110,7 @@ public class PPLine {
         // Keep original text
         this.m_source = s;
 
-        String ws[] = getWhites(s);
+        String ws[] = this.getWhites(s);
         // Keep whitespace and strip it from the string
         this.m_spaces = ws[0];
         s = ws[1];
@@ -123,7 +123,7 @@ public class PPLine {
         // Check the prefix.
         if (s.startsWith("//")) {
             s = s.substring(2);
-            ws = getWhites(s);
+            ws = this.getWhites(s);
             s = ws[1];
             if (s.length() > 0) {
                 char c = s.charAt(0);
@@ -182,42 +182,42 @@ public class PPLine {
      * @return
      */
     public String getSpace() {
-        return m_spaces;
+        return this.m_spaces;
     }
 
     /**
      * @return
      */
     public String getText() {
-        return m_text;
+        return this.m_text;
     }
 
     /**
      * @return
      */
     public String getType() {
-        return m_type;
+        return this.m_type;
     }
 
     /**
      * @return
      */
     public int getLineNumber() {
-        return m_lineNumber;
+        return this.m_lineNumber;
     }
 
     /**
      * @return
      */
     public File getFileName() {
-        return m_fileName;
+        return this.m_fileName;
     }
 
     /**
      * @return
      */
     public char prefixChar() {
-        return m_prefixChar;
+        return this.m_prefixChar;
     }
 
 }

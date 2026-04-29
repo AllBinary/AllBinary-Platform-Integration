@@ -56,7 +56,7 @@ public class CustomImageItem
             this.maxLabelLength = this.max;
         }
 
-        this.labelViewable = labelSet.substring(0, maxLabelLength);
+        this.labelViewable = labelSet.substring(0, this.maxLabelLength);
     }
 
     @Override

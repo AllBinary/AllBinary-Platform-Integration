@@ -89,7 +89,7 @@ public class APPParser extends Parser {
         this.adaptor = adaptor;
     }
     public TreeAdaptor getTreeAdaptor() {
-        return adaptor;
+        return this.adaptor;
     }
 
     public String[] getTokenNames() { return tokenNames; }
@@ -112,7 +112,7 @@ public class APPParser extends Parser {
 
     public static class prefix_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start prefix
@@ -165,7 +165,7 @@ public class APPParser extends Parser {
 
     public static class r_boolean_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start r_boolean
@@ -196,7 +196,7 @@ public class APPParser extends Parser {
                 if (backtracking>0) {failed=true; return retval;}
                 MismatchedSetException mse =
                     new MismatchedSetException(null,input);
-                recoverFromMismatchedSet(input,mse,FOLLOW_set_in_r_boolean0);    throw mse;
+                this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_r_boolean0);    throw mse;
             }
 
 
@@ -221,7 +221,7 @@ public class APPParser extends Parser {
 
     public static class ident_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start ident
@@ -324,7 +324,7 @@ public class APPParser extends Parser {
                     root_0 = (Object)this.adaptor.nil();
 
                     pushFollow(FOLLOW_r_boolean_in_ident694);
-                    r_boolean7=r_boolean();
+                    r_boolean7=this.r_boolean();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) this.adaptor.addChild(root_0, r_boolean7.getTree());
@@ -352,7 +352,7 @@ public class APPParser extends Parser {
 
     public static class bool_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start bool
@@ -398,7 +398,7 @@ public class APPParser extends Parser {
                     root_0 = (Object)this.adaptor.nil();
 
                     pushFollow(FOLLOW_ident_in_bool702);
-                    ident8=ident();
+                    ident8=this.ident();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) this.adaptor.addChild(root_0, ident8.getTree());
@@ -413,7 +413,7 @@ public class APPParser extends Parser {
                     LPAR9=(Token)input.LT(1);
                     match(input,LPAR,FOLLOW_LPAR_in_bool712); if (failed) return retval;
                     pushFollow(FOLLOW_expression_in_bool715);
-                    expression10=expression();
+                    expression10=this.expression();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) this.adaptor.addChild(root_0, expression10.getTree());
@@ -443,7 +443,7 @@ public class APPParser extends Parser {
 
     public static class not_bool_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start not_bool
@@ -497,7 +497,7 @@ public class APPParser extends Parser {
             } while (true);
 
             pushFollow(FOLLOW_bool_in_not_bool745);
-            bool13=bool();
+            bool13=this.bool();
             _fsp--;
             if (failed) return retval;
             if ( backtracking==0 ) this.adaptor.addChild(root_0, bool13.getTree());
@@ -523,7 +523,7 @@ public class APPParser extends Parser {
 
     public static class eq_bool_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start eq_bool
@@ -561,7 +561,7 @@ public class APPParser extends Parser {
             root_0 = (Object)this.adaptor.nil();
 
             pushFollow(FOLLOW_not_bool_in_eq_bool757);
-            not_bool14=not_bool();
+            not_bool14=this.not_bool();
             _fsp--;
             if (failed) return retval;
             if ( backtracking==0 ) this.adaptor.addChild(root_0, not_bool14.getTree());
@@ -711,7 +711,7 @@ public class APPParser extends Parser {
                     }
 
                     pushFollow(FOLLOW_not_bool_in_eq_bool797);
-                    not_bool22=not_bool();
+                    not_bool22=this.not_bool();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) this.adaptor.addChild(root_0, not_bool22.getTree());
@@ -743,7 +743,7 @@ public class APPParser extends Parser {
 
     public static class and_bool_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start and_bool
@@ -769,7 +769,7 @@ public class APPParser extends Parser {
             root_0 = (Object)this.adaptor.nil();
 
             pushFollow(FOLLOW_eq_bool_in_and_bool807);
-            eq_bool23=eq_bool();
+            eq_bool23=this.eq_bool();
             _fsp--;
             if (failed) return retval;
             if ( backtracking==0 ) this.adaptor.addChild(root_0, eq_bool23.getTree());
@@ -795,7 +795,7 @@ public class APPParser extends Parser {
             	    root_0 = (Object)this.adaptor.becomeRoot(AND24_tree, root_0);
             	    }
             	    pushFollow(FOLLOW_eq_bool_in_and_bool813);
-            	    eq_bool25=eq_bool();
+            	    eq_bool25=this.eq_bool();
             	    _fsp--;
             	    if (failed) return retval;
             	    if ( backtracking==0 ) this.adaptor.addChild(root_0, eq_bool25.getTree());
@@ -830,7 +830,7 @@ public class APPParser extends Parser {
 
     public static class xor_bool_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start xor_bool
@@ -856,7 +856,7 @@ public class APPParser extends Parser {
             root_0 = (Object)this.adaptor.nil();
 
             pushFollow(FOLLOW_and_bool_in_xor_bool823);
-            and_bool26=and_bool();
+            and_bool26=this.and_bool();
             _fsp--;
             if (failed) return retval;
             if ( backtracking==0 ) this.adaptor.addChild(root_0, and_bool26.getTree());
@@ -882,7 +882,7 @@ public class APPParser extends Parser {
             	    root_0 = (Object)this.adaptor.becomeRoot(XOR27_tree, root_0);
             	    }
             	    pushFollow(FOLLOW_and_bool_in_xor_bool829);
-            	    and_bool28=and_bool();
+            	    and_bool28=this.and_bool();
             	    _fsp--;
             	    if (failed) return retval;
             	    if ( backtracking==0 ) this.adaptor.addChild(root_0, and_bool28.getTree());
@@ -917,7 +917,7 @@ public class APPParser extends Parser {
 
     public static class expression_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start expression
@@ -943,7 +943,7 @@ public class APPParser extends Parser {
             root_0 = (Object)this.adaptor.nil();
 
             pushFollow(FOLLOW_xor_bool_in_expression839);
-            xor_bool29=xor_bool();
+            xor_bool29=this.xor_bool();
             _fsp--;
             if (failed) return retval;
             if ( backtracking==0 ) this.adaptor.addChild(root_0, xor_bool29.getTree());
@@ -969,7 +969,7 @@ public class APPParser extends Parser {
             	    root_0 = (Object)this.adaptor.becomeRoot(OR30_tree, root_0);
             	    }
             	    pushFollow(FOLLOW_xor_bool_in_expression845);
-            	    xor_bool31=xor_bool();
+            	    xor_bool31=this.xor_bool();
             	    _fsp--;
             	    if (failed) return retval;
             	    if ( backtracking==0 ) this.adaptor.addChild(root_0, xor_bool31.getTree());
@@ -1004,7 +1004,7 @@ public class APPParser extends Parser {
 
     public static class anything_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start anything
@@ -1051,7 +1051,7 @@ public class APPParser extends Parser {
             	        if (backtracking>0) {failed=true; return retval;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_anything856);    throw mse;
+            	        this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_anything856);    throw mse;
             	    }
 
 
@@ -1090,7 +1090,7 @@ public class APPParser extends Parser {
 
     public static class debug_level_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start debug_level
@@ -1121,7 +1121,7 @@ public class APPParser extends Parser {
                 if (backtracking>0) {failed=true; return retval;}
                 MismatchedSetException mse =
                     new MismatchedSetException(null,input);
-                recoverFromMismatchedSet(input,mse,FOLLOW_set_in_debug_level0);    throw mse;
+                this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_debug_level0);    throw mse;
             }
 
 
@@ -1146,7 +1146,7 @@ public class APPParser extends Parser {
 
     public static class line_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start line
@@ -1208,7 +1208,7 @@ public class APPParser extends Parser {
             // src/antenna/preprocessor/v3/parser/APP.g:183:9: ( prefix )=> prefix ( ( DEFINE define | UNDEFINE SYMBOL | ( IF | ELIF | CONDITION ) expression ) | ( IFDEF | IFNDEF | ELIFDEF | ELIFNDEF ) SYMBOL | ( ENDIF | ELSE | ENDINCLUDE ) | ( INCLUDE (~ EOL )+ ) | ( EXPAND (~ EOL )+ ) | ( ( DEBUG | MDEBUG ) ( debug_level )? ) | ENDDEBUG )
             {
             pushFollow(FOLLOW_prefix_in_line913);
-            prefix34=prefix();
+            prefix34=this.prefix();
             _fsp--;
             if (failed) return retval;
             if ( backtracking==0 ) this.adaptor.addChild(root_0, prefix34.getTree());
@@ -1311,7 +1311,7 @@ public class APPParser extends Parser {
                             this.adaptor.addChild(root_0, DEFINE35_tree);
                             }
                             pushFollow(FOLLOW_define_in_line966);
-                            define36=define();
+                            define36=this.define();
                             _fsp--;
                             if (failed) return retval;
                             if ( backtracking==0 ) this.adaptor.addChild(root_0, define36.getTree());
@@ -1349,11 +1349,11 @@ public class APPParser extends Parser {
                                 if (backtracking>0) {failed=true; return retval;}
                                 MismatchedSetException mse =
                                     new MismatchedSetException(null,input);
-                                recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1008);    throw mse;
+                                this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1008);    throw mse;
                             }
 
                             pushFollow(FOLLOW_expression_in_line1020);
-                            expression40=expression();
+                            expression40=this.expression();
                             _fsp--;
                             if (failed) return retval;
                             if ( backtracking==0 ) adaptor.addChild(root_0, expression40.getTree());
@@ -1379,7 +1379,7 @@ public class APPParser extends Parser {
                         if (backtracking>0) {failed=true; return retval;}
                         MismatchedSetException mse =
                             new MismatchedSetException(null,input);
-                        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1042);    throw mse;
+                        this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1042);    throw mse;
                     }
 
                     SYMBOL42=(Token)input.LT(1);
@@ -1404,7 +1404,7 @@ public class APPParser extends Parser {
                         if (backtracking>0) {failed=true; return retval;}
                         MismatchedSetException mse =
                             new MismatchedSetException(null,input);
-                        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1079);    throw mse;
+                        this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1079);    throw mse;
                     }
 
 
@@ -1448,7 +1448,7 @@ public class APPParser extends Parser {
                     	        if (backtracking>0) {failed=true; return retval;}
                     	        MismatchedSetException mse =
                     	            new MismatchedSetException(null,input);
-                    	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1112);    throw mse;
+                    	        this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1112);    throw mse;
                     	    }
 
 
@@ -1509,7 +1509,7 @@ public class APPParser extends Parser {
                     	        if (backtracking>0) {failed=true; return retval;}
                     	        MismatchedSetException mse =
                     	            new MismatchedSetException(null,input);
-                    	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1141);    throw mse;
+                    	        this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1141);    throw mse;
                     	    }
 
 
@@ -1548,7 +1548,7 @@ public class APPParser extends Parser {
                         if (backtracking>0) {failed=true; return retval;}
                         MismatchedSetException mse =
                             new MismatchedSetException(null,input);
-                        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1169);    throw mse;
+                        this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1169);    throw mse;
                     }
 
                     // src/antenna/preprocessor/v3/parser/APP.g:193:33: ( debug_level )?
@@ -1563,7 +1563,7 @@ public class APPParser extends Parser {
                             // src/antenna/preprocessor/v3/parser/APP.g:193:34: debug_level
                             {
                             pushFollow(FOLLOW_debug_level_in_line1176);
-                            debug_level49=debug_level();
+                            debug_level49=this.debug_level();
                             _fsp--;
                             if (failed) return retval;
                             if ( backtracking==0 ) adaptor.addChild(root_0, debug_level49.getTree());
@@ -1606,7 +1606,7 @@ public class APPParser extends Parser {
                 if (backtracking>0) {failed=true; return retval;}
                 MismatchedSetException mse =
                     new MismatchedSetException(null,input);
-                recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1264);    throw mse;
+                this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_line1264);    throw mse;
             }
 
 
@@ -1634,7 +1634,7 @@ public class APPParser extends Parser {
 
     public static class endof_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start endof
@@ -1679,7 +1679,7 @@ public class APPParser extends Parser {
 
     public static class define_command_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start define_command
@@ -1710,7 +1710,7 @@ public class APPParser extends Parser {
                 if (backtracking>0) {failed=true; return retval;}
                 MismatchedSetException mse =
                     new MismatchedSetException(null,input);
-                recoverFromMismatchedSet(input,mse,FOLLOW_set_in_define_command0);    throw mse;
+                this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_define_command0);    throw mse;
             }
 
 
@@ -1735,7 +1735,7 @@ public class APPParser extends Parser {
 
     public static class define_value_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start define_value
@@ -1777,7 +1777,7 @@ public class APPParser extends Parser {
                     root_0 = (Object)this.adaptor.nil();
 
                     pushFollow(FOLLOW_ident_in_define_value1298);
-                    ident54=ident();
+                    ident54=this.ident();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) this.adaptor.addChild(root_0, ident54.getTree());
@@ -1790,7 +1790,7 @@ public class APPParser extends Parser {
                     root_0 = (Object)this.adaptor.nil();
 
                     pushFollow(FOLLOW_debug_level_in_define_value1302);
-                    debug_level55=debug_level();
+                    debug_level55=this.debug_level();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) this.adaptor.addChild(root_0, debug_level55.getTree());
@@ -1818,7 +1818,7 @@ public class APPParser extends Parser {
 
     public static class define_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start define
@@ -1859,7 +1859,7 @@ public class APPParser extends Parser {
                     // src/antenna/preprocessor/v3/parser/APP.g:205:11: define_command AT
                     {
                     pushFollow(FOLLOW_define_command_in_define1310);
-                    define_command56=define_command();
+                    define_command56=this.define_command();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) this.adaptor.addChild(root_0, define_command56.getTree());
@@ -1895,7 +1895,7 @@ public class APPParser extends Parser {
                     EQ59=(Token)input.LT(1);
                     match(input,EQ,FOLLOW_EQ_in_define1320); if (failed) return retval;
                     pushFollow(FOLLOW_define_value_in_define1323);
-                    define_value60=define_value();
+                    define_value60=this.define_value();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) this.adaptor.addChild(root_0, define_value60.getTree());
@@ -1927,7 +1927,7 @@ public class APPParser extends Parser {
 
     public static class defines_return extends ParserRuleReturnScope {
         Object tree;
-        public Object getTree() { return tree; }
+        public Object getTree() { return this.tree; }
     };
 
     // $ANTLR start defines
@@ -1984,7 +1984,7 @@ public class APPParser extends Parser {
                         if (backtracking>0) {failed=true; return retval;}
                         MismatchedSetException mse =
                             new MismatchedSetException(null,input);
-                        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_defines1332);    throw mse;
+                        this.recoverFromMismatchedSet(input,mse,FOLLOW_set_in_defines1332);    throw mse;
                     }
 
 
@@ -1996,7 +1996,7 @@ public class APPParser extends Parser {
                     root_0 = (Object)adaptor.nil();
 
                     pushFollow(FOLLOW_define_in_defines1340);
-                    define62=define();
+                    define62=this.define();
                     _fsp--;
                     if (failed) return retval;
                     if ( backtracking==0 ) adaptor.addChild(root_0, define62.getTree());
@@ -2018,7 +2018,7 @@ public class APPParser extends Parser {
                     	    COMMA63=(Token)input.LT(1);
                     	    match(input,COMMA,FOLLOW_COMMA_in_defines1343); if (failed) return retval;
                     	    pushFollow(FOLLOW_define_in_defines1346);
-                    	    define64=define();
+                    	    define64=this.define();
                     	    _fsp--;
                     	    if (failed) return retval;
                     	    if ( backtracking==0 ) adaptor.addChild(root_0, define64.getTree());

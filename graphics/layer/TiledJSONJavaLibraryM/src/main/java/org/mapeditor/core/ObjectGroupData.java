@@ -90,7 +90,7 @@ public class ObjectGroupData
      */
     
     public String getColor() {
-        return color;
+        return this.color;
     }
 
     /**
@@ -118,7 +118,7 @@ public class ObjectGroupData
      */
     
     public String getDraworder() {
-        return draworder;
+        return this.draworder;
     }
 
     /**

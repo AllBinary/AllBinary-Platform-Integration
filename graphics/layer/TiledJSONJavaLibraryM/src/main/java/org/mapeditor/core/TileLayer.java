@@ -106,7 +106,7 @@ public class TileLayer extends TileLayerData {
      */
     public TileLayer(final Rectangle r) {
         this();
-        setBounds(r);
+        this.setBounds(r);
     }
 
     /**
@@ -259,7 +259,7 @@ public class TileLayer extends TileLayerData {
 
         // Tile instance properties is null when this method is called from
         // the constructor of TileLayer
-        if (tileInstanceProperties != null) {
+        if (this.tileInstanceProperties != null) {
             tileInstanceProperties.clear();
         }
     }

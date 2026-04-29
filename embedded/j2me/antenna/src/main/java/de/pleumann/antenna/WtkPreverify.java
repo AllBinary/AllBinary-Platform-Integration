@@ -113,13 +113,13 @@ public class WtkPreverify extends PostProcessor {
 		try {
 			try {
 				if (this.srcDir != null) {
-					getUtility().preverify(this.srcDir, destDir, getFullClasspath(), cldc, flags);
+					getUtility().preverify(this.srcDir, this.destDir, getFullClasspath(), this.cldc, this.flags);
 				}
 				else {
-					getUtility().preverify(getJarFile(), tmpDir, getFullClasspath(), cldc, flags);
+					getUtility().preverify(getJarFile(), tmpDir, getFullClasspath(), this.cldc, this.flags);
 
 					if (getToJarFile() == null) {
-						setTojarfile(getJarFile());
+						this.setTojarfile(getJarFile());
 					}
 
 					getToJarFile().delete();

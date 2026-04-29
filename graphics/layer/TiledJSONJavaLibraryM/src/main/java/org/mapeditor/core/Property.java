@@ -76,7 +76,7 @@ public class Property {
      */
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -104,7 +104,7 @@ public class Property {
      */
     
     public PropertyType getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -132,7 +132,7 @@ public class Property {
      */
     
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     /**

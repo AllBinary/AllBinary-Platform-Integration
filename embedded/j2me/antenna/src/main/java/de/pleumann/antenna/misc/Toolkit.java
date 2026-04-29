@@ -21,10 +21,10 @@ public class Toolkit {
 
     public Toolkit(String filename) {
         props = new Properties();
-        loadProps(filename);
+        this.loadProps(filename);
         this.name = this.props.getProperty(NAME, "invalid");
         if (this.props.containsKey(INCLUDE)) {
-            loadProps(this.props.getProperty(INCLUDE));
+            this.loadProps(this.props.getProperty(INCLUDE));
         }
     }
 

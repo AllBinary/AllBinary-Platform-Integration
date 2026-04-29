@@ -46,12 +46,12 @@ public class PPException extends Exception {
 
 	public int getLineNumber()
 	{
-		return m_lineNumber;
+		return this.m_lineNumber;
 	}
 	
 	public File getFile()
 	{
-		return m_file;
+		return this.m_file;
 	}
 	
 	public String getMessage()
@@ -59,7 +59,7 @@ public class PPException extends Exception {
 		if (this.m_file != null)
 		{
 			String ln = this.m_lineNumber != UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
-			return m_file + ln + " : " + super.getMessage();	
+			return this.m_file + ln + " : " + super.getMessage();	
 		}
 		else
 		{

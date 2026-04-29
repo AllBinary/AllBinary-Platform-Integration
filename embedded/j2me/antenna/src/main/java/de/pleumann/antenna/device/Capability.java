@@ -59,7 +59,7 @@ public class Capability
 
 	public String getIdentifier()
 	{
-		return m_identifier;
+		return this.m_identifier;
 	}
 	
 	public boolean extendByOverwrite()

@@ -122,9 +122,9 @@ public class JSONTokener {
      * @throws JSONException if the character does not match.
      */
     public char next(char c) throws JSONException {
-        char n = next();
+        char n = this.next();
         if (n != c) {
-            throw syntaxError("Expected '" + c + "' and instead saw '" +
+            throw this.syntaxError("Expected '" + c + "' and instead saw '" +
                     n + "'.");
         }
         return n;
@@ -144,7 +144,7 @@ public class JSONTokener {
          int i = this.myIndex;
          int j = i + n;
          if (j >= this.mySource.length()) {
-            throw syntaxError("Substring bounds error");
+            throw this.syntaxError("Substring bounds error");
          }
          this.myIndex += n;
          return this.mySource.substring(i, j);
@@ -159,35 +159,35 @@ public class JSONTokener {
      */
     public char nextClean() throws JSONException {
         for (;;) {
-            char c = next();
+            char c = this.next();
             if (c == '/') {
                 switch (next()) {
                 case '/':
                     do {
-                        c = next();
+                        c = this.next();
                     } while (c != '\n' && c != '\r' && c != 0);
                     break;
                 case '*':
                     for (;;) {
-                        c = next();
+                        c = this.next();
                         if (c == 0) {
-                            throw syntaxError("Unclosed comment.");
+                            throw this.syntaxError("Unclosed comment.");
                         }
                         if (c == '*') {
                             if (next() == '/') {
                                 break;
                             }
-                            back();
+                            this.back();
                         }
                     }
                     break;
                 default:
-                    back();
+                    this.back();
                     return '/';
                 }
             } else if (c == '#') {
                 do {
-                    c = next();
+                    c = this.next();
                 } while (c != '\n' && c != '\r' && c != 0);
             } else if (c == 0 || c > ' ') {
                 return c;
@@ -211,14 +211,14 @@ public class JSONTokener {
         char c;
         StringBuffer sb = new StringBuffer();
         for (;;) {
-            c = next();
+            c = this.next();
             switch (c) {
             case 0:
             case '\n':
             case '\r':
-                throw syntaxError("Unterminated string");
+                throw this.syntaxError("Unterminated string");
             case '\\':
-                c = next();
+                c = this.next();
                 switch (c) {
                 case 'b':
                     sb.append('\b');
@@ -264,10 +264,10 @@ public class JSONTokener {
     public String nextTo(char d) {
         StringBuffer sb = new StringBuffer();
         for (;;) {
-            char c = next();
+            char c = this.next();
             if (c == d || c == 0 || c == '\n' || c == '\r') {
                 if (c != 0) {
-                    back();
+                    this.back();
                 }
                 return sb.toString().trim();
             }
@@ -286,11 +286,11 @@ public class JSONTokener {
         char c;
         StringBuffer sb = new StringBuffer();
         for (;;) {
-            c = next();
+            c = this.next();
             if (delimiters.indexOf(c) >= 0 || c == 0 ||
                     c == '\n' || c == '\r') {
                 if (c != 0) {
-                    back();
+                    this.back();
                 }
                 return sb.toString().trim();
             }
@@ -307,18 +307,18 @@ public class JSONTokener {
      * @return An object.
      */
     public Object nextValue() throws JSONException {
-        char c = nextClean();
+        char c = this.nextClean();
         String s;
 
         switch (c) {
             case '"':
             case '\'':
-                return nextString(c);
+                return this.nextString(c);
             case '{':
-                back();
+                this.back();
                 return new JSONObject(this);
             case '[':
-                back();
+                this.back();
                 return new JSONArray(this);
         }
 
@@ -335,9 +335,9 @@ public class JSONTokener {
         char b = c;
         while (c >= ' ' && ",:]}/\\\"[{;=#".indexOf(c) < 0) {
             sb.append(c);
-            c = next();
+            c = this.next();
         }
-        back();
+        this.back();
 
         /*
          * If it is true, false, or null, return the proper value.
@@ -345,7 +345,7 @@ public class JSONTokener {
 
         s = sb.toString().trim();
         if (s.equals("")) {
-            throw syntaxError("Missing value.");
+            throw this.syntaxError("Missing value.");
         }
         if (s.equalsIgnoreCase("true")) {
             return Boolean.TRUE;
@@ -412,13 +412,13 @@ public class JSONTokener {
         char c;
         int index = this.myIndex;
         do {
-            c = next();
+            c = this.next();
             if (c == 0) {
                 this.myIndex = index;
                 return c;
             }
         } while (c != to);
-        back();
+        this.back();
         return c;
     }
 

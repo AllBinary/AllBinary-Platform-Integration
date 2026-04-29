@@ -181,7 +181,7 @@ public class MapData {
      *     
      */
     public Properties getProperties() {
-        return properties;
+        return this.properties;
     }
 
     /**
@@ -228,7 +228,7 @@ public class MapData {
         if (this.version == null) {
             return "1.0";
         } else {
-            return version;
+            return this.version;
         }
     }
 
@@ -258,7 +258,7 @@ public class MapData {
      */
     
     public String getTiledversion() {
-        return tiledversion;
+        return this.tiledversion;
     }
 
     /**
@@ -288,7 +288,7 @@ public class MapData {
      */
     
     public Orientation getOrientation() {
-        return orientation;
+        return this.orientation;
     }
 
     /**
@@ -322,7 +322,7 @@ public class MapData {
         if (this.renderorder == null) {
             return RenderOrder.RIGHT_DOWN;
         } else {
-            return renderorder;
+            return this.renderorder;
         }
     }
 
@@ -349,7 +349,7 @@ public class MapData {
      */
     
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     /**
@@ -367,7 +367,7 @@ public class MapData {
      */
     
     public int getHeight() {
-        return height;
+        return this.height;
     }
 
     /**
@@ -385,7 +385,7 @@ public class MapData {
      */
     
     public int getTileWidth() {
-        return tileWidth;
+        return this.tileWidth;
     }
 
     /**
@@ -403,7 +403,7 @@ public class MapData {
      */
     
     public int getTileHeight() {
-        return tileHeight;
+        return this.tileHeight;
     }
 
     /**
@@ -427,7 +427,7 @@ public class MapData {
      */
     
     public Integer getInfinite() {
-        return infinite;
+        return this.infinite;
     }
 
     /**
@@ -457,7 +457,7 @@ public class MapData {
      */
     
     public Integer getHexSideLength() {
-        return hexSideLength;
+        return this.hexSideLength;
     }
 
     /**
@@ -488,7 +488,7 @@ public class MapData {
      */
     
     public StaggerAxis getStaggerAxis() {
-        return staggerAxis;
+        return this.staggerAxis;
     }
 
     /**
@@ -521,7 +521,7 @@ public class MapData {
      */
     
     public StaggerIndex getStaggerIndex() {
-        return staggerIndex;
+        return this.staggerIndex;
     }
 
     /**
@@ -554,7 +554,7 @@ public class MapData {
      */
     
     public String getBackgroundcolor() {
-        return backgroundcolor;
+        return this.backgroundcolor;
     }
 
     /**
@@ -587,7 +587,7 @@ public class MapData {
      */
     
     public Integer getNextlayerid() {
-        return nextlayerid;
+        return this.nextlayerid;
     }
 
     /**
@@ -621,7 +621,7 @@ public class MapData {
      */
     
     public Integer getNextobjectid() {
-        return nextobjectid;
+        return this.nextobjectid;
     }
 
     /**

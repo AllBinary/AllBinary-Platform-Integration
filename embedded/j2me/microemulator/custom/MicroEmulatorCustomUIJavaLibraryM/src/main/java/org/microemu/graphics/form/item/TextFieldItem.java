@@ -108,7 +108,7 @@ public class TextFieldItem extends TextItem
 
     private int getCharPositionY()
     {
-        return positionY;
+        return this.positionY;
     }
 
     @Override
@@ -152,7 +152,7 @@ public class TextFieldItem extends TextItem
         graphics.setColor(this.stringComponent.getBackgroundBasicColor().intValue());
         
         graphics.fillRect(x, y + height,
-                myFont.defaultStringWidth(this.maxSize) * this.stringComponent.getFont().getSize() / defaultSize,
+                myFont.defaultStringWidth(this.maxSize) * this.stringComponent.getFont().getSize() / this.defaultSize,
                 //owner.getWidth() - 3, 
                 stringComponent.getHeight());
 
@@ -200,7 +200,7 @@ public class TextFieldItem extends TextItem
      */
     public int getCaretPosition()
     {
-        return position;
+        return this.position;
     }
 
     /**

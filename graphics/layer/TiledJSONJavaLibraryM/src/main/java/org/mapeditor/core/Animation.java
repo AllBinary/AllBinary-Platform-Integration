@@ -61,8 +61,8 @@ public class Animation {
      */
     
     public BasicArrayList getFrame() {
-        if (frame == null) {
-            frame = new BasicArrayListD();
+        if (this.frame == null) {
+            this.frame = new BasicArrayListD();
         }
         return this.frame;
     }

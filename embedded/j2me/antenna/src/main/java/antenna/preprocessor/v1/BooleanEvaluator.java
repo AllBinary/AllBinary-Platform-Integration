@@ -59,7 +59,7 @@ class BooleanEvaluator {
     			int q = defines.indexOf(',', p);
     			String t = defines.substring(p, q).trim();
     			if (t.length() != 0)
-    				define(t);
+    				this.define(t);
     			p = q + 1;
     		}
         }
@@ -70,7 +70,7 @@ class BooleanEvaluator {
 	 * when the symbol is used in further expressions.
 	 */
 	public void define(String symbol) {
-		symbols.put(symbol, symbol);
+		this.symbols.put(symbol, symbol);
 	}
 
 	/**
@@ -78,7 +78,7 @@ class BooleanEvaluator {
 	 * when the symbol is used in further expressions.
 	 */
 	public void undefine(String symbol) {
-		symbols.remove(symbol);
+		this.symbols.remove(symbol);
 	}
 
 	/**
@@ -87,7 +87,7 @@ class BooleanEvaluator {
 	 * assumption").
 	 */
 	public boolean isDefined(String symbol) {
-		return symbols.containsKey(symbol);
+		return this.symbols.containsKey(symbol);
 	}
 
 	/**
@@ -101,7 +101,7 @@ class BooleanEvaluator {
 
 		if (t.getTokenType() == BooleanTokenizer.TYPE_LPAR) {
 			t.nextToken();
-			result = parseExpression(t);
+			result = this.parseExpression(t);
 			if (t.getTokenType() != BooleanTokenizer.TYPE_RPAR) {
 				throw new PreprocessorException("\")\" expected");
 			}
@@ -109,10 +109,10 @@ class BooleanEvaluator {
 		}
 		else if (t.getTokenType() == BooleanTokenizer.TYPE_NOT) {
 			t.nextToken();
-			result = !parseFactor(t);
+			result = !this.parseFactor(t);
 		}
 		else if (t.getTokenType() == BooleanTokenizer.TYPE_ID) {
-			result = isDefined(t.getTokenText());
+			result = this.isDefined(t.getTokenText());
 			t.nextToken();
 		}
 		else
@@ -127,11 +127,11 @@ class BooleanEvaluator {
 	 * that "or" and "xor".
 	 */
 	private boolean parseTerm(BooleanTokenizer t) throws PreprocessorException {
-		boolean result = parseFactor(t);
+		boolean result = this.parseFactor(t);
 
 		while (t.getTokenType() == BooleanTokenizer.TYPE_AND) {
 			t.nextToken();
-			result = result & parseFactor(t);
+			result = result & this.parseFactor(t);
 		}
 
 		return result;
@@ -141,16 +141,16 @@ class BooleanEvaluator {
 	 * Parses a boolean expression.
 	 */
 	private boolean parseExpression(BooleanTokenizer t) throws PreprocessorException {
-		boolean result = parseTerm(t);
+		boolean result = this.parseTerm(t);
 
 		while (true) {
 			if (t.getTokenType() == BooleanTokenizer.TYPE_OR) {
 				t.nextToken();
-				result = result | parseTerm(t);
+				result = result | this.parseTerm(t);
 			}
 			else if (t.getTokenType() == BooleanTokenizer.TYPE_XOR) {
 				t.nextToken();
-				result = result ^ parseTerm(t);
+				result = result ^ this.parseTerm(t);
 			}
 			else {
 				return result;
@@ -167,7 +167,7 @@ class BooleanEvaluator {
 		BooleanTokenizer t = new BooleanTokenizer(expression);
 
 		t.nextToken();
-		boolean result = parseExpression(t);
+		boolean result = this.parseExpression(t);
 
 		if (t.getTokenType() != BooleanTokenizer.TYPE_STOP) {
 			throw new PreprocessorException("Syntax error");
@@ -178,6 +178,6 @@ class BooleanEvaluator {
 
 	public String getDefines()
 	{
-		return defines;
+		return this.defines;
 	}
 }

@@ -88,7 +88,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
         Rectangle layerBounds = new Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0);
 
         for (int i = 0; i < getLayers().size(); i++) {
-            getLayer(i).getBounds(layerBounds);
+            this.getLayer(i).getBounds(layerBounds);
             if (width < layerBounds.getWidth()) {
                 width = layerBounds.getWidth();
             }
@@ -332,7 +332,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return a {@link java.lang.String} object.
      */
     public String getFilename() {
-        return filename;
+        return this.filename;
     }
 
     /**

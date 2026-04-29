@@ -115,7 +115,7 @@ public class TileData {
      */
     
     public Properties getProperties() {
-        return properties;
+        return this.properties;
     }
 
     /**
@@ -140,7 +140,7 @@ public class TileData {
      */
     
     public ImageData getImageData() {
-        return imageData;
+        return this.imageData;
     }
 
     /**
@@ -178,7 +178,7 @@ public class TileData {
      */
     
     public Animation getAnimation() {
-        return animation;
+        return this.animation;
     }
 
     /**
@@ -204,7 +204,7 @@ public class TileData {
      */
     
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -233,7 +233,7 @@ public class TileData {
      */
     
     public String getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -268,7 +268,7 @@ public class TileData {
      */
     
     public String getTerrain() {
-        return terrain;
+        return this.terrain;
     }
 
     /**
@@ -304,7 +304,7 @@ public class TileData {
      */
     
     public Double getProbability() {
-        return probability;
+        return this.probability;
     }
 
     /**

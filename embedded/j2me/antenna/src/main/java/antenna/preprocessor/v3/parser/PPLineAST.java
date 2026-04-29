@@ -87,7 +87,7 @@ public class PPLineAST extends CommonAST {
      * @see org.antlr.runtime.tree.CommonTree#getText()
      */
     public String getText() {
-        return text;
+        return this.text;
     }
 
     /*

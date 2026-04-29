@@ -49,14 +49,14 @@ public class DeviceProps extends BaseProps
 			}
 		}
 		
-		calculateIMEIKey();
-		addVendor();
+		this.calculateIMEIKey();
+		this.addVendor();
 	}
 	
 	private void addVendor()
 	{
 		String vendor = "unknown";
-		String id = getIdentifier();
+		String id = this.getIdentifier();
 		if (id != null)
 		{
 			int i = id.indexOf('/');
@@ -142,7 +142,7 @@ public class DeviceProps extends BaseProps
 
 	public boolean inGroup(String group)
 	{
-		return m_groups.contains(group != null ? group.toLowerCase() : null);
+		return this.m_groups.contains(group != null ? group.toLowerCase() : null);
 	}
 	
 	public boolean hasFeature(String feature)
@@ -184,7 +184,7 @@ public class DeviceProps extends BaseProps
 
 	public String getIdentifier()
 	{
-		return m_identifier;
+		return this.m_identifier;
 	}
 
 	public Properties getCapabilities()
@@ -196,7 +196,7 @@ public class DeviceProps extends BaseProps
 	{
 		String deviceDefines = "";
 		Properties props = new Properties();
-		addToProperties(props);
+		this.addToProperties(props);
 		Enumeration keys = props.keys();
 		while(keys.hasMoreElements())
 		{

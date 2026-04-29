@@ -99,7 +99,7 @@ public class ClassFile {
 	}
 
 	public int getRequiredClassCount() {
-		return classes.size();
+		return this.classes.size();
 	}
 
 	public String getRequiredClass(int index) {

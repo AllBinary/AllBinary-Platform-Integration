@@ -63,7 +63,7 @@ public class PreprocessorBridge implements IPreprocessor {
      * @see antenna.preprocessor.IPreprocessor#setMode(int)
      */
     public void setMode(int mode) {
-        m_preprocessor.setVerbose((mode & IPreprocessor.MODE_VERBOSE) != 0);
+        this.m_preprocessor.setVerbose((mode & IPreprocessor.MODE_VERBOSE) != 0);
     }
 
     /*
@@ -72,7 +72,7 @@ public class PreprocessorBridge implements IPreprocessor {
      * @see antenna.preprocessor.IPreprocessor#setFile(java.io.File)
      */
     public void setFile(File fileName) {
-        m_preprocessor.setFile(fileName);
+        this.m_preprocessor.setFile(fileName);
     }
 
     /**
@@ -86,7 +86,7 @@ public class PreprocessorBridge implements IPreprocessor {
     public boolean preprocess(InputStream in, OutputStream out, String encoding)
             throws IOException, PreprocessorException {
         try {
-            return m_preprocessor.preprocess(in, out, encoding);
+            return this.m_preprocessor.preprocess(in, out, encoding);
         } catch (PPException e) {
             throw new PreprocessorException(e.getMessage(), e);
         }
@@ -101,7 +101,7 @@ public class PreprocessorBridge implements IPreprocessor {
     public boolean preprocess(Strings lines, String encoding)
             throws PreprocessorException, IOException {
         try {
-            return m_preprocessor.preprocess(lines.getVector(), encoding);
+            return this.m_preprocessor.preprocess(lines.getVector(), encoding);
         } catch (PPException e) {
             throw new PreprocessorException(e.getMessage(), e);
         }
@@ -111,7 +111,7 @@ public class PreprocessorBridge implements IPreprocessor {
      * @return
      */
     public boolean isVerbose() {
-        return m_preprocessor.isVerbose();
+        return this.m_preprocessor.isVerbose();
     }
 
     /*
@@ -160,7 +160,7 @@ public class PreprocessorBridge implements IPreprocessor {
      * @see antenna.preprocessor.IPreprocessor#clearSymbols()
      */
     public void clearSymbols() throws PreprocessorException {
-        m_preprocessor.clearDefines();
+        this.m_preprocessor.clearDefines();
     }
 
     /*
@@ -189,8 +189,8 @@ public class PreprocessorBridge implements IPreprocessor {
      * @see antenna.preprocessor.IPreprocessor#printSymbols()
      */
     public void printSymbols() throws PreprocessorException {
-        m_utility.getProject().log(
-                "Symbols: " + m_preprocessor.getDefines().toString());
+        this.m_utility.getProject().log(
+                "Symbols: " + this.m_preprocessor.getDefines().toString());
     }
 
     /*

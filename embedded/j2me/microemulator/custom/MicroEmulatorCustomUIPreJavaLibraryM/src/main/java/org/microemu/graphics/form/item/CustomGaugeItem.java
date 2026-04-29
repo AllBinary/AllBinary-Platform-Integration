@@ -50,8 +50,8 @@ public class CustomGaugeItem extends CustomItem
     {
         super(label, backgroundBasicColor, foregroundBasicColor);
 
-        setMaxValue(maxValue);
-        setValue((float) initialValue);
+        this.setMaxValue(maxValue);
+        this.setValue((float) initialValue);
     }
 
     public void setHeight(int height)
@@ -97,7 +97,7 @@ public class CustomGaugeItem extends CustomItem
 
     public float getValue()
     {
-        return value;
+        return this.value;
     }
 
     public void setMaxValue(int maxValue)
@@ -105,7 +105,7 @@ public class CustomGaugeItem extends CustomItem
         if (maxValue > 0)
         {
             this.maxValue = (float) maxValue;
-            setValue(getValue());
+            this.setValue(getValue());
         }
         else
         {
@@ -115,7 +115,7 @@ public class CustomGaugeItem extends CustomItem
 
     public float getMaxValue()
     {
-        return maxValue;
+        return this.maxValue;
     }
 
     public int getMinContentWidth()
@@ -151,7 +151,7 @@ public class CustomGaugeItem extends CustomItem
 
         final MyFont myFont = MyFont.getInstance();
 
-        if(height == 30)
+        if(this.height == 30)
         {
             //int width = (int) ((graphics.getClipWidth() - 8) * value / maxValue);
             int width = (int) ((this.displayInfoSingleton.getLastWidth() - 8) * this.value / this.maxValue);
@@ -159,7 +159,7 @@ public class CustomGaugeItem extends CustomItem
             graphics.fillRect(4, 4 + myFont.DEFAULT_CHAR_HEIGHT, width, 7);
         }
         else
-            if(height == myFont.DEFAULT_CHAR_HEIGHT + 2)
+            if(this.height == myFont.DEFAULT_CHAR_HEIGHT + 2)
         {
                 int stringWidth = graphics.getFont().stringWidth(this.getLabel());
                 

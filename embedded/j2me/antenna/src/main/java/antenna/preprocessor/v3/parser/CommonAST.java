@@ -107,7 +107,7 @@ public class CommonAST extends CommonTree {
      * @return the index
      */
     public int getIndex() {
-        return index;
+        return this.index;
     }
 
     /**
@@ -116,7 +116,7 @@ public class CommonAST extends CommonTree {
      * @return the parent
      */
     public CommonAST getParent() {
-        return parent;
+        return this.parent;
     }
 
     /**

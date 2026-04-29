@@ -90,7 +90,7 @@ public class Data {
      */
     
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     /**
@@ -117,7 +117,7 @@ public class Data {
      */
     
     public Encoding getEncoding() {
-        return encoding;
+        return this.encoding;
     }
 
     /**
@@ -146,7 +146,7 @@ public class Data {
      */
     
     public Compression getCompression() {
-        return compression;
+        return this.compression;
     }
 
     /**

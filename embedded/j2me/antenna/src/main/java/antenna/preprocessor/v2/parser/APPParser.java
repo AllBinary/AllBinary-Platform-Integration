@@ -31,7 +31,7 @@ public class APPParser extends antlr.LLkParser       implements APPLexerTokenTyp
 protected APPParser(TokenBuffer tokenBuf, int k) {
   super(tokenBuf,k);
   tokenNames = _tokenNames;
-  buildTokenTypeASTClassMap();
+  this.buildTokenTypeASTClassMap();
   astFactory = new ASTFactory(getTokenTypeToASTClassMap());
 }
 
@@ -42,7 +42,7 @@ public APPParser(TokenBuffer tokenBuf) {
 protected APPParser(TokenStream lexer, int k) {
   super(lexer,k);
   tokenNames = _tokenNames;
-  buildTokenTypeASTClassMap();
+  this.buildTokenTypeASTClassMap();
   astFactory = new ASTFactory(getTokenTypeToASTClassMap());
 }
 
@@ -53,7 +53,7 @@ public APPParser(TokenStream lexer) {
 public APPParser(ParserSharedInputState state) {
   super(state,1);
   tokenNames = _tokenNames;
-  buildTokenTypeASTClassMap();
+  this.buildTokenTypeASTClassMap();
   astFactory = new ASTFactory(getTokenTypeToASTClassMap());
 }
 
@@ -127,7 +127,7 @@ public APPParser(ParserSharedInputState state) {
 		case LITERAL_true:
 		case LITERAL_false:
 		{
-			r_boolean();
+			this.r_boolean();
 			astFactory.addASTChild(currentAST, returnAST);
 			ident_AST = (AST)currentAST.root;
 			break;
@@ -153,7 +153,7 @@ public APPParser(ParserSharedInputState state) {
 		case LITERAL_true:
 		case LITERAL_false:
 		{
-			ident();
+			this.ident();
 			astFactory.addASTChild(currentAST, returnAST);
 			bool_AST = (AST)currentAST.root;
 			break;
@@ -161,7 +161,7 @@ public APPParser(ParserSharedInputState state) {
 		case LPAR:
 		{
 			match(LPAR);
-			expression();
+			this.expression();
 			astFactory.addASTChild(currentAST, returnAST);
 			match(RPAR);
 			bool_AST = (AST)currentAST.root;
@@ -181,7 +181,7 @@ public APPParser(ParserSharedInputState state) {
 		ASTPair currentAST = new ASTPair();
 		AST expression_AST = null;
 		
-		xor_bool();
+		this.xor_bool();
 		astFactory.addASTChild(currentAST, returnAST);
 		{
 		_loop71:
@@ -191,7 +191,7 @@ public APPParser(ParserSharedInputState state) {
 				tmp8_AST = astFactory.create(LT(1));
 				astFactory.makeASTRoot(currentAST, tmp8_AST);
 				match(OR);
-				xor_bool();
+				this.xor_bool();
 				astFactory.addASTChild(currentAST, returnAST);
 			}
 			else {
@@ -225,7 +225,7 @@ public APPParser(ParserSharedInputState state) {
 			
 		} while (true);
 		}
-		bool();
+		this.bool();
 		astFactory.addASTChild(currentAST, returnAST);
 		not_bool_AST = (AST)currentAST.root;
 		returnAST = not_bool_AST;
@@ -237,7 +237,7 @@ public APPParser(ParserSharedInputState state) {
 		ASTPair currentAST = new ASTPair();
 		AST eq_bool_AST = null;
 		
-		not_bool();
+		this.not_bool();
 		astFactory.addASTChild(currentAST, returnAST);
 		{
 		switch ( LA(1)) {
@@ -313,7 +313,7 @@ public APPParser(ParserSharedInputState state) {
 			}
 			}
 			}
-			not_bool();
+			this.not_bool();
 			astFactory.addASTChild(currentAST, returnAST);
 			break;
 		}
@@ -342,7 +342,7 @@ public APPParser(ParserSharedInputState state) {
 		ASTPair currentAST = new ASTPair();
 		AST and_bool_AST = null;
 		
-		eq_bool();
+		this.eq_bool();
 		astFactory.addASTChild(currentAST, returnAST);
 		{
 		_loop65:
@@ -352,7 +352,7 @@ public APPParser(ParserSharedInputState state) {
 				tmp17_AST = astFactory.create(LT(1));
 				astFactory.makeASTRoot(currentAST, tmp17_AST);
 				match(AND);
-				eq_bool();
+				this.eq_bool();
 				astFactory.addASTChild(currentAST, returnAST);
 			}
 			else {
@@ -371,7 +371,7 @@ public APPParser(ParserSharedInputState state) {
 		ASTPair currentAST = new ASTPair();
 		AST xor_bool_AST = null;
 		
-		and_bool();
+		this.and_bool();
 		astFactory.addASTChild(currentAST, returnAST);
 		{
 		_loop68:
@@ -381,7 +381,7 @@ public APPParser(ParserSharedInputState state) {
 				tmp18_AST = astFactory.create(LT(1));
 				astFactory.makeASTRoot(currentAST, tmp18_AST);
 				match(XOR);
-				and_bool();
+				this.and_bool();
 				astFactory.addASTChild(currentAST, returnAST);
 			}
 			else {
@@ -524,7 +524,7 @@ inputState.guessing--;
 					tmp26_AST = astFactory.create(LT(1));
 					astFactory.addASTChild(currentAST, tmp26_AST);
 					match(LITERAL_define);
-					define();
+					this.define();
 					astFactory.addASTChild(currentAST, returnAST);
 					break;
 				}
@@ -576,7 +576,7 @@ inputState.guessing--;
 					}
 					}
 					}
-					expression();
+					this.expression();
 					astFactory.addASTChild(currentAST, returnAST);
 					break;
 				}
@@ -767,7 +767,7 @@ inputState.guessing--;
 				case LITERAL_error:
 				case LITERAL_fatal:
 				{
-					debug_level();
+					this.debug_level();
 					astFactory.addASTChild(currentAST, returnAST);
 					break;
 				}
@@ -801,7 +801,7 @@ inputState.guessing--;
 			}
 		}
 		else if ((_tokenSet_1.member(LA(1)))) {
-			anything();
+			this.anything();
 			astFactory.addASTChild(currentAST, returnAST);
 		}
 		else {
@@ -845,7 +845,7 @@ inputState.guessing--;
 		case LITERAL_unset:
 		case LITERAL_add_if_new:
 		{
-			define_command();
+			this.define_command();
 			astFactory.addASTChild(currentAST, returnAST);
 			AST tmp48_AST = null;
 			tmp48_AST = astFactory.create(LT(1));
@@ -872,7 +872,7 @@ inputState.guessing--;
 		case EQ:
 		{
 			match(EQ);
-			define_value();
+			this.define_value();
 			astFactory.addASTChild(currentAST, returnAST);
 			break;
 		}
@@ -938,7 +938,7 @@ inputState.guessing--;
 		case LITERAL_true:
 		case LITERAL_false:
 		{
-			ident();
+			this.ident();
 			astFactory.addASTChild(currentAST, returnAST);
 			define_value_AST = (AST)currentAST.root;
 			break;
@@ -949,7 +949,7 @@ inputState.guessing--;
 		case LITERAL_error:
 		case LITERAL_fatal:
 		{
-			debug_level();
+			this.debug_level();
 			astFactory.addASTChild(currentAST, returnAST);
 			define_value_AST = (AST)currentAST.root;
 			break;
@@ -1003,14 +1003,14 @@ inputState.guessing--;
 		case LITERAL_unset:
 		case LITERAL_add_if_new:
 		{
-			define();
+			this.define();
 			astFactory.addASTChild(currentAST, returnAST);
 			{
 			_loop104:
 			do {
 				if ((LA(1)==COMMA)) {
 					match(COMMA);
-					define();
+					this.define();
 					astFactory.addASTChild(currentAST, returnAST);
 				}
 				else {

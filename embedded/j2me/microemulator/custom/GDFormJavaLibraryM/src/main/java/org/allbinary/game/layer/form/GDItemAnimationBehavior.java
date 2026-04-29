@@ -49,7 +49,7 @@ public class GDItemAnimationBehavior extends GDAnimationBehaviorBase {
     }
 
     public boolean hasFocus() {
-        return hasFocus;
+        return this.hasFocus;
     }
     
     int traverse(int gameKeyCode, int top, int bottom, boolean action) {

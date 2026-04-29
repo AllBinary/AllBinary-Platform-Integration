@@ -31,7 +31,7 @@ public class HelperParser extends antlr.LLkParser       implements HelperLexerTo
 protected HelperParser(TokenBuffer tokenBuf, int k) {
   super(tokenBuf,k);
   tokenNames = _tokenNames;
-  buildTokenTypeASTClassMap();
+  this.buildTokenTypeASTClassMap();
   astFactory = new ASTFactory(getTokenTypeToASTClassMap());
 }
 
@@ -42,7 +42,7 @@ public HelperParser(TokenBuffer tokenBuf) {
 protected HelperParser(TokenStream lexer, int k) {
   super(lexer,k);
   tokenNames = _tokenNames;
-  buildTokenTypeASTClassMap();
+  this.buildTokenTypeASTClassMap();
   astFactory = new ASTFactory(getTokenTypeToASTClassMap());
 }
 
@@ -53,7 +53,7 @@ public HelperParser(TokenStream lexer) {
 public HelperParser(ParserSharedInputState state) {
   super(state,1);
   tokenNames = _tokenNames;
-  buildTokenTypeASTClassMap();
+  this.buildTokenTypeASTClassMap();
   astFactory = new ASTFactory(getTokenTypeToASTClassMap());
 }
 

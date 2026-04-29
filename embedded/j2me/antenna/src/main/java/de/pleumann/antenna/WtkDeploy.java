@@ -83,15 +83,15 @@ public class WtkDeploy extends Task {
     }
 
     public void setIf(String s) {
-        condition.setIf(s);
+        this.condition.setIf(s);
     }
     
     public void setUnless(String s) {
-        condition.setUnless(s);
+        this.condition.setUnless(s);
     }
 
     public boolean isActive() {
-        return condition.isActive();
+        return this.condition.isActive();
     }
 
 	public void execute() throws BuildException {
@@ -123,8 +123,8 @@ public class WtkDeploy extends Task {
 
             log("Deploying to " + this.target + "...");
 
-			upload(this.jarFile);
-			upload(this.jadFile);
+			this.upload(this.jarFile);
+			this.upload(this.jadFile);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);

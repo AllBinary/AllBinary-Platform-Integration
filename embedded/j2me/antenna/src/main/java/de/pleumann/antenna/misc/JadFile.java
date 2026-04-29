@@ -74,14 +74,14 @@ public class JadFile {
          * Returns the MIDlet's number.
          */
         public int getNumber() {
-            return number;
+            return this.number;
         }
 
         /**
          * Returns the MIDlet's name, or null, if the MIDlet doesn't have a name.
          */
         public String getName() {
-            return name;
+            return this.name;
         }
 
         /**
@@ -89,7 +89,7 @@ public class JadFile {
          * have a name (which would be an error in the JAR file, of course.
          */
         public String getClassName() {
-            return cls;
+            return this.cls;
         }
 
         /**
@@ -97,7 +97,7 @@ public class JadFile {
          * icon.
          */
         public String getIcon() {
-            return icon;
+            return this.icon;
         }
     }
 
@@ -111,8 +111,8 @@ public class JadFile {
      * Adds a line to the JAD file.
      */
     public int add(String s) {
-        int result = size();
-        insert(result, s);
+        int result = this.size();
+        this.insert(result, s);
         return result;
     }
     
@@ -120,7 +120,7 @@ public class JadFile {
      * Assigns all values from another JAD file.
      */
     public void assign(JadFile jad) {
-        assign(jad, false);
+        this.assign(jad, false);
     }
 
     /**
@@ -128,13 +128,13 @@ public class JadFile {
      * only values valid for a MANIFEST.MF file are copied.
      */
     public void assign(JadFile jad, boolean manifest) {
-        clear();
+        this.clear();
         
         for (int i = 0; i < jad.size(); i++) {
-        	String key = getName(jad.get(i));
+        	String key = this.getName(jad.get(i));
 			if (!(manifest && this.excludeFromManifest != null && this.excludeFromManifest.containsKey(key)))
         	{
-        		add(jad.get(i));
+        		this.add(jad.get(i));
         	}
         }
     }
@@ -150,7 +150,7 @@ public class JadFile {
      * Deletes a line from the JAD file.
      */
     public void delete(int index) {
-        strings.removeElementAt(index);
+        this.strings.removeElementAt(index);
     }
 
     /**
@@ -165,7 +165,7 @@ public class JadFile {
      * or null if the line doesn't contain a key.
      */
     public String getName(int i) {
-        return getName(get(i));
+        return this.getName(get(i));
     }
 
     /**
@@ -189,9 +189,9 @@ public class JadFile {
      * found.
      */
     public String getValue(String name) {
-        int i = indexOfName(name);
+        int i = this.indexOfName(name);
         if (i != -1) {
-            String result = get(i);
+            String result = this.get(i);
             i = result.indexOf(':');
             result = result.substring(i + 1);
             return result.trim();
@@ -235,14 +235,14 @@ public class JadFile {
      * Inserts a line into the JAD file.
      */
     public void insert(int index, String s) {
-        strings.insertElementAt(s, index);
+        this.strings.insertElementAt(s, index);
     }
 
     /**
      * Replaces a line in the JAD file.
      */
     public void set(int index, String s) {
-        strings.setElementAt(s, index);
+        this.strings.setElementAt(s, index);
     }
 
     /**
@@ -250,18 +250,18 @@ public class JadFile {
      * exists.
      */
     public void setValue(String name, String value) {
-        int i = indexOfName(name);
+        int i = this.indexOfName(name);
         if (i == -1) {
             if ((value != null) && (!value.equals(""))) {
-                add(name + ": " + value);
+                this.add(name + ": " + value);
             }
         }
         else {
             if ((value != null) && (!value.equals(""))) {
-                set(i, name + ": " + value);
+                this.set(i, name + ": " + value);
             }
             else {
-                delete(i);
+                this.delete(i);
             }
         }
     }
@@ -270,7 +270,7 @@ public class JadFile {
      * Returns the number of lines in the JAD file.
      */
     public int size() {
-        return strings.size();
+        return this.strings.size();
     }
 
     /**
@@ -291,7 +291,7 @@ public class JadFile {
      * doesn't exist. Note that MIDlet numbering starts at 1.
      */
     public MIDletData getMIDlet(int i) {
-        String value = getValue("MIDlet-" + i);
+        String value = this.getValue("MIDlet-" + i);
 
         if (value == null)
             return null;
@@ -330,7 +330,7 @@ public class JadFile {
 
 
     private void load(Reader isr) throws IOException {
-        clear ();   
+        this.clear ();   
         BufferedReader reader = new BufferedReader (isr);
         String s = reader.readLine();
         while (s != null) {
@@ -347,7 +347,7 @@ public class JadFile {
             }
             */
             if (!"".equals(s.trim())) {
-                add(s);
+                this.add(s);
             }
             
             s = reader.readLine();
@@ -362,10 +362,10 @@ public class JadFile {
      */
     public void load(String filename, String encoding) throws IOException {
     	if (encoding != null) {
-			load (new InputStreamReader(new FileInputStream(filename), encoding));
+			this.load (new InputStreamReader(new FileInputStream(filename), encoding));
     	}
     	else {
-			load (new InputStreamReader(new FileInputStream(filename)));
+			this.load (new InputStreamReader(new FileInputStream(filename)));
     	}
     }
 
@@ -384,7 +384,7 @@ public class JadFile {
         BufferedWriter writer = new BufferedWriter(osw);
 
         for (int i = 0; i < size(); i++) {
-            String s = get(i);
+            String s = this.get(i);
             if ((s != null) && (s.length() != 0)) {
                 writer.write(get(i));
                 writer.newLine();
@@ -401,7 +401,7 @@ public class JadFile {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
 
         for (int i = 0; i < size(); i++) {
-            String s = get(i);
+            String s = this.get(i);
             if ((s != null) && (s.length() != 0)) {
                 writer.write(get(i));
                 writer.newLine();

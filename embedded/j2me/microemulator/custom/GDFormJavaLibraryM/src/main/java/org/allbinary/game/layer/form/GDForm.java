@@ -80,12 +80,12 @@ public class GDForm extends GDFormInput
     }
 
     public void close() throws Exception {
-        logUtil.putF(commonStrings.START, this, commonStrings.CLOSE);
+        this.logUtil.putF(commonStrings.START, this, commonStrings.CLOSE);
     }
 
     @Override
     public void onEvent(final int keyCode, final int deviceId, final boolean repeated) {
-        logUtil.putF(Integer.toString(keyCode), this, "onEvent");
+        this.logUtil.putF(Integer.toString(keyCode), this, "onEvent");
         this.keyPressed(keyCode);
     }
     
@@ -105,7 +105,7 @@ public class GDForm extends GDFormInput
     }
     
     public void onPressGameKeyEvent(GameKeyEvent gameKeyEvent) {
-        logUtil.putF(new StringMaker().append("KeyCode: ").appendint(gameKeyEvent.getKey()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY);
+        this.logUtil.putF(new StringMaker().append("KeyCode: ").appendint(gameKeyEvent.getKey()).toString(), this, gameInputStrings.ON_PRESS_GAME_KEY);
         this.keyPressed(gameKeyEvent.getKey());
 
         BasicArrayList list = this.inputToGameKeyMapping.getReverseInstance(gameKeyEvent.getKey());
@@ -166,7 +166,7 @@ public class GDForm extends GDFormInput
     }
 
     public void insert(int itemNum, GDGameLayer gameLayerAsItem) {
-        list.addAt(itemNum, gameLayerAsItem);
+        this.list.addAt(itemNum, gameLayerAsItem);
 
     }
 
@@ -193,7 +193,7 @@ public class GDForm extends GDFormInput
     void fireItemStateListener() {
         int size = this.size();
         if (this.focusItemIndex >= 0 && this.focusItemIndex < size) {
-            fireItemStateListener((GDGameLayer) this.list.objectArray[this.focusItemIndex]);
+            this.fireItemStateListener((GDGameLayer) this.list.objectArray[this.focusItemIndex]);
         }
     }
 
@@ -232,7 +232,7 @@ public class GDForm extends GDFormInput
 
     public void keyPressed(int keyCode, int deviceId) {
         
-        showNotify();
+        this.showNotify();
 
         final GameKey gameKey = this.inputToGameKeyMapping.getInstance(keyCode);
 
@@ -286,7 +286,7 @@ public class GDForm extends GDFormInput
                 if (platformKeyFactory.isEnter(input) || platformKeyFactory.isLeft(input) || platformKeyFactory.isRight(input)) {
                     this.logUtil.putF(new StringMaker().append("Select: GameKey: ").append(StringUtil.getInstance().toString(gameKey)).toString(), this, gameInputStrings.KEY_PRESSED);
                     ((GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior()).select(gameKey, keyCode);
-                    fireItemStateListener();
+                    this.fireItemStateListener();
                 } else {
                     this.logUtil.putF(new StringMaker().append("keyPressed: keyCode: ").appendint(keyCode).toString(), this, gameInputStrings.KEY_PRESSED);
                     // gameLayerAsItem.keyPressed(gameKey.getId().intValue());
@@ -322,7 +322,7 @@ public class GDForm extends GDFormInput
             return;
         }
 
-        int heightToItem = getHeightToItem(this.focusItemIndex);
+        int heightToItem = this.getHeightToItem(this.focusItemIndex);
 
 //        final int heightAfterItem = heightToItem + ((GDGameLayer) list.objectArray[focusItemIndex]).getHeight();
 //
@@ -346,17 +346,17 @@ public class GDForm extends GDFormInput
 
         if (keyCode == Canvas.UP) {
             //logUtil.putF("traverse: Canvas.UP", this, gameInputStrings.KEY_PRESSED);
-            topItemIndex = getTopVisibleIndex(top);
+            topItemIndex = this.getTopVisibleIndex(top);
             if (this.focusItemIndex == -1) {
                 testItemIndex = topItemIndex;
-                height = getHeightToItem(testItemIndex);
+                height = this.getHeightToItem(testItemIndex);
                 final GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[testItemIndex];
                 final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
                 traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, false);
             } else {
                 testItemIndex = this.focusItemIndex;
                 this.logUtil.putF("traverse up: " + testItemIndex, this, gameInputStrings.KEY_PRESSED);
-                height = getHeightToItem(testItemIndex);
+                height = this.getHeightToItem(testItemIndex);
                 final GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[testItemIndex];
                 final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
                 traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, true);
@@ -384,7 +384,7 @@ public class GDForm extends GDFormInput
                             }
                             animationBehaviorBase.setFocus(true);
                             this.focusItemIndex = index;
-                            height = getHeightToItem(index);
+                            height = this.getHeightToItem(index);
                             traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, false);
                             if (traverse == GDForm.OUTOFITEM) {
                                 return 0;
@@ -394,13 +394,13 @@ public class GDForm extends GDFormInput
                         }
                     }
 
-                    height = getHeightToItem(topItemIndex);
+                    height = this.getHeightToItem(topItemIndex);
                     GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[topItemIndex];
                     final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
                     traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, false);
                     if (traverse == GDForm.OUTOFITEM) {
                     } else {
-                        bottomItemIndex = getTopVisibleIndex(bottom + traverse);
+                        bottomItemIndex = this.getTopVisibleIndex(bottom + traverse);
                         if (this.focusItemIndex != -1 && this.focusItemIndex > bottomItemIndex) {
                             GDGameLayer gameLayerAsItem2 = (GDGameLayer) this.list.objectArray[this.focusItemIndex];
                             final GDItemAnimationBehavior animationBehaviorBase2 = (GDItemAnimationBehavior) gameLayerAsItem2.getDimensionalBehavior().getAnimationBehavior();
@@ -413,18 +413,18 @@ public class GDForm extends GDFormInput
             }
         }
         if (keyCode == Canvas.DOWN) {
-            bottomItemIndex = getBottomVisibleIndex(bottom);
+            bottomItemIndex = this.getBottomVisibleIndex(bottom);
             //logUtil.putF("traverse: Canvas.DOWN bottomItemIndex: " + bottomItemIndex, this, gameInputStrings.KEY_PRESSED);
             if (this.focusItemIndex == -1) {
                 testItemIndex = bottomItemIndex;
-                height = getHeightToItem(testItemIndex);
+                height = this.getHeightToItem(testItemIndex);
                 GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[testItemIndex];
                 final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
                 traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, false);
             } else {
                 testItemIndex = this.focusItemIndex;
                 this.logUtil.putF("traverse down: " + testItemIndex, this, gameInputStrings.KEY_PRESSED);
-                height = getHeightToItem(testItemIndex);
+                height = this.getHeightToItem(testItemIndex);
                 GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[testItemIndex];
                 final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
                 traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, true);
@@ -455,7 +455,7 @@ public class GDForm extends GDFormInput
                             }
                             animationBehaviorBase.setFocus(true);
                             this.focusItemIndex = index;
-                            height = getHeightToItem(index);
+                            height = this.getHeightToItem(index);
                             traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, false);
                             if (traverse == GDForm.OUTOFITEM) {
                                 return 0;
@@ -464,14 +464,14 @@ public class GDForm extends GDFormInput
                             }
                         }
                     }
-                    height = getHeightToItem(bottomItemIndex);
+                    height = this.getHeightToItem(bottomItemIndex);
 
                     GDGameLayer gameLayerAsItem = (GDGameLayer) this.list.objectArray[bottomItemIndex];
                     final GDItemAnimationBehavior animationBehaviorBase = (GDItemAnimationBehavior) gameLayerAsItem.getDimensionalBehavior().getAnimationBehavior();
                     traverse = animationBehaviorBase.traverse(keyCode, top - height, bottom - height, false);
                     if (traverse == GDForm.OUTOFITEM) {
                     } else {
-                        topItemIndex = getTopVisibleIndex(top + traverse);
+                        topItemIndex = this.getTopVisibleIndex(top + traverse);
                         if (this.focusItemIndex != -1 && this.focusItemIndex < topItemIndex) {
                             GDGameLayer gameLayerAsItem2 = (GDGameLayer) this.list.objectArray[this.focusItemIndex];
                             final GDItemAnimationBehavior animationBehaviorBase2 = (GDItemAnimationBehavior) gameLayerAsItem2.getDimensionalBehavior().getAnimationBehavior();

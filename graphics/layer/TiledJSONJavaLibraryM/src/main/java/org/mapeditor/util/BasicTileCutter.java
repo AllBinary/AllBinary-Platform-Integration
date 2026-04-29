@@ -62,7 +62,7 @@ public class BasicTileCutter implements TileCutter {
         this.tileSpacing = tileSpacing;
         this.tileMargin = tileMargin;
 
-        reset();
+        this.reset();
     }
 
     /** {@inheritDoc} */
@@ -80,14 +80,14 @@ public class BasicTileCutter implements TileCutter {
     /** {@inheritDoc} */
     @Override
     public Image getNextTile() {
-        if (nextY + this.tileHeight + this.tileMargin <= this.image.getHeight()) {
+        if (this.nextY + this.tileHeight + this.tileMargin <= this.image.getHeight()) {
             Image tile = null;
                     //= image.getSubimage(nextX, nextY, tileWidth, tileHeight);
-            nextX += this.tileWidth + this.tileSpacing;
+            this.nextX += this.tileWidth + this.tileSpacing;
 
-            if (nextX + this.tileWidth + this.tileMargin > this.image.getWidth()) {
-                nextX = this.tileMargin;
-                nextY += this.tileHeight + this.tileSpacing;
+            if (this.nextX + this.tileWidth + this.tileMargin > this.image.getWidth()) {
+                this.nextX = this.tileMargin;
+                this.nextY += this.tileHeight + this.tileSpacing;
             }
 
             throw new RuntimeException();
@@ -107,13 +107,13 @@ public class BasicTileCutter implements TileCutter {
     /** {@inheritDoc} */
     @Override
     public int getTileWidth() {
-        return tileWidth;
+        return this.tileWidth;
     }
 
     /** {@inheritDoc} */
     @Override
     public int getTileHeight() {
-        return tileHeight;
+        return this.tileHeight;
     }
 
     /**
@@ -122,7 +122,7 @@ public class BasicTileCutter implements TileCutter {
      * @return the spacing between tile images.
      */
     public int getTileSpacing() {
-        return tileSpacing;
+        return this.tileSpacing;
     }
 
     /**
@@ -131,7 +131,7 @@ public class BasicTileCutter implements TileCutter {
      * @return the margin around the tile images.
      */
     public int getTileMargin() {
-        return tileMargin;
+        return this.tileMargin;
     }
 
     /**

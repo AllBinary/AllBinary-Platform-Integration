@@ -64,7 +64,7 @@ public class CustomForm extends CustomScreen
     
 	public int append(CustomItem item) 
 	{
-		verifyItem(item);
+		this.verifyItem(item);
 
 		if (this.numOfItems + 1 >= this.items.length) {
 			CustomItem newitems[] = new CustomItem[this.numOfItems + 4];
@@ -95,11 +95,11 @@ public class CustomForm extends CustomScreen
 	
 	public void delete(int itemNum) 
 	{
-		verifyItemNum(itemNum);
+		this.verifyItemNum(itemNum);
 
 		this.items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
 		System.arraycopy(items, itemNum + 1, items, itemNum, numOfItems - itemNum - 1);
-		numOfItems--;
+		this.numOfItems--;
 	}
 	
 	
@@ -114,9 +114,9 @@ public class CustomForm extends CustomScreen
 	
 	public CustomItem get(int itemNum) 
 	{
-		verifyItemNum(itemNum);
+		this.verifyItemNum(itemNum);
 
-		return items[itemNum];
+		return this.items[itemNum];
 	}
 	
 	/*
@@ -135,8 +135,8 @@ public class CustomForm extends CustomScreen
 	
 	public void insert(int itemNum, CustomItem item) 
 	{
-		verifyItemNum(itemNum);
-		verifyItem(item);
+		this.verifyItemNum(itemNum);
+		this.verifyItem(item);
 
 		if (this.numOfItems + 1 == this.items.length) {
 			CustomItem newitems[] = new CustomItem[this.numOfItems + 4];
@@ -144,9 +144,9 @@ public class CustomForm extends CustomScreen
 			this.items = newitems;
 		}
 		System.arraycopy(
-			items,
+			this.items,
 			itemNum,
-			items,
+			this.items,
 			itemNum + 1,
 			numOfItems - itemNum);
 		this.items[itemNum] = item;
@@ -158,8 +158,8 @@ public class CustomForm extends CustomScreen
 	
 	public void set(int itemNum, CustomItem item) 
 	{
-		verifyItemNum(itemNum);
-		verifyItem(item);
+		this.verifyItemNum(itemNum);
+		this.verifyItem(item);
 
 		// TODO add this to MIDP1
 		this.items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
@@ -177,12 +177,12 @@ public class CustomForm extends CustomScreen
 	
 	public int size() 
 	{
-		return numOfItems;
+		return this.numOfItems;
 	}
     
 	protected int getItemTotalHeight(int index)
 	{
-	    return items[index].getHeight();
+	    return this.items[index].getHeight();
 	}
 	
     protected int getItemIndexAt(GPoint point)
@@ -244,7 +244,7 @@ public class CustomForm extends CustomScreen
 	void fireItemStateListener()
     {
 		if (getSelectedIndex() >= 0 && getSelectedIndex() < this.items.length)
-			fireItemStateListener(this.items[getSelectedIndex()]);
+			this.fireItemStateListener(this.items[getSelectedIndex()]);
     }
 
 	
@@ -257,7 +257,7 @@ public class CustomForm extends CustomScreen
 		for (int i = 0; i < this.numOfItems; i++) {
 			if (this.items[i].isFocusable() && this.items[i].hasFocus()) {
 				this.items[i].setFocus(false);
-				setSelectedIndex(-1);
+				this.setSelectedIndex(-1);
 				break;
 			}
 		}
@@ -270,7 +270,7 @@ public class CustomForm extends CustomScreen
     public void traverse(int keyCode)
     {
         this.viewPortY = 0;
-        viewPortY += traverse(keyCode, viewPortY, viewPortY + this.viewPortHeight);        
+        viewPortY += this.traverse(keyCode, viewPortY, viewPortY + this.viewPortHeight);        
     }
 	
     private final GameKeyFactory gameKeyFactory = GameKeyFactory.getInstance();
@@ -317,7 +317,7 @@ public class CustomForm extends CustomScreen
 	                    fireItemStateListener();
 	                } else {
 	                */
-	                    this.items[getSelectedIndex()].keyPressed(keyCode);
+	                    this.items[this.getSelectedIndex()].keyPressed(keyCode);
 	                //}
 	            }
 
@@ -391,21 +391,21 @@ public class CustomForm extends CustomScreen
 		}
 		
 		if (gameKeyCode == Canvas.UP) {
-			topItemIndex = getTopVisibleIndex(top);
+			topItemIndex = this.getTopVisibleIndex(top);
 			if (getSelectedIndex() == -1) {
 				testItemIndex = topItemIndex;
-				height = getHeightToItem(testItemIndex);
+				height = this.getHeightToItem(testItemIndex);
 				traverse =
-					items[testItemIndex].traverse(
+					this.items[testItemIndex].traverse(
 						gameKeyCode,
 						top - height,
 						bottom - height,
 						false);
 			} else {
-				testItemIndex = getSelectedIndex();
-				height = getHeightToItem(testItemIndex);
+				testItemIndex = this.getSelectedIndex();
+				height = this.getHeightToItem(testItemIndex);
 				traverse =
-					items[testItemIndex].traverse(
+					this.items[testItemIndex].traverse(
 						gameKeyCode,
 						top - height,
 						bottom - height,
@@ -413,9 +413,9 @@ public class CustomForm extends CustomScreen
 			}
 			if (traverse == CustomItem.OUTOFITEM) {
 				if (getSelectedIndex() == -1
-					&& items[testItemIndex].isFocusable()) {
-				    items[testItemIndex].setFocus(true);
-					setSelectedIndex(testItemIndex);
+					&& this.items[testItemIndex].isFocusable()) {
+				    this.items[testItemIndex].setFocus(true);
+					this.setSelectedIndex(testItemIndex);
 				}
 				return traverse;
 			} else {
@@ -427,13 +427,13 @@ public class CustomForm extends CustomScreen
 					for (i = testItemIndex - 1; i >= topItemIndex; i--) {
 						if (this.items[i].isFocusable()) {
 							if (getSelectedIndex() != -1) {
-								this.items[getSelectedIndex()].setFocus(false);
+								this.items[this.getSelectedIndex()].setFocus(false);
 							}
 							this.items[i].setFocus(true);
-							setSelectedIndex(i);
-							height = getHeightToItem(i);
+							this.setSelectedIndex(i);
+							height = this.getHeightToItem(i);
 							traverse =
-								items[i].traverse(
+								this.items[i].traverse(
 									gameKeyCode,
 									top - height,
 									bottom - height,
@@ -446,9 +446,9 @@ public class CustomForm extends CustomScreen
 						}
 					}
 					// Na najnizszym widocznym item zrob traverse(false)
-					height = getHeightToItem(topItemIndex);
+					height = this.getHeightToItem(topItemIndex);
 					traverse =
-						items[topItemIndex].traverse(
+						this.items[topItemIndex].traverse(
 							gameKeyCode,
 							top - height,
 							bottom - height,
@@ -458,11 +458,11 @@ public class CustomForm extends CustomScreen
 						// Sprawdzenie czy znajduje sie powyzej na ekranie
 						// focusable item
 						// jesli tak zrob co trzeba
-						bottomItemIndex = getTopVisibleIndex(bottom + traverse);
+						bottomItemIndex = this.getTopVisibleIndex(bottom + traverse);
 						if (getSelectedIndex() != -1
 							&& getSelectedIndex() > bottomItemIndex) {
-							items[getSelectedIndex()].setFocus(false);
-							setSelectedIndex(-1);
+							this.items[getSelectedIndex()].setFocus(false);
+							this.setSelectedIndex(-1);
 						}
 						return traverse;
 					}
@@ -471,22 +471,22 @@ public class CustomForm extends CustomScreen
 		}
 		if (gameKeyCode == Canvas.DOWN) {
 		    		    
-			bottomItemIndex = getBottomVisibleIndex(bottom);
+			bottomItemIndex = this.getBottomVisibleIndex(bottom);
 			if (getSelectedIndex() == -1) {
 				testItemIndex = bottomItemIndex;
-				height = getHeightToItem(testItemIndex);
+				height = this.getHeightToItem(testItemIndex);
 				traverse =
-					items[testItemIndex].traverse(
+					this.items[testItemIndex].traverse(
 						gameKeyCode,
 						top - height,
 						bottom - height,
 						false);
 			} else {
 			    
-				testItemIndex = getSelectedIndex();
-				height = getHeightToItem(testItemIndex);
+				testItemIndex = this.getSelectedIndex();
+				height = this.getHeightToItem(testItemIndex);
 				traverse =
-					items[testItemIndex].traverse(
+					this.items[testItemIndex].traverse(
 						gameKeyCode,
 						top - height,
 						bottom - height,
@@ -495,9 +495,9 @@ public class CustomForm extends CustomScreen
 			
 			if (traverse == CustomItem.OUTOFITEM) {
 				if (getSelectedIndex() == -1
-					&& items[testItemIndex].isFocusable()) {
-					items[testItemIndex].setFocus(true);
-					setSelectedIndex(testItemIndex);
+					&& this.items[testItemIndex].isFocusable()) {
+					this.items[testItemIndex].setFocus(true);
+					this.setSelectedIndex(testItemIndex);
 				}
 				return traverse;
 			} else {
@@ -510,13 +510,13 @@ public class CustomForm extends CustomScreen
 					for (i = testItemIndex + 1; i <= bottomItemIndex; i++) {
 						if (this.items[i].isFocusable()) {
 							if (getSelectedIndex() != -1) {
-								this.items[getSelectedIndex()].setFocus(false);
+								this.items[this.getSelectedIndex()].setFocus(false);
 							}
 							this.items[i].setFocus(true);
-							setSelectedIndex(i);
-							height = getHeightToItem(i);
+							this.setSelectedIndex(i);
+							height = this.getHeightToItem(i);
 							traverse =
-								items[i].traverse(
+								this.items[i].traverse(
 									gameKeyCode,
 									top - height,
 									bottom - height,
@@ -529,9 +529,9 @@ public class CustomForm extends CustomScreen
 						}
 					}
 					// Na najnizszym widocznym item zrob traverse(false)
-					height = getHeightToItem(bottomItemIndex);
+					height = this.getHeightToItem(bottomItemIndex);
 					traverse =
-						items[bottomItemIndex].traverse(
+						this.items[bottomItemIndex].traverse(
 							gameKeyCode,
 							top - height,
 							bottom - height,
@@ -541,11 +541,11 @@ public class CustomForm extends CustomScreen
 						// Sprawdzenie czy znajduje sie powyzej na ekranie
 						// focusable item
 						// jesli tak zrob co trzeba
-						topItemIndex = getTopVisibleIndex(top + traverse);
+						topItemIndex = this.getTopVisibleIndex(top + traverse);
 						if (getSelectedIndex() != -1
 							&& getSelectedIndex() < topItemIndex) {
-							items[getSelectedIndex()].setFocus(false);
-							setSelectedIndex(-1);
+							this.items[getSelectedIndex()].setFocus(false);
+							this.setSelectedIndex(-1);
 						}
 						return traverse;
 					}
@@ -631,7 +631,7 @@ public class CustomForm extends CustomScreen
 	 */
 	private void verifyItemNum(int itemNum) 
 	{
-		if (itemNum < 0 || itemNum >= numOfItems) {
+		if (itemNum < 0 || itemNum >= this.numOfItems) {
 			throw new IndexOutOfBoundsException("item number is outside range of Form");
 		}
 	}
@@ -655,6 +655,6 @@ public class CustomForm extends CustomScreen
 
     public int getSelectedIndex()
     {
-        return selectedIndex;
+        return this.selectedIndex;
     }
 }

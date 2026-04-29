@@ -215,7 +215,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     protected XmlRpc(Class c)
     {
-        this.typeFactory = createTypeFactory(c);
+        this.typeFactory = this.createTypeFactory(c);
     }
     
 //    protected XmlRpc(String typeFactory)
@@ -264,7 +264,7 @@ public abstract class XmlRpc extends HandlerBase
                                typeFactory.getName() + "': " + e.getMessage() +
                                ": Using default");
             // Call self recursively to acquire default.
-            return createTypeFactory(null);
+            return this.createTypeFactory(null);
         }
     }
 
@@ -519,7 +519,7 @@ public abstract class XmlRpc extends HandlerBase
                 if (depth < 2)
                 {
                     // This is a top-level object
-                    objectParsed(v.value);
+                    this.objectParsed(v.value);
                     this.currentValue = null;
                 }
                 else
@@ -675,13 +675,13 @@ public abstract class XmlRpc extends HandlerBase
          */
         public void endElement(Value child)
         {
-            switch (type)
+            switch (this.type)
             {
                 case ARRAY:
-                    array.addElement(child.value);
+                    this.array.addElement(child.value);
                     break;
                 case STRUCT:
-                    struct.put(nextMemberName, child.value);
+                    this.struct.put(nextMemberName, child.value);
             }
         }
 
@@ -696,10 +696,10 @@ public abstract class XmlRpc extends HandlerBase
             switch (type)
             {
                 case ARRAY:
-                    value = array = new Vector ();
+                    this.value = array = new Vector ();
                     break;
                 case STRUCT:
-                    value = struct = new Hashtable ();
+                    this.value = struct = new Hashtable ();
                     break;
             }
         }
@@ -710,29 +710,29 @@ public abstract class XmlRpc extends HandlerBase
          */
         public void characterData(String cdata)
         {
-            switch (type)
+            switch (this.type)
             {
                 case INTEGER:
-                    value = typeFactory.createInteger(cdata);
+                    this.value = typeFactory.createInteger(cdata);
                     break;
                 case BOOLEAN:
-                    value = typeFactory.createBoolean(cdata);
+                    this.value = typeFactory.createBoolean(cdata);
                     break;
                 case DOUBLE:
-                    value = typeFactory.createDouble(cdata);
+                    this.value = typeFactory.createDouble(cdata);
                     break;
                 case DATE:
-                    value = typeFactory.createDate(cdata);
+                    this.value = typeFactory.createDate(cdata);
                     break;
                 case BASE64:
-                    value = typeFactory.createBase64(cdata);
+                    this.value = typeFactory.createBase64(cdata);
                     break;
                 case STRING:
-                    value = typeFactory.createString(cdata);
+                    this.value = typeFactory.createString(cdata);
                     break;
                 case STRUCT:
                     // this is the name to use for the next member of this struct
-                    nextMemberName = cdata;
+                    this.nextMemberName = cdata;
                     break;
             }
         }
@@ -745,7 +745,7 @@ public abstract class XmlRpc extends HandlerBase
          */
         public int hashCode()
         {
-            return type;
+            return this.type;
         }
 
         /**

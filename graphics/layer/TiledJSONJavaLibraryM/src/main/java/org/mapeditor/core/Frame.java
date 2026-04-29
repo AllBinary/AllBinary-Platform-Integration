@@ -69,7 +69,7 @@ public class Frame {
      */
     
     public Integer getTileid() {
-        return tileid;
+        return this.tileid;
     }
 
     /**
@@ -96,7 +96,7 @@ public class Frame {
      */
     
     public Integer getDuration() {
-        return duration;
+        return this.duration;
     }
 
     /**

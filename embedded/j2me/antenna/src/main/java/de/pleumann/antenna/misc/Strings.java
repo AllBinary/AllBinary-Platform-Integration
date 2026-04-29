@@ -42,28 +42,28 @@ public class Strings {
 	}
 
 	public int add(String s) {
-		int result = size();
-		insert(result, s);
+		int result = this.size();
+		this.insert(result, s);
 		return result;
 	}
 
 	public void addStrings(Strings s) {
 		for (int i = 0; i < s.size(); i++) {
-			add(s.get(i));
+			this.add(s.get(i));
 		}
 	}
 
 	public void assign(Strings s) {
-		clear();
-		addStrings(s);
+		this.clear();
+		this.addStrings(s);
 	}
 
 	public void clear() {
-		strings.clear();
+		this.strings.clear();
 	}
 
 	public void delete(int index) {
-		strings.remove(index);
+		this.strings.remove(index);
 	}
 
 	public boolean equals(Object o) {
@@ -85,7 +85,7 @@ public class Strings {
 	}
 
 	public void exchange(int index1, int index2) {
-		exchangeItem(index1, index2);
+		this.exchangeItem(index1, index2);
 	}
 
 	private void exchangeItem(int i, int j) {
@@ -108,33 +108,33 @@ public class Strings {
 	}
 
 	public void insert(int index, String s) {
-		strings.insertElementAt(s, index);
+		this.strings.insertElementAt(s, index);
 	}
 
 	public void move(int oldIndex, int newIndex) {
-		String s = get(oldIndex);
-		delete(oldIndex);
-		insert(newIndex, s);
+		String s = this.get(oldIndex);
+		this.delete(oldIndex);
+		this.insert(newIndex, s);
 	}
 
 	public void loadFromFile(String filename) throws IOException {
-		loadFromFile(new File(filename));
+		this.loadFromFile(new File(filename));
 	}
 	public void loadFromFile(File filename) throws IOException {
-		loadFromStream(new FileInputStream(filename));
+		this.loadFromStream(new FileInputStream(filename));
 	}
 
 	public void loadFromFile(File filename, String encoding) throws IOException, UnsupportedEncodingException {
-		loadFromStream(new FileInputStream(filename), encoding);
+		this.loadFromStream(new FileInputStream(filename), encoding);
 	}
 
 	public void loadFromStream(InputStream stream) throws IOException {
-		clear();
+		this.clear();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 		int i = 0;
 		String s = reader.readLine();
 		while (s != null) {
-			insert(i, s);
+			this.insert(i, s);
 			i++;
 			s = reader.readLine();
 		}
@@ -142,12 +142,12 @@ public class Strings {
 	}
 
 	public void loadFromStream(InputStream stream, String encoding) throws IOException, UnsupportedEncodingException {
-		clear();
+		this.clear();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream, encoding));
 		int i = 0;
 		String s = reader.readLine();
 		while (s != null) {
-			insert(i, s);
+			this.insert(i, s);
 			i++;
 			s = reader.readLine();
 		}
@@ -155,11 +155,11 @@ public class Strings {
 	}
 
 	public void saveToFile(String filename) throws IOException {
-		saveToStream(new FileOutputStream(filename));
+		this.saveToStream(new FileOutputStream(filename));
 	}
 
 	public void saveToFile(String filename, String encoding) throws IOException, UnsupportedEncodingException {
-		saveToStream(new FileOutputStream(filename), encoding);
+		this.saveToStream(new FileOutputStream(filename), encoding);
 	}
 
 	public void saveToStream(OutputStream stream) throws IOException {
@@ -183,11 +183,11 @@ public class Strings {
 	}
 
 	public void set(int index, String s) {
-		strings.set(index, s);
+		this.strings.set(index, s);
 	}
 
 	public int size() {
-		return strings.size();
+		return this.strings.size();
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class Strings {
 	 * or null if the line doesn't contain a key.
 	 */
 	public String getName(int i) {
-		String result = get(i);
+		String result = this.get(i);
 		int p = result.indexOf(':');
 		if (p != -1) {
 			result = result.substring(0, p);
@@ -211,9 +211,9 @@ public class Strings {
 	 * found.
 	 */
 	public String getValue(String name) {
-		int i = indexOfName(name);
+		int i = this.indexOfName(name);
 		if (i != -1) {
-			String result = get(i);
+			String result = this.get(i);
 			i = result.indexOf(':');
 			result = result.substring(i + 1);
 			return result.trim();
@@ -244,25 +244,25 @@ public class Strings {
 	 * exists.
 	 */
 	public void setValue(String name, String value) {
-		int i = indexOfName(name);
+		int i = this.indexOfName(name);
 		if (i == -1) {
 			if ((value != null) && (!value.equals(""))) {
-				add(name + ": " + value);
+				this.add(name + ": " + value);
 			}
 		}
 		else {
 			if ((value != null) && (!value.equals(""))) {
-				set(i, name + ": " + value);
+				this.set(i, name + ": " + value);
 			}
 			else {
-				delete(i);
+				this.delete(i);
 			}
 		}
 	}
 	
 	public Vector getVector()
 	{
-		return strings;
+		return this.strings;
 	}
 	
 	public String toString()

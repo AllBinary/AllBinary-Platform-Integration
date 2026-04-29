@@ -146,7 +146,7 @@ public class JSONObject {
     private final Map<String, Object> map;
 
     public Class<? extends Map> getMapType() {
-        return map.getClass();
+        return this.map.getClass();
     }
 
     /**
@@ -587,7 +587,7 @@ public class JSONObject {
      *             to an enum.
      */
     public <E extends Enum<E>> E getEnum(Class<E> clazz, String key) throws JSONException {
-        E val = optEnum(clazz, key);
+        E val = this.optEnum(clazz, key);
         if(val==null) {
             // JSONException should really take a throwable argument.
             // If it did, I would re-implement this with the Enum.valueOf
@@ -1516,7 +1516,7 @@ public class JSONObject {
      *            the bean
      */
     private void populateMap(Object bean) {
-        populateMap(bean, Collections.newSetFromMap(new IdentityHashMap<Object, Boolean>()));
+        this.populateMap(bean, Collections.newSetFromMap(new IdentityHashMap<Object, Boolean>()));
     }
 
     private void populateMap(Object bean, Set<Object> objectsRecord) {
@@ -1939,7 +1939,7 @@ public class JSONObject {
      * @return the item matched by the JSONPointer, otherwise null
      */
     public Object query(String jsonPointer) {
-        return query(new JSONPointer(jsonPointer));
+        return this.query(new JSONPointer(jsonPointer));
     }
     /**
      * Uses a user initialized JSONPointer  and tries to
@@ -1973,7 +1973,7 @@ public class JSONObject {
      * @throws IllegalArgumentException if {@code jsonPointer} has invalid syntax
      */
     public Object optQuery(String jsonPointer) {
-    	return optQuery(new JSONPointer(jsonPointer));
+    	return this.optQuery(new JSONPointer(jsonPointer));
     }
 
     /**

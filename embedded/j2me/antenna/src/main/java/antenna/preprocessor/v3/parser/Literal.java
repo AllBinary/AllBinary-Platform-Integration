@@ -187,7 +187,7 @@ public class Literal {
      * @return if the literal value is <code>false</code>
      */
     public boolean isFalse() {
-        return m_type == BOOLEAN && this.m_value.equals(BOOLEAN_FALSE);
+        return this.m_type == BOOLEAN && this.m_value.equals(BOOLEAN_FALSE);
     }
 
     /**
@@ -196,7 +196,7 @@ public class Literal {
      * @return if the literal value is <code>true</code>
      */
     public boolean isTrue() {
-        return m_type == BOOLEAN && this.m_value.equals(BOOLEAN_TRUE);
+        return this.m_type == BOOLEAN && this.m_value.equals(BOOLEAN_TRUE);
     }
 
     /**
@@ -214,7 +214,7 @@ public class Literal {
      * @return if the literal is a debug level
      */
     public boolean isDebugLevel() {
-        return m_type == DEBUG_LEVEL;
+        return this.m_type == DEBUG_LEVEL;
     }
 
     /**
@@ -223,7 +223,7 @@ public class Literal {
      * @return if the literal is a number
      */
     public boolean isNumber() {
-        return m_type == NUMBER;
+        return this.m_type == NUMBER;
     }
 
     /**
@@ -232,7 +232,7 @@ public class Literal {
      * @return if the literal is a String
      */
     public boolean isString() {
-        return m_type == STRING;
+        return this.m_type == STRING;
     }
 
     /**
@@ -241,7 +241,7 @@ public class Literal {
      * @return if the literal is a Symbol
      */
     public boolean isSymbol() {
-        return m_type == SYMBOL;
+        return this.m_type == SYMBOL;
     }
 
     /**
@@ -250,7 +250,7 @@ public class Literal {
      * @return if the literal is a Boolean
      */
     public boolean isBoolean() {
-        return m_type == BOOLEAN;
+        return this.m_type == BOOLEAN;
     }
 
 }

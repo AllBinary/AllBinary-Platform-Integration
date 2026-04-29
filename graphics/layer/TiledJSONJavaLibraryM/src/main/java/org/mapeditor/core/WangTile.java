@@ -73,7 +73,7 @@ public class WangTile {
      */
     
     public Integer getTileid() {
-        return tileid;
+        return this.tileid;
     }
 
     /**
@@ -102,7 +102,7 @@ public class WangTile {
      */
     
     public String getWangid() {
-        return wangid;
+        return this.wangid;
     }
 
     /**

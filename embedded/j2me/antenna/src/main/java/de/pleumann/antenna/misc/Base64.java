@@ -1123,7 +1123,7 @@ public class Base64
                     
                     if( i == 4 )
                     {
-                        this.numSigBytes = decode4to3( b4, 0, buffer, 0 );
+                        this.numSigBytes = decode4to3( b4, 0, this.buffer, 0 );
                         this.position = 0;
                     }   // end if: got four characters
                     else if( i == 0 ){
@@ -1152,7 +1152,7 @@ public class Base64
                 }   // end if
                 else
                 {
-                    lineLength++;   // This isn't important when decoding
+                    this.lineLength++;   // This isn't important when decoding
                                     // but throwing an extra "if" seems
                                     // just as wasteful.
                     
@@ -1193,7 +1193,7 @@ public class Base64
             int b;
             for( i = 0; i < len; i++ )
             {
-                b = read();
+                b = this.read();
                 
                 //if( b < 0 && i == 0 )
                 //    return -1;
@@ -1308,7 +1308,7 @@ public class Base64
             // Encode?
             if( this.encode )
             {
-                this.buffer[ position++ ] = (byte)theByte;
+                this.buffer[ this.position++ ] = (byte)theByte;
                 if( this.position >= this.bufferLength )  // Enough to encode.
                 {
                     out.write( encode3to4( this.b4, buffer, bufferLength ) );
@@ -1330,8 +1330,8 @@ public class Base64
                 // Meaningful Base64 character?
                 if( DECODABET[ theByte & 0x7f ] > WHITE_SPACE_ENC )
                 {
-                    buffer[ position++ ] = (byte)theByte;
-                    if( this.position >= bufferLength )  // Enough to output.
+                    this.buffer[ this.position++ ] = (byte)theByte;
+                    if( this.position >= this.bufferLength )  // Enough to output.
                     {
                         int len = Base64.decode4to3( buffer, 0, b4, 0 );
                         out.write( b4, 0, len );
@@ -1368,7 +1368,7 @@ public class Base64
             
             for( int i = 0; i < len; i++ )
             {
-                write( theBytes[ off + i ] );
+                this.write( theBytes[ off + i ] );
             }   // end for: each byte written
             
         }   // end write
@@ -1386,7 +1386,7 @@ public class Base64
                 if( this.encode )
                 {
                     out.write( encode3to4( this.b4, buffer, position ) );
-                    position = 0;
+                    this.position = 0;
                 }   // end if: encoding
                 else
                 {
@@ -1405,7 +1405,7 @@ public class Base64
         public void close() throws java.io.IOException
         {
             // 1. Ensure that pending characters are written
-            flushBase64();
+            this.flushBase64();
 
             // 2. Actually close the stream
             // Base class both flushes and closes.
@@ -1426,7 +1426,7 @@ public class Base64
          */
         public void suspendEncoding() throws java.io.IOException 
         {
-            flushBase64();
+            this.flushBase64();
             this.suspendEncoding = true;
         }   // end suspendEncoding
         

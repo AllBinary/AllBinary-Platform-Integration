@@ -179,15 +179,15 @@ public class WtkJad extends Task {
 	}
 
     public void setIf(String s) {
-        condition.setIf(s);
+        this.condition.setIf(s);
     }
     
     public void setUnless(String s) {
-        condition.setUnless(s);
+        this.condition.setUnless(s);
     }
 
     public boolean isActive() {
-        return condition.isActive();
+        return this.condition.isActive();
     }
 
 	public void execute() throws BuildException {
@@ -212,7 +212,7 @@ public class WtkJad extends Task {
 		if (this.jarFile != null) {
             String url = this.jarFile.getName();
             if (this.target != null && this.target.length() != 0) {
-                if(!this.target.startsWith("http://") && !target.startsWith("http://"))
+                if(!this.target.startsWith("http://") && !this.target.startsWith("http://"))
                     url =  "http://" + target + "/" + url;
                 else
                     url = this.target + "/" +url;
@@ -222,7 +222,7 @@ public class WtkJad extends Task {
 			jad.setValue("MIDlet-Jar-Size", "" + this.jarFile.length());
 		}
 
-		if (name != null)
+		if (this.name != null)
 			jad.setValue("MIDlet-Name", name);
 		if (this.vendor != null)
 			jad.setValue("MIDlet-Vendor", vendor);

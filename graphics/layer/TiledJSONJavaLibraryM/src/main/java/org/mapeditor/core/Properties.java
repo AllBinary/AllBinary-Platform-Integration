@@ -67,7 +67,7 @@ public class Properties extends PropertiesData implements Cloneable {
      * @return a {@link java.lang.String} object.
      */
     public String getProperty(String name) {
-        return getProperty(name, null);
+        return this.getProperty(name, null);
     }
 
     /**

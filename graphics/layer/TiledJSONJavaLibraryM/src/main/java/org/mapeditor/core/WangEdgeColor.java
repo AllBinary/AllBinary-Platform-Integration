@@ -82,7 +82,7 @@ public class WangEdgeColor {
      */
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -108,7 +108,7 @@ public class WangEdgeColor {
      */
     
     public String getColor() {
-        return color;
+        return this.color;
     }
 
     /**
@@ -134,7 +134,7 @@ public class WangEdgeColor {
      */
     
     public Integer getTile() {
-        return tile;
+        return this.tile;
     }
 
     /**
@@ -161,7 +161,7 @@ public class WangEdgeColor {
      */
     
     public Integer getProbability() {
-        return probability;
+        return this.probability;
     }
 
     /**

@@ -141,7 +141,7 @@ class PreprocessorLine {
      *             if an unknown directive is used
      */
     public PreprocessorLine(String s) throws PreprocessorException {
-        processLine(s);
+        this.processLine(s);
     }
 
     public void processLine(String s) throws PreprocessorException {
@@ -158,7 +158,7 @@ class PreprocessorLine {
         s = s.substring(p);
 
         if (s.startsWith("//#")) {
-            this.type = parseCommand(s);
+            this.type = this.parseCommand(s);
         }
         else {
             this.type = TYPE_VISIBLE;
@@ -196,40 +196,40 @@ class PreprocessorLine {
                 this.text = s;
             }
 
-            if ("//#define".equals(text)) {
+            if ("//#define".equals(this.text)) {
                 return TYPE_DEFINE;
             }
-            else if ("//#undef".equals(text)) {
+            else if ("//#undef".equals(this.text)) {
                 return TYPE_UNDEF;
             }
-            else if ("//#ifdef".equals(text)) {
+            else if ("//#ifdef".equals(this.text)) {
                 return TYPE_IFDEF;
             }
-            else if ("//#ifndef".equals(text)) {
+            else if ("//#ifndef".equals(this.text)) {
                 return TYPE_IFNDEF;
             }
-            else if ("//#elifdef".equals(text)) {
+            else if ("//#elifdef".equals(this.text)) {
                 return TYPE_ELIFDEF;
             }
-            else if ("//#elifndef".equals(text)) {
+            else if ("//#elifndef".equals(this.text)) {
                 return TYPE_ELIFNDEF;
             }
-            else if ("//#else".equals(text)) {
+            else if ("//#else".equals(this.text)) {
                 return TYPE_ELSE;
             }
-            else if ("//#endif".equals(text)) {
+            else if ("//#endif".equals(this.text)) {
                 return TYPE_ENDIF;
             }
-            else if ("//#if".equals(text)) {
+            else if ("//#if".equals(this.text)) {
                 return TYPE_IF;
             }
-            else if ("//#elif".equals(text)) {
+            else if ("//#elif".equals(this.text)) {
                 return TYPE_ELIF;
             }
-            else if ("//#include".equals(text)) {
+            else if ("//#include".equals(this.text)) {
                 return TYPE_INCLUDE;
             }
-            else if ("//#endinclude".equals(text)) {
+            else if ("//#endinclude".equals(this.text)) {
                 return TYPE_ENDINCLUDE;
             }
             else {
@@ -243,23 +243,23 @@ class PreprocessorLine {
             throw new RuntimeException(this.text + " needs an argument");
         }
 
-        return args;
+        return this.args;
     }
 
     public String getSource() {
-        return source;
+        return this.source;
     }
 
     public String getSpace() {
-        return space;
+        return this.space;
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
 
     public int getType() {
-        return type;
+        return this.type;
     }
 
 }

@@ -152,7 +152,7 @@ public class Utility {
         this.project = project;
         this.parent = parent;
 
-        detectToolkit();
+        this.detectToolkit();
     }
 
     public static Utility getInstance(Project project, Task parent) {
@@ -229,41 +229,41 @@ public class Utility {
          */
         if (this.toolkit == null) {
             if (new File(getWtkRelative("lib/api.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit(MIDP1.0) ", "lib/api.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit(MIDP1.0) ", "lib/api.jar");
             } else if (new File(getWtkRelative("emulators/C6C/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit 3(MIDP2.0)","emulators/C6C/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit 3(MIDP2.0)","emulators/C6C/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/C65/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/C65/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/C65/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/C75/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/C75/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/C75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/CX6C/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX6C/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX6C/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/CX7C/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX7C/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX7C/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/CX75/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX75/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/CX75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/S75/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/SL65/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/SL75/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
             } else if (new File(getWtkRelative("emulators/SXG75/lib/API.jar")).exists()) {
-                toolkitType = TOOLKIT_SIEMENS;
-                toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
+                this.toolkitType = TOOLKIT_SIEMENS;
+                this.toolkit = new Toolkit("Siemens Mobility Toolkit3(MIDP2.0)","emulators/S75/lib/API.jar");
             }else{
-                toolkit = new Toolkit("Unknown toolkit","");
-                toolkitType = TOOLKIT_UNKNOWN;
+                this.toolkit = new Toolkit("Unknown toolkit","");
+                this.toolkitType = TOOLKIT_UNKNOWN;
             }
 
         }
@@ -418,11 +418,11 @@ public class Utility {
     }
 
     public String getEmulator() {
-        return toolkit.props.getProperty(Toolkit.EMULATOR, "bin/emulator.exe");
+        return this.toolkit.props.getProperty(Toolkit.EMULATOR, "bin/emulator.exe");
     }
 
     public String getDevice() {
-        return toolkit.props.getProperty(Toolkit.DEVICE);
+        return this.toolkit.props.getProperty(Toolkit.DEVICE);
     }
 
     /**
@@ -434,7 +434,7 @@ public class Utility {
         String result = project.getProperty("wtk.emptyapi");
 
         if (result == null) {
-            result = getWtkRelative("wtklib/emptyapi.zip");
+            result = this.getWtkRelative("wtklib/emptyapi.zip");
         }
 
         if (!new File(result).exists()) {
@@ -456,21 +456,21 @@ public class Utility {
      * Preverifies the given file or directory.
      */
     public void preverify(File srcFile, File destDir, String classpath, boolean cldc, int flags) throws BuildException {
-        parent.log("Preverifying " + srcFile);
+        this.parent.log("Preverifying " + srcFile);
 
         // WIn32 vs. Linux Fix
         String preverify;
 
         if (new File(getWtkRelative("osx/preverify/preverify")).exists()) {
-            preverify = getQuotedName(new File(getWtkRelative("osx/preverify/preverify")));
+            preverify = this.getQuotedName(new File(getWtkRelative("osx/preverify/preverify")));
         } else {
-            preverify = getQuotedName(new File(getWtkRelative("bin/preverify")));
+            preverify = this.getQuotedName(new File(getWtkRelative("bin/preverify")));
         }
 
-        String source = getQuotedName(srcFile);
-        String target = getQuotedName(destDir);
+        String source = this.getQuotedName(srcFile);
+        String target = this.getQuotedName(destDir);
 
-        String arguments = "-classpath " + getOutsideQuotedPath(classpath) + " -d " + target;
+        String arguments = "-classpath " + this.getOutsideQuotedPath(classpath) + " -d " + target;
 
         /**
          * MacOS X / MPowerPlayer special handling.
@@ -516,7 +516,7 @@ public class Utility {
         try {
             String java_bin = jdk + File.separator + "bin";
             if (!new File(java_bin, "jar").exists() && !new File(java_bin, "jar.exe").exists()) {
-                parent.log("Cannot find jar or jar.exe in " + java_bin + ", preverify will most likely fail.", Project.MSG_WARN);
+                this.parent.log("Cannot find jar or jar.exe in " + java_bin + ", preverify will most likely fail.", Project.MSG_WARN);
             }
 
             // prepend java bin path to system PATH calling preverify
@@ -527,7 +527,7 @@ public class Utility {
 
             Process proc = Runtime.getRuntime().exec(preverify + " " + arguments, env);
             proc.waitFor();
-            printProcessOutput(proc);
+            this.printProcessOutput(proc);
 
             int rc = proc.exitValue();
             if (rc != 0) {
@@ -553,7 +553,7 @@ public class Utility {
     }
 
     private String getToolkitProp(String p) {
-        return toolkit.props.getProperty(p);
+        return this.toolkit.props.getProperty(p);
     }
 
     /**
@@ -603,11 +603,11 @@ public class Utility {
         int q = 0;
         int p = path.indexOf(File.pathSeparatorChar);
         while (p != -1) {
-            result = result + getQuotedName(new File(path.substring(q, p))) + File.pathSeparatorChar;
+            result = result + this.getQuotedName(new File(path.substring(q, p))) + File.pathSeparatorChar;
             q = p + 1;
             p = path.indexOf(File.pathSeparatorChar, q);
         }
-        result = result + getQuotedName(new File(path.substring(q)));
+        result = result + this.getQuotedName(new File(path.substring(q)));
 
         return result;
     }
@@ -631,7 +631,7 @@ public class Utility {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             for (int i = 0; i < files.length; i++) {
-                delete(files[i]);
+                this.delete(files[i]);
             }
 
             if (file.equals(this.tmpDir)) {
@@ -647,7 +647,7 @@ public class Utility {
      */
     public void copy(File srcFile, File destFile) throws BuildException {
         try {
-            delete(destFile);
+            this.delete(destFile);
             FileUtils.getFileUtils().copyFile(srcFile, destFile);
         } catch (IOException e) {
             throw new BuildException(e);
@@ -670,7 +670,7 @@ public class Utility {
             this.tmpDir.deleteOnExit();
         }
 
-        return tmpDir;
+        return this.tmpDir;
     }
 
     /**
@@ -690,7 +690,7 @@ public class Utility {
 
             this.parent.log("New version is " + version);
         } catch (Exception ex) {
-            parent.log("Unable to increase version number.");
+            this.parent.log("Unable to increase version number.");
         }
 
         return version;
@@ -731,22 +731,22 @@ public class Utility {
         try {
             if (obfuscator == null) {
                 if (pgFound) {
-                    proguard(srcFile, destFile, classpath, verbose, preserve, arguments, jad);
+                    this.proguard(srcFile, destFile, classpath, verbose, preserve, arguments, jad);
                 } else if (rgFound) {
-                    retroguard(srcFile, destFile, classpath, verbose, preserve, arguments, jad);
+                    this.retroguard(srcFile, destFile, classpath, verbose, preserve, arguments, jad);
                 } else {
                     throw new BuildException("No obfuscator found in WTK bin directory, CLASSPATH, or properties.");
                 }
             } else {
                 if (obfuscator.equals("proguard")) {
                     if (pgFound) {
-                        proguard(srcFile, destFile, classpath, verbose, preserve, arguments, jad);
+                        this.proguard(srcFile, destFile, classpath, verbose, preserve, arguments, jad);
                     } else {
                         throw new BuildException("ProGuard not found in WTK bin directory or CLASSPATH.");
                     }
                 } else if (obfuscator.equals("retroguard")) {
                     if (rgFound) {
-                        retroguard(srcFile, destFile, classpath, verbose, preserve, arguments, jad);
+                        this.retroguard(srcFile, destFile, classpath, verbose, preserve, arguments, jad);
                     } else {
                         throw new BuildException("RetroGuard not found in WTK bin directory or CLASSPATH.");
                     }
@@ -996,19 +996,19 @@ public class Utility {
     }
 
     public int getToolkitType() {
-        return toolkitType;
+        return this.toolkitType;
     }
 
     public String getCldcVersion() {
-        return cldcVersion;
+        return this.cldcVersion;
     }
 
     public String getMidpVersion() {
-        return midpVersion;
+        return this.midpVersion;
     }
 
     public Project getProject() {
-        return project;
+        return this.project;
     }
 
 }

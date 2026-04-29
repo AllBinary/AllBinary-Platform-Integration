@@ -82,6 +82,6 @@ public class ParseFailed extends RuntimeException
 
     public Throwable getCause()
     {
-        return cause;
+        return this.cause;
     }
 }

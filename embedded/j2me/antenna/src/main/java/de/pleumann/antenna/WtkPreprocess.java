@@ -160,15 +160,15 @@ public class WtkPreprocess extends MatchingTask {
     }
 
     public void setIf(String s) {
-        condition.setIf(s);
+        this.condition.setIf(s);
     }
 
     public void setUnless(String s) {
-        condition.setUnless(s);
+        this.condition.setUnless(s);
     }
 
     public boolean isActive() {
-        return condition.isActive();
+        return this.condition.isActive();
     }
 
     public void execute() throws BuildException {
@@ -216,8 +216,8 @@ public class WtkPreprocess extends MatchingTask {
     				{
     					log(e.getMessage(),Project.MSG_WARN);
     				}
-    				String deviceDefines = getDeviceDefines();
-    				String symbols = addSymbols(this.m_symbols, deviceDefines);
+    				String deviceDefines = this.getDeviceDefines();
+    				String symbols = this.addSymbols(this.m_symbols, deviceDefines);
     				pp.addSymbols(symbols);
     				
     				for(int i=0;i<this.m_symbolsFile.size();i++)
@@ -291,7 +291,7 @@ public class WtkPreprocess extends MatchingTask {
     			}
 
 				File file = new File(dir);
-				preprocess(pp, file, mode, newext, encoding, utility);
+				this.preprocess(pp, file, mode, newext, encoding, utility);
     		}
     		catch (Exception ex) {
     			ex.printStackTrace();
@@ -322,7 +322,7 @@ public class WtkPreprocess extends MatchingTask {
 
 				String sourceFile = "" + sourceDir + File.separatorChar + filename;
 
-				Strings lines = loadFile(encoding, new File(sourceFile));
+				Strings lines = this.loadFile(encoding, new File(sourceFile));
 
 				pp.setFile(new File(sourceFile));
 
@@ -468,8 +468,8 @@ public class WtkPreprocess extends MatchingTask {
 	private String addSymbols(String current, String deviceDefines)
 	{
 		String s = "";
-		s = append(this.m_symbols, s);
-		s = append(s, deviceDefines);
+		s = this.append(this.m_symbols, s);
+		s = this.append(s, deviceDefines);
 		return s;
 	}
 

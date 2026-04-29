@@ -133,8 +133,8 @@ class XmlWriter extends OutputStreamWriter
         
         // Add the XML prolog (including the encoding in XML form).
         write(PROLOG_START);
-        write(canonicalizeEncoding(enc));
-        write(PROLOG_END);
+        this.write(canonicalizeEncoding(enc));
+        this.write(PROLOG_END);
         
         //System.out.println("XmlRpcClient - XmlWriter - constructed");
     }
@@ -181,7 +181,7 @@ class XmlWriter extends OutputStreamWriter
     public void writeObject(Object obj)
         throws XmlRpcException, IOException
     {
-        startElement("value");
+        this.startElement("value");
         if (obj == null)
         {
             throw new IllegalArgumentException
@@ -189,87 +189,87 @@ class XmlWriter extends OutputStreamWriter
         }
         else if (obj instanceof String)
         {
-            chardata(obj.toString());
+            this.chardata(obj.toString());
         }
         else if (obj instanceof Integer)
         {
-            startElement("int");
-            write(obj.toString());
-            endElement("int");
+            this.startElement("int");
+            this.write(obj.toString());
+            this.endElement("int");
         }
         else if (obj instanceof Boolean)
         {
-            startElement("boolean");
-            write(((Boolean) obj).booleanValue() ? "1" : "0");
-            endElement("boolean");
+            this.startElement("boolean");
+            this.write(((Boolean) obj).booleanValue() ? "1" : "0");
+            this.endElement("boolean");
         }
         else if (obj instanceof Double || obj instanceof Float)
         {
-            startElement("double");
-            write(obj.toString());
-            endElement("double");
+            this.startElement("double");
+            this.write(obj.toString());
+            this.endElement("double");
         }
         else if (obj instanceof Date)
         {
-            startElement("dateTime.iso8601");
+            this.startElement("dateTime.iso8601");
             Date d = (Date) obj;
-            write(d.toString());
-            endElement("dateTime.iso8601");
+            this.write(d.toString());
+            this.endElement("dateTime.iso8601");
         }
         else if (obj instanceof byte[])
         {
-            startElement("base64");
+            this.startElement("base64");
             this.write(Base64.encode((byte[]) obj));
-            endElement("base64");
+            this.endElement("base64");
         }
         else if (obj instanceof Object[])
         {
-            startElement("array");
-            startElement("data");
+            this.startElement("array");
+            this.startElement("data");
             Object[] array = (Object []) obj;
             for (int i = 0; i < array.length; i++)
             {
-                writeObject(array[i]);
+                this.writeObject(array[i]);
             }
-            endElement("data");
-            endElement("array");
+            this.endElement("data");
+            this.endElement("array");
         }
         else if (obj instanceof Vector)
         {
-            startElement("array");
-            startElement("data");
+            this.startElement("array");
+            this.startElement("data");
             Vector array = (Vector) obj;
             int size = array.size();
             for (int i = 0; i < size; i++)
             {
-                writeObject(array.elementAt(i));
+                this.writeObject(array.elementAt(i));
             }
-            endElement("data");
-            endElement("array");
+            this.endElement("data");
+            this.endElement("array");
         }
         else if (obj instanceof Hashtable)
         {
-            startElement("struct");
+            this.startElement("struct");
             Hashtable struct = (Hashtable) obj;
             for (Enumeration enumeration = struct.keys(); enumeration.hasMoreElements(); )
             {
                 String key = (String) enumeration.nextElement();
                 Object value = struct.get(key);
-                startElement("member");
-                startElement("name");
-                chardata(key);
-                endElement("name");
-                writeObject(value);
-                endElement("member");
+                this.startElement("member");
+                this.startElement("name");
+                this.chardata(key);
+                this.endElement("name");
+                this.writeObject(value);
+                this.endElement("member");
             }
-            endElement("struct");
+            this.endElement("struct");
         }
         else
         {
             throw new RuntimeException("unsupported Java type: "
                                        + obj.getClass());
         }
-        endElement("value");
+        this.endElement("value");
     }
 
     /**
@@ -283,7 +283,7 @@ class XmlWriter extends OutputStreamWriter
         
         for (int i = 0; i < size; i++)
         {
-            write((int) byteData[i]);
+            this.write((int) byteData[i]);
         }
     }
 
@@ -294,9 +294,9 @@ class XmlWriter extends OutputStreamWriter
      */
     protected void startElement(String elem) throws IOException
     {
-        write('<');
-        write(elem);
-        write('>');
+        this.write('<');
+        this.write(elem);
+        this.write('>');
     }
 
     /**
@@ -306,9 +306,9 @@ class XmlWriter extends OutputStreamWriter
      */
     protected void endElement(String elem) throws IOException
     {
-        write(CLOSING_TAG_START);
-        write(elem);
-        write('>');
+        this.write(CLOSING_TAG_START);
+        this.write(elem);
+        this.write('>');
     }
 
     /**
@@ -318,9 +318,9 @@ class XmlWriter extends OutputStreamWriter
      */
     protected void emptyElement(String elem) throws IOException
     {
-        write('<');
-        write(elem);
-        write(SINGLE_TAG_END);
+        this.write('<');
+        this.write(elem);
+        this.write(SINGLE_TAG_END);
     }
 
     /**
@@ -342,16 +342,16 @@ class XmlWriter extends OutputStreamWriter
             case '\t':
             case '\r':
             case '\n':
-                write(c);
+                this.write(c);
                 break;
             case '<':
-                write(LESS_THAN_ENTITY);
+                this.write(LESS_THAN_ENTITY);
                 break;
             case '>':
-                write(GREATER_THAN_ENTITY);
+                this.write(GREATER_THAN_ENTITY);
                 break;
             case '&':
-                write(AMPERSAND_ENTITY);
+                this.write(AMPERSAND_ENTITY);
                 break;
             default:
                 if (c < 0x20 || c > 0xff)
@@ -367,7 +367,7 @@ class XmlWriter extends OutputStreamWriter
                 }
                 else
                 {
-                    write(c);
+                    this.write(c);
                 }
             }
         }

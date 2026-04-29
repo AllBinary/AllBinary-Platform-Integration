@@ -181,7 +181,7 @@ public class MapObjectData {
      */
     
     public Properties getProperties() {
-        return properties;
+        return this.properties;
     }
 
     /**
@@ -206,7 +206,7 @@ public class MapObjectData {
      */
     
     public Point getPoint() {
-        return point;
+        return this.point;
     }
 
     /**
@@ -232,7 +232,7 @@ public class MapObjectData {
      */
     
     public Ellipse getEllipse() {
-        return ellipse;
+        return this.ellipse;
     }
 
     /**
@@ -257,7 +257,7 @@ public class MapObjectData {
      */
     
     public Polygon getPolygon() {
-        return polygon;
+        return this.polygon;
     }
 
     /**
@@ -281,7 +281,7 @@ public class MapObjectData {
      */
     
     public Polyline getPolyline() {
-        return polyline;
+        return this.polyline;
     }
 
     /**
@@ -306,7 +306,7 @@ public class MapObjectData {
      */
     
     public Text getText() {
-        return text;
+        return this.text;
     }
 
     /**
@@ -331,7 +331,7 @@ public class MapObjectData {
      */
     
     public ImageData getImage() {
-        return image;
+        return this.image;
     }
 
     /**
@@ -360,7 +360,7 @@ public class MapObjectData {
      */
     
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -390,7 +390,7 @@ public class MapObjectData {
      */
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -416,7 +416,7 @@ public class MapObjectData {
      */
     
     public String getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -438,7 +438,7 @@ public class MapObjectData {
      */
     
     public double getX() {
-        return x;
+        return this.x;
     }
 
     /**
@@ -456,7 +456,7 @@ public class MapObjectData {
      */
     
     public double getY() {
-        return y;
+        return this.y;
     }
 
     /**
@@ -478,7 +478,7 @@ public class MapObjectData {
      */
     
     public Double getWidth() {
-        return width;
+        return this.width;
     }
 
     /**
@@ -504,7 +504,7 @@ public class MapObjectData {
      */
     
     public Double getHeight() {
-        return height;
+        return this.height;
     }
 
     /**
@@ -529,7 +529,7 @@ public class MapObjectData {
      */
     
     public double getRotation() {
-        return rotation;
+        return this.rotation;
     }
 
     /**
@@ -554,7 +554,7 @@ public class MapObjectData {
      */
     
     public Integer getGid() {
-        return gid;
+        return this.gid;
     }
 
     /**
@@ -583,7 +583,7 @@ public class MapObjectData {
      */
     
     public Boolean isVisible() {
-        return visible;
+        return this.visible;
     }
 
     /**
@@ -612,7 +612,7 @@ public class MapObjectData {
      */
     
     public String getTemplate() {
-        return template;
+        return this.template;
     }
 
     /**

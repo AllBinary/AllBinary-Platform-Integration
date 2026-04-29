@@ -69,7 +69,7 @@ public class MapLayer extends LayerData implements Cloneable {
      * Constructor for MapLayer.
      */
     public MapLayer() {
-        setMap(null);
+        this.setMap(null);
     }
 
     /**
@@ -88,7 +88,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public MapLayer(Rectangle r) {
         this();
-        setBounds(r);
+        this.setBounds(r);
     }
 
     /**
@@ -96,7 +96,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     MapLayer(TiledMap map) {
         this();
-        setMap(map);
+        this.setMap(map);
     }
 
     /**
@@ -108,7 +108,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public MapLayer(TiledMap map, int w, int h) {
         this(w, h);
-        setMap(map);
+        this.setMap(map);
     }
 
     /**
@@ -148,7 +148,7 @@ public class MapLayer extends LayerData implements Cloneable {
      * @return a {@link org.mapeditor.core.TiledMap} object.
      */
     public TiledMap getMap() {
-        return map;
+        return this.map;
     }
 
     /**

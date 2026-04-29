@@ -40,12 +40,12 @@ public class Group extends BaseProps
 
 	public String getName()
 	{
-		return m_name;
+		return this.m_name;
 	}
 	
 	public String getParent()
 	{
-		return m_parent;
+		return this.m_parent;
 	}
 
 	public Properties constructCapabilities(Hashtable groups, Hashtable capTable)

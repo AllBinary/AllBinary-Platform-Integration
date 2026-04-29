@@ -30,7 +30,7 @@ public class InputStreamUtil
      */
     public static InputStreamUtil getInstance()
     {
-        return instance;
+        return InputStreamUtil.instance;
     }
 
     private InputStreamUtil()

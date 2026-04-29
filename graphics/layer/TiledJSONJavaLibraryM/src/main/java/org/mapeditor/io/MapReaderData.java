@@ -25,7 +25,7 @@ public class MapReaderData {
      * @return the instance
      */
     public static MapReaderData getInstance() {
-        return instance;
+        return MapReaderData.instance;
     }
     
     public final long FLIPPED_HORIZONTALLY_FLAG =  0x0000000080000000L;

@@ -37,7 +37,7 @@ public class GDFormInputProcessor
      * @return the instance
      */
     public static GDFormInputProcessor getInstance() {
-        return instance;
+        return GDFormInputProcessor.instance;
     }
     
     //Hack as we may need more than 1 form per scene.

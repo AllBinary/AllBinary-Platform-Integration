@@ -25,7 +25,7 @@ public class TiledBehaviorFactory {
      * @return the instance
      */
     public static TiledBehaviorFactory getInstance() {
-        return instance;
+        return TiledBehaviorFactory.instance;
     }
     
     private final String TILED_1_4 = "1.4";

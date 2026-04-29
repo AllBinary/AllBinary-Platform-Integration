@@ -17,7 +17,7 @@ public class AndroidInputMethodFactory {
      * @return the instance
      */
     public static AndroidInputMethodFactory getInstance() {
-        return instance;
+        return AndroidInputMethodFactory.instance;
     }
     
     public final AndroidInputMethod ANDROID_INPUT_METHOD = new AndroidInputMethod();

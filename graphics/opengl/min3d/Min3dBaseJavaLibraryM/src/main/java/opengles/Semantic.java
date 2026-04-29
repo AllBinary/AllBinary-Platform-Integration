@@ -13,7 +13,7 @@ public class Semantic {
      * @return the instance
      */
     public static Semantic getInstance() {
-        return instance;
+        return Semantic.instance;
     }
 
     public class Attr {

@@ -24,7 +24,7 @@ public class PostLoadPlatformMutableImage extends PostLoadSwtPlatformImage {
      * @return the instance
      */
     public static PostLoadPlatformMutableImage getInstance() {
-        return instance;
+        return PostLoadPlatformMutableImage.instance;
     }
 
     @Override

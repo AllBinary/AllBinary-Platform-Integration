@@ -41,7 +41,7 @@ public class AboutCommandProcessor {
      * @return the instance
      */
     public static AboutCommandProcessor getInstance() {
-        return instance;
+        return AboutCommandProcessor.instance;
     }
 
     public final String URL = "url";

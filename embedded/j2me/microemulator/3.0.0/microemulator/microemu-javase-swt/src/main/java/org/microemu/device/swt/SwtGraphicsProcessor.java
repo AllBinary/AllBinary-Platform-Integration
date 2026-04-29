@@ -21,7 +21,7 @@ public class SwtGraphicsProcessor {
      * @return the instance
      */
     public static SwtGraphicsProcessor getInstance() {
-        return instance;
+        return SwtGraphicsProcessor.instance;
     }
     
     public Color getColor(final SwtGraphics g, final RGBA rgba) {

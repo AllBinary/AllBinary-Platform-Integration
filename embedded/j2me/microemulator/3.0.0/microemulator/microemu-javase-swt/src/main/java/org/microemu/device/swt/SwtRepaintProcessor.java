@@ -19,7 +19,7 @@ public class SwtRepaintProcessor extends RepaintProcessor {
      * @return the instance
      */
     public static SwtRepaintProcessor getInstance() {
-        return instance;
+        return SwtRepaintProcessor.instance;
     }
     
     public void repaint(final Object context, final int x, final int y, final int width, final int height) {

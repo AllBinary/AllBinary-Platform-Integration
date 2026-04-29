@@ -42,7 +42,7 @@ public final class BWImageFilter implements ImageFilter
      * @return the instance
      */
     public static BWImageFilter getInstance() {
-        return instance;
+        return BWImageFilter.instance;
     }
     
   private final double Yr, Yg, Yb;

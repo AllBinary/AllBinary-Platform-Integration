@@ -42,7 +42,7 @@ public final class RGBImageFilter implements ImageFilter
      * @return the instance
      */
     public static RGBImageFilter getInstance() {
-        return instance;
+        return RGBImageFilter.instance;
     }
     
   private final double Rr, Rg, Rb;

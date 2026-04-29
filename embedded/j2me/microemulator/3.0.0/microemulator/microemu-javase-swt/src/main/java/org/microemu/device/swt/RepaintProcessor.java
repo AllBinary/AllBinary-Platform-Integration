@@ -17,7 +17,7 @@ public class RepaintProcessor {
      * @return the instance
      */
     public static RepaintProcessor getInstance() {
-        return instance;
+        return RepaintProcessor.instance;
     }
     
     public void repaint(final Object context, final int x, final int y, final int width, final int height) {

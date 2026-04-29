@@ -19,7 +19,7 @@ public class OpenGLESPostLoadPlatformImage extends PlatformImage {
      * @return the instance
      */
     public static OpenGLESPostLoadPlatformImage getInstance() {
-        return instance;
+        return OpenGLESPostLoadPlatformImage.instance;
     }
     
     @Override

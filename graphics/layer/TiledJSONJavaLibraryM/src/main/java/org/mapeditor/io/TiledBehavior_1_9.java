@@ -27,7 +27,7 @@ public class TiledBehavior_1_9 extends TiledBehavior {
      * @return the instance
      */
     public static TiledBehavior_1_9 getInstance() {
-        return instance;
+        return TiledBehavior_1_9.instance;
     }
 
     @Override

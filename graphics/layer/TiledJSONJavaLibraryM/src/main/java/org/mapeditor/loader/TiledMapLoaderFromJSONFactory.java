@@ -37,7 +37,7 @@ public class TiledMapLoaderFromJSONFactory {
      * @return the instance
      */
     public static TiledMapLoaderFromJSONFactory getInstance() {
-        return instance;
+        return TiledMapLoaderFromJSONFactory.instance;
     }
     
     public TiledMap process(final GDJSONMapReader mapReader, final InputStream tileMapInputStream, final InputStream[] tileSetInputStreamArray, final int size, final int[] sizeArray2, final int[] tileSetImageHeightArray) {

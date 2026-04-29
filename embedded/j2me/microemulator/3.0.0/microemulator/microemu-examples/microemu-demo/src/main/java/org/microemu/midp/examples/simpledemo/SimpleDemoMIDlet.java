@@ -96,7 +96,7 @@ public class SimpleDemoMIDlet extends MIDlet implements CommandListener {
 	}
 
 	public static SimpleDemoMIDlet getInstance() {
-		return instance;
+		return SimpleDemoMIDlet.instance;
 	}
 
 	public static void showMenu() {

@@ -25,7 +25,7 @@ public class FontNoDebugFactory extends FontDebugFactoryBase {
      * @return the instance
      */
     public static FontNoDebugFactory getInstance() {
-        return instance;
+        return FontNoDebugFactory.instance;
     }
 
     public FontNoDebugFactory(FontDebugBase debug, FontDebugBase noDebug) {

@@ -70,7 +70,7 @@ public class ImplFactory {
 
 	public static ImplFactory instance() {
 		//return SingletonHolder.instance;
-                return instance;
+                return ImplFactory.instance;
 	}
 
 	public static void register(Class delegate, Class implementationClass) {

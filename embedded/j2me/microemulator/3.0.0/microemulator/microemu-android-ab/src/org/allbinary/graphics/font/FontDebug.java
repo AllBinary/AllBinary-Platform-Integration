@@ -31,7 +31,7 @@ public class FontDebug extends FontDebugBase {
      * @return the instance
      */
     public static FontDebug getInstance() {
-        return instance;
+        return FontDebug.instance;
     }
 
     private static final FontDebug instance = new FontDebug();

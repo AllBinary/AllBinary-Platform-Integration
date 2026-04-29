@@ -38,7 +38,7 @@ public class WidgetSpy {
 	}
 
 	public static WidgetSpy getInstance() {
-		return instance;
+		return WidgetSpy.instance;
 	}
 
 	/**

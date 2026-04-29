@@ -21,7 +21,7 @@ public class PostLoadPlatformImmutableImage extends PostLoadJ2SEPlatformImage {
      * @return the instance
      */
     public static PostLoadPlatformImmutableImage getInstance() {
-        return instance;
+        return PostLoadPlatformImmutableImage.instance;
     }
 
     @Override

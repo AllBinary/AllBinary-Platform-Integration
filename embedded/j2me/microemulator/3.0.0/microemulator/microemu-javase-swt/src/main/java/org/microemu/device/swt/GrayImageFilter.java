@@ -42,7 +42,7 @@ public final class GrayImageFilter implements ImageFilter
      * @return the instance
      */
     public static GrayImageFilter getInstance() {
-        return instance;
+        return GrayImageFilter.instance;
     }
     
   private final double Yr, Yg, Yb;

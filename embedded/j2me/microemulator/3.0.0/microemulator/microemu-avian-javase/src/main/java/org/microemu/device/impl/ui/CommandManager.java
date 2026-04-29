@@ -85,7 +85,7 @@ public class CommandManager
 	
 	public static CommandManager getInstance()
 	{
-		return instance;
+		return CommandManager.instance;
 	}
 	
 	

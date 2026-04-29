@@ -39,7 +39,7 @@ public class TileSetToGeographicMapUtil {
      * @return the instance
      */
     public static TileSetToGeographicMapUtil getInstance() {
-        return instance;
+        return TileSetToGeographicMapUtil.instance;
     }
 
     private final String OTHER = "Other";

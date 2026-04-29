@@ -24,7 +24,7 @@ public class PostLoadPlatformMutableImage extends PostLoadJ2SEPlatformImage {
      * @return the instance
      */
     public static PostLoadPlatformMutableImage getInstance() {
-        return instance;
+        return PostLoadPlatformMutableImage.instance;
     }
     
     @Override

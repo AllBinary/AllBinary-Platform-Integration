@@ -30,7 +30,7 @@ public class TiledJSONUtil {
      * @return the instance
      */
     public static TiledJSONUtil getInstance() {
-        return instance;
+        return TiledJSONUtil.instance;
     }
     
     private final String BEFORE_HEIGHT_0 = "{ \n\"compressionlevel\":-1,\n \"height\":";

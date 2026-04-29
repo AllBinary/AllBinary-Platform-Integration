@@ -26,7 +26,7 @@ public class SwtImageUtil {
      * @return the instance
      */
     public static SwtImageUtil getInstance() {
-        return instance;
+        return SwtImageUtil.instance;
     }
     
     public String toString(final javax.microedition.lcdui.Image image) {

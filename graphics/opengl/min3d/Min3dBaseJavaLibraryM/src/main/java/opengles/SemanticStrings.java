@@ -25,7 +25,7 @@ public class SemanticStrings {
      * @return the instance
      */
     public static SemanticStrings getInstance() {
-        return instance;
+        return SemanticStrings.instance;
     }
     
     public final String POSITION = "position";

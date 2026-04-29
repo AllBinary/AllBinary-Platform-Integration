@@ -17,7 +17,7 @@ public class ResourceCallbackStrings {
      * @return the instance
      */
     public static ResourceCallbackStrings getInstance() {
-        return instance;
+        return ResourceCallbackStrings.instance;
     }
         
     public final String FROM_DATA = "FromData";

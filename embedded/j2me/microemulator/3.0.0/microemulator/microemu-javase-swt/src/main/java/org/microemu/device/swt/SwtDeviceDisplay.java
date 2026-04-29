@@ -89,12 +89,12 @@ public class SwtDeviceDisplay extends DeviceDisplayImpl {
      * @return the instance
      */
     public static SwtDeviceDisplay getInstance() {
-        return instance;
+        return SwtDeviceDisplay.instance;
     }
 
     public static SwtDeviceDisplay getInstance(EmulatorContext swtEmulatorContext) {
         instance = new SwtDeviceDisplay(swtEmulatorContext);
-        return instance;
+        return SwtDeviceDisplay.instance;
     }
 
     private final ResourceCallbackStrings resourceCallbackStrings = ResourceCallbackStrings.getInstance();

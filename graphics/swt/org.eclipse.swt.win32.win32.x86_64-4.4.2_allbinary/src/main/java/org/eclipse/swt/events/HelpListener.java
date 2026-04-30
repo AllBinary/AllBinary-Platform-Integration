@@ -36,5 +36,5 @@ public interface HelpListener extends SWTEventListener {
  *
  * @param e an event containing information about the help
  */
-public void helpRequested(HelpEvent e);
+void helpRequested(HelpEvent e);
 }

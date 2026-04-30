@@ -252,7 +252,7 @@ public interface HeaderSet {
 	 *                <code>headerValue</code> is not the correct Java type as
 	 *                defined in the description of this interface
 	 */
-	public void setHeader(int headerID, Object headerValue);
+	void setHeader(int headerID, Object headerValue);
 
 	/**
 	 * Retrieves the value of the header identifier provided. The type of the
@@ -273,7 +273,7 @@ public interface HeaderSet {
 	 *                if an error occurred in the transport layer during the
 	 *                operation or if the connection has been closed
 	 */
-	public Object getHeader(int headerID) throws IOException;
+	Object getHeader(int headerID) throws IOException;
 
 	/**
 	 * Retrieves the list of headers that may be retrieved via the
@@ -290,7 +290,7 @@ public interface HeaderSet {
 	 *                if an error occurred in the transport layer during the
 	 *                operation or the connection has been closed
 	 */
-	public int[] getHeaderList() throws IOException;
+	int[] getHeaderList() throws IOException;
 
 	/**
 	 * Sets the authentication challenge header. The <code>realm</code> will
@@ -312,7 +312,7 @@ public interface HeaderSet {
 	 *            successful; if <code>false</code> then read-only access will
 	 *            be granted if successful
 	 */
-	public void createAuthenticationChallenge(String realm, boolean userID, boolean access);
+	void createAuthenticationChallenge(String realm, boolean userID, boolean access);
 
 	/**
 	 * Returns the response code received from the server. Response codes are
@@ -330,5 +330,5 @@ public interface HeaderSet {
 	 *                <code>ClientSession</code> object; if an OBEX server
 	 *                created this object
 	 */
-	public int getResponseCode() throws IOException;
+	int getResponseCode() throws IOException;
 }

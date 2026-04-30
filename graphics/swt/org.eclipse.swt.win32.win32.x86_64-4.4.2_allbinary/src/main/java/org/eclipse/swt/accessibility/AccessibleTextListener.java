@@ -55,7 +55,7 @@ public interface AccessibleTextListener extends SWTEventListener {
 	 *    <li>offset [OUT] - the current offset of the text caret</li>
 	 * </ul>
 	 */
-	public void getCaretOffset (AccessibleTextEvent e);
+	void getCaretOffset (AccessibleTextEvent e);
 
 	/**
 	 * Sent when an accessibility client requests the range of the current
@@ -71,5 +71,5 @@ public interface AccessibleTextListener extends SWTEventListener {
 	 *    <li>length [OUT] - the length of the current text selection</li>
 	 * </ul>
 	 */
-	public void getSelectionRange (AccessibleTextEvent e);
+	void getSelectionRange (AccessibleTextEvent e);
 }

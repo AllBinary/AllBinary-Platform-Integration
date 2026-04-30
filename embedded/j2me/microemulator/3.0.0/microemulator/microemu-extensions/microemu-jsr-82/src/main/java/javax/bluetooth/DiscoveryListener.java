@@ -143,7 +143,7 @@ public interface DiscoveryListener {
 	 * class of the remote device 
 	 * @see DiscoveryAgent#startInquiry(int, javax.bluetooth.DiscoveryListener)
 	 */
-	public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod);
+	void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod);
 
 	/**
 	 * Called when service(s) are found during a service search. 
@@ -154,7 +154,7 @@ public interface DiscoveryListener {
 	 * @see DiscoveryAgent#searchServices(int[], javax.bluetooth.UUID[],
 	 * javax.bluetooth.RemoteDevice, javax.bluetooth.DiscoveryListener)
 	 */
-	public void servicesDiscovered(int transID, ServiceRecord[] servRecord);
+	void servicesDiscovered(int transID, ServiceRecord[] servRecord);
 
 	/**
 	 * Called when a service search is completed or was terminated because of an
@@ -182,7 +182,7 @@ public interface DiscoveryListener {
 	 * initiated the service search 
 	 * @param respCode  the response code that indicates the status of the transaction
 	 */
-	public void serviceSearchCompleted(int transID, int respCode);
+	void serviceSearchCompleted(int transID, int respCode);
 
 	/**
 	 * Called when an inquiry is completed. The {@code discType} will be
@@ -199,5 +199,5 @@ public interface DiscoveryListener {
 	 * @see #INQUIRY_TERMINATED
 	 * @see #INQUIRY_ERROR
 	 */
-	public void inquiryCompleted(int discType);
+	void inquiryCompleted(int discType);
 }

@@ -54,7 +54,7 @@ public interface AccessibleListener extends SWTEventListener {
 	 *    <li>result [OUT] - the requested name string, or null</li>
 	 * </ul>
 	 */
-	public void getName(AccessibleEvent e);
+	void getName(AccessibleEvent e);
 
 	/**
 	 * Sent when an accessibility client requests the help string
@@ -77,7 +77,7 @@ public interface AccessibleListener extends SWTEventListener {
 	 *    <li>result [OUT] - the requested help string, or null</li>
 	 * </ul>
 	 */
-	public void getHelp(AccessibleEvent e);
+	void getHelp(AccessibleEvent e);
 
 	/**
 	 * Sent when an accessibility client requests the keyboard shortcut
@@ -100,7 +100,7 @@ public interface AccessibleListener extends SWTEventListener {
 	 *    <li>result [OUT] - the requested keyboard shortcut string (example: "ALT+N"), or null</li>
 	 * </ul>
 	 */
-	public void getKeyboardShortcut(AccessibleEvent e);
+	void getKeyboardShortcut(AccessibleEvent e);
 
 	/**
 	 * Sent when an accessibility client requests a description
@@ -122,5 +122,5 @@ public interface AccessibleListener extends SWTEventListener {
 	 *    <li>result [OUT] - the requested description string, or null</li>
 	 * </ul>
 	 */
-	public void getDescription(AccessibleEvent e);
+	void getDescription(AccessibleEvent e);
 }

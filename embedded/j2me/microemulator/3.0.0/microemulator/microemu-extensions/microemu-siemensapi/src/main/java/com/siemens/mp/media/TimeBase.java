@@ -27,5 +27,5 @@ package com.siemens.mp.media;
 public interface TimeBase
 {
 
-    public abstract long getTime();
+    abstract long getTime();
 }

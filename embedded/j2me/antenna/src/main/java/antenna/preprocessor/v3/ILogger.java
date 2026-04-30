@@ -25,6 +25,6 @@ public interface ILogger {
      * 
      * @param message The string message
      */
-    public abstract void log(String message);
+    abstract void log(String message);
 
 }

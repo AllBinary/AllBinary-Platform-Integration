@@ -41,5 +41,5 @@ public interface VerifyListener extends SWTEventListener {
  *
  * @param e an event containing information about the verify
  */
-public void verifyText(VerifyEvent e);
+void verifyText(VerifyEvent e);
 }

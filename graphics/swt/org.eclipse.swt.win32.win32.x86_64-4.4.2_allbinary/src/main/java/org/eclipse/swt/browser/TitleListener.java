@@ -41,5 +41,5 @@ public interface TitleListener extends SWTEventListener {
  * 
  * @since 3.0
  */
-public void changed(TitleEvent event);
+void changed(TitleEvent event);
 }

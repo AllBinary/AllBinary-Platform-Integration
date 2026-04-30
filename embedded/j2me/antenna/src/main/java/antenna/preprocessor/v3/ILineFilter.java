@@ -32,6 +32,6 @@ public interface ILineFilter {
      * @param line the line to be modified
      * @return the result line
      */
-    public abstract String filter(String line);
+    abstract String filter(String line);
 
 }

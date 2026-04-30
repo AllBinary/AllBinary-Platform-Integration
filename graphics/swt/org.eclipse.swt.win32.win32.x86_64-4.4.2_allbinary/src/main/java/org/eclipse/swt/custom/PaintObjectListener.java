@@ -36,5 +36,5 @@ public interface PaintObjectListener extends SWTEventListener {
  * @see PaintObjectEvent
  * @see StyledText#addPaintObjectListener(PaintObjectListener)
  */
-public void paintObject(PaintObjectEvent event);
+void paintObject(PaintObjectEvent event);
 }

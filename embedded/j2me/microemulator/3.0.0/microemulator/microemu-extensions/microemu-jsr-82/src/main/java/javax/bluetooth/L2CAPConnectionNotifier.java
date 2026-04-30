@@ -85,6 +85,6 @@ public interface L2CAPConnectionNotifier extends Connection {
 	    * configured the device to be non-connectable.
 	    *
 	    */
-	    public L2CAPConnection  acceptAndOpen() throws IOException;
+	    L2CAPConnection  acceptAndOpen() throws IOException;
 	    
 }

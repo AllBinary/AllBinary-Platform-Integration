@@ -49,6 +49,6 @@ public interface ToneControl extends Control
 	
 	public static final byte SILENCE = -1;
 	
-	public void setSequence(byte[] sequence);
+	void setSequence(byte[] sequence);
 	
 }

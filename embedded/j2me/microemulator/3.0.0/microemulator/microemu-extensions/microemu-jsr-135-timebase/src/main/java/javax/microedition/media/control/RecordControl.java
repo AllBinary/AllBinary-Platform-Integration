@@ -26,19 +26,19 @@ import javax.microedition.media.MediaException;
 
 public interface RecordControl extends Control {
 
-	public abstract void setRecordStream(OutputStream outputstream);
+	abstract void setRecordStream(OutputStream outputstream);
 
-	public abstract void setRecordLocation(String s) throws IOException, MediaException;
+	abstract void setRecordLocation(String s) throws IOException, MediaException;
 
-	public abstract String getContentType();
+	abstract String getContentType();
 
-	public abstract void startRecord();
+	abstract void startRecord();
 
-	public abstract void stopRecord();
+	abstract void stopRecord();
 
-	public abstract void commit() throws IOException;
+	abstract void commit() throws IOException;
 
-	public abstract int setRecordSizeLimit(int i) throws MediaException;
+	abstract int setRecordSizeLimit(int i) throws MediaException;
 
-	public abstract void reset() throws IOException;
+	abstract void reset() throws IOException;
 }

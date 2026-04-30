@@ -30,6 +30,6 @@ package org.microemu.app.ui;
 public interface DisplayRepaintListener 
 {
 	
-	public void repaintInvoked(Object repaintObject);
+	void repaintInvoked(Object repaintObject);
 	
 }

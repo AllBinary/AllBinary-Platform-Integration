@@ -72,6 +72,6 @@ public interface XmlRpcHandler
     /**
      * Return the result, or throw an Exception if something went wrong.
      */
-    public Object execute (String method, Vector<Object> params)
+    Object execute (String method, Vector<Object> params)
             throws Exception;
 }

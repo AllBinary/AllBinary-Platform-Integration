@@ -32,5 +32,5 @@ public interface VerifyKeyListener extends SWTEventListener {
  * @param event the verify event
  * @see VerifyEvent
  */
-public void verifyKey (VerifyEvent event);
+void verifyKey (VerifyEvent event);
 }

@@ -28,7 +28,7 @@ import com.siemens.mp.media.Control;
 public interface ToneControl
     extends Control
 {
-    public abstract void setSequence(byte abyte0[]);
+    abstract void setSequence(byte abyte0[]);
 
     public static final byte VERSION = -2;
     public static final byte TEMPO = -3;

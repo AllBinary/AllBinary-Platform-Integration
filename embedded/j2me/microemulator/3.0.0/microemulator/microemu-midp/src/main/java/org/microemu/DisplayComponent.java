@@ -29,8 +29,8 @@ import org.microemu.app.ui.DisplayRepaintListener;
 public interface DisplayComponent
 {
 
-	public void repaintRequest(int x, int y, int width, int height);
+	void repaintRequest(int x, int y, int width, int height);
 
-        public void addDisplayRepaintListener(DisplayRepaintListener l);
-        public void removeDisplayRepaintListener(DisplayRepaintListener l);
+        void addDisplayRepaintListener(DisplayRepaintListener l);
+        void removeDisplayRepaintListener(DisplayRepaintListener l);
 }

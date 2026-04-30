@@ -39,7 +39,7 @@ public interface AccessibleActionListener extends SWTEventListener {
 	 * <li>[out] count - the number of actions, or zero if there are no actions</li>
 	 * </ul>
 	 */
-	public void getActionCount(AccessibleActionEvent e);
+	void getActionCount(AccessibleActionEvent e);
 
 	/**
 	 * Performs the specified action on the object.
@@ -50,7 +50,7 @@ public interface AccessibleActionListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the action was performed.</li>
 	 * </ul>
 	 */
-	public void doAction(AccessibleActionEvent e);
+	void doAction(AccessibleActionEvent e);
 
 	/**
 	 * Returns a description of the specified action.
@@ -61,7 +61,7 @@ public interface AccessibleActionListener extends SWTEventListener {
 	 * 		or null if the index lies outside the valid range</li>
 	 * </ul>
 	 */
-	public void getDescription(AccessibleActionEvent e);
+	void getDescription(AccessibleActionEvent e);
 
 	/**
 	 * Returns a string representing one or more key bindings, if there
@@ -77,7 +77,7 @@ public interface AccessibleActionListener extends SWTEventListener {
 	 * 		(example: "C;CTRL+C"), or null if the index lies outside the valid range</li>
 	 * </ul>
 	 */
-	public void getKeyBinding(AccessibleActionEvent e);
+	void getKeyBinding(AccessibleActionEvent e);
 
 	/**
 	 * Returns the name of the specified action.
@@ -93,5 +93,5 @@ public interface AccessibleActionListener extends SWTEventListener {
 	 * 		or null if the index lies outside the valid range</li>
 	 * </ul>
 	 */
-	public void getName(AccessibleActionEvent e);
+	void getName(AccessibleActionEvent e);
 }

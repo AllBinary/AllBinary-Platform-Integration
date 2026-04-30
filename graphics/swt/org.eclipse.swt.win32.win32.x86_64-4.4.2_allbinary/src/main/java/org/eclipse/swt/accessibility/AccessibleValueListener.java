@@ -35,7 +35,7 @@ public interface AccessibleValueListener extends SWTEventListener {
 	 * <li>[out] value - the number that is the current value of this object</li>
 	 * </ul>
 	 */
-	public void getCurrentValue(AccessibleValueEvent e);
+	void getCurrentValue(AccessibleValueEvent e);
 
 	/**
 	 * Sets the value of this object to the given number.
@@ -50,7 +50,7 @@ public interface AccessibleValueListener extends SWTEventListener {
 	 * 		<br>- on output, set to null if the value cannot be set</li>
 	 * </ul>
 	 */
-	public void setCurrentValue(AccessibleValueEvent e);
+	void setCurrentValue(AccessibleValueEvent e);
 
 	/**
 	 * Returns the maximum value that can be represented by this object.
@@ -60,7 +60,7 @@ public interface AccessibleValueListener extends SWTEventListener {
 	 * 		If this object has no upper bound then null is returned.</li>
 	 * </ul>
 	 */
-	public void getMaximumValue(AccessibleValueEvent e);
+	void getMaximumValue(AccessibleValueEvent e);
 
 	/**
 	 * Returns the minimum value that can be represented by this object.
@@ -70,5 +70,5 @@ public interface AccessibleValueListener extends SWTEventListener {
 	 * 		If this object has no lower bound then null is returned.</li>
 	 * </ul>
 	 */
-	public void getMinimumValue(AccessibleValueEvent e);
+	void getMinimumValue(AccessibleValueEvent e);
 }

@@ -41,7 +41,7 @@ public interface DragSourceListener extends SWTEventListener {
  * 
  * @see DragSourceEvent
  */
-public void dragStart(DragSourceEvent event);
+void dragStart(DragSourceEvent event);
 
 /**
  * The data is required from the drag source.
@@ -59,7 +59,7 @@ public void dragStart(DragSourceEvent event);
  * 
  * @see DragSourceEvent
  */
-public void dragSetData(DragSourceEvent event);
+void dragSetData(DragSourceEvent event);
 
 /**
  * The drop has successfully completed(mouse up over a valid target) or has been terminated (such as hitting 
@@ -77,5 +77,5 @@ public void dragSetData(DragSourceEvent event);
  * 
  * @see DragSourceEvent
  */
-public void dragFinished(DragSourceEvent event);
+void dragFinished(DragSourceEvent event);
 }

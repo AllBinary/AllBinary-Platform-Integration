@@ -45,5 +45,5 @@ public interface CloseWindowListener extends SWTEventListener {
  * 
  * @since 3.0
  */ 
-public void close(WindowEvent event);
+void close(WindowEvent event);
 }

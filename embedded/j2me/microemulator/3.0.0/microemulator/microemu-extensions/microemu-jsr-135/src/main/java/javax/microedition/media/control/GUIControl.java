@@ -25,6 +25,6 @@ public interface GUIControl extends Control {
 
     public static final int USE_GUI_PRIMITIVE = 0;
 
-    public abstract Object initDisplayMode(int i, Object obj);
+    abstract Object initDisplayMode(int i, Object obj);
 
 }

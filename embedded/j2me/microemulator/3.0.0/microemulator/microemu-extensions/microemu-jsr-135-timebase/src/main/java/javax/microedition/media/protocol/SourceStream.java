@@ -30,18 +30,18 @@ public interface SourceStream extends Controllable {
 
 	public static final int RANDOM_ACCESSIBLE = 2;
 	
-	public abstract ContentDescriptor getContentDescriptor();
+	abstract ContentDescriptor getContentDescriptor();
 
-	public abstract long getContentLength();
+	abstract long getContentLength();
 
-	public abstract int read(byte abyte0[], int i, int j) throws IOException;
+	abstract int read(byte abyte0[], int i, int j) throws IOException;
 
-	public abstract int getTransferSize();
+	abstract int getTransferSize();
 
-	public abstract long seek(long l) throws IOException;
+	abstract long seek(long l) throws IOException;
 
-	public abstract long tell();
+	abstract long tell();
 
-	public abstract int getSeekType();
+	abstract int getSeekType();
 
 }

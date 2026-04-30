@@ -31,10 +31,10 @@ import org.microemu.app.ui.DisplayRepaintListener;
 public interface AndroidRepaintListener extends DisplayRepaintListener
 {
 
-    public abstract void onPause();
+    abstract void onPause();
 
-    public abstract void onResume();
+    abstract void onResume();
     
-    public abstract void flushGraphics();
+    abstract void flushGraphics();
     
 }

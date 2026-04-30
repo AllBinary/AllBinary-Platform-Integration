@@ -37,5 +37,5 @@ public interface CTabFolderListener extends SWTEventListener {
  * 
  * @see CTabItem#setControl
  */
-public void itemClosed(CTabFolderEvent event);
+void itemClosed(CTabFolderEvent event);
 }

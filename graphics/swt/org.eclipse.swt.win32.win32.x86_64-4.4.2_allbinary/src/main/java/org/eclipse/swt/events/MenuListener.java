@@ -35,12 +35,12 @@ public interface MenuListener extends SWTEventListener {
  *
  * @param e an event containing information about the menu operation
  */
-public void menuHidden(MenuEvent e);
+void menuHidden(MenuEvent e);
 
 /**
  * Sent when a menu is shown.
  *
  * @param e an event containing information about the menu operation
  */
-public void menuShown(MenuEvent e);
+void menuShown(MenuEvent e);
 }

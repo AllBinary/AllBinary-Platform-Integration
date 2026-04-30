@@ -28,26 +28,26 @@ public interface MIDIControl extends Control {
 
 	public static final int CONTROL_CHANGE = 176;
 	
-	public abstract boolean isBankQuerySupported();
+	abstract boolean isBankQuerySupported();
 
-	public abstract int[] getProgram(int i) throws MediaException;
+	abstract int[] getProgram(int i) throws MediaException;
 
-	public abstract int getChannelVolume(int i);
+	abstract int getChannelVolume(int i);
 
-	public abstract void setProgram(int i, int j, int k);
+	abstract void setProgram(int i, int j, int k);
 
-	public abstract void setChannelVolume(int i, int j);
+	abstract void setChannelVolume(int i, int j);
 
-	public abstract int[] getBankList(boolean flag) throws MediaException;
+	abstract int[] getBankList(boolean flag) throws MediaException;
 
-	public abstract int[] getProgramList(int i) throws MediaException;
+	abstract int[] getProgramList(int i) throws MediaException;
 
-	public abstract String getProgramName(int i, int j) throws MediaException;
+	abstract String getProgramName(int i, int j) throws MediaException;
 
-	public abstract String getKeyName(int i, int j, int k) throws MediaException;
+	abstract String getKeyName(int i, int j, int k) throws MediaException;
 
-	public abstract void shortMidiEvent(int i, int j, int k);
+	abstract void shortMidiEvent(int i, int j, int k);
 
-	public abstract int longMidiEvent(byte abyte0[], int i, int j);
+	abstract int longMidiEvent(byte abyte0[], int i, int j);
 
 }

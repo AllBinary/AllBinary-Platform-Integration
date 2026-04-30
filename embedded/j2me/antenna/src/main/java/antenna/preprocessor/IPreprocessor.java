@@ -23,14 +23,14 @@ public interface IPreprocessor
 	public static final int MODE_TARGET = 64; // Write to different directory
 	public static final int MODE_INDENT = 128; // Comment indentation
 	
-	public void addSymbols(String defines) throws PreprocessorException;
-	public void addSymbols(InputStream in) throws PreprocessorException, IOException;
-	public void addSymbols(File file) throws PreprocessorException, IOException;
-	public void clearSymbols() throws PreprocessorException;
-	public void printSymbols() throws PreprocessorException;
-	public void outputDefinesToFile(File file, String encoding) throws PreprocessorException, IOException;
-	public boolean preprocess(Strings lines, String encoding) throws PreprocessorException, IOException;
-	public void setMode(int mode);
-	public void setFile(File fileName);
-	public void setDebugLevel(String level) throws PreprocessorException;
+	void addSymbols(String defines) throws PreprocessorException;
+	void addSymbols(InputStream in) throws PreprocessorException, IOException;
+	void addSymbols(File file) throws PreprocessorException, IOException;
+	void clearSymbols() throws PreprocessorException;
+	void printSymbols() throws PreprocessorException;
+	void outputDefinesToFile(File file, String encoding) throws PreprocessorException, IOException;
+	boolean preprocess(Strings lines, String encoding) throws PreprocessorException, IOException;
+	void setMode(int mode);
+	void setFile(File fileName);
+	void setDebugLevel(String level) throws PreprocessorException;
 }

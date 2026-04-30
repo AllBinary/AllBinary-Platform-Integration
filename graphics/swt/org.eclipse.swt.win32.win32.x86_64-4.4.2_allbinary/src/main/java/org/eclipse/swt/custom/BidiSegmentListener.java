@@ -33,7 +33,7 @@ public interface BidiSegmentListener extends SWTEventListener {
  * @param event the given event
  * @see BidiSegmentEvent
  */
-public void lineGetSegments(BidiSegmentEvent event);
+void lineGetSegments(BidiSegmentEvent event);
 
 }
 

@@ -55,15 +55,15 @@ public interface ImplementationInitialization {
 	 * @param parameters
 	 *            Map of configuration options and emulatorID property.
 	 */
-	public void registerImplementation(HashMap parameters);
+	void registerImplementation(HashMap parameters);
 
 	/**
 	 * Called when MIDlet started
 	 */
-	public void notifyMIDletStart();
+	void notifyMIDletStart();
 
 	/**
 	 * Called when MIDlet exits or destroyed
 	 */
-	public void notifyMIDletDestroyed();
+	void notifyMIDletDestroyed();
 }

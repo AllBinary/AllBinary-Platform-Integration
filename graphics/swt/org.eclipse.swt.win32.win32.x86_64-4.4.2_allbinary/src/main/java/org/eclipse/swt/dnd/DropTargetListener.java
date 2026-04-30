@@ -75,7 +75,7 @@ public interface DropTargetListener extends SWTEventListener {
  * 
  * @see DropTargetEvent
  */
-public void dragEnter(DropTargetEvent event);
+void dragEnter(DropTargetEvent event);
 
 /**
  * The cursor has left the drop target boundaries OR the drop has been cancelled OR the data 
@@ -97,7 +97,7 @@ public void dragEnter(DropTargetEvent event);
  *
  * @see DropTargetEvent
  */
-public void dragLeave(DropTargetEvent event);
+void dragLeave(DropTargetEvent event);
 
 /**
  * The operation being performed has changed (usually due to the user changing the selected modifier key(s)
@@ -136,7 +136,7 @@ public void dragLeave(DropTargetEvent event);
  * 
  * @see DropTargetEvent
  */
-public void dragOperationChanged(DropTargetEvent event);
+void dragOperationChanged(DropTargetEvent event);
 
 /**
  * The cursor is moving over the drop target.
@@ -187,7 +187,7 @@ public void dragOperationChanged(DropTargetEvent event);
  * 
  * @see DropTargetEvent
  */
-public void dragOver(DropTargetEvent event);
+void dragOver(DropTargetEvent event);
 
 /**
  * The data is being dropped.  The data field contains java format of the data being dropped.  
@@ -212,7 +212,7 @@ public void dragOver(DropTargetEvent event);
  * 
  * @see DropTargetEvent
  */
-public void drop(DropTargetEvent event);
+void drop(DropTargetEvent event);
 
 /**
  * The drop is about to be performed.  
@@ -245,6 +245,6 @@ public void drop(DropTargetEvent event);
  * 
  * @see DropTargetEvent
  */
-public void dropAccept(DropTargetEvent event);
+void dropAccept(DropTargetEvent event);
 
 }

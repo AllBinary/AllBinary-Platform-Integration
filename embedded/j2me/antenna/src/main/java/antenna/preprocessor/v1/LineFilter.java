@@ -11,5 +11,5 @@ import antenna.preprocessor.PreprocessorException;
  */
 public interface LineFilter
 {
-	public String filterLine(String s) throws PreprocessorException;
+	String filterLine(String s) throws PreprocessorException;
 }

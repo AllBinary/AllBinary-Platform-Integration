@@ -41,5 +41,5 @@ public interface StatusTextListener extends SWTEventListener {
  * 
  * @since 3.0
  */
-public void changed(StatusTextEvent event);
+void changed(StatusTextEvent event);
 }

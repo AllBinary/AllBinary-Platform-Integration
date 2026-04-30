@@ -69,30 +69,30 @@ public interface TypeFactory
     /**
      * Create a local object for an &lt;int&gt; or &lt;i4&gt; tag.
      */
-    public Object createInteger(String s);
+    Object createInteger(String s);
 
     /**
      * Create a local object for a &lt;boolean&gt; tag.
      */
-    public Object createBoolean(String s);
+    Object createBoolean(String s);
 
     /**
      * Create a local object for a &lt;double&gt; tag.
      */
-    public Object createDouble(String s);
+    Object createDouble(String s);
 
     /**
      * Create a local object for a &lt;dateTime.iso8601&gt; tag.
      */
-    public Object createDate(String s);
+    Object createDate(String s);
 
     /**
      * Create a local object for a &lt;base64&gt; tag.
      */
-    public Object createBase64(String s);
+    Object createBase64(String s);
 
     /**
      * Create a local object for a &lt;string&gt; tag.
      */
-    public Object createString(String s);
+    Object createString(String s);
 }

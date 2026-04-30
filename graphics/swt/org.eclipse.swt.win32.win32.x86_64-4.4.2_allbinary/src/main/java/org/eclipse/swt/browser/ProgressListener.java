@@ -43,7 +43,7 @@ public interface ProgressListener extends SWTEventListener {
  * 
  * @since 3.0
  */   
-public void changed(ProgressEvent event);
+void changed(ProgressEvent event);
 	
 /**
  * This method is called when the current location has been completely loaded.
@@ -59,5 +59,5 @@ public void changed(ProgressEvent event);
  * 
  * @since 3.0
  */
-public void completed(ProgressEvent event);
+void completed(ProgressEvent event);
 }

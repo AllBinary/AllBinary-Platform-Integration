@@ -35,5 +35,5 @@ public interface LineBackgroundListener extends SWTEventListener {
  * @param event the given event
  * @see LineBackgroundEvent
  */
-public void lineGetBackground(LineBackgroundEvent event);
+void lineGetBackground(LineBackgroundEvent event);
 }

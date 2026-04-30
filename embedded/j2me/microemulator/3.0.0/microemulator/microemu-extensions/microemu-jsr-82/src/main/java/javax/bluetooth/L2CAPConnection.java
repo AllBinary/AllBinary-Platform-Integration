@@ -68,7 +68,7 @@ public interface L2CAPConnection extends Connection {
 	 *
 	 * @exception IOException if the connection is closed
 	 */
-	public int getTransmitMTU() throws IOException;
+	int getTransmitMTU() throws IOException;
 
 	/**
 	 * Returns the ReceiveMTU that the connection supports. If the
@@ -83,7 +83,7 @@ public interface L2CAPConnection extends Connection {
 	 * @exception IOException if the connection is closed
 	 *
 	 */
-	public int getReceiveMTU() throws IOException;
+	int getReceiveMTU() throws IOException;
 
 	/**
 	 * Requests that data be sent to the remote device. The TransmitMTU
@@ -101,7 +101,7 @@ public interface L2CAPConnection extends Connection {
 	 * @exception NullPointerException if the <code>data</code> is
 	 * <code>null</code>
 	 */
-	public void send(byte[] data) throws IOException;
+	void send(byte[] data) throws IOException;
 
 	/**
 	 * Reads a packet of data. The amount of data received in
@@ -129,7 +129,7 @@ public interface L2CAPConnection extends Connection {
 	 *
 	 * @exception NullPointerException if <code>inBuf</code> is <code>null</code>
 	 */
-	public int receive(byte[] inBuf) throws IOException;
+	int receive(byte[] inBuf) throws IOException;
 
 	/**
 	 * Determines if there is a packet that can be read via a call to
@@ -144,6 +144,6 @@ public interface L2CAPConnection extends Connection {
 	 * @exception IOException if the connection is closed
 	 *
 	 */
-	public boolean ready() throws IOException;
+	boolean ready() throws IOException;
 
 }

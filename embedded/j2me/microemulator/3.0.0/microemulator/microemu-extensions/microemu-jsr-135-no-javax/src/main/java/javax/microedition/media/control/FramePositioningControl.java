@@ -23,11 +23,11 @@ import javax.microedition.media.Control;
 
 public interface FramePositioningControl extends Control {
 
-	public abstract int seek(int i);
+	abstract int seek(int i);
 
-	public abstract int skip(int i);
+	abstract int skip(int i);
 
-	public abstract long mapFrameToTime(int i);
+	abstract long mapFrameToTime(int i);
 
-	public abstract int mapTimeToFrame(long l);
+	abstract int mapTimeToFrame(long l);
 }

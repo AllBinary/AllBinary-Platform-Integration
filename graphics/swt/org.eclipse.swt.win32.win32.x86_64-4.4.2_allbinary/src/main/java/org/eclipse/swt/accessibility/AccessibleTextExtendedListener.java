@@ -35,7 +35,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the text selection was added</li>
 	 * </ul>
 	 */
-	public void addSelection(AccessibleTextEvent e);
+	void addSelection(AccessibleTextEvent e);
 
 	/**
 	 * Returns the total number of characters in the text.
@@ -44,7 +44,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] count - the total number of characters</li>
 	 * </ul>
 	 */
-	public void getCharacterCount(AccessibleTextEvent e);
+	void getCharacterCount(AccessibleTextEvent e);
 
 	/**
 	 * Returns the number of links and link groups contained within this hypertext
@@ -55,7 +55,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * 		or 0 if there are none</li>
 	 * </ul>
 	 */
-	public void getHyperlinkCount(AccessibleTextEvent e);
+	void getHyperlinkCount(AccessibleTextEvent e);
 
 	/**
 	 * Returns the specified hyperlink.
@@ -65,7 +65,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] accessible - the specified hyperlink object, or null if the index is invalid</li>
 	 * </ul>
 	 */
-	public void getHyperlink(AccessibleTextEvent e);
+	void getHyperlink(AccessibleTextEvent e);
 
 	/**
 	 * Returns the index of the hyperlink that is associated with this character offset.
@@ -78,7 +78,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * 		character offset, or -1 if the offset is not in a link</li>
 	 * </ul>
 	 */
-	public void getHyperlinkIndex(AccessibleTextEvent e);
+	void getHyperlinkIndex(AccessibleTextEvent e);
 
 	/**
 	 * Returns the offset of the character under the specified point.
@@ -92,7 +92,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * 		or -1 if the point is invalid or there is no character under the point</li>
 	 * </ul>
 	 */
-	public void getOffsetAtPoint(AccessibleTextEvent e);
+	void getOffsetAtPoint(AccessibleTextEvent e);
 
 	/**
 	 * Returns the text range(s) contained within the given bounding box.
@@ -111,7 +111,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * 		if the text range is clipped by the bounding box</li>
 	 * </ul>
 	 */
-	public void getRanges(AccessibleTextEvent e);
+	void getRanges(AccessibleTextEvent e);
 
 	/**
 	 * Returns the character offsets of the specified text selection.
@@ -122,7 +122,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] end - the 0 based offset after the last selected character</li>
 	 * </ul>
 	 */
-	public void getSelection(AccessibleTextEvent e);
+	void getSelection(AccessibleTextEvent e);
 
 	/**
 	 * Returns the number of active non-contiguous selections.
@@ -131,7 +131,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] count - the number of active non-contiguous selections</li>
 	 * </ul>
 	 */
-	public void getSelectionCount(AccessibleTextEvent e);
+	void getSelectionCount(AccessibleTextEvent e);
 
 	/**
 	 * Returns a substring and its range for the given range, count and boundary type.
@@ -173,7 +173,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * 		when no appropriate substring is found, or if the type is invalid.</li>
 	 * </ul>
 	 */
-	public void getText(AccessibleTextEvent e);
+	void getText(AccessibleTextEvent e);
 
 	/**
 	 * Returns the bounding box(es) of the specified text range in display coordinates.
@@ -203,7 +203,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * 		partial lines</li>
 	 * </ul>
 	 */
-	public void getTextBounds(AccessibleTextEvent e);
+	void getTextBounds(AccessibleTextEvent e);
 
 	/**
 	 * Returns the visible text range(s).
@@ -218,7 +218,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * 		if the visible text range is clipped</li>
 	 * </ul>
 	 */
-	public void getVisibleRanges(AccessibleTextEvent e);
+	void getVisibleRanges(AccessibleTextEvent e);
 
 	/**
 	 * Deselects a range of text.
@@ -228,7 +228,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the range of text was deselected</li>
 	 * </ul>
 	 */
-	public void removeSelection(AccessibleTextEvent e);
+	void removeSelection(AccessibleTextEvent e);
 
 	/**
 	 * Scrolls a specific part of a substring according to the scroll type.
@@ -252,7 +252,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the text was scrolled</li>
 	 * </ul>
 	 */
-	public void scrollText(AccessibleTextEvent e);
+	void scrollText(AccessibleTextEvent e);
 
 	/**
 	 * Sets the position of the caret.
@@ -277,7 +277,7 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the caret position was set</li>
 	 * </ul>
 	 */
-	public void setCaretOffset(AccessibleTextEvent e);
+	void setCaretOffset(AccessibleTextEvent e);
 
 	/**
 	 * Changes the bounds of an existing selection.
@@ -289,5 +289,5 @@ public interface AccessibleTextExtendedListener extends AccessibleTextListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the selection was set</li>
 	 * </ul>
 	 */
-	public void setSelection(AccessibleTextEvent e);
+	void setSelection(AccessibleTextEvent e);
 }

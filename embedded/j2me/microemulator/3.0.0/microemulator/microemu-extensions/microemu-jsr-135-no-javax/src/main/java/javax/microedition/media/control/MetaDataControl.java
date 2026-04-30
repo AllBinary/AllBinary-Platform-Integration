@@ -31,8 +31,8 @@ public interface MetaDataControl extends Control {
 
 	public static final String TITLE_KEY = "title";
 
-	public abstract String[] getKeys();
+	abstract String[] getKeys();
 
-	public abstract String getKeyValue(String s);
+	abstract String getKeyValue(String s);
 
 }

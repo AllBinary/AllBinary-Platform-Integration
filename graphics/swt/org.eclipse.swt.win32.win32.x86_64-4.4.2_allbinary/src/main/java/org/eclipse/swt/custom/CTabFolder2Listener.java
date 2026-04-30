@@ -42,7 +42,7 @@ public interface CTabFolder2Listener extends SWTEventListener {
  * 
  * @param event an event indicating the item being closed
  */
-public void close(CTabFolderEvent event);
+void close(CTabFolderEvent event);
 
 /**
  * Sent when the user clicks on the minimize button of a CTabFolder.
@@ -56,7 +56,7 @@ public void close(CTabFolderEvent event);
  * @see CTabFolder#setMinimized(boolean)
  * @see CTabFolder#setMinimizeVisible(boolean)
  */
-public void minimize(CTabFolderEvent event);
+void minimize(CTabFolderEvent event);
 
 /**
  * Sent when the user clicks on the maximize button of a CTabFolder.
@@ -70,7 +70,7 @@ public void minimize(CTabFolderEvent event);
  * @see CTabFolder#setMaximized(boolean)
  * @see CTabFolder#setMaximizeVisible(boolean)
  */
-public void maximize(CTabFolderEvent event);
+void maximize(CTabFolderEvent event);
 
 /**
  * Sent when the user clicks on the restore button of a CTabFolder.
@@ -92,7 +92,7 @@ public void maximize(CTabFolderEvent event);
  * @see CTabFolder#setMaximized(boolean)
  * @see CTabFolder#setMaximizeVisible(boolean)
  */
-public void restore(CTabFolderEvent event);
+void restore(CTabFolderEvent event);
 
 /**
  * Sent when the user clicks on the chevron button of the CTabFolder.
@@ -108,5 +108,5 @@ public void restore(CTabFolderEvent event);
  * 
  * @see CTabFolder#setSelection(CTabItem)
  */
-public void showList(CTabFolderEvent event);
+void showList(CTabFolderEvent event);
 }

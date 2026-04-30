@@ -32,6 +32,6 @@ public interface FileSystemListener {
 
 	public static final int ROOT_REMOVED = 1;
 
-	public abstract void rootChanged(int i, String s);
+	abstract void rootChanged(int i, String s);
 
 }

@@ -41,7 +41,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the column was deselected.</li>
 	 * </ul>
 	 */
-	public void deselectColumn(AccessibleTableEvent e);
+	void deselectColumn(AccessibleTableEvent e);
 
 	/**
 	 * Deselects one row, leaving other selected rows selected (if any).
@@ -51,7 +51,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the row was deselected.</li>
 	 * </ul>
 	 */
-	public void deselectRow(AccessibleTableEvent e);
+	void deselectRow(AccessibleTableEvent e);
 
 	/**
 	 * Returns the caption for the table.
@@ -60,7 +60,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] accessible - the caption for the table, or null if the table does not have a caption</li>
 	 * </ul>
 	 */
-	public void getCaption(AccessibleTableEvent e);
+	void getCaption(AccessibleTableEvent e);
 
 	/**
 	 * Returns the accessible object at the specified row and column in the table.
@@ -72,7 +72,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if the row or column index are not valid</li>
 	 * </ul>
 	 */
-	public void getCell(AccessibleTableEvent e);
+	void getCell(AccessibleTableEvent e);
 
 	/**
 	 * Returns the accessible object for the specified column in the table.
@@ -83,7 +83,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if the column index is not valid</li>
 	 * </ul>
 	 */
-	public void getColumn(AccessibleTableEvent e);
+	void getColumn(AccessibleTableEvent e);
 
 	/**
 	 * Returns the total number of columns in the table.
@@ -92,7 +92,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] count - the number of columns in the table</li>
 	 * </ul>
 	 */
-	public void getColumnCount(AccessibleTableEvent e);
+	void getColumnCount(AccessibleTableEvent e);
 
 	/**
 	 * Returns the description text of the specified column in the table.
@@ -103,7 +103,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if the column does not have a description</li>
 	 * </ul>
 	 */
-	public void getColumnDescription(AccessibleTableEvent e);
+	void getColumnDescription(AccessibleTableEvent e);
 
 	/**
 	 * Returns the accessible object for the column header.
@@ -113,7 +113,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if there is no column header</li>
 	 * </ul>
 	 */
-	public void getColumnHeader(AccessibleTableEvent e);
+	void getColumnHeader(AccessibleTableEvent e);
 
 	/**
 	 * Returns the column header cells as an array of accessible objects.
@@ -123,7 +123,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if there are no column header cells</li>
 	 * </ul>
 	 */
-	public void getColumnHeaderCells(AccessibleTableEvent e);
+	void getColumnHeaderCells(AccessibleTableEvent e);
 
 	/**
 	 * Returns the columns as an array of accessible objects.
@@ -133,7 +133,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if there are no columns</li>
 	 * </ul>
 	 */
-	public void getColumns(AccessibleTableEvent e);
+	void getColumns(AccessibleTableEvent e);
 
 	/**
 	 * Returns the accessible object for the specified row in the table.
@@ -144,7 +144,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if the row index is not valid</li>
 	 * </ul>
 	 */
-	public void getRow(AccessibleTableEvent e);
+	void getRow(AccessibleTableEvent e);
 
 	/**
 	 * Returns the total number of rows in the table.
@@ -153,7 +153,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] count - the number of rows in the table</li>
 	 * </ul>
 	 */
-	public void getRowCount(AccessibleTableEvent e);
+	void getRowCount(AccessibleTableEvent e);
 
 	/**
 	 * Returns the description text of the specified row in the table.
@@ -164,7 +164,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if the row does not have a description</li>
 	 * </ul>
 	 */
-	public void getRowDescription(AccessibleTableEvent e);
+	void getRowDescription(AccessibleTableEvent e);
 
 	/**
 	 * Returns the accessible object for the row header.
@@ -174,7 +174,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if there is no row header</li>
 	 * </ul>
 	 */
-	public void getRowHeader(AccessibleTableEvent e);
+	void getRowHeader(AccessibleTableEvent e);
 
 	/**
 	 * Returns the row header cells as an array of accessible objects.
@@ -184,7 +184,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if there are no row header cells</li>
 	 * </ul>
 	 */
-	public void getRowHeaderCells(AccessibleTableEvent e);
+	void getRowHeaderCells(AccessibleTableEvent e);
 
 	/**
 	 * Returns the rows as an array of accessible objects.
@@ -194,7 +194,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if there are no rows</li>
 	 * </ul>
 	 */
-	public void getRows(AccessibleTableEvent e);
+	void getRows(AccessibleTableEvent e);
 
 	/**
 	 * Returns the number of selected cells.
@@ -203,7 +203,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] count -  the number of cells currently selected</li>
 	 * </ul>
 	 */
-	public void getSelectedCellCount(AccessibleTableEvent e);
+	void getSelectedCellCount(AccessibleTableEvent e);
 
 	/**
 	 * Returns the currently selected cells.
@@ -212,7 +212,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] accessibles - array containing the selected accessible cells</li>
 	 * </ul>
 	 */
-	public void getSelectedCells(AccessibleTableEvent e);
+	void getSelectedCells(AccessibleTableEvent e);
 
 	/**
 	 * Returns the number of selected columns.
@@ -221,7 +221,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] count - the number of columns currently selected</li>
 	 * </ul>
 	 */
-	public void getSelectedColumnCount(AccessibleTableEvent e);
+	void getSelectedColumnCount(AccessibleTableEvent e);
 
 	/**
 	 * Returns the column indexes that are currently selected.
@@ -230,7 +230,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] selected - an array of 0 based column indexes of selected columns</li>
 	 * </ul>
 	 */
-	public void getSelectedColumns(AccessibleTableEvent e);
+	void getSelectedColumns(AccessibleTableEvent e);
 
 	/**
 	 * Returns the number of selected rows.
@@ -239,7 +239,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] count - the number of rows currently selected</li>
 	 * </ul>
 	 */
-	public void getSelectedRowCount(AccessibleTableEvent e);
+	void getSelectedRowCount(AccessibleTableEvent e);
 
 	/**
 	 * Returns the row indexes that are currently selected.
@@ -248,7 +248,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] selected - an array of 0 based row indexes of selected rows</li>
 	 * </ul>
 	 */
-	public void getSelectedRows(AccessibleTableEvent e);
+	void getSelectedRows(AccessibleTableEvent e);
 
 	/**
 	 * Returns the summary description of the table.
@@ -258,7 +258,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if the table does not have a summary</li>
 	 * </ul>
 	 */
-	public void getSummary(AccessibleTableEvent e);
+	void getSummary(AccessibleTableEvent e);
 
 	/**
 	 * Returns the visible columns as an array of accessible objects.
@@ -268,7 +268,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if there are no visible columns</li>
 	 * </ul>
 	 */
-	public void getVisibleColumns(AccessibleTableEvent e);
+	void getVisibleColumns(AccessibleTableEvent e);
 
 	/**
 	 * Returns the visible rows as an array of accessible objects.
@@ -278,7 +278,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * 		or null if there are no visible rows</li>
 	 * </ul>
 	 */
-	public void getVisibleRows(AccessibleTableEvent e);
+	void getVisibleRows(AccessibleTableEvent e);
 
 	/**
 	 * Returns a boolean value indicating whether the specified column is
@@ -289,7 +289,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] isSelected - true if the specified column is selected completely, and false otherwise</li>
 	 * </ul>
 	 */
-	public void isColumnSelected(AccessibleTableEvent e);
+	void isColumnSelected(AccessibleTableEvent e);
 
 	/**
 	 * Returns a boolean value indicating whether the specified row is
@@ -300,7 +300,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] isSelected - true if the specified row is selected completely, and false otherwise</li>
 	 * </ul>
 	 */
-	public void isRowSelected(AccessibleTableEvent e);
+	void isRowSelected(AccessibleTableEvent e);
 
 	/**
 	 * Selects a column.
@@ -310,7 +310,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the column was selected.</li>
 	 * </ul>
 	 */
-	public void selectColumn(AccessibleTableEvent e);
+	void selectColumn(AccessibleTableEvent e);
 
 	/**
 	 * Selects a row.
@@ -320,7 +320,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the row was selected.</li>
 	 * </ul>
 	 */
-	public void selectRow(AccessibleTableEvent e);
+	void selectRow(AccessibleTableEvent e);
 
 	/**
 	 * Selects a column and deselects all previously selected columns.
@@ -330,7 +330,7 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the column was selected.</li>
 	 * </ul>
 	 */
-	public void setSelectedColumn(AccessibleTableEvent e);
+	void setSelectedColumn(AccessibleTableEvent e);
 
 	/**
 	 * Selects a row and deselects all previously selected rows.
@@ -340,5 +340,5 @@ public interface AccessibleTableListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the row was selected.</li>
 	 * </ul>
 	 */
-	public void setSelectedRow(AccessibleTableEvent e);
+	void setSelectedRow(AccessibleTableEvent e);
 }

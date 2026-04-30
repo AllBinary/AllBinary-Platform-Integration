@@ -28,7 +28,7 @@ package org.microemu.midp.examples.simpledemo;
 
 public interface HasRunnable {
 
-	public void startRunnable();
+	void startRunnable();
 	
-	public void stopRunnable();
+	void stopRunnable();
 }

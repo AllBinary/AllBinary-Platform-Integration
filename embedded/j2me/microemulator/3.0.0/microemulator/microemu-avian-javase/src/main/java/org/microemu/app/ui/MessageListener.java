@@ -34,6 +34,6 @@ public interface MessageListener {
 
     public static final int WARN = 2;
     
-	public void showMessage(int level, String title, String text, Throwable throwable);
+	void showMessage(int level, String title, String text, Throwable throwable);
 	
 }

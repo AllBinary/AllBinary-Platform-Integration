@@ -33,5 +33,5 @@ public interface OleListener {
  *
  * @param event the event which occurred
  */
-public void handleEvent(OleEvent event);
+void handleEvent(OleEvent event);
 }

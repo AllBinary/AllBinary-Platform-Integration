@@ -45,6 +45,6 @@ public interface PlayerListener
 	
 	public static final String CLOSED = "closed";
 	
-	public void playerUpdate(Player player, String event, Object eventData);
+	void playerUpdate(Player player, String event, Object eventData);
 	
 }

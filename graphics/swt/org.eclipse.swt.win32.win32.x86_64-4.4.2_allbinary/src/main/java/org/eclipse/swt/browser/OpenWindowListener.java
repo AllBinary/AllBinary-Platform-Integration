@@ -56,5 +56,5 @@ public interface OpenWindowListener extends SWTEventListener {
  * 
  * @since 3.0
  */ 
-public void open(WindowEvent event);
+void open(WindowEvent event);
 }

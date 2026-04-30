@@ -38,7 +38,7 @@ public interface MouseTrackListener extends SWTEventListener {
  *
  * @param e an event containing information about the mouse enter
  */
-public void mouseEnter(MouseEvent e);
+void mouseEnter(MouseEvent e);
 
 /**
  * Sent when the mouse pointer passes out of the area of
@@ -46,7 +46,7 @@ public void mouseEnter(MouseEvent e);
  *
  * @param e an event containing information about the mouse exit
  */
-public void mouseExit(MouseEvent e);
+void mouseExit(MouseEvent e);
 
 /**
  * Sent when the mouse pointer hovers (that is, stops moving
@@ -55,5 +55,5 @@ public void mouseExit(MouseEvent e);
  *
  * @param e an event containing information about the hover
  */
-public void mouseHover(MouseEvent e);
+void mouseHover(MouseEvent e);
 }

@@ -52,5 +52,5 @@ public interface AuthenticationListener extends SWTEventListener {
  * either supply authentication credentials, defer credential input to
  * an authentication prompter, or cancel an authentication challenge.
  */
-public void authenticate(AuthenticationEvent event);
+void authenticate(AuthenticationEvent event);
 }

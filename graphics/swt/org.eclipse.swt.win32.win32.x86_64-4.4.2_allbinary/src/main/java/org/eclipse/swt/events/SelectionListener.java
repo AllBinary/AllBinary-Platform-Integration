@@ -43,7 +43,7 @@ public interface SelectionListener extends SWTEventListener {
  *
  * @param e an event containing information about the selection
  */
-public void widgetSelected(SelectionEvent e);
+void widgetSelected(SelectionEvent e);
 
 /**
  * Sent when default selection occurs in the control.
@@ -58,5 +58,5 @@ public void widgetSelected(SelectionEvent e);
  *
  * @param e an event containing information about the default selection
  */
-public void widgetDefaultSelected(SelectionEvent e);
+void widgetDefaultSelected(SelectionEvent e);
 }

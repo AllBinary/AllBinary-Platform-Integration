@@ -28,14 +28,14 @@ package org.microemu.device;
 public interface InputMethodListener
 {
 
-	public void caretPositionChanged(InputMethodEvent event);
+	void caretPositionChanged(InputMethodEvent event);
 
-	public void inputMethodTextChanged(InputMethodEvent event);
+	void inputMethodTextChanged(InputMethodEvent event);
 
-	public int getCaretPosition();
+	int getCaretPosition();
 	
-	public String getText();
+	String getText();
     
-    public int getConstraints();
+    int getConstraints();
 	
 }

@@ -25,28 +25,28 @@ public interface VideoControl extends GUIControl {
 
 	public static final int USE_DIRECT_VIDEO = 1;
 
-	public abstract Object initDisplayMode(int i, Object obj);
+	abstract Object initDisplayMode(int i, Object obj);
 
-	public abstract void setDisplayLocation(int i, int j);
+	abstract void setDisplayLocation(int i, int j);
 
-	public abstract int getDisplayX();
+	abstract int getDisplayX();
 
-	public abstract int getDisplayY();
+	abstract int getDisplayY();
 
-	public abstract void setVisible(boolean flag);
+	abstract void setVisible(boolean flag);
 
-	public abstract void setDisplaySize(int i, int j) throws MediaException;
+	abstract void setDisplaySize(int i, int j) throws MediaException;
 
-	public abstract void setDisplayFullScreen(boolean flag) throws MediaException;
+	abstract void setDisplayFullScreen(boolean flag) throws MediaException;
 
-	public abstract int getSourceWidth();
+	abstract int getSourceWidth();
 
-	public abstract int getSourceHeight();
+	abstract int getSourceHeight();
 
-	public abstract int getDisplayWidth();
+	abstract int getDisplayWidth();
 
-	public abstract int getDisplayHeight();
+	abstract int getDisplayHeight();
 
-	public abstract byte[] getSnapshot(String s) throws MediaException;
+	abstract byte[] getSnapshot(String s) throws MediaException;
 
 }

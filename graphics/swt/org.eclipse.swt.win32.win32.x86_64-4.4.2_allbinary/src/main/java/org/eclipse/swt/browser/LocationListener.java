@@ -41,7 +41,7 @@ public interface LocationListener extends SWTEventListener {
  * 
  * @since 3.0
  */ 
-public void changing(LocationEvent event);
+void changing(LocationEvent event);
 
 /**
  * This method is called when the current location is changed.
@@ -60,6 +60,6 @@ public void changing(LocationEvent event);
  * 
  * @since 3.0
  */ 
-public void changed(LocationEvent event);
+void changed(LocationEvent event);
 
 }

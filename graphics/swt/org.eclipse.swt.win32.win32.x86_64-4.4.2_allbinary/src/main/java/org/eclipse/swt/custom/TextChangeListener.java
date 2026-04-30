@@ -38,7 +38,7 @@ public interface TextChangeListener extends SWTEventListener {
  * 	to be set by the sender.
  * @see TextChangingEvent
  */
-public void textChanging(TextChangingEvent event);
+void textChanging(TextChangingEvent event);
 /**
  * This method is called when the content has changed.
  * Callers need to have called the textChanging method prior to 
@@ -47,7 +47,7 @@ public void textChanging(TextChangingEvent event);
  * 
  * @param event the text changed event
  */
-public void textChanged(TextChangedEvent event);
+void textChanged(TextChangedEvent event);
 /**
  * This method is called instead of the textChanging/textChanged 
  * combination when the entire old content has been replaced 
@@ -55,7 +55,7 @@ public void textChanged(TextChangedEvent event);
  * 
  * @param event the text changed event
  */
-public void textSet(TextChangedEvent event);
+void textSet(TextChangedEvent event);
 }
 
 

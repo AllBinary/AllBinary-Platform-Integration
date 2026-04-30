@@ -49,38 +49,38 @@ public interface DirectGraphics
 	public static final int TYPE_INT_8888_ARGB = 8888;
 
 
-	public void drawImage(Image image, int x, int y, int anchor, int manipulation);
+	void drawImage(Image image, int x, int y, int anchor, int manipulation);
     
-	public void drawPixels(byte pixels[], byte transparencyMask[], int offset, int scanlength, int x, int y, int width,
+	void drawPixels(byte pixels[], byte transparencyMask[], int offset, int scanlength, int x, int y, int width,
 			int height, int manipulation, int format);
     
-	public void drawPixels(int pixels[], boolean transparency, int offset, int scanlength, int x, int y, int width,
+	void drawPixels(int pixels[], boolean transparency, int offset, int scanlength, int x, int y, int width,
 			int height, int manipulation, int format);
     
-	public void drawPixels(short pixels[], boolean transparency, int offset, int scanlength, int x, int y, int width,
+	void drawPixels(short pixels[], boolean transparency, int offset, int scanlength, int x, int y, int width,
 			int height, int manipulation, int format);
     
-	public void drawPolygon(int xPoints[], int xOffset, int yPoints[], int yOffset, int nPoints, int argbColor);
+	void drawPolygon(int xPoints[], int xOffset, int yPoints[], int yOffset, int nPoints, int argbColor);
     
-	public void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, int argbColor);
+	void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, int argbColor);
     
-	public void fillPolygon(int xPoints[], int xOffset, int yPoints[], int yOffset, int nPoints, int argbColor);
+	void fillPolygon(int xPoints[], int xOffset, int yPoints[], int yOffset, int nPoints, int argbColor);
     
-	public void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, int argbColor);
+	void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, int argbColor);
     
-	public int getAlphaComponent();
+	int getAlphaComponent();
     
-	public int getNativePixelFormat();
+	int getNativePixelFormat();
     
-	public void getPixels(byte pixels[], byte transparencyMask[], int offset, int scanlength, int x, int y, int width,
+	void getPixels(byte pixels[], byte transparencyMask[], int offset, int scanlength, int x, int y, int width,
 			int height, int format);
     
-	public void getPixels(int pixels[], int offset, int scanlength, int x, int y, int width,
+	void getPixels(int pixels[], int offset, int scanlength, int x, int y, int width,
 			int height, int format);
     
-	public void getPixels(short pixels[], int offset, int scanlength, int x, int y, int width,
+	void getPixels(short pixels[], int offset, int scanlength, int x, int y, int width,
 			int height, int format);
     
-	public void setARGBColor(int i);
+	void setARGBColor(int i);
         
 }

@@ -594,7 +594,7 @@ public class IPhoneDisplayGraphics extends javax.microedition.lcdui.Graphics {
 	}
 
 	interface Renderable {
-		public abstract void render();
+		abstract void render();
 
 	}
 }

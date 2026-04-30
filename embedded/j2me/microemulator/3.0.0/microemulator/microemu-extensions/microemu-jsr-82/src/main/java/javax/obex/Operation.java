@@ -117,7 +117,7 @@ public interface Operation extends ContentConnection {
 	 *                if the transaction has already ended or if an OBEX server
 	 *                calls this method
 	 */
-	public void abort() throws IOException;
+	void abort() throws IOException;
 
 	/**
 	 * Returns the headers that have been received during the operation.
@@ -129,7 +129,7 @@ public interface Operation extends ContentConnection {
 	 * @exception IOException
 	 *                if this <code>Operation</code> has been closed
 	 */
-	public HeaderSet getReceivedHeaders() throws IOException;
+	HeaderSet getReceivedHeaders() throws IOException;
 
 	/**
 	 * Specifies the headers that should be sent in the next OBEX message that
@@ -151,7 +151,7 @@ public interface Operation extends ContentConnection {
 	 * @exception NullPointerException
 	 *                if <code>headers</code> if <code>null</code>
 	 */
-	public void sendHeaders(HeaderSet headers) throws IOException;
+	void sendHeaders(HeaderSet headers) throws IOException;
 
 	/**
 	 * Returns the response code received from the server. Response codes are
@@ -165,5 +165,5 @@ public interface Operation extends ContentConnection {
 	 *                if an error occurred in the transport layer during the
 	 *                transaction; if this object was created by an OBEX server
 	 */
-	public int getResponseCode() throws IOException;
+	int getResponseCode() throws IOException;
 }

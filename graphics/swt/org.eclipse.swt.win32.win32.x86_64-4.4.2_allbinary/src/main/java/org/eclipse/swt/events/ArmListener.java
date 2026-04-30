@@ -34,5 +34,5 @@ public interface ArmListener extends SWTEventListener {
  *
  * @param e an event containing information about the arm
  */
-public void widgetArmed(ArmEvent e);
+void widgetArmed(ArmEvent e);
 }

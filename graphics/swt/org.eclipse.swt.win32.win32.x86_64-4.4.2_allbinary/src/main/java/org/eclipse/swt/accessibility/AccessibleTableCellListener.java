@@ -39,7 +39,7 @@ public interface AccessibleTableCellListener extends SWTEventListener {
 	 * <li>[out] count - the 1 based number of columns spanned by the specified cell
 	 * </ul>
 	 */
-	public void getColumnSpan(AccessibleTableCellEvent e);
+	void getColumnSpan(AccessibleTableCellEvent e);
 
 	/**
 	 * Returns the column headers as an array of cell accessibles.
@@ -49,7 +49,7 @@ public interface AccessibleTableCellListener extends SWTEventListener {
 	 * <li>[out] accessibles - an array of cell accessibles, or null if there are no column headers
 	 * </ul>
 	 */
-	public void getColumnHeaders(AccessibleTableCellEvent e);
+	void getColumnHeaders(AccessibleTableCellEvent e);
 
 	/**
 	 * Translates this cell accessible into the corresponding column index.
@@ -59,7 +59,7 @@ public interface AccessibleTableCellListener extends SWTEventListener {
 	 * 		or the index of the first column if the cell spans multiple columns
 	 * </ul>
 	 */
-	public void getColumnIndex(AccessibleTableCellEvent e);
+	void getColumnIndex(AccessibleTableCellEvent e);
 
 	/**
 	 * Returns the number of rows occupied by this cell accessible.
@@ -72,7 +72,7 @@ public interface AccessibleTableCellListener extends SWTEventListener {
 	 * <li>[out] count - the 1 based number of rows spanned by the specified cell
 	 * </ul>
 	 */
-	public void getRowSpan(AccessibleTableCellEvent e);
+	void getRowSpan(AccessibleTableCellEvent e);
 
 	/**
 	 * Returns the row headers as an array of cell accessibles.
@@ -82,7 +82,7 @@ public interface AccessibleTableCellListener extends SWTEventListener {
 	 * <li>[out] accessibles - an array of cell accessibles, or null if there are no row headers
 	 * </ul>
 	 */
-	public void getRowHeaders(AccessibleTableCellEvent e);
+	void getRowHeaders(AccessibleTableCellEvent e);
 
 	/**
 	 * Translates this cell accessible into the corresponding row index.
@@ -92,7 +92,7 @@ public interface AccessibleTableCellListener extends SWTEventListener {
 	 * 		or the index of the first row if the cell spans multiple rows
 	 * </ul>
 	 */
-	public void getRowIndex(AccessibleTableCellEvent e);
+	void getRowIndex(AccessibleTableCellEvent e);
 
 	/**
 	 * Returns the accessible for the table containing this cell.
@@ -101,7 +101,7 @@ public interface AccessibleTableCellListener extends SWTEventListener {
 	 * <li>[out] accessible - the accessible for the containing table
 	 * </ul>
 	 */
-	public void getTable(AccessibleTableCellEvent e);
+	void getTable(AccessibleTableCellEvent e);
 
 	/**
 	 * Returns a boolean value indicating whether this cell is selected.
@@ -110,5 +110,5 @@ public interface AccessibleTableCellListener extends SWTEventListener {
 	 * <li>[out] isSelected - true if the specified cell is selected and false otherwise
 	 * </ul>
 	 */
-	public void isSelected(AccessibleTableCellEvent e);
+	void isSelected(AccessibleTableCellEvent e);
 }

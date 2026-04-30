@@ -39,34 +39,34 @@ public interface Player extends Controllable
 	
 	public static final long TIME_UNKNOWN = -1;
 	
-	public void realize() throws MediaException;
+	void realize() throws MediaException;
 	
-	public void prefetch() throws MediaException;
+	void prefetch() throws MediaException;
 	
-	public void start() throws MediaException;
+	void start() throws MediaException;
 	
-	public void stop() throws MediaException;
+	void stop() throws MediaException;
 	
-	public void deallocate();
+	void deallocate();
 	
-	public void close();
+	void close();
 	
-	public long setMediaTime(long now) throws MediaException;
+	long setMediaTime(long now) throws MediaException;
 	
-	public long getMediaTime();
+	long getMediaTime();
 	
-	public int getState();
+	int getState();
 	
-	public long getDuration();
+	long getDuration();
 	
-	public String getContentType();
+	String getContentType();
 	
-	public void setLoopCount(int count);
+	void setLoopCount(int count);
 	
-	public void addPlayerListener(PlayerListener playerListener);
+	void addPlayerListener(PlayerListener playerListener);
 	
-	public void removePlayerListener(PlayerListener playerListener);
+	void removePlayerListener(PlayerListener playerListener);
 	
-        public TimeBase getTimeBase();
-        public void setTimeBase(TimeBase timeBase) throws MediaException;
+        TimeBase getTimeBase();
+        void setTimeBase(TimeBase timeBase) throws MediaException;
 }

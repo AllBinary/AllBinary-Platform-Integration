@@ -36,12 +36,12 @@ public interface TreeListener extends SWTEventListener {
  *
  * @param e an event containing information about the tree operation
  */
-public void treeCollapsed(TreeEvent e);
+void treeCollapsed(TreeEvent e);
 
 /**
  * Sent when a tree branch is expanded.
  *
  * @param e an event containing information about the tree operation
  */
-public void treeExpanded(TreeEvent e);
+void treeExpanded(TreeEvent e);
 }

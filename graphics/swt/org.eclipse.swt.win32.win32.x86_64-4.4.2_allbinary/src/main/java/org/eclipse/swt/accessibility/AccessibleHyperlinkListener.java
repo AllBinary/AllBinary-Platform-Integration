@@ -42,7 +42,7 @@ public interface AccessibleHyperlinkListener extends SWTEventListener {
 	 * 		the accessible for the image.</li>
 	 * </ul>
 	 */
-	public void getAnchor(AccessibleHyperlinkEvent e);
+	void getAnchor(AccessibleHyperlinkEvent e);
 
 	/**
 	 * Returns the target of the link at the specified index.
@@ -57,7 +57,7 @@ public interface AccessibleHyperlinkListener extends SWTEventListener {
 	 * 		object to be activated when the link is activated.</li>
 	 * </ul>
 	 */
-	public void getAnchorTarget(AccessibleHyperlinkEvent e);
+	void getAnchorTarget(AccessibleHyperlinkEvent e);
 
 	/**
 	 * Returns the 0 based character offset at which the textual representation of the hyperlink starts.
@@ -70,7 +70,7 @@ public interface AccessibleHyperlinkListener extends SWTEventListener {
 	 * <li>[out] index</li>
 	 * </ul>
 	 */
-	public void getStartIndex(AccessibleHyperlinkEvent e);
+	void getStartIndex(AccessibleHyperlinkEvent e);
 
 	/**
 	 * Returns the 0 based character offset at which the textual representation of the hyperlink ends.
@@ -83,5 +83,5 @@ public interface AccessibleHyperlinkListener extends SWTEventListener {
 	 * <li>[out] index</li>
 	 * </ul>
 	 */
-	public void getEndIndex(AccessibleHyperlinkEvent e);
+	void getEndIndex(AccessibleHyperlinkEvent e);
 }

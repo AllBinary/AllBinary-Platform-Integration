@@ -34,6 +34,6 @@ public interface IPhoneImage {
 	 * 
 	 * @return the CGImage. Must be released by the caller after usage!
 	 */
-	public abstract Pointer<CGImage> getBitmap();
+	abstract Pointer<CGImage> getBitmap();
 
 }

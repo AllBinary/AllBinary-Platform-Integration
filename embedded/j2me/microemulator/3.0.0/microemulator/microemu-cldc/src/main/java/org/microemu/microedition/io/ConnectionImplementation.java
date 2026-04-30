@@ -39,6 +39,6 @@ import javax.microedition.io.Connection;
  */
 public interface ConnectionImplementation {
 	
-	public Connection openConnection(String name, int mode, boolean timeouts) throws IOException;
+	Connection openConnection(String name, int mode, boolean timeouts) throws IOException;
 	
 }

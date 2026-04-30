@@ -12,6 +12,6 @@ public interface IPreprocessorListener
 	 */
 	public static final int UNKNOWN = -1;
 	
-	public void warning(String message, int lineNumber, int offset, int length);
-	public void error(Exception e, int lineNumber, int offset, int length);
+	void warning(String message, int lineNumber, int offset, int length);
+	void error(Exception e, int lineNumber, int offset, int length);
 }

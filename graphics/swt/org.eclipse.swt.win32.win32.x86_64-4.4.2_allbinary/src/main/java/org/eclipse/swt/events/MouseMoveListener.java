@@ -34,5 +34,5 @@ public interface MouseMoveListener extends SWTEventListener {
  *
  * @param e an event containing information about the mouse move
  */
-public void mouseMove(MouseEvent e);
+void mouseMove(MouseEvent e);
 }

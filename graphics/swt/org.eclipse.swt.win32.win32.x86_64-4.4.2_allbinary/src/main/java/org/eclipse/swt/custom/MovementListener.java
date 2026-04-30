@@ -43,7 +43,7 @@ public interface MovementListener extends SWTEventListener {
  * @see MovementEvent
  * @see StyledText#addWordMovementListener(MovementListener)
  */
-public void getNextOffset (MovementEvent event);
+void getNextOffset (MovementEvent event);
 /**
  * This method is called when a new offset is required based on the current
  * offset and a movement type.
@@ -62,6 +62,6 @@ public void getNextOffset (MovementEvent event);
  * @see MovementEvent
  * @see StyledText#addWordMovementListener(MovementListener)
  */
-public void getPreviousOffset (MovementEvent event);
+void getPreviousOffset (MovementEvent event);
 
 }

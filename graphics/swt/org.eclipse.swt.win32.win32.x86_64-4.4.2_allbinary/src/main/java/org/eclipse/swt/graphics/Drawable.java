@@ -45,7 +45,7 @@ public interface Drawable {
  * @noreference This method is not intended to be referenced by clients.
  */
  
-public long /*int*/ internal_new_GC (GCData data);
+long /*int*/ internal_new_GC (GCData data);
 
 /**	 
  * Invokes platform specific functionality to dispose a GC handle.
@@ -62,6 +62,6 @@ public long /*int*/ internal_new_GC (GCData data);
  * 
  * @noreference This method is not intended to be referenced by clients.
  */
-public void internal_dispose_GC (long /*int*/ handle, GCData data);
+void internal_dispose_GC (long /*int*/ handle, GCData data);
 
 }

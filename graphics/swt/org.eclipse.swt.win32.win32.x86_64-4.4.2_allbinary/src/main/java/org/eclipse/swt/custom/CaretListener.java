@@ -33,7 +33,7 @@ public interface CaretListener extends SWTEventListener {
  * 
  * @see CaretEvent
  */
-public void caretMoved(CaretEvent event);
+void caretMoved(CaretEvent event);
 
 }
 

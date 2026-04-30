@@ -39,19 +39,19 @@ public interface MouseListener extends SWTEventListener {
  *
  * @see org.eclipse.swt.widgets.Display#getDoubleClickTime()
  */
-public void mouseDoubleClick(MouseEvent e);
+void mouseDoubleClick(MouseEvent e);
 
 /**
  * Sent when a mouse button is pressed.
  *
  * @param e an event containing information about the mouse button press
  */
-public void mouseDown(MouseEvent e);
+void mouseDown(MouseEvent e);
 
 /**
  * Sent when a mouse button is released.
  *
  * @param e an event containing information about the mouse button release
  */
-public void mouseUp(MouseEvent e);
+void mouseUp(MouseEvent e);
 }

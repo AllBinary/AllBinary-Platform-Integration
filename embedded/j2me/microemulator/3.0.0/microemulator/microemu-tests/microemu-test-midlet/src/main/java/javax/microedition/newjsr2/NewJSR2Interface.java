@@ -34,6 +34,6 @@ package javax.microedition.newjsr2;
  */
 public interface NewJSR2Interface {
 
-	public String doStuff(String data);
+	String doStuff(String data);
 	
 }

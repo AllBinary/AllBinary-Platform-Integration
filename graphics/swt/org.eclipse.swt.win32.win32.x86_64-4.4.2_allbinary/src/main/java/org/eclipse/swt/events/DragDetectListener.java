@@ -36,5 +36,5 @@ public interface DragDetectListener extends SWTEventListener {
  *
  * @param e an event containing information about the drag
  */
-public void dragDetected(DragDetectEvent e);
+void dragDetected(DragDetectEvent e);
 }

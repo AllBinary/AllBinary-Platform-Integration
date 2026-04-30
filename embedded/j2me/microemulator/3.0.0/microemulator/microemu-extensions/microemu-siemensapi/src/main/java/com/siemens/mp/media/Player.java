@@ -27,43 +27,43 @@ public interface Player
     extends Controllable
 {
 
-    public abstract void realize()
+    abstract void realize()
         throws MediaException;
 
-    public abstract void prefetch()
+    abstract void prefetch()
         throws MediaException;
 
-    public abstract void start()
+    abstract void start()
         throws MediaException;
 
-    public abstract void stop()
+    abstract void stop()
         throws MediaException;
 
-    public abstract void deallocate();
+    abstract void deallocate();
 
-    public abstract void close();
+    abstract void close();
 
-    public abstract void setTimeBase(TimeBase timebase)
+    abstract void setTimeBase(TimeBase timebase)
         throws MediaException;
 
-    public abstract TimeBase getTimeBase();
+    abstract TimeBase getTimeBase();
 
-    public abstract long setMediaTime(long l)
+    abstract long setMediaTime(long l)
         throws MediaException;
 
-    public abstract long getMediaTime();
+    abstract long getMediaTime();
 
-    public abstract int getState();
+    abstract int getState();
 
-    public abstract long getDuration();
+    abstract long getDuration();
 
-    public abstract String getContentType();
+    abstract String getContentType();
 
-    public abstract void setLoopCount(int i);
+    abstract void setLoopCount(int i);
 
-    public abstract void addPlayerListener(PlayerListener playerlistener);
+    abstract void addPlayerListener(PlayerListener playerlistener);
 
-    public abstract void removePlayerListener(PlayerListener playerlistener);
+    abstract void removePlayerListener(PlayerListener playerlistener);
 
     public static final int UNREALIZED = 100;
     public static final int REALIZED = 200;

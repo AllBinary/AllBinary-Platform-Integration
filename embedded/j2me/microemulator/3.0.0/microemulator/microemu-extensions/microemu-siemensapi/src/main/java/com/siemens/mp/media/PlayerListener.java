@@ -26,7 +26,7 @@ package com.siemens.mp.media;
 public interface PlayerListener
 {
 
-    public abstract void playerUpdate(Player player, String s, Object obj);
+    abstract void playerUpdate(Player player, String s, Object obj);
 
     public static final String STARTED = "started";
     public static final String STOPPED = "stopped";

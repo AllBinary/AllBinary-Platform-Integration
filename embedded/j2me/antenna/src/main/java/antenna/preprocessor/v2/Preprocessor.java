@@ -731,7 +731,7 @@ public class Preprocessor
 	 */
 	public static interface ILogger
 	{
-		public void log(String message);
+		void log(String message);
 	}
 
 	/**
@@ -741,7 +741,7 @@ public class Preprocessor
 	 */
 	public static interface ILineFilter
 	{
-		public String filter(String line);
+		String filter(String line);
 	}
 
 	public Defines getDefines()

@@ -41,7 +41,7 @@ public interface AccessibleEditableTextListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the operation was completed successfully</li>
 	 * </ul>
 	 */
-	public void copyText(AccessibleEditableTextEvent e);
+	void copyText(AccessibleEditableTextEvent e);
 
 	/**
 	 * Moves the substring beginning at the specified <code>start</code> offset
@@ -55,7 +55,7 @@ public interface AccessibleEditableTextListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the operation was completed successfully</li>
 	 * </ul>
 	 */
-	public void cutText(AccessibleEditableTextEvent e);
+	void cutText(AccessibleEditableTextEvent e);
 
 	/**
 	 * Inserts the text in the clipboard at the leading edge of the specified <code>start</code> offset.
@@ -66,7 +66,7 @@ public interface AccessibleEditableTextListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the operation was completed successfully</li>
 	 * </ul>
 	 */
-	public void pasteText(AccessibleEditableTextEvent e);
+	void pasteText(AccessibleEditableTextEvent e);
 
 	/**
 	 * Replaces the substring beginning at the specified <code>start</code> offset
@@ -86,7 +86,7 @@ public interface AccessibleEditableTextListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the operation was completed successfully</li>
 	 * </ul>
 	 */
-	public void replaceText(AccessibleEditableTextEvent e);
+	void replaceText(AccessibleEditableTextEvent e);
 
 	/**
 	 * Replaces the set of attributes of the substring beginning at the specified <code>start</code> offset
@@ -106,5 +106,5 @@ public interface AccessibleEditableTextListener extends SWTEventListener {
 	 * <li>[out] result - set to {@link ACC#OK} if the operation was completed successfully</li>
 	 * </ul>
 	 */
-	public void setTextAttributes(AccessibleTextAttributeEvent e);
+	void setTextAttributes(AccessibleTextAttributeEvent e);
 }

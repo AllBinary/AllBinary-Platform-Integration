@@ -35,5 +35,5 @@ public interface LineStyleListener extends SWTEventListener {
  * @param event the given event
  * @see LineStyleEvent
  */
-public void lineGetStyle(LineStyleEvent event);
+void lineGetStyle(LineStyleEvent event);
 }

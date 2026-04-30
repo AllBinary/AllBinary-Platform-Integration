@@ -21,6 +21,6 @@ package javax.microedition.media;
 
 public interface TimeBase {
 
-	public abstract long getTime();
+	abstract long getTime();
 	
 }

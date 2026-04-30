@@ -44,7 +44,7 @@ public interface VisibilityWindowListener extends SWTEventListener {
  * 
  * @since 3.0
  */ 
-public void hide(WindowEvent event);
+void hide(WindowEvent event);
 
 /**
  * This method is called when the window hosting a <code>Browser</code>
@@ -86,6 +86,6 @@ public void hide(WindowEvent event);
  * 
  * @since 3.0
  */ 
-public void show(WindowEvent event);
+void show(WindowEvent event);
 
 }

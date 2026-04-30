@@ -30,7 +30,7 @@ import nanoxml.XMLElement;
 
 public interface XMLItem {
 
-	public void save(XMLElement xml);
+	void save(XMLElement xml);
 	
-	public void read(XMLElement xml);
+	void read(XMLElement xml);
 }

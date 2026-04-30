@@ -48,7 +48,7 @@ public interface AccessibleAttributeListener extends SWTEventListener {
 	 * 		which represent additional (i.e. non predefined) attributes</li>
 	 * </ul>
 	 */
-	public void getAttributes(AccessibleAttributeEvent e);
+	void getAttributes(AccessibleAttributeEvent e);
 
 	/**
 	 * Returns text attributes specific to this Accessible object.
@@ -64,5 +64,5 @@ public interface AccessibleAttributeListener extends SWTEventListener {
 	 * 		that represent additional attributes that do not correspond to TextStyle fields</li>
 	 * </ul>
 	 */
-	public void getTextAttributes(AccessibleTextAttributeEvent e);
+	void getTextAttributes(AccessibleTextAttributeEvent e);
 }

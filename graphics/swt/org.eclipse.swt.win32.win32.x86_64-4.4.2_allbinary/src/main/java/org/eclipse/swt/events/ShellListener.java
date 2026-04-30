@@ -35,33 +35,33 @@ public interface ShellListener extends SWTEventListener {
  *
  * @param e an event containing information about the activation
  */
-public void shellActivated(ShellEvent e);
+void shellActivated(ShellEvent e);
 
 /**
  * Sent when a shell is closed.
  *
  * @param e an event containing information about the close
  */
-public void shellClosed(ShellEvent e);
+void shellClosed(ShellEvent e);
 
 /**
  * Sent when a shell stops being the active window.
  *
  * @param e an event containing information about the deactivation
  */
-public void shellDeactivated(ShellEvent e);
+void shellDeactivated(ShellEvent e);
 
 /**
  * Sent when a shell is un-minimized.
  *
  * @param e an event containing information about the un-minimization
  */
-public void shellDeiconified(ShellEvent e);
+void shellDeiconified(ShellEvent e);
 
 /**
  * Sent when a shell is minimized.
  *
  * @param e an event containing information about the minimization
  */
-public void shellIconified(ShellEvent e);
+void shellIconified(ShellEvent e);
 }

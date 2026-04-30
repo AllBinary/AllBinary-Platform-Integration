@@ -32,7 +32,7 @@ public interface StyledTextContent {
  *    <li>ERROR_NULL_ARGUMENT when listener is null</li>
  * </ul>
  */
-public void addTextChangeListener(TextChangeListener listener);
+void addTextChangeListener(TextChangeListener listener);
 
 /**
  * Return the number of characters in the content.
@@ -40,7 +40,7 @@ public void addTextChangeListener(TextChangeListener listener);
  *
  * @return the number of characters in the content.
  */
-public int getCharCount();
+int getCharCount();
 
 /**
  * Return the line at the given line index without delimiters.
@@ -51,7 +51,7 @@ public int getCharCount();
  * 	content.
  * @return the line text without delimiters
  */
-public String getLine(int lineIndex);
+String getLine(int lineIndex);
 
 /**
  * Return the line index at the given character offset.
@@ -72,7 +72,7 @@ public String getLine(int lineIndex);
  * <li>getLineAtOffset(4) == 2
  * </ul>
  */
-public int getLineAtOffset(int offset);
+int getLineAtOffset(int offset);
 
 /**
  * Return the number of lines.  Should answer 1 when no text is specified.
@@ -88,7 +88,7 @@ public int getLineAtOffset(int offset);
  * <li>	"\n\n" ==> 3			
  * </ul>
  */
-public int getLineCount();
+int getLineCount();
 
 /**
  * Return the line delimiter that should be used by the StyledText 
@@ -101,7 +101,7 @@ public int getLineCount();
  * @return the line delimiter that should be used by the StyledText widget
  *	when inserting new lines.
  */
-public String getLineDelimiter();
+String getLineDelimiter();
 
 /**
  * Return the character offset of the first character of the given line.
@@ -121,7 +121,7 @@ public String getLineDelimiter();
  * <li>getOffsetAtLine(2) == 8
  * </ul>
  */
-public int getOffsetAtLine(int lineIndex);
+int getOffsetAtLine(int lineIndex);
 
 /**
  * Returns a string representing the content at the given range.
@@ -132,7 +132,7 @@ public int getOffsetAtLine(int lineIndex);
  * @param length the length of the text to return
  * @return the text at the given range
  */
-public String getTextRange(int start, int length);
+String getTextRange(int start, int length);
 
 /**
  * Remove the specified text changed listener.
@@ -144,7 +144,7 @@ public String getTextRange(int start, int length);
  *    <li>ERROR_NULL_ARGUMENT when listener is null</li>
  * </ul>
  */
-public void removeTextChangeListener(TextChangeListener listener);
+void removeTextChangeListener(TextChangeListener listener);
 
 /**
  * Replace the text with "newText" starting at position "start" 
@@ -191,7 +191,7 @@ public void removeTextChangeListener(TextChangeListener listener);
  * @param text text to replace
  * @see TextChangeListener
  */
-public void replaceTextRange(int start, int replaceLength, String text);
+void replaceTextRange(int start, int replaceLength, String text);
 
 /**
  * Set text to "text".
@@ -203,5 +203,5 @@ public void replaceTextRange(int start, int replaceLength, String text);
  * @param text the new text
  * @see TextChangeListener
  */
-public void setText(String text);
+void setText(String text);
 }

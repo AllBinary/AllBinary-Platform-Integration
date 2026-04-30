@@ -22,5 +22,5 @@ import javax.microedition.lcdui.Command;
 
 public interface CustomItemCommandListener
 {
-    public void commandAction(Command c, CustomItem item);
+    void commandAction(Command c, CustomItem item);
 }

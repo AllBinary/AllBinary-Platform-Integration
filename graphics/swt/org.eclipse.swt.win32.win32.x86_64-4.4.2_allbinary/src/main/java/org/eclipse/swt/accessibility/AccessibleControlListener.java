@@ -59,7 +59,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>accessible [Optional OUT] - the accessible object for the control or child may be returned instead of the childID</li>
 	 * </ul>
 	 */
-	public void getChildAtPoint(AccessibleControlEvent e);
+	void getChildAtPoint(AccessibleControlEvent e);
 
 	/**
 	 * Sent when an accessibility client requests the location
@@ -75,7 +75,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>x, y, width, height [OUT] - the control or child location in display coordinates</li>
 	 * </ul>
 	 */
-	public void getLocation(AccessibleControlEvent e);
+	void getLocation(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the accessible object
@@ -97,7 +97,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>accessible [Optional OUT] - an Accessible for the specified childID or index, or null if one does not exist</li>
 	 * </ul>
 	 */
-	public void getChild(AccessibleControlEvent e);
+	void getChild(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the number of
@@ -111,7 +111,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>detail [OUT] - the number of child items in this control</li>
 	 * </ul>
 	 */
-	public void getChildCount(AccessibleControlEvent e);
+	void getChildCount(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the default action
@@ -131,7 +131,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>result [OUT] - the requested default action string, or null</li>
 	 * </ul>
 	 */
-	public void getDefaultAction(AccessibleControlEvent e);
+	void getDefaultAction(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the identity of
@@ -148,7 +148,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>accessible [Optional OUT] - the accessible object for a child may be returned instead of its childID</li>
 	 * </ul>
 	 */
-	public void getFocus(AccessibleControlEvent e);
+	void getFocus(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the role
@@ -164,7 +164,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>detail [OUT] - a role constant describing the role of the control or child</li>
 	 * </ul>
 	 */
-	public void getRole(AccessibleControlEvent e);
+	void getRole(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the identity of
@@ -183,7 +183,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>accessible [Optional OUT] - the accessible object for the control or child may be returned instead of the childID</li>
 	 * </ul>
 	 */
-	public void getSelection(AccessibleControlEvent e);
+	void getSelection(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the state
@@ -199,7 +199,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>detail [OUT] - a state mask describing the current state of the control or child</li>
 	 * </ul>
 	 */
-	public void getState(AccessibleControlEvent e);
+	void getState(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the value
@@ -221,7 +221,7 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>result [OUT] - the requested value string, or null</li>
 	 * </ul>
 	 */
-	public void getValue(AccessibleControlEvent e);
+	void getValue(AccessibleControlEvent e);
 	
 	/**
 	 * Sent when an accessibility client requests the children, or visible children,
@@ -240,5 +240,5 @@ public interface AccessibleControlListener extends SWTEventListener {
 	 *    <li>children [Optional OUT] - an array of accessible objects for the children may be returned instead of the childIDs</li>
 	 * </ul>
 	 */
-	public void getChildren(AccessibleControlEvent e);
+	void getChildren(AccessibleControlEvent e);
 }

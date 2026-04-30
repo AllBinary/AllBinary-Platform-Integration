@@ -28,7 +28,7 @@ public interface IPreprocessorListener {
      * @param offset
      * @param length
      */
-    public void warning(String message, int lineNumber, int offset, int length);
+    void warning(String message, int lineNumber, int offset, int length);
 
     /**
      * @param e
@@ -36,5 +36,5 @@ public interface IPreprocessorListener {
      * @param offset
      * @param length
      */
-    public void error(Exception e, int lineNumber, int offset, int length);
+    void error(Exception e, int lineNumber, int offset, int length);
 }

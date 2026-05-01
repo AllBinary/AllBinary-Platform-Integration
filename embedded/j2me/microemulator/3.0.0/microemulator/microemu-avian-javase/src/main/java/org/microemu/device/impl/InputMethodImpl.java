@@ -26,6 +26,7 @@ package org.microemu.device.impl;
 
 import javax.microedition.lcdui.TextField;
 
+import org.allbinary.TsUtil;
 import org.microemu.MIDletBridge;
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.InputMethod;
@@ -71,7 +72,7 @@ public class InputMethodImpl extends InputMethod implements Runnable {
 			try {
 				this.resetKey = true;
 				synchronized (this) {
-					wait(1500);
+					TsUtil.getInstance().waitFor(this,1500);
 				}
 			} catch (InterruptedException ex) {
 			}

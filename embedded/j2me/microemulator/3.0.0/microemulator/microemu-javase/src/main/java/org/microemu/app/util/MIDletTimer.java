@@ -36,6 +36,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.WeakHashMap;
 
+import org.allbinary.TsUtil;
 import org.microemu.MIDletBridge;
 import org.microemu.MIDletContext;
 import org.microemu.log.Logger;
@@ -174,7 +175,7 @@ public class MIDletTimer extends Timer implements Runnable {
 					} else {
 						long timeout = nextTimeTask - System.currentTimeMillis();
 						if (timeout > 0) {
-							this.tasks.wait(timeout);
+							TsUtil.getInstance().waitFor(this.tasks, timeout);
 						}
 					}
 				} catch (InterruptedException e) {

@@ -24,6 +24,7 @@
 
 package org.microemu.device.ui;
 
+import org.allbinary.TsUtil;
 import org.microemu.device.DeviceFactory;
 
 public class EventDispatcher implements Runnable {
@@ -62,7 +63,7 @@ public class EventDispatcher implements Runnable {
 						if (difference < (1000 / EventDispatcher.maxFps)) {
 							event = null;
 							try {
-								wait((1000 / maxFps) - difference);
+								TsUtil.getInstance().waitFor(this,(1000 / maxFps) - difference);
 							} catch (InterruptedException e) {
 							}
 						}

@@ -45,13 +45,13 @@ public class Connector {
 	    
 	}
 	
-//	public static Connection open(String name) throws IOException {
-//		return ImplFactory.getCGFImplementation(name).open(name);
-//	}
+	public static Connection open(String name) throws IOException {
+		return ImplFactory.getCGFImplementation(name).open(name);
+	}
 
-//	public static Connection open(String name, int mode) throws IOException {
-//		return ImplFactory.getCGFImplementation(name).open(name, mode);
-//	}
+	public static Connection open(String name, int mode) throws IOException {
+		return ImplFactory.getCGFImplementation(name).open(name, mode);
+	}
 
 	public static Connection open(String name, int mode, boolean timeouts) throws IOException {
 		return ImplFactory.getCGFImplementation(name).open(name, mode, timeouts);

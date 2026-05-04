@@ -30,6 +30,9 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.Sprite;
 
+import org.allbinary.android.NullAndroidCanvas;
+import org.allbinary.graphics.font.FontDebugFactory;
+import org.allbinary.logic.NullUtil;
 import org.microemu.device.DeviceFactory;
 import org.microemu.log.Logger;
 
@@ -43,6 +46,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 
+//microemulator 3.0.0
 public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 	
     public Paint strokePaint = new Paint();
@@ -55,7 +59,7 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
 	
 	private static final Matrix identityMatrix = new Matrix();
 	
-	private Canvas canvas;
+	private Canvas canvas = NullAndroidCanvas.NULL_CANVAS;
 	
     private GraphicsDelegate delegate;
     
@@ -75,18 +79,17 @@ public class AndroidDisplayGraphics extends AndroidDisplayGraphicsBase {
     
     private Matrix tmpMatrix = new Matrix();
     
-	public AndroidDisplayGraphics() {
-        this.delegate = null;
-        
-		this.strokePaint.setAntiAlias(true);
-		this.strokePaint.setStyle(Paint.Style.STROKE);
-		this.fillPaint.setAntiAlias(true);
-		this.fillPaint.setStyle(Paint.Style.FILL);
-	}
-	
-    public AndroidDisplayGraphics(Bitmap bitmap) {
-        this.canvas = new Canvas(bitmap);
-        this.canvas.clipRect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+    public AndroidDisplayGraphics(final Object object) {
+
+        super(NullAndroidCanvas.NULL_CANVAS, FontDebugFactory.getInstance());
+
+        if(object == NullUtil.getInstance().NULL_OBJECT) {
+        } else {
+            final Bitmap bitmap = (Bitmap) object;
+            this.canvas = new Canvas(bitmap);
+            this.canvas.clipRect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        }
+
         this.delegate = null;
         
 		this.strokePaint.setAntiAlias(true);

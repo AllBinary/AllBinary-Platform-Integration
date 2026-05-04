@@ -15,7 +15,6 @@ import org.allbinary.android.NullAndroidCanvas;
 import org.allbinary.device.GraphicsInterface;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.FontDebugBase;
-import org.allbinary.graphics.font.FontDebugFactory;
 import org.allbinary.graphics.font.FontDebugFactoryBase;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
@@ -24,6 +23,7 @@ import org.allbinary.string.CommonStrings;
  *
  * @author user
  */
+//microemulator - 3.0.0
 public class AndroidDisplayGraphicsBase
         extends javax.microedition.lcdui.Graphics 
         implements GraphicsInterface
@@ -59,35 +59,6 @@ public class AndroidDisplayGraphicsBase
 
     protected final char[] CHAR_ARRAY = new char[1023];
     protected final char[] characterArray = new char[1];
-
-    public AndroidDisplayGraphicsBase()
-    {
-        this.fontDebugFactory = FontDebugFactory.getInstance();
-        
-        //this.fontPaint = new Paint();
-
-        this.strokeAndFillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-
-        this.paint.setStyle(Paint.Style.FILL);
-
-        this.strokePaint.setStyle(Paint.Style.STROKE);
-        this.strokePaint.setStrokeWidth(2.0f);
-
-        this.setFont(this.currentFont);
-
-        /*
-         * Device device = DeviceFactory.getDevice(); AndroidFontManager
-         * fontManager = (AndroidFontManager) device .getFontManager();
-         * AndroidDeviceDisplay display = (AndroidDeviceDisplay) device
-         * .getDeviceDisplay();
-         */
-    }
-
-    public AndroidDisplayGraphicsBase(final android.graphics.Canvas a_g)
-    {
-        this(a_g, FontDebugFactory.getInstance());
-    }
-
     public AndroidDisplayGraphicsBase(final android.graphics.Canvas a_g, final FontDebugFactoryBase fontDebugFactory)
     {
         this.fontDebugFactory = fontDebugFactory;
@@ -198,16 +169,11 @@ public class AndroidDisplayGraphicsBase
     public void setFont(final Font font)
     {
         //logUtil.put("setFont", this, commonStrings.EXCEPTION, new Exception());
-        this.setFont(font, fontDebugFactory.DEBUG);
-    }
-
-    public void setFontNoDebug(final Font font)
-    {
-        this.setFont(font, fontDebugFactory.NO_DEBUG);
+        this.setFontDebug(font, fontDebugFactory.DEBUG);
     }
 
     @Override    
-    public void setFont(final Font font, final FontDebugBase fontDebug)
+    public void setFontDebug(final Font font, final FontDebugBase fontDebug)
     {   
         try
         {   

@@ -26,6 +26,7 @@
 
 package org.microemu.android.device.ui;
 import android.app.Activity;
+import org.allbinary.logic.NullUtil;
 import org.allbinary.thread.ARunnable;
 
 
@@ -106,7 +107,7 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
     }
     
 	public AndroidDisplayGraphics getGraphics() {
-		gameCanvasGraphics = new AndroidDisplayGraphics();
+		gameCanvasGraphics = new AndroidDisplayGraphics(NullUtil.getInstance().NULL_OBJECT);
         if (AndroidCanvasUI.gameCanvasBitmap != null) {
         	this.gameCanvasGraphics.reset(new android.graphics.Canvas(gameCanvasBitmap));
         }
@@ -229,7 +230,7 @@ public class AndroidCanvasUI extends AndroidDisplayableUI implements CanvasUI {
             if (ma == null) {
                 return;
             }
-        	AndroidDisplayGraphics graphics = new AndroidDisplayGraphics();
+        	AndroidDisplayGraphics graphics = new AndroidDisplayGraphics(NullUtil.getInstance().NULL_OBJECT);
         	Matrix originalMatrix = androidCanvas.getMatrix();
             graphics.reset(androidCanvas);
             if (gameCanvasGraphics != null) {

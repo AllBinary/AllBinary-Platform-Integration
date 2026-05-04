@@ -26,6 +26,7 @@
 
 package org.microemu.android.device.ui;
 import android.app.Activity;
+import org.allbinary.logic.NullUtil;
 import org.allbinary.thread.ARunnable;
 
 
@@ -115,7 +116,7 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 		public CanvasView(Context context) {
 			super(context);
 			
-            this.graphics = new AndroidDisplayGraphics();
+            this.graphics = new AndroidDisplayGraphics(NullUtil.getInstance().NULL_OBJECT);
 
             setFocusable(true);
 			setFocusableInTouchMode(true);

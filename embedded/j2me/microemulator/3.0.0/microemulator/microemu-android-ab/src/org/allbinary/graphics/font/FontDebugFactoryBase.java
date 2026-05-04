@@ -35,6 +35,6 @@ public class FontDebugFactoryBase {
     
     public void setFont(final Font font, final Graphics graphics) {
         final GraphicsInterface graphicsInterface = (GraphicsInterface) graphics;
-        graphicsInterface.setFont(font, NO_DEBUG);
+        graphicsInterface.setFontDebug(font, NO_DEBUG);
     }
 }

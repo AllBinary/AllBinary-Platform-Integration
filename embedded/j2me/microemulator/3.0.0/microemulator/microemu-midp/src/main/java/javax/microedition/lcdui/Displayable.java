@@ -222,7 +222,7 @@ public class Displayable
     {
         //PreLogUtil.put("AndroidToJ2ME", this, "draw");
         
-        this.openGLESGraphics.update(gl);
+        this.openGLESGraphics.updateGL(gl);
         this.paint(this.openGLESGraphics);
         this.openGLESGraphics.setCameraMode();
     }

@@ -55,7 +55,7 @@ public class CustomItem extends Item {
 
                         @Override
 			public void paint(Graphics g, int w, int h) {
-				CustomItem.this.paint(g, w, h);
+				CustomItem.this.paintWH(g, w, h);
 			}
 
 		}));
@@ -113,7 +113,8 @@ public class CustomItem extends Item {
 		// does nothing
 	}
 	
-	protected void paint(Graphics g, int w, int h) {
+	protected void paintWH(Graphics g, int w, int h) {
+
             
         }
 
@@ -191,7 +192,7 @@ public class CustomItem extends Item {
 		// Move graphics context down
 		g.translate(0, super.getHeight());
 		// Paint custom item
-		this.paint(g, width, height);
+		this.paintWH(g, width, height);
 		// Return 'height' which is the amount the context must translated
 		return height;
 	}

@@ -57,7 +57,7 @@ public class Spacer extends Item {
 
                         @Override
 			public void paint(Graphics g, int w, int h) {
-				customItem.paint(g, w, h);
+				customItem.paintWH(g, w, h);
 			}
 
 		}));
@@ -122,7 +122,7 @@ public class Spacer extends Item {
 		}
 
                 @Override
-		protected void paint(Graphics g, int w, int h) {
+		protected void paintWH(Graphics g, int w, int h) {
 		}
 		
 	}

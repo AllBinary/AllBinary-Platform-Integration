@@ -9,7 +9,7 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.NullCanvas;
 
-import org.allbinary.graphics.form.item.CustomItem;
+import org.allbinary.graphics.form.item.ABCustomItem;
 import org.allbinary.graphics.form.item.CustomItemStateListener;
 
 import org.allbinary.string.CommonSeps;
@@ -32,16 +32,16 @@ public class CustomForm extends CustomScreen
 {
     protected final LogUtil logUtil = LogUtil.getInstance();
     
-    private CustomItem[] items = new CustomItem[16];
+    private ABCustomItem[] items = new ABCustomItem[16];
 	private int numOfItems = 0;
 	private CustomItemStateListener itemStateListener = CustomItemState.NULL_CUSTOM_ITEM_STATE;
 	private int selectedIndex;
 
-    public CustomForm(String title, CustomItem[] items, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) 
+    public CustomForm(String title, ABCustomItem[] items, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(title, backgroundBasicColor, foregroundBasicColor);
 
-		this.items = new CustomItem[items.length];
+		this.items = new ABCustomItem[items.length];
 		System.arraycopy(items, 0, this.items, 0, items.length);
 		this.numOfItems = this.items.length;
 		for (int i = 0; i < this.numOfItems; i++)
@@ -62,12 +62,12 @@ public class CustomForm extends CustomScreen
         
     }
     
-	public int append(CustomItem item) 
+	public int append(ABCustomItem item)
 	{
 		this.verifyItem(item);
 
 		if (this.numOfItems + 1 >= this.items.length) {
-			CustomItem newitems[] = new CustomItem[this.numOfItems + 4];
+			ABCustomItem newitems[] = new ABCustomItem[this.numOfItems + 4];
 			System.arraycopy(this.items, 0, newitems, 0, numOfItems);
 			this.items = newitems;
 		}
@@ -112,7 +112,7 @@ public class CustomForm extends CustomScreen
 	}
 
 	
-	public CustomItem get(int itemNum) 
+	public ABCustomItem get(int itemNum)
 	{
 		this.verifyItemNum(itemNum);
 
@@ -133,13 +133,13 @@ public class CustomForm extends CustomScreen
 	*/
 
 	
-	public void insert(int itemNum, CustomItem item) 
+	public void insert(int itemNum, ABCustomItem item)
 	{
 		this.verifyItemNum(itemNum);
 		this.verifyItem(item);
 
 		if (this.numOfItems + 1 == this.items.length) {
-			CustomItem newitems[] = new CustomItem[this.numOfItems + 4];
+			ABCustomItem newitems[] = new ABCustomItem[this.numOfItems + 4];
 			System.arraycopy(this.items, 0, newitems, 0, numOfItems);
 			this.items = newitems;
 		}
@@ -156,7 +156,7 @@ public class CustomForm extends CustomScreen
 	}
 
 	
-	public void set(int itemNum, CustomItem item) 
+	public void set(int itemNum, ABCustomItem item)
 	{
 		this.verifyItemNum(itemNum);
 		this.verifyItem(item);
@@ -235,7 +235,7 @@ public class CustomForm extends CustomScreen
 		return contentHeight;
 	}
     
-	void fireItemStateListener(CustomItem item) {
+	void fireItemStateListener(ABCustomItem item) {
         if (this.itemStateListener != null) {
             this.itemStateListener.itemStateChanged(item);
         }
@@ -411,7 +411,7 @@ public class CustomForm extends CustomScreen
 						bottom - height,
 						true);
 			}
-			if (traverse == CustomItem.OUTOFITEM) {
+			if (traverse == ABCustomItem.OUTOFITEM) {
 				if (getSelectedIndex() == -1
 					&& this.items[testItemIndex].isFocusable()) {
 				    this.items[testItemIndex].setFocus(true);
@@ -438,7 +438,7 @@ public class CustomForm extends CustomScreen
 									top - height,
 									bottom - height,
 									false);
-							if (traverse == CustomItem.OUTOFITEM) {
+							if (traverse == ABCustomItem.OUTOFITEM) {
 								return 0;
 							} else {
 								return traverse;
@@ -453,7 +453,7 @@ public class CustomForm extends CustomScreen
 							top - height,
 							bottom - height,
 							false);
-					if (traverse == CustomItem.OUTOFITEM) {
+					if (traverse == ABCustomItem.OUTOFITEM) {
 					} else {
 						// Sprawdzenie czy znajduje sie powyzej na ekranie
 						// focusable item
@@ -493,7 +493,7 @@ public class CustomForm extends CustomScreen
 						true);
 			}
 			
-			if (traverse == CustomItem.OUTOFITEM) {
+			if (traverse == ABCustomItem.OUTOFITEM) {
 				if (getSelectedIndex() == -1
 					&& this.items[testItemIndex].isFocusable()) {
 					this.items[testItemIndex].setFocus(true);
@@ -521,7 +521,7 @@ public class CustomForm extends CustomScreen
 									top - height,
 									bottom - height,
 									false);
-							if (traverse == CustomItem.OUTOFITEM) {
+							if (traverse == ABCustomItem.OUTOFITEM) {
 								return 0;
 							} else {
 								return traverse;
@@ -536,7 +536,7 @@ public class CustomForm extends CustomScreen
 							top - height,
 							bottom - height,
 							false);
-					if (traverse == CustomItem.OUTOFITEM) {
+					if (traverse == ABCustomItem.OUTOFITEM) {
 					} else {
 						// Sprawdzenie czy znajduje sie powyzej na ekranie
 						// focusable item
@@ -606,7 +606,7 @@ public class CustomForm extends CustomScreen
 	 * @throws IllegalStateException
 	 * @throws NullPointerException
 	 */
-	private void verifyItem(CustomItem item) 
+	private void verifyItem(ABCustomItem item)
 	{
 		// Check that we are being passed valid items
 		if (item == null) {

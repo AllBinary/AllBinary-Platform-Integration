@@ -21,13 +21,13 @@ package org.microemu.graphics.form.item;
 
 import javax.microedition.lcdui.Graphics;
 
-import org.allbinary.graphics.form.item.CustomItem;
+import org.allbinary.graphics.form.item.ABCustomItem;
 
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.communication.log.ForcedLogUtil;
 import org.allbinary.graphics.color.BasicColor;
 
-public class CustomCustomItem extends CustomItem {
+public class CustomCustomItem extends ABCustomItem {
     //protected final LogUtil logUtil = LogUtil.getInstance();
 
 

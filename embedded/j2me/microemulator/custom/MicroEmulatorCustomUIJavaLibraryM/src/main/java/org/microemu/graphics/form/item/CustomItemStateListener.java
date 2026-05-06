@@ -5,10 +5,10 @@
  */
 package org.microemu.graphics.form.item;
 
-import org.allbinary.graphics.form.item.CustomItem;
+import org.allbinary.graphics.form.item.ABCustomItem;
 
 
 public interface CustomItemStateListener
 {
-  void itemStateChanged(CustomItem item);
+  void itemStateChanged(ABCustomItem item);
 }

@@ -5,19 +5,21 @@
  */
 package org.allbinary.graphics.form.item;
 
+import org.microemu.graphics.form.item.CustomItem;
+
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.color.BasicColorFactory;
 import org.allbinary.logic.string.StringUtil;
 
-public class CustomItem extends org.microemu.graphics.form.item.CustomItem
+public class ABCustomItem extends CustomItem
 {
     
-    public static final CustomItem NULL_CUSTOM_ITEM = new CustomItem(
+    public static final ABCustomItem NULL_CUSTOM_ITEM = new ABCustomItem(
         StringUtil.getInstance().EMPTY_STRING, BasicColorFactory.getInstance().BLACK, BasicColorFactory.getInstance().WHITE);
 
     public static final int OUTOFITEM = Integer.MAX_VALUE;
 
-    protected CustomItem(String label, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
+    protected ABCustomItem(String label, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(label, backgroundBasicColor, foregroundBasicColor);
     }

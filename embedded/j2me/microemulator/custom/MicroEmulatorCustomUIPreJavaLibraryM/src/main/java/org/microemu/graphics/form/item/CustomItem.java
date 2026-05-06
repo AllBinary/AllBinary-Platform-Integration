@@ -26,7 +26,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.NullCanvas;
 import javax.microedition.lcdui.Screen;
 
-import org.allbinary.graphics.form.item.StringComponent;
+import org.allbinary.graphics.form.item.ABStringComponent;
 
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.communication.log.ForcedLogUtil;
@@ -58,7 +58,7 @@ public class CustomItem
 
     public static final int LAYOUT_2 = 0x4000;
 
-    private final StringComponent labelStringComponent;
+    private final ABStringComponent labelStringComponent;
     private Displayable owner = NullCanvas.NULL_CANVAS;
     private boolean focus = false;
 
@@ -73,7 +73,7 @@ public class CustomItem
 
     protected CustomItem(final String label, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
     {
-        this.labelStringComponent = new StringComponent(label, backgroundBasicColor, foregroundBasicColor);
+        this.labelStringComponent = new ABStringComponent(label, backgroundBasicColor, foregroundBasicColor);
         this.commands = new Vector<Object>();
     }
 
@@ -336,7 +336,7 @@ public class CustomItem
         return this.commandListener;
     }
 
-    public StringComponent getLabelStringComponent()
+    public ABStringComponent getLabelStringComponent()
     {
         return this.labelStringComponent;
     }

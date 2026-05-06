@@ -22,7 +22,7 @@ public class CustomItemState implements CustomItemStateListener {
     public static final CustomItemState NULL_CUSTOM_ITEM_STATE = new CustomItemState();
     
     @Override
-    public void itemStateChanged(CustomItem item) {
+    public void itemStateChanged(ABCustomItem item) {
         
     }
     

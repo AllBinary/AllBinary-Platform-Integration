@@ -23,12 +23,12 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.NullCanvas;
 
-import org.allbinary.graphics.form.item.CustomItem;
+import org.allbinary.graphics.form.item.ABCustomItem;
 import org.microemu.graphics.form.StringComponent;
 
 import org.allbinary.graphics.color.BasicColor;
 
-public class ImageStringItem extends CustomItem
+public class ImageStringItem extends ABCustomItem
 {
     private Image img = NullCanvas.NULL_IMAGE;
     private final StringComponent stringComponent;

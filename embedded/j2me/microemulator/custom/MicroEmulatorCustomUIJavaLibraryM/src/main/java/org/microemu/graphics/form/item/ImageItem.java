@@ -24,11 +24,11 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.NullCanvas;
 
-import org.allbinary.graphics.form.item.CustomItem;
+import org.allbinary.graphics.form.item.ABCustomItem;
 
 import org.allbinary.graphics.color.BasicColorFactory;
 
-public class ImageItem extends CustomItem 
+public class ImageItem extends ABCustomItem
 {
 
 	public static final int LAYOUT_DEFAULT = 0;
@@ -154,7 +154,7 @@ public class ImageItem extends CustomItem
 					return -(top % f.getHeight());
 				}
 			} else {
-				return CustomItem.OUTOFITEM;
+				return ABCustomItem.OUTOFITEM;
 			}
 		}
 		if (gameKeyCode == Canvas.DOWN) {
@@ -165,7 +165,7 @@ public class ImageItem extends CustomItem
 					return f.getHeight();
 				}
 			} else {
-				return CustomItem.OUTOFITEM;
+				return ABCustomItem.OUTOFITEM;
 			}
 		}
 

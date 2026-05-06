@@ -9,15 +9,16 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.color.BasicColorFactory;
 import org.allbinary.logic.string.StringUtil;
 
-public class CustomGaugeItem 
-extends org.microemu.graphics.form.item.CustomGaugeItem
+import org.microemu.graphics.form.item.CustomGaugeItem;
+
+public class ABCustomGaugeItem extends CustomGaugeItem
 {
-    public static final CustomGaugeItem NULL_GAUGE_ITEM = new CustomGaugeItem(
+    public static final ABCustomGaugeItem NULL_GAUGE_ITEM = new ABCustomGaugeItem(
     StringUtil.getInstance().EMPTY_STRING, 1, 0, 
         BasicColorFactory.getInstance().BLACK, BasicColorFactory.getInstance().WHITE);
     
-    public CustomGaugeItem(String label, int maxValue, int initialValue, 
-            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
+    public ABCustomGaugeItem(String label, int maxValue, int initialValue,
+                             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(label, maxValue, initialValue, backgroundBasicColor, foregroundBasicColor);
     }

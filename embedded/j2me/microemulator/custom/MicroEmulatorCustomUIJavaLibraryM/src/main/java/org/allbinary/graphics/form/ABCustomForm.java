@@ -5,14 +5,14 @@
  */
 package org.allbinary.graphics.form;
 
-import org.allbinary.graphics.form.item.CustomItem;
+import org.microemu.graphics.form.CustomForm;
 
+import org.allbinary.graphics.form.item.CustomItem;
 import org.allbinary.graphics.color.BasicColor;
 
-public class CustomForm extends org.microemu.graphics.form.CustomForm
+public class ABCustomForm extends CustomForm
 {
-    public CustomForm(String title, CustomItem[] items,
-            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
+    public ABCustomForm(String title, CustomItem[] items, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(title, items, backgroundBasicColor, foregroundBasicColor);
     }

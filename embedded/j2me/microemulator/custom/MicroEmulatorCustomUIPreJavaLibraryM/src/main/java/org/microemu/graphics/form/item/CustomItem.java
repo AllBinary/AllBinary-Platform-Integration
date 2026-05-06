@@ -73,7 +73,8 @@ public class CustomItem
 
     protected CustomItem(final String label, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
     {
-        this.labelStringComponent = new ABStringComponent(label, backgroundBasicColor, foregroundBasicColor);
+        this.labelStringComponent = new ABStringComponent(backgroundBasicColor, foregroundBasicColor);
+        this.labelStringComponent.setText(label);
         this.commands = new Vector<Object>();
     }
 

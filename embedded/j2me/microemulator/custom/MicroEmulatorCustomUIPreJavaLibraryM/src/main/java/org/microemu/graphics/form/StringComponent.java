@@ -39,18 +39,6 @@ public class StringComponent
 
     // 0xFFe07718;
 
-    public StringComponent(final BasicColor backgroundBasicColor,
-            final BasicColor foregroundBasicColor)
-    {
-        this(StringUtil.getInstance().EMPTY_STRING, Font.getDefaultFont(), backgroundBasicColor, foregroundBasicColor);
-    }
-
-    public StringComponent(final String text, final BasicColor backgroundBasicColor,
-            final BasicColor foregroundBasicColor) 
-    {
-        this(text, Font.getDefaultFont(), backgroundBasicColor, foregroundBasicColor);
-    }    
-    
     public StringComponent(String text, final Font font, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         this.font = font;

@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 
 import org.allbinary.graphics.color.BasicColor;
@@ -24,7 +25,7 @@ public class CustomDisplayable extends Paintable
     CustomDisplayable(String title, 
             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
-        this.title = new StringComponent(title, backgroundBasicColor, foregroundBasicColor);
+        this.title = new StringComponent(title, Font.getDefaultFont(), backgroundBasicColor, foregroundBasicColor);
     }
 
     public void addCommand(Command cmd)

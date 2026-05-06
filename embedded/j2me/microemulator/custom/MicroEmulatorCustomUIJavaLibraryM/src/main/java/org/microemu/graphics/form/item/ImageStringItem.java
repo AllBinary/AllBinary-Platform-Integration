@@ -19,6 +19,7 @@
 
 package org.microemu.graphics.form.item;
 
+import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.NullCanvas;
@@ -38,7 +39,7 @@ public class ImageStringItem extends ABCustomItem
     {
         super(label, backgroundBasicColor, foregroundBasicColor);
         
-        this.stringComponent = new StringComponent(text, backgroundBasicColor, foregroundBasicColor);
+        this.stringComponent = new StringComponent(text, Font.getDefaultFont(), backgroundBasicColor, foregroundBasicColor);
         this.setImage(img);
     }
 

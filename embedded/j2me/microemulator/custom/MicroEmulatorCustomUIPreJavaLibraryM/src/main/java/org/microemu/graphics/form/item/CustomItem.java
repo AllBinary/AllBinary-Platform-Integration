@@ -122,7 +122,7 @@ public class CustomItem
 
     public int getMinimumHeight()
     {
-        if (getLabelStringComponent() != null) {
+        if (this.getLabelStringComponent() != null) {
             return this.getLabelStringComponent().getHeight();
         } else {
             return 0;
@@ -136,7 +136,7 @@ public class CustomItem
 
     public int getPreferredHeight()
     {
-        int ret = prefHeight;
+        int ret = this.prefHeight;
         final int min = this.getMinimumHeight();
         final int max = this.getMaximumHeight();
 
@@ -154,7 +154,7 @@ public class CustomItem
 
     public int getPreferredWidth()
     {
-        int ret = prefWidth;
+        int ret = this.prefWidth;
         final int min = this.getMinimumWidth();
         final int max = this.getMaximumWidth();
 

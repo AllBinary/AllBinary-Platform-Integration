@@ -87,7 +87,7 @@ public class MIDletBridge {
 		MIDletBridge.midletContexts.put(midletContext.getMIDlet(), midletContext);
 	}
 
-	public static MIDletContext getMIDletContext(MIDlet midlet) {
+	public static MIDletContext getMIDletContextForMIDlet(MIDlet midlet) {
 		return (MIDletContext)MIDletBridge.midletContexts.get(midlet);
 	}
 	
@@ -96,7 +96,7 @@ public class MIDletBridge {
 		if (c != null) {
 			return c;
 		}
-		return MIDletBridge.getMIDletContext(currentMIDlet);
+		return MIDletBridge.getMIDletContextForMIDlet(currentMIDlet);
 	}
 
 	public static void setCurrentMIDlet(MIDlet midlet) {
@@ -119,8 +119,8 @@ public class MIDletBridge {
 		return c.getMIDletAccess();
 	}
 
-	public static MIDletAccess getMIDletAccess(MIDlet midlet) {
-		return MIDletBridge.getMIDletContext(midlet).getMIDletAccess();
+	public static MIDletAccess getMIDletAccessForMIDlet(MIDlet midlet) {
+		return MIDletBridge.getMIDletContextForMIDlet(midlet).getMIDletAccess();
 	}
 
 	

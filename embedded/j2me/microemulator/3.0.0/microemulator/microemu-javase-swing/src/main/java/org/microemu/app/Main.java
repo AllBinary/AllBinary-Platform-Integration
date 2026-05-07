@@ -44,7 +44,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -104,7 +103,6 @@ import org.microemu.app.ui.swing.SwingSelectDevicePanel;
 import org.microemu.app.util.AppletProducer;
 import org.microemu.app.util.DeviceEntry;
 import org.microemu.app.util.IOUtils;
-import org.microemu.app.util.MidletURLReference;
 import org.microemu.device.Device;
 import org.microemu.device.DeviceDisplay;
 import org.microemu.device.DeviceFactory;
@@ -772,12 +770,12 @@ public class Main extends JFrame {
 		}
 
 		public void windowIconified(WindowEvent ev) {
-			MIDletBridge.getMIDletAccess(MIDletBridge.getCurrentMIDlet()).pauseApp();
+			MIDletBridge.getMIDletAccessForMIDlet(MIDletBridge.getCurrentMIDlet()).pauseApp();
 		}
 
 		public void windowDeiconified(WindowEvent ev) {
 			try {
-				MIDletBridge.getMIDletAccess(MIDletBridge.getCurrentMIDlet()).startApp();
+				MIDletBridge.getMIDletAccessForMIDlet(MIDletBridge.getCurrentMIDlet()).startApp();
 			} catch (MIDletStateChangeException ex) {
 				System.err.println(ex);
 			}

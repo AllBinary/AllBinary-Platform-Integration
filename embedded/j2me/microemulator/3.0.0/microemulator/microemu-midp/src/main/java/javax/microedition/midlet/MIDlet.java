@@ -26,8 +26,6 @@
  */
 package javax.microedition.midlet;
 
-import java.io.FileNotFoundException;
-
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.Display;
 
@@ -79,7 +77,7 @@ public class MIDlet
                 da.clean();
                 setDisplayAccess(null);
             }
-            MIDletBridge.destroyMIDletContext(MIDletBridge.getMIDletContext(midlet));
+            MIDletBridge.destroyMIDletContext(MIDletBridge.getMIDletContextForMIDlet(midlet));
         }
     }
 

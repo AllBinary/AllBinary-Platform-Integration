@@ -550,7 +550,7 @@ public class Display {
 	public static Display getDisplay(MIDlet m) {
 		Display result;
 
-                final MIDletAccess midletAccess = MIDletBridge.getMIDletAccess(m);
+                final MIDletAccess midletAccess = MIDletBridge.getMIDletAccessForMIDlet(m);
 		if (midletAccess.getDisplayAccess() == null) {
 			result = new Display();
 			midletAccess.setDisplayAccess(result.accessor);

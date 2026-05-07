@@ -192,7 +192,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
             }
         }
 
-        MIDletAccess ma = MIDletBridge.getMIDletAccess(this.midlet);
+        MIDletAccess ma = MIDletBridge.getMIDletAccessForMIDlet(this.midlet);
         if (ma != null) {
             ma.pauseApp();
             ma.getDisplayAccess().hideNotify();
@@ -207,7 +207,7 @@ public class MicroEmulator extends MicroEmulatorActivity{
 
             public void run()
             {
-                MIDletAccess ma = MIDletBridge.getMIDletAccess(midlet);
+                MIDletAccess ma = MIDletBridge.getMIDletAccessForMIDlet(midlet);
                 if (ma != null) {
                     try {
                         ma.startApp();

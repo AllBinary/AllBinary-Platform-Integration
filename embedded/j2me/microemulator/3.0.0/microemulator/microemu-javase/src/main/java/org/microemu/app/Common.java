@@ -26,34 +26,19 @@
 package org.microemu.app;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Vector;
-import java.util.jar.Attributes;
-import java.util.jar.JarEntry;
-import java.util.jar.JarInputStream;
-import java.util.zip.ZipException;
 
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
-import org.microemu.Injected;
 import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
 import org.microemu.MIDletContext;
@@ -70,16 +55,11 @@ import org.microemu.app.ui.StatusBarListener;
 import org.microemu.app.util.DeviceEntry;
 import org.microemu.app.util.FileRecordStoreManager;
 import org.microemu.app.util.IOUtils;
-import org.microemu.app.util.MIDletResourceLoader;
 import org.microemu.app.util.MIDletSystemProperties;
 import org.microemu.app.util.MIDletThread;
-import org.microemu.app.util.MIDletTimer;
-import org.microemu.app.util.MIDletTimerTask;
-import org.microemu.app.util.MidletURLReference;
 import org.microemu.device.Device;
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.EmulatorContext;
-import org.microemu.device.FontManager;
 import org.microemu.device.impl.DeviceDisplayImpl;
 import org.microemu.device.impl.DeviceImpl;
 import org.microemu.device.impl.Rectangle;
@@ -89,7 +69,6 @@ import org.microemu.microedition.ImplFactory;
 import org.microemu.microedition.ImplementationInitialization;
 import org.microemu.microedition.io.ConnectorImpl;
 import org.microemu.util.Base64Coder;
-import org.microemu.util.JadMidletEntry;
 import org.microemu.util.JadProperties;
 import org.microemu.util.MemoryRecordStoreManager;
 
@@ -472,7 +451,7 @@ public class Common implements MicroEmulator, CommonInterface {
 
         try {
             Common.launcher = new Launcher(this);
-            MIDletBridge.getMIDletAccess(launcher).startApp();
+            MIDletBridge.getMIDletAccessForMIDlet(launcher).startApp();
         } catch (Throwable e) {
             Message.error("Unable to start launcher MIDlet, " + Message.getCauseMessage(e), e);
             this.handleStartMidletException(e);
@@ -1071,7 +1050,7 @@ public class Common implements MicroEmulator, CommonInterface {
                 midlet = this.loadMidlet(midletClass, MIDletBridge.getMIDletAccess());
                 if (startMidlet) {
                     try {
-                        MIDletBridge.getMIDletAccess(midlet).startApp();
+                        MIDletBridge.getMIDletAccessForMIDlet(midlet).startApp();
                     } catch (MIDletStateChangeException e) {
                         Logger.error(e);
                     }
@@ -1089,7 +1068,7 @@ public class Common implements MicroEmulator, CommonInterface {
         MIDlet midlet = this.loadMidlet(entry.getMIDletClass(), MIDletBridge.getMIDletAccess());
         if (startMidlet) {
             try {
-                MIDletBridge.getMIDletAccess(midlet).startApp();
+                MIDletBridge.getMIDletAccessForMIDlet(midlet).startApp();
             } catch (MIDletStateChangeException e) {
                 Logger.error(e);
             }

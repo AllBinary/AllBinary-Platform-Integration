@@ -23,6 +23,7 @@ import org.allbinary.logic.string.StringMaker;
  *
  * @author User
  */
+//microemu-android-ab
 public class FontDebug extends FontDebugBase {
     protected final LogUtil logUtil = LogUtil.getInstance();
 

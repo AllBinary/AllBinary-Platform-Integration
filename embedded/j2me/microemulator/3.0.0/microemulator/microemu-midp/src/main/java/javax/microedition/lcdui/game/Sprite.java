@@ -135,7 +135,6 @@ public class Sprite extends Layer {
     
     //TWB - OpenGL Only
     public Sprite(Image img, int frameWidth, int frameHeight, int cols, int rows)
-    throws Exception
     {
         this(img, frameWidth, frameHeight);
         //throw new Exception("This constructor is OpenGL only");

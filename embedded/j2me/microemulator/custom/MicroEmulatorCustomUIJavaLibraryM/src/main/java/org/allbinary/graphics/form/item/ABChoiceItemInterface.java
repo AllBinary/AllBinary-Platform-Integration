@@ -5,7 +5,9 @@
  */
 package org.allbinary.graphics.form.item;
 
-public interface CustomItemInterface extends org.microemu.graphics.form.item.CustomItemInterface
+import org.microemu.graphics.form.item.ChoiceItemInterface;
+
+public interface ABChoiceItemInterface extends ChoiceItemInterface
 {
 
 }

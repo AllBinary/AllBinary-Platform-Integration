@@ -13,10 +13,11 @@ import org.allbinary.J2MEUtil;
 import org.allbinary.game.configuration.feature.Features;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.MyFont;
+import org.allbinary.graphics.form.item.ABCustomItemInterface;
 import org.allbinary.graphics.opengles.OpenGLFeatureFactory;
 
 public class TextItem extends CustomCustomItem 
-implements org.allbinary.graphics.form.item.CustomItemInterface
+implements ABCustomItemInterface
 {
     //private Screen owner;
 

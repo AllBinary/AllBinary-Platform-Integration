@@ -17,7 +17,7 @@ package org.allbinary.graphics.form.item;
  *
  * @author User
  */
-public class CustomItemState implements CustomItemStateListener {
+public class CustomItemState implements ABCustomItemStateListener {
  
     public static final CustomItemState NULL_CUSTOM_ITEM_STATE = new CustomItemState();
     

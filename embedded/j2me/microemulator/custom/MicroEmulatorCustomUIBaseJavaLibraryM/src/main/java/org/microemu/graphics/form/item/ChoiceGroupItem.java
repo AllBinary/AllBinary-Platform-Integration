@@ -34,9 +34,9 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.List;
 import javax.microedition.lcdui.NullCanvas;
 
-import org.allbinary.graphics.form.item.ChoiceItemInterface;
+import org.allbinary.graphics.form.item.ABChoiceItemInterface;
 import org.allbinary.graphics.form.item.ABCustomItem;
-import org.allbinary.graphics.form.item.ImageStringItem;
+import org.allbinary.graphics.form.item.ABImageStringItem;
 import org.allbinary.graphics.opengles.OpenGLCapabilities;
 import org.allbinary.graphics.opengles.OpenGLFeatureFactory;
 
@@ -48,7 +48,7 @@ import org.allbinary.logic.string.StringUtil;
 //
 //import org.allbinary.logic.communication.log.LogUtil;
 
-public class ChoiceGroupItem extends ABCustomItem implements ChoiceItemInterface
+public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterface
 {
     public static final List NULL_LIST = new List(StringUtil.getInstance().EMPTY_STRING, Choice.IMPLICIT);
 
@@ -747,7 +747,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ChoiceItemInterface
       super.repaint();
     }*/
 
-    class ChoiceItem extends ImageStringItem
+    class ChoiceItem extends ABImageStringItem
     {
         private boolean selected;
         private Font font;

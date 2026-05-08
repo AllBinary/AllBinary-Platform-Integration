@@ -8,11 +8,11 @@ package org.allbinary.graphics.form.item;
 import javax.microedition.lcdui.Image;
 
 import org.allbinary.graphics.color.BasicColor;
-
-public class ImageStringItem extends org.microemu.graphics.form.item.ImageStringItem
+import org.microemu.graphics.form.item.ImageStringItem;
+public class ABImageStringItem extends ImageStringItem
 {
-    public ImageStringItem(String label, Image img, String text, 
-            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
+    public ABImageStringItem(String label, Image img, String text,
+                             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(label, img, text, backgroundBasicColor, foregroundBasicColor);
     }

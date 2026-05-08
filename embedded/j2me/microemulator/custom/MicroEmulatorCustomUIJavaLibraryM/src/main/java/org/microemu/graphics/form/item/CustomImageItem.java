@@ -13,6 +13,7 @@ import javax.microedition.lcdui.Screen;
 import org.allbinary.graphics.Anchor;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.MyFont;
+import org.allbinary.graphics.form.item.ABCustomItemInterface;
 
 /**
  *
@@ -20,7 +21,7 @@ import org.allbinary.graphics.font.MyFont;
  */
 public class CustomImageItem
     extends ImageItem
-    implements org.allbinary.graphics.form.item.CustomItemInterface {
+    implements ABCustomItemInterface {
 
     private Screen owner = NullCanvas.NULL_SCREEN;
 

@@ -5,7 +5,8 @@
  */
 package org.allbinary.graphics.form.item;
 
-public interface CustomItemStateListener extends org.microemu.graphics.form.item.CustomItemStateListener
+import org.microemu.graphics.form.item.CustomItemStateListener;
+public interface ABCustomItemStateListener extends CustomItemStateListener
 {
 
 }

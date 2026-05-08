@@ -10,7 +10,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.NullCanvas;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
-import org.allbinary.graphics.form.item.CustomItemStateListener;
+import org.allbinary.graphics.form.item.ABCustomItemStateListener;
 
 import org.allbinary.string.CommonSeps;
 import org.allbinary.logic.string.StringMaker;
@@ -34,7 +34,7 @@ public class CustomForm extends CustomScreen
     
     private ABCustomItem[] items = new ABCustomItem[16];
 	private int numOfItems = 0;
-	private CustomItemStateListener itemStateListener = CustomItemState.NULL_CUSTOM_ITEM_STATE;
+	private ABCustomItemStateListener itemStateListener = CustomItemState.NULL_CUSTOM_ITEM_STATE;
 	private int selectedIndex;
 
     public CustomForm(String title, ABCustomItem[] items, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
@@ -169,7 +169,7 @@ public class CustomForm extends CustomScreen
 	}
 
 	
-	public void setItemStateListener(CustomItemStateListener iListener) 
+	public void setItemStateListener(ABCustomItemStateListener iListener)
 	{
 		this.itemStateListener = iListener;
 	}

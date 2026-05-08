@@ -6,11 +6,12 @@
 package org.allbinary.graphics.form.item;
 
 import org.allbinary.graphics.color.BasicColor;
+import org.microemu.graphics.form.item.TextItem;
 
-public class TextItem extends org.microemu.graphics.form.item.TextItem
+public class ABTextItem extends TextItem
 {
-    public TextItem(String label, int layout, String altText, 
-            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
+    public ABTextItem(String label, int layout, String altText,
+                      BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(label, layout, altText, backgroundBasicColor, foregroundBasicColor);
     }

@@ -25,24 +25,25 @@
  */
 
 package org.microemu.android.device.ui;
-import android.app.Activity;
-import org.allbinary.logic.NullUtil;
-import org.allbinary.thread.ARunnable;
-
 
 import javax.microedition.lcdui.Command;
+
+import android.graphics.Canvas;
+import android.app.Activity;
+import android.content.Context;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.microemu.CustomItemAccess;
 import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
 import org.microemu.android.device.AndroidDisplayGraphics;
 import org.microemu.device.ui.CustomItemUI;
-
-import android.content.Context;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import org.microemu.android.MicroEmulatorActivity;
+
+import org.allbinary.logic.NullUtil;
+import org.allbinary.thread.ARunnable;
 
 public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 
@@ -139,7 +140,7 @@ public class AndroidCustomItemUI extends LinearLayout implements CustomItemUI {
 		}
 		
 		@Override
-		protected void onDraw(android.graphics.Canvas androidCanvas) {
+		protected void onDraw(Canvas androidCanvas) {
 			MIDletAccess ma = MIDletBridge.getMIDletAccess();
 			if (ma == null) {
 				return;

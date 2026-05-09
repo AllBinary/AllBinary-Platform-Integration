@@ -96,7 +96,8 @@ public class CustomCustomItem extends ABCustomItem {
 	protected void keyRepeated(int keyCode) {
 	}
 
-	public void paint(Graphics graphics, int x, int y)
+        @Override
+	public void paintXY(Graphics graphics, int x, int y)
 	{
 	    
 	}
@@ -141,7 +142,7 @@ public class CustomCustomItem extends ABCustomItem {
 	    //logUtil.putF(commonStrings.START, this, "paint");
 	    
 		//super.paintContent(graphics);
-		this.paint(graphics, 0, 0);
+		this.paintXY(graphics, 0, 0);
 		return this.getHeight();
 	}
 }

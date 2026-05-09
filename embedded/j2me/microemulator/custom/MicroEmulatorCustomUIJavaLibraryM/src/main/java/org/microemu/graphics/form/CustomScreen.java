@@ -30,10 +30,10 @@ public class CustomScreen extends CustomDisplayable
     }
     */
     
+    //abstract
 	int traverse(int gameKeyCode, int top, int bottom)
 	{
-        //abstract
-        ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
+            ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
 	    return 0;
 	}
 
@@ -71,7 +71,7 @@ public class CustomScreen extends CustomDisplayable
         @Override
 	public void keyRepeated(int keyCode) 
 	{
-		keyPressed(keyCode);
+		this.keyPressed(keyCode);
 	}
 
         @Override
@@ -91,15 +91,15 @@ public class CustomScreen extends CustomDisplayable
 		*/
 		
 		g.setColor(this.title.getBackgroundBasicColor().intValue());
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		g.setColor(this.title.getForegroundBasicColor().intValue());
 
 		g.translate(0, contentHeight);
 		translatedY = contentHeight;
 
         // TODO move to Displayable
-		contentHeight += title.paint(g);
-		g.drawLine(0, title.getHeight() + 4, getWidth(), title.getHeight() + 4);
+		contentHeight += this.title.paint(g);
+		g.drawLine(0, this.title.getHeight() + 4, this.getWidth(), this.title.getHeight() + 4);
 		contentHeight += 5;
 
 		g.translate(0, contentHeight - translatedY);

@@ -5,6 +5,8 @@
  */
 package org.allbinary.graphics.form.item;
 
+import javax.microedition.lcdui.Graphics;
+
 import org.microemu.graphics.form.item.CustomItem;
 
 import org.allbinary.graphics.color.BasicColor;
@@ -23,4 +25,14 @@ public class ABCustomItem extends CustomItem
     {
         super(label, backgroundBasicColor, foregroundBasicColor);
     }
+
+    public void paintXY(Graphics graphics, int x, int y)
+    {
+
+    }
+
+    public void paintUnselected(Graphics graphics, int x, int y) {
+
+    }
+
 }

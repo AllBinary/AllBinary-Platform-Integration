@@ -79,7 +79,7 @@ public class CustomImageItem
     private int anchor = Anchor.TOP_LEFT;
 
     @Override
-    public void paint(Graphics graphics, int x, int y) {
+    public void paintXY(Graphics graphics, int x, int y) {
         Image image = this.getImage();
         int layout = this.getLayout();
         // int height = image.getHeight();

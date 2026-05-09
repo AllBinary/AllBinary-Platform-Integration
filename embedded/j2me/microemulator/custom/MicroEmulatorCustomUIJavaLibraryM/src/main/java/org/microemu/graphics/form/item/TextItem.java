@@ -97,7 +97,7 @@ implements ABCustomItemInterface
     }
 
     @Override
-    public void paint(Graphics graphics, int x, int y)
+    public void paintXY(Graphics graphics, int x, int y)
     {
         graphics.setColor(this.getLabelStringComponent().getForegroundBasicColor().intValue());
         graphics.drawString(this.getLabel(), x + this.offsetX, y, 0);

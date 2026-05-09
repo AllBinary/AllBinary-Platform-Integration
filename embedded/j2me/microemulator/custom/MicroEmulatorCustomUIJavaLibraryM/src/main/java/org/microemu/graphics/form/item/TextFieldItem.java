@@ -132,7 +132,7 @@ public class TextFieldItem extends TextItem
     }
     
     @Override
-    public void paint(Graphics graphics, int x, int y)
+    public void paintXY(Graphics graphics, int x, int y)
     {
 
         final MyFont myFont = MyFont.getInstance();
@@ -147,7 +147,7 @@ public class TextFieldItem extends TextItem
             height = this.stringComponent.getHeight() + 4;
         }
         
-        super.paint(graphics, x, y);
+        super.paintXY(graphics, x, y);
         
         graphics.setColor(this.stringComponent.getBackgroundBasicColor().intValue());
         

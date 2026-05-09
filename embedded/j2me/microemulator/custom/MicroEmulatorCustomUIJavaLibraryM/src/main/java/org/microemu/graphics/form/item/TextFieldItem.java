@@ -59,7 +59,7 @@ public class TextFieldItem extends TextItem
     {
         super(label, layout, altText, backgroundBasicColor, foregroundBasicColor);
 
-        this.logUtil.putF(commonStrings.START + font.getSize(), this, commonStrings.CONSTRUCTOR);
+        this.logUtil.putF(this.commonStrings.START + font.getSize(), this, this.commonStrings.CONSTRUCTOR);
         
         this.stringComponent = new StringComponent(StringUtil.getInstance().EMPTY_STRING, font, backgroundBasicColor, foregroundBasicColor);
         

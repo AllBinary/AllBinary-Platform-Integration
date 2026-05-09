@@ -126,7 +126,7 @@ public class ImageItem extends ABCustomItem
 
 		if (this.img != null) {
 			g.translate(0, super.getHeight());
-			if (layout == LAYOUT_DEFAULT || layout == LAYOUT_LEFT) {
+			if (this.layout == ImageItem.LAYOUT_DEFAULT || this.layout == ImageItem.LAYOUT_LEFT) {
 				g.drawImage(this.img, 0, 0, Graphics.LEFT | Graphics.TOP);
 			} else if (layout == LAYOUT_RIGHT) {
 				g.drawImage(img, owner.getWidth(), 0, Graphics.RIGHT | Graphics.TOP);

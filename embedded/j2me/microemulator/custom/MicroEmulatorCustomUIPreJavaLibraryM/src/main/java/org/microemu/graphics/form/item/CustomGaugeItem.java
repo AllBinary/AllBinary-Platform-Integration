@@ -142,8 +142,8 @@ public class CustomGaugeItem extends CustomItem
     {
         graphics.setColor(this.getLabelStringComponent().getBackgroundBasicColor().intValue());
         //g.fillRect(0, 0, g.getClipWidth(), g.getClipHeight());
-        //graphics.fillRect(0, 0, graphics.getClipWidth(), height);
-        graphics.fillRect(0, 0, this.displayInfoSingleton.getLastWidth(), height);
+        //graphics.fillRect(0, 0, graphics.getClipWidth(), this.height);
+        graphics.fillRect(0, 0, this.displayInfoSingleton.getLastWidth(), this.height);
 
         // Don't use WHITE.intValue() because of static load time
         graphics.setColor(this.getCurrentInnerColor());

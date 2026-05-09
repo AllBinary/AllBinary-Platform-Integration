@@ -107,7 +107,7 @@ public class TextFieldItemHelper
             
         } catch(Exception e) {
             final CommonStrings commonStrings = CommonStrings.getInstance();
-            this.logUtil.put(commonStrings.EXCEPTION, this, gameInputStrings.KEY_PRESSED, e);
+            this.logUtil.put(commonStrings.EXCEPTION, this, this.gameInputStrings.KEY_PRESSED, e);
         }
         return true;
     }

@@ -89,13 +89,13 @@ public class CustomImageItem
         graphics.setColor(this.basicColor.intValue());
 
         if (layout == LAYOUT_DEFAULT || layout == LAYOUT_LEFT) {
-            graphics.drawImage(image, x, height, anchor);
+            graphics.drawImage(image, x, height, this.anchor);
         } else if (layout == LAYOUT_RIGHT) {
             graphics.drawImage(image, owner.getWidth(), x, anchor);
         } else if (layout == LAYOUT_CENTER) {
             graphics.drawImage(image, (owner.getWidth() >> 1), x, topCenterAnchor);
         } else {
-            graphics.drawImage(image, x, 0, anchor);
+            graphics.drawImage(image, x, 0, this.anchor);
         }
 
         graphics.drawString(this.labelViewable, x + 2, y - this.yOffset, 0);

@@ -342,9 +342,9 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                 .getLabelStringComponent().getBackgroundBasicColor(), this
                 .getLabelStringComponent().getForegroundBasicColor());
 
-        ++numOfItems;
+        ++this.numOfItems;
 
-        if (numOfItems == 1)
+        if (this.numOfItems == 1)
         {
             this.highlightedItemIndex = 0;
             if (ChoiceGroupItem.EXCLUSIVE == this.choiceType

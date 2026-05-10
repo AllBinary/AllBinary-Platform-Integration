@@ -28,13 +28,13 @@ public class FontDebugFactoryBase {
     public final FontDebugBase DEBUG;
     public final FontDebugBase NO_DEBUG;
     
-    public FontDebugFactoryBase(FontDebugBase debug, FontDebugBase noDebug) {
+    public FontDebugFactoryBase(final FontDebugBase debug, final FontDebugBase noDebug) {
         this.DEBUG = debug;
         this.NO_DEBUG = noDebug;
     }
     
     public void setFont(final Font font, final Graphics graphics) {
-        final GraphicsInterface graphicsInterface = (GraphicsInterface) graphics;
-        graphicsInterface.setFontDebug(font, NO_DEBUG);
+        final GraphicsInterface graphicsInterface = (GraphicsInterface) /*TS as unknown */ graphics;
+        graphicsInterface.setFontDebug(font, this.NO_DEBUG);
     }
 }

@@ -17,6 +17,7 @@ package javax.microedition.lcdui;
  *
  * @author User
  */
+//microemu-midp 3.0.0
 public class PostLoadPlatformImage extends PlatformImage {
 
     @Override

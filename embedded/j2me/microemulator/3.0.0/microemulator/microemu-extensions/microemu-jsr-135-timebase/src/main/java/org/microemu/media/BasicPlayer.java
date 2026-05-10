@@ -31,6 +31,7 @@ import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 import javax.microedition.media.TimeBase;
 
+//microemu-jsr-135-timebase:3.0.0
 public abstract class BasicPlayer implements Player
 {
    public static String CONTROL_TYPE = "ToneControl";

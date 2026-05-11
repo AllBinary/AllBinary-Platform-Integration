@@ -105,7 +105,7 @@ public class CustomGaugeItem extends CustomItem
         if (maxValue > 0)
         {
             this.maxValue = (float) maxValue;
-            this.setValue(getValue());
+            this.setValue(this.getValue());
         }
         else
         {
@@ -138,7 +138,7 @@ public class CustomGaugeItem extends CustomItem
         return super.getPreferredHeight();
     }
 
-    public void paint(Graphics graphics, int unused, int hunused)
+    public void paintWH(Graphics graphics, int unused, int hunused)
     {
         graphics.setColor(this.getLabelStringComponent().getBackgroundBasicColor().intValue());
         //g.fillRect(0, 0, g.getClipWidth(), g.getClipHeight());

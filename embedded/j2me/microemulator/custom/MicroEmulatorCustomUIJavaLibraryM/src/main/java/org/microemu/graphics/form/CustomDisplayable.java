@@ -101,10 +101,10 @@ public class CustomDisplayable extends Paintable
     {
     }
 
-    final void hideNotify(Display d)
-    {
-        this.hideNotify();
-    }
+//    final void hideNotify(Display d)
+//    {
+//        this.hideNotify();
+//    }
 
     public void keyPressed(int keyCode)
     {

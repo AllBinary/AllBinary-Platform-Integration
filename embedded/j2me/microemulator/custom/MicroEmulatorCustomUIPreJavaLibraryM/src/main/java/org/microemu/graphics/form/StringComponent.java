@@ -82,7 +82,7 @@ public class StringComponent
                 this.stringComponentProperties.hasNotChanged[num] = true;
             }
 
-            return stringComponentProperties.lastWidth[num];
+            return this.stringComponentProperties.lastWidth[num];
         //}
     }
 
@@ -132,7 +132,7 @@ public class StringComponent
             height = this.stringComponentProperties.numOfBreaks * this.font.getHeight();
 
             if (this.stringComponentProperties.breaks[this.stringComponentProperties.numOfBreaks - 1] == this.stringComponentProperties.text.length() - 1
-                    && stringComponentProperties.text.charAt(stringComponentProperties.text.length() - 1) == '\n')
+                    && this.stringComponentProperties.text.charAt(this.stringComponentProperties.text.length() - 1) == '\n')
             {
             }
             else

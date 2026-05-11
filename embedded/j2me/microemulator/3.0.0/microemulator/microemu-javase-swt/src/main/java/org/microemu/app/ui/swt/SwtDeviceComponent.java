@@ -537,7 +537,7 @@ public class SwtDeviceComponent extends Canvas {
                         try {
                             
                             final GameRunnable gameRunnable = NullWaitGameRunnable.getInstance();
-                            gameRunnable.wait = gameRunnable.FAST;
+                            gameRunnable.waitInMillis = gameRunnable.FAST;
 
                             final SwtDeviceDisplay deviceDisplay = (SwtDeviceDisplay) DeviceFactory.getDevice().getDeviceDisplay();
                             //shell.getLocation().x, shell.getLocation().y

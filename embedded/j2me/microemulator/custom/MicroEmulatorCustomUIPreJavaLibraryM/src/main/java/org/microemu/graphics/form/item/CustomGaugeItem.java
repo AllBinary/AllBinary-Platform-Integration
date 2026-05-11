@@ -138,7 +138,7 @@ public class CustomGaugeItem extends CustomItem
         return super.getPreferredHeight();
     }
 
-    public void paintWH(Graphics graphics, int unused, int hunused)
+    public void paintXY(Graphics graphics, int xunused, int yunused)
     {
         graphics.setColor(this.getLabelStringComponent().getBackgroundBasicColor().intValue());
         //g.fillRect(0, 0, g.getClipWidth(), g.getClipHeight());

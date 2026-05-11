@@ -118,7 +118,7 @@ public class CustomCustomItem extends ABCustomItem {
 	protected void pointerReleased(int x, int y) {
 	}
 	
-	protected final void repaint(int x, int y, int w, int h) {
+	protected final void repaintXYWH(int x, int y, int w, int h) {
 		this.repaint();
 	}
 	
@@ -128,8 +128,7 @@ public class CustomCustomItem extends ABCustomItem {
 	protected void sizeChanged(int w, int h) {
 	}
 	
-	protected boolean traverse(int dir, int viewportWidth,
-            					int viewportHeight, int[] visRect_inout) {
+	protected boolean traverseViewport(int dir, int viewportWidth, int viewportHeight, int[] visRect_inout) {
 		return false;
 	}
 

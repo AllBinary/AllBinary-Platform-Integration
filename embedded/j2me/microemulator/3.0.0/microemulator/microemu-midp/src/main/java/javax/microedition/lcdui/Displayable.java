@@ -227,7 +227,7 @@ public class Displayable
         this.openGLESGraphics.setCameraMode();
     }
     
-    public void drawThreed(GL gl)
+    public void drawThreedGL(GL gl)
     {
         this.openGLESGraphics.set(gl);
         this.paintThreed(this.openGLESGraphics);

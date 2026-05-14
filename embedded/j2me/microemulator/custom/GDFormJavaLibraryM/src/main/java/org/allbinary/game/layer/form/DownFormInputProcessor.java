@@ -13,7 +13,6 @@
  */
 package org.allbinary.game.layer.form;
 
-import org.allbinary.game.input.event.DownGameKeyEventHandler;
 import org.allbinary.game.input.event.DownKeyEventHandler;
 import org.allbinary.logic.util.event.EventListenerInterface;
 import org.allbinary.util.BasicArrayList;
@@ -29,7 +28,7 @@ public class DownFormInputProcessor extends PlatformFormInputProcessor {
     
     public void addListener(final EventListenerInterface eventListenerInterface) {
         //this.downGameKeyEventHandler.addListener(eventListenerInterface);
-        this.downKeyEventHandler.addListener(eventListenerInterface);
+        this.downKeyEventHandler.addListenerInterface(eventListenerInterface);
     }
     
     public void addListeners(final BasicArrayList list) {

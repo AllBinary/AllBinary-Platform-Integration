@@ -65,8 +65,8 @@ public class GDFormInputProcessor
     public void append(final GDFormInput gdFormInput) {
 
         this.platformFormInputProcessor.addListener(gdFormInput);
-        this.basicMotionGesturesHandler.addListener(gdFormInput);
-        this.movedMotionGesturesHandler.addListener(gdFormInput);
+        this.basicMotionGesturesHandler.addListenerInterface(gdFormInput);
+        this.movedMotionGesturesHandler.addListenerInterface(gdFormInput);
         
         if(!this.sceneFormInputListenerList.contains(gdFormInput)) {
             this.sceneFormInputListenerList.add(gdFormInput);

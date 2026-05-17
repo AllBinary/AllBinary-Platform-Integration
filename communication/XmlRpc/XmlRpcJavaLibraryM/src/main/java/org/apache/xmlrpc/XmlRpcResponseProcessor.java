@@ -164,7 +164,7 @@ public class XmlRpcResponseProcessor
                     + "client: " + e);
         }
 
-        return (writer != null ? buffer.toByteArray() : EMPTY_BYTE_ARRAY);
+        return (writer != null ? buffer.toByteArray() : this.EMPTY_BYTE_ARRAY);
     }
 
      /**

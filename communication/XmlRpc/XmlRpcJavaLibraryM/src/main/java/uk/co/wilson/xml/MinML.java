@@ -158,7 +158,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   int level = 0;
   int mixedContentLevel = -1;
   String elementName = null;
-  String state = operands[inSkipping];
+  String state = this.operands[this.inSkipping];
 
     this.lineNumber = 1;
     this.columnNumber = 0;
@@ -178,7 +178,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
         if (currentChar > ']') {
           transition = state.charAt(14);
         } else {
-        final int charClass = charClasses[currentChar + 1];
+        final int charClass = this.charClasses[currentChar + 1];
 
           if (charClass == -1)
           {
@@ -207,7 +207,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
         this.columnNumber++;
 
-        String operand = operands[transition >>> 8];
+        String operand = this.operands[transition >>> 8];
 
         switch (transition & 0XFF) {
           case MinML.endStartName:
@@ -265,7 +265,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
             }
 
             if (mixedContentLevel != -1 && --mixedContentLevel == 0)
-              operand = operands[inCharData];
+              operand = this.operands[this.inCharData];
 
             break;  // change state to operand
 
@@ -620,18 +620,18 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     }
 
     public void write(final int c) throws IOException {
-      written = true;
+      this.written = true;
       this.chars[this.count++] = (char)c;
     }
 
     public void write(final char[] cbuf, final int off, final int len) throws IOException {
-      written = true;
-      System.arraycopy(cbuf, off, chars, count, len);
-      count += len;
+      this.written = true;
+      System.arraycopy(cbuf, off, this.chars, this.count, len);
+      this.count += len;
     }
 
     public void saveChar(final char c) {
-      written = false;
+      this.written = false;
       this.chars[this.count++] = c;
     }
 
@@ -640,7 +640,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
       this.writer = (writer == null) ? this : writer;
 
-      flushed = written = false;
+      this.flushed = this.written = false;
     }
 
     public Writer getWriter() {
@@ -658,14 +658,14 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     }
 
     public String getString() {
-    final String result = new String(chars, 0, count);
+    final String result = new String(this.chars, 0, this.count);
 
-      count = 0;
+      this.count = 0;
       return result;
     }
 
     public void reset() {
-      count = 0;
+      this.count = 0;
     }
 
     public int read() throws IOException {
@@ -674,22 +674,22 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           if (this.written) {
             this._flush();
           } else if (this.count >= (this.chars.length - MinML.this.bufferIncrement)) {
-          final char[] newChars = new char[chars.length + MinML.this.bufferIncrement];
+          final char[] newChars = new char[this.chars.length + MinML.this.bufferIncrement];
 
-            System.arraycopy(chars, 0, newChars, 0, count);
-            chars = newChars;
+            System.arraycopy(this.chars, 0, newChars, 0, this.count);
+            this.chars = newChars;
           }
         }
 
-        final int numRead = in.read(chars, count, chars.length - count);
+        final int numRead = this.in.read(this.chars, this.count, this.chars.length - this.count);
 
         if (numRead == -1) return -1;
 
-        this.nextIn = count;
-        this.lastIn = count + numRead;
+        this.nextIn = this.count;
+        this.lastIn = this.count + numRead;
       }
 
-      return chars[this.nextIn++];
+      return this.chars[this.nextIn++];
     }
 
     private void _flush() throws IOException {
@@ -697,13 +697,13 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
         try {
           if (this.writer == this) {
             try {
-              MinML.this.documentHandler.characters(chars, 0, count);
+              MinML.this.documentHandler.characters(this.chars, 0, this.count);
             }
             catch (final SAXException e) {
               throw new IOException(e.toString());
             }
           } else {
-            this.writer.write(chars, 0, count);
+            this.writer.write(this.chars, 0, this.count);
           }
         }
         finally {

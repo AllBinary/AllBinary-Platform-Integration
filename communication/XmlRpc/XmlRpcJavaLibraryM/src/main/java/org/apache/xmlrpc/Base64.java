@@ -77,7 +77,7 @@ import org.allbinary.string.CommonSeps;
  * @author Daniel Rall
  * @since 1.2
  */
-public final class  Base64
+public final class Base64
 {
     static final int CHUNK_SIZE = 76;
     static final byte[] CHUNK_SEPARATOR = CommonSeps.getInstance().NEW_LINE.getBytes();
@@ -97,9 +97,9 @@ public final class  Base64
 
     static
     {
-        for (int i = 0; i < BASELENGTH; i++ )
+        for (int i = 0; i < Base64.BASELENGTH; i++ )
         {
-            base64Alphabet[i] = -1;
+            Base64.base64Alphabet[i] = -1;
         }
         for (int i = 'Z'; i >= 'A'; i--)
         {
@@ -138,7 +138,7 @@ public final class  Base64
     public static boolean isBase64( byte octect )
     {
         //shall we ignore white space? JEFF??
-        return (octect == PAD || base64Alphabet[octect] != -1);
+        return (octect == Base64.PAD || Base64.base64Alphabet[octect] != -1);
     }
 
     public static boolean isArrayByteBase64( byte[] arrayOctect )
@@ -166,9 +166,9 @@ public final class  Base64
      */
     public static byte[] encode( byte[] binaryData )
     {
-        int      lengthDataBits    = binaryData.length*EIGHTBIT;
-        int      fewerThan24bits   = lengthDataBits%TWENTYFOURBITGROUP;
-        int      numberTriplets    = lengthDataBits/TWENTYFOURBITGROUP;
+        int      lengthDataBits    = binaryData.length * Base64.EIGHTBIT;
+        int      fewerThan24bits   = lengthDataBits % Base64.TWENTYFOURBITGROUP;
+        int      numberTriplets    = lengthDataBits / Base64.TWENTYFOURBITGROUP;
         byte     encodedData[]     = null;
         int      encodedDataLength = 0;
 
@@ -184,10 +184,10 @@ public final class  Base64
         }
 
         // allow extra length for the separator
-        int nbrChunks = (CHUNK_SEPARATOR.length == 0 ? 0 :
+        int nbrChunks = (Base64.CHUNK_SEPARATOR.length == 0 ? 0 :
                          (int) Math.ceil((float) encodedDataLength / Base64.CHUNK_SIZE));
 
-        encodedDataLength += nbrChunks * CHUNK_SEPARATOR.length;
+        encodedDataLength += nbrChunks * Base64.CHUNK_SEPARATOR.length;
         encodedData = new byte[encodedDataLength];
 
         byte k = 0, l = 0, b1 = 0, b2 = 0, b3 = 0;
@@ -195,7 +195,7 @@ public final class  Base64
         int encodedIndex = 0;
         int dataIndex   = 0;
         int i           = 0;
-        int nextSeparatorIndex = CHUNK_SIZE;
+        int nextSeparatorIndex = Base64.CHUNK_SIZE;
         int chunksSoFar = 0;
 
         //log.debug("number of triplets = " + numberTriplets);
@@ -211,30 +211,30 @@ public final class  Base64
             l  = (byte)(b2 & 0x0f);
             k  = (byte)(b1 & 0x03);
 
-            byte val1 = ((b1 & SIGN)==0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
-            byte val2 = ((b2 & SIGN)==0)?(byte)(b2>>4):(byte)((b2)>>4^0xf0);
-            byte val3 = ((b3 & SIGN)==0)?(byte)(b3>>6):(byte)((b3)>>6^0xfc);
+            byte val1 = ((b1 & Base64.SIGN)==0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
+            byte val2 = ((b2 & Base64.SIGN)==0)?(byte)(b2>>4):(byte)((b2)>>4^0xf0);
+            byte val3 = ((b3 & Base64.SIGN)==0)?(byte)(b3>>6):(byte)((b3)>>6^0xfc);
 
-            encodedData[encodedIndex]   = lookUpBase64Alphabet[ val1 ];
+            encodedData[encodedIndex]   = Base64.lookUpBase64Alphabet[ val1 ];
             //log.debug( "val2 = " + val2 );
             //log.debug( "k4   = " + (k<<4) );
             //log.debug(  "vak  = " + (val2 | (k<<4)) );
             encodedData[encodedIndex+1] =
-                lookUpBase64Alphabet[ val2 | ( k<<4 )];
+                Base64.lookUpBase64Alphabet[ val2 | ( k<<4 )];
             encodedData[encodedIndex+2] =
-                lookUpBase64Alphabet[ (l <<2 ) | val3 ];
-            encodedData[encodedIndex+3] = lookUpBase64Alphabet[ b3 & 0x3f ];
+                Base64.lookUpBase64Alphabet[ (l <<2 ) | val3 ];
+            encodedData[encodedIndex+3] = Base64.lookUpBase64Alphabet[ b3 & 0x3f ];
 
             encodedIndex += 4;
 
             // this assumes that CHUNK_SIZE % 4 == 0
             if(encodedIndex == nextSeparatorIndex){
-                System.arraycopy(CHUNK_SEPARATOR, 0, encodedData,
-                                 encodedIndex, CHUNK_SEPARATOR.length);
+                System.arraycopy(Base64.CHUNK_SEPARATOR, 0, encodedData,
+                                 encodedIndex, Base64.CHUNK_SEPARATOR.length);
                 chunksSoFar++;
-                nextSeparatorIndex = (CHUNK_SIZE * (chunksSoFar + 1)) +
-                                     (chunksSoFar * CHUNK_SEPARATOR.length);
-                encodedIndex += CHUNK_SEPARATOR.length;
+                nextSeparatorIndex = (Base64.CHUNK_SIZE * (chunksSoFar + 1)) +
+                                     (chunksSoFar * Base64.CHUNK_SEPARATOR.length);
+                encodedIndex += Base64.CHUNK_SEPARATOR.length;
             }
         }
 
@@ -247,7 +247,7 @@ public final class  Base64
             k = (byte) ( b1 &0x03 );
             //log.debug("b1=" + b1);
             //log.debug("b1<<2 = " + (b1>>2) );
-            byte val1 = ((b1 & SIGN)==0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
+            byte val1 = ((b1 & Base64.SIGN)==0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
             encodedData[encodedIndex]     = Base64.lookUpBase64Alphabet[ val1 ];
             encodedData[encodedIndex + 1] = Base64.lookUpBase64Alphabet[ k<<4 ];
             encodedData[encodedIndex + 2] = Base64.PAD;
@@ -261,8 +261,8 @@ public final class  Base64
             l = (byte) (b2 & 0x0f);
             k = (byte) (b1 & 0x03);
 
-            byte val1 = ((b1 & SIGN) == 0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
-            byte val2 = ((b2 & SIGN) == 0)?(byte)(b2>>4):(byte)((b2)>>4^0xf0);
+            byte val1 = ((b1 & Base64.SIGN) == 0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
+            byte val2 = ((b2 & Base64.SIGN) == 0)?(byte)(b2>>4):(byte)((b2)>>4^0xf0);
 
             encodedData[encodedIndex]     = Base64.lookUpBase64Alphabet[ val1 ];
             encodedData[encodedIndex + 1] =
@@ -273,8 +273,8 @@ public final class  Base64
 
         // we also add a separator to the end of the final chunk.
         if(chunksSoFar < nbrChunks)
-            System.arraycopy(CHUNK_SEPARATOR, 0, encodedData,
-                             encodedDataLength - CHUNK_SEPARATOR.length, CHUNK_SEPARATOR.length);
+            System.arraycopy(Base64.CHUNK_SEPARATOR, 0, encodedData,
+                             encodedDataLength - Base64.CHUNK_SEPARATOR.length, Base64.CHUNK_SEPARATOR.length);
 
         return encodedData;
     }
@@ -294,7 +294,7 @@ public final class  Base64
         // handle the edge case, so we don't have to worry about it later
         if(base64Data.length == 0) { return new byte[0]; }
 
-        int      numberQuadruple    = base64Data.length/FOURBYTE;
+        int      numberQuadruple    = base64Data.length / Base64.FOURBYTE;
         byte     decodedData[]      = null;
         byte     b1=0,b2=0,b3=0, b4=0, marker0=0, marker1=0;
 
@@ -322,29 +322,29 @@ public final class  Base64
             marker0   = base64Data[dataIndex + 2];
             marker1   = base64Data[dataIndex + 3];
 
-            b1 = base64Alphabet[base64Data[dataIndex]];
-            b2 = base64Alphabet[base64Data[dataIndex +1]];
+            b1 = Base64.base64Alphabet[base64Data[dataIndex]];
+            b2 = Base64.base64Alphabet[base64Data[dataIndex +1]];
 
-            if (marker0 != PAD && marker1 != PAD)
+            if (marker0 != Base64.PAD && marker1 != Base64.PAD)
             {
                 //No PAD e.g 3cQl
-                b3 = base64Alphabet[ marker0 ];
-                b4 = base64Alphabet[ marker1 ];
+                b3 = Base64.base64Alphabet[ marker0 ];
+                b4 = Base64.base64Alphabet[ marker1 ];
 
                 decodedData[encodedIndex]   = (byte)(  b1 <<2 | b2>>4 ) ;
                 decodedData[encodedIndex + 1] =
                     (byte)(((b2 & 0xf)<<4 ) |( (b3>>2) & 0xf) );
                 decodedData[encodedIndex + 2] = (byte)( b3<<6 | b4 );
             }
-            else if (marker0 == PAD)
+            else if (marker0 == Base64.PAD)
             {
                 //Two PAD e.g. 3c[Pad][Pad]
                 decodedData[encodedIndex]   = (byte)(  b1 <<2 | b2>>4 ) ;
             }
-            else if (marker1 == PAD)
+            else if (marker1 == Base64.PAD)
             {
                 //One PAD e.g. 3cQ[Pad]
-                b3 = base64Alphabet[ marker0 ];
+                b3 = Base64.base64Alphabet[ marker0 ];
 
                 decodedData[encodedIndex]   = (byte)(  b1 <<2 | b2>>4 );
                 decodedData[encodedIndex + 1] =

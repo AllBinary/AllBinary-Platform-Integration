@@ -88,12 +88,12 @@ public class CustomImageItem
 
         graphics.setColor(this.basicColor.intValue());
 
-        if (layout == LAYOUT_DEFAULT || layout == LAYOUT_LEFT) {
+        if (layout == CustomImageItem.LAYOUT_DEFAULT || layout == CustomImageItem.LAYOUT_LEFT) {
             graphics.drawImage(image, x, height, this.anchor);
-        } else if (layout == LAYOUT_RIGHT) {
-            graphics.drawImage(image, owner.getWidth(), x, anchor);
-        } else if (layout == LAYOUT_CENTER) {
-            graphics.drawImage(image, (owner.getWidth() >> 1), x, topCenterAnchor);
+        } else if (layout == CustomImageItem.LAYOUT_RIGHT) {
+            graphics.drawImage(image, this.owner.getWidth(), x, this.anchor);
+        } else if (layout == CustomImageItem.LAYOUT_CENTER) {
+            graphics.drawImage(image, (this.owner.getWidth() >> 1), x, this.topCenterAnchor);
         } else {
             graphics.drawImage(image, x, 0, this.anchor);
         }

@@ -117,28 +117,28 @@ public class XmlRpcClientLite extends XmlRpcClient
     {
         try
         {
-            Worker w = (Worker) pool.pop();
+            Worker w = (Worker) this.pool.pop();
             if (async)
             {
-                asyncWorkers += 1;
+                this.asyncWorkers += 1;
             }
             else
             {
-                workers += 1;
+                this.workers += 1;
             }
             return w;
         }
         catch (EmptyStackException x)
         {
-            if (workers < XmlRpc.getMaxThreads())
+            if (this.workers < XmlRpc.getMaxThreads())
             {
                 if (async)
                 {
-                    asyncWorkers += 1;
+                    this.asyncWorkers += 1;
                 }
                 else
                 {
-                    workers += 1;
+                    this.workers += 1;
                 }
                 return new LiteWorker();
             }
@@ -173,26 +173,26 @@ public class XmlRpcClientLite extends XmlRpcClient
                 throws XmlRpcException, IOException
         {
             long now = System.currentTimeMillis();
-            fault = false;
+            this.fault = false;
             try
             {
-                if (buffer == null)
+                if (this.buffer == null)
                 {
-                    buffer = new ByteArrayOutputStream();
+                    this.buffer = new ByteArrayOutputStream();
                 }
                 else
                 {
-                    buffer.reset();
+                    this.buffer.reset();
                 }
-                XmlWriter writer = new XmlWriter(buffer, encoding);
+                XmlWriter writer = new XmlWriter(this.buffer, this.encoding);
                 writeRequest(writer, method, params);
                 writer.flush();
-                byte[] request = buffer.toByteArray();
+                byte[] request = this.buffer.toByteArray();
 
                 // and send it to the server
                 if (this.client == null)
                 {
-                    this.client = new HttpClient(url);
+                    this.client = new HttpClient(XmlRpcClientLite.this.url);
                 }
 
                 InputStream in = null;
@@ -201,18 +201,18 @@ public class XmlRpcClientLite extends XmlRpcClient
                // from which to read the response
                 try
                 {
-                    in = client.sendRequest(request);
+                    in = this.client.sendRequest(request);
                 }
                 catch (IOException iox)
                 {
                     // if we get an exception while sending the request,
                     // and the connection is a keepalive connection, it may
                     // have been timed out by the server. Try again.
-                    if (client.keepalive)
+                    if (this.client.keepalive)
                     {
-                        client.closeConnection();
-                        client.initConnection();
-                        in = client.sendRequest(request);
+                        this.client.closeConnection();
+                        this.client.initConnection();
+                        in = this.client.sendRequest(request);
                     }
                     else
                     {
@@ -224,21 +224,21 @@ public class XmlRpcClientLite extends XmlRpcClient
                 parse(in);
 
                 // client keepalive is always false if XmlRpc.keepalive is false
-                if (!client.keepalive)
+                if (!this.client.keepalive)
                 {
-                    client.closeConnection ();
-                    client = null;
+                    this.client.closeConnection ();
+                    this.client = null;
                 }
 
-                if (debug)
+                if (this.debug)
                 {
-                    System.out.println ("result = " + result);
+                    System.out.println ("result = " + this.result);
                 }
 
                 // check for errors from the XML parser
-                if (errorLevel == FATAL)
+                if (this.errorLevel == this.FATAL)
                 {
-                    throw new Exception (errorMsg);
+                    throw new Exception (this.errorMsg);
                 }
             }
             catch (IOException iox)
@@ -264,14 +264,14 @@ public class XmlRpcClientLite extends XmlRpcClient
                 throw new IOException (msg);
             }
 
-            if (fault)
+            if (this.fault)
             {
                 // this is an XML-RPC-level problem, i.e. the server reported an error.
                 // throw an XmlRpcException.
                 XmlRpcException exception = null;
                 try
                 {
-                    Hashtable f = (Hashtable) result;
+                    Hashtable f = (Hashtable) this.result;
                     String faultString = (String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());
@@ -285,12 +285,12 @@ public class XmlRpcClientLite extends XmlRpcClient
                 }
                 throw exception;
             }
-            if (debug)
+            if (this.debug)
             {
                 System.out.println ("Spent " + (System.currentTimeMillis()
                         - now) + " millis in request");
             }
-            return result;
+            return this.result;
         }
     } // end of class Worker
 
@@ -317,18 +317,18 @@ public class XmlRpcClientLite extends XmlRpcClient
          */
         public HttpClient(URL url) throws IOException
         {
-            hostname = url.getHost();
-            port = url.getPort();
-            if (port < 1)
+            this.hostname = url.getHost();
+            this.port = url.getPort();
+            if (this.port < 1)
             {
-                port = 80;
+                this.port = 80;
             }
-            uri = url.getFile();
-            if (uri == null || StringUtil.getInstance().EMPTY_STRING.equals(uri))
+            this.uri = url.getFile();
+            if (this.uri == null || StringUtil.getInstance().EMPTY_STRING.equals(this.uri))
             {
-                uri = CommonSeps.getInstance().FORWARD_SLASH;
+                this.uri = CommonSeps.getInstance().FORWARD_SLASH;
             }
-            this.host = port == 80 ? hostname : hostname + CommonSeps.getInstance().COLON + port;
+            this.host = this.port == 80 ? this.hostname : this.hostname + CommonSeps.getInstance().COLON + this.port;
             this.initConnection();
         }
 
@@ -338,9 +338,9 @@ public class XmlRpcClientLite extends XmlRpcClient
          */
         protected void initConnection() throws IOException
         {
-            socket = new Socket(hostname, port);
-            output = new BufferedOutputStream(socket.getOutputStream());
-            input = new BufferedInputStream(socket.getInputStream());
+            this.socket = new Socket(this.hostname, this.port);
+            this.output = new BufferedOutputStream(this.socket.getOutputStream());
+            this.input = new BufferedInputStream(this.socket.getInputStream());
         }
 
         /**
@@ -365,18 +365,17 @@ public class XmlRpcClientLite extends XmlRpcClient
          */
         public InputStream sendRequest(byte[] request) throws IOException
         {
-            this.output.write(("POST " + uri + " HTTP/1.0\r\n").getBytes());
+            this.output.write(("POST " + this.uri + " HTTP/1.0\r\n").getBytes());
             this.output.write(("User-Agent: " + XmlRpc.version + "\r\n").getBytes());
-            this.output.write(("Host: " + host + "\r\n").getBytes());
+            this.output.write(("Host: " + this.host + "\r\n").getBytes());
             if (XmlRpc.getKeepAlive())
             {
                 this.output.write("Connection: Keep-Alive\r\n".getBytes());
             }
             this.output.write("Content-Type: text/xml\r\n".getBytes());
-            if (auth != null)
+            if (XmlRpcClientLite.this.auth != null)
             {
-                this.output.write(("Authorization: Basic " + auth + "\r\n")
-                        .getBytes());
+                this.output.write(("Authorization: Basic " + XmlRpcClientLite.this.auth + "\r\n").getBytes());
             }
             this.output.write(("Content-Length: " + request.length)
                     .getBytes());
@@ -437,7 +436,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 }
             }
             while (line != null && ! line.equals(""));
-            return new ServerInputStream(input, contentLength);
+            return new ServerInputStream(this.input, contentLength);
         }
 
         /**
@@ -455,21 +454,21 @@ public class XmlRpcClientLite extends XmlRpcClient
             int count = 0;
             while (true)
             {
-                next = input.read();
+                next = this.input.read();
                 if (next < 0 || next == '\n')
                 {
                     break;
                 }
                 if (next != '\r')
                 {
-                    buffer[count++] = (byte) next;
+                    this.buffer[count++] = (byte) next;
                 }
-                if (count >= buffer.length)
+                if (count >= this.buffer.length)
                 {
                     throw new IOException ("HTTP Header too long");
                 }
             }
-            return new String(buffer, 0, count);
+            return new String(this.buffer, 0, count);
         }
 
         /**

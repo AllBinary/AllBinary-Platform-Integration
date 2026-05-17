@@ -147,7 +147,7 @@ class ServerInputStream extends InputStream
         }
         else if (this.available == -1)
         {
-            return in.read(b, off, len);
+            return this.in.read(b, off, len);
         }
         return -1;
     }

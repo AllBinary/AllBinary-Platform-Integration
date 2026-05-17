@@ -106,8 +106,8 @@ class XmlWriter extends OutputStreamWriter
 
     static
     {
-        XmlWriter.encodings.put(UTF8, "UTF-8");
-        XmlWriter.encodings.put(ISO8859_1, "ISO-8859-1");
+        XmlWriter.encodings.put(XmlWriter.UTF8, "UTF-8");
+        XmlWriter.encodings.put(XmlWriter.ISO8859_1, "ISO-8859-1");
     }
 
     /**
@@ -132,9 +132,9 @@ class XmlWriter extends OutputStreamWriter
         //System.out.println("XmlRpcClient - XmlWriter - constructor: " + enc);
         
         // Add the XML prolog (including the encoding in XML form).
-        write(PROLOG_START);
+        write(XmlWriter.PROLOG_START);
         this.write(canonicalizeEncoding(enc));
-        this.write(PROLOG_END);
+        this.write(XmlWriter.PROLOG_END);
         
         //System.out.println("XmlRpcClient - XmlWriter - constructed");
     }
@@ -306,7 +306,7 @@ class XmlWriter extends OutputStreamWriter
      */
     protected void endElement(String elem) throws IOException
     {
-        this.write(CLOSING_TAG_START);
+        this.write(XmlWriter.CLOSING_TAG_START);
         this.write(elem);
         this.write('>');
     }
@@ -320,7 +320,7 @@ class XmlWriter extends OutputStreamWriter
     {
         this.write('<');
         this.write(elem);
-        this.write(SINGLE_TAG_END);
+        this.write(XmlWriter.SINGLE_TAG_END);
     }
 
     /**
@@ -345,13 +345,13 @@ class XmlWriter extends OutputStreamWriter
                 this.write(c);
                 break;
             case '<':
-                this.write(LESS_THAN_ENTITY);
+                this.write(XmlWriter.LESS_THAN_ENTITY);
                 break;
             case '>':
-                this.write(GREATER_THAN_ENTITY);
+                this.write(XmlWriter.GREATER_THAN_ENTITY);
                 break;
             case '&':
-                this.write(AMPERSAND_ENTITY);
+                this.write(XmlWriter.AMPERSAND_ENTITY);
                 break;
             default:
                 if (c < 0x20 || c > 0xff)

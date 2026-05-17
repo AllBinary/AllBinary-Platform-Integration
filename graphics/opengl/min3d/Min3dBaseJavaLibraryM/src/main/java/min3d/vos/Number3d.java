@@ -75,7 +75,7 @@ public class Number3d
 
     public Number3d clone()
     {
-        return new Number3d(this.x, y, z);
+        return new Number3d(this.x, this.y, this.z);
     }
 
     private final NoDecimalTrigTable noDecimalTrigTable = NoDecimalTrigTable.getInstance();

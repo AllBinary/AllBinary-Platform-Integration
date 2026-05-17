@@ -95,7 +95,7 @@ public class TextFieldItem extends TextItem
 
     public void setCaretVisible(boolean caretVisible)
     {
-        this.logUtil.putF(commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible);
+        this.logUtil.putF(this.commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible);
         this.caretVisible = caretVisible;
     }
 
@@ -120,7 +120,7 @@ public class TextFieldItem extends TextItem
     @Override
     public void setFocus(boolean state)
     {
-        this.logUtil.putF(commonStrings.START, this, "setFocus: " + state);
+        this.logUtil.putF(this.commonStrings.START, this, "setFocus: " + state);
         
         this.caretVisible = state;
         
@@ -154,7 +154,7 @@ public class TextFieldItem extends TextItem
         graphics.fillRect(x, y + height,
                 myFont.defaultStringWidth(this.maxSize) * this.stringComponent.getFont().getSize() / this.defaultSize,
                 //owner.getWidth() - 3, 
-                stringComponent.getHeight());
+                this.stringComponent.getHeight());
 
         graphics.setColor(this.stringComponent.getForegroundBasicColor().intValue());
         graphics.drawString(this.stringComponent.getText(), x + 2, y + height, this.anchor);

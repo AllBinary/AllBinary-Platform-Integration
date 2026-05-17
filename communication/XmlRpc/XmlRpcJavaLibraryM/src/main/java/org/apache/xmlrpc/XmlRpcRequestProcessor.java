@@ -106,16 +106,16 @@ public class XmlRpcRequestProcessor extends XmlRpc
             }
             if (XmlRpc.debug)
             {
-                System.out.println("XML-RPC method name: " + methodName);
+                System.out.println("XML-RPC method name: " + this.methodName);
                 System.out.println("Request parameters: " + this.requestParams);
             }
             // check for errors from the XML parser
-            if (errorLevel > NONE)
+            if (this.errorLevel > this.NONE)
             {
-                throw new ParseFailed(errorMsg);
+                throw new ParseFailed(this.errorMsg);
             }
 
-            return new XmlRpcRequest(methodName, (Vector) this.requestParams.clone());
+            return new XmlRpcRequest(this.methodName, (Vector) this.requestParams.clone());
         }
         finally
         {

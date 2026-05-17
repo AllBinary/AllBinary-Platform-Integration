@@ -119,7 +119,7 @@ public abstract class XmlRpc extends HandlerBase
         // names of common SAX parsers.  If more mappings are added
         // here, increase the size of the saxDrivers Map used to store
         // them.
-        saxDrivers.put("xerces", "org.apache.xerces.parsers.SAXParser");
+        XmlRpc.saxDrivers.put("xerces", "org.apache.xerces.parsers.SAXParser");
         XmlRpc.saxDrivers.put("xp", "com.jclark.xml.sax.Driver");
         XmlRpc.saxDrivers.put("ibm1", "com.ibm.xml.parser.SAXDriver");
         XmlRpc.saxDrivers.put("ibm2", "com.ibm.xml.parsers.SAXParser");
@@ -284,7 +284,7 @@ public abstract class XmlRpc extends HandlerBase
         String parserClassName = null;
         try
         {
-            parserClassName = (String) saxDrivers.get(driver);
+            parserClassName = (String) XmlRpc.saxDrivers.get(driver);
             //System.out.println("Using driver: " + driver + " parserClass: saxDriver: " + parserClassName);
             if (parserClassName == null)
             {
@@ -308,7 +308,7 @@ public abstract class XmlRpc extends HandlerBase
     public static void setDriver(Class driver)
     {
         //System.out.println("Using parserClass driver: " + driver.getName() + " " + driver.getClass().getName());
-        parserClass = driver;
+        XmlRpc.parserClass = driver;
     }
 
     /**
@@ -318,7 +318,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public static void setEncoding(String enc)
     {
-        encoding = enc;
+        XmlRpc.encoding = enc;
     }
 
     /**
@@ -329,7 +329,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public String getEncoding ()
     {
-        return XmlWriter.canonicalizeEncoding(encoding);
+        return XmlWriter.canonicalizeEncoding(this.encoding);
     }
 
     /**
@@ -353,7 +353,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public static void setDebug(boolean val)
     {
-        debug = val;
+        XmlRpc.debug = val;
     }
 
     /**
@@ -361,7 +361,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public static void setKeepAlive(boolean val)
     {
-        keepalive = val;
+        XmlRpc.keepalive = val;
     }
 
     /**
@@ -426,7 +426,7 @@ public abstract class XmlRpc extends HandlerBase
         {
             // This is thrown if no constructor exists for the parser class
             // and is transformed into a regular exception.
-            throw new Exception("Can't create Parser: " + parserClass);
+            throw new Exception("Can't create Parser: " + XmlRpc.parserClass);
         }
 
         parser.setDocumentHandler(this);
@@ -587,41 +587,41 @@ public abstract class XmlRpc extends HandlerBase
         }
         else if ("i4".equals(name) || "int".equals(name))
         {
-            this.currentValue.setType(INTEGER);
+            this.currentValue.setType(XmlRpc.INTEGER);
             this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("boolean".equals(name))
         {
-            this.currentValue.setType(BOOLEAN);
+            this.currentValue.setType(XmlRpc.BOOLEAN);
             this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("double".equals(name))
         {
-            this.currentValue.setType(DOUBLE);
+            this.currentValue.setType(XmlRpc.DOUBLE);
             this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("dateTime.iso8601".equals(name))
         {
-            this.currentValue.setType(DATE);
+            this.currentValue.setType(XmlRpc.DATE);
             this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("base64".equals(name))
         {
-            this.currentValue.setType(BASE64);
+            this.currentValue.setType(XmlRpc.BASE64);
             this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("struct".equals(name))
         {
-            this.currentValue.setType(STRUCT);
+            this.currentValue.setType(XmlRpc.STRUCT);
         }
         else if ("array".equals(name))
         {
-            this.currentValue.setType(ARRAY);
+            this.currentValue.setType(XmlRpc.ARRAY);
         }
     }
 
@@ -667,7 +667,7 @@ public abstract class XmlRpc extends HandlerBase
          */
         public Value()
         {
-            this.type = STRING;
+            this.type = XmlRpc.STRING;
         }
 
         /**
@@ -677,11 +677,11 @@ public abstract class XmlRpc extends HandlerBase
         {
             switch (this.type)
             {
-                case ARRAY:
+                case XmlRpc.ARRAY:
                     this.array.addElement(child.value);
                     break;
-                case STRUCT:
-                    this.struct.put(nextMemberName, child.value);
+                case XmlRpc.STRUCT:
+                    this.struct.put(this.nextMemberName, child.value);
             }
         }
 
@@ -695,10 +695,10 @@ public abstract class XmlRpc extends HandlerBase
             this.type = type;
             switch (type)
             {
-                case ARRAY:
+                case XmlRpc.ARRAY:
                     this.value = this.array = new Vector ();
                     break;
-                case STRUCT:
+                case XmlRpc.STRUCT:
                     this.value = this.struct = new Hashtable ();
                     break;
             }
@@ -710,27 +710,28 @@ public abstract class XmlRpc extends HandlerBase
          */
         public void characterData(String cdata)
         {
+            final TypeFactory typeFactory = XmlRpc.this.typeFactory;
             switch (this.type)
             {
-                case INTEGER:
+                case XmlRpc.INTEGER:
                     this.value = typeFactory.createInteger(cdata);
                     break;
-                case BOOLEAN:
+                case XmlRpc.BOOLEAN:
                     this.value = typeFactory.createBoolean(cdata);
                     break;
-                case DOUBLE:
+                case XmlRpc.DOUBLE:
                     this.value = typeFactory.createDouble(cdata);
                     break;
-                case DATE:
+                case XmlRpc.DATE:
                     this.value = typeFactory.createDate(cdata);
                     break;
-                case BASE64:
+                case XmlRpc.BASE64:
                     this.value = typeFactory.createBase64(cdata);
                     break;
-                case STRING:
+                case XmlRpc.STRING:
                     this.value = typeFactory.createString(cdata);
                     break;
-                case STRUCT:
+                case XmlRpc.STRUCT:
                     // this is the name to use for the next member of this struct
                     this.nextMemberName = cdata;
                     break;
@@ -754,7 +755,7 @@ public abstract class XmlRpc extends HandlerBase
          */
         public String toString()
         {
-            return (types[type] + " element " + value);
+            return (XmlRpc.types[this.type] + " element " + this.value);
         }
     }
 }

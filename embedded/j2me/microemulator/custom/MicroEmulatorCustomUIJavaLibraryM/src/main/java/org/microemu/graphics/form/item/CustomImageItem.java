@@ -88,11 +88,11 @@ public class CustomImageItem
 
         graphics.setColor(this.basicColor.intValue());
 
-        if (layout == CustomImageItem.LAYOUT_DEFAULT || layout == CustomImageItem.LAYOUT_LEFT) {
+        if (layout == ImageItem.LAYOUT_DEFAULT || layout == ImageItem.LAYOUT_LEFT) {
             graphics.drawImage(image, x, height, this.anchor);
-        } else if (layout == CustomImageItem.LAYOUT_RIGHT) {
+        } else if (layout == ImageItem.LAYOUT_RIGHT) {
             graphics.drawImage(image, this.owner.getWidth(), x, this.anchor);
-        } else if (layout == CustomImageItem.LAYOUT_CENTER) {
+        } else if (layout == ImageItem.LAYOUT_CENTER) {
             graphics.drawImage(image, (this.owner.getWidth() >> 1), x, this.topCenterAnchor);
         } else {
             graphics.drawImage(image, x, 0, this.anchor);

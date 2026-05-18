@@ -184,8 +184,8 @@ public class XmlRpcClientLite extends XmlRpcClient
                 {
                     this.buffer.reset();
                 }
-                XmlWriter writer = new XmlWriter(this.buffer, this.encoding);
-                writeRequest(writer, method, params);
+                XmlWriter writer = new XmlWriter(this.buffer, XmlRpc.encoding);
+                this.writeRequest(writer, method, params);
                 writer.flush();
                 byte[] request = this.buffer.toByteArray();
 
@@ -221,7 +221,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 }
 
                 // parse the response
-                parse(in);
+                this.parse(in);
 
                 // client keepalive is always false if XmlRpc.keepalive is false
                 if (!this.client.keepalive)
@@ -230,13 +230,13 @@ public class XmlRpcClientLite extends XmlRpcClient
                     this.client = null;
                 }
 
-                if (this.debug)
+                if (XmlRpc.debug)
                 {
                     System.out.println ("result = " + this.result);
                 }
 
                 // check for errors from the XML parser
-                if (this.errorLevel == this.FATAL)
+                if (this.errorLevel == XmlRpc.FATAL)
                 {
                     throw new Exception (this.errorMsg);
                 }
@@ -285,7 +285,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 }
                 throw exception;
             }
-            if (this.debug)
+            if (XmlRpc.debug)
             {
                 System.out.println ("Spent " + (System.currentTimeMillis()
                         - now) + " millis in request");
@@ -373,9 +373,9 @@ public class XmlRpcClientLite extends XmlRpcClient
                 this.output.write("Connection: Keep-Alive\r\n".getBytes());
             }
             this.output.write("Content-Type: text/xml\r\n".getBytes());
-            if (XmlRpcClientLite.this.auth != null)
+            if (XmlRpcClientLite.auth != null)
             {
-                this.output.write(("Authorization: Basic " + XmlRpcClientLite.this.auth + "\r\n").getBytes());
+                this.output.write(("Authorization: Basic " + XmlRpcClientLite.auth + "\r\n").getBytes());
             }
             this.output.write(("Content-Length: " + request.length)
                     .getBytes());

@@ -169,7 +169,7 @@ public class XmlRpcClient implements XmlRpcHandler
     public Object execute(String method, Vector params)
             throws XmlRpcException, IOException
     {
-        Worker worker = getWorker(false);
+        Worker worker = this.getWorker(false);
         try
         {
             Object retval = worker.execute(method, params);
@@ -177,14 +177,14 @@ public class XmlRpcClient implements XmlRpcHandler
         }
         finally
         {
-            releaseWorker(worker, false);
+            this.releaseWorker(worker, false);
         }
     }
 
     public Object execute(String method, Vector params, CryptInterface abCrypt)
             throws XmlRpcException, IOException
     {
-        Worker worker = getWorker(false);
+        Worker worker = this.getWorker(false);
         try
         {
             Object retval = worker.execute(method, params, abCrypt);
@@ -192,7 +192,7 @@ public class XmlRpcClient implements XmlRpcHandler
         }
         finally
         {
-            releaseWorker(worker, false);
+            this.releaseWorker(worker, false);
         }
     }    
     /**
@@ -391,9 +391,9 @@ public class XmlRpcClient implements XmlRpcHandler
             while (this.call != null)
             {
                 this.executeAsync(this.call.method, this.call.params, this.call.callback);
-                this.call = dequeue();
+                this.call = XmlRpcClient.this.dequeue();
             }
-            releaseWorker(this, true);
+            XmlRpcClient.this.releaseWorker(this, true);
         }
 
         /**
@@ -474,7 +474,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 out.flush();
                 out.close();
                 InputStream in = con.getInputStream();
-                parse(in);
+                this.parse(in);
             }
             catch(Exception x)
             {
@@ -600,7 +600,7 @@ public class XmlRpcClient implements XmlRpcHandler
 
                 //System.out.println("XmlRpcClient - execute - response decrypted so parse now");
                 
-                parse(decryptedInputStream);
+                this.parse(decryptedInputStream);
                 
                 //System.out.println("XmlRpcClient - execute - response parsed");
             }

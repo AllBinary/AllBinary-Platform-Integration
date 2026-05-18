@@ -158,7 +158,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   int level = 0;
   int mixedContentLevel = -1;
   String elementName = null;
-  String state = this.operands[this.inSkipping];
+  String state = MinML.operands[MinML.inSkipping];
 
     this.lineNumber = 1;
     this.columnNumber = 0;
@@ -178,7 +178,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
         if (currentChar > ']') {
           transition = state.charAt(14);
         } else {
-        final int charClass = this.charClasses[currentChar + 1];
+        final int charClass = MinML.charClasses[currentChar + 1];
 
           if (charClass == -1)
           {
@@ -207,7 +207,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
         this.columnNumber++;
 
-        String operand = this.operands[transition >>> 8];
+        String operand = MinML.operands[transition >>> 8];
 
         switch (transition & 0XFF) {
           case MinML.endStartName:
@@ -265,7 +265,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
             }
 
             if (mixedContentLevel != -1 && --mixedContentLevel == 0)
-              operand = this.operands[this.inCharData];
+              operand = MinML.operands[MinML.inCharData];
 
             break;  // change state to operand
 

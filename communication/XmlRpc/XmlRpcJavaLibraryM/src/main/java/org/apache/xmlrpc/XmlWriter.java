@@ -132,8 +132,8 @@ class XmlWriter extends OutputStreamWriter
         //System.out.println("XmlRpcClient - XmlWriter - constructor: " + enc);
         
         // Add the XML prolog (including the encoding in XML form).
-        write(XmlWriter.PROLOG_START);
-        this.write(canonicalizeEncoding(enc));
+        this.write(XmlWriter.PROLOG_START);
+        this.write(XmlWriter.canonicalizeEncoding(enc));
         this.write(XmlWriter.PROLOG_END);
         
         //System.out.println("XmlRpcClient - XmlWriter - constructed");

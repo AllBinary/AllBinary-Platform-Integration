@@ -59,6 +59,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
+import org.allbinary.logic.NullUtil;
 
 /**
  * Process an Object and produce byte array that represents the specified
@@ -71,7 +72,6 @@ import java.util.Hashtable;
  */
 public class XmlRpcResponseProcessor
 {
-    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
     /**
      * Process a successful response, and return output in the
@@ -164,7 +164,7 @@ public class XmlRpcResponseProcessor
                     + "client: " + e);
         }
 
-        return (writer != null ? buffer.toByteArray() : this.EMPTY_BYTE_ARRAY);
+        return (writer != null ? buffer.toByteArray() : NullUtil.getInstance().NULL_BYTE_ARRAY);
     }
 
      /**

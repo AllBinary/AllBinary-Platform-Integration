@@ -382,7 +382,7 @@ public final class Base64
             case (byte) '\t':
                 break;
             default:
-                if(isBase64(data[i])){
+                if(Base64.isBase64(data[i])){
                    groomedData[bytesCopied++] = data[i];
                 }
                 else{

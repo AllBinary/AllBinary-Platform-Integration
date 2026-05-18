@@ -103,7 +103,7 @@ public class ImageItem extends ABCustomItem
 			//img = Image.createImage(img);
 		}
 		this.img = img;
-		repaint();
+		this.repaint();
 	}
 
         @Override
@@ -158,8 +158,8 @@ public class ImageItem extends ABCustomItem
 			}
 		}
 		if (gameKeyCode == Canvas.DOWN) {
-			if (bottom < getHeight()) {
-				if (getHeight() - bottom < f.getHeight()) {
+			if (bottom < this.getHeight()) {
+				if (this.getHeight() - bottom < f.getHeight()) {
 					return this.getHeight() - bottom;
 				} else {
 					return f.getHeight();

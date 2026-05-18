@@ -329,7 +329,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public String getEncoding ()
     {
-        return XmlWriter.canonicalizeEncoding(this.encoding);
+        return XmlWriter.canonicalizeEncoding(XmlRpc.encoding);
     }
 
     /**

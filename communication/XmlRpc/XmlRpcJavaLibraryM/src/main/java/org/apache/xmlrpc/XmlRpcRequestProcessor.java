@@ -98,7 +98,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
         {
             try
             {
-                parse(is);
+                this.parse(is);
             }
             catch (Exception e)
             {
@@ -110,7 +110,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
                 System.out.println("Request parameters: " + this.requestParams);
             }
             // check for errors from the XML parser
-            if (this.errorLevel > this.NONE)
+            if (this.errorLevel > XmlRpc.NONE)
             {
                 throw new ParseFailed(this.errorMsg);
             }

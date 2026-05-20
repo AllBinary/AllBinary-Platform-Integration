@@ -45,7 +45,7 @@ public class AndroidInputMethod extends InputMethod {
 	    this.buttonPressed(getKeyCode(keyEvent));		
 	}
 	
-        public boolean commonKeyPressed(int keyCode, int deviceId, Displayable displayable)
+        public boolean commonKeyPressedByDeviceId(int keyCode, int deviceId, Displayable displayable)
         {
             throw new RuntimeException();
         }

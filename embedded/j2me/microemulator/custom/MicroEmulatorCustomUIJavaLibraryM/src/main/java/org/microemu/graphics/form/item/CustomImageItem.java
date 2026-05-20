@@ -14,6 +14,7 @@ import org.allbinary.graphics.Anchor;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.MyFont;
 import org.allbinary.graphics.form.item.ABCustomItemInterface;
+import org.microemu.graphics.form.CustomForm;
 
 /**
  *
@@ -23,7 +24,7 @@ public class CustomImageItem
     extends ImageItem
     implements ABCustomItemInterface {
 
-    private Screen owner = NullCanvas.NULL_SCREEN;
+    private Screen owner = CustomForm.NULL_SCREEN;
 
     private BasicColor basicColor;
 

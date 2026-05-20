@@ -6,6 +6,7 @@
 package org.microemu.graphics.form;
 
 import javax.microedition.lcdui.Canvas;
+import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.NullCanvas;
 
@@ -26,10 +27,13 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.color.BasicColorFactory;
 import org.allbinary.graphics.form.item.CustomItemState;
 import org.allbinary.layer.AllBinaryLayerManager;
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonLabels;
 
 public class CustomForm extends CustomScreen 
 {
+    public static final Form NULL_SCREEN = new Form(StringUtil.getInstance().EMPTY_STRING);
+    
     protected final LogUtil logUtil = LogUtil.getInstance();
     
     private ABCustomItem[] items = new ABCustomItem[16];
@@ -97,7 +101,7 @@ public class CustomForm extends CustomScreen
 	{
 		this.verifyItemNum(itemNum);
 
-		this.items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
+		this.items[itemNum].setOwner(CustomForm.NULL_SCREEN);
 		System.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
 		this.numOfItems--;
 	}
@@ -106,7 +110,7 @@ public class CustomForm extends CustomScreen
 	public void deleteAll()
 	{
 		for (int i = 0; i < this.numOfItems; i++) {
-			this.items[i].setOwner(NullCanvas.NULL_SCREEN);
+			this.items[i].setOwner(CustomForm.NULL_SCREEN);
 		}
 		this.numOfItems = 0;
 	}
@@ -162,7 +166,7 @@ public class CustomForm extends CustomScreen
 		this.verifyItem(item);
 
 		// TODO add this to MIDP1
-		this.items[itemNum].setOwner(NullCanvas.NULL_SCREEN);
+		this.items[itemNum].setOwner(CustomForm.NULL_SCREEN);
 		
 		this.items[itemNum] = item;
 		//items[itemNum].setOwner(this);

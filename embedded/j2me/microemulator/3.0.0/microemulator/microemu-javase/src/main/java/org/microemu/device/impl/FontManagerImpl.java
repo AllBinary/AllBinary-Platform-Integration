@@ -32,7 +32,7 @@ public interface FontManagerImpl extends FontManager {
 
 	void setAntialiasing(boolean antialiasing);
 
-	void setFont(String face, String style, String size, Font font);
+	void setFont(String face, String style, String size, Object font);
 
 	Font createSystemFont(String defName, String defStyle, int defSize, boolean antialiasing);
 	

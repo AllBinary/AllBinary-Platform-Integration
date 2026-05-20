@@ -163,7 +163,7 @@ public class J2SEFontManager implements FontManagerImpl
 	}
 
 
-	public void setFont(String face, String style, String size, org.microemu.device.impl.Font font) {
+	public void setFont(String face, String style, String size, Object font) {
 		int key = 0;
 		
 		if (face.equalsIgnoreCase("system")) {

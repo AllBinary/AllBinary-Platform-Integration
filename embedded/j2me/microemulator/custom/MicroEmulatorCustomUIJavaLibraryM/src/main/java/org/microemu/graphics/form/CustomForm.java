@@ -8,7 +8,6 @@ package org.microemu.graphics.form;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.NullCanvas;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
 import org.allbinary.graphics.form.item.ABCustomItemStateListener;

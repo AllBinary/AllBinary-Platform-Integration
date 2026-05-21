@@ -684,7 +684,7 @@ public class ChoiceGroup extends Item implements Choice
 		
                 int width = 0;
                 if (this.box != null) width+=this.box.getWidth();
-                if (this.img != NullCanvas.NULL_IMAGE) width+=img.getWidth();
+                if (this.img != NullImage.NULL_IMAGE) width+=img.getWidth();
                 if (width > 0) width+=2;
                 stringComponent.setWidthDecreaser(width);
 	}
@@ -695,7 +695,7 @@ public class ChoiceGroup extends Item implements Choice
 	{
                 int height =  0;
                 if (this.box != null) height = this.box.getHeight();                
-		if (img != NullCanvas.NULL_IMAGE && img.getHeight() > height) {
+		if (img != NullImage.NULL_IMAGE && img.getHeight() > height) {
 			height = img.getHeight();
                 }
 		if (stringComponent.getHeight() > height) {
@@ -715,7 +715,7 @@ public class ChoiceGroup extends Item implements Choice
                 int widthAddition = 0;
 		if (this.box != null) {
 			g.drawImage(box, 0, 0, Graphics.LEFT | Graphics.TOP);
-			if (img != NullCanvas.NULL_IMAGE) {
+			if (img != NullImage.NULL_IMAGE) {
                             widthAddition = box.getWidth();
                             g.translate(box.getWidth(), 0);
                         }
@@ -726,7 +726,7 @@ public class ChoiceGroup extends Item implements Choice
 		}
                 
                 
-		if (img != NullCanvas.NULL_IMAGE) {
+		if (img != NullImage.NULL_IMAGE) {
                         widthAddition += img.getWidth() + 2;
 			g.drawImage(img, 0, 0, Graphics.LEFT | Graphics.TOP);
 			g.translate(img.getWidth() + 2, 0);

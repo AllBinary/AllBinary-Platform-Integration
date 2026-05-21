@@ -31,7 +31,7 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.List;
-import javax.microedition.lcdui.NullCanvas;
+import javax.microedition.lcdui.NullImage;
 import javax.microedition.midlet.MIDlet;
 
 import org.microemu.MIDletEntry;
@@ -84,7 +84,7 @@ public class Launcher extends MIDlet implements CommandListener {
 		this.menuList.setCommandListener(this);
 
 		if (Launcher.midletEntries.size() == 0) {
-			this.menuList.append(NOMIDLETS, NullCanvas.NULL_IMAGE);
+			this.menuList.append(NOMIDLETS, NullImage.NULL_IMAGE);
 		} else {
 			for (int i = 0; i < midletEntries.size(); i++) {
 				this.menuList.append(((MIDletEntry) midletEntries.elementAt(i)).getName(), null);

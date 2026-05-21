@@ -37,7 +37,7 @@ public class ImageItem extends Item {
 
 	public static final int LAYOUT_NEWLINE_AFTER = 0x200;
 
-	Image img = NullCanvas.NULL_IMAGE;
+	Image img = NullImage.NULL_IMAGE;
 
 	String altText;
 
@@ -86,7 +86,7 @@ public class ImageItem extends Item {
 	}
 
 	public void setImage(Image img) {
-		if (img != NullCanvas.NULL_IMAGE && img.isMutable()) {
+		if (img != NullImage.NULL_IMAGE && img.isMutable()) {
 			img = Image.createImage(img);
 		}
 		this.img = img;

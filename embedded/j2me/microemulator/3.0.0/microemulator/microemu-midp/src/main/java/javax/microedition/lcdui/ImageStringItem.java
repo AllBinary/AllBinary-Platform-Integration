@@ -28,7 +28,7 @@ package javax.microedition.lcdui;
 class ImageStringItem extends Item
 {
 
-	Image img = NullCanvas.NULL_IMAGE;
+	Image img = NullImage.NULL_IMAGE;
   StringComponent stringComponent;
 
 
@@ -49,7 +49,7 @@ class ImageStringItem extends Item
 	public void setImage(Image img)
 	{
     this.img = img;
-		if (this.img != NullCanvas.NULL_IMAGE) {
+		if (this.img != NullImage.NULL_IMAGE) {
 			this.stringComponent.setWidthDecreaser(img.getWidth() + 2);
 		}
 	}
@@ -70,7 +70,7 @@ class ImageStringItem extends Item
         //TWB - made public
 	public int getHeight()
 	{
-		if (this.img != NullCanvas.NULL_IMAGE && this.img.getHeight() > this.stringComponent.getHeight()) {
+		if (this.img != NullImage.NULL_IMAGE && this.img.getHeight() > this.stringComponent.getHeight()) {
 			return this.img.getHeight();
 		} else {
 			return this.stringComponent.getHeight();
@@ -91,14 +91,14 @@ class ImageStringItem extends Item
 			return 0;
 		}
 
-		if (this.img != NullCanvas.NULL_IMAGE) {
+		if (this.img != NullImage.NULL_IMAGE) {
 			g.drawImage(this.img, 0, 0, Graphics.LEFT | Graphics.TOP);
 			g.translate(this.img.getWidth() + 2, 0);
 		}
 
 		int y = this.stringComponent.paint(g);
 
-		if (this.img != NullCanvas.NULL_IMAGE) {
+		if (this.img != NullImage.NULL_IMAGE) {
 			g.translate(-this.img.getWidth() - 2, 0);
 		}
 

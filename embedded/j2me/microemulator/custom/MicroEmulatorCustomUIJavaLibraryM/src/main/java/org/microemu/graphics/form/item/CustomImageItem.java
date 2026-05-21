@@ -7,7 +7,7 @@ package org.microemu.graphics.form.item;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
-import javax.microedition.lcdui.NullCanvas;
+import javax.microedition.lcdui.NullImage;
 import javax.microedition.lcdui.Screen;
 
 import org.allbinary.graphics.Anchor;
@@ -45,7 +45,7 @@ public class CustomImageItem
         this.basicColor = basicColor;
         this.yOffset = yOffset;
 
-        if (image == NullCanvas.NULL_IMAGE) {
+        if (image == NullImage.NULL_IMAGE) {
             throw new Exception("Image: " + image);
         }
 

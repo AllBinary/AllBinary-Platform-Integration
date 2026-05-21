@@ -22,7 +22,7 @@ package org.microemu.graphics.form.item;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
-import javax.microedition.lcdui.NullCanvas;
+import javax.microedition.lcdui.NullImage;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
 import org.microemu.graphics.form.StringComponent;
@@ -31,7 +31,7 @@ import org.allbinary.graphics.color.BasicColor;
 
 public class ImageStringItem extends ABCustomItem
 {
-    private Image img = NullCanvas.NULL_IMAGE;
+    private Image img = NullImage.NULL_IMAGE;
     private final StringComponent stringComponent;
 
     public ImageStringItem(String label, Image img, String text, 

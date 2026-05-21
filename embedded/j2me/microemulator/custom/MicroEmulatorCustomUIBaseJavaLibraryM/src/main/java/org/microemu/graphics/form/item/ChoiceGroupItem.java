@@ -32,7 +32,7 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.List;
-import javax.microedition.lcdui.NullCanvas;
+import javax.microedition.lcdui.NullImage;
 
 import org.allbinary.graphics.form.item.ABChoiceItemInterface;
 import org.allbinary.graphics.form.item.ABCustomItem;
@@ -127,7 +127,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         {
             if (imageElements == null)
             {
-                this.append(stringElements[i], NullCanvas.NULL_IMAGE);
+                this.append(stringElements[i], NullImage.NULL_IMAGE);
             } else
             {
                 this.append(stringElements[i], imageElements[i]);
@@ -751,7 +751,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
     {
         private boolean selected;
         private Font font;
-        Image box = NullCanvas.NULL_IMAGE;
+        Image box = NullImage.NULL_IMAGE;
 
         ChoiceItem(String label, Image image, String text, BasicColor backgroundBasicColor,
                 BasicColor foregroundBasicColor)

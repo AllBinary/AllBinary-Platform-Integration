@@ -22,7 +22,7 @@ package org.microemu.graphics.form.item;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Image;
-import javax.microedition.lcdui.NullCanvas;
+import javax.microedition.lcdui.NullImage;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
 
@@ -47,7 +47,7 @@ public class ImageItem extends ABCustomItem
         public static final int HYPERLINK = 1;
         public static final int BUTTON = 2;
         
-	Image img = NullCanvas.NULL_IMAGE;
+	Image img = NullImage.NULL_IMAGE;
 
 	String altTextP;
 

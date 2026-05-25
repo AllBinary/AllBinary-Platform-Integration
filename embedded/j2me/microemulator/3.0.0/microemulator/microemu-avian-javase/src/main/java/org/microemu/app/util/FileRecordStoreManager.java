@@ -91,7 +91,7 @@ public class FileRecordStoreManager implements RecordStoreManager {
 		}
 	};
 
-	public void init(MicroEmulator emulator) {
+	public void initForMicroemulator(MicroEmulator emulator) {
 		this.emulator = emulator;
 		//this.acc = AccessController.getContext();
 	}

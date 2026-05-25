@@ -58,7 +58,7 @@ public interface RecordStoreManager {
 	/**
 	 * Initialize RMS Manager before starting MIDlet 
 	 */
-	void init(MicroEmulator emulator);
+	void initForMicroemulator(MicroEmulator emulator);
 
 	/**
 	 * Delete all record stores.

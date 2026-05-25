@@ -1,22 +1,18 @@
 //MIT license
 package min3d.vos;
 
+import org.allbinary.logic.math.MathUtil;
 import org.allbinary.string.CommonSeps;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.math.NoDecimalTrigTable;
 
 public class Number3d
 {
+    private final MathUtil mathUtil = MathUtil.getInstance();
+    
     public float x;
     public float y;
     public float z;
-
-    public Number3d()
-    {
-        this.x = 0.0f;
-        this.y = 0.0f;
-        this.z = 0.0f;
-    }
 
     public Number3d(float x, float y, float z)
     {
@@ -34,7 +30,8 @@ public class Number3d
 
     public void normalize()
     {
-        double sqrt = Math.sqrt((double) this.x * this.x + this.y * this.y + this.z * this.z);
+        //double sqrt = Math.sqrt((double) this.x * this.x + this.y * this.y + this.z * this.z);
+        final double sqrt = this.mathUtil.sqrtd((int) (this.x * this.x + this.y * this.y + this.z * this.z));
         float mod = (float) sqrt;
 
         if (mod != 0.0f && mod != 1.0f)
@@ -69,7 +66,8 @@ public class Number3d
 
     public float length()
     {
-        double sqrt = Math.sqrt((double) this.x * this.x + this.y * this.y + this.z * this.z);
+        //double sqrt = Math.sqrt((double) this.x * this.x + this.y * this.y + this.z * this.z);
+        final double sqrt = this.mathUtil.sqrtd((int) (this.x * this.x + this.y * this.y + this.z * this.z));
         return (float) sqrt;
     }
 
@@ -107,7 +105,7 @@ public class Number3d
         this.z = (initialNumber3d.x * sinRY) + (initialNumber3d.y * cosRY);
     }
 
-    private static Number3d _temp = new Number3d();
+    private static Number3d _temp = new Number3d(0.0f, 0.0f, 0.0f);
     
 	public void rotateXSlow(float angle)
 	{

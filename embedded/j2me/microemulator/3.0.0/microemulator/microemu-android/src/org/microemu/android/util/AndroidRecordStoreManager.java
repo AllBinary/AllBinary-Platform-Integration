@@ -66,7 +66,7 @@ public class AndroidRecordStoreManager implements RecordStoreManager {
 		this.activity = context;
 	}
 
-	public void init(MicroEmulator emulator) {
+	public void initForMicroemulator(MicroEmulator emulator) {
 	}
 
 	public String getName() {

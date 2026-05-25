@@ -39,7 +39,7 @@ public class MemoryRecordStoreManager implements RecordStoreManager {
 
 	private ExtendedRecordListener recordListener = null;
 
-	public void init(MicroEmulator emulator) {
+	public void initForMicroemulator(MicroEmulator emulator) {
 	}
 
 	public String getName() {

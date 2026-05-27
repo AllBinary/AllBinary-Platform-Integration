@@ -55,7 +55,7 @@ public class Base64Coder {
 	 */
 	public static String encode(String s) {
             final TsUtil tsUtil = TsUtil.getInstance();
-		return new String(encode(tsUtil.getBytes(s)));
+		return new String(encode(tsUtil.getByteArray(s)));
 	}
 
 	/**

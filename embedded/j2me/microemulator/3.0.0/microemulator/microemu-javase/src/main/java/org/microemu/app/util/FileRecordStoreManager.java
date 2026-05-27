@@ -86,6 +86,8 @@ public class FileRecordStoreManager implements RecordStoreManager {
 	}
 
 	private FilenameFilter filter = new FilenameFilter() {
+            
+            @Override
 		public boolean accept(File dir, String name) {
 			if (name.endsWith(RECORD_STORE_SUFFIX)) {
 				return true;
@@ -95,11 +97,13 @@ public class FileRecordStoreManager implements RecordStoreManager {
 		}
 	};
 
-	public void init(MicroEmulator emulator) {
+        @Override
+	public void initForMicroemulator(MicroEmulator emulator) {
 		this.emulator = emulator;
 		this.acc = AccessController.getContext();
 	}
 
+        @Override
 	public String getName() {
 		return "File record store";
 	}

@@ -20,6 +20,8 @@
 
 package org.microemu.util;
 
+import org.allbinary.TsUtil;
+
 public class Base64Coder {
 
 	//	 Mapping table from 6-bit nibbles to Base64 characters.
@@ -52,7 +54,8 @@ public class Base64Coder {
 	 * @return   A String with the Base64 encoded data.
 	 */
 	public static String encode(String s) {
-		return new String(encode(s.getBytes()));
+            final TsUtil tsUtil = TsUtil.getInstance();
+		return new String(encode(tsUtil.getBytes(s)));
 	}
 
 	/**

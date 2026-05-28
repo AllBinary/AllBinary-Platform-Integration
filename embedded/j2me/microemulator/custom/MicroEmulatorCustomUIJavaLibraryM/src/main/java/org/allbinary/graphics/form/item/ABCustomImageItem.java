@@ -11,15 +11,15 @@ import org.allbinary.graphics.color.BasicColor;
 
 public class ABCustomImageItem extends org.microemu.graphics.form.item.CustomImageItem
 {
-    public ABCustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor)
-            throws Exception
-    {
-        super(label, image, layout, altText, basicColor);
-    }
-
-//    public ABCustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor, int yOffset) throws Exception
+//    public ABCustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor)
+//            throws Exception
 //    {
-//        super(label, image, layout, altText, basicColor, yOffset);
+//        super(label, image, layout, altText, basicColor);
 //    }
+
+    public ABCustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor, int yOffset) throws Exception
+    {
+        super(label, image, layout, altText, basicColor, yOffset);
+    }
 
 }

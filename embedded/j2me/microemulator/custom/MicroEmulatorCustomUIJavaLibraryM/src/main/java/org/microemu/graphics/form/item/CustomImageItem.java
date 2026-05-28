@@ -35,9 +35,9 @@ public class CustomImageItem
 
     private final String labelViewable;
 
-    public CustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor) throws Exception {
-        this(label, image, layout, altText, basicColor, 0);
-    }
+//    public CustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor) throws Exception {
+//        this(label, image, layout, altText, basicColor, 0);
+//    }
 
     public CustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor, int yOffset) throws Exception {
         super(label, image, layout, altText, ImageItem.PLAIN);

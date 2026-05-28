@@ -20,6 +20,7 @@ import android.content.Intent;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
+import org.allbinary.TsUtil;
 
 import org.allbinary.business.init.LicenseInitInfoUtil;
 
@@ -55,7 +56,7 @@ public class AboutCommandProcessor {
             //midletCommandListener.commandAction(command, canvas);
 
             final Context context = (Context) this.context;
-            final Intent intent = new Intent(context, this.getClass().getClassLoader().loadClass(this.WEB_VIEW_ACTIVITY));
+            final Intent intent = new Intent(context, TsUtil.getInstance().getClassClassLoader(this).loadClass(this.WEB_VIEW_ACTIVITY));
             intent.putExtra(this.NAME, LicenseInitInfoUtil.getInstance().ABOUT);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);

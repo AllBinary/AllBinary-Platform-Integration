@@ -53,9 +53,9 @@ public class ImageItem extends ABCustomItem
 
 	private int appearanceMode;
 
-	public ImageItem(String label, Image img, int layout, String altText) {
-		this(label, img, layout, altText, ImageItem.PLAIN);
-	}
+//	public ImageItem(String label, Image img, int layout, String altText) {
+//		this(label, img, layout, altText, ImageItem.PLAIN);
+//	}
 	
 	public ImageItem(String label, Image img, int layout, String altText, int appearanceMode) 
 	{

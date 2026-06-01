@@ -48,11 +48,11 @@ public class TextFieldItem extends TextItem
     private final TimeDelayHelper timeDelayHelper2 = new TimeDelayHelper(200);
     private boolean hide;
 
-    public TextFieldItem(Canvas canvas, Visitor visitor, String label, String value, int maxSize, int layout, String altText, 
-            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) {
-        this(canvas, visitor, label, value, maxSize, layout, altText, Font.getDefaultFont(),
-            backgroundBasicColor, foregroundBasicColor);
-    }
+//    public TextFieldItem(Canvas canvas, Visitor visitor, String label, String value, int maxSize, int layout, String altText,
+//            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) {
+//        this(canvas, visitor, label, value, maxSize, layout, altText, Font.getDefaultFont(),
+//            backgroundBasicColor, foregroundBasicColor);
+//    }
 
     public TextFieldItem(Canvas canvas, Visitor visitor, String label, String value, int maxSize, int layout, String altText, 
             final Font font, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)

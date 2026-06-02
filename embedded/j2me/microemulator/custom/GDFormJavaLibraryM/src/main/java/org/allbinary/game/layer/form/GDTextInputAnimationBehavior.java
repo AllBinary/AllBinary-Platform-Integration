@@ -25,7 +25,6 @@ import org.allbinary.input.motion.gesture.MotionGestureInput;
 import org.allbinary.input.motion.gesture.observer.MotionGestureEvent;
 
 import org.allbinary.logic.communication.log.LogUtil;
-import org.allbinary.string.CommonStrings;
 import org.allbinary.math.RectangleCollisionUtil;
 
 /**
@@ -93,17 +92,17 @@ public class GDTextInputAnimationBehavior extends GDItemAnimationBehavior
 
     public int select(final GameKey gameKey, final int keyCode) {
         if(gameKey == gameKeyFactory.LEFT) {
-            ((CustomTextBoxIndexedAnimation) this.animationArray[0]).onEvent(keyCode, 0, false);
+            ((CustomTextBoxIndexedAnimation) this.animationArray[0]).onEventRaw(keyCode, 0, false);
             return 1;
         } else if(gameKey == gameKeyFactory.RIGHT) {
-            ((CustomTextBoxIndexedAnimation) this.animationArray[0]).onEvent(keyCode, 0, false);
+            ((CustomTextBoxIndexedAnimation) this.animationArray[0]).onEventRaw(keyCode, 0, false);
             return 1;
         }
         return 0;
     }
 
     public void keyPressed(final int keyCode) {
-        ((CustomTextBoxIndexedAnimation) this.animationArray[0]).onEvent(keyCode, 0, false);
+        ((CustomTextBoxIndexedAnimation) this.animationArray[0]).onEventRaw(keyCode, 0, false);
     }
 
     public void setFocus(final boolean hasFocus) {    

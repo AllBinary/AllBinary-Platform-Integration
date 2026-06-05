@@ -11,7 +11,6 @@ import javax.microedition.lcdui.Graphics;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
 import org.allbinary.graphics.form.item.ABCustomItemStateListener;
-
 import org.allbinary.string.CommonSeps;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.communication.log.LogUtil;
@@ -26,12 +25,20 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.color.BasicColorFactory;
 import org.allbinary.graphics.form.item.CustomItemState;
 import org.allbinary.layer.AllBinaryLayerManager;
+import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonLabels;
 
 public class CustomForm extends CustomScreen 
 {
-    public static final Form NULL_SCREEN = new Form(StringUtil.getInstance().EMPTY_STRING);
+    private static Object NULL_SCREEN = NullUtil.getInstance().NULL_OBJECT;
+    public static Form getNullForm() {
+        if(CustomForm.NULL_SCREEN == NullUtil.getInstance().NULL_OBJECT) {
+            CustomForm.NULL_SCREEN = new Form(StringUtil.getInstance().EMPTY_STRING);
+        }
+        
+        return (Form) CustomForm.NULL_SCREEN;
+    }
     
     protected final LogUtil logUtil = LogUtil.getInstance();
     
@@ -100,7 +107,7 @@ public class CustomForm extends CustomScreen
 	{
 		this.verifyItemNum(itemNum);
 
-		this.items[itemNum].setOwner(CustomForm.NULL_SCREEN);
+		this.items[itemNum].setOwner(CustomForm.getNullForm());
 		System.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
 		this.numOfItems--;
 	}
@@ -109,7 +116,7 @@ public class CustomForm extends CustomScreen
 	public void deleteAll()
 	{
 		for (int i = 0; i < this.numOfItems; i++) {
-			this.items[i].setOwner(CustomForm.NULL_SCREEN);
+			this.items[i].setOwner(CustomForm.getNullForm());
 		}
 		this.numOfItems = 0;
 	}
@@ -165,7 +172,7 @@ public class CustomForm extends CustomScreen
 		this.verifyItem(item);
 
 		// TODO add this to MIDP1
-		this.items[itemNum].setOwner(CustomForm.NULL_SCREEN);
+		this.items[itemNum].setOwner(CustomForm.getNullForm());
 		
 		this.items[itemNum] = item;
 		//items[itemNum].setOwner(this);

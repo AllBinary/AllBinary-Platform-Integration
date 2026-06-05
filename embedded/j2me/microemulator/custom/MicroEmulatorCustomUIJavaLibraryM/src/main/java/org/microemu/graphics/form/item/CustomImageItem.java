@@ -24,7 +24,7 @@ public class CustomImageItem
     extends ImageItem
     implements ABCustomItemInterface {
 
-    private Screen owner = CustomForm.NULL_SCREEN;
+    private Screen owner = CustomForm.getNullForm();
 
     private BasicColor basicColor;
 

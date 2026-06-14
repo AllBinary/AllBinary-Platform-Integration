@@ -76,7 +76,7 @@ public class Config {
 			if (Config.emulatorID != null) {
 				return new File(meHome, emulatorID);
 			} else {
-				return Config.meHome;
+				return meHome;
 			}
 		} catch (SecurityException e) {
 			Logger.error("Cannot access user.home", e);

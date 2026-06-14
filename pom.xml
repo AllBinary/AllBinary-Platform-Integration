@@ -53,6 +53,8 @@
         
         <module>./embedded/j2me/microemulator/custom/MicroEmulatorCustomGameJavaLibraryM</module>
         
+        <module>./j2me/games/Resources/images/GameOuyaImageResourcesJavaLibraryM</module>
+        
     </modules>
 
     <dependencies>

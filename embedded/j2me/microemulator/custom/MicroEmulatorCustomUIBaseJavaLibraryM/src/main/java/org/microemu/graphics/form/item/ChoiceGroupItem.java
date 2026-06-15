@@ -50,7 +50,8 @@ import org.allbinary.logic.string.StringUtil;
 
 public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterface
 {
-    public static final List NULL_LIST = new List(StringUtil.getInstance().EMPTY_STRING, Choice.IMPLICIT);
+
+    public static final List NULL_LIST = new List(StringUtil.getInstance().EMPTY_STRING, Choice.IMPLICIT, StringUtil.getInstance().getArrayInstance(), NullImage.NULL_IMAGE_ARRAY);
 
     static final int EXCLUSIVE = 1;
     static final int MULTIPLE = 2;
@@ -108,7 +109,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         {
             // POPUP has a hidden List to implement it's
             // behaviour
-            popupList = new List(label, ChoiceGroupItem.IMPLICIT);
+            popupList = new List(label, ChoiceGroupItem.IMPLICIT, StringUtil.getInstance().getArrayInstance(), NullImage.NULL_IMAGE_ARRAY);
             popupList.setCommandListener(new ImplicitListener());
         } else {
             popupList = ChoiceGroupItem.NULL_LIST;

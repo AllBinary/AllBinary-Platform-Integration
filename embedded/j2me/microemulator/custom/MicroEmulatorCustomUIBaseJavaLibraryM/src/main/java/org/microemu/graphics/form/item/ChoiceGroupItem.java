@@ -43,6 +43,7 @@ import org.allbinary.graphics.opengles.OpenGLFeatureFactory;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.game.configuration.feature.Features;
 import org.allbinary.graphics.color.BasicColor;
+import org.allbinary.image.opengles.OpenGLESImage;
 import org.allbinary.logic.string.StringUtil;
 
 //
@@ -777,7 +778,8 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                 width += box.getWidth();
             }
 
-            if (this.getImage() != null) {
+            final Image image = this.getImage();
+            if (!(image == NullImage.NULL_IMAGE || image == OpenGLESImage.NULL_OPENGL_IMAGE)) {
                 width += img.getWidth();
             }
 
@@ -797,7 +799,8 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                 height = box.getHeight();
             }
                 
-            if (this.getImage() != null && this.getImage().getHeight() > height)
+            final Image image = this.getImage();
+            if (!(image == NullImage.NULL_IMAGE || image == OpenGLESImage.NULL_OPENGL_IMAGE) && this.getImage().getHeight() > height)
             {
                 height = this.getImage().getHeight();
             }
@@ -820,6 +823,8 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                 return 0;
             }
 
+            final Image image = this.getImage();
+            
             int widthAddition = 0;
             if (this.box != null)
             {
@@ -833,7 +838,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                     g.drawImage(box, 0, 0, Graphics.LEFT | Graphics.TOP);
                 }
 
-                if (this.getImage() != null)
+                if (!(image == NullImage.NULL_IMAGE || image == OpenGLESImage.NULL_OPENGL_IMAGE))
                 {
                     widthAddition = box.getWidth();
                     g.translate(box.getWidth(), 0);
@@ -843,10 +848,8 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                     g.translate(box.getWidth() + 2, 0);
                 }
             }
-
-            Image image = this.getImage();
             
-            if (image != null)
+            if (!(image == NullImage.NULL_IMAGE || image == OpenGLESImage.NULL_OPENGL_IMAGE))
             {
 
                 widthAddition += image.getWidth() + 2;

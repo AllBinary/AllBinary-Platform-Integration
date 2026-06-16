@@ -25,6 +25,7 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.NullImage;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
+import org.allbinary.image.opengles.OpenGLESImage;
 import org.microemu.graphics.form.StringComponent;
 
 import org.allbinary.graphics.color.BasicColor;
@@ -34,11 +35,11 @@ public class ImageStringItem extends ABCustomItem
     private Image img = NullImage.NULL_IMAGE;
     private final StringComponent stringComponent;
 
-    public ImageStringItem(String label, Image img, String text, 
-            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
+    public ImageStringItem(String label, Image img, String text,
+                           BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(label, backgroundBasicColor, foregroundBasicColor);
-        
+
         this.stringComponent = new StringComponent(text, Font.getDefaultFont(), backgroundBasicColor, foregroundBasicColor);
         this.setImage(img);
     }
@@ -51,7 +52,7 @@ public class ImageStringItem extends ABCustomItem
     public void setImage(Image img)
     {
         this.img = img;
-        if (this.img != null)
+        if (!(this.img == NullImage.NULL_IMAGE || this.img == OpenGLESImage.NULL_OPENGL_IMAGE))
         {
             this.stringComponent.setWidthDecreaser(img.getWidth() + 2);
         }

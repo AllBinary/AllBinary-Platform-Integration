@@ -219,7 +219,7 @@ public class GDForm extends GDFormInput
     private final GameKeyUtil gameKeyUtil = GameKeyUtil.getInstance();
 
     public void keyPressed(int keyCode) {
-        this.keyPressed(keyCode, 0);
+        this.keyPressedByDevice(keyCode, 0);
     }
 
     public void keyReleased(int keyCode) {
@@ -230,7 +230,7 @@ public class GDForm extends GDFormInput
 //        this.keyRepeated(keyCode, 0);
 //    }
 
-    public void keyPressed(int keyCode, int deviceId) {
+    public void keyPressedByDevice(int keyCode, int deviceId) {
         
         this.showNotify();
 
@@ -296,7 +296,7 @@ public class GDForm extends GDFormInput
         }
     }
     
-    public void keyReleased(int keyCode, int deviceId) {
+    public void keyReleasedByDevice(int keyCode, int deviceId) {
         // logUtil.putF(commonStrings.START, this, gameInputStrings.KEY_RELEASED);
     }
 

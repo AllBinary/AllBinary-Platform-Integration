@@ -137,14 +137,16 @@ public class TextFieldItem extends TextItem
 
         final MyFont myFont = MyFont.getInstance();
         final Font existingFont = graphics.getFont();
-        this.fontDebugFactory.setFont(this.stringComponent.getFont(), graphics);
+        final Font textFieldFont = this.stringComponent.getFont();
+        this.fontDebugFactory.setFont(textFieldFont, graphics);
         
         int height = 0;
         
+        final int textFieldHeight = this.stringComponent.getHeight();
         final String label = this.getLabel();
         if(label.length() > 0)
         {
-            height = this.stringComponent.getHeight() + 4;
+            height = textFieldHeight + 4;
         }
         
         super.paintXY(graphics, x, y);
@@ -152,9 +154,9 @@ public class TextFieldItem extends TextItem
         graphics.setColor(this.stringComponent.getBackgroundBasicColor().intValue());
         
         graphics.fillRect(x, y + height,
-                myFont.defaultStringWidth(this.maxSize) * this.stringComponent.getFont().getSize() / this.defaultSize,
+                myFont.defaultStringWidth(this.maxSize) * textFieldFont.getSize() / this.defaultSize,
                 //owner.getWidth() - 3, 
-                this.stringComponent.getHeight());
+                textFieldHeight);
 
         graphics.setColor(this.stringComponent.getForegroundBasicColor().intValue());
         graphics.drawString(this.stringComponent.getText(), x + 2, y + height, this.anchor);
@@ -166,9 +168,9 @@ public class TextFieldItem extends TextItem
                 //Font.getDefaultFont().getHeight()
             final int dx = x + x_pos + 2;
             final int dy = y + y_pos + height;
-            final int caretWidth = (this.stringComponent.getFont().getSize() > 10) ? this.stringComponent.getFont().getSize() / 10 : 1;
+            final int caretWidth = (textFieldFont.getSize() > 10) ? textFieldFont.getSize() / 10 : 1;
             //final int caretHeight = y_pos + height + (AndroidUtil.isAndroid() ? stringComponent.getHeight() * 2 : stringComponent.getHeight());
-            final int caretHeight = this.stringComponent.getHeight();
+            final int caretHeight = textFieldHeight;
             
             if(this.timeDelayHelper.isTimeTNT()) {
                 this.hide = true;

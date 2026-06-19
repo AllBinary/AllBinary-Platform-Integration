@@ -47,6 +47,9 @@ public class SwtSystemFont implements SwtFont {
 	public SwtSystemFont(String name, String style, int size, boolean antialiasing) {
 		this.name = name;
 		this.style = style.toLowerCase();
+                if(size < 6) {
+                    throw new RuntimeException();
+                }
 		this.size = size - 6;
                 this.halfSize = this.size >> 1;
 		this.antialiasing = antialiasing;

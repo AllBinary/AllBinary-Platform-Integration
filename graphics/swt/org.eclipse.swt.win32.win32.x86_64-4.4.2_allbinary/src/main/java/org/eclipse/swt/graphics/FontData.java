@@ -276,7 +276,7 @@ public FontData(String name, int height, int style) {
 	if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	this.data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
 	setName(name);
-	setHeight(this.height);
+	setHeight(height);
 	setStyle(style);
 	// We set the charset field so that
 	// wildcard searching will work properly
@@ -489,7 +489,7 @@ public void setHeight(int height) {
 }
 
 /*public*/ void setHeight(float height) {
-	if (this.height < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+	if (height < 0) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	this.height = height;
 }
 

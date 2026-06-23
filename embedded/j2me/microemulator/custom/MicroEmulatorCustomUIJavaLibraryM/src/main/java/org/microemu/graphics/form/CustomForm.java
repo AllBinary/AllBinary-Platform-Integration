@@ -62,6 +62,10 @@ public class CustomForm extends CustomScreen
 		this.setSelectedIndex(-1);
     }
 
+    public ABCustomItem[] getAllitems() {
+        return this.items;
+    }
+
     public void processInput(AllBinaryLayerManager layerManager) throws Exception
     {
         

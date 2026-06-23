@@ -14,7 +14,9 @@ import org.microemu.graphics.form.StringComponent;
 import org.allbinary.graphics.Anchor;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.FontDebugFactory;
-import org.allbinary.graphics.font.MyFont;
+import org.allbinary.graphics.font.MyFontProcessor;
+import org.allbinary.graphics.font.UpdateMyFontInterface;
+import org.allbinary.graphics.font.UpdateMyFontProcessor;
 import org.allbinary.input.event.VirtualKeyboardEventHandler;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.logic.string.StringUtil;
@@ -25,7 +27,7 @@ import org.allbinary.time.TimeDelayHelper;
  *
  * @author user
  */
-public class TextFieldItem extends TextItem
+public class TextFieldItem extends TextItem implements UpdateMyFontInterface
 {
     protected final LogUtil logUtil = LogUtil.getInstance();
 
@@ -34,11 +36,15 @@ public class TextFieldItem extends TextItem
 
     private final int anchor = Anchor.TOP_LEFT;
 
+    private final int maxSize;
+
+    private final MyFontProcessor updateMyFontProcessor = new UpdateMyFontProcessor(this);
+    private MyFontProcessor myFontProcessor = this.updateMyFontProcessor;
+    
     private int position;
     //private int positionX;
     private int positionY = 1;
     private boolean caretVisible = false;
-    private int maxSize;
 
     private final StringComponent stringComponent;
     
@@ -47,6 +53,8 @@ public class TextFieldItem extends TextItem
     private final TimeDelayHelper timeDelayHelper = new TimeDelayHelper(900);
     private final TimeDelayHelper timeDelayHelper2 = new TimeDelayHelper(200);
     private boolean hide;
+    
+    private int maxWidth = 0;
 
 //    public TextFieldItem(Canvas canvas, Visitor visitor, String label, String value, int maxSize, int layout, String altText,
 //            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) {
@@ -69,6 +77,13 @@ public class TextFieldItem extends TextItem
         
         this.textFieldItemHelper = new TextFieldItemHelper(canvas, this, visitor);
         
+    }
+
+    @Override
+    public void updateMeasurement(final Graphics graphics) {
+        final Font font = graphics.getFont();
+        this.maxWidth = MyFontProcessor.defaultStringWidth(font, this.maxSize);
+        super.updateMeasurement(graphics);
     }
 
     @Override
@@ -134,11 +149,11 @@ public class TextFieldItem extends TextItem
     @Override
     public void paintXY(Graphics graphics, int x, int y)
     {
-
-        final MyFont myFont = MyFont.getInstance();
         final Font existingFont = graphics.getFont();
         final Font textFieldFont = this.stringComponent.getFont();
         this.fontDebugFactory.setFont(textFieldFont, graphics);
+        
+        this.myFontProcessor.process(graphics);
         
         int height = 0;
         
@@ -154,7 +169,7 @@ public class TextFieldItem extends TextItem
         graphics.setColor(this.stringComponent.getBackgroundBasicColor().intValue());
         
         graphics.fillRect(x, y + height,
-                myFont.defaultStringWidth(this.maxSize) * textFieldFont.getSize() / this.defaultSize,
+                this.maxWidth * textFieldFont.getSize() / this.defaultSize,
                 //owner.getWidth() - 3, 
                 textFieldHeight);
 

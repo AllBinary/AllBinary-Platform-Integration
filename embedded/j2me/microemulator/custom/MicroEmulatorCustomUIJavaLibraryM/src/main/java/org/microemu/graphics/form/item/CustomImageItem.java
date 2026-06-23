@@ -5,6 +5,7 @@
  */
 package org.microemu.graphics.form.item;
 
+import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.NullImage;
@@ -12,7 +13,9 @@ import javax.microedition.lcdui.Screen;
 
 import org.allbinary.graphics.Anchor;
 import org.allbinary.graphics.color.BasicColor;
-import org.allbinary.graphics.font.MyFont;
+import org.allbinary.graphics.font.MyFontProcessor;
+import org.allbinary.graphics.font.UpdateMyFontInterface;
+import org.allbinary.graphics.font.UpdateMyFontProcessor;
 import org.allbinary.graphics.form.item.ABCustomItemInterface;
 import org.microemu.graphics.form.CustomForm;
 
@@ -22,8 +25,11 @@ import org.microemu.graphics.form.CustomForm;
  */
 public class CustomImageItem
     extends ImageItem
-    implements ABCustomItemInterface {
+    implements ABCustomItemInterface, UpdateMyFontInterface {
 
+    private final MyFontProcessor updateMyFontProcessor = new UpdateMyFontProcessor(this);
+    private MyFontProcessor myFontProcessor = this.updateMyFontProcessor;
+    
     private Screen owner = CustomForm.getNullForm();
 
     private BasicColor basicColor;
@@ -33,7 +39,7 @@ public class CustomImageItem
     private int max;
     private int maxLabelLength;
 
-    private final String labelViewable;
+    private String labelViewable;
 
 //    public CustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor) throws Exception {
 //        this(label, image, layout, altText, basicColor, 0);
@@ -48,8 +54,13 @@ public class CustomImageItem
         if (image == NullImage.NULL_IMAGE) {
             throw new Exception("Image: " + image);
         }
+    }
 
-        this.max = image.getWidth() / MyFont.getInstance().defaultCharWidth();
+    @Override
+    public void updateMeasurement(final Graphics graphics) {
+        final Font font = graphics.getFont();
+
+        this.max = this.getImage().getWidth() / MyFontProcessor.defaultCharWidth(font);
 
         final String labelSet = this.getLabel();
         if (this.max > labelSet.length()) {
@@ -59,8 +70,10 @@ public class CustomImageItem
         }
 
         this.labelViewable = labelSet.substring(0, this.maxLabelLength);
-    }
 
+        this.myFontProcessor = MyFontProcessor.getInstance();
+    }
+        
     @Override
     public void setOwner(Screen owner) {
         this.owner = owner;
@@ -81,11 +94,14 @@ public class CustomImageItem
 
     @Override
     public void paintXY(Graphics graphics, int x, int y) {
-        Image image = this.getImage();
-        int layout = this.getLayout();
+        
+        this.myFontProcessor.process(graphics);
+        
+        final Image image = this.getImage();
+        final int layout = this.getLayout();
         // int height = image.getHeight();
 
-        int height = y;
+        final int height = y;
 
         graphics.setColor(this.basicColor.intValue());
 

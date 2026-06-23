@@ -51,7 +51,7 @@ public class SwtFontManager implements FontManagerImpl {
 
 	private boolean antialiasing;
 
-	org.microemu.device.impl.Font getFont(Font meFont) {
+	public org.microemu.device.impl.Font getFont(Font meFont) {
     	int key = 0;
     	key |= meFont.getFace();
     	key |= meFont.getStyle();

@@ -18,32 +18,41 @@
  */
 package org.microemu.graphics.form.item;
 
+import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 
 import org.allbinary.J2MEUtil;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
-import org.allbinary.graphics.font.MyFont;
+import org.allbinary.graphics.font.MyFontProcessor;
+import org.allbinary.graphics.font.UpdateMyFontInterface;
+import org.allbinary.graphics.font.UpdateMyFontProcessor;
 
-public class CustomGaugeItem extends CustomItem
+public class CustomGaugeItem extends CustomItem 
+    implements UpdateMyFontInterface
 {
     //protected final LogUtil logUtil = LogUtil.getInstance();
-
-    
-    private int height = 30;
-
-    private float value;
-    private float maxValue;
     
     //private final int currentOuterColor = 0xff000000;
     private final long currentRed = 0xffff0000;
     private final long currentGreen = 0xff00ff00;
     private final long currentBlue = 0xff0000ff;
     private final long START_INNER_COLOR = this.currentRed;
-    private long currentInnerColor = 0xffff0000;
-
+    
     private final DisplayInfoSingleton displayInfoSingleton = 
             DisplayInfoSingleton.getInstance();
+    
+    private final MyFontProcessor updateMyFontProcessor = new UpdateMyFontProcessor(this);
+    private MyFontProcessor myFontProcessor = this.updateMyFontProcessor;
+
+    private long currentInnerColor = 0xffff0000;
+    
+    private int height = 30;
+
+    private float value;
+    private float maxValue;
+    
+    private int fontHeight = 0;
     
     public CustomGaugeItem(String label, int maxValue, int initialValue, 
             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
@@ -52,6 +61,13 @@ public class CustomGaugeItem extends CustomItem
 
         this.setMaxValue(maxValue);
         this.setValue((float) initialValue);
+    }
+
+    @Override
+    public void updateMeasurement(final Graphics graphics) {
+        final Font font = graphics.getFont();
+        this.fontHeight = font.getHeight();
+        this.myFontProcessor = MyFontProcessor.getInstance();
     }
 
     public void setHeight(int height)
@@ -140,6 +156,8 @@ public class CustomGaugeItem extends CustomItem
 
     public void paintXY(Graphics graphics, int xunused, int yunused)
     {
+        this.myFontProcessor.process(graphics);
+        
         graphics.setColor(this.getLabelStringComponent().getBackgroundBasicColor().intValue());
         //g.fillRect(0, 0, g.getClipWidth(), g.getClipHeight());
         //graphics.fillRect(0, 0, graphics.getClipWidth(), this.height);
@@ -149,17 +167,15 @@ public class CustomGaugeItem extends CustomItem
         graphics.setColor(this.getCurrentInnerColor());
         graphics.drawString(this.getLabel(), 4, 0, 0);
 
-        final MyFont myFont = MyFont.getInstance();
-
         if(this.height == 30)
         {
             //int width = (int) ((graphics.getClipWidth() - 8) * value / maxValue);
             int width = (int) ((this.displayInfoSingleton.getLastWidth() - 8) * this.value / this.maxValue);
             //logUtil.put("Rect1: " + width + "," + 7, this, "paint");
-            graphics.fillRect(4, 4 + myFont.DEFAULT_CHAR_HEIGHT, width, 7);
+            graphics.fillRect(4, 4 + this.fontHeight, width, 7);
         }
         else
-            if(this.height == myFont.DEFAULT_CHAR_HEIGHT + 2)
+            if(this.height == this.fontHeight + 2)
         {
                 int stringWidth = graphics.getFont().stringWidth(this.getLabel());
                 

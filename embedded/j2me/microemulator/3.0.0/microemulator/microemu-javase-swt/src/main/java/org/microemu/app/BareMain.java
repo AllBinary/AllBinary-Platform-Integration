@@ -23,8 +23,6 @@
  */
 
 package org.microemu.app;
-import org.allbinary.thread.ARunnable;
-
 
 //import java.io.File;
 import java.io.IOException;
@@ -32,6 +30,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.microedition.lcdui.Font;
 import javax.microedition.midlet.MIDlet;
 
 import org.eclipse.swt.SWT;
@@ -71,6 +70,7 @@ import org.microemu.device.swt.SwtFontManager;
 import org.microemu.device.swt.SwtInputMethod;
 import org.microemu.log.Logger;
 
+import org.allbinary.thread.ARunnable;
 import org.allbinary.emulator.swt.SWTProcessorUtil;
 import org.allbinary.graphics.ResizableListenerHandler;
 import org.allbinary.graphics.ResizableListenerInterface;
@@ -250,7 +250,34 @@ public class BareMain extends Common
 
 			private DeviceDisplay deviceDisplay = SwtDeviceDisplay.getInstance(this); //new SwtDeviceDisplay(this);
 
-			private FontManager fontManager = new SwtFontManager();
+                        class OpenGLESWithSwtFontManager extends SwtFontManager {
+                            
+                            private final SWTJOGLProcessor swtJOGLProcessor = SWTJOGLProcessor.getInstance();
+                            
+                            @Override
+                            public int charWidth(Font font, char ch) {
+                                return swtJOGLProcessor.charWidth(font, ch);
+                            }
+
+                            @Override
+                            public int charsWidth(Font font, char[] ch, int offset, int length) {
+                                return swtJOGLProcessor.charsWidth(font, ch, offset, length);
+                            }
+
+                            @Override
+                            public int stringWidth(Font font, String str) {
+                                return swtJOGLProcessor.stringWidth(font, str);
+                            }
+                            
+                            @Override
+                            public int substringWidth(Font font, String str, int offset, int len) {
+                                return swtJOGLProcessor.substringWidth(font, str, offset, len);
+                            }
+
+                        };
+                        
+                        private final SWTJOGLProcessor swtJOGLProcessor = SWTJOGLProcessor.getInstance();
+			private FontManager fontManager = this.swtJOGLProcessor.isJOGL() ? new OpenGLESWithSwtFontManager() : new SwtFontManager();
 
 			public DisplayComponent getDisplayComponent() {
 				return devicePanel.getDisplayComponent();

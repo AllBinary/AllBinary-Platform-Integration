@@ -7,7 +7,6 @@ package org.allbinary.graphics.form;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
 import org.microemu.graphics.form.CustomForm;
-
 import org.allbinary.graphics.color.BasicColor;
 
 public class ABCustomForm extends CustomForm

@@ -252,8 +252,7 @@ public class BareMain extends Common
 
                         class OpenGLESWithSwtFontManager extends SwtFontManager {
                             
-                            private final SWTJOGLProcessor swtJOGLProcessor = SWTJOGLProcessor.getInstance();
-                            
+                            private final SWTJOGLProcessor swtJOGLProcessor = SWTJOGLProcessor.getInstance();                            
 //                            @Override
 //                            public int charWidth(Font font, char ch) {
 //                                return swtJOGLProcessor.charWidth(font, ch);

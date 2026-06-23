@@ -35,4 +35,8 @@ public class ABCustomItem extends CustomItem
 
     }
 
+    public void preMeasurement(final Graphics graphics) {
+        
+    }
+    
 }

@@ -29,69 +29,65 @@ import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonLabels;
 
-public class CustomForm extends CustomScreen 
-{
+public class CustomForm extends CustomScreen {
+
     private static Object NULL_SCREEN = NullUtil.getInstance().NULL_OBJECT;
+
     public static Form getNullForm() {
-        if(CustomForm.NULL_SCREEN == NullUtil.getInstance().NULL_OBJECT) {
+        if (CustomForm.NULL_SCREEN == NullUtil.getInstance().NULL_OBJECT) {
             CustomForm.NULL_SCREEN = new Form(StringUtil.getInstance().EMPTY_STRING);
         }
-        
+
         return (Form) CustomForm.NULL_SCREEN;
     }
-    
-    protected final LogUtil logUtil = LogUtil.getInstance();
-    
-    private ABCustomItem[] items = new ABCustomItem[16];
-	private int numOfItems = 0;
-	private ABCustomItemStateListener itemStateListener = CustomItemState.NULL_CUSTOM_ITEM_STATE;
-	private int selectedIndex;
 
-    public CustomForm(final String title, final ABCustomItem[] items, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
-    {
+    protected final LogUtil logUtil = LogUtil.getInstance();
+
+    private ABCustomItem[] items = new ABCustomItem[16];
+    private int numOfItems = 0;
+    private ABCustomItemStateListener itemStateListener = CustomItemState.NULL_CUSTOM_ITEM_STATE;
+    private int selectedIndex;
+
+    public CustomForm(final String title, final ABCustomItem[] items, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor) {
         super(title, backgroundBasicColor, foregroundBasicColor);
 
-		this.items = new ABCustomItem[items.length];
-		System.arraycopy(items, 0, this.items, 0, items.length);
-		this.numOfItems = this.items.length;
-		for (int i = 0; i < this.numOfItems; i++)
-		{
-			this.verifyItem(this.items[i]);
-		}
+        this.items = new ABCustomItem[items.length];
+        System.arraycopy(items, 0, this.items, 0, items.length);
+        this.numOfItems = this.items.length;
+        for (int i = 0; i < this.numOfItems; i++) {
+            this.verifyItem(this.items[i]);
+        }
 
-		this.setSelectedIndex(-1);
+        this.setSelectedIndex(-1);
     }
 
     public ABCustomItem[] getAllitems() {
         return this.items;
     }
 
-    public void processInput(AllBinaryLayerManager layerManager) throws Exception
-    {
-        
+    public void processInput(AllBinaryLayerManager layerManager) throws Exception {
+
     }
-    
-    public void initInputProcessors()
-    {
-        
+
+    public void initInputProcessors() {
+
     }
-    
-	public int append(ABCustomItem item)
-	{
-		this.verifyItem(item);
 
-		if (this.numOfItems + 1 >= this.items.length) {
-			ABCustomItem newitems[] = new ABCustomItem[this.numOfItems + 4];
-			System.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
-			this.items = newitems;
-		}
-		this.items[this.numOfItems] = item;
-		this.numOfItems++;
+    public int append(ABCustomItem item) {
+        this.verifyItem(item);
 
-		return (this.numOfItems - 1);
-	}
+        if (this.numOfItems + 1 >= this.items.length) {
+            ABCustomItem newitems[] = new ABCustomItem[this.numOfItems + 4];
+            System.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
+            this.items = newitems;
+        }
+        this.items[this.numOfItems] = item;
+        this.numOfItems++;
 
-	/*
+        return (this.numOfItems - 1);
+    }
+
+    /*
 	public int append(Image img) 
 	{
 		return append(new ImageItem(null, img, ImageItem.LAYOUT_DEFAULT, null));
@@ -105,35 +101,29 @@ public class CustomForm extends CustomScreen
 
 		return append(new StringItem(null, str));
 	}
-	*/
-	
-	public void delete(int itemNum) 
-	{
-		this.verifyItemNum(itemNum);
+     */
+    public void delete(int itemNum) {
+        this.verifyItemNum(itemNum);
 
-		this.items[itemNum].setOwner(CustomForm.getNullForm());
-		System.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
-		this.numOfItems--;
-	}
-	
-	
-	public void deleteAll()
-	{
-		for (int i = 0; i < this.numOfItems; i++) {
-			this.items[i].setOwner(CustomForm.getNullForm());
-		}
-		this.numOfItems = 0;
-	}
+        this.items[itemNum].setOwner(CustomForm.getNullForm());
+        System.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
+        this.numOfItems--;
+    }
 
-	
-	public ABCustomItem get(int itemNum)
-	{
-		this.verifyItemNum(itemNum);
+    public void deleteAll() {
+        for (int i = 0; i < this.numOfItems; i++) {
+            this.items[i].setOwner(CustomForm.getNullForm());
+        }
+        this.numOfItems = 0;
+    }
 
-		return this.items[itemNum];
-	}
-	
-	/*
+    public ABCustomItem get(int itemNum) {
+        this.verifyItemNum(itemNum);
+
+        return this.items[itemNum];
+    }
+
+    /*
 	public int getHeight()
 	{
 		return super.getHeight();
@@ -144,74 +134,60 @@ public class CustomForm extends CustomScreen
 	{
 		return super.getWidth();
 	}
-	*/
+     */
+    public void insert(int itemNum, ABCustomItem item) {
+        this.verifyItemNum(itemNum);
+        this.verifyItem(item);
 
-	
-	public void insert(int itemNum, ABCustomItem item)
-	{
-		this.verifyItemNum(itemNum);
-		this.verifyItem(item);
+        if (this.numOfItems + 1 == this.items.length) {
+            ABCustomItem[] newitems = new ABCustomItem[this.numOfItems + 4];
+            System.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
+            this.items = newitems;
+        }
+        System.arraycopy(
+            this.items,
+            itemNum,
+            this.items,
+            itemNum + 1,
+            this.numOfItems - itemNum);
+        this.items[itemNum] = item;
+        //items[itemNum].setOwner(this);
+        this.numOfItems++;
 
-		if (this.numOfItems + 1 == this.items.length) {
-			ABCustomItem[] newitems = new ABCustomItem[this.numOfItems + 4];
-			System.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
-			this.items = newitems;
-		}
-		System.arraycopy(
-			this.items,
-			itemNum,
-			this.items,
-			itemNum + 1,
-				this.numOfItems - itemNum);
-		this.items[itemNum] = item;
-		//items[itemNum].setOwner(this);
-		this.numOfItems++;
-		
-	}
+    }
 
-	
-	public void set(int itemNum, ABCustomItem item)
-	{
-		this.verifyItemNum(itemNum);
-		this.verifyItem(item);
+    public void set(int itemNum, ABCustomItem item) {
+        this.verifyItemNum(itemNum);
+        this.verifyItem(item);
 
-		// TODO add this to MIDP1
-		this.items[itemNum].setOwner(CustomForm.getNullForm());
-		
-		this.items[itemNum] = item;
-		//items[itemNum].setOwner(this);
-	}
+        // TODO add this to MIDP1
+        this.items[itemNum].setOwner(CustomForm.getNullForm());
 
-	
-	public void setItemStateListener(ABCustomItemStateListener iListener)
-	{
-		this.itemStateListener = iListener;
-	}
+        this.items[itemNum] = item;
+        //items[itemNum].setOwner(this);
+    }
 
-	
-	public int size() 
-	{
-		return this.numOfItems;
-	}
-    
-	protected int getItemTotalHeight(int index)
-	{
-	    return this.items[index].getHeight();
-	}
-	
-    protected int getItemIndexAt(GPoint point)
-    {
+    public void setItemStateListener(ABCustomItemStateListener iListener) {
+        this.itemStateListener = iListener;
+    }
+
+    public int size() {
+        return this.numOfItems;
+    }
+
+    protected int getItemTotalHeight(int index) {
+        return this.items[index].getHeight();
+    }
+
+    protected int getItemIndexAt(GPoint point) {
         int beginY = 0;
         int endY = 0;
-        for (int index = 0; index < this.numOfItems; index++)
-        {
+        for (int index = 0; index < this.numOfItems; index++) {
             //logUtil.putF("Painting: " + items[i].getLabel(), this, "paint");
             endY += this.getItemTotalHeight(index);
-            
+
             //logUtil.putF(point.getY() + ">=" + beginY + " && " + point.getY() + "<" + endY, this, "getItemIndexAt");
-            
-            if(point.getY() >= beginY && point.getY() < endY )
-            {
+            if (point.getY() >= beginY && point.getY() < endY) {
                 return index;
             }
 
@@ -221,110 +197,95 @@ public class CustomForm extends CustomScreen
     }
 
     private final int LIGHT_GREY = BasicColorFactory.getInstance().LIGHT_GREY.intValue();
-            
+
     @Override
-	int paintContent(Graphics graphics) 
-	{
-	    //logUtil.putF(commonStrings.START_LABEL + numOfItems, this, "paintContent");
+    int paintContent(Graphics graphics) {
+        //logUtil.putF(commonStrings.START_LABEL + numOfItems, this, "paintContent");
 
-	    int contentHeight = 0;
-		int translateY = 0;
+        int contentHeight = 0;
+        int translateY = 0;
 
-		for (int index = 0; index < this.numOfItems; index++)
-		{
-			//logUtil.putF("Painting: " + items[i].getLabel(), this, "paint");
-		    if(this.items[index].hasFocus())
-		    {
-	            graphics.setColor(this.LIGHT_GREY);
-	            graphics.drawRect(0, 0, this.getWidth(), this.getItemTotalHeight(index));
-		    }
+        for (int index = 0; index < this.numOfItems; index++) {
+            //logUtil.putF("Painting: " + items[i].getLabel(), this, "paint");
+            if (this.items[index].hasFocus()) {
+                graphics.setColor(this.LIGHT_GREY);
+                graphics.drawRect(0, 0, this.getWidth(), this.getItemTotalHeight(index));
+            }
 
-			translateY = this.items[index].paint(graphics);
-			graphics.translate(0, translateY);
-			contentHeight += translateY;
-		}
+            translateY = this.items[index].paint(graphics);
+            graphics.translate(0, translateY);
+            contentHeight += translateY;
+        }
 
-		graphics.translate(0, -contentHeight);
+        graphics.translate(0, -contentHeight);
 
-		return contentHeight;
-	}
-    
-	void fireItemStateListenerForCustomItem(final ABCustomItem item) {
+        return contentHeight;
+    }
+
+    void fireItemStateListenerForCustomItem(final ABCustomItem item) {
         if (this.itemStateListener != null) {
             this.itemStateListener.itemStateChanged(item);
         }
-	}
-	
-	void fireItemStateListener()
-    {
-        final int selectedIndex = this.getSelectedIndex();
-		if (selectedIndex >= 0 && selectedIndex < this.items.length) {
-			this.fireItemStateListenerForCustomItem(this.items[selectedIndex]);
-                }
     }
 
-	
-        @Override
-	void hideNotify() 
-	{
-		super.hideNotify();
-		// TODO eliminate this to
-		// allow focus restoring
-		for (int i = 0; i < this.numOfItems; i++) {
-			if (this.items[i].isFocusable() && this.items[i].hasFocus()) {
-				this.items[i].setFocus(false);
-				this.setSelectedIndex(-1);
-				break;
-			}
-		}
-	}
+    void fireItemStateListener() {
+        final int selectedIndex = this.getSelectedIndex();
+        if (selectedIndex >= 0 && selectedIndex < this.items.length) {
+            this.fireItemStateListenerForCustomItem(this.items[selectedIndex]);
+        }
+    }
 
+    @Override
+    void hideNotify() {
+        super.hideNotify();
+        // TODO eliminate this to
+        // allow focus restoring
+        for (int i = 0; i < this.numOfItems; i++) {
+            if (this.items[i].isFocusable() && this.items[i].hasFocus()) {
+                this.items[i].setFocus(false);
+                this.setSelectedIndex(-1);
+                break;
+            }
+        }
+    }
 
     int viewPortY = 0;
     final int viewPortHeight = this.getHeight() - this.title.getHeight() - 1;
-    
-    public void traverseFromKey(int keyCode)
-    {
+
+    public void traverseFromKey(int keyCode) {
         this.viewPortY = 0;
         this.viewPortY += this.traverse(keyCode, this.viewPortY, this.viewPortY + this.viewPortHeight);
     }
-	
+
     private final GameKeyFactory gameKeyFactory = GameKeyFactory.getInstance();
-    
+
     protected final InputFactory inputFactory = InputFactory.getInstance();
-    
+
     @Override
-	public void keyPressed(final int keyCode) 
-	{
-		try
-		{
+    public void keyPressed(final int keyCode) {
+        try {
             GameKey gameKey =
                 PlatformFormInputMappingFactory.getInstance().getOrCreate().getInstance(keyCode);
-                //( (InputToGameKeyMapping) 
-                  //      PlatformInputMappingFactory.getInstance()).getInstance(keyCode);
+            //( (InputToGameKeyMapping) 
+            //      PlatformInputMappingFactory.getInstance()).getInstance(keyCode);
 
             //PreLogUtil.put(commonStrings.START + gameKey, this, gameInputStrings.KEY_PRESSED);
-            
             final Input input = this.inputFactory.getInstanceById(keyCode);
             final PlatformKeyFactory platformKeyFactory = PlatformKeyFactory.getInstance();
-            
-            if(platformKeyFactory.isEnter(input))
-            {
+
+            if (platformKeyFactory.isEnter(input)) {
                 gameKey = this.gameKeyFactory.DOWN;
             }
 
-		    if (gameKey == this.gameKeyFactory.UP || gameKey == this.gameKeyFactory.DOWN)
-		    {
-		        this.logUtil.putF(gameKey.toString(), this, this.gameInputStrings.KEY_PRESSED);
-		        
-                this.traverseFromKey(gameKey.getId());
-		    }
-		    else
-		    {
-	            //logUtil.putF(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
+            if (gameKey == this.gameKeyFactory.UP || gameKey == this.gameKeyFactory.DOWN) {
+                this.logUtil.putF(gameKey.toString(), this, this.gameInputStrings.KEY_PRESSED);
 
-	            if (this.getSelectedIndex() != -1) {
-	                /*
+                this.traverseFromKey(gameKey.getId());
+            } else {
+                //logUtil.putF(commonStrings.START, this, gameInputStrings.KEY_PRESSED);
+
+                if (this.getSelectedIndex() != -1) {
+                    /*
 	                //Display.getGameAction()
 	                if (keyCode == Canvas.FIRE) {
 	                    this.items[this.selectedIndex].select();
@@ -332,21 +293,19 @@ public class CustomForm extends CustomScreen
 	                    // Andres Navarro
 	                    fireItemStateListener();
 	                } else {
-	                */
-	                    this.items[this.getSelectedIndex()].keyPressed(keyCode);
-	                //}
-	            }
+                     */
+                    this.items[this.getSelectedIndex()].keyPressed(keyCode);
+                    //}
+                }
 
-	            super.keyPressed(keyCode);
-		    }
-		}
-		catch(Exception e)
-		{
-		    this.logUtil.put(this.commonStrings.EXCEPTION, this, this.gameInputStrings.KEY_PRESSED, e);
-		}
-	}
+                super.keyPressed(keyCode);
+            }
+        } catch (Exception e) {
+            this.logUtil.put(this.commonStrings.EXCEPTION, this, this.gameInputStrings.KEY_PRESSED, e);
+        }
+    }
 
-	/*
+    /*
 	void showNotify() 
 	{
 		if (focusItemIndex == -2) {
@@ -371,306 +330,290 @@ public class CustomForm extends CustomScreen
 		//	viewPortY = heightAfterItem - viewPortHeight;
 		//}
 	}
-	*/
-	
-	private int getTotalTraversable()
-	{
-	    int total = 0;
-	    
-	    for(int index = this.items.length - 1; index >= 0; index--)
-	    {
-	        if(this.items[index].isFocusable())
-	        {
-	            total++;
-	        }
-	        
-	    }
-	    
-	    return total;
-	}
-	
-        @Override
-	int traverse(int gameKeyCode, int top, int bottom) 
-	{
-	    //logUtil.put(commonStrings.START, this, "traverse");
+     */
+    private int getTotalTraversable() {
+        int total = 0;
 
-		int height, testItemIndex, traverse, i;
-		int topItemIndex, bottomItemIndex;
+        for (int index = this.items.length - 1; index >= 0; index--) {
+            if (this.items[index].isFocusable()) {
+                total++;
+            }
 
-		if (this.numOfItems == 0) {
-			return 0;
-		}
-		
-		if(this.getTotalTraversable() == 0)
-		{
-		    return 0;
-		}
-		
-		if (gameKeyCode == Canvas.UP) {
-			topItemIndex = this.getTopVisibleIndex(top);
-			if (this.getSelectedIndex() == -1) {
-				testItemIndex = topItemIndex;
-				height = this.getHeightToItem(testItemIndex);
-				traverse =
-					this.items[testItemIndex].traverse(
-						gameKeyCode,
-						top - height,
-						bottom - height,
-						false);
-			} else {
-				testItemIndex = this.getSelectedIndex();
-				height = this.getHeightToItem(testItemIndex);
-				traverse =
-					this.items[testItemIndex].traverse(
-						gameKeyCode,
-						top - height,
-						bottom - height,
-						true);
-			}
-			if (traverse == ABCustomItem.OUTOFITEM) {
-				if (this.getSelectedIndex() == -1
-					&& this.items[testItemIndex].isFocusable()) {
-				    this.items[testItemIndex].setFocus(true);
-					this.setSelectedIndex(testItemIndex);
-				}
-				return traverse;
-			} else {
-				if (testItemIndex > 0) {
-					// Czy istnieje obiekt focusable powyzej testItemIndex
-					// widoczny na ekranie
-					// jesli tak to zrob na nim traverse(false) i return
-					// traverse
-					for (i = testItemIndex - 1; i >= topItemIndex; i--) {
-						if (this.items[i].isFocusable()) {
-							if (this.getSelectedIndex() != -1) {
-								this.items[this.getSelectedIndex()].setFocus(false);
-							}
-							this.items[i].setFocus(true);
-							this.setSelectedIndex(i);
-							height = this.getHeightToItem(i);
-							traverse =
-								this.items[i].traverse(
-									gameKeyCode,
-									top - height,
-									bottom - height,
-									false);
-							if (traverse == ABCustomItem.OUTOFITEM) {
-								return 0;
-							} else {
-								return traverse;
-							}
-						}
-					}
-					// Na najnizszym widocznym item zrob traverse(false)
-					height = this.getHeightToItem(topItemIndex);
-					traverse =
-						this.items[topItemIndex].traverse(
-							gameKeyCode,
-							top - height,
-							bottom - height,
-							false);
-					if (traverse == ABCustomItem.OUTOFITEM) {
-					} else {
-						// Sprawdzenie czy znajduje sie powyzej na ekranie
-						// focusable item
-						// jesli tak zrob co trzeba
-						bottomItemIndex = this.getTopVisibleIndex(bottom + traverse);
-						if (this.getSelectedIndex() != -1
-							&& this.getSelectedIndex() > bottomItemIndex) {
-							this.items[this.getSelectedIndex()].setFocus(false);
-							this.setSelectedIndex(-1);
-						}
-						return traverse;
-					}
-				}
-			}
-		}
-		if (gameKeyCode == Canvas.DOWN) {
-		    		    
-			bottomItemIndex = this.getBottomVisibleIndex(bottom);
-			if (this.getSelectedIndex() == -1) {
-				testItemIndex = bottomItemIndex;
-				height = this.getHeightToItem(testItemIndex);
-				traverse =
-					this.items[testItemIndex].traverse(
-						gameKeyCode,
-						top - height,
-						bottom - height,
-						false);
-			} else {
-			    
-				testItemIndex = this.getSelectedIndex();
-				height = this.getHeightToItem(testItemIndex);
-				traverse =
-					this.items[testItemIndex].traverse(
-						gameKeyCode,
-						top - height,
-						bottom - height,
-						true);
-			}
-			
-			if (traverse == ABCustomItem.OUTOFITEM) {
-				if (this.getSelectedIndex() == -1
-					&& this.items[testItemIndex].isFocusable()) {
-					this.items[testItemIndex].setFocus(true);
-					this.setSelectedIndex(testItemIndex);
-				}
-				return traverse;
-			} else {
-			    
-				if (testItemIndex < this.numOfItems - 1) {
-					// Czy istnieje obiekt focusable ponizej testItemIndex
-					// widoczny na ekranie
-					// jesli tak to zrob na nim traverse(false) i return
-					// traverse
-					for (i = testItemIndex + 1; i <= bottomItemIndex; i++) {
-						if (this.items[i].isFocusable()) {
-							if (this.getSelectedIndex() != -1) {
-								this.items[this.getSelectedIndex()].setFocus(false);
-							}
-							this.items[i].setFocus(true);
-							this.setSelectedIndex(i);
-							height = this.getHeightToItem(i);
-							traverse =
-								this.items[i].traverse(
-									gameKeyCode,
-									top - height,
-									bottom - height,
-									false);
-							if (traverse == ABCustomItem.OUTOFITEM) {
-								return 0;
-							} else {
-								return traverse;
-							}
-						}
-					}
-					// Na najnizszym widocznym item zrob traverse(false)
-					height = this.getHeightToItem(bottomItemIndex);
-					traverse =
-						this.items[bottomItemIndex].traverse(
-							gameKeyCode,
-							top - height,
-							bottom - height,
-							false);
-					if (traverse == ABCustomItem.OUTOFITEM) {
-					} else {
-						// Sprawdzenie czy znajduje sie powyzej na ekranie
-						// focusable item
-						// jesli tak zrob co trzeba
-						topItemIndex = this.getTopVisibleIndex(top + traverse);
-						if (this.getSelectedIndex() != -1
-							&& this.getSelectedIndex() < topItemIndex) {
-							this.items[this.getSelectedIndex()].setFocus(false);
-							this.setSelectedIndex(-1);
-						}
-						return traverse;
-					}
-				}
-			}
-		}
+        }
 
-		return 0;
-	}
+        return total;
+    }
 
-	
-	private int getTopVisibleIndex(int top) 
-	{
-		int height = 0;
+    @Override
+    int traverse(int gameKeyCode, int top, int bottom) {
+        //logUtil.put(commonStrings.START, this, "traverse");
 
-		for (int i = 0; i < this.numOfItems; i++) {
-			height += this.items[i].getHeight();
-			if (height >= top) {
-				return i;
-			}
-		}
+        int height, testItemIndex, traverse, i;
+        int topItemIndex, bottomItemIndex;
 
-		return this.numOfItems - 1;
-	}
+        if (this.numOfItems == 0) {
+            return 0;
+        }
 
-	
-	private int getBottomVisibleIndex(int bottom) 
-	{
-		int height = 0;
+        if (this.getTotalTraversable() == 0) {
+            return 0;
+        }
 
-		for (int i = 0; i < this.numOfItems; i++) {
-			height += this.items[i].getHeight();
-			if (height > bottom) {
-				return i;
-			}
-		}
+        if (gameKeyCode == Canvas.UP) {
+            topItemIndex = this.getTopVisibleIndex(top);
+            if (this.getSelectedIndex() == -1) {
+                testItemIndex = topItemIndex;
+                height = this.getHeightToItem(testItemIndex);
+                traverse =
+                    this.items[testItemIndex].traverse(
+                        gameKeyCode,
+                        top - height,
+                        bottom - height,
+                        false);
+            } else {
+                testItemIndex = this.getSelectedIndex();
+                height = this.getHeightToItem(testItemIndex);
+                traverse =
+                    this.items[testItemIndex].traverse(
+                        gameKeyCode,
+                        top - height,
+                        bottom - height,
+                        true);
+            }
+            if (traverse == ABCustomItem.OUTOFITEM) {
+                if (this.getSelectedIndex() == -1
+                    && this.items[testItemIndex].isFocusable()) {
+                    this.items[testItemIndex].setFocus(true);
+                    this.setSelectedIndex(testItemIndex);
+                }
+                return traverse;
+            } else {
+                if (testItemIndex > 0) {
+                    // Czy istnieje obiekt focusable powyzej testItemIndex
+                    // widoczny na ekranie
+                    // jesli tak to zrob na nim traverse(false) i return
+                    // traverse
+                    for (i = testItemIndex - 1; i >= topItemIndex; i--) {
+                        if (this.items[i].isFocusable()) {
+                            if (this.getSelectedIndex() != -1) {
+                                this.items[this.getSelectedIndex()].setFocus(false);
+                            }
+                            this.items[i].setFocus(true);
+                            this.setSelectedIndex(i);
+                            height = this.getHeightToItem(i);
+                            traverse =
+                                this.items[i].traverse(
+                                    gameKeyCode,
+                                    top - height,
+                                    bottom - height,
+                                    false);
+                            if (traverse == ABCustomItem.OUTOFITEM) {
+                                return 0;
+                            } else {
+                                return traverse;
+                            }
+                        }
+                    }
+                    // Na najnizszym widocznym item zrob traverse(false)
+                    height = this.getHeightToItem(topItemIndex);
+                    traverse =
+                        this.items[topItemIndex].traverse(
+                            gameKeyCode,
+                            top - height,
+                            bottom - height,
+                            false);
+                    if (traverse == ABCustomItem.OUTOFITEM) {
+                    } else {
+                        // Sprawdzenie czy znajduje sie powyzej na ekranie
+                        // focusable item
+                        // jesli tak zrob co trzeba
+                        bottomItemIndex = this.getTopVisibleIndex(bottom + traverse);
+                        if (this.getSelectedIndex() != -1
+                            && this.getSelectedIndex() > bottomItemIndex) {
+                            this.items[this.getSelectedIndex()].setFocus(false);
+                            this.setSelectedIndex(-1);
+                        }
+                        return traverse;
+                    }
+                }
+            }
+        }
+        if (gameKeyCode == Canvas.DOWN) {
 
-		return this.numOfItems - 1;
-	}
+            bottomItemIndex = this.getBottomVisibleIndex(bottom);
+            if (this.getSelectedIndex() == -1) {
+                testItemIndex = bottomItemIndex;
+                height = this.getHeightToItem(testItemIndex);
+                traverse =
+                    this.items[testItemIndex].traverse(
+                        gameKeyCode,
+                        top - height,
+                        bottom - height,
+                        false);
+            } else {
 
-	
-	private int getHeightToItem(int itemIndex) 
-	{
-		int height = 0;
+                testItemIndex = this.getSelectedIndex();
+                height = this.getHeightToItem(testItemIndex);
+                traverse =
+                    this.items[testItemIndex].traverse(
+                        gameKeyCode,
+                        top - height,
+                        bottom - height,
+                        true);
+            }
 
-		for (int i = 0; i < itemIndex; i++) {
-			height += this.items[i].getHeight();
-		}
+            if (traverse == ABCustomItem.OUTOFITEM) {
+                if (this.getSelectedIndex() == -1
+                    && this.items[testItemIndex].isFocusable()) {
+                    this.items[testItemIndex].setFocus(true);
+                    this.setSelectedIndex(testItemIndex);
+                }
+                return traverse;
+            } else {
 
-		return height;
-	}
+                if (testItemIndex < this.numOfItems - 1) {
+                    // Czy istnieje obiekt focusable ponizej testItemIndex
+                    // widoczny na ekranie
+                    // jesli tak to zrob na nim traverse(false) i return
+                    // traverse
+                    for (i = testItemIndex + 1; i <= bottomItemIndex; i++) {
+                        if (this.items[i].isFocusable()) {
+                            if (this.getSelectedIndex() != -1) {
+                                this.items[this.getSelectedIndex()].setFocus(false);
+                            }
+                            this.items[i].setFocus(true);
+                            this.setSelectedIndex(i);
+                            height = this.getHeightToItem(i);
+                            traverse =
+                                this.items[i].traverse(
+                                    gameKeyCode,
+                                    top - height,
+                                    bottom - height,
+                                    false);
+                            if (traverse == ABCustomItem.OUTOFITEM) {
+                                return 0;
+                            } else {
+                                return traverse;
+                            }
+                        }
+                    }
+                    // Na najnizszym widocznym item zrob traverse(false)
+                    height = this.getHeightToItem(bottomItemIndex);
+                    traverse =
+                        this.items[bottomItemIndex].traverse(
+                            gameKeyCode,
+                            top - height,
+                            bottom - height,
+                            false);
+                    if (traverse == ABCustomItem.OUTOFITEM) {
+                    } else {
+                        // Sprawdzenie czy znajduje sie powyzej na ekranie
+                        // focusable item
+                        // jesli tak zrob co trzeba
+                        topItemIndex = this.getTopVisibleIndex(top + traverse);
+                        if (this.getSelectedIndex() != -1
+                            && this.getSelectedIndex() < topItemIndex) {
+                            this.items[this.getSelectedIndex()].setFocus(false);
+                            this.setSelectedIndex(-1);
+                        }
+                        return traverse;
+                    }
+                }
+            }
+        }
 
-	/**
-	 * Verify that the item is non null and is not owned by this form or anyone
-	 * else. If all is ok set the owner to this Form
-	 * 
-	 * @param item the item to be verified
-	 * @throws IllegalStateException
-	 * @throws NullPointerException
-	 */
-	private void verifyItem(ABCustomItem item)
-	{
-		// Check that we are being passed valid items
-		if (item == null) {
-			throw new NullPointerException("item is null");
-		}
+        return 0;
+    }
 
-		/*
+    private int getTopVisibleIndex(int top) {
+        int height = 0;
+
+        for (int i = 0; i < this.numOfItems; i++) {
+            height += this.items[i].getHeight();
+            if (height >= top) {
+                return i;
+            }
+        }
+
+        return this.numOfItems - 1;
+    }
+
+    private int getBottomVisibleIndex(int bottom) {
+        int height = 0;
+
+        for (int i = 0; i < this.numOfItems; i++) {
+            height += this.items[i].getHeight();
+            if (height > bottom) {
+                return i;
+            }
+        }
+
+        return this.numOfItems - 1;
+    }
+
+    private int getHeightToItem(int itemIndex) {
+        int height = 0;
+
+        for (int i = 0; i < itemIndex; i++) {
+            height += this.items[i].getHeight();
+        }
+
+        return height;
+    }
+
+    /**
+     * Verify that the item is non null and is not owned by this form or anyone
+     * else. If all is ok set the owner to this Form
+     *
+     * @param item the item to be verified
+     * @throws IllegalStateException
+     * @throws NullPointerException
+     */
+    private void verifyItem(ABCustomItem item) {
+        // Check that we are being passed valid items
+        if (item == null) {
+            throw new NullPointerException("item is null");
+        }
+
+        /*
 		if (item.getOwner() != null) {
 			throw new IllegalStateException("item is already owned");
 		}
 
 		item.setOwner(this);
-		*/
-	}
+         */
+    }
 
-	/**
-	 * Verify that the index passed in is valid for this form. ie within the
-	 * range 0..size-1
-	 * 
-	 * @param itemNum the number of the item
-	 * @throws IndexOutOfBoundsException
-	 */
-	private void verifyItemNum(int itemNum) 
-	{
-		if (itemNum < 0 || itemNum >= this.numOfItems) {
-			throw new IndexOutOfBoundsException("item number is outside range of Form");
-		}
-	}
+    /**
+     * Verify that the index passed in is valid for this form. ie within the
+     * range 0..size-1
+     *
+     * @param itemNum the number of the item
+     * @throws IndexOutOfBoundsException
+     */
+    private void verifyItemNum(int itemNum) {
+        if (itemNum < 0 || itemNum >= this.numOfItems) {
+            throw new IndexOutOfBoundsException("item number is outside range of Form");
+        }
+    }
 
-	private static final String SET_SELECTED_INDEX = "setSelectedIndex";
-	
-    public void setSelectedIndex(int selectedIndex)
-    {
+    private static final String SET_SELECTED_INDEX = "setSelectedIndex";
+
+    public void setSelectedIndex(int selectedIndex) {
         final CommonLabels commonLabels = CommonLabels.getInstance();
         final StringMaker stringBuffer = new StringMaker();
-        
+
         stringBuffer.append(commonLabels.START_LABEL);
         stringBuffer.append(CommonSeps.getInstance().SPACE);
         stringBuffer.append(commonLabels.INDEX_LABEL);
         stringBuffer.appendint(selectedIndex);
-        
+
         this.logUtil.putF(stringBuffer.toString(), this, CustomForm.SET_SELECTED_INDEX);
-        
+
         this.selectedIndex = selectedIndex;
     }
 
-    public int getSelectedIndex()
-    {
+    public int getSelectedIndex() {
         return this.selectedIndex;
     }
 }

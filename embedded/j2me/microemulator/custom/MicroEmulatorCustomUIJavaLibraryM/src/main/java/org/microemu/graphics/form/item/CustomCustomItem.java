@@ -145,4 +145,9 @@ public class CustomCustomItem extends ABCustomItem implements UpdateMyFontInterf
         this.paintXY(graphics, 0, 0);
         return this.getHeight();
     }
+    
+    public void preMeasurement(final Graphics graphics) {
+        this.myFontProcessor.process(graphics);
+    }
+    
 }

@@ -254,25 +254,25 @@ public class BareMain extends Common
                             
                             private final SWTJOGLProcessor swtJOGLProcessor = SWTJOGLProcessor.getInstance();
                             
-                            @Override
-                            public int charWidth(Font font, char ch) {
-                                return swtJOGLProcessor.charWidth(font, ch);
-                            }
-
-                            @Override
-                            public int charsWidth(Font font, char[] ch, int offset, int length) {
-                                return swtJOGLProcessor.charsWidth(font, ch, offset, length);
-                            }
-
-                            @Override
-                            public int stringWidth(Font font, String str) {
-                                return swtJOGLProcessor.stringWidth(font, str);
-                            }
-                            
-                            @Override
-                            public int substringWidth(Font font, String str, int offset, int len) {
-                                return swtJOGLProcessor.substringWidth(font, str, offset, len);
-                            }
+//                            @Override
+//                            public int charWidth(Font font, char ch) {
+//                                return swtJOGLProcessor.charWidth(font, ch);
+//                            }
+//
+//                            @Override
+//                            public int charsWidth(Font font, char[] ch, int offset, int length) {
+//                                return swtJOGLProcessor.charsWidth(font, ch, offset, length);
+//                            }
+//
+//                            @Override
+//                            public int stringWidth(Font font, String str) {
+//                                return swtJOGLProcessor.stringWidth(font, str);
+//                            }
+//                            
+//                            @Override
+//                            public int substringWidth(Font font, String str, int offset, int len) {
+//                                return swtJOGLProcessor.substringWidth(font, str, offset, len);
+//                            }
 
                         };
                         

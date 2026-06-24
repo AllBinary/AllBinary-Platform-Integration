@@ -9,7 +9,6 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Screen;
 
-import org.allbinary.AndroidUtil;
 import org.allbinary.J2MEUtil;
 import org.allbinary.game.configuration.feature.Features;
 import org.allbinary.graphics.color.BasicColor;
@@ -45,7 +44,8 @@ implements ABCustomItemInterface
         int offsetY;
         int offsetWidth;
         final String labelSet = this.getLabel();
-        if(J2MEUtil.isHTML() || (AndroidUtil.isAndroid() && isOpenGL)) {
+        //AndroidUtil.isAndroid() && 
+        if(J2MEUtil.isHTML() || isOpenGL) {
             offsetX = 0;
             offsetY = 0;
             offsetWidth = font.stringWidth(labelSet) / 2;

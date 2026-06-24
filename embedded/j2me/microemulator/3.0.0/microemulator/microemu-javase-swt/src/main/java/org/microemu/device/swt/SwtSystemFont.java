@@ -24,6 +24,7 @@
 
 package org.microemu.device.swt;
 
+import org.allbinary.graphics.threed.SWTJOGLProcessor;
 import org.allbinary.logic.string.StringUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -37,6 +38,8 @@ public class SwtSystemFont implements SwtFont {
 	
 	private int size;
         private int halfSize;
+        private float extraWidth;
+        private float extraHeight;
 	
 	private boolean antialiasing;
 	
@@ -52,6 +55,8 @@ public class SwtSystemFont implements SwtFont {
                 }
 		this.size = size - 6;
                 this.halfSize = this.size >> 1;
+                this.extraWidth = SWTJOGLProcessor.getInstance().isJOGL() ? 2.0f : 1.0f;
+                this.extraHeight = SWTJOGLProcessor.getInstance().isJOGL() ? 2.0f : 1.0f;
 		this.antialiasing = antialiasing;
 		
 		this.initialized = false;
@@ -98,7 +103,7 @@ public class SwtSystemFont implements SwtFont {
 		checkInitialized();
 
                 final String str = new String(ch, offset, length);
-		return SwtDeviceComponent.stringWidth(this.font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize);
+                return (int) ((SwtDeviceComponent.stringWidth(this.font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize)) * this.extraWidth);
 	}
 
 	public int getBaselinePosition() {
@@ -110,13 +115,13 @@ public class SwtSystemFont implements SwtFont {
 	public int getHeight() {
 		this.checkInitialized();
 		
-		return SwtDeviceComponent.getFontMetrics(this.font).getHeight();
+		return (int) (SwtDeviceComponent.getFontMetrics(this.font).getHeight() * this.extraHeight);
 	}
 
 	public int stringWidth(String str) {
 		this.checkInitialized();
 		
-		return SwtDeviceComponent.stringWidth(this.font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize);
+		return (int) ((SwtDeviceComponent.stringWidth(this.font, str) + (StringUtil.getInstance().count(str, ' ') * this.halfSize)) * this.extraWidth);
 	}
 
 }

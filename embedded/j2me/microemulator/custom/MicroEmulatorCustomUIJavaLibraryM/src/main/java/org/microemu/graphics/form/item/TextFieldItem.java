@@ -16,7 +16,6 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.FontDebugFactory;
 import org.allbinary.graphics.font.MyFontProcessor;
 import org.allbinary.graphics.font.UpdateMyFontInterface;
-import org.allbinary.graphics.font.UpdateMyFontProcessor;
 import org.allbinary.input.event.VirtualKeyboardEventHandler;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.logic.string.StringUtil;

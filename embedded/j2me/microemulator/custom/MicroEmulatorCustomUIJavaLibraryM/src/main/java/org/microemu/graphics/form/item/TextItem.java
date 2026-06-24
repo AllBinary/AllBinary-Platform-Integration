@@ -24,7 +24,8 @@ implements ABCustomItemInterface
     
     private int fontHeight;
     private int offsetX;
-    private int offsetWidth;
+    private int offsetY;
+    //private int offsetWidth;
     private int width;
     
     public TextItem(String label, int layout, String altText, 
@@ -41,17 +42,25 @@ implements ABCustomItemInterface
         final Features features = Features.getInstance();
         final boolean isOpenGL = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL);
         int offsetX;
+        int offsetY;
         int offsetWidth;
         final String labelSet = this.getLabel();
         if(J2MEUtil.isHTML() || (AndroidUtil.isAndroid() && isOpenGL)) {
             offsetX = 0;
+            offsetY = 0;
             offsetWidth = font.stringWidth(labelSet) / 2;
+        } else if(J2MEUtil.isJ2SE()) {
+            offsetX = 0;
+            offsetY = -4;
+            offsetWidth = font.stringWidth(labelSet) / 3;
         } else {
             offsetX = 2;
+            offsetY = 0;
             offsetWidth = 2;
         }
         this.offsetX = offsetX;
-        this.offsetWidth = offsetWidth;
+        this.offsetY = offsetY;
+        //this.offsetWidth = offsetWidth;
 
         this.width = font.stringWidth(labelSet) + offsetWidth;
         
@@ -106,7 +115,7 @@ implements ABCustomItemInterface
         this.myFontProcessor.process(graphics);
         
         graphics.setColor(this.getLabelStringComponent().getForegroundBasicColor().intValue());
-        graphics.drawString(this.getLabel(), x + this.offsetX, y, 0);
+        graphics.drawString(this.getLabel(), x + this.offsetX, y + this.offsetY, 0);
     }
 
     @Override
@@ -114,6 +123,6 @@ implements ABCustomItemInterface
     {
         this.myFontProcessor.process(graphics);
         
-        graphics.drawString(this.getLabel(), x + this.offsetX, y, 0);
+        graphics.drawString(this.getLabel(), x + this.offsetX, y + this.offsetY, 0);
     }
 }

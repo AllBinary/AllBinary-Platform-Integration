@@ -43,11 +43,17 @@ public class CustomForm extends CustomScreen {
 
     protected final LogUtil logUtil = LogUtil.getInstance();
 
+    private final GameKeyFactory gameKeyFactory = GameKeyFactory.getInstance();
+    protected final InputFactory inputFactory = InputFactory.getInstance();
+    
     private ABCustomItem[] items = new ABCustomItem[16];
     private int numOfItems = 0;
     private ABCustomItemStateListener itemStateListener = CustomItemState.NULL_CUSTOM_ITEM_STATE;
     private int selectedIndex;
 
+    int viewPortY = 0;
+    final int viewPortHeight = this.getHeight() - this.title.getHeight() - 1;
+    
     public CustomForm(final String title, final ABCustomItem[] items, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor) {
         super(title, backgroundBasicColor, foregroundBasicColor);
 
@@ -249,17 +255,11 @@ public class CustomForm extends CustomScreen {
         }
     }
 
-    int viewPortY = 0;
-    final int viewPortHeight = this.getHeight() - this.title.getHeight() - 1;
-
     public void traverseFromKey(int keyCode) {
         this.viewPortY = 0;
         this.viewPortY += this.traverse(keyCode, this.viewPortY, this.viewPortY + this.viewPortHeight);
     }
 
-    private final GameKeyFactory gameKeyFactory = GameKeyFactory.getInstance();
-
-    protected final InputFactory inputFactory = InputFactory.getInstance();
 
     @Override
     public void keyPressed(final int keyCode) {

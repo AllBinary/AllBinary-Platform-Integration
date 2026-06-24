@@ -17,6 +17,7 @@ import org.allbinary.graphics.font.MyFontProcessor;
 import org.allbinary.graphics.font.UpdateMyFontInterface;
 import org.allbinary.graphics.font.UpdateMyFontProcessor;
 import org.allbinary.graphics.form.item.ABCustomItemInterface;
+import org.allbinary.logic.string.StringUtil;
 import org.microemu.graphics.form.CustomForm;
 
 /**
@@ -39,7 +40,7 @@ public class CustomImageItem
     private int max;
     private int maxLabelLength;
 
-    private String labelViewable;
+    private String labelViewable = StringUtil.getInstance().EMPTY_STRING;
 
 //    public CustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor) throws Exception {
 //        this(label, image, layout, altText, basicColor, 0);

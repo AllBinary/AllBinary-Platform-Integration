@@ -37,9 +37,6 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     private final int anchor = Anchor.TOP_LEFT;
 
     private final int maxSize;
-
-    private final MyFontProcessor updateMyFontProcessor = new UpdateMyFontProcessor(this);
-    private MyFontProcessor myFontProcessor = this.updateMyFontProcessor;
     
     private int position;
     //private int positionX;

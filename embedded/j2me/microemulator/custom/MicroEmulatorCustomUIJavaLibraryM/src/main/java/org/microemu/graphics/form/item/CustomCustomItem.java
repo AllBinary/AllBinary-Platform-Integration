@@ -152,6 +152,7 @@ public class CustomCustomItem extends ABCustomItem implements UpdateMyFontInterf
         return this.getHeight();
     }
     
+    @Override
     public void preMeasurement(final Graphics graphics) {
         this.myFontProcessor.process(graphics);
     }

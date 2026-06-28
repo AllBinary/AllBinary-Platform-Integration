@@ -9,6 +9,8 @@ import javax.microedition.midlet.MIDlet;
 
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
 import org.allbinary.graphics.displayable.ScalableListener;
+import org.allbinary.logic.communication.log.LogUtil;
+
 import org.eclipse.swt.events.DragDetectEvent;
 import org.eclipse.swt.events.MouseEvent;
 
@@ -114,6 +116,14 @@ public class ScalableSWTMouseEventListener extends SWTMouseEventListener {
 
         }
         
+    }
+    
+    public void mouseScrolled(final MIDlet midlet, final MouseEvent mouseEvent) {
+
+//        final LogUtil logUtil = LogUtil.getInstance();
+//        logUtil.putF(mouseEvent.toString(), this, "mouseScrolled");
+        midlet.mouseWheelMoved(mouseEvent.x, mouseEvent.y, mouseEvent.count);
+
     }
 
     public void dragDetected(final MIDlet midlet, final DragDetectEvent mouseEvent) {

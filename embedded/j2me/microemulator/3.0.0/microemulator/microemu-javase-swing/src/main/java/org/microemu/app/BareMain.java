@@ -345,6 +345,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
         final SwingMIDletHelper midletHelper = (SwingMIDletHelper) midlet.midletHelper;
         component.addMouseListener(midletHelper);
         component.addMouseMotionListener(midletHelper);
+        component.addMouseWheelListener(midletHelper);
         component.addComponentListener(midletHelper);
 
         //TWB

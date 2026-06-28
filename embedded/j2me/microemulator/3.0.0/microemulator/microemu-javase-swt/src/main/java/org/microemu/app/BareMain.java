@@ -685,7 +685,7 @@ public class BareMain extends Common
                     BareMain.devicePanel.addDragDetectListener(swtMIDletHelper);
                     //devicePanel.addGestureListener(listener);
                     //devicePanel.addMouseTrackListener(listener);
-                    //devicePanel.addMouseWheelListener(listener);
+                    BareMain.devicePanel.addMouseWheelListener(swtMIDletHelper);
                     //devicePanel.addTouchListener(listener);
                     
                     //shell.addMouseListener(swtMIDletHelper);

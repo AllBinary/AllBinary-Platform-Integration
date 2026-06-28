@@ -1138,6 +1138,7 @@ boolean sendMouseEvent (int type, int button, int count, int detail, boolean sen
 }
 
 boolean sendMouseWheelEvent (int type, long /*int*/ hwnd, long /*int*/ wParam, long /*int*/ lParam) {
+        //TWB Usually +-120
 	int delta = OS.GET_WHEEL_DELTA_WPARAM (wParam);
 	int detail = 0;
 	if (type == SWT.MouseWheel) {
@@ -1147,7 +1148,9 @@ boolean sendMouseWheelEvent (int type, long /*int*/ hwnd, long /*int*/ wParam, l
 			detail = SWT.SCROLL_PAGE;
 		} else {
 			detail = SWT.SCROLL_LINE;
-			delta *= linesToScroll [0];
+                        if(linesToScroll[0] != 0) {
+                            delta *= linesToScroll[0];
+                        }
 		}
 		/* Check if the delta and the remainder have the same direction (sign) */
 		if ((delta ^ this.display.scrollRemainder) >= 0) delta += this.display.scrollRemainder;
@@ -1159,9 +1162,11 @@ boolean sendMouseWheelEvent (int type, long /*int*/ hwnd, long /*int*/ wParam, l
 		
 		delta = -delta;
 	}
+        //System.out.println(delta);
 
 	if (!hooks (type) && !filters (type)) return true;
 	int count = delta / OS.WHEEL_DELTA;
+        //System.out.println(count);
 	POINT pt = new POINT ();
 	OS.POINTSTOPOINT (pt, lParam);
 	OS.ScreenToClient (hwnd, pt);

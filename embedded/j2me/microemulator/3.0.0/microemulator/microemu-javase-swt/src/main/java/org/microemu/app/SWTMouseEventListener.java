@@ -7,6 +7,8 @@ package org.microemu.app;
 
 import javax.microedition.midlet.MIDlet;
 
+import org.allbinary.logic.communication.log.LogUtil;
+
 import org.eclipse.swt.events.DragDetectEvent;
 import org.eclipse.swt.events.MouseEvent;
 
@@ -38,6 +40,15 @@ public class SWTMouseEventListener {
         
     }
 
+    public void mouseScrolled(final MIDlet midlet, final MouseEvent mouseEvent) {
+
+//        final LogUtil logUtil = LogUtil.getInstance();
+//        logUtil.putF(mouseEvent.toString(), this, "mouseScrolled");
+        
+        midlet.mouseWheelMoved(mouseEvent.x, mouseEvent.y, mouseEvent.count);
+        
+    }
+    
     public void dragDetected(final MIDlet midlet, final DragDetectEvent mouseEvent) {
 
         midlet.mouseDragged(mouseEvent.x, mouseEvent.y, mouseEvent.button);

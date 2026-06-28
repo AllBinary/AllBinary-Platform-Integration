@@ -73,6 +73,11 @@ public class GDFormInput
     }
 
     @Override
+    public void onScrolledMotionGestureEvent(final MotionGestureEvent motionGestureEvent) {
+
+    }
+    
+    @Override
     public void keyPressed(int keyCode) {
 
     }

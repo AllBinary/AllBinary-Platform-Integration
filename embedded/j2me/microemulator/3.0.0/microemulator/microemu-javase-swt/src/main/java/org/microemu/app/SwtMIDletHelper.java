@@ -16,6 +16,7 @@ import org.eclipse.swt.events.DragDetectListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseWheelListener;
 
 import org.eclipse.swt.widgets.Listener;
 
@@ -24,7 +25,7 @@ import org.eclipse.swt.widgets.Listener;
  * @author User
  */
 public class SwtMIDletHelper extends PlatformMIDletHelper 
-    implements MouseListener, MouseMoveListener, DragDetectListener
+    implements MouseListener, MouseMoveListener, DragDetectListener, MouseWheelListener
     //GestureListener
     {
 
@@ -78,6 +79,12 @@ public class SwtMIDletHelper extends PlatformMIDletHelper
         
     }
 
+    public void mouseScrolled(MouseEvent mouseEvent) {
+        
+        this.swtMouseEventListener.mouseScrolled(midlet, mouseEvent);
+
+    }
+    
     public void dragDetected(DragDetectEvent mouseEvent) {
 
         this.swtMouseEventListener.dragDetected(midlet, mouseEvent);

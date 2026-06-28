@@ -46,6 +46,7 @@
         <module>microemu-nokiaui</module>
         <module>microemu-jsr-135-timebase</module>
         <module>microemu-jsr-135-no-javax</module>
+        <module>microemu-jsr-75-js</module>
     </modules>
 
     <!--

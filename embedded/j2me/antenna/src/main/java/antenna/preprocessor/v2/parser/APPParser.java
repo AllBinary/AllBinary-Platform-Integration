@@ -247,7 +247,7 @@ public APPParser(ParserSharedInputState state) {
 		case LT:
 		case GT:
 		case LTE:
-		case GTE:
+		case APPLexerTokenTypes.GTE:
 		{
 			{
 			switch ( LA(1)) {
@@ -299,12 +299,12 @@ public APPParser(ParserSharedInputState state) {
 				match(LTE);
 				break;
 			}
-			case GTE:
+			case APPLexerTokenTypes.GTE:
 			{
 				AST tmp16_AST = null;
 				tmp16_AST = astFactory.create(LT(1));
 				astFactory.makeASTRoot(currentAST, tmp16_AST);
-				match(GTE);
+				match(APPLexerTokenTypes.GTE);
 				break;
 			}
 			default:
@@ -407,7 +407,7 @@ public APPParser(ParserSharedInputState state) {
 				AST tmp19_AST = null;
 				tmp19_AST = astFactory.create(LT(1));
 				astFactory.addASTChild(currentAST, tmp19_AST);
-				matchNot(EOL);
+				this.matchNot(EOL);
 			}
 			else {
 				break _loop74;
@@ -435,12 +435,12 @@ public APPParser(ParserSharedInputState state) {
 			debug_level_AST = (AST)currentAST.root;
 			break;
 		}
-		case LITERAL_info:
+		case APPLexerTokenTypes.LITERAL_info:
 		{
 			AST tmp21_AST = null;
 			tmp21_AST = astFactory.create(LT(1));
 			astFactory.addASTChild(currentAST, tmp21_AST);
-			match(LITERAL_info);
+			match(APPLexerTokenTypes.LITERAL_info);
 			debug_level_AST = (AST)currentAST.root;
 			break;
 		}
@@ -514,7 +514,7 @@ inputState.guessing--;
 			case LITERAL_undefine:
 			case LITERAL_if:
 			case LITERAL_elif:
-			case LITERAL_condition:
+			case APPLexerTokenTypes.LITERAL_condition:
 			{
 				{
 				switch ( LA(1)) {
@@ -542,7 +542,7 @@ inputState.guessing--;
 				}
 				case LITERAL_if:
 				case LITERAL_elif:
-				case LITERAL_condition:
+				case APPLexerTokenTypes.LITERAL_condition:
 				{
 					{
 					switch ( LA(1)) {
@@ -562,12 +562,12 @@ inputState.guessing--;
 						match(LITERAL_elif);
 						break;
 					}
-					case LITERAL_condition:
+					case APPLexerTokenTypes.LITERAL_condition:
 					{
 						AST tmp31_AST = null;
 						tmp31_AST = astFactory.create(LT(1));
 						astFactory.addASTChild(currentAST, tmp31_AST);
-						match(LITERAL_condition);
+						match(APPLexerTokenTypes.LITERAL_condition);
 						break;
 					}
 					default:
@@ -590,7 +590,7 @@ inputState.guessing--;
 			}
 			case LITERAL_ifdef:
 			case LITERAL_ifndef:
-			case LITERAL_elifdef:
+			case APPLexerTokenTypes.LITERAL_elifdef:
 			case LITERAL_elifndef:
 			{
 				{
@@ -611,12 +611,12 @@ inputState.guessing--;
 					match(LITERAL_ifndef);
 					break;
 				}
-				case LITERAL_elifdef:
+				case APPLexerTokenTypes.LITERAL_elifdef:
 				{
 					AST tmp34_AST = null;
 					tmp34_AST = astFactory.create(LT(1));
 					astFactory.addASTChild(currentAST, tmp34_AST);
-					match(LITERAL_elifdef);
+					match(APPLexerTokenTypes.LITERAL_elifdef);
 					break;
 				}
 				case LITERAL_elifndef:
@@ -692,7 +692,7 @@ inputState.guessing--;
 						AST tmp41_AST = null;
 						tmp41_AST = astFactory.create(LT(1));
 						astFactory.addASTChild(currentAST, tmp41_AST);
-						matchNot(EOL);
+						this.matchNot(EOL);
 					}
 					else {
 						if ( _cnt88>=1 ) { break _loop88; } else {throw new NoViableAltException(LT(1), getFilename());}
@@ -719,7 +719,7 @@ inputState.guessing--;
 						AST tmp43_AST = null;
 						tmp43_AST = astFactory.create(LT(1));
 						astFactory.addASTChild(currentAST, tmp43_AST);
-						matchNot(EOL);
+						this.matchNot(EOL);
 					}
 					else {
 						if ( _cnt91>=1 ) { break _loop91; } else {throw new NoViableAltException(LT(1), getFilename());}
@@ -762,7 +762,7 @@ inputState.guessing--;
 				{
 				switch ( LA(1)) {
 				case LITERAL_debug:
-				case LITERAL_info:
+				case APPLexerTokenTypes.LITERAL_info:
 				case LITERAL_warn:
 				case LITERAL_error:
 				case LITERAL_fatal:
@@ -944,7 +944,7 @@ inputState.guessing--;
 			break;
 		}
 		case LITERAL_debug:
-		case LITERAL_info:
+		case APPLexerTokenTypes.LITERAL_info:
 		case LITERAL_warn:
 		case LITERAL_error:
 		case LITERAL_fatal:

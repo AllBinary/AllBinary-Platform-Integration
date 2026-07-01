@@ -25,11 +25,13 @@ class JadSelector extends JDialog
 		JFileChooser chooser = new JFileChooser(this.m_dir);
 		chooser.setFileFilter(new FileFilter()
 		{
+			@Override
 			public String getDescription()
 			{
 				return "Jad files";
 			}
 		
+			@Override
 			public boolean accept(File f)
 			{
 				return f.getName().toLowerCase().endsWith(".jad");

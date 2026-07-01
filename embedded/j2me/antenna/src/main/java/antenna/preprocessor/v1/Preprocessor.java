@@ -53,7 +53,7 @@ public class Preprocessor implements IPreprocessor{
 	private String encoding;
 	
 	public Preprocessor(Utility utility, String encoding) {
-		eval = new BooleanEvaluator("");
+		this.eval = new BooleanEvaluator("");
 		this.stack = new Stack();
 		this.mode = IPreprocessor.MODE_NORMAL;
 
@@ -67,11 +67,11 @@ public class Preprocessor implements IPreprocessor{
 //	}
 	
 	public void setFile(File f) {
-		file = f;
+		this.file = f;
 	}
 
 	public boolean isBlind() {
-		return ((this.state == STATE_CAN_BECOME_TRUE) || (this.state == STATE_HAS_BEEN_TRUE)) && (this.mode != IPreprocessor.MODE_CLEANUP);
+		return ((this.state == Preprocessor.STATE_CAN_BECOME_TRUE) || (this.state == Preprocessor.STATE_HAS_BEEN_TRUE)) && (this.mode != IPreprocessor.MODE_CLEANUP);
 	}
 
 	public String getPackageName() {
@@ -79,11 +79,11 @@ public class Preprocessor implements IPreprocessor{
 	}
 
 	private void pushState() {
-		this.stack.push(new Integer(state));
+		this.stack.push(new Integer(this.state));
 	}
 
 	private void popState() {
-		state = ((Integer) stack.pop()).intValue();
+		this.state = ((Integer) this.stack.pop()).intValue();
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Preprocessor implements IPreprocessor{
 	 */
 	private void handleIf(boolean condition) {
 		this.pushState();
-		if (!isBlind()) {
+		if (!this.isBlind()) {
 			if (condition) {
 				this.state = Preprocessor.STATE_IS_TRUE;
 			}
@@ -108,7 +108,7 @@ public class Preprocessor implements IPreprocessor{
 
 	private void handleElseIf(boolean condition) throws PreprocessorException {
 		if (this.state == Preprocessor.STATE_NO_CONDITIONAL) {
-			throw new PreprocessorException("Unexpected #elif", file, currentLine);
+			throw new PreprocessorException("Unexpected #elif", this.file, this.currentLine);
 		}
 		else if (this.state == Preprocessor.STATE_CAN_BECOME_TRUE) {
 			if (condition)
@@ -121,7 +121,7 @@ public class Preprocessor implements IPreprocessor{
 
 	private void handleElse() throws PreprocessorException {
 		if (this.state == Preprocessor.STATE_NO_CONDITIONAL) {
-			throw new PreprocessorException("Unexpected #else",file,  currentLine);
+			throw new PreprocessorException("Unexpected #else",this.file,  this.currentLine);
 		}
 		else if (this.state == Preprocessor.STATE_CAN_BECOME_TRUE) {
 			this.state = Preprocessor.STATE_IS_TRUE;
@@ -133,7 +133,7 @@ public class Preprocessor implements IPreprocessor{
 
 	private void handleEndIf() throws PreprocessorException {
 		if (this.state == Preprocessor.STATE_NO_CONDITIONAL) {
-			throw new PreprocessorException("Unexpected #endif",file,  currentLine);
+			throw new PreprocessorException("Unexpected #endif",this.file,  this.currentLine);
 		}
 		else {
 			this.popState();
@@ -144,12 +144,12 @@ public class Preprocessor implements IPreprocessor{
 		int type = l.getType();
 
 		if (type == PreprocessorLine.TYPE_DEFINE) {
-			if (!isBlind()) {
+			if (!this.isBlind()) {
 				this.eval.define(l.getArgs());
 			}
 		}
 		else if (type == PreprocessorLine.TYPE_UNDEF) {
-			if (!isBlind()) {
+			if (!this.isBlind()) {
 				this.eval.undefine(l.getArgs());
 			}
 		}
@@ -180,7 +180,7 @@ public class Preprocessor implements IPreprocessor{
 	}
 
 	public void setMode(int value) {
-		mode = value;
+		this.mode = value;
 	}
 
 	public String filterLine(String s) throws PreprocessorException
@@ -272,14 +272,14 @@ public class Preprocessor implements IPreprocessor{
 
 		try {
 			if (this.encoding != null && this.encoding.length() != 0) {
-				include.loadFromFile(new File(name), encoding);
+				include.loadFromFile(new File(name), this.encoding);
 			}
 			else {
 				include.loadFromFile(new File(name));
 			}
 		}
 		catch (java.io.UnsupportedEncodingException uee) {
-			throw new PreprocessorException("Unknown encoding \"" + encoding + "\" for "+ file);
+			throw new PreprocessorException("Unknown encoding \"" + this.encoding + "\" for "+ file);
 		}
 		catch (java.io.IOException error) {
 			throw new PreprocessorException("File \"" + name + "\" not found");
@@ -331,7 +331,7 @@ public class Preprocessor implements IPreprocessor{
 					 * If not found, raise an error
 					 */
 					if (l.getType() != PreprocessorLine.TYPE_ENDINCLUDE) {
-						throw new PreprocessorException("Missing #endinclude", file, currentLine);
+						throw new PreprocessorException("Missing #endinclude", this.file, this.currentLine);
 					}
 
 					if (include != null && (this.mode & IPreprocessor.MODE_CLEANUP) == 0) {
@@ -340,7 +340,7 @@ public class Preprocessor implements IPreprocessor{
 						 */
 						Preprocessor subfilter = new Preprocessor(this.utility, encoding);
 						subfilter.eval = this.eval; // Ugly stuff.
-						subfilter.setFile(file);
+						subfilter.setFile(this.file);
 						subfilter.setMode(this.mode);
 						subfilter.preprocess(include, encoding);
 
@@ -364,14 +364,14 @@ public class Preprocessor implements IPreprocessor{
 				 */
 				else {
 					if (l.getType() == PreprocessorLine.TYPE_VISIBLE || l.getType() == PreprocessorLine.TYPE_HIDDEN) {
-						if (isBlind()) {
-							lines.set(i, commentLine(l));
+						if (this.isBlind()) {
+							lines.set(i, this.commentLine(l));
 							if ((this.mode & IPreprocessor.MODE_VERBOSE) != 0) {
 								System.out.println("Comment: " + l);
 							}
 						}
 					    else {
-							lines.set(i, uncommentLine(l));
+							lines.set(i, this.uncommentLine(l));
 							if ((this.mode & IPreprocessor.MODE_VERBOSE) != 0) {
 								System.out.println("Uncomment: " + l);
 							}
@@ -384,11 +384,11 @@ public class Preprocessor implements IPreprocessor{
 				}
 			}
 			catch (PreprocessorException error) {
-				throw new PreprocessorException(error.getMessage() + " in line " + (i + 1) + " : " + line, file, currentLine);
+				throw new PreprocessorException(error.getMessage() + " in line " + (i + 1) + " : " + line, this.file, this.currentLine);
 			}
 		}
 		if (this.state != Preprocessor.STATE_NO_CONDITIONAL) {
-			throw new PreprocessorException("Missing #endif", file, currentLine);
+			throw new PreprocessorException("Missing #endif", this.file, this.currentLine);
 		}
 
 		if ((this.mode & IPreprocessor.MODE_FILTER) != 0) {

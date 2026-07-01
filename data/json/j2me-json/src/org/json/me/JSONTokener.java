@@ -105,7 +105,7 @@ public class JSONTokener {
      * @return The next character, or 0 if past the end of the source string.
      */
     public char next() {
-        if (more()) {
+        if (this.more()) {
             char c = this.mySource.charAt(this.myIndex);
             this.myIndex += 1;
             return c;
@@ -161,7 +161,7 @@ public class JSONTokener {
         for (;;) {
             char c = this.next();
             if (c == '/') {
-                switch (next()) {
+                switch (this.next()) {
                 case '/':
                     do {
                         c = this.next();
@@ -174,7 +174,7 @@ public class JSONTokener {
                             throw this.syntaxError("Unclosed comment.");
                         }
                         if (c == '*') {
-                            if (next() == '/') {
+                            if (this.next() == '/') {
                                 break;
                             }
                             this.back();
@@ -236,10 +236,10 @@ public class JSONTokener {
                     sb.append('\r');
                     break;
                 case 'u':
-                    sb.append((char)Integer.parseInt(next(4), 16));
+                    sb.append((char)Integer.parseInt(this.next(4), 16));
                     break;
                 case 'x' :
-                    sb.append((char) Integer.parseInt(next(2), 16));
+                    sb.append((char) Integer.parseInt(this.next(2), 16));
                     break;
                 default:
                     sb.append(c);
@@ -445,7 +445,7 @@ public class JSONTokener {
      * @return  A JSONException object, suitable for throwing
      */
     public JSONException syntaxError(String message) {
-        return new JSONException(message + toString());
+        return new JSONException(message + this.toString());
     }
 
 

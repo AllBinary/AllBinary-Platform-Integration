@@ -76,6 +76,7 @@ public class WtkBuild extends Javac {
 		}
 	}
 	
+	@Override
 	public void init() throws BuildException {
 		super.init();
 

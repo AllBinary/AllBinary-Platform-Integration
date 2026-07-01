@@ -93,7 +93,7 @@ public class ObjectGroup extends ObjectGroupData implements Cloneable //, Iterab
      * @return a boolean.
      */
     public boolean isEmpty() {
-        return getObjects().isEmpty();
+        return this.getObjects().isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -115,7 +115,7 @@ public class ObjectGroup extends ObjectGroupData implements Cloneable //, Iterab
      * @param o a {@link org.mapeditor.core.MapObject} object.
      */
     public void addObject(MapObject o) {
-        getObjects().add(o);
+        this.getObjects().add(o);
         o.setObjectGroup(this);
     }
 
@@ -125,7 +125,7 @@ public class ObjectGroup extends ObjectGroupData implements Cloneable //, Iterab
      * @param o a {@link org.mapeditor.core.MapObject} object.
      */
     public void removeObject(MapObject o) {
-        getObjects().remove(o);
+        this.getObjects().remove(o);
         o.setObjectGroup(null);
     }
 

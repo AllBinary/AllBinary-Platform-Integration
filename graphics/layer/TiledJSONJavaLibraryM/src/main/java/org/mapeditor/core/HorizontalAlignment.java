@@ -66,7 +66,7 @@ public enum HorizontalAlignment {
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static HorizontalAlignment fromValue(String v) {

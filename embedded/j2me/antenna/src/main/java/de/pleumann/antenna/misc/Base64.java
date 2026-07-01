@@ -1059,6 +1059,7 @@ public class Base64
          * @return next byte
          * @since 1.3
          */
+        @Override
         public int read() throws java.io.IOException 
         { 
             // Do we need to get data?

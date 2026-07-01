@@ -60,7 +60,7 @@ public class Group extends BaseProps
 			}
 		}
 		
-		Util.addCapabilities(base, m_capabilities, capTable);
+		Util.addCapabilities(base, this.m_capabilities, capTable);
 		return base;
 	}
 
@@ -76,7 +76,7 @@ public class Group extends BaseProps
 			}
 		}
 
-		base.addAll(m_features);
+		base.addAll(this.m_features);
 		return base;
 	}
 		

@@ -67,7 +67,7 @@ public class ClassFile {
 		for (int i = 1; i < numConstants; i++) {
 			int tag = data.readUnsignedByte();
 
-			int size = sizes[tag];
+			int size = ClassFile.sizes[tag];
 			if (size == 0)
 				size = data.readUnsignedShort();
 

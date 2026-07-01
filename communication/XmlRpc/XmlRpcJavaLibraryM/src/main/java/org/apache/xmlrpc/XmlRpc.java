@@ -478,6 +478,7 @@ public abstract class XmlRpc extends HandlerBase
     /**
      * Method called by SAX driver.
      */
+    @Override
     public void characters(char ch[], int start, int length)
             throws SAXException
     {

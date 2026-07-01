@@ -567,7 +567,7 @@ public class JSONObject {
         }
         Object object = this.opt(key);
         if (object == null) {
-            throw new JSONException("JSONObject[" + quote(key) + "] not found.");
+            throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] not found.");
         }
         return object;
     }
@@ -592,7 +592,7 @@ public class JSONObject {
             // JSONException should really take a throwable argument.
             // If it did, I would re-implement this with the Enum.valueOf
             // method and place any thrown exception in the JSONException
-            throw JSONObject.wrongValueFormatException(key, "enum of type " + quote(clazz.getSimpleName()), opt(key), null);
+            throw JSONObject.wrongValueFormatException(key, "enum of type " + JSONObject.quote(clazz.getSimpleName()), opt(key), null);
         }
         return val;
     }
@@ -904,7 +904,7 @@ public class JSONObject {
         } else if (value instanceof BigDecimal) {
             this.put(key, ((BigDecimal)value).add(BigDecimal.ONE));
         } else {
-            throw new JSONException("Unable to increment [" + quote(key) + "].");
+            throw new JSONException("Unable to increment [" + JSONObject.quote(key) + "].");
         }
         return this;
     }
@@ -1534,7 +1534,7 @@ public class JSONObject {
                     && method.getParameterTypes().length == 0
                     && !method.isBridge()
                     && method.getReturnType() != Void.TYPE
-                    && isValidMethodName(method.getName())) {
+                    && JSONObject.isValidMethodName(method.getName())) {
                 final String key = JSONObject.getKeyNameFromMethod(method);
                 if (key != null && !key.isEmpty()) {
                     try {
@@ -2122,7 +2122,7 @@ public class JSONObject {
                         return false;
                     }
                 } else if (valueThis instanceof Number && valueOther instanceof Number) {
-                    if (!isNumberSimilar((Number)valueThis, (Number)valueOther)) {
+                    if (!JSONObject.isNumberSimilar((Number)valueThis, (Number)valueOther)) {
                     	return false;
                     }
                 } else if (valueThis instanceof JSONString && valueOther instanceof JSONString) {
@@ -2525,7 +2525,7 @@ public class JSONObject {
             } catch (Exception e) {
                 throw new JSONException(e);
             }
-            writer.write(o != null ? o.toString() : quote(value.toString()));
+            writer.write(o != null ? o.toString() : JSONObject.quote(value.toString()));
         } else if (value instanceof Number) {
             // not all Numbers may match JSON Numbers. i.e. fractions or Imaginary
             final String numberAsString = JSONObject.numberToString((Number) value);
@@ -2539,7 +2539,7 @@ public class JSONObject {
         } else if (value instanceof Boolean) {
             writer.write(value.toString());
         } else if (value instanceof Enum<?>) {
-            writer.write(quote(((Enum<?>)value).name()));
+            writer.write(JSONObject.quote(((Enum<?>)value).name()));
         } else if (value instanceof JSONObject) {
             ((JSONObject) value).write(writer, indentFactor, indent);
         } else if (value instanceof JSONArray) {
@@ -2602,13 +2602,13 @@ public class JSONObject {
             if (length == 1) {
             	final Entry<String,?> entry = this.entrySet().iterator().next();
                 final String key = entry.getKey();
-                writer.write(quote(key));
+                writer.write(JSONObject.quote(key));
                 writer.write(':');
                 if (indentFactor > 0) {
                     writer.write(' ');
                 }
                 try{
-                    writeValue(writer, entry.getValue(), indentFactor, indent);
+                    JSONObject.writeValue(writer, entry.getValue(), indentFactor, indent);
                 } catch (Exception e) {
                     throw new JSONException("Unable to write JSONObject value for key: " + key, e);
                 }
@@ -2623,13 +2623,13 @@ public class JSONObject {
                     }
                     JSONObject.indent(writer, newIndent);
                     final String key = entry.getKey();
-                    writer.write(quote(key));
+                    writer.write(JSONObject.quote(key));
                     writer.write(':');
                     if (indentFactor > 0) {
                         writer.write(' ');
                     }
                     try {
-                        writeValue(writer, entry.getValue(), indentFactor, newIndent);
+                        JSONObject.writeValue(writer, entry.getValue(), indentFactor, newIndent);
                     } catch (Exception e) {
                         throw new JSONException("Unable to write JSONObject value for key: " + key, e);
                     }
@@ -2689,17 +2689,17 @@ public class JSONObject {
         if(value == null) {
 
             return new JSONException(
-                    "JSONObject[" + quote(key) + "] is not a " + valueType + " (null)."
+                    "JSONObject[" + JSONObject.quote(key) + "] is not a " + valueType + " (null)."
                     , cause);
         }
         // don't try to toString collections or known object types that could be large.
         if(value instanceof Map || value instanceof Iterable || value instanceof JSONObject) {
             return new JSONException(
-                    "JSONObject[" + quote(key) + "] is not a " + valueType + " (" + value.getClass() + ")."
+                    "JSONObject[" + JSONObject.quote(key) + "] is not a " + valueType + " (" + value.getClass() + ")."
                     , cause);
         }
         return new JSONException(
-                "JSONObject[" + quote(key) + "] is not a " + valueType + " (" + value.getClass() + " : " + value + ")."
+                "JSONObject[" + JSONObject.quote(key) + "] is not a " + valueType + " (" + value.getClass() + " : " + value + ")."
                 , cause);
     }
 
@@ -2710,7 +2710,7 @@ public class JSONObject {
      */
     private static JSONException recursivelyDefinedObjectException(String key) {
         return new JSONException(
-            "JavaBean object contains recursively defined member variable of key " + quote(key)
+            "JavaBean object contains recursively defined member variable of key " + JSONObject.quote(key)
         );
     }
 }

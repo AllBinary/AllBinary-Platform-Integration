@@ -175,7 +175,7 @@ public class PPLine {
      * @return
      */
     public String getSource() {
-        return m_source;
+        return this.m_source;
     }
 
     /**

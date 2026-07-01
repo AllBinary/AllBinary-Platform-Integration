@@ -181,8 +181,8 @@ public class Tile extends TileData {
     /** {@inheritDoc} */
     @Override
     public Properties getProperties() {
-        if (properties == null) {
-            properties = new Properties();
+        if (this.properties == null) {
+            this.properties = new Properties();
         }
         return super.getProperties();
     }
@@ -190,6 +190,6 @@ public class Tile extends TileData {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return new StringMaker().append("Tile ").append(id.toString()).append(" (").appendint(getWidth()).append("x").appendint(getHeight()).append(")").toString();
+        return new StringMaker().append("Tile ").append(this.id.toString()).append(" (").appendint(this.getWidth()).append("x").appendint(this.getHeight()).append(")").toString();
     }
 }

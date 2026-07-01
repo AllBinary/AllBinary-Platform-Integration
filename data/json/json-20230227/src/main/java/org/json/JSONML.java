@@ -549,9 +549,9 @@ public class JSONML {
                     if (object instanceof String) {
                         sb.append(XML.escape(object.toString()));
                     } else if (object instanceof JSONObject) {
-                        sb.append(toString((JSONObject)object));
+                        sb.append(JSONML.toString((JSONObject)object));
                     } else if (object instanceof JSONArray) {
-                        sb.append(toString((JSONArray)object));
+                        sb.append(JSONML.toString((JSONArray)object));
                     } else {
                         sb.append(object.toString());
                     }
@@ -628,9 +628,9 @@ public class JSONML {
                     if (object instanceof String) {
                         sb.append(XML.escape(object.toString()));
                     } else if (object instanceof JSONObject) {
-                        sb.append(toString((JSONObject)object));
+                        sb.append(JSONML.toString((JSONObject)object));
                     } else if (object instanceof JSONArray) {
-                        sb.append(toString((JSONArray)object));
+                        sb.append(JSONML.toString((JSONArray)object));
                     } else {
                         sb.append(object.toString());
                     }

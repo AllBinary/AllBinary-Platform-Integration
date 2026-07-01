@@ -243,7 +243,7 @@ public class Preprocessor
 							this.m_modified = true;
 
 						lines.set(i, l);
-						if (isVerbose())
+						if (this.isVerbose())
 						{
 							this.log("(+)" + l);
 						}
@@ -266,7 +266,7 @@ public class Preprocessor
 							lines.insertElementAt(str, i);
 						}
 						
-						if (isVerbose())
+						if (this.isVerbose())
 						{
 							this.log("(-)" + str);
 						}
@@ -304,7 +304,7 @@ public class Preprocessor
 
 						if (!foundEndInclude) 
 						{
-							throw new PPException("Missing #endinclude", m_file, includeLine);
+							throw new PPException("Missing #endinclude", this.m_file, includeLine);
 						}
 						
 						String file = this.getIncludeName(lp);
@@ -312,7 +312,7 @@ public class Preprocessor
 						if (includeLines != null)
 						{
 							Preprocessor includePreprocessor = new Preprocessor(this.m_logger, m_lineFilter);
-							includePreprocessor.setFile(m_file);
+							includePreprocessor.setFile(this.m_file);
 							includePreprocessor.setListener(this.m_listener);
 							// make a copy to be sure changes (defines, undefine does not effect including file).
 							includePreprocessor.m_defines = this.m_defines.copy();
@@ -321,7 +321,7 @@ public class Preprocessor
 							for (int k = 0; k < includeLines.size(); k++)
 							{
 								String s = (String) includeLines.get(k);
-								PPLine lp2 = new PPLine(m_file, s, k);
+								PPLine lp2 = new PPLine(this.m_file, s, k);
 								if (isBlind())
 								{
 									s = this.commentLine(lp2);
@@ -340,11 +340,11 @@ public class Preprocessor
 			}
 			catch (IllegalStateException e)
 			{
-				throw new PPException(e.getMessage(), m_file, e, i);
+				throw new PPException(e.getMessage(), this.m_file, e, i);
 			}
 			catch (ANTLRException e)
 			{
-				throw new PPException("Error parsing line : " + line, m_file, e, i);
+				throw new PPException("Error parsing line : " + line, this.m_file, e, i);
 			}
 			i++;
 
@@ -352,12 +352,12 @@ public class Preprocessor
 		
 		if (this.m_currentState != Preprocessor.STATE_NO_CONDITIONAL)
 		{
-			throw new PPException("Missing #endif", m_file, -1);
+			throw new PPException("Missing #endif", this.m_file, -1);
 		}
 		
 		if (this.m_insideHiddenMdebugBlock)
 		{
-			throw new PPException("Missing #enddebug", m_file, m_currentMdebugBlockStart);
+			throw new PPException("Missing #enddebug", this.m_file, this.m_currentMdebugBlockStart);
 		}
 
 		return this.m_modified;
@@ -475,7 +475,7 @@ public class Preprocessor
 			File parent = this.m_file.getParentFile();
 			f = new File(parent, file);
 		}
-		if (!f.exists()) throw new PPException("File not found : " + f,m_file, lineNum);
+		if (!f.exists()) throw new PPException("File not found : " + f,this.m_file, lineNum);
 		Vector v = new Vector();
 		try
 		{
@@ -484,7 +484,7 @@ public class Preprocessor
 		}
 		catch (IOException e)
 		{
-			throw new PPException("Error loading include file " + file, m_file, e, lineNum);
+			throw new PPException("Error loading include file " + file, this.m_file, e, lineNum);
 		}
 		
 	}
@@ -605,7 +605,7 @@ public class Preprocessor
 	private void handleCommand(Vector lines, PPLine ppl, AST ast, CommandEvaluator evaluator, String encoding, boolean lastLine) throws ANTLRException,
 			PPException, UnsupportedEncodingException
 	{
-		if (isVerbose())
+		if (this.isVerbose())
 		{
 			this.log("(?)" + ppl.getSource());
 		}
@@ -669,7 +669,7 @@ public class Preprocessor
 				this.handleExpand(ppl, lines);
 				break;
 			default:
-				throw new PPException("Unexpected token " + APPParser._tokenNames[type] + " at \"" + ppl.getSource() + "\"", m_file,
+				throw new PPException("Unexpected token " + APPParser._tokenNames[type] + " at \"" + ppl.getSource() + "\"", this.m_file,
 						ppl.getLineNumber());
 
 		}

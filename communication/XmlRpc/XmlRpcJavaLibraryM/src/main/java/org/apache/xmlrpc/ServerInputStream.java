@@ -92,6 +92,7 @@ class ServerInputStream extends InputStream
      * @return
      * @throws IOException
      */
+    @Override
     public int read() throws IOException
     {
         if (this.available > 0)
@@ -112,6 +113,7 @@ class ServerInputStream extends InputStream
      * @return
      * @throws IOException
      */
+    @Override
     public int read(byte b[]) throws IOException
     {
         return this.read(b, 0, b.length);
@@ -125,6 +127,7 @@ class ServerInputStream extends InputStream
      * @return
      * @throws IOException
      */
+    @Override
     public int read(byte b[], int off, int len) throws IOException
     {
         if (this.available > 0)
@@ -158,6 +161,7 @@ class ServerInputStream extends InputStream
      * @return
      * @throws IOException
      */
+    @Override
     public long skip(long n) throws IOException
     {
         long skip = this.in.skip(n);
@@ -172,6 +176,7 @@ class ServerInputStream extends InputStream
      *
      * @param readlimit
      */
+    @Override
     public void mark(int readlimit)
     {
         this.in.mark(readlimit);
@@ -182,6 +187,7 @@ class ServerInputStream extends InputStream
      *
      * @throws IOException
      */
+    @Override
     public synchronized void reset() throws IOException
     {
         this.in.reset();
@@ -192,6 +198,7 @@ class ServerInputStream extends InputStream
      *
      * @return
      */
+    @Override
     public boolean markSupported()
     {
         return true;

@@ -75,6 +75,7 @@ public class StringWriter extends Writer {
     /**
      * Write a single character.
      */
+    @Override
     public void write(int c) {
         this.buf.append((char) c);
     }
@@ -86,6 +87,7 @@ public class StringWriter extends Writer {
      * @param  off   Offset from which to start writing characters
      * @param  len   Number of characters to write
      */
+    @Override
     public void write(char cbuf[], int off, int len) {
         if ((off < 0) || (off > cbuf.length) || (len < 0) ||
             ((off + len) > cbuf.length) || ((off + len) < 0)) {

@@ -86,6 +86,7 @@ public class WtkSign extends Task
 	/**
 	 * @see org.apache.tools.ant.Task#execute()
 	 */
+	@Override
 	public void execute() throws BuildException
 	{
 		if(this.m_jarFile == null)
@@ -118,10 +119,10 @@ public class WtkSign extends Task
 		try
 		{
 			JadFile jadfile = new JadFile();
-			jadfile.load(this.m_jadFile.getAbsolutePath(), m_jadEncoding);
+			jadfile.load(this.m_jadFile.getAbsolutePath(), this.m_jadEncoding);
 			KeyStore keystore = KeyStore.getInstance(this.m_storeType);
             ksin = new FileInputStream(this.m_keyStore);
-			keystore.load(ksin, m_storePass.toCharArray());
+			keystore.load(ksin, this.m_storePass.toCharArray());
 			// add certificates chain.
 			Certificate[] certificates = keystore.getCertificateChain(this.m_certAlias);
 			if(certificates == null)
@@ -142,13 +143,13 @@ public class WtkSign extends Task
 			// sign the jar
 			jin = new FileInputStream(this.m_jarFile);
 			
-			log("Signing jar " + this.m_jarFile);
-			log("Key store : " + this.m_keyStore);
-			log("Cert alias : " + this.m_certAlias);
+			this.log("Signing jar " + this.m_jarFile);
+			this.log("Key store : " + this.m_keyStore);
+			this.log("Cert alias : " + this.m_certAlias);
 			
 			Signature signature = Signature.getInstance("SHA1withRSA");
 			
-			PrivateKey key = (PrivateKey) keystore.getKey(this.m_certAlias, m_certPass.toCharArray());
+			PrivateKey key = (PrivateKey) keystore.getKey(this.m_certAlias, this.m_certPass.toCharArray());
 			signature.initSign(key);
 			int len;
 			int t = 0;
@@ -162,7 +163,7 @@ public class WtkSign extends Task
 			byte[] sign = signature.sign();
 			String sigStr = Base64.encodeBytes(sign, Base64.DONT_BREAK_LINES);
 			jadfile.setValue("MIDlet-Jar-RSA-SHA1", sigStr);
-			jadfile.save(this.m_jadFile.getAbsolutePath(), m_jadEncoding);
+			jadfile.save(this.m_jadFile.getAbsolutePath(), this.m_jadEncoding);
 		}
 		catch (IOException e)
 		{
@@ -223,7 +224,7 @@ public class WtkSign extends Task
 	 */
 	private void error(Exception e)
 	{
-		log(e.getMessage());
+		this.log(e.getMessage());
 		throw new BuildException(e);
 	}
 

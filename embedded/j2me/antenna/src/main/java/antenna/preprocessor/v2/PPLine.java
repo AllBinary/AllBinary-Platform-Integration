@@ -132,7 +132,7 @@ public class PPLine
 
 	public String getSource()
 	{
-		return m_source;
+		return this.m_source;
 	}
 
 	public String getSpace()

@@ -71,7 +71,7 @@ public enum RenderOrder {
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static RenderOrder fromValue(String v) {

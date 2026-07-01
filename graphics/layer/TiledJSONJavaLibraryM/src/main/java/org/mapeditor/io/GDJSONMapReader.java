@@ -836,6 +836,7 @@ public class GDJSONMapReader {
             return oldValue;
         }
 
+        @Override
         public boolean equals(Object o) {
             if (!(o instanceof java.util.Map.Entry))
                 return false;

@@ -228,8 +228,8 @@ public class MapObject extends MapObjectData implements Cloneable {
             return null;
         }
 
-        final int zoomedWidth = (int) (getWidth() * zoom);
-        final int zoomedHeight = (int) (getHeight() * zoom);
+        final int zoomedWidth = (int) (this.getWidth() * zoom);
+        final int zoomedHeight = (int) (this.getHeight() * zoom);
 
         if (this.scaledImage == null || this.scaledImage.getWidth() != zoomedWidth
                 || this.scaledImage.getHeight() != zoomedHeight) {
@@ -247,13 +247,13 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @param dy a double.
      */
     public void translate(double dx, double dy) {
-        x += dx;
-        y += dy;
+        this.x += dx;
+        this.y += dy;
     }
 
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return type + " (" + getX() + "," + getY() + ")";
+        return this.type + " (" + this.getX() + "," + this.getY() + ")";
     }
 }

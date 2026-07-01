@@ -639,6 +639,7 @@ public class XmlRpcClient implements XmlRpcHandler
         /**
          * Called when the return value has been parsed.
          */
+        @Override
         protected void objectParsed(Object what)
         {
             this.result = what;

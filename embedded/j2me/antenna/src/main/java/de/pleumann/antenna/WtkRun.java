@@ -115,7 +115,7 @@ public class WtkRun extends Task {
 
 	public Path createClasspath() {
 		if (this.classpath == null) {
-			this.classpath = new Path(getProject());
+			this.classpath = new Path(this.getProject());
 		}
 		return this.classpath.createPath();
 	}
@@ -159,10 +159,11 @@ public class WtkRun extends Task {
         this.trace = trace;
     }
     
+	@Override
 	public void init() throws BuildException {
 		super.init();
-		this.utility = Utility.getInstance(getProject(), this);
-        this.condition = new Conditional(getProject());
+		this.utility = Utility.getInstance(this.getProject(), this);
+        this.condition = new Conditional(this.getProject());
 	}
 
     public void setIf(String s) {
@@ -189,7 +190,7 @@ public class WtkRun extends Task {
 	        emulator = this.utility.getWtkRelative("emulators/" + device + "/bin/emulator.exe");
 
 	        if (!new File(emulator).exists()) {
-	            emulator = utility.getWtkRelative(device + "emulators/bin/mmiu35.exe");
+	            emulator = this.utility.getWtkRelative(device + "emulators/bin/mmiu35.exe");
 	        }
 
 	        if (!new File(emulator).exists()) {
@@ -208,7 +209,7 @@ public class WtkRun extends Task {
 
         JadFile jad = new JadFile();
         try {
-            jad.load(this.jadFile.getAbsolutePath(), encoding);
+            jad.load(this.jadFile.getAbsolutePath(), this.encoding);
         }
         catch (IOException ex) {
             throw new BuildException("Unable to load JAD file", ex);
@@ -227,7 +228,7 @@ public class WtkRun extends Task {
             arguments = arguments + " /tracing";
         }
                 
-        log("Running : " + emulator + " " + arguments);
+        this.log("Running : " + emulator + " " + arguments);
         
         try {
             Process proc = Runtime.getRuntime().exec(emulator + " " + arguments);
@@ -248,13 +249,13 @@ public class WtkRun extends Task {
     }
 
     private void executeMPowerEmulator(String device) throws BuildException {
-        String arguments = utility.getQuotedName(jadFile);
+        String arguments = this.utility.getQuotedName(this.jadFile);
                 
-        log("Arguments : " + arguments, Project.MSG_VERBOSE);
+        this.log("Arguments : " + arguments, Project.MSG_VERBOSE);
 
         Java java = new Java();
-        java.setProject(getProject());
-        java.setTaskName(getTaskName());
+        java.setProject(this.getProject());
+        java.setTaskName(this.getTaskName());
         java.setFork(true);
         java.setJar(new File(this.utility.getWtkRelative(this.utility.getEmulator())));
         java.setArgs(arguments);
@@ -262,9 +263,9 @@ public class WtkRun extends Task {
     }
 
     private void executeDefaultEmulator(String device) throws BuildException {       
-        String emulator = utility.getWtkRelative(wait ? "bin/emulator.exe" : "bin/emulatorw.exe");
+        String emulator = this.utility.getWtkRelative(this.wait ? "bin/emulator.exe" : "bin/emulatorw.exe");
         if (!new File(emulator).exists()) {
-            emulator = utility.getWtkRelative("bin/emulator");
+            emulator = this.utility.getWtkRelative("bin/emulator");
             
         }
 
@@ -297,7 +298,7 @@ public class WtkRun extends Task {
             arguments += " </dev/nul >/dev/nul";
         }
 
-        log("Running : " + emulator + " " + arguments);
+        this.log("Running : " + emulator + " " + arguments);
         
         if (this.m_eclipseDebugger)
         {
@@ -333,7 +334,7 @@ public class WtkRun extends Task {
 			InetAddress address = InetAddress.getByName("localhost");
 			int port = 60001;
 			String srcPath = this.m_sourcePath == null ? "" : this.m_sourcePath;
-			log("Launching eclispe debugger : (address="+ this.debugAddress+", source path="+srcPath+") -> eclipse("+ address + ":" + port+")");
+			this.log("Launching eclispe debugger : (address="+ this.debugAddress+", source path="+srcPath+") -> eclipse("+ address + ":" + port+")");
 			ByteArrayOutputStream bout = new ByteArrayOutputStream();
 			DataOutputStream dout = new DataOutputStream(bout);
 			dout.writeUTF(this.debugAddress);
@@ -346,12 +347,13 @@ public class WtkRun extends Task {
 		} 
 		catch (Exception e)
 		{
-			log(e.getClass().getName() + " : " + e.getMessage());
+			this.log(e.getClass().getName() + " : " + e.getMessage());
 		}
 	}
 
+	@Override
 	public void execute() throws BuildException {
-        if (!isActive()) return;
+        if (!this.isActive()) return;
         
         if (this.m_jadDirectory != null)
         {
@@ -361,7 +363,7 @@ public class WtkRun extends Task {
         		throw new BuildException("No jad selected");
         	}
         	
-        	log("Selected jad : " + this.jadFile);
+        	this.log("Selected jad : " + this.jadFile);
         }
         
         if ("Siemens".equals(this.device) || this.utility.getToolkitType() == Utility.TOOLKIT_SIEMENS) {
@@ -369,11 +371,11 @@ public class WtkRun extends Task {
                 this.device = null;
             }
             
-            log("Running " + this.jadFile + " on Siemens " + (this.device == null ? "phone" : this.device));
+            this.log("Running " + this.jadFile + " on Siemens " + (this.device == null ? "phone" : this.device));
             this.executeSiemensEmulator(this.device);
         }
          else if (this.utility.getEmulator().endsWith(".jar")) {
-            log("Running " + this.jadFile + " on java emulator");
+            this.log("Running " + this.jadFile + " on java emulator");
             this.executeMPowerEmulator(this.device);
         }
         else {
@@ -381,7 +383,7 @@ public class WtkRun extends Task {
                 this.device = this.utility.getDevice();
             }
             
-			log("Running " + this.jadFile + " on " + this.device);
+			this.log("Running " + this.jadFile + " on " + this.device);
             this.executeDefaultEmulator(this.device);
         }
     }

@@ -239,7 +239,7 @@ public class XML {
 // Nested element
 
                         } else if (t == XML.LT) {
-                            if (parse(x, o, n)) {
+                            if (XML.parse(x, o, n)) {
                                 if (o.length() == 0) {
                                     context.accumulate(n, "");
                                 } else if (o.length() == 1 &&
@@ -347,10 +347,10 @@ public class XML {
                             if (i > 0) {
                                 b.append('\n');
                             }
-                            b.append(escape(ja.get(i).toString()));
+                            b.append(XML.escape(ja.get(i).toString()));
                         }
                     } else {
-                        b.append(escape(v.toString()));
+                        b.append(XML.escape(v.toString()));
                     }
 
 // Emit an array of similar keys
@@ -359,7 +359,7 @@ public class XML {
                     ja = (JSONArray)v;
                     len = ja.length();
                     for (i = 0; i < len; i += 1) {
-                        b.append(toString(ja.get(i), k));
+                        b.append(XML.toString(ja.get(i), k));
                     }
                 } else if (v.equals("")) {
                     b.append('<');
@@ -369,7 +369,7 @@ public class XML {
 // Emit a new tag <k>
 
                 } else {
-                    b.append(toString(v, k));
+                    b.append(XML.toString(v, k));
                 }
             }
             if (tagName != null) {
@@ -389,7 +389,7 @@ public class XML {
             ja = (JSONArray)o;
             len = ja.length();
             for (i = 0; i < len; ++i) {
-                b.append(toString(
+                b.append(XML.toString(
                     ja.opt(i), (tagName == null) ? "array" : tagName));
             }
             return b.toString();

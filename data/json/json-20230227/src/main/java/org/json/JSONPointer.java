@@ -129,7 +129,7 @@ public class JSONPointer {
         if (pointer.startsWith("#/")) {
             refs = pointer.substring(2);
             try {
-                refs = URLDecoder.decode(refs, ENCODING);
+                refs = URLDecoder.decode(refs, JSONPointer.ENCODING);
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }
@@ -150,11 +150,11 @@ public class JSONPointer {
                 this.refTokens.add("");
             } else if (slashIdx >= 0) {
                 final String token = refs.substring(prevSlashIdx, slashIdx);
-                this.refTokens.add(unescape(token));
+                this.refTokens.add(JSONPointer.unescape(token));
             } else {
                 // last item after separator, or no separator at all.
                 final String token = refs.substring(prevSlashIdx);
-                this.refTokens.add(unescape(token));
+                this.refTokens.add(JSONPointer.unescape(token));
             }
         } while (slashIdx >= 0);
         // using split does not take into account consecutive separators or "ending nulls"
@@ -191,11 +191,11 @@ public class JSONPointer {
         Object current = document;
         for (String token : this.refTokens) {
             if (current instanceof JSONObject) {
-                current = ((JSONObject) current).opt(unescape(token));
+                current = ((JSONObject) current).opt(JSONPointer.unescape(token));
             } else if (current instanceof JSONArray) {
                 current = JSONPointer.readByIndexToken(current, token);
             } else {
-                throw new JSONPointerException(format(
+                throw new JSONPointerException(String.format(
                         "value [%s] is not an array or object therefore its key %s cannot be resolved", current,
                         token));
             }
@@ -215,7 +215,7 @@ public class JSONPointer {
             int index = Integer.parseInt(indexToken);
             JSONArray currentArr = (JSONArray) current;
             if (index >= currentArr.length()) {
-                throw new JSONPointerException(format("index %s is out of bounds - the array has %d elements", indexToken,
+                throw new JSONPointerException(String.format("index %s is out of bounds - the array has %d elements", indexToken,
                         Integer.valueOf(currentArr.length())));
             }
             try {
@@ -224,7 +224,7 @@ public class JSONPointer {
 				throw new JSONPointerException("Error reading value at index position " + index, e);
 			}
         } catch (NumberFormatException e) {
-            throw new JSONPointerException(format("%s is not an array index", indexToken), e);
+            throw new JSONPointerException(String.format("%s is not an array index", indexToken), e);
         }
     }
 
@@ -236,7 +236,7 @@ public class JSONPointer {
     public String toString() {
         StringBuilder rval = new StringBuilder("");
         for (String token: this.refTokens) {
-            rval.append('/').append(escape(token));
+            rval.append('/').append(JSONPointer.escape(token));
         }
         return rval.toString();
     }

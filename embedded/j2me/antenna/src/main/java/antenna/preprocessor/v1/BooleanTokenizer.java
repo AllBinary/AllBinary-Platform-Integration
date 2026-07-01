@@ -113,7 +113,7 @@ class BooleanTokenizer {
 			char c = this.sourceText.charAt(this.sourcePos);
 			if ((c != ' ') && (c != '\t'))
 				break;
-			sourcePos++;
+			this.sourcePos++;
 		}
 	}
 
@@ -135,40 +135,40 @@ class BooleanTokenizer {
 		char c = this.sourceText.charAt(this.sourcePos);
 		if (Character.isJavaIdentifierStart(c)) {
 			this.tokenType = BooleanTokenizer.TYPE_ID;
-			sourcePos++;
-			while (isIdentifierPart(this.sourceText.charAt(this.sourcePos))) {
-				sourcePos++;
+			this.sourcePos++;
+			while (this.isIdentifierPart(this.sourceText.charAt(this.sourcePos))) {
+				this.sourcePos++;
 			}
 		}
 		else if (c == '(') {
 			this.tokenType = BooleanTokenizer.TYPE_LPAR;
-			sourcePos++;
+			this.sourcePos++;
 		}
 		else if (c == ')') {
 			this.tokenType = BooleanTokenizer.TYPE_RPAR;
-			sourcePos++;
+			this.sourcePos++;
 		}
 		else if (c == '&') {
 			this.tokenType = BooleanTokenizer.TYPE_AND;
-			sourcePos++;
+			this.sourcePos++;
 			if (this.sourceText.charAt(this.sourcePos) == '&') {
-				sourcePos++;
+				this.sourcePos++;
 			}
 		}
 		else if (c == '|') {
 			this.tokenType = BooleanTokenizer.TYPE_OR;
-			sourcePos++;
+			this.sourcePos++;
 			if (this.sourceText.charAt(this.sourcePos) == '|') {
-				sourcePos++;
+				this.sourcePos++;
 			}
 		}
 		else if (c == '^') {
 			this.tokenType = BooleanTokenizer.TYPE_XOR;
-			sourcePos++;
+			this.sourcePos++;
 		}
 		else if (c == '!') {
 			this.tokenType = BooleanTokenizer.TYPE_NOT;
-			sourcePos++;
+			this.sourcePos++;
 		}
 		else
 			throw new PreprocessorException("Syntax Error");
@@ -198,7 +198,7 @@ class BooleanTokenizer {
 			return "";
 		}
 		else {
-			return this.sourceText.substring(this.tokenPos, sourcePos);
+			return this.sourceText.substring(this.tokenPos, this.sourcePos);
 		}
 	}
 }

@@ -47,7 +47,7 @@ public class PreprocessorException extends Exception {
 	
 	public PreprocessorException(String message, File file)
 	{
-		this(message, file, null, UNKNOWN_LINE);
+		this(message, file, null, PreprocessorException.UNKNOWN_LINE);
 	}
 
 	public PreprocessorException(String message, File file, int lineNumber)
@@ -57,11 +57,11 @@ public class PreprocessorException extends Exception {
 	
 	public PreprocessorException(String message, File file, Throwable cause)
 	{
-		this(message, file, cause, UNKNOWN_LINE);
+		this(message, file, cause, PreprocessorException.UNKNOWN_LINE);
 	}
 	public PreprocessorException(String message, File file, Throwable cause, int lineNumber)
 	{
-		super((lineNumber != UNKNOWN_LINE ? "Line " + lineNumber + " : " : "") + message, cause);
+		super((lineNumber != PreprocessorException.UNKNOWN_LINE ? "Line " + lineNumber + " : " : "") + message, cause);
 		this.m_lineNumber = lineNumber;
 		this.m_file = file;
 	}
@@ -76,18 +76,19 @@ public class PreprocessorException extends Exception {
 		return this.m_file;
 	}
 	
+	@Override
 	public String getMessage()
 	{
 		if (this.m_file != null)
 		{
-			String ln = this.m_lineNumber != UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
+			String ln = this.m_lineNumber != PreprocessorException.UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
 			return this.m_file + ln + " : " + super.getMessage();	
 		}
 		else
 		{
 			if (this.m_lineNumber != PreprocessorException.UNKNOWN_LINE)
 			{
-				return m_lineNumber + " : " + super.getMessage();
+				return this.m_lineNumber + " : " + super.getMessage();
 			}
 			else
 			{

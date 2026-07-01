@@ -172,7 +172,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         // Delete item.
         if (itemNum != this.numOfItems - 1)
         {
-            System.arraycopy(items, itemNum + 1, items, itemNum, numOfItems - itemNum - 1);
+            System.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
         }
         this.numOfItems--;
         // clear the slot to allow garbage collection
@@ -194,7 +194,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         if (this.choiceType == ChoiceGroupItem.POPUP) {
             this.popupList.delete(itemNum);
         }
-        repaint();
+        this.repaint();
     }
 
     @Override
@@ -207,7 +207,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         this.highlightedItemIndex = -1;
         if (this.choiceType == ChoiceGroupItem.POPUP)
             this.popupList.deleteAll();
-        repaint();
+        this.repaint();
     }
 
     @Override
@@ -340,11 +340,11 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         if (this.numOfItems == this.items.length /*no space left in item array*/)
         {
             ChoiceItem newItems[] = new ChoiceItem[this.numOfItems + 4];
-            System.arraycopy(items, 0, newItems, 0, numOfItems);
+            System.arraycopy(this.items, 0, newItems, 0, this.numOfItems);
             this.items = newItems;
         }
 
-        System.arraycopy(items, elementNum, items, elementNum + 1, numOfItems - elementNum);
+        System.arraycopy(this.items, elementNum, this.items, elementNum + 1, this.numOfItems - elementNum);
 
         this.items[elementNum] = new ChoiceItem(StringUtil.getInstance().EMPTY_STRING, imagePart, stringPart, this
                 .getLabelStringComponent().getBackgroundBasicColor(), this
@@ -362,7 +362,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             }
         }
 
-        repaint();
+        this.repaint();
     }
 
     @Override
@@ -400,7 +400,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             this.popupList.set(elementNum, stringPart, imagePart);
         }
 
-        repaint();
+        this.repaint();
     }
 
     @Override
@@ -498,17 +498,17 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             {
                 this.popupList.setSelectedIndex(elementNum, true);
             }
-            repaint();
+            this.repaint();
         } else if (this.choiceType == ChoiceGroupItem.MULTIPLE)
         {
             this.items[elementNum].setSelectedState(selected);
-            repaint();
+            this.repaint();
         } else if (this.choiceType == ChoiceGroupItem.IMPLICIT)
         {
             if (selected)
             {
                 this.items[elementNum].setSelectedState(selected);
-                repaint();
+                this.repaint();
             }
         }
     }
@@ -533,13 +533,13 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         {
             if (this.highlightedItemIndex != -1)
             {
-                height += items[this.highlightedItemIndex].getHeight();
+                height += this.items[this.highlightedItemIndex].getHeight();
             }
         } else
         {
             for (int i = 0; i < this.numOfItems; i++)
             {
-                height += items[i].getHeight();
+                height += this.items[i].getHeight();
             }
         }
 
@@ -555,7 +555,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         int testY = 0;
         for (int i = 0; i < this.numOfItems; i++)
         {
-            testY += items[i].getHeight();
+            testY += this.items[i].getHeight();
             if (y < testY)
             {
                 return i;
@@ -571,7 +571,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
 
         for (int i = 0; i < itemIndex; i++)
         {
-            height += items[i].getHeight();
+            height += this.items[i].getHeight();
         }
 
         return height;
@@ -595,18 +595,18 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             int index = this.getSelectedIndex();
             if (index != -1)
             {
-                this.items[index].invertPaint(hasFocus());
+                this.items[index].invertPaint(this.hasFocus());
                 this.items[index].paint(g);
             }
         } else
         {
             for (int i = 0; i < this.numOfItems; i++)
             {
-                this.items[i].invertPaint(i == this.highlightedItemIndex && hasFocus());
+                this.items[i].invertPaint(i == this.highlightedItemIndex && this.hasFocus());
                 this.items[i].paint(g);
                 // logUtil.putF("Painting: " + items[i].getLabel(), this, "paint");
-                g.translate(0, items[i].getHeight());
-                translatedY += items[i].getHeight();
+                g.translate(0, this.items[i].getHeight());
+                translatedY += this.items[i].getHeight();
             }
             g.translate(0, -translatedY);
         }
@@ -635,7 +635,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             // state, in exclusive selects the highligthed
             // and in implicit it does nothing
             // Andres Navarro
-            this.setSelectedIndex(this.highlightedItemIndex, !items[this.highlightedItemIndex].isSelected());
+            this.setSelectedIndex(this.highlightedItemIndex, !this.items[this.highlightedItemIndex].isSelected());
         }
 
         return true;
@@ -667,7 +667,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                     int index = this.getSelectedIndex();
                     if (index != -1)
                     {
-                        height += items[index].getHeight();
+                        height += this.items[index].getHeight();
                     }
 
                     if (height > bottom)
@@ -675,7 +675,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                         return height - bottom;
                     } else
                     {
-                        repaint();
+                        this.repaint();
                     }
                 } else
                 {
@@ -695,14 +695,14 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                     int height = super.getHeight();
                     for (int i = 0; i < this.highlightedItemIndex; i++)
                     {
-                        height += items[i].getHeight();
+                        height += this.items[i].getHeight();
                     }
                     if (height < top)
                     {
                         return height - top;
                     } else
                     {
-                        repaint();
+                        this.repaint();
                     }
                 } else
                 {
@@ -718,23 +718,23 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             if (gameKeyCode == Canvas.DOWN)
             {
                 if ((!action && this.highlightedItemIndex < this.numOfItems)
-                        || (action && highlightedItemIndex < (this.numOfItems - 1)))
+                        || (action && this.highlightedItemIndex < (this.numOfItems - 1)))
                 {
                     if (action)
                     {
-                        highlightedItemIndex++;
+                        this.highlightedItemIndex++;
                     }
                     int height = super.getHeight();
                     for (int i = 0; i <= this.highlightedItemIndex; i++)
                     {
-                        height += items[i].getHeight();
+                        height += this.items[i].getHeight();
                     }
                     if (height > bottom)
                     {
                         return height - bottom;
                     } else
                     {
-                        repaint();
+                        this.repaint();
                     }
                 } else
                 {
@@ -766,7 +766,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
         {
             super(label, image, text, backgroundBasicColor, foregroundBasicColor);
             this.setSelectedState(false);
-            font = Font.getDefaultFont();
+            this.font = Font.getDefaultFont();
         }
 
         Font getFont()
@@ -781,7 +781,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
 
             int width = 0;
             if (this.box != null) {
-                width += box.getWidth();
+                width += this.box.getWidth();
             }
 
             final Image image = this.getImage();
@@ -802,7 +802,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             int height = 0;
             if (this.box != null)
             {
-                height = box.getHeight();
+                height = this.box.getHeight();
             }
                 
             final Image image = this.getImage();
@@ -838,20 +838,20 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
                 if (Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL)
                         && openGLCapabilities.isGlExtensionDrawTexture())
                 {
-                    g.drawImage(box, g.getTranslateX(), g.getTranslateY(), Graphics.LEFT | Graphics.TOP);
+                    g.drawImage(this.box, g.getTranslateX(), g.getTranslateY(), Graphics.LEFT | Graphics.TOP);
                 } else
                 {
-                    g.drawImage(box, 0, 0, Graphics.LEFT | Graphics.TOP);
+                    g.drawImage(this.box, 0, 0, Graphics.LEFT | Graphics.TOP);
                 }
 
                 if (!(image == NullImage.NULL_IMAGE || image == OpenGLESImage.NULL_OPENGL_IMAGE))
                 {
-                    widthAddition = box.getWidth();
-                    g.translate(box.getWidth(), 0);
+                    widthAddition = this.box.getWidth();
+                    g.translate(this.box.getWidth(), 0);
                 } else
                 {
-                    widthAddition = box.getWidth() + 2;
-                    g.translate(box.getWidth() + 2, 0);
+                    widthAddition = this.box.getWidth() + 2;
+                    g.translate(this.box.getWidth() + 2, 0);
                 }
             }
             
@@ -906,7 +906,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
 
         void setSelectedState(boolean state)
         {
-            selected = state;
+            this.selected = state;
 
             final Image[] imageArray = ChoiceGroupImageFactory.getInstance().getImageArray();
             if (choiceType != ChoiceGroupItem.IMPLICIT

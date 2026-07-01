@@ -58,6 +58,7 @@ public class WtkMakePrc extends Task {
     
     private String encoding;
 
+    @Override
     public void init() throws BuildException {
         super.init();
         this.utility = Utility.getInstance(getProject(), this);

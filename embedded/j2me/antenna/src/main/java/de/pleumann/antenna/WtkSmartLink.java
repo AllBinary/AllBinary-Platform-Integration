@@ -34,35 +34,36 @@ import de.pleumann.antenna.post.PostProcessor;
 
 public class WtkSmartLink extends PostProcessor {
 
+	@Override
 	public void execute() throws BuildException {
-        if (!isActive()) return;
+        if (!this.isActive()) return;
         
-		if (getJarFile() == null) {
+		if (this.getJarFile() == null) {
 			throw new BuildException("Need a JAR file");
 		}
 
 		try {
 			try {
-				File tmpFile = getToJarFile();
+				File tmpFile = this.getToJarFile();
 				if (tmpFile == null) {
-					tmpFile = new File(getUtility().getTempDir(), "output.jar");
+					tmpFile = new File(this.getUtility().getTempDir(), "output.jar");
 				}
 
-				JadFile jad = getJad();
+				JadFile jad = this.getJad();
 
-				File tmpDir = new File(getUtility().getTempDir(), "files");
+				File tmpDir = new File(this.getUtility().getTempDir(), "files");
 
 				Expand expand = new Expand();
-				expand.setProject(getProject());
-				expand.setTaskName(getTaskName());
-				expand.setSrc(getJarFile());
+				expand.setProject(this.getProject());
+				expand.setTaskName(this.getTaskName());
+				expand.setSrc(this.getJarFile());
 				expand.setDest(tmpDir);
 				expand.setOverwrite(true);
 				expand.execute();
 
 				Jar zip = new Jar();
-				zip.setProject(getProject());
-				zip.setTaskName(getTaskName());
+				zip.setProject(this.getProject());
+				zip.setTaskName(this.getTaskName());
 				zip.setDestFile(tmpFile);
 				zip.setDefaultexcludes(false);
 
@@ -79,11 +80,11 @@ public class WtkSmartLink extends PostProcessor {
 				zip.addFileset(classes);
 				zip.addFileset(nonClasses);
 
-                Vector preserve = new Vector(getPreserve());
-                getUtility().getPreserveList(jad, preserve);
+                Vector preserve = new Vector(this.getPreserve());
+                this.getUtility().getPreserveList(jad, preserve);
                 
 				DependencyChecker checker =
-					new DependencyChecker("" + tmpDir, getFullClasspath());
+					new DependencyChecker("" + tmpDir, this.getFullClasspath());
 				for (int i = 0; i < preserve.size(); i++) {
 					try {
 						checker.addRootClass(preserve.elementAt(i).toString());
@@ -102,12 +103,12 @@ public class WtkSmartLink extends PostProcessor {
 
 				zip.execute();
 
-				if (getToJarFile() == null) {
-					getJarFile().delete();
-					tmpFile.renameTo(getJarFile());
+				if (this.getToJarFile() == null) {
+					this.getJarFile().delete();
+					tmpFile.renameTo(this.getJarFile());
 				}
                 
-                updateJad();
+                this.updateJad();
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -116,7 +117,7 @@ public class WtkSmartLink extends PostProcessor {
 		}
 
 		finally {
-			getUtility().delete(getUtility().getTempDir());
+			this.getUtility().delete(this.getUtility().getTempDir());
 		}
 	}
 }

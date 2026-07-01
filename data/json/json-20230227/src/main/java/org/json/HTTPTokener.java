@@ -31,14 +31,14 @@ public class HTTPTokener extends JSONTokener {
         char q;
         StringBuilder sb = new StringBuilder();
         do {
-            c = next();
+            c = this.next();
         } while (Character.isWhitespace(c));
         if (c == '"' || c == '\'') {
             q = c;
             for (;;) {
-                c = next();
+                c = this.next();
                 if (c < ' ') {
-                    throw syntaxError("Unterminated string.");
+                    throw this.syntaxError("Unterminated string.");
                 }
                 if (c == q) {
                     return sb.toString();
@@ -51,7 +51,7 @@ public class HTTPTokener extends JSONTokener {
                 return sb.toString();
             }
             sb.append(c);
-            c = next();
+            c = this.next();
         }
     }
 }

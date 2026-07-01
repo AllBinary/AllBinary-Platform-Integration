@@ -32,7 +32,7 @@ protected HelperParser(TokenBuffer tokenBuf, int k) {
   super(tokenBuf,k);
   tokenNames = _tokenNames;
   this.buildTokenTypeASTClassMap();
-  astFactory = new ASTFactory(getTokenTypeToASTClassMap());
+  astFactory = new ASTFactory(this.getTokenTypeToASTClassMap());
 }
 
 public HelperParser(TokenBuffer tokenBuf) {
@@ -43,7 +43,7 @@ protected HelperParser(TokenStream lexer, int k) {
   super(lexer,k);
   tokenNames = _tokenNames;
   this.buildTokenTypeASTClassMap();
-  astFactory = new ASTFactory(getTokenTypeToASTClassMap());
+  astFactory = new ASTFactory(this.getTokenTypeToASTClassMap());
 }
 
 public HelperParser(TokenStream lexer) {
@@ -54,7 +54,7 @@ public HelperParser(ParserSharedInputState state) {
   super(state,1);
   tokenNames = _tokenNames;
   this.buildTokenTypeASTClassMap();
-  astFactory = new ASTFactory(getTokenTypeToASTClassMap());
+  astFactory = new ASTFactory(this.getTokenTypeToASTClassMap());
 }
 
 	public final void line() throws RecognitionException, TokenStreamException {
@@ -64,17 +64,17 @@ public HelperParser(ParserSharedInputState state) {
 		AST line_AST = null;
 		
 		AST tmp1_AST = null;
-		tmp1_AST = astFactory.create(LT(1));
+		tmp1_AST = astFactory.create(this.LT(1));
 		astFactory.addASTChild(currentAST, tmp1_AST);
-		match(PREFIX);
+		match(HelperLexerTokenTypes.PREFIX);
 		AST tmp2_AST = null;
-		tmp2_AST = astFactory.create(LT(1));
+		tmp2_AST = astFactory.create(this.LT(1));
 		astFactory.addASTChild(currentAST, tmp2_AST);
 		match(LITERAL_include);
 		AST tmp3_AST = null;
-		tmp3_AST = astFactory.create(LT(1));
+		tmp3_AST = astFactory.create(this.LT(1));
 		astFactory.addASTChild(currentAST, tmp3_AST);
-		match(FILE);
+		match(HelperLexerTokenTypes.FILE);
 		line_AST = (AST)currentAST.root;
 		returnAST = line_AST;
 	}
@@ -99,7 +99,7 @@ public HelperParser(ParserSharedInputState state) {
 	};
 	
 	protected void buildTokenTypeASTClassMap() {
-		tokenTypeToASTClassMap=null;
+		this.tokenTypeToASTClassMap=null;
 	};
 	
 	

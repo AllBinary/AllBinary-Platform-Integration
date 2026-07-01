@@ -48,7 +48,7 @@ public class BaseProps implements Cloneable
 				String tagName = e.getTagName();
 				if (BaseProps.FEATURES.equals(tagName))
 				{
-					this.parseGroup(e, m_features);
+					this.parseGroup(e, this.m_features);
 				}
 				else
 				if (BaseProps.CAPABILITY.equals(tagName))
@@ -72,6 +72,7 @@ public class BaseProps implements Cloneable
 		}
 	}
 
+	@Override
 	public Object clone() throws CloneNotSupportedException
 	{
 		return super.clone();

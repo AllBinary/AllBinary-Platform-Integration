@@ -390,6 +390,6 @@ public class JSONWriter {
      * @throws JSONException If the value is out of sequence.
      */
     public JSONWriter value(Object object) throws JSONException {
-        return this.append(valueToString(object));
+        return this.append(JSONWriter.valueToString(object));
     }
 }

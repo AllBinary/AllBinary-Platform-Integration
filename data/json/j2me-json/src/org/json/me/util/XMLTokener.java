@@ -97,7 +97,7 @@ public class XMLTokener extends JSONTokener {
         StringBuffer sb;
         do {
             c = next();
-        } while (isWhitespace(c));
+        } while (XMLTokener.isWhitespace(c));
         if (c == 0) {
             return null;
         }
@@ -111,7 +111,7 @@ public class XMLTokener extends JSONTokener {
                 return sb.toString().trim();
             }
             if (c == '&') {
-                sb.append(nextEntity(c));
+                sb.append(this.nextEntity(c));
             } else {
                 sb.append(c);
             }
@@ -159,7 +159,7 @@ public class XMLTokener extends JSONTokener {
         char q;
         do {
             c = next();
-        } while (isWhitespace(c));
+        } while (XMLTokener.isWhitespace(c));
         switch (c) {
         case 0:
             throw syntaxError("Misshaped meta tag.");
@@ -190,7 +190,7 @@ public class XMLTokener extends JSONTokener {
         default:
             for (;;) {
                 c = next();
-                if (isWhitespace(c)) {
+                if (XMLTokener.isWhitespace(c)) {
                     return Boolean.TRUE;
                 }
                 switch (c) {
@@ -225,7 +225,7 @@ public class XMLTokener extends JSONTokener {
         StringBuffer sb;
         do {
             c = next();
-        } while (isWhitespace(c));
+        } while (XMLTokener.isWhitespace(c));
         switch (c) {
         case 0:
             throw syntaxError("Misshaped element.");
@@ -257,7 +257,7 @@ public class XMLTokener extends JSONTokener {
                     return sb.toString();
                 }
                 if (c == '&') {
-                    sb.append(nextEntity(c));
+                    sb.append(this.nextEntity(c));
                 } else {
                     sb.append(c);
                 }
@@ -270,7 +270,7 @@ public class XMLTokener extends JSONTokener {
             for (;;) {
                 sb.append(c);
                 c = next();
-                if (isWhitespace(c)) {
+                if (XMLTokener.isWhitespace(c)) {
                     return sb.toString();
                 }
                 switch (c) {

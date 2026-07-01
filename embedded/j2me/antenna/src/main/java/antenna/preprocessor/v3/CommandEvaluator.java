@@ -197,7 +197,7 @@ public class CommandEvaluator {
      * @throws PPException
      */
     private boolean evaluateDebug(Eval eval) throws PPException {
-        boolean debugDefined = m_defines.isDefined(DEBUG_KEY);
+        boolean debugDefined = this.m_defines.isDefined(CommandEvaluator.DEBUG_KEY);
         if (!debugDefined) {
             return false;
         }
@@ -208,7 +208,7 @@ public class CommandEvaluator {
         if (nextSibling == null) {
             return debugDefined; // always true here
         } else {
-            Define define = this.m_defines.getDefine(DEBUG_KEY);
+            Define define = this.m_defines.getDefine(CommandEvaluator.DEBUG_KEY);
             String currentValue = define.getLiteral().getValue();
             int currentLevel = this.getDebugLevelNumber(currentValue);
             if (currentLevel == -1) {
@@ -370,7 +370,7 @@ public class CommandEvaluator {
                 Literal lit = v.getLiteral();
                 return this.getValues(lit.getValue());
             } else {
-                ast.warning(emptySymbolWarning(text));
+                ast.warning(this.emptySymbolWarning(text));
                 return this.literals(new Literal(Literal.STRING, ""));
             }
         }
@@ -429,7 +429,7 @@ public class CommandEvaluator {
             if (v != null) {
                 return v.getLiteral();
             } else {
-                ast.warning(emptySymbolWarning(text));
+                ast.warning(this.emptySymbolWarning(text));
                 return new Literal(Literal.STRING, "");
             }
         }
@@ -532,8 +532,8 @@ public class CommandEvaluator {
             if (this.listener != null) {
                 int ln = this.ppl.getLineNumber() + 1; // use 1 based line number
                 // system for the external world
-                this.listener.warning(message, ln, ast.getCharPositionInLine(),
-                        getText().length());
+                this.listener.warning(message, ln, this.ast.getCharPositionInLine(),
+                        this.getText().length());
             }
         }
 
@@ -555,7 +555,7 @@ public class CommandEvaluator {
          * @return
          */
         public Eval getFirstChild() {
-            return new Eval(this.ppl, (PPLineAST) this.ast.getChild(0), listener);
+            return new Eval(this.ppl, (PPLineAST) this.ast.getChild(0), this.listener);
         }
 
         /**
@@ -563,7 +563,7 @@ public class CommandEvaluator {
          */
         public Eval getNextSibling() {
             return new Eval(this.ppl, (PPLineAST) this.ast.getParent().getChild(
-                    this.ast.getIndex() + 1), listener);
+                    this.ast.getIndex() + 1), this.listener);
         }
 
         /*

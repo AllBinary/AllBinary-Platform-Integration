@@ -66,6 +66,7 @@ public class Strings {
 		this.strings.remove(index);
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Strings)) {
 			return false;

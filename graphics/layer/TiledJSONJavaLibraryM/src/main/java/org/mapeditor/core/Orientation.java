@@ -73,7 +73,7 @@ public enum Orientation {
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static Orientation fromValue(String v) {

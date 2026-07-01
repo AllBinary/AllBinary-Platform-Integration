@@ -80,12 +80,12 @@ public class SimpleTiledLayer extends Layer
     {
         int column0 = 0;
         int row0 = 0;
-        int maxColumn = totalColumns;
-        int maxRow = totalRows;
+        int maxColumn = this.totalColumns;
+        int maxRow = this.totalRows;
 
-        int x0 = this.getXP() - tileWidth;
+        int x0 = this.getXP() - this.tileWidth;
         int x = x0;
-        int y = this.getYP() - tileHeight;
+        int y = this.getYP() - this.tileHeight;
 
         final int clipWidth = graphics.getClipWidth();
         final int clipHeight = graphics.getClipHeight();
@@ -98,16 +98,16 @@ public class SimpleTiledLayer extends Layer
             int clipX = graphics.getClipX();
 
             int diff = clipX - x;
-            if (diff > tileWidth)
+            if (diff > this.tileWidth)
             {
-                column0 = diff / tileWidth - 1;
+                column0 = diff / this.tileWidth - 1;
                 // logUtil.putF("column0: " + column0, this, "paint");
             }
 
             diff = width - ((clipX - x) + clipWidth);
-            if (diff > tileWidth)
+            if (diff > this.tileWidth)
             {
-                maxColumn -= diff / tileWidth + 1;
+                maxColumn -= diff / this.tileWidth + 1;
                 //logUtil.putF("maxColumn: " + maxColumn, this, "paint");
                 //System.out.println("maxColumn: " + maxColumn);
             }
@@ -118,23 +118,23 @@ public class SimpleTiledLayer extends Layer
             int clipY = graphics.getClipY();
 
             int diff = clipY - y;
-            if (diff > tileHeight)
+            if (diff > this.tileHeight)
             {
-                row0 = diff / tileHeight - 1;
+                row0 = diff / this.tileHeight - 1;
                 
                 // logUtil.putF("row0: " + row0, this, "paint");
             }
 
             diff = height - ((clipY - y) + clipHeight);
-            if (diff > tileHeight)
+            if (diff > this.tileHeight)
             {
-                maxRow -= diff / tileHeight + 1;
+                maxRow -= diff / this.tileHeight + 1;
                 //System.out.println("maxRow: " + maxRow);
                 //logUtil.putF("maxRow: " + maxRow, this, "paint");
             }
         }
 
-        y += (row0 * tileHeight);
+        y += (row0 * this.tileHeight);
 
         int originalColor = graphics.getColor();
         
@@ -143,16 +143,16 @@ public class SimpleTiledLayer extends Layer
         int cell;
         for (int rowIndex = row0; rowIndex < maxRow; rowIndex++)
         {
-            y += tileHeight;
-            x = x0 + (column0 * tileWidth);
+            y += this.tileHeight;
+            x = x0 + (column0 * this.tileWidth);
             for (int columnIndex = column0; columnIndex < maxColumn; columnIndex++)
             {
-                x += tileWidth;
+                x += this.tileWidth;
 
                 cell = (int) tiles[rowIndex][columnIndex];
                 if (cell == 0)
                 {
-                    graphics.fillRect(x, y, tileWidth, tileHeight);
+                    graphics.fillRect(x, y, this.tileWidth, this.tileHeight);
                 }
             }
         }

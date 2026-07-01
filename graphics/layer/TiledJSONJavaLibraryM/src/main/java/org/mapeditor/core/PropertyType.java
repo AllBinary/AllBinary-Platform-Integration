@@ -103,7 +103,7 @@ public enum PropertyType {
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static PropertyType fromValue(String v) {

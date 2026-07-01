@@ -144,7 +144,7 @@ public class Preprocessor {
      * @param listener
      */
     public void setListener(IPreprocessorListener listener) {
-        m_listener = listener;
+        this.m_listener = listener;
     }
 
     /**
@@ -327,14 +327,14 @@ public class Preprocessor {
             try {
                 if ((lp.getType() == PPLine.TYPE_VISIBLE)
                         || (lp.getType() == PPLine.TYPE_HIDDEN)) {
-                    if (isBlind()) {
+                    if (this.isBlind()) {
                         String l = this.commentLine(lp);
                         if (!l.equals(line)) {
                             this.m_modified = true;
                         }
 
                         lines.set(i, l);
-                        if (isVerbose()) {
+                        if (this.isVerbose()) {
                             this.log("(+)" + l);
                         }
                     } else {
@@ -352,7 +352,7 @@ public class Preprocessor {
                             lines.insertElementAt(str, i);
                         }
 
-                        if (isVerbose()) {
+                        if (this.isVerbose()) {
                             this.log("(-)" + str);
                         }
                     }
@@ -408,7 +408,7 @@ public class Preprocessor {
                             for (int k = 0; k < includeLines.size(); k++) {
                                 String s = (String) includeLines.get(k);
                                 PPLine lp2 = new PPLine(this.m_file, s, k);
-                                if (isBlind()) {
+                                if (this.isBlind()) {
                                     s = this.commentLine(lp2);
                                 }
                                 lines.insertElementAt(s, i);
@@ -609,7 +609,7 @@ public class Preprocessor {
      * Pop a State from the stack.
      */
     private void popState() {
-        m_currentState = ((Integer) m_statsStack.pop()).intValue();
+        m_currentState = ((Integer) this.m_statsStack.pop()).intValue();
     }
 
     /**
@@ -665,7 +665,7 @@ public class Preprocessor {
      */
     private void handleIf(boolean condition) {
         this.pushState();
-        if (!isBlind()) {
+        if (!this.isBlind()) {
             if (condition) {
                 this.m_currentState = Preprocessor.STATE_IS_TRUE;
             } else {
@@ -730,7 +730,7 @@ public class Preprocessor {
             CommandEvaluator evaluator, String encoding, boolean lastLine)
             throws Exception, PPException, UnsupportedEncodingException {
 
-        if (isVerbose()) {
+        if (this.isVerbose()) {
             this.log("(?)" + ppl.getSource());
         }
 
@@ -740,8 +740,8 @@ public class Preprocessor {
 
         case APPLexer.DEFINE:
         case APPLexer.UNDEFINE: {
-            if (!isBlind()) {
-                evaluator.evaluate(ppl, ast, m_listener);
+            if (!this.isBlind()) {
+                evaluator.evaluate(ppl, ast, this.m_listener);
             }
             break;
         }
@@ -749,7 +749,7 @@ public class Preprocessor {
         case APPLexer.IF:
         case APPLexer.IFDEF:
         case APPLexer.IFNDEF: {
-            boolean r = evaluator.evaluate(ppl, ast, m_listener);
+            boolean r = evaluator.evaluate(ppl, ast, this.m_listener);
             this.handleIf(r);
             break;
         }
@@ -760,7 +760,7 @@ public class Preprocessor {
                         "//#condition is only allowed in the first line of the file",
                         this.m_file, ppl.getLineNumber());
             }
-            boolean r = evaluator.evaluate(ppl, ast, m_listener);
+            boolean r = evaluator.evaluate(ppl, ast, this.m_listener);
             this.handleCondition(r);
 
             break;
@@ -769,7 +769,7 @@ public class Preprocessor {
         case APPLexer.ELIF:
         case APPLexer.ELIFDEF:
         case APPLexer.ELIFNDEF: {
-            boolean r = evaluator.evaluate(ppl, ast, m_listener);
+            boolean r = evaluator.evaluate(ppl, ast, this.m_listener);
             this.handleElseIf(r);
             break;
         }
@@ -785,13 +785,13 @@ public class Preprocessor {
         }
 
         case APPLexer.DEBUG: {
-            boolean show = evaluator.evaluate(ppl, ast, m_listener);
+            boolean show = evaluator.evaluate(ppl, ast, this.m_listener);
             this.m_debugHideNextLine = !show;
             break;
         }
 
         case APPLexer.MDEBUG: {
-            boolean show = evaluator.evaluate(ppl, ast, m_listener);
+            boolean show = evaluator.evaluate(ppl, ast, this.m_listener);
             this.handleMdebug(show, ppl.getLineNumber());
             break;
         }
@@ -833,7 +833,7 @@ public class Preprocessor {
         String nextLine = this.uncommentLine(nextPPline);
         boolean replace = nextLine.matches(template);
 
-        String expanded = Expander.expandMacros(expLine, m_defines);
+        String expanded = Expander.expandMacros(expLine, this.m_defines);
         if (!nextLine.equals(expanded)) {
             this.m_modified = true;
         }

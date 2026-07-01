@@ -66,7 +66,7 @@ public enum VerticalAlignment {
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static VerticalAlignment fromValue(String v) {

@@ -110,6 +110,7 @@ public class WtkJad extends Task {
      */
     private String attribName;
     
+    @Override
     public void init() throws BuildException {
         super.init();
         this.utility = Utility.getInstance(getProject(), this);

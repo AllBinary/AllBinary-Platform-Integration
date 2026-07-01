@@ -143,7 +143,7 @@ public class JadFile {
      * Clear the JAD file.
      */
     public void clear() {
-        strings = new Vector();
+        this.strings = new Vector();
     }
 
     /**
@@ -207,7 +207,7 @@ public class JadFile {
      */
     public int indexOf(String s) {
         String t = s.toLowerCase();
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < this.size(); i++) {
             if (get(i).toLowerCase().equals(t)) {
                 return i;
             }
@@ -222,7 +222,7 @@ public class JadFile {
     public int indexOfName(String name) {
         String s = name.toLowerCase() + ':';
         int i = 0;
-        while (i < size()) {
+        while (i < this.size()) {
             if (get(i).toLowerCase().startsWith(s)) {
                 return i;
             }
@@ -383,7 +383,7 @@ public class JadFile {
     	
         BufferedWriter writer = new BufferedWriter(osw);
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < this.size(); i++) {
             String s = this.get(i);
             if ((s != null) && (s.length() != 0)) {
                 writer.write(get(i));
@@ -400,7 +400,7 @@ public class JadFile {
     public void save(OutputStream stream) throws IOException {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < this.size(); i++) {
             String s = this.get(i);
             if ((s != null) && (s.length() != 0)) {
                 writer.write(get(i));

@@ -120,7 +120,7 @@ public class JSONMLParserConfiguration {
         if (maxNestingDepth > JSONMLParserConfiguration.UNDEFINED_MAXIMUM_NESTING_DEPTH) {
             newConfig.maxNestingDepth = maxNestingDepth;
         } else {
-            newConfig.maxNestingDepth = UNDEFINED_MAXIMUM_NESTING_DEPTH;
+            newConfig.maxNestingDepth = JSONMLParserConfiguration.UNDEFINED_MAXIMUM_NESTING_DEPTH;
         }
 
         return newConfig;

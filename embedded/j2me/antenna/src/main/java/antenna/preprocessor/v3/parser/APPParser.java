@@ -92,6 +92,7 @@ public class APPParser extends Parser {
         return this.adaptor;
     }
 
+    @Override
     public String[] getTokenNames() { return APPParser.tokenNames; }
     public String getGrammarFileName() { return "src/antenna/preprocessor/v3/parser/APP.g"; }
 

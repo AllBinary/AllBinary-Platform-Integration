@@ -35,6 +35,7 @@ public class Define
 		}
 	}
 	
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj instanceof Define)

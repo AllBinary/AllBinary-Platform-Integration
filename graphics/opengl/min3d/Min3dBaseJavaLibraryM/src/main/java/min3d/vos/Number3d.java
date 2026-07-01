@@ -71,6 +71,7 @@ public class Number3d
         return (float) sqrt;
     }
 
+    @Override
     public Number3d clone()
     {
         return new Number3d(this.x, this.y, this.z);

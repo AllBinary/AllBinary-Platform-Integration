@@ -65,6 +65,7 @@ public class Define {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj != null) {
             if (obj instanceof Define) {

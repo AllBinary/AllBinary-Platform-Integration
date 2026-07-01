@@ -83,7 +83,7 @@ public class Cookie {
         // per RFC6265, if there is no '=', the cookie should be ignored.
         // the 'next' call here throws an exception if the '=' is not found.
         x.next('=');
-        jo.put("value", unescape(x.nextTo(';')).trim());
+        jo.put("value", Cookie.unescape(x.nextTo(';')).trim());
         // discard the ';'
         x.next();
         // parse the remaining cookie attributes
@@ -147,9 +147,9 @@ public class Cookie {
             value = "";
         }
         
-        sb.append(escape(name));
+        sb.append(Cookie.escape(name));
         sb.append("=");
-        sb.append(escape((String)value));
+        sb.append(Cookie.escape((String)value));
         
         for(String key : jo.keySet()){
             if("name".equalsIgnoreCase(key)
@@ -160,14 +160,14 @@ public class Cookie {
             value = jo.opt(key);
             if(value instanceof Boolean) {
                 if(Boolean.TRUE.equals(value)) {
-                    sb.append(';').append(escape(key));
+                    sb.append(';').append(Cookie.escape(key));
                 }
                 // don't emit false values
             } else {
                 sb.append(';')
-                    .append(escape(key))
+                    .append(Cookie.escape(key))
                     .append('=')
-                    .append(escape(value.toString()));
+                    .append(Cookie.escape(value.toString()));
             }
         }
         

@@ -342,7 +342,7 @@ public class XMLParserConfiguration {
         if (maxNestingDepth > XMLParserConfiguration.UNDEFINED_MAXIMUM_NESTING_DEPTH) {
             newConfig.maxNestingDepth = maxNestingDepth;
         } else {
-            newConfig.maxNestingDepth = UNDEFINED_MAXIMUM_NESTING_DEPTH;
+            newConfig.maxNestingDepth = XMLParserConfiguration.UNDEFINED_MAXIMUM_NESTING_DEPTH;
         }
 
         return newConfig;

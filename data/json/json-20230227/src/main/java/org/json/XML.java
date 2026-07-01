@@ -131,7 +131,7 @@ public class XML {
                 sb.append("&apos;");
                 break;
             default:
-                if (mustEscape(cp)) {
+                if (XML.mustEscape(cp)) {
                     sb.append("&#x");
                     sb.append(Integer.toHexString(cp));
                     sb.append(';');
@@ -411,7 +411,7 @@ public class XML {
                                 throw x.syntaxError("Maximum nesting depth of " + config.getMaxNestingDepth() + " reached");
                             }
 
-                            if (parse(x, jsonObject, tagName, config, currentNestingDepth + 1)) {
+                            if (XML.parse(x, jsonObject, tagName, config, currentNestingDepth + 1)) {
                                 if (config.getForceList().contains(tagName)) {
                                     // Force the value to be an array
                                     if (jsonObject.length() == 0) {
@@ -824,10 +824,10 @@ public class XML {
                                 sb.append('\n');
                             }
                             Object val = ja.opt(i);
-                            sb.append(escape(val.toString()));
+                            sb.append(XML.escape(val.toString()));
                         }
                     } else {
-                        sb.append(escape(value.toString()));
+                        sb.append(XML.escape(value.toString()));
                     }
 
                     // Emit an array of similar keys
@@ -842,12 +842,12 @@ public class XML {
                             sb.append('<');
                             sb.append(key);
                             sb.append('>');
-                            sb.append(toString(val, null, config, indentFactor, indent));
+                            sb.append(XML.toString(val, null, config, indentFactor, indent));
                             sb.append("</");
                             sb.append(key);
                             sb.append('>');
                         } else {
-                            sb.append(toString(val, key, config, indentFactor, indent));
+                            sb.append(XML.toString(val, key, config, indentFactor, indent));
                         }
                     }
                 } else if ("".equals(value)) {
@@ -862,7 +862,7 @@ public class XML {
                     // Emit a new tag <k>
 
                 } else {
-                    sb.append(toString(value, key, config, indentFactor, indent));
+                    sb.append(XML.toString(value, key, config, indentFactor, indent));
                 }
             }
             if (tagName != null) {
@@ -893,7 +893,7 @@ public class XML {
                 // XML does not have good support for arrays. If an array
                 // appears in a place where XML is lacking, synthesize an
                 // <array> element.
-                sb.append(toString(val, tagName == null ? "array" : tagName, config, indentFactor, indent));
+                sb.append(XML.toString(val, tagName == null ? "array" : tagName, config, indentFactor, indent));
             }
             return sb.toString();
         }

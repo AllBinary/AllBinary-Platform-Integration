@@ -46,6 +46,7 @@ public class OTAServer extends HttpServlet {
 
     private Strings counters;
 
+    @Override
     public void init() throws ServletException {
         super.init();
 

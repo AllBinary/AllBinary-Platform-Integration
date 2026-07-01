@@ -100,8 +100,8 @@ public class BasicTileCutter implements TileCutter {
     /** {@inheritDoc} */
     @Override
     public final void reset() {
-        nextX = tileMargin;
-        nextY = this.tileMargin;
+        this.nextX = this.tileMargin;
+        this.nextY = this.tileMargin;
     }
 
     /** {@inheritDoc} */

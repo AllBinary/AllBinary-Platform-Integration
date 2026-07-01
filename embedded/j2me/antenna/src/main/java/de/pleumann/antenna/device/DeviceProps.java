@@ -42,9 +42,9 @@ public class DeviceProps extends BaseProps
 					this.m_identifier = Util.getText(e);
 				}
 				else
-				if (GROUPS.equals(tagName))
+				if (BaseProps.GROUPS.equals(tagName))
 				{
-					parseGroup(e, m_groups);
+					this.parseGroup(e, m_groups);
 				}
 			}
 		}
@@ -79,8 +79,8 @@ public class DeviceProps extends BaseProps
 			props.setProperty(c, "'"+v+"'");
 		}
 		
-		props.put(GROUPS, convertSetToString(this.m_groups));
-		props.put(FEATURES, convertSetToString(m_features));
+		props.put(BaseProps.GROUPS, this.convertSetToString(this.m_groups));
+		props.put(FEATURES, this.convertSetToString(m_features));
 		props.put(this.m_identifier, "");
 	}
 	
@@ -122,7 +122,7 @@ public class DeviceProps extends BaseProps
 		else
 		if (this.m_identifier.toLowerCase().indexOf("nokia") != -1)
 		{
-			if (inGroup("series40"))
+			if (this.inGroup("series40"))
 			{
 				name = "com.nokia.mid.imei";
 			}
@@ -137,7 +137,7 @@ public class DeviceProps extends BaseProps
 			name = "UNKNOWN IMEI KEY";
 		}
 		
-		m_capabilities.setProperty(IMEI_KEY, name);
+		m_capabilities.setProperty(BaseProps.IMEI_KEY, name);
 	}
 
 	public boolean inGroup(String group)
@@ -158,7 +158,7 @@ public class DeviceProps extends BaseProps
 
 	public boolean supportSound(String soundFormat)
 	{
-		return m_soundFormats.contains(soundFormat);
+		return this.m_soundFormats.contains(soundFormat);
 	}
 
 	public boolean supportVideo(String videoFormat)
@@ -168,7 +168,7 @@ public class DeviceProps extends BaseProps
 	
 	public boolean supportsPackage(String packageName)
 	{
-		return m_javaPackage.contains(packageName);
+		return this.m_javaPackage.contains(packageName);
 	}
 	
 	public boolean hasCapability(String name)

@@ -86,7 +86,7 @@ public class TileLayer extends TileLayerData {
      */
     public TileLayer() {
         super();
-        setMap(null);
+        this.setMap(null);
     }
 
     /**
@@ -116,7 +116,7 @@ public class TileLayer extends TileLayerData {
      */
     public TileLayer(final TiledMap map) {
         this();
-        setMap(map);
+        this.setMap(map);
     }
 
     /**
@@ -128,7 +128,7 @@ public class TileLayer extends TileLayerData {
      */
     public TileLayer(final TiledMap map, final int w, final int h) {
         this(w, h);
-        setMap(map);
+        this.setMap(map);
     }
 
     /**
@@ -191,13 +191,13 @@ public class TileLayer extends TileLayerData {
      * @param dir a int.
      */
     public void mirror(final int dir) {
-        final Tile[][] mirror = new Tile[height][width];
-        final int[][] mirrorFlags = new int[height][width];
-        for (int y = 0; y < height; y++) {
+        final Tile[][] mirror = new Tile[this.height][width];
+        final int[][] mirrorFlags = new int[this.height][width];
+        for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < width; x++) {
                 if (dir == MIRROR_VERTICAL) {
-                    mirror[y][x] = this.tileMap[height - 1 - y][x];
-                    mirrorFlags[y][x] = this.flags[height - 1 - y][x];
+                    mirror[y][x] = this.tileMap[this.height - 1 - y][x];
+                    mirrorFlags[y][x] = this.flags[this.height - 1 - y][x];
                 } else {
                     mirror[y][x] = this.tileMap[y][width - 1 - x];
                     mirrorFlags[y][x] = this.flags[y][width - 1 - x];
@@ -216,7 +216,7 @@ public class TileLayer extends TileLayerData {
      * <code>false</code> otherwise.
      */
     public boolean isUsed(Tile t) {
-        for (int y = 0; y < height; y++) {
+        for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < width; x++) {
                 if (this.tileMap[y][x] == t) {
                     return true;
@@ -233,7 +233,7 @@ public class TileLayer extends TileLayerData {
      */
     public boolean isEmpty() {
         for (int p = 0; p < 2; p++) {
-            for (int y = 0; y < height; y++) {
+            for (int y = 0; y < this.height; y++) {
                 for (int x = p; x < width; x += 2) {
                     if (this.tileMap[y][x] != null) {
                         return false;
@@ -253,9 +253,9 @@ public class TileLayer extends TileLayerData {
     @Override
     protected void setBounds(Rectangle bounds) {
         super.setBounds(bounds);
-        this.tileMap = new Tile[height][width];
-        this.tileToIdArray = new int[height][width];
-        this.flags = new int[height][width];
+        this.tileMap = new Tile[this.height][width];
+        this.tileToIdArray = new int[this.height][width];
+        this.flags = new int[this.height][width];
 
         // Tile instance properties is null when this method is called from
         // the constructor of TileLayer

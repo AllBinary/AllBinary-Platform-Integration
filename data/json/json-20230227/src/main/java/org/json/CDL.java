@@ -178,7 +178,7 @@ public class CDL {
      * @throws JSONException if a called function fails
      */
     public static JSONArray toJSONArray(JSONTokener x) throws JSONException {
-        return CDL.toJSONArray(rowToJSONArray(x), x);
+        return CDL.toJSONArray(CDL.rowToJSONArray(x), x);
     }
 
     /**
@@ -259,7 +259,7 @@ public class CDL {
         for (int i = 0; i < ja.length(); i += 1) {
             JSONObject jo = ja.optJSONObject(i);
             if (jo != null) {
-                sb.append(rowToString(jo.toJSONArray(names)));
+                sb.append(CDL.rowToString(jo.toJSONArray(names)));
             }
         }
         return sb.toString();

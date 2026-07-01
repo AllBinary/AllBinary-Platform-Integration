@@ -126,6 +126,7 @@ public class WtkPackage extends Jar {
 
     private String classDirs = "";
 
+    @Override
     public void init() throws BuildException {
         super.init();
         this.utility = Utility.getInstance(getProject(), this);
@@ -164,6 +165,7 @@ public class WtkPackage extends Jar {
         this.verbose = aVerbose;
     }
 
+    @Override
     public void setJarfile(File jar) {
         super.setDestFile(jar);
         this.jarFile = jar;

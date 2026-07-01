@@ -62,7 +62,7 @@ public enum Compression {
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static Compression fromValue(String v) {

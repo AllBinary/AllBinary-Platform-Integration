@@ -94,6 +94,7 @@ public class APPLexer extends Lexer {
      * 
      * @see org.antlr.runtime.Lexer#reportError(org.antlr.runtime.RecognitionException)
      */
+    @Override
     public void reportError(RecognitionException e) {
         super.reportError(e);
         this.exceptions.add(e);
@@ -103,6 +104,7 @@ public class APPLexer extends Lexer {
     public APPLexer(CharStream input) {
         super(input);
     }
+    @Override
     public String getGrammarFileName() { return "src/antenna/preprocessor/v3/parser/APP.g"; }
 
     // $ANTLR start DOT

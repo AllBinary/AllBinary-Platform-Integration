@@ -156,7 +156,7 @@ public class Utility {
     }
 
     public static Utility getInstance(Project project, Task parent) {
-        Utility utility = (Utility) instances.get(project);
+        Utility utility = (Utility) Utility.instances.get(project);
 
         if (utility == null) {
             utility = new Utility(project, parent);
@@ -192,7 +192,7 @@ public class Utility {
              this.midpVersion = midp;
 
      
-        BufferedReader input = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/toolkit/autodetect.txt")));
+        BufferedReader input = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/toolkit/autodetect.txt")));
         String line = null;
         try {
             while ((line = input.readLine()) != null && this.toolkit == null) {
@@ -272,7 +272,7 @@ public class Utility {
                 + "\"");
         while (s.length() < 58)
             s.append(' ');
-        StringBuffer t = new StringBuffer("Using " + toolkit.name + " (CLDC-" + this.cldcVersion + "; MIDP-" + this.midpVersion + ")");
+        StringBuffer t = new StringBuffer("Using " + this.toolkit.name + " (CLDC-" + this.cldcVersion + "; MIDP-" + this.midpVersion + ")");
         while (t.length() < 58)
             t.append(' ');
 
@@ -788,7 +788,7 @@ public class Utility {
          * Preprend emptied-out API, because RetroGuard can't work with the
          * normal MIDP API.
          */
-        java.createClasspath().setPath(getEmptyApi());
+        java.createClasspath().setPath(this.getEmptyApi());
         java.createClasspath().setPath(classpath);
         java.createClasspath().setPath(System.getProperty("java.class.path"));
 
@@ -857,7 +857,7 @@ public class Utility {
         writer.println("-dontusemixedcaseclassnames");
 
         if ((classpath != null) && (!"".equals(classpath))) {
-            writer.println("-libraryjars " + getInsideQuotedPath(classpath));
+            writer.println("-libraryjars " + this.getInsideQuotedPath(classpath));
         }
 
         for (int i = 0; i < preserve.size(); i++) {

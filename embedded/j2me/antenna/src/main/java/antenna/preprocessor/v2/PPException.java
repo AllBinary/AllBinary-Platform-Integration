@@ -24,7 +24,7 @@ public class PPException extends Exception {
 	
 	public PPException(String message, File file)
 	{
-		this(message, file, null, UNKNOWN_LINE);
+		this(message, file, null, PPException.UNKNOWN_LINE);
 	}
 
 	public PPException(String message, File file, int lineNumber)
@@ -34,7 +34,7 @@ public class PPException extends Exception {
 	
 	public PPException(String message, File file, Throwable cause)
 	{
-		this(message, file, cause, UNKNOWN_LINE);
+		this(message, file, cause, PPException.UNKNOWN_LINE);
 	}
 	
 	public PPException(String message, File file, Throwable cause, int lineNumber)
@@ -54,11 +54,12 @@ public class PPException extends Exception {
 		return this.m_file;
 	}
 	
+	@Override
 	public String getMessage()
 	{
 		if (this.m_file != null)
 		{
-			String ln = this.m_lineNumber != UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
+			String ln = this.m_lineNumber != PPException.UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
 			return this.m_file + ln + " : " + super.getMessage();	
 		}
 		else

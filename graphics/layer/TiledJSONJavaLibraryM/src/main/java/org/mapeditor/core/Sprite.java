@@ -73,7 +73,7 @@ public class Sprite {
         private Tile[] frames;
 
         public KeyFrame() {
-            flags = KEY_LOOP;
+            this.flags = KeyFrame.KEY_LOOP;
         }
 
         public KeyFrame(String name) {
@@ -83,7 +83,7 @@ public class Sprite {
 
         public KeyFrame(String name, Tile[] tile) {
             this(name);
-            frames = tile;
+            this.frames = tile;
         }
 
         public void setName(String name) {
@@ -91,7 +91,7 @@ public class Sprite {
         }
 
         public void setFrameRate(float r) {
-            frameRate = r;
+            this.frameRate = r;
         }
 
         public void setId(int id) {
@@ -111,7 +111,7 @@ public class Sprite {
         }
 
         public void setFlags(int f) {
-            flags = f;
+            this.flags = f;
         }
 
         public int getFlags() {
@@ -153,7 +153,7 @@ public class Sprite {
      * Constructor for Sprite.
      */
     public Sprite() {
-        frameSize = new Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0);
+        this.frameSize = new Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0);
         this.keys = new BasicArrayListD();
     }
 
@@ -191,7 +191,7 @@ public class Sprite {
      * @param frames an array of {@link org.mapeditor.core.Tile} objects.
      */
     public final void setFrames(Tile[] frames) {
-        frameSize = new Rectangle(PointFactory.getInstance().ZERO_ZERO, frames[0].getWidth(), frames[0].getHeight());
+        this.frameSize = new Rectangle(PointFactory.getInstance().ZERO_ZERO, frames[0].getWidth(), frames[0].getHeight());
 
         this.createKey(StringUtil.getInstance().EMPTY_STRING, frames, KeyFrame.KEY_LOOP);
     }
@@ -222,7 +222,7 @@ public class Sprite {
      * @param f a int.
      */
     public void setFpl(int f) {
-        fpl = f;
+        this.fpl = f;
     }
 
     /**
@@ -325,7 +325,7 @@ public class Sprite {
      * @return a {@link org.mapeditor.core.Sprite.KeyFrame} object.
      */
     public KeyFrame getNextKey() {
-        final int size = keys.size();
+        final int size = this.keys.size();
         KeyFrame k;
         int index = this.keys.indexOf(this.currentKey);
         if(index < size - 1) {
@@ -384,7 +384,7 @@ public class Sprite {
      * @param name a {@link java.lang.String} object.
      */
     public void setKeyFrameTo(String name) {
-        final int size = keys.size();
+        final int size = this.keys.size();
         KeyFrame k;
         for (int index = 0; index < size; index++) {
             k = (KeyFrame) this.keys.get(index);
@@ -410,7 +410,7 @@ public class Sprite {
      * @param name a {@link java.lang.String} object.
      */
     public void removeKey(String name) {
-        this.keys.remove(getKey(name));
+        this.keys.remove(this.getKey(name));
     }
 
     /**
@@ -449,14 +449,14 @@ public class Sprite {
      * play.
      */
     public void play() {
-        bPlaying = true;
+        this.bPlaying = true;
     }
 
     /**
      * stop.
      */
     public void stop() {
-        bPlaying = false;
+        this.bPlaying = false;
     }
 
     /**
@@ -465,7 +465,7 @@ public class Sprite {
      * @param amt a int.
      */
     public void keyStepBack(int amt) {
-        this.setCurrentFrame(currentFrame - amt);
+        this.setCurrentFrame(this.currentFrame - amt);
     }
 
     /**
@@ -474,7 +474,7 @@ public class Sprite {
      * @param amt a int.
      */
     public void keyStepForward(int amt) {
-        this.setCurrentFrame(currentFrame + amt);
+        this.setCurrentFrame(this.currentFrame + amt);
     }
 
     /**
@@ -484,7 +484,7 @@ public class Sprite {
      * @return a {@link org.mapeditor.core.Sprite.KeyFrame} object.
      */
     public KeyFrame getKey(String keyName) {
-        final int size = keys.size();
+        final int size = this.keys.size();
         KeyFrame k;
         for (int index = 0; index < size; index++) {
             k = (KeyFrame) this.keys.get(index);
@@ -527,7 +527,7 @@ public class Sprite {
             x = ((int) this.currentFrame % this.fpl) * (this.frameSize.getWidth() + this.borderWidth);
         }
 
-        return new Rectangle(PointFactory.getInstance().createXY(x, y), frameSize.getWidth(), frameSize.getHeight());
+        return new Rectangle(PointFactory.getInstance().createXY(x, y), this.frameSize.getWidth(), this.frameSize.getHeight());
     }
 
     /** {@inheritDoc} */

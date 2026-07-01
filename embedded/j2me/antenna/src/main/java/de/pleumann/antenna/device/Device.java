@@ -35,6 +35,7 @@ public class Device extends Task
 	}
 	
 	
+	@Override
 	public void execute() throws BuildException
 	{
 		if (this.m_result == null)
@@ -65,48 +66,48 @@ public class Device extends Task
 		
 		if (this.m_op.equalsIgnoreCase("has_capability"))
 		{
-			getProject().setProperty(this.m_result, "" + deviceProps.hasCapability(this.m_key));
+			this.getProject().setProperty(this.m_result, "" + deviceProps.hasCapability(this.m_key));
 		}
 		else
 		if (this.m_op.equalsIgnoreCase("get_capability"))
 		{
 			String capability = deviceProps.getCapability(this.m_key);
-			getProject().setProperty(this.m_result, capability == null ? "" : capability);
+			this.getProject().setProperty(this.m_result, capability == null ? "" : capability);
 		}
 		else
 		if (this.m_op.equalsIgnoreCase("in_group"))
 		{
-			getProject().setProperty(this.m_result, "" + deviceProps.inGroup(this.m_key));
+			this.getProject().setProperty(this.m_result, "" + deviceProps.inGroup(this.m_key));
 		}
 		else
 		if (this.m_op.equalsIgnoreCase("has_capability"))
 		{
-			getProject().setProperty(this.m_result, "" + deviceProps.hasCapability(this.m_key));
+			this.getProject().setProperty(this.m_result, "" + deviceProps.hasCapability(this.m_key));
 		}
 		else
 		if (this.m_op.equalsIgnoreCase("support_sound"))
 		{
-			getProject().setProperty(this.m_result, "" + deviceProps.supportSound(this.m_key));
+			this.getProject().setProperty(this.m_result, "" + deviceProps.supportSound(this.m_key));
 		}
 		else
 		if (this.m_op.equalsIgnoreCase("support_video"))
 		{
-			getProject().setProperty(this.m_result, "" + deviceProps.supportVideo(this.m_key));
+			this.getProject().setProperty(this.m_result, "" + deviceProps.supportVideo(this.m_key));
 		}
 		else
 		if (this.m_op.equalsIgnoreCase("support_package"))
 		{
-			getProject().setProperty(this.m_result, "" + deviceProps.supportsPackage(this.m_key));
+			this.getProject().setProperty(this.m_result, "" + deviceProps.supportsPackage(this.m_key));
 		}
 		else
 		if (this.m_op.equalsIgnoreCase("has_bug"))
 		{
-			getProject().setProperty(this.m_result, "" + deviceProps.hasBug(this.m_key));
+			this.getProject().setProperty(this.m_result, "" + deviceProps.hasBug(this.m_key));
 		}
 		else
 		if (this.m_op.equalsIgnoreCase("translate"))
 		{
-			getProject().setProperty(this.m_result, Util.expandMacros(this.m_key, deviceProps.getCapabilities()));
+			this.getProject().setProperty(this.m_result, Util.expandMacros(this.m_key, deviceProps.getCapabilities()));
 		}
 		else
 			throw new BuildException("Unsupported operation : " + this.m_op);

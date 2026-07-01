@@ -138,7 +138,7 @@ public class CommandEvaluator
 
 	private boolean evaluateDebug(Eval eval) throws PPException
 	{
-		boolean debugDefined = this.m_defines.isDefined(DEBUG_KEY);
+		boolean debugDefined = this.m_defines.isDefined(CommandEvaluator.DEBUG_KEY);
 		if (!debugDefined) return false;
 		
 		AST nextSibling = eval.ast.getNextSibling();
@@ -149,7 +149,7 @@ public class CommandEvaluator
 		}
 		else
 		{
-			Define define = this.m_defines.getDefine(DEBUG_KEY);
+			Define define = this.m_defines.getDefine(CommandEvaluator.DEBUG_KEY);
 			String currentValue = define.m_value.getValue();
 			int currentLevel = this.getDebugLevelNumber(currentValue);
 			if (currentLevel == -1)
@@ -258,7 +258,7 @@ public class CommandEvaluator
 				}
 				else
 				{
-					ast.warning(emptySymbolWarning(text));
+					ast.warning(this.emptySymbolWarning(text));
 					return this.literals(new Literal(Literal.STRING, ""));
 				}
 			case APPLexerTokenTypes.STRING:
@@ -299,7 +299,7 @@ public class CommandEvaluator
 					return v.m_value;
 				else
 				{
-					ast.warning(emptySymbolWarning(text));
+					ast.warning(this.emptySymbolWarning(text));
 					return new Literal(Literal.STRING, "");
 				}
 			case APPLexerTokenTypes.STRING:
@@ -397,7 +397,7 @@ public class CommandEvaluator
 			if (this.listener != null)
 			{
 				int ln = this.ppl.getLineNumber() + 1; // use 1 based line number system for the external world
-				this.listener.warning(message, ln, ast.getColumn(), getText().length());
+				this.listener.warning(message, ln, ast.getColumn(), this.getText().length());
 			}
 		}
 
@@ -413,12 +413,12 @@ public class CommandEvaluator
 
 		public Eval getFirstChild()
 		{
-			return new Eval(this.ppl, ast.getFirstChild(), listener);
+			return new Eval(this.ppl, ast.getFirstChild(), this.listener);
 		}
 
 		public Eval getNextSibling()
 		{
-			return new Eval(this.ppl, ast.getNextSibling(), listener);
+			return new Eval(this.ppl, ast.getNextSibling(), this.listener);
 		}
 		
 		public String toString()

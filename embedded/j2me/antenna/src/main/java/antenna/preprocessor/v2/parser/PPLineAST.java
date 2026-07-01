@@ -11,6 +11,7 @@ public class PPLineAST extends CommonAST
 
 	private int column, line;
 
+	@Override
 	public void initialize(Token tok)
 	{
 		super.initialize(tok);
@@ -18,11 +19,13 @@ public class PPLineAST extends CommonAST
 		this.line = tok.getLine();
 	}
 
+	@Override
 	public int getColumn()
 	{
 		return this.column;
 	}
 
+	@Override
 	public int getLine()
 	{
 		return this.line;
@@ -32,8 +35,8 @@ public class PPLineAST extends CommonAST
 	{
 		StringBuffer result = new StringBuffer("");
 
-		result.append(super.toString()).append("[").append(getLine()).append(":").append(getColumn()).append(" - ")
-				.append(this.getClass().getName()).append("(").append(getType()).append(")] : ").append(getText());
+		result.append(super.toString()).append("[").append(this.getLine()).append(":").append(this.getColumn()).append(" - ")
+				.append(this.getClass().getName()).append("(").append(this.getType()).append(")] : ").append(this.getText());
 
 		return result.toString();
 	}

@@ -54,7 +54,7 @@ public class WtkObfuscate extends PostProcessor {
 	private String obfuscator;
 
 	public Argument createArgument() {
-		Argument a = new Argument(getProject());
+		Argument a = new Argument(this.getProject());
 		this.arguments.addElement(a);
 		return a;
 	}
@@ -82,43 +82,44 @@ public class WtkObfuscate extends PostProcessor {
 	//
 	// Generic class for ME tasks that take JAR/JAR?
 
+	@Override
 	public void execute() throws BuildException {
-		if (!isActive())
+		if (!this.isActive())
 			return;
 
-		if (getJarFile() == null) {
+		if (this.getJarFile() == null) {
 			throw new BuildException("Need a JAR file");
 		}
 
-		File tmpDir = getUtility().getTempDir();
+		File tmpDir = this.getUtility().getTempDir();
 
 		try {
 			try {
-				File tmpFile = getToJarFile();
+				File tmpFile = this.getToJarFile();
 				if (tmpFile == null) {
 					tmpFile = new File(tmpDir + "/output.jar");
 				}
 
-				Vector preserve = getPreserve();
-				getUtility().getPreserveList(getJad(), preserve);
-				getUtility().obfuscate(getJarFile(), tmpFile, getFullClasspath(), getVerbose(), preserve, this.obfuscator, getArguments(), getJad());
+				Vector preserve = this.getPreserve();
+				this.getUtility().getPreserveList(this.getJad(), preserve);
+				this.getUtility().obfuscate(this.getJarFile(), tmpFile, this.getFullClasspath(), this.getVerbose(), preserve, this.obfuscator, this.getArguments(), this.getJad());
 
-				if (getToJarFile() == null) {
-					setTojarfile(getJarFile());
+				if (this.getToJarFile() == null) {
+					this.setTojarfile(this.getJarFile());
 				}
 
-				if (!getToJarFile().delete()) {
-					log("Unable to delete " + getToJarFile(), Project.MSG_WARN);
+				if (!this.getToJarFile().delete()) {
+					this.log("Unable to delete " + this.getToJarFile(), Project.MSG_WARN);
 				}
 
-				if (!tmpFile.renameTo(getToJarFile())) {
-					log("Unable to rename " + tmpFile, Project.MSG_WARN);
+				if (!tmpFile.renameTo(this.getToJarFile())) {
+					this.log("Unable to rename " + tmpFile, Project.MSG_WARN);
 				}
 
-				updateJad();
+				this.updateJad();
 			}
 			finally {
-				getUtility().delete(tmpDir);
+				this.getUtility().delete(tmpDir);
 			}
 		}
 		catch (Exception e) {

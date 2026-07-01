@@ -97,8 +97,8 @@ public class Devices
 
 	public static DeviceProps[] getAllDevices()
 	{
-		DeviceProps[] devices = new DeviceProps[s_devices.size()];
-		Enumeration enumeration = s_devices.elements();
+		DeviceProps[] devices = new DeviceProps[Devices.s_devices.size()];
+		Enumeration enumeration = Devices.s_devices.elements();
 		int i = 0;
 		while (enumeration.hasMoreElements())
 		{
@@ -196,7 +196,7 @@ public class Devices
 
 	private static void parseGroupsFile() throws IOException, ParserConfigurationException, SAXException
 	{
-		s_groups = new Hashtable();
+		Devices.s_groups = new Hashtable();
 		InputStream in = Devices.openStream("groups.xml");
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -223,7 +223,7 @@ public class Devices
 								if ("group".equals(e1.getTagName()))
 								{
 									Group group = new Group(e1);
-									s_groups.put(group.getName().toLowerCase(), group);
+									Devices.s_groups.put(group.getName().toLowerCase(), group);
 								}
 							}
 						}
@@ -239,13 +239,13 @@ public class Devices
 
 	private static void parseDevicesFile() throws IOException, ParserConfigurationException, SAXException
 	{
-		s_devices = new Hashtable();
-		Devices.parseDevices(openStream("devices.xml"));
+		Devices.s_devices = new Hashtable();
+		Devices.parseDevices(Devices.openStream("devices.xml"));
 		
 		try
 		{
 			// parse custom devices data.
-			parseDevices(openStream("custom-devices.xml"));
+			Devices.parseDevices(Devices.openStream("custom-devices.xml"));
 		}
 		catch (IOException e)
 		{
@@ -279,7 +279,7 @@ public class Devices
 								if ("device".equals(e1.getTagName()))
 								{
 									DeviceProps dev = new DeviceProps(e1);
-									dev.setGroupsData(s_groups, s_capablities);
+									dev.setGroupsData(Devices.s_groups, Devices.s_capablities);
 									String ids = dev.getIdentifier();
 									StringTokenizer toks = new StringTokenizer(ids, ",");
 									boolean clone = toks.countTokens() > 1;
@@ -288,7 +288,7 @@ public class Devices
 										String id = toks.nextToken().trim();
 										if (Devices.s_devices.containsKey(id))
 										{
-											DeviceProps d = (DeviceProps) s_devices.get(id);
+											DeviceProps d = (DeviceProps) Devices.s_devices.get(id);
 											d.parseBase(e1);
 										}
 										else
@@ -328,7 +328,7 @@ public class Devices
 
 	private static void parseCapabilitiesFile() throws IOException, ParserConfigurationException, SAXException
 	{
-		s_capablities = new Hashtable();
+		Devices.s_capablities = new Hashtable();
 		String cpFile = "capabilities.xml";
 		InputStream in = Devices.openStream(cpFile);
 
@@ -356,7 +356,7 @@ public class Devices
 								if ("capability".equals(e1.getTagName()))
 								{
 									Capability cap = new Capability(e1);
-									s_capablities.put(cap.getIdentifier().toLowerCase(), cap);
+									Devices.s_capablities.put(cap.getIdentifier().toLowerCase(), cap);
 								}
 							}
 						}
@@ -390,7 +390,7 @@ public class Devices
 	
 	public static void setDatabaseDir(String dir) throws IOException, ParserConfigurationException, SAXException
 	{
-		s_baseDir = dir;
+		Devices.s_baseDir = dir;
 		Devices.reload();
 	}
 }

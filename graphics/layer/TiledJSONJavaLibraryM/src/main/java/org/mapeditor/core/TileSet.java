@@ -282,15 +282,15 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
     public int addTile(Tile t) {
 
         if (t.getId() < 0) {
-            t.setId(getMaxTileId() + 1);
+            t.setId(this.getMaxTileId() + 1);
         }
 
-        if (tileWidth < t.getWidth()) {
-            tileWidth = t.getWidth();
+        if (this.tileWidth < t.getWidth()) {
+            this.tileWidth = t.getWidth();
         }
 
-        if (tileHeight < t.getHeight()) {
-            tileHeight = t.getHeight();
+        if (this.tileHeight < t.getHeight()) {
+            this.tileHeight = t.getHeight();
         }
 
         //logUtil.putF(t.toString(), this, "addTile");
@@ -369,7 +369,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
     public Tile getTile(int i) {
         try {
             //logUtil.putF("i: " + i, this, "getTile");
-            final Tile tile = tiles.get(i);
+            final Tile tile = this.tiles.get(i);
             if(tile == null) {
                 this.logUtil.putF("was null for i: " + i, this, "getTile");
             }
@@ -389,7 +389,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
     public Tile getFirstTile() {
         Tile ret = null;
         int i = 0;
-        while (ret == null && i <= getMaxTileId()) {
+        while (ret == null && i <= this.getMaxTileId()) {
             ret = this.getTile(i);
             i++;
         }
@@ -426,7 +426,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return new StringMaker().append(getName()).append(" [").appendint(size()).append("]").toString();
+        return new StringMaker().append(this.getName()).append(" [").appendint(this.size()).append("]").toString();
     }
 
     // TILE IMAGE CODE

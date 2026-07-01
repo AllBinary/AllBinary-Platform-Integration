@@ -308,7 +308,7 @@ public class Defines {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        Enumeration keys = m_defines.keys();
+        Enumeration keys = this.m_defines.keys();
         Vector v = new Vector(this.m_defines.size());
         while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
@@ -353,7 +353,7 @@ public class Defines {
      * @return
      */
     public String[] keys() {
-        String keys[] = new String[m_defines.size()];
+        String keys[] = new String[this.m_defines.size()];
         this.m_defines.keySet().toArray(keys);
         return keys;
     }
@@ -362,7 +362,7 @@ public class Defines {
      * @return
      */
     public Define[] values() {
-        Define defines[] = new Define[m_defines.size()];
+        Define defines[] = new Define[this.m_defines.size()];
         this.m_defines.values().toArray(defines);
         return defines;
     }
@@ -383,6 +383,6 @@ public class Defines {
      * definitions.
      */
     public void clear() {
-        m_defines = new Hashtable();
+        this.m_defines = new Hashtable();
     }
 }

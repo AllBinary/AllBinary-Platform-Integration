@@ -73,7 +73,7 @@ public class Literal {
      */
     public Literal(int type, String value) {
 
-        m_type = type;
+        this.m_type = type;
 
         /* check if value is not invalid */
         if (value == null) {
@@ -107,7 +107,7 @@ public class Literal {
 
             if (value.toLowerCase().equals(Literal.BOOLEAN_FALSE)
                     || value.toLowerCase().equals(Literal.BOOLEAN_TRUE)) {
-                m_type = BOOLEAN;
+                this.m_type = Literal.BOOLEAN;
             } else {
                 try {
                     Double.parseDouble(value);
@@ -173,6 +173,7 @@ public class Literal {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof Literal) {
             Literal other = (Literal) obj;

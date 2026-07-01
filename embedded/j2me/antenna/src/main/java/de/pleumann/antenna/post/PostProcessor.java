@@ -70,11 +70,12 @@ public abstract class PostProcessor extends Task {
 
 	private Utility utility;
 
+	@Override
 	public void init() {
 		super.init();
-		this.classpath = new Path(getProject(), "");
-		this.utility = Utility.getInstance(getProject(), this);
-        this.condition = new Conditional(getProject());
+		this.classpath = new Path(this.getProject(), "");
+		this.utility = Utility.getInstance(this.getProject(), this);
+        this.condition = new Conditional(this.getProject());
 	}
 
    public void setVerbose(boolean verbose) {
@@ -82,7 +83,7 @@ public abstract class PostProcessor extends Task {
    }
 
 	public Object createPreserve() {
-		Preserve pre = new Preserve(getProject());
+		Preserve pre = new Preserve(this.getProject());
 		this.preserve.addElement(pre);
 		return pre;
 	}
@@ -96,7 +97,7 @@ public abstract class PostProcessor extends Task {
 	}
 
 	public void setJadfile(File file) {
-		jadFile = file;
+		this.jadFile = file;
 	}
 	
 	public void setEncoding(String encoding) {
@@ -138,7 +139,7 @@ public abstract class PostProcessor extends Task {
 	*/
 	public Path createClasspath() {
 		if (this.classpath == null) {
-			this.classpath = new Path(getProject());
+			this.classpath = new Path(this.getProject());
 		}
 		return this.classpath.createPath();
 	}
@@ -169,7 +170,7 @@ public abstract class PostProcessor extends Task {
 	*/
 	public Path createBootclasspath() {
 		if (this.bootclasspath == null) {
-			this.bootclasspath = new Path(getProject());
+			this.bootclasspath = new Path(this.getProject());
 		}
 		return this.bootclasspath.createPath();
 	}
@@ -224,7 +225,7 @@ public abstract class PostProcessor extends Task {
 		else {
 			if (this.jadFile != null) {
 				this.jad = new JadFile();
-				this.jad.load("" + this.jadFile, encoding);
+				this.jad.load("" + this.jadFile, this.encoding);
 			}
 
 			return this.jad;
@@ -242,9 +243,9 @@ public abstract class PostProcessor extends Task {
 			if ((this.toJarFile == null) || (this.jarFile.equals(this.toJarFile))) {
 				jad.setValue("MIDlet-Jar-Size", "" + this.jarFile.length());
 
-				log("Updating JAD file " + this.jadFile);
+				this.log("Updating JAD file " + this.jadFile);
 				try {
-					jad.save("" + this.jadFile, encoding);
+					jad.save("" + this.jadFile, this.encoding);
 				}
 				catch (IOException ex) {
 					throw new BuildException("Error processing JAD file", ex);

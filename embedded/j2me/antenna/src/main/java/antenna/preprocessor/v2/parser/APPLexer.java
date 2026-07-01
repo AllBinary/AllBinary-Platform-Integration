@@ -275,12 +275,12 @@ tryAgain:
 		switch ( LA(1)) {
 		case ' ':
 		{
-			match(' ');
+			this.match(' ');
 			break;
 		}
 		case '\t':
 		{
-			match('\t');
+			this.match('\t');
 			break;
 		}
 		default:
@@ -354,7 +354,7 @@ tryAgain:
 		_ttype = FSLASH;
 		int _saveIndex;
 		
-		match('/');
+		this.match('/');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -367,7 +367,7 @@ tryAgain:
 		_ttype = BSLASH;
 		int _saveIndex;
 		
-		match('\\');
+		this.match('\\');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -408,7 +408,7 @@ tryAgain:
 		_ttype = COLON;
 		int _saveIndex;
 		
-		match(':');
+		this.match(':');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -489,7 +489,7 @@ tryAgain:
 		_ttype = LPAR;
 		int _saveIndex;
 		
-		match('(');
+		this.match('(');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -502,7 +502,7 @@ tryAgain:
 		_ttype = RPAR;
 		int _saveIndex;
 		
-		match(')');
+		this.match(')');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -515,7 +515,7 @@ tryAgain:
 		_ttype = BLPAR;
 		int _saveIndex;
 		
-		match('[');
+		this.match('[');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -528,7 +528,7 @@ tryAgain:
 		_ttype = BRPAR;
 		int _saveIndex;
 		
-		match(']');
+		this.match(']');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));
@@ -546,10 +546,10 @@ tryAgain:
 			match("\r\n");
 		}
 		else if ((LA(1)=='\n')) {
-			match('\n');
+			this.match('\n');
 		}
 		else if ((LA(1)=='\r') && (true)) {
-			match('\r');
+			this.match('\r');
 		}
 		else {
 			throw new NoViableAltForCharException((char)LA(1), getFilename(), getLine(), getColumn());
@@ -631,17 +631,17 @@ tryAgain:
 			}
 			case '-':
 			{
-				match('-');
+				this.match('-');
 				break;
 			}
 			case '+':
 			{
-				match('+');
+				this.match('+');
 				break;
 			}
 			case '.':
 			{
-				match('.');
+				this.match('.');
 				break;
 			}
 			case '\\':
@@ -688,12 +688,12 @@ tryAgain:
 		switch ( LA(1)) {
 		case '+':
 		{
-			match('+');
+			this.match('+');
 			break;
 		}
 		case '-':
 		{
-			match('-');
+			this.match('-');
 			break;
 		}
 		case '0':  case '1':  case '2':  case '3':
@@ -725,7 +725,7 @@ tryAgain:
 		{
 		if ((LA(1)=='.')) {
 			{
-			match('.');
+			this.match('.');
 			}
 			{
 			int _cnt34=0;
@@ -888,7 +888,7 @@ tryAgain:
 		_ttype = AT;
 		int _saveIndex;
 		
-		match('@');
+		this.match('@');
 		if ( _createToken && _token==null && _ttype!=Token.SKIP ) {
 			_token = makeToken(_ttype);
 			_token.setText(new String(text.getBuffer(), _begin, text.length()-_begin));

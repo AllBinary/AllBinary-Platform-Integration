@@ -113,6 +113,7 @@ public class XmlRpcClientLite extends XmlRpcClient
      * @return
      * @throws IOException
      */
+    @Override
     synchronized Worker getWorker(boolean async) throws IOException
     {
         try
@@ -169,6 +170,7 @@ public class XmlRpcClientLite extends XmlRpcClient
          * @throws XmlRpcException
          * @throws IOException
          */
+        @Override
         Object execute(String method, Vector params)
                 throws XmlRpcException, IOException
         {

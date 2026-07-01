@@ -73,7 +73,7 @@ public class TileSetToGeographicMapUtil {
                 }
             } else {
                 //logUtil.put(OTHER, this, commonStrings.PROCESS);
-                this.add(map, OTHER, index + 1, stringMaker);
+                this.add(map, this.OTHER, index + 1, stringMaker);
             }
 
         }

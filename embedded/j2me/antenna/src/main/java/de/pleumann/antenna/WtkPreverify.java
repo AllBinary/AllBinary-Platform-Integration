@@ -84,6 +84,7 @@ public class WtkPreverify extends PostProcessor {
 		this.srcDir = srcDir;
 	}
 
+	@Override
 	public void setJarfile(File srcFile) {
 		if (this.srcDir != null) {
 			throw new BuildException("Can only preverify JAR or directory, not both.");

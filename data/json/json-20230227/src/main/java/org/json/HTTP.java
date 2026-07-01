@@ -123,7 +123,7 @@ public class HTTP {
         } else {
             throw new JSONException("Not enough material for an HTTP header.");
         }
-        sb.append(CRLF);
+        sb.append(HTTP.CRLF);
         // Don't use the new entrySet API to maintain Android support
         for (final String key : jo.keySet()) {
             String value = jo.optString(key);
@@ -133,10 +133,10 @@ public class HTTP {
                 sb.append(key);
                 sb.append(": ");
                 sb.append(jo.optString(key));
-                sb.append(CRLF);
+                sb.append(HTTP.CRLF);
             }
         }
-        sb.append(CRLF);
+        sb.append(HTTP.CRLF);
         return sb.toString();
     }
 }

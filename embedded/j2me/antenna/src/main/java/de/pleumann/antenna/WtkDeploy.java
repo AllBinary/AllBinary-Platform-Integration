@@ -49,17 +49,18 @@ public class WtkDeploy extends Task {
 
     private Conditional condition;
 
+    @Override
     public void init() throws BuildException {
         super.init();
-        this.condition = new Conditional(getProject());
+        this.condition = new Conditional(this.getProject());
     }
 
 	public void setJarfile(File file) {
-		jarFile = file;
+		this.jarFile = file;
 	}
 
 	public void setJadfile(File file) {
-		jadFile = file;
+		this.jadFile = file;
 	}
 	
 	public void setEncoding(String encoding) {
@@ -94,8 +95,9 @@ public class WtkDeploy extends Task {
         return this.condition.isActive();
     }
 
+	@Override
 	public void execute() throws BuildException {
-        if (!isActive()) return;
+        if (!this.isActive()) return;
 
 		try {
 			if (this.jarFile == null || !this.jarFile.exists()) {
@@ -108,7 +110,7 @@ public class WtkDeploy extends Task {
 
 			if (this.target == null) {
                 JadFile jad = new JadFile();
-                jad.load(this.jadFile.getAbsolutePath(), encoding);
+                jad.load(this.jadFile.getAbsolutePath(), this.encoding);
                 
                 String s = jad.getValue("MIDlet-Jar-URL");
                 if (s != null && s.startsWith("http://")) {
@@ -121,7 +123,7 @@ public class WtkDeploy extends Task {
 				throw new IllegalArgumentException("Need a deployment target.");
 			}
 
-            log("Deploying to " + this.target + "...");
+            this.log("Deploying to " + this.target + "...");
 
 			this.upload(this.jarFile);
 			this.upload(this.jadFile);
@@ -132,7 +134,7 @@ public class WtkDeploy extends Task {
 	}
 
 	private void upload(File file) throws IOException {
-		log((delete ? "Deleting" : "Uploading") + " file " + file.getName());
+		this.log((this.delete ? "Deleting" : "Uploading") + " file " + file.getName());
 
 		String s = this.target + "/" + file.getName() + "?delete=" + this.delete;
         if (this.login != null) {
@@ -160,7 +162,7 @@ public class WtkDeploy extends Task {
 		int i = connection.getResponseCode();
 		String message = connection.getResponseMessage() + " (" + i + ")";
 
-		log(message, Project.MSG_VERBOSE);
+		this.log(message, Project.MSG_VERBOSE);
 		if (i >= 300) {
 			throw new IOException(message);
 		}

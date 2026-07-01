@@ -605,10 +605,12 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
       this.in = in;
     }
 
+    @Override
     public void close() throws IOException {
       this.flush();
     }
 
+    @Override
     public void flush() throws IOException {
       try {
         this._flush();
@@ -619,11 +621,13 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
       }
     }
 
+    @Override
     public void write(final int c) throws IOException {
       this.written = true;
       this.chars[this.count++] = (char)c;
     }
 
+    @Override
     public void write(final char[] cbuf, final int off, final int len) throws IOException {
       this.written = true;
       System.arraycopy(cbuf, off, this.chars, this.count, len);

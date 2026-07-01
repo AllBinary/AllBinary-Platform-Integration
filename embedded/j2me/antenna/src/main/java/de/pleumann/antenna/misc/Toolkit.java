@@ -20,17 +20,17 @@ public class Toolkit {
     public static final String INCLUDE = "include";
 
     public Toolkit(String filename) {
-        props = new Properties();
+        this.props = new Properties();
         this.loadProps(filename);
         this.name = this.props.getProperty(Toolkit.NAME, "invalid");
         if (this.props.containsKey(Toolkit.INCLUDE)) {
-            this.loadProps(this.props.getProperty(INCLUDE));
+            this.loadProps(this.props.getProperty(Toolkit.INCLUDE));
         }
     }
 
     private void loadProps(String filename) {
         try {
-            this.props.load(getClass().getResourceAsStream("/toolkit/" + filename + ".properties"));
+            this.props.load(this.getClass().getResourceAsStream("/toolkit/" + filename + ".properties"));
         } catch (IOException e) {
 
         }

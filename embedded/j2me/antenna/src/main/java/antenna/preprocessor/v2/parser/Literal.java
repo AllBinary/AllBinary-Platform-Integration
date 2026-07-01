@@ -78,6 +78,7 @@ public class Literal
 		}
 	}
 	
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj instanceof Literal)

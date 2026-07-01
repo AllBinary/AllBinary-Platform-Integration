@@ -67,7 +67,7 @@ public class PPException extends Exception {
      * @param file the file being preprocessed when the exception was thrown
      */
     public PPException(String message, File file) {
-        this(message, file, null, UNKNOWN_LINE);
+        this(message, file, null, PPException.UNKNOWN_LINE);
     }
 
     /**
@@ -92,7 +92,7 @@ public class PPException extends Exception {
      *                the cause is nonexistent or unknown.)
      */
     public PPException(String message, File file, Throwable cause) {
-        this(message, file, cause, UNKNOWN_LINE);
+        this(message, file, cause, PPException.UNKNOWN_LINE);
     }
 
     /**
@@ -135,9 +135,10 @@ public class PPException extends Exception {
      * 
      * @see java.lang.Throwable#getMessage()
      */
+    @Override
     public String getMessage() {
         if (this.m_file != null) {
-            String ln = this.m_lineNumber != UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
+            String ln = this.m_lineNumber != PPException.UNKNOWN_LINE ? ":" + this.m_lineNumber : "";
             return this.m_file + ln + " : " + super.getMessage();
         } else {
             if (this.m_lineNumber != PPException.UNKNOWN_LINE) {

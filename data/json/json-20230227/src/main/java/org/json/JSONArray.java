@@ -358,7 +358,7 @@ public class JSONArray implements Iterable<Object> {
             // If it did, I would re-implement this with the Enum.valueOf
             // method and place any thrown exception in the JSONException
             throw JSONArray.wrongValueFormatException(index, "enum of type "
-                    + JSONObject.quote(clazz.getSimpleName()), opt(index), null);
+                    + JSONObject.quote(clazz.getSimpleName()), this.opt(index), null);
         }
         return val;
     }

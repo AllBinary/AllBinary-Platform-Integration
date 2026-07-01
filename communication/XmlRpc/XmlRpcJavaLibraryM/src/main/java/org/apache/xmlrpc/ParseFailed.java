@@ -80,6 +80,7 @@ public class ParseFailed extends RuntimeException
         this.cause = cause;
     }
 
+    @Override
     public Throwable getCause()
     {
         return this.cause;

@@ -61,7 +61,7 @@ public enum StaggerAxis {
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static StaggerAxis fromValue(String v) {

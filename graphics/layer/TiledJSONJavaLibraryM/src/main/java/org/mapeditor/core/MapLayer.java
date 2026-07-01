@@ -170,7 +170,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public Rectangle getBounds() {
 
-        return new Rectangle(x == null && y == null ? PointFactory.getInstance().ZERO_ZERO : PointFactory.getInstance().createXY(x, y), width, height);
+        return new Rectangle(this.x == null && this.y == null ? PointFactory.getInstance().ZERO_ZERO : PointFactory.getInstance().createXY(this.x, this.y), this.width, this.height);
     }
 
     /**
@@ -187,8 +187,8 @@ public class MapLayer extends LayerData implements Cloneable {
     /** {@inheritDoc} */
     @Override
     public Properties getProperties() {
-        if (properties == null) {
-            properties = new Properties();
+        if (this.properties == null) {
+            this.properties = new Properties();
         }
         return super.getProperties();
     }

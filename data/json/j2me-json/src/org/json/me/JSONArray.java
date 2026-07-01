@@ -300,7 +300,7 @@ public class JSONArray {
      * @return true if the value at the index is null, or if there is no value.
      */
     public boolean isNull(int index) {
-        return JSONObject.NULL.equals(opt(index));
+        return JSONObject.NULL.equals(this.opt(index));
     }
 
 
@@ -343,7 +343,7 @@ public class JSONArray {
      *              object at that index.
      */
     public Object opt(int index) {
-        return (index < 0 || index >= length()) ?
+        return (index < 0 || index >= this.length()) ?
             null : this.myArrayList.elementAt(index);
     }
 
@@ -719,10 +719,10 @@ public class JSONArray {
         if (index < 0) {
             throw new JSONException("JSONArray[" + index + "] not found.");
         }
-        if (index < length()) {
+        if (index < this.length()) {
             this.myArrayList.setElementAt(value, index);
         } else {
-            while (index != length()) {
+            while (index != this.length()) {
                 this.put(JSONObject.NULL);
             }
             this.put(value);
@@ -741,7 +741,7 @@ public class JSONArray {
      * @throws JSONException If any of the names are null.
      */
     public JSONObject toJSONObject(JSONArray names) throws JSONException {
-        if (names == null || names.length() == 0 || length() == 0) {
+        if (names == null || names.length() == 0 || this.length() == 0) {
             return null;
         }
         JSONObject jo = new JSONObject();

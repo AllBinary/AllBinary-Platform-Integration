@@ -51,6 +51,7 @@ public class WtkRapc extends PostProcessor {
         project = getProject();
     }
 
+    @Override
     public void setJadfile(File jadfile) {
         this.jadfile = jadfile;
     }

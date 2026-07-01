@@ -108,7 +108,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return a new rectangle containing the maximum bounds of this plane
      */
     public Rectangle getBounds() {
-        return new Rectangle(PointFactory.getInstance().createXY(width, height), 0, 0);
+        return new Rectangle(PointFactory.getInstance().createXY(this.width, height), 0, 0);
     }
 
     /**
@@ -195,7 +195,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
         final int size = this.layers.size();
         MapLayer layer;
         for (int index = 0; index < size; index++) {
-            layer = (MapLayer) layers.get(index);
+            layer = (MapLayer) this.layers.get(index);
             Rectangle layerBounds = layer.getBounds();
             if (layerBounds.equals(getBounds())) {
                 layer.resize(width, height, dx, dy);
@@ -217,7 +217,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * <code>false</code> otherwise
      */
     public boolean inBounds(int x, int y) {
-        return x >= 0 && y >= 0 && x < width && y < height;
+        return x >= 0 && y >= 0 && x < this.width && y < height;
     }
 
     /**
@@ -231,7 +231,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
         //logUtil.putF(tileset.toString(), this, "addTileset");
         
         // Sanity check
-        final int tilesetIndex = getTileSets().indexOf(tileset);
+        final int tilesetIndex = this.getTileSets().indexOf(tileset);
         if (tileset == null || tilesetIndex > -1) {
             return;
         }
@@ -247,7 +247,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
             }
         }
 
-        tileSets.add(tileset);
+        this.tileSets.add(tileset);
     }
 
     /**
@@ -286,7 +286,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * <code>false</code> otherwise
      */
     public boolean contains(int x, int y) {
-        return x >= 0 && y >= 0 && x < width && y < height;
+        return x >= 0 && y >= 0 && x < this.width && y < height;
     }
 
     /**
@@ -299,9 +299,9 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
         int maxHeight = tileHeight;
 
         TileSet tileset;
-        final int size = tileSets.size();
+        final int size = this.tileSets.size();
         for (int index = 0; index < size; index++) {
-            tileset = (TileSet) tileSets.get(index);
+            tileset = (TileSet) this.tileSets.get(index);
             int height = tileset.getTileHeight();
             if (height > maxHeight) {
                 maxHeight = height;
@@ -318,12 +318,12 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @param index1 a int.
      */
     public void swapTileSets(int index0, int index1) {
-        if (index0 == index1 || tileSets == null) {
+        if (index0 == index1 || this.tileSets == null) {
             return;
         }
-        TileSet set = (TileSet) tileSets.get(index0);
-        tileSets.set(index0, tileSets.get(index1));
-        tileSets.set(index1, set);
+        TileSet set = (TileSet) this.tileSets.get(index0);
+        this.tileSets.set(index0, this.tileSets.get(index1));
+        this.tileSets.set(index1, set);
     }
 
     /**
@@ -347,8 +347,8 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
     /** {@inheritDoc} */
     @Override
     public Properties getProperties() {
-        if (properties == null) {
-            properties = new Properties();
+        if (this.properties == null) {
+            this.properties = new Properties();
         }
         return super.getProperties();
     }
@@ -368,7 +368,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     @Override
     public String toString() {
-        return new StringMaker().append("Map[").appendint(width).append("x").appendint(height)
+        return new StringMaker().append("Map[").appendint(this.width).append("x").appendint(height)
                 .append("x").appendint(getLayerCount()).append("][").appendint(tileWidth).append("x")
                 .appendint(tileHeight).append("]").toString();
     }

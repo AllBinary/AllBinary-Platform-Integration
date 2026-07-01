@@ -61,7 +61,7 @@ public enum Encoding {
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static Encoding fromValue(String v) {

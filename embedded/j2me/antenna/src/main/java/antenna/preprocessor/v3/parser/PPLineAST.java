@@ -28,6 +28,7 @@ public class PPLineAST extends CommonAST {
      * location in the tree
      */
     public static final TreeAdaptor adaptor = new CommonTreeAdaptor() {
+        @Override
         public Object create(Token payload) {
             return new PPLineAST(payload);
         }
@@ -77,6 +78,7 @@ public class PPLineAST extends CommonAST {
      * 
      * @return line number
      */
+    @Override
     public int getLine() {
         return this.line;
     }
@@ -86,6 +88,7 @@ public class PPLineAST extends CommonAST {
      * 
      * @see org.antlr.runtime.tree.CommonTree#getText()
      */
+    @Override
     public String getText() {
         return this.text;
     }
@@ -98,10 +101,10 @@ public class PPLineAST extends CommonAST {
     public String toString() {
         StringBuffer result = new StringBuffer("");
 
-        result.append(super.toString()).append("[").append(getLine()).append(
-                ":").append(getColumn()).append(" - ").append(
-                this.getClass().getName()).append("(").append(getType())
-                .append(")] : ").append(getText());
+        result.append(super.toString()).append("[").append(this.getLine()).append(
+                ":").append(this.getColumn()).append(" - ").append(
+                this.getClass().getName()).append("(").append(this.getType())
+                .append(")] : ").append(this.getText());
 
         return result.toString();
     }

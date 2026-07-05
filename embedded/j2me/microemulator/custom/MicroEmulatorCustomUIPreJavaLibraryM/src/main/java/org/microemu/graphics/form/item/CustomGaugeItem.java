@@ -35,6 +35,7 @@ import org.allbinary.graphics.displayable.DisplayInfoSingleton;
 import org.allbinary.graphics.font.MyFontProcessor;
 import org.allbinary.graphics.font.UpdateMyFontInterface;
 import org.allbinary.graphics.font.UpdateMyFontProcessor;
+import org.allbinary.graphics.threed.SWTJOGLProcessor;
 
 public class CustomGaugeItem extends CustomItem 
     implements UpdateMyFontInterface
@@ -61,6 +62,7 @@ public class CustomGaugeItem extends CustomItem
     private float maxValue;
     
     private int fontHeight = 0;
+    private int offsetY = 0;
     
     public CustomGaugeItem(String label, int maxValue, int initialValue, 
             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
@@ -75,6 +77,7 @@ public class CustomGaugeItem extends CustomItem
     public void updateMeasurement(final Graphics graphics) {
         final Font font = graphics.getFont();
         this.fontHeight = font.getHeight();
+        this.offsetY = SWTJOGLProcessor.getInstance().isJOGL() ? this.fontHeight / 4 : 0;
         this.myFontProcessor = MyFontProcessor.getInstance();
     }
 
@@ -173,7 +176,7 @@ public class CustomGaugeItem extends CustomItem
 
         // Don't use WHITE.intValue() because of static load time
         graphics.setColor(this.getCurrentInnerColor());
-        graphics.drawString(this.getLabel(), 4, 0, 0);
+        graphics.drawString(this.getLabel(), 4, offsetY, 0);
 
         if(this.height == 30)
         {

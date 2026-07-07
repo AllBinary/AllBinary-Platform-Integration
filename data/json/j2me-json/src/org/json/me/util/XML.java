@@ -1,6 +1,7 @@
 package org.json.me.util;
 
 import java.util.Enumeration;
+import org.allbinary.logic.string.StringUtil;
 import org.json.me.JSONArray;
 import org.json.me.JSONException;
 import org.json.me.JSONObject;
@@ -394,7 +395,7 @@ public class XML {
             }
             return b.toString();
         } else {
-            s = (o == null) ? "null" : XML.escape(o.toString());
+            s = (o == null) ? StringUtil.getInstance().NULL_STRING : XML.escape(o.toString());
             return (tagName == null) ? "\"" + s + "\"" :
                 (s.length() == 0) ? "<" + tagName + "/>" :
                 "<" + tagName + ">" + s + "</" + tagName + ">";

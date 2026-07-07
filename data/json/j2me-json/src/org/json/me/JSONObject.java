@@ -29,6 +29,9 @@ import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+import org.allbinary.logic.NullUtil;
+import org.allbinary.logic.string.StringUtil;
+
 import org.allbinary.string.CommonSeps;
 
 /**
@@ -120,7 +123,7 @@ public class JSONObject {
          * @return The string "null".
          */
         public String toString() {
-            return "null";
+            return StringUtil.getInstance().NULL_STRING;
         }
     }
 
@@ -318,7 +321,7 @@ public class JSONObject {
      */
     static public String doubleToString(double d) {
         if (Double.isInfinite(d) || Double.isNaN(d)) {
-        	return "null";
+        	return StringUtil.getInstance().NULL_STRING;
         }
 
 // Shave off trailing zeros and decimal point, if possible.
@@ -346,8 +349,7 @@ public class JSONObject {
     public Object get(String key) throws JSONException {
         Object o = this.opt(key);
         if (o == null) {
-            throw new JSONException("JSONObject[" + quote(key) +
-                    "] not found.");
+            throw new JSONException("JSONObject[" + quote(key) + "] not found.");
         }
         return o;
     }
@@ -372,8 +374,7 @@ public class JSONObject {
                 ((String)o).equalsIgnoreCase("true"))) {
             return true;
         }
-        throw new JSONException("JSONObject[" + quote(key) +
-                "] is not a Boolean.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a Boolean.");
     }
 
 
@@ -402,12 +403,10 @@ public class JSONObject {
             try {
                 return Double.valueOf((String)o).doubleValue();
             } catch (Exception e) {
-                throw new JSONException("JSONObject[" + quote(key) +
-                    "] is not a number.");
+                throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
             }
         } 
-        throw new JSONException("JSONObject[" + quote(key) +
-            "] is not a number.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
     }
 
 
@@ -437,8 +436,7 @@ public class JSONObject {
         } else if (o instanceof String) {
             return (int) this.getDouble(key);
         } 
-        throw new JSONException("JSONObject[" + quote(key) +
-            "] is not a number.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
     }
 
 
@@ -455,8 +453,7 @@ public class JSONObject {
         if (o instanceof JSONArray) {
             return (JSONArray)o;
         }
-        throw new JSONException("JSONObject[" + quote(key) +
-                "] is not a JSONArray.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a JSONArray.");
     }
 
 
@@ -473,8 +470,7 @@ public class JSONObject {
         if (o instanceof JSONObject) {
             return (JSONObject)o;
         }
-        throw new JSONException("JSONObject[" + quote(key) +
-                "] is not a JSONObject.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a JSONObject.");
     }
 
 
@@ -504,8 +500,7 @@ public class JSONObject {
         } else if (o instanceof String) {
             return (long) this.getDouble(key);
         } 
-        throw new JSONException("JSONObject[" + quote(key) +
-            "] is not a number.");
+        throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
     }
 
 
@@ -587,7 +582,7 @@ public class JSONObject {
             while (s.endsWith("0")) {
                 s = s.substring(0, s.length() - 1);
             }
-            if (s.endsWith(".")) {
+            if (s.endsWith(CommonSeps.getInstance().PERIOD)) {
                 s = s.substring(0, s.length() - 1);
             }
         }
@@ -743,7 +738,10 @@ public class JSONObject {
         Object o = this.opt(key);
         return o instanceof JSONArray ? (JSONArray)o : null;
     }
-
+    public Object optJSONArrayAsObject(String key) {
+        Object o = this.opt(key);
+        return o instanceof JSONArray ? (JSONArray)o : NullUtil.getInstance().NULL_OBJECT;
+    }
 
     /**
      * Get an optional JSONObject associated with a key.
@@ -757,7 +755,10 @@ public class JSONObject {
         Object o = this.opt(key);
         return o instanceof JSONObject ? (JSONObject)o : null;
     }
-
+    public Object optJSONObjectAsObject(String key) {
+        Object o = this.opt(key);
+        return o instanceof JSONObject ? (JSONObject)o : NullUtil.getInstance().NULL_OBJECT;
+    }
 
     /**
      * Get an optional long value associated with a key,
@@ -1175,7 +1176,7 @@ public class JSONObject {
      */
     static String valueToString(Object value) throws JSONException {
         if (value == null || value.equals(null)) {
-            return "null";
+            return StringUtil.getInstance().NULL_STRING;
         }
         if (value instanceof JSONString) {
         	Object o;
@@ -1219,7 +1220,7 @@ public class JSONObject {
      static String valueToString(Object value, int indentFactor, int indent)
             throws JSONException {
         if (value == null || value.equals(null)) {
-            return "null";
+            return StringUtil.getInstance().NULL_STRING;
         }
         try {
 	        if (value instanceof JSONString) {

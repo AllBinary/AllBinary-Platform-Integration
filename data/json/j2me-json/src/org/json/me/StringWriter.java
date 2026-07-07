@@ -27,6 +27,7 @@ package org.json.me;
 
 import java.io.IOException;
 import java.io.Writer;
+import org.allbinary.logic.string.StringUtil;
 
 /**
  * A character stream that collects its output in a string buffer, which can
@@ -142,7 +143,7 @@ public class StringWriter extends Writer {
      */
     public StringWriter append(CharSequence csq) {
         if (csq == null)
-            this.write("null");
+            this.write(StringUtil.getInstance().NULL_STRING);
         else
             this.write(csq.toString());
         return this;
@@ -181,7 +182,7 @@ public class StringWriter extends Writer {
      * @since  1.5
      */
     public StringWriter append(CharSequence csq, int start, int end) {
-        CharSequence cs = (csq == null ? "null" : csq);
+        CharSequence cs = (csq == null ? StringUtil.getInstance().NULL_STRING : csq);
         this.write(cs.subSequence(start, end).toString());
         return this;
     }

@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Hashtable;
 import java.util.Vector;
+import org.allbinary.logic.NullUtil;
 
 /**
  * A JSONArray is an ordered sequence of values. Its external text form is a
@@ -450,6 +451,10 @@ public class JSONArray {
         Object o = this.opt(index);
         return o instanceof JSONArray ? (JSONArray)o : null;
     }
+    public Object optJSONArrayAsObject(int index) {
+        Object o = this.opt(index);
+        return o instanceof JSONArray ? (JSONArray)o : NullUtil.getInstance().NULL_OBJECT;
+    }
 
 
     /**
@@ -465,6 +470,10 @@ public class JSONArray {
         return o instanceof JSONObject ? (JSONObject)o : null;
     }
 
+    public Object optJSONObjectAsObject(int index) {
+        Object o = this.opt(index);
+        return o instanceof JSONObject ? (JSONObject)o : NullUtil.getInstance().NULL_OBJECT;
+    }
 
     /**
      * Get the optional long value associated with an index.

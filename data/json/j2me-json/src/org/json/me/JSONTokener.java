@@ -1,5 +1,8 @@
 package org.json.me;
 
+import org.allbinary.logic.string.StringMaker;
+import org.allbinary.logic.string.StringUtil;
+
 /*
 Copyright (c) 2002 JSON.org
 
@@ -353,7 +356,7 @@ public class JSONTokener {
         if (s.equalsIgnoreCase("false")) {
             return Boolean.FALSE;
         }
-        if (s.equalsIgnoreCase("null")) {
+        if (s.equalsIgnoreCase(StringUtil.getInstance().NULL_STRING)) {
             return JSONObject.NULL;
         }
 
@@ -455,6 +458,6 @@ public class JSONTokener {
      * @return " at character [this.myIndex] of [this.mySource]"
      */
     public String toString() {
-        return " at character " + this.myIndex + " of " + this.mySource;
+        return new StringMaker().append(" at character ").appendint(this.myIndex).append(" of ").append(this.mySource).toString();
     }
 }

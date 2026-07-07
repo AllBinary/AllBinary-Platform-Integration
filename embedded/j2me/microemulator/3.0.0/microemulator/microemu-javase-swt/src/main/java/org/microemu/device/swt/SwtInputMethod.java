@@ -310,6 +310,11 @@ public class SwtInputMethod extends InputMethodImpl {
 
 	public void keyPressed(KeyEvent ev) {
             
+            boolean isShiftPressed = (ev.stateMask & SWT.SHIFT) != 0;
+            if(isShiftPressed) {
+                ev.keyCode -= 0x20;
+            }
+
             //System.out.println("keyPressed: " + ev.keyCode);
             
 		if (DeviceFactory.getDevice().hasRepeatEvents() && inputMethodListener == null) {

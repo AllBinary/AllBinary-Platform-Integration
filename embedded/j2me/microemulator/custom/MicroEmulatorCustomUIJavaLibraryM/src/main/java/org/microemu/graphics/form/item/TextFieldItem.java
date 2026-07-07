@@ -16,6 +16,7 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.FontDebugFactory;
 import org.allbinary.graphics.font.MyFontProcessor;
 import org.allbinary.graphics.font.UpdateMyFontInterface;
+import org.allbinary.graphics.threed.SWTJOGLProcessor;
 import org.allbinary.input.event.VirtualKeyboardEventHandler;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.logic.string.StringUtil;
@@ -51,6 +52,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     private boolean hide;
     
     private int maxWidth = 0;
+    private int textFieldOffsetY = 0;
 
 //    public TextFieldItem(Canvas canvas, Visitor visitor, String label, String value, int maxSize, int layout, String altText,
 //            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) {
@@ -80,6 +82,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
         final Font font = graphics.getFont();
         this.maxWidth = MyFontProcessor.defaultStringWidth(font, this.maxSize);
         super.updateMeasurement(graphics);
+        this.textFieldOffsetY = SWTJOGLProcessor.getInstance().isJOGL() ? -this.fontHeight : 0;
     }
 
     @Override
@@ -170,7 +173,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
                 textFieldHeight);
 
         graphics.setColor(this.stringComponent.getForegroundBasicColor().intValue());
-        graphics.drawString(this.stringComponent.getText(), x + 2, y + height, this.anchor);
+        graphics.drawString(this.stringComponent.getText(), x + 2, y + height + this.textFieldOffsetY, this.anchor);
 
         if (this.caretVisible)
         {

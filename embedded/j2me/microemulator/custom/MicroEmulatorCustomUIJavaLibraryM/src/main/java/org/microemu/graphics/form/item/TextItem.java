@@ -21,7 +21,7 @@ implements ABCustomItemInterface
 {
     //private Screen owner;
     
-    private int fontHeight;
+    protected int fontHeight;
     private int offsetX;
     private int offsetY;
     //private int offsetWidth;

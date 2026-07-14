@@ -241,4 +241,9 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
         
         //this.positionX = this.getCaretPosition() * (MyFont.MYFONT.DEFAULT_CHAR_WIDTH >> 1);
     }
+    
+    public int getFontHeight() {
+        return this.stringComponent.getFont().getHeight();
+    }
+    
 }

@@ -181,20 +181,19 @@ public class CustomGaugeItem extends CustomItem
         if(this.height == 30)
         {
             //int width = (int) ((graphics.getClipWidth() - 8) * value / maxValue);
-            int width = (int) ((this.displayInfoSingleton.getLastWidth() - 8) * this.value / this.maxValue);
+            final int width = (int) ((this.displayInfoSingleton.getLastWidth() - 8) * this.value / this.maxValue);
             //logUtil.put("Rect1: " + width + "," + 7, this, "paint");
             graphics.fillRect(4, 4 + this.fontHeight, width, 7);
         }
         else
             if(this.height == this.fontHeight + 2)
         {
-                int stringWidth = graphics.getFont().stringWidth(this.getLabel());
+                final int stringWidth = graphics.getFont().stringWidth(this.getLabel()) * (SWTJOGLProcessor.getInstance().isJOGL() ? 100 : 100) / (SWTJOGLProcessor.getInstance().isJOGL() ? 66 : 88);
                 
-                final int ADJUST_X = 26;
                 //int width = (int) ((graphics.getClipWidth() - stringWidth - 8) * value / maxValue);
-                int width = (int) ((this.displayInfoSingleton.getLastWidth() - stringWidth - ADJUST_X) * this.value / this.maxValue);
+                final int width = (int) ((this.displayInfoSingleton.getLastWidth() - stringWidth) * this.value / this.maxValue);
 
-                graphics.fillRect(ADJUST_X + stringWidth, 4, width, graphics.getFont().getHeight() / 2);
+                graphics.fillRect(stringWidth, 4, width, graphics.getFont().getHeight() / 2);
         }
     }
 

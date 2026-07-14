@@ -55,8 +55,8 @@ public class SwtSystemFont implements SwtFont {
                 }
 		this.size = size - 6;
                 this.halfSize = this.size >> 1;
-                this.extraWidth = SWTJOGLProcessor.getInstance().isJOGL() ? 2.0f : 1.0f;
-                this.extraHeight = SWTJOGLProcessor.getInstance().isJOGL() ? 2.0f : 1.0f;
+                this.extraWidth = SWTJOGLProcessor.getInstance().isJOGL() ? 1.5f : 1.0f;
+                this.extraHeight = SWTJOGLProcessor.getInstance().isJOGL() ? 1.5f : 1.0f;
 		this.antialiasing = antialiasing;
 		
 		this.initialized = false;

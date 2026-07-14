@@ -329,21 +329,25 @@ public class StringComponent
             }
             if (this.stringComponentProperties.text.charAt(i) == '\n')
             {
+                //System.out.println("insert new line at: " + i);
                 this.insertBreak(i);
                 canBreak = 0;
                 prevIndex = i + 1;
                 continue;
             }
-            if (this.font.substringWidth(this.stringComponentProperties.text, prevIndex, i - prevIndex + 1) > this.stringComponentProperties.width)
+            if (this.stringComponentProperties.text.length() > prevIndex + i + 1 && this.font.substringWidth(this.stringComponentProperties.text, prevIndex, i - prevIndex + 1) > this.stringComponentProperties.width)
             {
+                //System.out.println("insert can break: " + this.font.substringWidth(this.stringComponentProperties.text, prevIndex, i - prevIndex + 1) + ">" + this.stringComponentProperties.width);
                 if (canBreak != 0)
                 {
+                    //System.out.println("insert can break with0: " + this.stringComponentProperties.text.charAt(i) + " at: " + i);
                     this.insertBreak(canBreak);
                     i = canBreak;
                     prevIndex = i;
                 }
                 else
                 {
+                    //System.out.println("insert can break with: " + this.stringComponentProperties.text.charAt(i) + " at: " + i);
                     this.insertBreak(i);
                     prevIndex = i + 1;
                 }

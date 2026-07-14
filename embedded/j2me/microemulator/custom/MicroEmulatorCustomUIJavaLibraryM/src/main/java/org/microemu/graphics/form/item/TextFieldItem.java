@@ -184,7 +184,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
             final int dy = y + y_pos + height;
             final int caretWidth = (textFieldFont.getSize() > 10) ? textFieldFont.getSize() / 10 : 1;
             //final int caretHeight = y_pos + height + (AndroidUtil.isAndroid() ? stringComponent.getHeight() * 2 : stringComponent.getHeight());
-            final int caretHeight = textFieldHeight;
+            final int caretHeight = this.fontHeight;
             
             if(this.timeDelayHelper.isTimeTNT()) {
                 this.hide = true;
@@ -245,5 +245,10 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     public int getFontHeight() {
         return this.stringComponent.getFont().getHeight();
     }
-    
+
+    public void setBackgroundBasicColorP(final BasicColor basicColor)
+    {
+        this.stringComponent.setBackgroundBasicColor(basicColor);
+    }
+
 }

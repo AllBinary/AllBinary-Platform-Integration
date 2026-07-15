@@ -142,6 +142,7 @@ public class JSONObject {
      */
     public static final Object NULL = new Null();
 
+    public static final JSONObject NULL_OBJECT = new JSONObject();
 
     /**
      * Construct an empty JSONObject.

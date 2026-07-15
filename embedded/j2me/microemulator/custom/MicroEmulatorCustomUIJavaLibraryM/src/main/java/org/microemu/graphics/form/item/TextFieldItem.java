@@ -251,4 +251,9 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
         this.stringComponent.setBackgroundBasicColor(basicColor);
     }
 
+    public void setForegroundBasicColorP(final BasicColor basicColor)
+    {
+        this.stringComponent.setForegroundBasicColor(basicColor);
+    }
+    
 }

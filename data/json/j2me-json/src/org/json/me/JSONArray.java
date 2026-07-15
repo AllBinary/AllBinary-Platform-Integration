@@ -82,6 +82,7 @@ import org.allbinary.logic.NullUtil;
  */
 public class JSONArray {
 
+    public static final JSONArray NULL_ARRAY = new JSONArray();
 
     /**
      * The Vector where the JSONArray's properties are kept.

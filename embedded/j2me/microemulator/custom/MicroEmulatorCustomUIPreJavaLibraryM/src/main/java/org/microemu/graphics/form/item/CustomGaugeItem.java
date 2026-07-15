@@ -188,7 +188,7 @@ public class CustomGaugeItem extends CustomItem
         else
             if(this.height == this.fontHeight + 2)
         {
-                final int stringWidth = graphics.getFont().stringWidth(this.getLabel()) * (SWTJOGLProcessor.getInstance().isJOGL() ? 100 : 100) / (SWTJOGLProcessor.getInstance().isJOGL() ? 66 : 88);
+                final int stringWidth = graphics.getFont().stringWidth(this.getLabel()) * (SWTJOGLProcessor.getInstance().isJOGL() ? 100 : 100) / (SWTJOGLProcessor.getInstance().isJOGL() ? 60 : 88);
                 
                 //int width = (int) ((graphics.getClipWidth() - stringWidth - 8) * value / maxValue);
                 final int width = (int) ((this.displayInfoSingleton.getLastWidth() - stringWidth) * this.value / this.maxValue);

@@ -82,7 +82,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
         final Font font = graphics.getFont();
         this.maxWidth = MyFontProcessor.defaultStringWidth(font, this.maxSize);
         super.updateMeasurement(graphics);
-        this.textFieldOffsetY = SWTJOGLProcessor.getInstance().isJOGL() ? -this.fontHeight : 0;
+        this.textFieldOffsetY = SWTJOGLProcessor.getInstance().isJOGL() ? -this.fontHeightP : 0;
     }
 
     @Override
@@ -184,7 +184,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
             final int dy = y + y_pos + height;
             final int caretWidth = (textFieldFont.getSize() > 10) ? textFieldFont.getSize() / 10 : 1;
             //final int caretHeight = y_pos + height + (AndroidUtil.isAndroid() ? stringComponent.getHeight() * 2 : stringComponent.getHeight());
-            final int caretHeight = this.fontHeight;
+            final int caretHeight = this.fontHeightP;
             
             if(this.timeDelayHelper.isTimeTNT()) {
                 this.hide = true;

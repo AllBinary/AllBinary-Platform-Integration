@@ -21,7 +21,7 @@ implements ABCustomItemInterface
 {
     //private Screen owner;
     
-    protected int fontHeight;
+    protected int fontHeightP;
     private int offsetX;
     private int offsetY;
     //private int offsetWidth;
@@ -36,7 +36,7 @@ implements ABCustomItemInterface
     @Override
     public void updateMeasurement(final Graphics graphics) {
         final Font font = graphics.getFont();
-        this.fontHeight = font.getHeight();
+        this.fontHeightP = font.getHeight();
         
         final Features features = Features.getInstance();
         final boolean isOpenGL = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL);
@@ -82,13 +82,13 @@ implements ABCustomItemInterface
     @Override
     public int getMinimumHeight()
     {
-        return this.fontHeight;
+        return this.fontHeightP;
     }
 
     @Override
     protected int getMinContentHeight()
     {
-        return this.fontHeight;
+        return this.fontHeightP;
     }
 
     @Override
@@ -100,7 +100,7 @@ implements ABCustomItemInterface
     @Override
     protected int getPrefContentHeight(int width)
     {
-        return this.fontHeight;
+        return this.fontHeightP;
     }
 
     @Override

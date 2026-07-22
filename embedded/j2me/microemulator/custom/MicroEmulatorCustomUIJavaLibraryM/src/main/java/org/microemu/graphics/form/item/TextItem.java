@@ -16,6 +16,7 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.MyFontProcessor;
 import org.allbinary.graphics.form.item.ABCustomItemInterface;
 import org.allbinary.graphics.opengles.OpenGLFeatureFactory;
+import org.allbinary.graphics.threed.SWTJOGLProcessor;
 
 public class TextItem extends CustomCustomItem
         implements ABCustomItemInterface
@@ -45,7 +46,7 @@ public class TextItem extends CustomCustomItem
         int offsetY;
         int offsetWidth;
         final String labelSet = this.getLabel();
-        if(J2MEUtil.isHTML() || isOpenGL) {
+        if(J2MEUtil.isHTML() || (SWTJOGLProcessor.getInstance().isJOGL() && isOpenGL)) {
             offsetX = 0;
             offsetY = 0;
             offsetWidth = font.stringWidth(labelSet) / 2;

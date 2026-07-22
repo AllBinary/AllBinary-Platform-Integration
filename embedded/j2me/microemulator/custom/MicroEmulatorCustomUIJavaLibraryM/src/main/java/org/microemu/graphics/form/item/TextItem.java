@@ -8,6 +8,7 @@ package org.microemu.graphics.form.item;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Screen;
+import org.allbinary.AndroidUtil;
 
 import org.allbinary.J2MEUtil;
 import org.allbinary.game.configuration.feature.Features;
@@ -16,35 +17,34 @@ import org.allbinary.graphics.font.MyFontProcessor;
 import org.allbinary.graphics.form.item.ABCustomItemInterface;
 import org.allbinary.graphics.opengles.OpenGLFeatureFactory;
 
-public class TextItem extends CustomCustomItem 
-implements ABCustomItemInterface
+public class TextItem extends CustomCustomItem
+        implements ABCustomItemInterface
 {
     //private Screen owner;
-    
+
     protected int fontHeightP;
     private int offsetX;
     private int offsetY;
     //private int offsetWidth;
     private int width;
-    
-    public TextItem(String label, int layout, String altText, 
-            BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
+
+    public TextItem(String label, int layout, String altText,
+                    BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
-        super(label, backgroundBasicColor, foregroundBasicColor);        
+        super(label, backgroundBasicColor, foregroundBasicColor);
     }
 
     @Override
     public void updateMeasurement(final Graphics graphics) {
         final Font font = graphics.getFont();
         this.fontHeightP = font.getHeight();
-        
+
         final Features features = Features.getInstance();
         final boolean isOpenGL = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL);
         int offsetX;
         int offsetY;
         int offsetWidth;
         final String labelSet = this.getLabel();
-        //AndroidUtil.isAndroid() && 
         if(J2MEUtil.isHTML() || isOpenGL) {
             offsetX = 0;
             offsetY = 0;
@@ -53,6 +53,10 @@ implements ABCustomItemInterface
             offsetX = 0;
             offsetY = -4;
             offsetWidth = font.stringWidth(labelSet) / 3;
+        } else if(AndroidUtil.isAndroid()) {
+            offsetX = 0;
+            offsetY = 0;
+            offsetWidth = font.stringWidth(labelSet) / 4;
         } else {
             offsetX = 2;
             offsetY = 0;
@@ -63,9 +67,9 @@ implements ABCustomItemInterface
         //this.offsetWidth = offsetWidth;
 
         this.width = font.stringWidth(labelSet) + offsetWidth;
-        
+
         this.myFontProcessor = MyFontProcessor.getInstance();
-    }    
+    }
 
     @Override
     public void setOwner(Screen owner)
@@ -113,7 +117,7 @@ implements ABCustomItemInterface
     public void paintXY(Graphics graphics, int x, int y)
     {
         this.myFontProcessor.process(graphics);
-        
+
         graphics.setColor(this.getLabelStringComponent().getForegroundBasicColor().intValue());
         graphics.drawString(this.getLabel(), x + this.offsetX, y + this.offsetY, 0);
     }
@@ -122,7 +126,7 @@ implements ABCustomItemInterface
     public void paintUnselected(Graphics graphics, int x, int y)
     {
         this.myFontProcessor.process(graphics);
-        
+
         graphics.drawString(this.getLabel(), x + this.offsetX, y + this.offsetY, 0);
     }
 }

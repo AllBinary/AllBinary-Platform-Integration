@@ -84,21 +84,21 @@ public class GameCanvas extends Canvas {
     /** Creates a new instance of GameCanvas */
     protected GameCanvas(boolean suppressKeyEvents) 
     {
-        MIDletBridge.registerGameCanvasKeyAccess(this, new KeyAccess());
+        //MIDletBridge.registerGameCanvasKeyAccess(this, new KeyAccess());
         
         this.suppressKeyEvents = suppressKeyEvents;
     }
     
-    protected Graphics getGraphics() {
-        return DeviceFactory.getDevice().getDeviceDisplay().getGraphics(this);
-    }
+//    protected Graphics getGraphics() {
+//        return DeviceFactory.getDevice().getDeviceDisplay().getGraphics(this);
+//    }
     
     @Override
     public void paint(Graphics g) {
     }
     
     public void flushGraphics(int x, int y, int width, int height) {
-        DeviceFactory.getDevice().getDeviceDisplay().flushGraphics(this, x, y, width, height);
+        //DeviceFactory.getDevice().getDeviceDisplay().flushGraphics(this, x, y, width, height);
     }
 
     public void flushGraphics() {

@@ -230,69 +230,69 @@ public final class GameCanvasPanel extends GameCanvas implements CommandListener
 
     private void paintScreen() {
 
-        Graphics g = getGraphics();
-
-        int width = getWidth();
-        int height = getHeight();
-
-        g.setGrayScale(255);
-        g.fillRect(0, 0, width, height);
-
-        g.setColor(0x5691F0);
-        g.drawRect(0, 0, width - 1, height - 1);
-
-        g.setGrayScale(0);
-        g.drawRect(2, 2, width - 5, height - 5);
-
-        int pos = this.posX;
-        while (pos < width - 5) {
-            g.drawLine(3 + pos, 3, 3 + pos, height - 4);
-            pos += POSNUMBER;
-        }
-        pos = posY;
-        while (pos < height - 5) {
-            g.drawLine(3, 3 + pos, width - 4, 3 + pos);
-            pos += POSNUMBER;
-        }
-
-        // Paint canvas info in the middle
-        String text = width + " x " + height;
-
-        Font f = g.getFont();
-        int w = f.stringWidth(text) + 4;
-        int h = 2 * f.getHeight() + 4;
-
-        int arcWidth = w;
-        int arcHeight = h;
-        g.setColor(0xFFCC11);
-        g.drawRoundRect((width - w) / 2, (height - h) / 2, w, h, arcWidth, arcHeight);
-        g.setColor(0xFFEE99);
-        g.fillRoundRect((width - w) / 2, (height - h) / 2, w, h, arcWidth, arcHeight);
-
-        g.setColor(0xBB5500);
-        g.drawString(text, width / 2, (height - f.getHeight()) / 2, Graphics.HCENTER | Graphics.TOP);
-
-        // Pint Ball
-        g.setColor(this.ballColor);
-        g.fillRoundRect(this.ballPosX - 4, ballPosY - 4, 8, 8, 8, 8);
-
-        this.ballPosX += this.ballMoveX;
-        ballPosY += ballMoveY;
-
-        boolean changeColor = false;
-        if ((this.ballPosX < 4) || (this.ballPosX > width - 4)) {
-            this.ballMoveX = -this.ballMoveX;
-            changeColor = true;
-        }
-        if ((ballPosY < 4) || (ballPosY > height - 4)) {
-            ballMoveY = -ballMoveY;
-            changeColor = true;
-        }
-        if (changeColor) {
-            this.ballColor = this.ballRandom.nextInt(0xFF) + (this.ballRandom.nextInt(0xFF) << 8) + (this.ballRandom.nextInt(0xFF) << 16);
-        }
-
-        flushGraphics();
+//        Graphics g = getGraphics();
+//
+//        int width = getWidth();
+//        int height = getHeight();
+//
+//        g.setGrayScale(255);
+//        g.fillRect(0, 0, width, height);
+//
+//        g.setColor(0x5691F0);
+//        g.drawRect(0, 0, width - 1, height - 1);
+//
+//        g.setGrayScale(0);
+//        g.drawRect(2, 2, width - 5, height - 5);
+//
+//        int pos = this.posX;
+//        while (pos < width - 5) {
+//            g.drawLine(3 + pos, 3, 3 + pos, height - 4);
+//            pos += POSNUMBER;
+//        }
+//        pos = posY;
+//        while (pos < height - 5) {
+//            g.drawLine(3, 3 + pos, width - 4, 3 + pos);
+//            pos += POSNUMBER;
+//        }
+//
+//        // Paint canvas info in the middle
+//        String text = width + " x " + height;
+//
+//        Font f = g.getFont();
+//        int w = f.stringWidth(text) + 4;
+//        int h = 2 * f.getHeight() + 4;
+//
+//        int arcWidth = w;
+//        int arcHeight = h;
+//        g.setColor(0xFFCC11);
+//        g.drawRoundRect((width - w) / 2, (height - h) / 2, w, h, arcWidth, arcHeight);
+//        g.setColor(0xFFEE99);
+//        g.fillRoundRect((width - w) / 2, (height - h) / 2, w, h, arcWidth, arcHeight);
+//
+//        g.setColor(0xBB5500);
+//        g.drawString(text, width / 2, (height - f.getHeight()) / 2, Graphics.HCENTER | Graphics.TOP);
+//
+//        // Pint Ball
+//        g.setColor(this.ballColor);
+//        g.fillRoundRect(this.ballPosX - 4, ballPosY - 4, 8, 8, 8, 8);
+//
+//        this.ballPosX += this.ballMoveX;
+//        ballPosY += ballMoveY;
+//
+//        boolean changeColor = false;
+//        if ((this.ballPosX < 4) || (this.ballPosX > width - 4)) {
+//            this.ballMoveX = -this.ballMoveX;
+//            changeColor = true;
+//        }
+//        if ((ballPosY < 4) || (ballPosY > height - 4)) {
+//            ballMoveY = -ballMoveY;
+//            changeColor = true;
+//        }
+//        if (changeColor) {
+//            this.ballColor = this.ballRandom.nextInt(0xFF) + (this.ballRandom.nextInt(0xFF) << 8) + (this.ballRandom.nextInt(0xFF) << 16);
+//        }
+//
+//        flushGraphics();
     }
 
     protected boolean fullScreenMode = false;

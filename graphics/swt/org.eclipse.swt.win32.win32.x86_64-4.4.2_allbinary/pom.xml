@@ -85,7 +85,7 @@ Building for avian requires 1.7 target 51.0 class version.  java 1.8 can still b
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>

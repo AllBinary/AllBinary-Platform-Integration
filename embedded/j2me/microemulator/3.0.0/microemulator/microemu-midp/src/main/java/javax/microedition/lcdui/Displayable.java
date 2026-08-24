@@ -24,6 +24,8 @@
  
 package javax.microedition.lcdui;
 
+import jsinterop.annotations.JsType;
+
 import java.util.Vector;
 
 import javax.microedition.khronos.opengles.GL;
@@ -35,7 +37,12 @@ import org.microemu.device.ui.DisplayableUI;
 
 import org.allbinary.device.OpenGLESGraphics;
 import org.allbinary.device.OpenGLESGraphicsCompositeFactory;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 
+
+@JsType
 public class Displayable
 {
     //protected final LogUtil logUtil = LogUtil.getInstance();
@@ -55,8 +62,10 @@ public class Displayable
     Ticker ticker;
     
     // TODO make private
+    @JsProperty
     public int viewPortY;
     // TODO make private
+    @JsProperty
     public int viewPortHeight;
     
     DisplayableUI ui;
@@ -66,6 +75,7 @@ public class Displayable
 	private CommandListener listener = null;
 
     
+    @JsConstructor
     Displayable(String title) 
     {
         this.device = DeviceFactory.getDevice();
@@ -76,16 +86,19 @@ public class Displayable
     }
     
     
+    @JsMethod
     void setUI(DisplayableUI ui) {
     	this.ui = ui;
     }
   
 
+	@JsMethod
 	public void addCommand(Command cmd) {
 		this.ui.addCommandUI(cmd.ui);
 	}
 
 
+	@JsMethod
 	public void removeCommand(Command cmd)
 	{
 		if (cmd != null) {
@@ -94,6 +107,7 @@ public class Displayable
 	}
     
     
+    @JsMethod
     public int getWidth()
     {
     	if (this.width == -1) {
@@ -104,6 +118,7 @@ public class Displayable
     }
 
 
+    @JsMethod
     public int getHeight()
     {
     	if (this.height == -1) {
@@ -114,6 +129,7 @@ public class Displayable
     }
 
 
+	@JsMethod
 	public boolean isShown()
 	{
 		if (this.currentDisplay == null) {
@@ -123,12 +139,14 @@ public class Displayable
 	}
 
     
+    @JsMethod
     public Ticker getTicker() 
     {
         return this.ticker;
     }
 
     
+    @JsMethod
     public void setTicker(Ticker ticker) 
     {
         this.ticker = ticker;
@@ -137,12 +155,14 @@ public class Displayable
     }
 
     
+    @JsMethod
     public String getTitle() 
     {
         return this.title;
     }
 
     
+    @JsMethod
     public void setTitle(String s) 
     {
         this.title = s;
@@ -152,6 +172,7 @@ public class Displayable
     }        
     
 
+	@JsMethod
 	public void setCommandListener(CommandListener l)
 	{
 		this.listener = l;
@@ -160,12 +181,14 @@ public class Displayable
 	}
 	
 	
+	@JsMethod
 	public CommandListener getCommandListener()
 	{
 		return this.listener;
 	}
 
 
+	@JsMethod
 	public Vector getCommands()
 	{
 		// in Form this is overridden to allow for the inclusion of item contained commands 
@@ -179,11 +202,13 @@ public class Displayable
 	}
 
 
+	@JsMethod
 	void hideNotify()
 	{
 	}
 
 
+	@JsMethod
 	final void hideNotify(Display d)
 	{		
 		this.ui.hideNotify();
@@ -191,33 +216,40 @@ public class Displayable
 		this.hideNotify();
 	}
 
+	@JsMethod
 	public void keyPressed(int keyCode)
 	{
 	}
 
+	@JsMethod
 	void keyRepeated(int keyCode)
 	{
 	}
 
+	@JsMethod
 	public void keyReleased(int keyCode)
 	{
 	}
     
+	@JsMethod
 	void pointerPressed(int x, int y) 
 	{
 	}
 
 	
+	@JsMethod
 	void pointerReleased(int x, int y) 
 	{
 	}
 
 	
+	@JsMethod
 	void pointerDragged(int x, int y) 
 	{
 	}
 
 
+    @JsMethod
     public void draw(GL gl)
     {
         //PreLogUtil.put("AndroidToJ2ME", this, "draw");
@@ -227,17 +259,20 @@ public class Displayable
         this.openGLESGraphics.setCameraMode();
     }
     
+    @JsMethod
     public void drawThreedGL(GL gl)
     {
         this.openGLESGraphics.set(gl);
         this.paintThreed(this.openGLESGraphics);
     }
      
+    @JsMethod
     public void paintThreed(Graphics graphics)
     {
 
     }
     
+    @JsMethod
     public void onDraw(Object canvas)
     {
         /*
@@ -252,12 +287,14 @@ public class Displayable
         //this.paint(AndroidDisplayGraphics.getInstance(canvas));
     }
     
+        @JsMethod
         void paint(Graphics g)
         {
         }
 
         //Added public
         //public void repaint()
+	@JsMethod
 	void repaint()
 	{
             this.repaint(0, 0, getWidth(), getHeight());
@@ -265,6 +302,7 @@ public class Displayable
 
         //Added public
         //public void repaint(int x, int y, int width, int height)
+	@JsMethod
 	void repaint(int x, int y, int width, int height)
     {
                 final Display currentDisplay = this.currentDisplay;
@@ -273,11 +311,13 @@ public class Displayable
 		}
     }
 	
+	@JsMethod
 	protected void sizeChanged(int w, int h)
 	{		
 	}
 
 
+	@JsMethod
 	final void sizeChanged(Display d)
 	{
 		this.updateWidthAndHeight();
@@ -285,11 +325,13 @@ public class Displayable
 	}
 	
 	
+	@JsMethod
 	void showNotify()
 	{        
 	}
 
 
+	@JsMethod
 	final void showNotify(Display d)
 	{
 		this.currentDisplay = d;
@@ -323,6 +365,7 @@ public class Displayable
 		this.ui.showNotify();
 	}
 
+	@JsMethod
 	private void updateWidthAndHeight() 
 	{
     	if (this.fullScreenMode) {
@@ -337,20 +380,24 @@ public class Displayable
     /**
      * @return the fullScreenMode
      */
+    @JsMethod
     public void setFullScreenMode(boolean fullScreenMode)
     {
         this.fullScreenMode = fullScreenMode;
     }
 
+    @JsMethod
     public boolean isFullScreenMode()
     {
         return this.fullScreenMode;
     }
     
+    @JsMethod
     public void translate(final int x, final int y) {
         
     }
     
+    @JsMethod
     public int getTypeAsInt() {
         return 0;
     }

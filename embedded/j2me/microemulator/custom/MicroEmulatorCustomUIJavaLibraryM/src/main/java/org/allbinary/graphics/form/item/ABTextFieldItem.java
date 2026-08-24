@@ -5,13 +5,18 @@
  */
 package org.allbinary.graphics.form.item;
 
+import jsinterop.annotations.JsType;
+
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
 
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.logic.util.visitor.Visitor;
 import org.microemu.graphics.form.item.TextFieldItem;
+import jsinterop.annotations.JsConstructor;
 
+
+@JsType
 public class ABTextFieldItem extends TextFieldItem
 {
     
@@ -21,6 +26,7 @@ public class ABTextFieldItem extends TextFieldItem
 //            backgroundBasicColor, foregroundBasicColor);
 //    }
 
+    @JsConstructor
     public ABTextFieldItem(Canvas canvas, Visitor visitor, String label, String value, int maxSize, int layout, String altText,
                            final Font font, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {

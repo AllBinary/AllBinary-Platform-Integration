@@ -20,25 +20,40 @@
 
 package javax.microedition.lcdui;
 
+import jsinterop.annotations.JsType;
+
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.ui.CommandUI;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 
+
+@JsType
 public class Command {
 
+	@JsProperty
 	public static final int SCREEN = 1;
 
+	@JsProperty
 	public static final int BACK = 2;
 
+	@JsProperty
 	public static final int CANCEL = 3;
 
+	@JsProperty
 	public static final int OK = 4;
 
+	@JsProperty
 	public static final int HELP = 5;
 
+	@JsProperty
 	public static final int STOP = 6;
 
+	@JsProperty
 	public static final int EXIT = 7;
 
+	@JsProperty
 	public static final int ITEM = 8;
 
 	// this is needed to allow for item commands without 
@@ -59,6 +74,7 @@ public class Command {
 	
 	CommandUI ui;
 
+	@JsConstructor
 	public Command(String label, int commandType, int priority) {
 		this.label = label;
 		this.commandType = commandType;
@@ -67,24 +83,29 @@ public class Command {
 		this.ui = DeviceFactory.getDevice().getUIFactory().createCommandUI(this);
 	}
 
+	@JsConstructor
 	public Command(String shortLabel, String longLabel, int commandType, int priority) {
 		// TODO implement
 		this(shortLabel, commandType, priority);
 	}
 
+	@JsMethod
 	public int getCommandType() {
 		return this.commandType;
 	}
 
+	@JsMethod
 	public String getLabel() {
 		return this.label;
 	}
 
+	@JsMethod
 	public String getLongLabel() {
 		// TODO implement;
 		return this.label;
 	}
 
+	@JsMethod
 	public int getPriority() {
 		return this.priority;
 	}	
@@ -92,10 +113,12 @@ public class Command {
 	/**
 	 * @since MIDP 3.0
 	 */
+	@JsMethod
 	public void setImage(Image image) {
 		this.ui.setImage(image);
 	}
 
+	@JsMethod
 	Item getFocusedItem() {
 		if (isRegularCommand()) {
 			throw new IllegalStateException();
@@ -104,6 +127,7 @@ public class Command {
 		return this.focusedItem;
 	}
 
+	@JsMethod
 	Command getItemCommand(Item item) {
 		if (!isRegularCommand()) {
 			throw new IllegalStateException();
@@ -121,6 +145,7 @@ public class Command {
 		return this.itemCommand;
 	}
 
+	@JsMethod
 	Command getOriginalCommand() {
 		if (isRegularCommand()) {
 			throw new IllegalStateException();
@@ -129,10 +154,12 @@ public class Command {
 		return this.originalCommand;
 	}
 
+	@JsMethod
 	boolean isRegularCommand() {
 		return this.originalCommand == null;
 	}
         
+        @JsMethod
         public String toString() {
             return this.label;
         }

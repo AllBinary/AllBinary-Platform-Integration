@@ -24,14 +24,22 @@
  
 package javax.microedition.rms;
 
+import jsinterop.annotations.JsType;
+
 import org.microemu.MIDletBridge;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsProperty;
 
 
+
+@JsType
 public class RecordStore 
 {  
 	
+	@JsProperty
 	public static final int AUTHMODE_PRIVATE = 0;
 	
+	@JsProperty
 	public static final int AUTHMODE_ANY = 1;
 	
 //	TODO there should be a public constructors
@@ -39,6 +47,7 @@ public class RecordStore
 //	    
 //	}
 	
+	@JsMethod
 	public static void deleteRecordStore(String recordStoreName)
 			throws RecordStoreException, RecordStoreNotFoundException
 	{
@@ -46,12 +55,14 @@ public class RecordStore
 	}
 	
 	
+    @JsMethod
     public static String[] listRecordStores()
     {
     	return MIDletBridge.getRecordStoreManager().listRecordStores();
     }
 	
 	
+    @JsMethod
     public static RecordStore openRecordStore(String recordStoreName, boolean createIfNecessary) 
     		throws RecordStoreException, RecordStoreFullException, RecordStoreNotFoundException
     {
@@ -59,6 +70,7 @@ public class RecordStore
     }
     
     
+    @JsMethod
     public static RecordStore openRecordStore(String recordStoreName, boolean createIfNecessary, int authmode, boolean writable)
     		throws RecordStoreException, RecordStoreFullException, RecordStoreNotFoundException
     {
@@ -67,6 +79,7 @@ public class RecordStore
     }
 	
     
+    @JsMethod
     public static RecordStore openRecordStore(String recordStoreName, String vendorName, String suiteName)
     		throws RecordStoreException, RecordStoreNotFoundException
 	{
@@ -74,6 +87,7 @@ public class RecordStore
     	return RecordStore.openRecordStore(recordStoreName, false);
 	}
 	
+    @JsMethod
     public void closeRecordStore() 
     		throws RecordStoreNotOpenException, RecordStoreException
     {
@@ -81,6 +95,7 @@ public class RecordStore
     }
 	
 	
+	@JsMethod
 	public String getName()
 			throws RecordStoreNotOpenException
 	{
@@ -90,6 +105,7 @@ public class RecordStore
 	}
 	
 	
+    @JsMethod
     public int getVersion() 
     		throws RecordStoreNotOpenException
     {
@@ -99,6 +115,7 @@ public class RecordStore
     }
 
 
+    @JsMethod
     public int getNumRecords() 
     		throws RecordStoreNotOpenException
     {
@@ -108,6 +125,7 @@ public class RecordStore
     }
 
 
+    @JsMethod
     public int getSize()
     		throws RecordStoreNotOpenException
     {
@@ -117,6 +135,7 @@ public class RecordStore
     }
 
   
+    @JsMethod
     public int getSizeAvailable()
     		throws RecordStoreNotOpenException
     {
@@ -126,6 +145,7 @@ public class RecordStore
     }
 
   
+    @JsMethod
     public long getLastModified() 
     		throws RecordStoreNotOpenException
     {
@@ -135,18 +155,21 @@ public class RecordStore
     }
 
 
+    @JsMethod
     public void addRecordListener(RecordListener listener)
     {
     	// Must be overriden
     }
 	
 	
+    @JsMethod
     public void removeRecordListener(RecordListener listener)
     {
     	// Must be overriden
     }
 	
 	
+    @JsMethod
     public int getNextRecordID() 
     		throws RecordStoreNotOpenException, RecordStoreException
     {
@@ -156,6 +179,7 @@ public class RecordStore
     }
 	
 	
+    @JsMethod
     public int addRecord(byte[] data, int offset, int numBytes)
             throws RecordStoreNotOpenException, RecordStoreException, RecordStoreFullException
     {
@@ -165,6 +189,7 @@ public class RecordStore
     }
 	
 	
+    @JsMethod
     public void deleteRecord(int recordId) 
     		throws RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException
     {
@@ -172,6 +197,7 @@ public class RecordStore
     }
 	
 
+    @JsMethod
     public int getRecordSize(int recordId) 
     		throws RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException
     {
@@ -181,6 +207,7 @@ public class RecordStore
     }
 	
 
+    @JsMethod
     public int getRecord(int recordId, byte[] buffer, int offset)
             throws RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException
     {
@@ -190,6 +217,7 @@ public class RecordStore
     }
 	
 	
+    @JsMethod
     public byte[] getRecord(int recordId) 
     		throws RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException
     {
@@ -199,12 +227,14 @@ public class RecordStore
     }
 	
     
+    @JsMethod
     public void setMode(int authmode, boolean writable)
     		throws RecordStoreException
 	{
 		// TODO Not yet implemented
 	}
 	
+    @JsMethod
     public void setRecord(int recordId, byte[] newData, int offset, int numBytes)
             throws RecordStoreNotOpenException, InvalidRecordIDException, RecordStoreException, RecordStoreFullException
     {
@@ -212,6 +242,7 @@ public class RecordStore
     }
 
   	
+    @JsMethod
     public RecordEnumeration enumerateRecords(RecordFilter filter, RecordComparator comparator, boolean keepUpdated)
             throws RecordStoreNotOpenException
     {

@@ -26,17 +26,25 @@
  */
 package javax.microedition.midlet;
 
+import jsinterop.annotations.JsType;
+
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.Display;
 
 import org.microemu.DisplayAccess;
 import org.microemu.MIDletAccess;
 import org.microemu.MIDletBridge;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 
 //TWB - Changed to class for performance and added listeners
+
+@JsType
 public class MIDlet 
 {
 
+    @JsProperty
     public PlatformMIDletHelper midletHelper;
     
     private boolean destroyed;
@@ -45,6 +53,7 @@ public class MIDlet
     class MIDletAccessor extends MIDletAccess
     {
 
+        @JsConstructor
         public MIDletAccessor()
         {
             super(MIDlet.this);
@@ -52,6 +61,7 @@ public class MIDlet
         }
 
         @Override
+        @JsMethod
         public void startApp() throws MIDletStateChangeException
         {
             MIDletBridge.setCurrentMIDlet(midlet);
@@ -59,12 +69,14 @@ public class MIDlet
         }
 
         @Override
+        @JsMethod
         public void pauseApp()
         {
             midlet.pauseApp();
         }
 
         @Override
+        @JsMethod
         public void destroyApp(boolean unconditional) throws MIDletStateChangeException
         {
             if (!midlet.destroyed)
@@ -81,6 +93,7 @@ public class MIDlet
         }
     }
 
+    @JsConstructor
     protected MIDlet()
     {
         MIDletBridge.registerMIDletAccess(new MIDletAccessor());
@@ -89,43 +102,52 @@ public class MIDlet
         Display.getDisplay(this);
     }
 
+    @JsMethod
     protected void startApp() throws MIDletStateChangeException
     {
     }
 
+    @JsMethod
     protected void pauseApp()
     {
     }
 
+    @JsMethod
     protected void destroyApp(boolean unconditional) throws MIDletStateChangeException
     {
     }
 
+    @JsMethod
     public final int checkPermission(String permission)
     {
         return MIDletBridge.checkPermission(permission);
     }
 
+    @JsMethod
     public final String getAppProperty(String key)
     {
         return MIDletBridge.getAppProperty(key);
     }
 
+    @JsMethod
     public final void notifyDestroyed()
     {
         this.destroyed = true;
         MIDletBridge.notifyDestroyed();
     }
 
+    @JsMethod
     public final void notifyPaused()
     {
     }
 
+    @JsMethod
     public final boolean platformRequest(String URL) throws ConnectionNotFoundException
     {
         return MIDletBridge.platformRequest(URL);
     }
 
+    @JsMethod
     public final void resumeRequest()
     {
         // TODO implement
@@ -133,47 +155,56 @@ public class MIDlet
     
     //TWB - Added mouse input support
     //public void mouseClicked(MouseEvent e)
+    @JsMethod
     public void mouseClicked(final int x, final int y, final int button)
     {
     }
 
     //public void mousePressed(MouseEvent e)
+    @JsMethod
     public void mousePressed(final int x, final int y, final int button)
     {
     }
 
     //public void mouseReleased(MouseEvent e)
+    @JsMethod
     public void mouseReleased(final int x, final int y, final int button)
     {
     }
 
     //public void mouseEntered(MouseEvent e)
+    @JsMethod
     public void mouseEntered(final int x, final int y, final int button)
     {
     }
 
     //public void mouseExited(MouseEvent e)
+    @JsMethod
     public void mouseExited(final int x, final int y, final int button)
     {
     }
 
     //public void mouseDragged(MouseEvent e)
+    @JsMethod
     public void mouseDragged(final int x, final int y, final int button)
     {
     }
 
     //public void mouseMoved(MouseEvent e)
+    @JsMethod
     public void mouseMoved(final int x, final int y, final int button)
     {
     }
 
     //public void mouseWheelMoved(MouseWheelEvent e)
+    @JsMethod
     public void mouseWheelMoved(final int x, final int y, final int button)
     {
     }
     
     //int lastHeight = 0;
     //int lastWidth = 0;
+    @JsMethod
     public void componentResized()
     {
         /*
@@ -203,14 +234,17 @@ public class MIDlet
         this.setResized(true);
     }
 
+    @JsMethod
     public void componentMoved()
     {
     }
 
+    @JsMethod
     public void componentShown()
     {
     }
 
+    @JsMethod
     public void componentHidden()
     {
     }
@@ -218,6 +252,7 @@ public class MIDlet
     /**
      * @return the resized
      */
+    @JsMethod
     public boolean isResized()
     {
         return this.resized;
@@ -226,11 +261,13 @@ public class MIDlet
     /**
      * @param resized the resized to set
      */
+    @JsMethod
     public void setResized(boolean resized)
     {
         this.resized = resized;
     }
 
+    @JsMethod
     public void register()
     {
         //TWB - Registered in constructor 2.0.2-SPECIAL vs 3.0.0
@@ -238,6 +275,7 @@ public class MIDlet
         //destroyed = false;
     }
 
+    @JsMethod
     public void exit()
         throws Exception
     {

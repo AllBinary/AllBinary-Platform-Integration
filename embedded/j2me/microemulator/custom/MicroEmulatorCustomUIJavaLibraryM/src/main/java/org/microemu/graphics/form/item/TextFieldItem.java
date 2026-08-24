@@ -5,6 +5,8 @@
  */
 package org.microemu.graphics.form.item;
 
+import jsinterop.annotations.JsType;
+
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
@@ -22,13 +24,19 @@ import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.logic.util.visitor.Visitor;
 import org.allbinary.time.TimeDelayHelper;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 
 /**
  *
  * @author user
  */
+
+@JsType
 public class TextFieldItem extends TextItem implements UpdateMyFontInterface
 {
+    @JsProperty
     protected final LogUtil logUtil = LogUtil.getInstance();
 
     private final FontDebugFactory fontDebugFactory = FontDebugFactory.getInstance();
@@ -60,6 +68,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
 //            backgroundBasicColor, foregroundBasicColor);
 //    }
 
+    @JsConstructor
     public TextFieldItem(Canvas canvas, Visitor visitor, String label, String value, int maxSize, int layout, String altText, 
             final Font font, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
@@ -78,6 +87,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     }
 
     @Override
+    @JsMethod
     public void updateMeasurement(final Graphics graphics) {
         final Font font = graphics.getFont();
         this.maxWidth = MyFontProcessor.defaultStringWidth(font, this.maxSize);
@@ -86,6 +96,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     }
 
     @Override
+    @JsMethod
     public boolean isFocusable()
     {
         return true;
@@ -94,11 +105,13 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     /**
      * @return the string
      */
+    @JsMethod
     public String getString()
     {
         return this.stringComponent.getText();
     }
 
+    @JsMethod
     public void setString(String string)
     {
         if(string.length() < this.maxSize)
@@ -107,12 +120,14 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
         }
     }
 
+    @JsMethod
     public void setCaretVisible(boolean caretVisible)
     {
         this.logUtil.putF(this.commonStrings.START, this, "setCaretVisible:setFocus: " + caretVisible);
         this.caretVisible = caretVisible;
     }
 
+    @JsMethod
     private int getCharPositionX(Graphics graphics)
     {
         //return graphics.getFont().stringWidth(this.stringComponent.getText().substring(0, this.getCaretPosition()));
@@ -120,18 +135,21 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
         //return positionX;
     }
 
+    @JsMethod
     private int getCharPositionY()
     {
         return this.positionY;
     }
 
     @Override
+    @JsMethod
     public int getHeight()
     {
         return super.getHeight() + this.stringComponent.getHeight() + 4;
     }
     
     @Override
+    @JsMethod
     public void setFocus(boolean state)
     {
         this.logUtil.putF(this.commonStrings.START, this, "setFocus: " + state);
@@ -146,6 +164,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     }
     
     @Override
+    @JsMethod
     public void paintXY(Graphics graphics, int x, int y)
     {
         final Font existingFont = graphics.getFont();
@@ -205,6 +224,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     }
 
     @Override
+    @JsMethod
     public void keyPressed(int keyCode)
     {
         //ForcedLogUtil.log(commonStrings.NOT_IMPLEMENTED, this);
@@ -214,6 +234,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     /**
      * @return the position
      */
+    @JsMethod
     public int getCaretPosition()
     {
         return this.position;
@@ -222,6 +243,7 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
     /**
      * @param position the position to set
      */
+    @JsMethod
     public void setCaretPosition(int position)
     {
         final String text = this.stringComponent.getText();
@@ -242,15 +264,18 @@ public class TextFieldItem extends TextItem implements UpdateMyFontInterface
         //this.positionX = this.getCaretPosition() * (MyFont.MYFONT.DEFAULT_CHAR_WIDTH >> 1);
     }
     
+    @JsMethod
     public int getFontHeight() {
         return this.stringComponent.getFont().getHeight();
     }
 
+    @JsMethod
     public void setBackgroundBasicColorP(final BasicColor basicColor)
     {
         this.stringComponent.setBackgroundBasicColor(basicColor);
     }
 
+    @JsMethod
     public void setForegroundBasicColorP(final BasicColor basicColor)
     {
         this.stringComponent.setForegroundBasicColor(basicColor);

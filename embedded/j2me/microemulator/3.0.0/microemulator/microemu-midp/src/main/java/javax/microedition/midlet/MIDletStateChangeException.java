@@ -24,17 +24,24 @@
  
 package javax.microedition.midlet;
 
+import jsinterop.annotations.JsType;
+import jsinterop.annotations.JsConstructor;
 
+
+
+@JsType
 public class MIDletStateChangeException extends Exception
 {
 
 
+	@JsConstructor
 	public MIDletStateChangeException()
 	{
 		super();
 	}
 
 
+	@JsConstructor
 	public MIDletStateChangeException(String s)
 	{
 		super(s);

@@ -114,6 +114,7 @@ import org.allbinary.graphics.ResizableListenerInterface;
 import org.allbinary.graphics.ScreenListenerHandler;
 import org.allbinary.graphics.ScreenListenerInterface;
 import org.allbinary.logic.NullUtil;
+import org.allbinary.midlet.AllBinaryMidlet;
 
 public class BareMain extends JFrame 
 implements ScreenListenerInterface, ResizableListenerInterface
@@ -336,6 +337,7 @@ implements ScreenListenerInterface, ResizableListenerInterface
             midletString = null;
         }
 
+        AllBinaryMidlet.getNullInstance();
         final MIDlet midlet = app.common.initMIDlet(true);
         midlet.midletHelper = new SwingMIDletHelper();
         midlet.midletHelper.midlet = midlet;

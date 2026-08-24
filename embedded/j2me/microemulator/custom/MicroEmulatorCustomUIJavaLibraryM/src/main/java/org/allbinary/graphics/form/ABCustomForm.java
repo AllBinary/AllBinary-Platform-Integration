@@ -5,12 +5,18 @@
  */
 package org.allbinary.graphics.form;
 
+import jsinterop.annotations.JsType;
+
 import org.allbinary.graphics.form.item.ABCustomItem;
 import org.microemu.graphics.form.CustomForm;
 import org.allbinary.graphics.color.BasicColor;
+import jsinterop.annotations.JsConstructor;
 
+
+@JsType
 public class ABCustomForm extends CustomForm
 {
+    @JsConstructor
     public ABCustomForm(String title, ABCustomItem[] items, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(title, items, backgroundBasicColor, foregroundBasicColor);

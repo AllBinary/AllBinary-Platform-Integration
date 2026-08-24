@@ -5,6 +5,10 @@
  */
 package org.allbinary.graphics.form.item;
 
+import jsinterop.annotations.JsType;
+
+
+@JsType
 public class CustomCustomItem
 {
 }

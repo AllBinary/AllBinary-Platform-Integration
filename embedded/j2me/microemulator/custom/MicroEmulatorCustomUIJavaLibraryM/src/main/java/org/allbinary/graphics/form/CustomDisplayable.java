@@ -5,6 +5,10 @@
  */
 package org.allbinary.graphics.form;
 
+import jsinterop.annotations.JsType;
+
+
+@JsType
 public class CustomDisplayable
 {
 

@@ -80,6 +80,7 @@ import org.allbinary.graphics.threed.SWTJOGLProcessor;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.communication.log.PreLogUtil;
 import org.allbinary.logic.java.exception.ExceptionUtil;
+import org.allbinary.midlet.AllBinaryMidlet;
 import org.allbinary.string.CommonStrings;
 import org.eclipse.swt.graphics.DeviceData;
 import org.eclipse.swt.graphics.Point;
@@ -667,6 +668,7 @@ public class BareMain extends Common
 //                        midletString = null;
 //                    }
 //                    System.out.println("midletString: " + midletString);
+                    AllBinaryMidlet.getNullInstance();
                     final MIDlet midlet = app.initMIDlet(true);
                     //logUtil.putF(new StringMaker().append("midlet: ").append(midlet).toString(), midlet, "main2");
                     

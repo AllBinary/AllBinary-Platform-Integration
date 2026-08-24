@@ -29,6 +29,8 @@
  *  @version $Id: Display.java 2496 2011-05-07 11:27:52Z barteo@gmail.com $
  */
 package javax.microedition.lcdui;
+
+import jsinterop.annotations.JsType;
 import org.allbinary.thread.ARunnable;
 
 
@@ -44,25 +46,39 @@ import org.microemu.MIDletBridge;
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.ui.DisplayableUI;
 import org.microemu.device.ui.ItemUI;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 
+
+@JsType
 public class Display {
 
+	@JsProperty
 	public static final int LIST_ELEMENT = 1;
 
+	@JsProperty
 	public static final int CHOICE_GROUP_ELEMENT = 2;
 
+	@JsProperty
 	public static final int ALERT = 3;
 
+	@JsProperty
 	public static final int COLOR_BACKGROUND = 0;
 
+	@JsProperty
 	public static final int COLOR_FOREGROUND = 1;
 
+	@JsProperty
 	public static final int COLOR_HIGHLIGHTED_BACKGROUND = 2;
 
+	@JsProperty
 	public static final int COLOR_HIGHLIGHTED_FOREGROUND = 3;
 
+	@JsProperty
 	public static final int COLOR_BORDER = 4;
 
+	@JsProperty
 	public static final int COLOR_HIGHLIGHTED_BORDER = 5;
 
         private final Displayable DISPLAYABLE = new Canvas();
@@ -192,13 +208,15 @@ public class Display {
 
 		Display display;
 
+		@JsConstructor
 		DisplayAccessor(Display d) {
 
 			display = d;
 		}
 
                 @Override
-		public void commandAction(final Command c, final Displayable d) {
+		              @JsMethod
+		              public void commandAction(final Command c, final Displayable d) {
 
 			if (c.isRegularCommand()) {
 				if (d == null) {
@@ -224,7 +242,8 @@ public class Display {
 		}
 
                 @Override
-		public void commandAction(final Command c, final Item item) {
+		              @JsMethod
+		              public void commandAction(final Command c, final Item item) {
 			final ItemCommandListener listener = item.getItemCommandListener();
 			if (listener == null) {
 				return;
@@ -242,7 +261,8 @@ public class Display {
 		}
 		
                 @Override
-		public Display getDisplay() {
+		              @JsMethod
+		              public Display getDisplay() {
 			return this.display;
 		}
 
@@ -280,7 +300,8 @@ public class Display {
 		// check later
 		// Andres Navarro
                 @Override
-		public void keyPressed(int keyCode) {
+		              @JsMethod
+		              public void keyPressed(int keyCode) {
 			// Andres Navarro
                     
 //TWB - optimized
@@ -303,7 +324,8 @@ public class Display {
 		}
 
                 @Override
-		public void keyRepeated(int keyCode) {
+		              @JsMethod
+		              public void keyRepeated(int keyCode) {
                     
 //TWB - optimized
 //            if (display.isCanvas)
@@ -320,7 +342,8 @@ public class Display {
 		}
 
                 @Override
-		public void keyReleased(int keyCode) {
+		              @JsMethod
+		              public void keyReleased(int keyCode) {
 			// Andres Navarro
 //TWB - optimized
 //            if (display.isCanvas)
@@ -342,7 +365,8 @@ public class Display {
 		}
 
                 @Override
-		public void pointerPressed(final int x, final int y) {
+		              @JsMethod
+		              public void pointerPressed(final int x, final int y) {
                     /*
 			if (current != null) {
 				eventDispatcher.put(eventDispatcher.new PointerEvent(new ARunnable() {
@@ -358,7 +382,8 @@ public class Display {
 		}
 
                 @Override
-		public void pointerReleased(final int x, final int y) {
+		              @JsMethod
+		              public void pointerReleased(final int x, final int y) {
                     /*
 			if (current != null) {
 				eventDispatcher.put(eventDispatcher.new PointerEvent(new ARunnable() {
@@ -373,6 +398,7 @@ public class Display {
                     */
 		}
 
+		@JsMethod
 		public void pointerDragged(final int x, final int y) {
                     /*
 			if (current != null) {
@@ -389,7 +415,8 @@ public class Display {
 		}
 
                 @Override
-		public void paint(Graphics g) {
+		              @JsMethod
+		              public void paint(Graphics g) {
 			// TODO consider removal of DisplayAccess::paint(..)
 				try {
 					current.paint(g);
@@ -400,22 +427,26 @@ public class Display {
 		}
 
                 @Override
-		public Displayable getCurrent() {
+		              @JsMethod
+		              public Displayable getCurrent() {
 			return this.display.getCurrent();
 		}
 
                 @Override
-		public DisplayableUI getDisplayableUI(Displayable displayable) {
+		              @JsMethod
+		              public DisplayableUI getDisplayableUI(Displayable displayable) {
 			return displayable.ui;
 		}
 
                 @Override
-        public ItemUI getItemUI(Item item) {
+                @JsMethod
+                public ItemUI getItemUI(Item item) {
         	return item.ui;
         }
 
         @Override
-		public boolean isFullScreenMode() {
+		      @JsMethod
+		      public boolean isFullScreenMode() {
 			Displayable current = this.getCurrent();
 
 //			if (current.getTypeAsInt() == Canvas.TYPE) {
@@ -426,7 +457,8 @@ public class Display {
 		}
 
                 @Override
-		public void hideNotify() {
+		              @JsMethod
+		              public void hideNotify() {
             Displayable current = this.getCurrent();
             if (current != null) {
                 current.hideNotify();
@@ -434,12 +466,14 @@ public class Display {
 		}
 
                 @Override
-        public void setCurrent(Displayable d) {
+                @JsMethod
+                public void setCurrent(Displayable d) {
 			this.getDisplay().setCurrent(d);
 		}
 
         @Override
-		public void sizeChanged() {
+		      @JsMethod
+		      public void sizeChanged() {
                             /*
 	    		if (current instanceof GameCanvas) {
 	    			current.width = -1;
@@ -450,7 +484,8 @@ public class Display {
 		}
 
                 @Override
-		public void repaint() {
+		              @JsMethod
+		              public void repaint() {
 			Displayable d = this.display.getCurrent();
 			if (d != null) {
 				this.display.repaint(d, 0, 0, d.getWidth(), d.getHeight());
@@ -458,7 +493,8 @@ public class Display {
 		}
 
                 @Override
-		public void clean() {
+		              @JsMethod
+		              public void clean() {
                             /*
 				eventDispatcher.put(new HideNotifyEvent(eventDispatcher, new ARunnable() {
 			*/		
@@ -520,6 +556,7 @@ public class Display {
 
         private final EmuThreadPool displayThreadPool = DisplayThreadPool.getInstance();
 
+	@JsConstructor
 	Display() {
 		accessor = new DisplayAccessor(this);
 
@@ -535,18 +572,22 @@ public class Display {
 	}
         */
 
+	@JsMethod
 	public int numAlphaLevels() {
 		return DeviceFactory.getDevice().getDeviceDisplay().numAlphaLevels();
 	}
 
+	@JsMethod
 	public int numColors() {
 		return DeviceFactory.getDevice().getDeviceDisplay().numColors();
 	}
 
+	@JsMethod
 	public boolean flashBacklight(int duration) {
 		return DeviceFactory.getDevice().getDeviceDisplay().flashBacklight(duration);
 	}
 
+	@JsMethod
 	public static Display getDisplay(MIDlet m) {
 		Display result;
 
@@ -561,6 +602,7 @@ public class Display {
 		return result;
 	}
 
+	@JsMethod
 	public int getColor(int colorSpecifier) {
 		// TODO implement better
 		switch (colorSpecifier) {
@@ -573,26 +615,31 @@ public class Display {
 		}
 	}
 
+	@JsMethod
 	public int getBorderStyle(boolean highlighted) {
 		// TODO implement better
 		return highlighted ? Graphics.DOTTED : Graphics.SOLID;
 	}
 
+	@JsMethod
 	public int getBestImageWidth(int imageType) {
 		// TODO implement
 		return 0;
 	}
 
+	@JsMethod
 	public int getBestImageHeight(int imageType) {
 
 		// TODO implement
 		return 0;
 	}
 
+	@JsMethod
 	public Displayable getCurrent() {
 		return this.current;
 	}
 
+	@JsMethod
 	public boolean isColor() {
 		return DeviceFactory.getDevice().getDeviceDisplay().isColor();
 	}
@@ -600,20 +647,25 @@ public class Display {
 	private EmulatorViewInterface allBinaryMidletView = new EmulatorViewInterface() {
 
             @Override
+            @JsMethod
             public void setMidlet(final MIDlet midlet) {}
     
             @Override
+            @JsMethod
             public void onEmulatorInitComplete(final Object midletActivity) {}
 
             @Override
+            @JsMethod
             public void onSetDisplayable(Displayable displayable) {}
 
         };
+	@JsMethod
 	public void addListener(EmulatorViewInterface allBinaryMidletView)
 	{
 	    this.allBinaryMidletView = allBinaryMidletView;
 	}
         
+	@JsMethod
 	public void setCurrent(final Displayable nextDisplayable) {
 		if (nextDisplayable == this.current) {
 			return;
@@ -735,6 +787,7 @@ public class Display {
 	}
 
         //This keeps the Displayable from showing the prior Displayable.
+        @JsMethod
         private void hackForSWT(final Displayable nextDisplayable) {
 
             System.out.println(new StringMaker().append(current.toString()).append("hackForSWT").toString());
@@ -743,6 +796,7 @@ public class Display {
                 //final Thread thread = new Thread(
                 new ARunnable() {
                     @Override
+                    @JsMethod
                     public void run() {
                         try {
                             for (int index = 0; index < 1; index++) {
@@ -762,6 +816,7 @@ public class Display {
             //thread.start();
         }
         
+	@JsMethod
 	public void setCurrent(Alert alert, Displayable nextDisplayable) {
 		if (alert == null) {
 			throw new NullPointerException("alert");
@@ -778,28 +833,34 @@ public class Display {
 		this.setCurrent(alert);
 	}
 
+	@JsMethod
 	public void setCurrentItem(Item item) {
 		if (item.owner != this.current) {
 			this.setCurrent(item.owner);
 		}
 	}
 
+	@JsMethod
 	public boolean vibrate(int duration) {
 		return DeviceFactory.getDevice().vibrate(duration);
 	}
 
+	@JsMethod
 	static int getGameAction(int keyCode) {
 		return DeviceFactory.getDevice().getInputMethod().getGameAction(keyCode);
 	}
 
+	@JsMethod
 	static int getKeyCode(int gameAction) {
 		return DeviceFactory.getDevice().getInputMethod().getKeyCode(gameAction);
 	}
 
+	@JsMethod
 	static String getKeyName(int keyCode) throws IllegalArgumentException {
 		return DeviceFactory.getDevice().getInputMethod().getKeyName(keyCode);
 	}
 
+	@JsMethod
 	boolean isShown(Displayable d) {
 		if (this.current != d) {
 			return false;
@@ -823,6 +884,7 @@ public class Display {
         //public final RepaintRunnable repaintRunnable = new RepaintRunnable();
         
         //DeviceFactory.getDevice().getDeviceDisplay().repaint(x, y, width, height);
+	@JsMethod
 	void repaint(final Displayable d, final int x, final int y, final int width, final int height) {
 
 		if (this.current == d) {
@@ -845,6 +907,7 @@ public class Display {
 //                }
 	}
 
+	@JsMethod
 	void serviceRepaints() {
 		//
 		// If service repaints is being called from the event thread, then we
@@ -866,10 +929,12 @@ public class Display {
                 System.out.println("shouldn't call Display::serviceRepaints");
 	}
 
+	@JsMethod
 	void setScrollDown(boolean state) {
 		DeviceFactory.getDevice().getDeviceDisplay().setScrollDown(state);
 	}
 
+	@JsMethod
 	void setScrollUp(boolean state) {
 		DeviceFactory.getDevice().getDeviceDisplay().setScrollUp(state);
 	}

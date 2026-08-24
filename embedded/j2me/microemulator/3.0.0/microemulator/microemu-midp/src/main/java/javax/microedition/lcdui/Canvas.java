@@ -27,39 +27,69 @@
  
 package javax.microedition.lcdui;
 
+import jsinterop.annotations.JsType;
+
 import org.allbinary.graphics.ScreenListenerHandler;
 
 import org.microemu.device.DeviceFactory;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 
+
+@JsType
 public class Canvas extends Displayable
 {
 
+	@JsProperty
 	public static final int UP = 1;
+	@JsProperty
 	public static final int DOWN = 6;
+	@JsProperty
 	public static final int LEFT = 2;
+	@JsProperty
 	public static final int RIGHT = 5;
+	@JsProperty
 	public static final int FIRE = 8;
 
+	@JsProperty
 	public static final int GAME_A = 9;
+	@JsProperty
 	public static final int GAME_B = 10;
+	@JsProperty
 	public static final int GAME_C = 11;
+	@JsProperty
 	public static final int GAME_D = 12;
 
+	@JsProperty
 	public static final int KEY_NUM0 = 48;
+    @JsProperty
     public static final int KEY_NUM1 = 49;
+    @JsProperty
     public static final int KEY_NUM2 = 50;
+    @JsProperty
     public static final int KEY_NUM3 = 51;
+    @JsProperty
     public static final int KEY_NUM4 = 52;
+    @JsProperty
     public static final int KEY_NUM5 = 53;
+    @JsProperty
     public static final int KEY_NUM6 = 54;
+    @JsProperty
     public static final int KEY_NUM7 = 55;
+    @JsProperty
     public static final int KEY_NUM8 = 56;
+    @JsProperty
     public static final int KEY_NUM9 = 57;
+    @JsProperty
     public static final int KEY_STAR = 42;
+    @JsProperty
     public static final int KEY_POUND = 35;
     
+    @JsProperty
     public static final int TYPE = 1;
 
+	@JsConstructor
 	protected Canvas()
 	{
         super(null);
@@ -67,47 +97,55 @@ public class Canvas extends Displayable
 	}
 
 
+	@JsMethod
 	public int getGameAction(int keyCode)
 	{
 		return Display.getGameAction(keyCode);
 	}
 
 
+	@JsMethod
 	public int getKeyCode(int gameAction)
     {
         return Display.getKeyCode(gameAction);
     }
 
     
+    @JsMethod
     public String getKeyName(int keyCode) throws IllegalArgumentException 
     {
     	return Display.getKeyName(keyCode);
     }
 
     
+    @JsMethod
     public boolean hasPointerEvents()
     {
         return device.hasPointerEvents();
     }
 
     
+    @JsMethod
     public boolean hasPointerMotionEvents()
     {
         return device.hasPointerMotionEvents();
     }
 
     
+    @JsMethod
     public boolean hasRepeatEvents()
     {
         return device.hasRepeatEvents();
     }
 
     @Override
-	protected void hideNotify()
+	   @JsMethod
+	   protected void hideNotify()
 	{
 	}
 
 
+	@JsMethod
 	public boolean isDoubleBuffered()
 	{
 	    return true;
@@ -115,56 +153,66 @@ public class Canvas extends Displayable
 
 
         @Override
-	public void keyPressed(int keyCode)
+	       @JsMethod
+	       public void keyPressed(int keyCode)
 	{
 	}
 
 
         @Override
-	protected void keyRepeated(int keyCode)
+	       @JsMethod
+	       protected void keyRepeated(int keyCode)
 	{
 	}
 
 
         @Override
-	public void keyReleased(int keyCode)
+	       @JsMethod
+	       public void keyReleased(int keyCode)
 	{
 	}
 
 
         @Override
-	protected void paint(Graphics g)
+	       @JsMethod
+	       protected void paint(Graphics g)
         {
         }
 
 
         @Override
-	protected void pointerPressed(int x, int y)
+	       @JsMethod
+	       protected void pointerPressed(int x, int y)
     {
     }
 
     @Override
+    @JsMethod
     protected void pointerReleased(int x, int y)
     {
     }
 
     @Override
+    @JsMethod
     protected void pointerDragged(int x, int y)
     {
     }
 
     @Override
+    @JsMethod
     public final void repaint() {
         super.repaint();
     }
 
     @Override
+    @JsMethod
     public final void repaint(int x, int y, int width, int height)
     {
         super.repaint(x, y, width, height);
     }
 
     
+    @JsMethod
     public final void serviceRepaints()
     {
     	if (currentDisplay != null) {
@@ -172,6 +220,7 @@ public class Canvas extends Displayable
     	}
     }
     
+    @JsMethod
     public void waitOnNotify(int wait)
         throws Exception
     {
@@ -179,6 +228,7 @@ public class Canvas extends Displayable
     }   
 
     @Override
+    @JsMethod
     public void setFullScreenMode(boolean mode) {
     	if (this.fullScreenMode != mode) {
             super.setFullScreenMode(mode);
@@ -199,16 +249,19 @@ public class Canvas extends Displayable
     }
     
     @Override
+    @JsMethod
     protected void sizeChanged(int w, int h)
     {
     }
     
     @Override
+    @JsMethod
     protected void showNotify()
     {
     }
 
     @Override
+    @JsMethod
     public int getTypeAsInt() {
         return Canvas.TYPE;
     }

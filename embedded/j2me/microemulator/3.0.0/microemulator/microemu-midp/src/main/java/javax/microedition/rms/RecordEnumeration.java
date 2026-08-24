@@ -24,36 +24,53 @@
  
 package javax.microedition.rms;
 
+import jsinterop.annotations.JsType;
+import jsinterop.annotations.JsMethod;
 
+
+
+@JsType
 public interface RecordEnumeration
 {
 
+  @JsMethod
   int numRecords();
   
+  @JsMethod
   byte[] nextRecord()
       throws InvalidRecordIDException, RecordStoreNotOpenException, RecordStoreException;
   
+  @JsMethod
   int nextRecordId()
       throws InvalidRecordIDException;
   
+  @JsMethod
   byte[] previousRecord()
       throws InvalidRecordIDException, RecordStoreNotOpenException, RecordStoreException;
   
+  @JsMethod
   int previousRecordId()
       throws InvalidRecordIDException;
   
+  @JsMethod
   boolean hasNextElement();
   
+  @JsMethod
   boolean hasPreviousElement();
   
+  @JsMethod
   void reset();
   
+  @JsMethod
   void rebuild();
   
+  @JsMethod
   void keepUpdated(boolean keepUpdated);
   
+  @JsMethod
   boolean isKeptUpdated();
   
+  @JsMethod
   void destroy();
 
 }

@@ -24,29 +24,39 @@
 
 package javax.microedition.lcdui;
 
+import jsinterop.annotations.JsType;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+
 
 // TODO implement pointer events
+
+@JsType
 public class Screen extends Displayable
 {
 	
+    @JsConstructor
     Screen(String title)
     {
         super(title);
     }
 
     
+    @JsMethod
     void scroll(int gameKeyCode) {
     	viewPortY += this.traverse(gameKeyCode, viewPortY, viewPortY + viewPortHeight);
     	this.repaint();
     }
     
 	
+        @JsMethod
         int traverse(int gameKeyCode, int top, int bottom) {
             return -1;
         }
 
         @Override
-	public void keyPressed(int keyCode) 
+	       @JsMethod
+	       public void keyPressed(int keyCode) 
 	{
 		int gameKeyCode = Display.getGameAction(keyCode);
 
@@ -57,19 +67,22 @@ public class Screen extends Displayable
 	}
 
 	@Override
+	@JsMethod
 	void hideNotify() 
 	{
 		super.hideNotify();
 	}
 
 	@Override
+	@JsMethod
 	void keyRepeated(int keyCode) 
 	{
 		this.keyPressed(keyCode);
 	}
         
         @Override
-	final void paint(Graphics g) 
+	       @JsMethod
+	       final void paint(Graphics g) 
 	{
 		int contentHeight = 0;
 		int translatedY;
@@ -119,18 +132,21 @@ public class Screen extends Displayable
 		g.translate(0, -translatedY);
 	}
 	
+        @JsMethod
         int paintContent(Graphics g) {
             return -1;
         }
 
 	//TWB - made public
         @Override
-	void repaint() 
+	       @JsMethod
+	       void repaint() 
 	{
 		super.repaint();
 	}
 
 	@Override
+	@JsMethod
 	void showNotify() 
 	{
 		viewPortY = 0;

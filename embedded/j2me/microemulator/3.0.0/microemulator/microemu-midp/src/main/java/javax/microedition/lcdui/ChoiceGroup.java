@@ -23,9 +23,15 @@
  
 package javax.microedition.lcdui;
 
+import jsinterop.annotations.JsType;
+
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.ui.ChoiceGroupUI;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
 
+
+@JsType
 public class ChoiceGroup extends Item implements Choice
 {
     int choiceType;
@@ -40,18 +46,21 @@ public class ChoiceGroup extends Item implements Choice
     
     private List popupList;
 
+	@JsConstructor
 	public ChoiceGroup(String label, int choiceType) 
 	{
 		this(label, choiceType, true);
 	}
 
 
+	@JsConstructor
 	public ChoiceGroup(String label, int choiceType, String[] stringElements, Image[] imageElements)
 	{
 		this(label, choiceType, stringElements, imageElements, true);
 	}
 
 
+	@JsConstructor
 	ChoiceGroup(String label, int choiceType, boolean validateChoiceType)
 	{
 		super(label);
@@ -73,6 +82,7 @@ public class ChoiceGroup extends Item implements Choice
 
 
 	// XXX imageElements is ignored.
+	@JsConstructor
 	ChoiceGroup(String label, int choiceType, String[] stringElements, Image[] imageElements, boolean validateChoiceType)
 	{
 		this(label, choiceType, validateChoiceType);
@@ -88,14 +98,16 @@ public class ChoiceGroup extends Item implements Choice
 
 	
         @Override
-	public int append(String stringPart, Image imagePart) {
+	       @JsMethod
+	       public int append(String stringPart, Image imagePart) {
 		this.insert(size(), stringPart, imagePart);
 	
 		return (size() - 1);
 	}
 
         @Override
-	public void delete(int itemNum) {
+	       @JsMethod
+	       public void delete(int itemNum) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).delete(itemNum);
 		} else {
@@ -138,7 +150,8 @@ public class ChoiceGroup extends Item implements Choice
 	}
   
         @Override
-	public void deleteAll() {
+	       @JsMethod
+	       public void deleteAll() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).deleteAll();
 		} else {
@@ -155,11 +168,13 @@ public class ChoiceGroup extends Item implements Choice
 
 
         @Override
-  public int getFitPolicy() {
+        @JsMethod
+        public int getFitPolicy() {
 	  return this.fitPolicy;
   }
   
   @Override
+  @JsMethod
   public Font getFont(int itemNum) {
 		if (itemNum < 0 || itemNum >= this.numOfItems) {
 			throw new IndexOutOfBoundsException();
@@ -168,6 +183,7 @@ public class ChoiceGroup extends Item implements Choice
   }
   
   @Override
+  @JsMethod
   public Image getImage(int elementNum)
   {
 		if (elementNum < 0 || elementNum >= this.numOfItems) {
@@ -191,7 +207,8 @@ public class ChoiceGroup extends Item implements Choice
 	 * zero elements in the ChoiceGroup.
 	 */
   @Override
-	public int getSelectedFlags(boolean[] selectedArray) {
+	 @JsMethod
+	 public int getSelectedFlags(boolean[] selectedArray) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).getSelectedFlags(selectedArray);
 		} else {
@@ -227,7 +244,8 @@ public class ChoiceGroup extends Item implements Choice
 	 * To get the complete state of a MULTIPLE Choice, see getSelectedFlags.
 	 */
         @Override
-	public int getSelectedIndex() {
+	       @JsMethod
+	       public int getSelectedIndex() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).getSelectedIndex();
 		} else {
@@ -251,7 +269,8 @@ public class ChoiceGroup extends Item implements Choice
 
 
         @Override
-  public String getString(int elementNum)
+        @JsMethod
+        public String getString(int elementNum)
   {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			if (elementNum < 0 || elementNum >= ((ChoiceGroupUI) ui).size()) {
@@ -271,7 +290,8 @@ public class ChoiceGroup extends Item implements Choice
 
 
   @Override
-  	public void insert(int elementNum, String stringPart, Image imagePart) {
+  @JsMethod
+	 public void insert(int elementNum, String stringPart, Image imagePart) {
 		if (ui.getClass().getName().equals( "org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).insert(elementNum, stringPart, imagePart);
 		} else {
@@ -310,7 +330,8 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
         @Override
-  	public boolean isSelected(int elementNum) {
+  	     @JsMethod
+  	     public boolean isSelected(int elementNum) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).isSelected(elementNum);
 		} else {
@@ -323,7 +344,8 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
         @Override
-  	public void set(int elementNum, String stringPart, Image imagePart) {
+  	     @JsMethod
+  	     public void set(int elementNum, String stringPart, Image imagePart) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).set(elementNum, stringPart, imagePart);
 		} else {
@@ -349,7 +371,8 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
         @Override
-  public void setFitPolicy(int policy) {
+        @JsMethod
+        public void setFitPolicy(int policy) {
 	  if (policy != Choice.TEXT_WRAP_DEFAULT &&
 			  	policy != Choice.TEXT_WRAP_ON &&
 			  	policy != Choice.TEXT_WRAP_OFF)
@@ -361,6 +384,7 @@ public class ChoiceGroup extends Item implements Choice
   }
   
   @Override
+  @JsMethod
   public void setFont(int itemNum, Font font) {
 		if (itemNum < 0 || itemNum >= this.numOfItems) {
 			throw new IndexOutOfBoundsException();
@@ -376,7 +400,8 @@ public class ChoiceGroup extends Item implements Choice
 
 
         @Override
- 	public void setSelectedFlags(boolean[] selectedArray) {
+ 	      @JsMethod
+ 	      public void setSelectedFlags(boolean[] selectedArray) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).setSelectedFlags(selectedArray);
 		} else {
@@ -416,7 +441,8 @@ public class ChoiceGroup extends Item implements Choice
 
 
         @Override
-  	public void setSelectedIndex(int elementNum, boolean selected) {
+  	     @JsMethod
+  	     public void setSelectedIndex(int elementNum, boolean selected) {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			((ChoiceGroupUI) ui).setSelectedIndex(elementNum, selected);
 		} else {
@@ -447,7 +473,8 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
         @Override
-	public int size() {
+	       @JsMethod
+	       public int size() {
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidChoiceGroupUI")) {
 			return ((ChoiceGroupUI) ui).size();
 		} else {
@@ -458,7 +485,8 @@ public class ChoiceGroup extends Item implements Choice
 
         //TWB - made public
         @Override
-	public boolean isFocusable()
+	       @JsMethod
+	       public boolean isFocusable()
 	{
 		return true;
 	}
@@ -466,7 +494,8 @@ public class ChoiceGroup extends Item implements Choice
 
         //TWB - made public
         @Override
-	public int getHeight()
+	       @JsMethod
+	       public int getHeight()
 	{
 		int height = 0;
 		if (this.choiceType == Choice.POPUP) {
@@ -485,6 +514,7 @@ public class ChoiceGroup extends Item implements Choice
 	/*
 	 * Get item index from coordinates
 	 */
+	@JsMethod
 	int getItemIndexAt(int x, int y)
 	{
 		x -= super.getHeight();
@@ -500,6 +530,7 @@ public class ChoiceGroup extends Item implements Choice
 	}
 	
 	
+	@JsMethod
 	int getHeightToItem(int itemIndex) 
 	{
 		int height = 0;
@@ -512,6 +543,7 @@ public class ChoiceGroup extends Item implements Choice
 	}
 
 
+	@JsMethod
 	int getItemHeight(int itemIndex)
 	{
 		return this.items[itemIndex].getHeight();
@@ -520,7 +552,8 @@ public class ChoiceGroup extends Item implements Choice
 
         //TWB - made public
         @Override
-  public int paint(Graphics g)
+        @JsMethod
+        public int paint(Graphics g)
   {
 		super.paintContent(g);
 
@@ -551,6 +584,7 @@ public class ChoiceGroup extends Item implements Choice
 
   //TWB - made public
   @Override
+  @JsMethod
   public boolean select()
   {
     if (this.numOfItems == 0) {
@@ -575,6 +609,7 @@ public class ChoiceGroup extends Item implements Choice
   
   //TWB - made public
   @Override
+  @JsMethod
   public int traverse(int gameKeyCode, int top, int bottom, boolean action)
   {
 	  
@@ -651,6 +686,7 @@ public class ChoiceGroup extends Item implements Choice
   }
 
   @Override
+  @JsMethod
   void repaint() {
 	  // the popup list should be repainted
 	  // in the case it is being shown
@@ -666,6 +702,7 @@ public class ChoiceGroup extends Item implements Choice
     Image box;
            
 
+    @JsConstructor
     ChoiceItem(String label, Image image, String text)
     {
       super(label, image, text);
@@ -673,12 +710,14 @@ public class ChoiceGroup extends Item implements Choice
       font = Font.getDefaultFont();
     }
 
+    @JsMethod
     Font getFont() {
     	return this.font;
     }
     
     @Override
-    	public void setImage(Image img)
+    @JsMethod
+	   public void setImage(Image img)
 	{
                 this.img = img;
 		
@@ -691,7 +730,8 @@ public class ChoiceGroup extends Item implements Choice
 
         //TWB - made public
         @Override
-	public int getHeight()
+	       @JsMethod
+	       public int getHeight()
 	{
                 int height =  0;
                 if (this.box != null) height = this.box.getHeight();                
@@ -706,7 +746,8 @@ public class ChoiceGroup extends Item implements Choice
 
         //TWB - made public
         @Override
-  public int paint(Graphics g)
+        @JsMethod
+        public int paint(Graphics g)
   {
 		if (stringComponent == null) {
 			return 0;
@@ -743,11 +784,13 @@ public class ChoiceGroup extends Item implements Choice
         
         
     
+    @JsMethod
     boolean isSelected()
     {
       return this.selected;
     }
 
+    @JsMethod
     void setFont(Font f) {
 		if (f == null)
 			throw new NullPointerException();
@@ -757,6 +800,7 @@ public class ChoiceGroup extends Item implements Choice
     		this.font = f;
     }
     
+    @JsMethod
     void setSelectedState(boolean state)
     {
       selected = state;
@@ -770,7 +814,8 @@ public class ChoiceGroup extends Item implements Choice
 
   class ImplicitListener implements CommandListener {
       @Override
-		public void commandAction(Command c, Displayable d) {
+		    @JsMethod
+		    public void commandAction(Command c, Displayable d) {
 			List list = (List) d;
 			setSelectedIndex(list.getSelectedIndex(), true);
 			try {

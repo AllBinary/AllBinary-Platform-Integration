@@ -26,19 +26,13 @@
  */
 package org.microemu.graphics.form;
 
-import jsinterop.annotations.JsType;
-
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
 import org.allbinary.logic.string.StringUtil;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
 
-
-@JsType
 public class StringComponent
 {
     //protected final LogUtil logUtil = LogUtil.getInstance();
@@ -53,7 +47,6 @@ public class StringComponent
 
     // 0xFFe07718;
 
-    @JsConstructor
     public StringComponent(String text, final Font font, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         this.font = font;
@@ -66,13 +59,11 @@ public class StringComponent
         this.setText(text);
     }
 
-    @JsMethod
     public int getCharHeight()
     {
         return this.font.getHeight();
     }
 
-    @JsMethod
     public int getCharPositionX(int num)
     {
         //synchronize (this)
@@ -103,7 +94,6 @@ public class StringComponent
         //}
     }
 
-    @JsMethod
     public int getCharPositionY(int num)
     {
         int y = 0;
@@ -127,7 +117,6 @@ public class StringComponent
         return y;
     }
 
-    @JsMethod
     public int getHeight()
     {
         int height;
@@ -163,13 +152,11 @@ public class StringComponent
         return height;
     }
 
-    @JsMethod
     public String getText()
     {
         return this.stringComponentProperties.text;
     }
 
-    @JsMethod
     public void invertPaint(boolean state)
     {
         //synchronize (this)
@@ -182,7 +169,6 @@ public class StringComponent
         //}
     }
 
-    @JsMethod
     public int paint(Graphics g)
     {
         this.paintComponentProperties.copy(this.stringComponentProperties);
@@ -260,7 +246,6 @@ public class StringComponent
         return y;
     }
 
-    @JsMethod
     public void setText(String text)
     {
         //synchronize (this)
@@ -283,7 +268,6 @@ public class StringComponent
         //}
     }
 
-    @JsMethod
     public void setWidthDecreaser(int widthDecreaser)
     {
         //synchronize (this)
@@ -297,7 +281,6 @@ public class StringComponent
         //}
     }
 
-    @JsMethod
     private void insertBreak(int pos)
     {
         int i;
@@ -322,7 +305,6 @@ public class StringComponent
         this.stringComponentProperties.numOfBreaks++;
     }
 
-    @JsMethod
     private void updateBreaks()
     {
         if (this.stringComponentProperties.text == null)
@@ -375,30 +357,25 @@ public class StringComponent
         }
     }
 
-    @JsMethod
     public Font getFont() {
         return this.font;
     }
     
-    @JsMethod
     public BasicColor getBackgroundBasicColor()
     {
         return this.stringComponentProperties.backgroundBasicColor;
     }
 
-    @JsMethod
     public BasicColor getForegroundBasicColor()
     {
         return this.stringComponentProperties.foregroundBasicColor;
     }
 
-    @JsMethod
     public void setBackgroundBasicColor(BasicColor backgroundBasicColor)
     {
         this.stringComponentProperties.backgroundBasicColor = backgroundBasicColor;
     }
 
-    @JsMethod
     public void setForegroundBasicColor(BasicColor foregroundBasicColor)
     {
         this.stringComponentProperties.foregroundBasicColor = foregroundBasicColor;

@@ -394,7 +394,7 @@ public class CustomItem
         return this.commandListener;
     }
 
-    //@JsMethod
+    @JsMethod
     public ABStringComponent getLabelStringComponent()
     {
         return this.labelStringComponent;

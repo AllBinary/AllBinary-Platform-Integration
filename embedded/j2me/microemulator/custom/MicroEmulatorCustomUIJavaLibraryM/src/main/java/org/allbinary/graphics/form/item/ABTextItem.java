@@ -6,19 +6,22 @@
 package org.allbinary.graphics.form.item;
 
 import jsinterop.annotations.JsType;
+import jsinterop.annotations.JsConstructor;
 
 import org.allbinary.graphics.color.BasicColor;
+import org.allbinary.logic.communication.log.PreLogUtil;
+
 import org.microemu.graphics.form.item.TextItem;
-import jsinterop.annotations.JsConstructor;
 
 
 @JsType
 public class ABTextItem extends TextItem
 {
     @JsConstructor
-    public ABTextItem(String label, int layout, String altText,
-                      BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
+    public ABTextItem(final String label, final int layout, final String altText,
+        final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
     {
         super(label, layout, altText, backgroundBasicColor, foregroundBasicColor);
+        
     }
 }

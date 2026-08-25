@@ -294,7 +294,6 @@ public class Form extends Screen
 	}
 
         @Override
-	       @JsMethod
 	       void showNotify() 
 	{
 		super.showNotify();

@@ -146,7 +146,6 @@ public class Screen extends Displayable
 	}
 
 	@Override
-	@JsMethod
 	void showNotify() 
 	{
 		viewPortY = 0;

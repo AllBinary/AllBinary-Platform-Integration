@@ -325,7 +325,6 @@ public class Displayable
 	}
 	
 	
-	@JsMethod
 	void showNotify()
 	{        
 	}

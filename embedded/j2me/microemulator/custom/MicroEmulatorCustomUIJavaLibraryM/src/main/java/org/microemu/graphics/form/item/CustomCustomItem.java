@@ -166,7 +166,6 @@ public class CustomCustomItem extends ABCustomItem implements UpdateMyFontInterf
         this.repaint();
     }
 
-    @JsMethod
     protected void showNotify() {
     }
 

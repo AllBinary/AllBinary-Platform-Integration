@@ -327,7 +327,6 @@ public class List extends Screen implements Choice {
     }
 
     @Override
-    @JsMethod
     void showNotify() {
         super.showNotify();
 

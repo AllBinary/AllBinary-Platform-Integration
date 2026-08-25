@@ -255,7 +255,6 @@ public class Canvas extends Displayable
     }
     
     @Override
-    @JsMethod
     protected void showNotify()
     {
     }

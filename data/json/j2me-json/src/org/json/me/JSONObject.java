@@ -30,6 +30,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 import org.allbinary.logic.NullUtil;
+import org.allbinary.logic.StdUtil;
 import org.allbinary.logic.string.StringUtil;
 
 import org.allbinary.string.CommonSeps;
@@ -148,7 +149,7 @@ public class JSONObject {
      * Construct an empty JSONObject.
      */
     public JSONObject() {
-        this.myHashMap = new Hashtable();
+        this.myHashMap = StdUtil.getInstance().createHashtable();
     }
 
 
@@ -235,7 +236,7 @@ public class JSONObject {
      */
     public JSONObject(Hashtable map) {
         if (map == null) {
-            this.myHashMap = new Hashtable();
+            this.myHashMap = StdUtil.getInstance().createHashtable();
         } else {
             this.myHashMap = new Hashtable(map.size());
             Enumeration keys = map.keys();

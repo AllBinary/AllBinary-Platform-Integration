@@ -14,10 +14,9 @@
 package org.allbinary.media.graphics.geography.map.platform;
 
 import java.util.Hashtable;
+import org.allbinary.logic.StdUtil;
 
 import org.allbinary.logic.communication.log.LogUtil;
-import org.allbinary.string.CommonSeps;
-import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
@@ -48,7 +47,7 @@ public class TileSetToGeographicMapUtil {
         final StringMaker stringMaker = 
                 null;
                 //new StringMaker();
-        final Hashtable map = new Hashtable();
+        final Hashtable map = StdUtil.getInstance().createHashtable();
         final int tileCount = tileSet.getTilecount();
         Tile tile;
         BasicArrayList objectGroupList;

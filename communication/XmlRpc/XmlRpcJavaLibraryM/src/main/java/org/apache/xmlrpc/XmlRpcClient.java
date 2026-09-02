@@ -69,6 +69,7 @@ import java.util.Vector;
 
 import org.allbinary.init.crypt.jcehelper.BasicCryptUtil;
 import org.allbinary.init.crypt.jcehelper.CryptInterface;
+import org.allbinary.logic.StdUtil;
 
 import org.allbinary.logic.communication.log.LogUtil;
 
@@ -91,7 +92,7 @@ public class XmlRpcClient implements XmlRpcHandler
     private String auth;
 
     // pool of worker instances
-    protected Stack pool = new Stack();
+    protected Stack pool = StdUtil.getInstance().createStack();
     protected int workers = 0;
     protected int asyncWorkers = 0;
 
@@ -717,7 +718,7 @@ public class XmlRpcClient implements XmlRpcHandler
         {
             String url = args[0];
             String method = args[1];
-            Vector v = new Vector();
+            Vector v = StdUtil.getInstance().createVector();
 
             for (int i = 2; i < args.length; i++)
             {

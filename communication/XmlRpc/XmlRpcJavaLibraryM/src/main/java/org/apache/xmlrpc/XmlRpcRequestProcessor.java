@@ -57,6 +57,7 @@ package org.apache.xmlrpc;
 
 import java.io.InputStream;
 import java.util.Vector;
+import org.allbinary.logic.StdUtil;
 
 /**
  * Process an InputStream and produce and XmlRpcRequest.  This class
@@ -76,7 +77,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
      */
     protected XmlRpcRequestProcessor()
     {
-        this.requestParams = new Vector();
+        this.requestParams = StdUtil.getInstance().createVector();
     }
 
     /**

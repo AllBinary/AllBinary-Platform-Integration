@@ -60,6 +60,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 import org.allbinary.logic.NullUtil;
+import org.allbinary.logic.StdUtil;
 
 /**
  * Process an Object and produce byte array that represents the specified
@@ -190,7 +191,7 @@ public class XmlRpcResponseProcessor
         throws XmlRpcException, IOException
     {
         // System.err.println("error: "+message);
-        Hashtable h = new Hashtable();
+        Hashtable h = StdUtil.getInstance().createHashtable();
         h.put("faultCode", new Integer(code));
         h.put("faultString", message);
         writer.startElement("methodResponse");

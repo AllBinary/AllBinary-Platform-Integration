@@ -38,6 +38,7 @@ import java.io.File;
 //import java.io.File;
 import java.io.InputStream;
 import java.util.Hashtable;
+import org.allbinary.logic.StdUtil;
 //import java.util.Base64;
 //import java.util.Map.Entry;
 
@@ -726,7 +727,7 @@ public class GDJSONMapReader {
         map.setRenderorder(RenderOrder.fromValue(mapJSONObject.getString(this.RENDER_ORDER)));
         map.setTiledversion(mapJSONObject.getString(this.TILED_VERSION));
 
-        this.tilesetPerFirstGid = new Hashtable();
+        this.tilesetPerFirstGid = StdUtil.getInstance().createHashtable();
 
         final JSONArray jsonArray = mapJSONObject.getJSONArray(this.TILESETS);
         final int size = jsonArray.length();

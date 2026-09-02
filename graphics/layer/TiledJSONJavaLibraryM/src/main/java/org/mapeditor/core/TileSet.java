@@ -35,11 +35,11 @@ import java.util.Hashtable;
 import java.util.NoSuchElementException;
 
 import org.allbinary.graphics.color.BasicColor;
+import org.allbinary.logic.StdUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.logic.communication.log.LogUtil;
-import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
 //import org.mapeditor.util.TransparentImageFilter;
@@ -75,7 +75,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
     public TileSet() {
         super();
         this.internalTiles = new BasicArrayListD();
-        this.tiles = new Hashtable();
+        this.tiles = StdUtil.getInstance().createHashtable();
     }
 
     /**

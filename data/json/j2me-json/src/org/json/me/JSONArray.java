@@ -29,6 +29,7 @@ import java.io.Writer;
 import java.util.Hashtable;
 import java.util.Vector;
 import org.allbinary.logic.NullUtil;
+import org.allbinary.logic.StdUtil;
 
 /**
  * A JSONArray is an ordered sequence of values. Its external text form is a
@@ -94,7 +95,7 @@ public class JSONArray {
      * Construct an empty JSONArray.
      */
     public JSONArray() {
-        this.myArrayList = new Vector();
+        this.myArrayList = StdUtil.getInstance().createVector();
     }
 
     /**
@@ -154,7 +155,7 @@ public class JSONArray {
      */
     public JSONArray(Vector collection) {
         if (collection == null) {
-            this.myArrayList = new Vector();
+            this.myArrayList = StdUtil.getInstance().createVector();
         } else {
             int size = collection.size();
             this.myArrayList = new Vector(size);

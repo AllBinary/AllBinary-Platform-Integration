@@ -53,6 +53,7 @@ import java.util.EmptyStackException;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.Vector;
+import org.allbinary.logic.StdUtil;
 
 import org.xml.sax.AttributeList;
 import org.xml.sax.DTDHandler;
@@ -122,8 +123,8 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   }
 
   public void parse(final Reader in) throws SAXException, IOException {
-  final Vector attributeNames = new Vector();
-  final Vector attributeValues = new Vector();
+  final Vector attributeNames = StdUtil.getInstance().createVector();
+  final Vector attributeValues = StdUtil.getInstance().createVector();
 
   final AttributeList attrs = new AttributeList() {
     public int getLength() {
@@ -728,7 +729,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   private DocumentHandler extDocumentHandler = this;
   private org.xml.sax.DocumentHandler documentHandler = this;
   private ErrorHandler errorHandler = this;
-  private final Stack tags = new Stack();
+  private final Stack tags = StdUtil.getInstance().createStack();
   private int lineNumber = 1;
   private int columnNumber = 0;
   private final int initialBufferSize;

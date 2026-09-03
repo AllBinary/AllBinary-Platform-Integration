@@ -56,7 +56,8 @@ package org.apache.xmlrpc;
  */
 
 import java.io.InputStream;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.StdUtil;
 
 /**
@@ -70,14 +71,14 @@ import org.allbinary.logic.StdUtil;
  */
 public class XmlRpcRequestProcessor extends XmlRpc
 {
-    private Vector requestParams;
+    private BasicArrayList requestParams;
 
     /**
      * Creates a new instance.
      */
     protected XmlRpcRequestProcessor()
     {
-        this.requestParams = StdUtil.getInstance().createVector();
+        this.requestParams = new BasicArrayListD();
     }
 
     /**
@@ -116,11 +117,11 @@ public class XmlRpcRequestProcessor extends XmlRpc
                 throw new ParseFailed(this.errorMsg);
             }
 
-            return new XmlRpcRequest(this.methodName, (Vector) this.requestParams.clone());
+            return new XmlRpcRequest(this.methodName, (BasicArrayList) this.requestParams.clone());
         }
         finally
         {
-            this.requestParams.removeAllElements();
+            this.requestParams.clear();
             if (XmlRpc.debug)
             {
                 System.out.println("Spent " + (System.currentTimeMillis() - now) + " millis decoding request");
@@ -137,6 +138,6 @@ public class XmlRpcRequestProcessor extends XmlRpc
     @Override
     protected void objectParsed(Object what)
     {
-        this.requestParams.addElement(what);
+        this.requestParams.add(what);
     }
 }

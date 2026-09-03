@@ -64,7 +64,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * A quick and dirty XML writer.  If you feed it a
@@ -234,15 +235,15 @@ class XmlWriter extends OutputStreamWriter
             this.endElement("data");
             this.endElement("array");
         }
-        else if (obj instanceof Vector)
+        else if (obj instanceof BasicArrayList)
         {
             this.startElement("array");
             this.startElement("data");
-            Vector array = (Vector) obj;
+            BasicArrayList array = (BasicArrayList) obj;
             int size = array.size();
             for (int i = 0; i < size; i++)
             {
-                this.writeObject(array.elementAt(i));
+                this.writeObject(array.get(i));
             }
             this.endElement("data");
             this.endElement("array");

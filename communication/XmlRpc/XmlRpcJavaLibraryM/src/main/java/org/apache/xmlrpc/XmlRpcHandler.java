@@ -55,7 +55,8 @@ package org.apache.xmlrpc;
  * <http://www.apache.org/>.
  */
 
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * The XML-RPC server uses this interface to call a method of an RPC handler.
@@ -72,6 +73,6 @@ public interface XmlRpcHandler
     /**
      * Return the result, or throw an Exception if something went wrong.
      */
-    Object execute (String method, Vector<Object> params)
+    Object execute (String method, BasicArrayList params)
             throws Exception;
 }

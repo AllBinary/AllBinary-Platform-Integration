@@ -28,7 +28,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.StdUtil;
 import org.allbinary.logic.string.StringUtil;
@@ -655,7 +656,7 @@ public class JSONObject {
      * @return		this.
      * @throws JSONException
      */
-    public JSONObject put(String key, Vector value) throws JSONException {
+    public JSONObject put(String key, BasicArrayList value) throws JSONException {
         this.put(key, new JSONArray(value));
         return this;
     }

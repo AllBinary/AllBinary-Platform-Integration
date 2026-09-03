@@ -65,7 +65,8 @@ import java.net.URLConnection;
 import java.util.EmptyStackException;
 import java.util.Hashtable;
 import java.util.Stack;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 import org.allbinary.init.crypt.jcehelper.BasicCryptUtil;
 import org.allbinary.init.crypt.jcehelper.CryptInterface;
@@ -167,7 +168,7 @@ public class XmlRpcClient implements XmlRpcHandler
      * @exception IOException: If the call could not be made because of lower
      *          level problems.
      */
-    public Object execute(String method, Vector params)
+    public Object execute(String method, BasicArrayList params)
             throws XmlRpcException, IOException
     {
         Worker worker = this.getWorker(false);
@@ -182,7 +183,7 @@ public class XmlRpcClient implements XmlRpcHandler
         }
     }
 
-    public Object execute(String method, Vector params, CryptInterface abCrypt)
+    public Object execute(String method, BasicArrayList params, CryptInterface abCrypt)
             throws XmlRpcException, IOException
     {
         Worker worker = this.getWorker(false);
@@ -203,7 +204,7 @@ public class XmlRpcClient implements XmlRpcHandler
      * the result or error when the call is finished.
      */
     /*
-    public void executeAsync(String method, Vector params,
+    public void executeAsync(String method, BasicArrayList params,
             AsyncCallback callback)
     {
         // if at least 4 threads are running, don't create any new ones,
@@ -308,7 +309,7 @@ public class XmlRpcClient implements XmlRpcHandler
      * @param params
      * @param callback
      */
-    synchronized void enqueue(String method, Vector params,
+    synchronized void enqueue(String method, BasicArrayList params,
             AsyncCallback callback)
     {
         CallData call = new CallData(method, params, callback);
@@ -375,7 +376,7 @@ public class XmlRpcClient implements XmlRpcHandler
          * @param callback
          */
         /*
-        public void start(String method, Vector params,
+        public void start(String method, BasicArrayList params,
                 AsyncCallback callback)
         {
             this.call = new CallData(method, params, callback);
@@ -400,7 +401,7 @@ public class XmlRpcClient implements XmlRpcHandler
         /**
          * Execute an XML-RPC call and handle asyncronous callback.
          */
-        void executeAsync(String method, Vector params, AsyncCallback callback)
+        void executeAsync(String method, BasicArrayList params, AsyncCallback callback)
         {
             Object res = null;
             try
@@ -430,7 +431,7 @@ public class XmlRpcClient implements XmlRpcHandler
         /**
          * Execute an XML-RPC call.
          */
-        Object execute(final String method, final Vector params)
+        Object execute(final String method, final BasicArrayList params)
                 throws XmlRpcException, IOException
         {
             this.fault = false;
@@ -512,7 +513,7 @@ public class XmlRpcClient implements XmlRpcHandler
         /**
          * Execute an XML-RPC call.
          */
-        Object execute(String method, Vector params, CryptInterface cryptInterface)
+        Object execute(String method, BasicArrayList params, CryptInterface cryptInterface)
                 throws XmlRpcException, IOException
         {
             this.fault = false;
@@ -649,7 +650,7 @@ public class XmlRpcClient implements XmlRpcHandler
         /**
          * Generate an XML-RPC request from a method name and a parameter vector.
          */
-        void writeRequest(XmlWriter writer, String method, Vector params)
+        void writeRequest(XmlWriter writer, String method, BasicArrayList params)
                 throws IOException, XmlRpcException
         {
             writer.startElement("methodCall");
@@ -661,7 +662,7 @@ public class XmlRpcClient implements XmlRpcHandler
             for (int i = 0; i < l; i++)
             {
                 writer.startElement("param");
-                writer.writeObject(params.elementAt(i));
+                writer.writeObject(params.get(i));
                 writer.endElement("param");
             }
             writer.endElement("params");
@@ -690,7 +691,7 @@ public class XmlRpcClient implements XmlRpcHandler
     class CallData
     {
         String method;
-        Vector params;
+        BasicArrayList params;
         AsyncCallback callback;
         CallData next;
 
@@ -698,7 +699,7 @@ public class XmlRpcClient implements XmlRpcHandler
          * Make a call to be queued and then executed by the next free async
          * thread
          */
-        public CallData(String method, Vector params, AsyncCallback callback)
+        public CallData(String method, BasicArrayList params, AsyncCallback callback)
         {
             this.method = method;
             this.params = params;
@@ -718,17 +719,17 @@ public class XmlRpcClient implements XmlRpcHandler
         {
             String url = args[0];
             String method = args[1];
-            Vector v = StdUtil.getInstance().createVector();
+            BasicArrayList v = new BasicArrayListD();
 
             for (int i = 2; i < args.length; i++)
             {
                 try
                 {
-                    v.addElement(new Integer(Integer.parseInt(args[i])));
+                    v.add(new Integer(Integer.parseInt(args[i])));
                 }
                 catch(NumberFormatException nfx)
                 {
-                    v.addElement(args[i]);
+                    v.add(args[i]);
                 }
             }
             XmlRpcClient client = new XmlRpcClientLite(url);

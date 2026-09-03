@@ -55,7 +55,8 @@ package org.apache.xmlrpc;
  * <http://www.apache.org/>.
  */
 
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  *
@@ -67,7 +68,7 @@ public class AuthDemo implements AuthenticatedXmlRpcHandler
     /**
      *
      */
-    public Object execute(String method, Vector v, String user, String password)
+    public Object execute(String method, BasicArrayList v, String user, String password)
             throws Exception
     {
         // our simplistic authentication guidelines never fail ;)

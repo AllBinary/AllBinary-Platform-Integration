@@ -55,7 +55,8 @@ package org.apache.xmlrpc;
  * <http://www.apache.org/>.
  */
 
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * Encapsulates an XML-RPC request.
@@ -67,22 +68,22 @@ import java.util.Vector;
 public class XmlRpcRequest
 {
     protected final String methodName;
-    protected final Vector parameters;
+    protected final BasicArrayList parameters;
 
-    public XmlRpcRequest(String methodName, Vector parameters)
+    public XmlRpcRequest(String methodName, BasicArrayList parameters)
     {
         this.parameters = parameters;
         this.methodName = methodName;
     }
 
-    public Vector getParameters()
+    public BasicArrayList getParameters()
     {
         return this.parameters;
     }
 
     public Object getParameter(int index)
     {
-        return this.parameters.elementAt(index);
+        return this.parameters.get(index);
     }
 
     public String getMethodName()

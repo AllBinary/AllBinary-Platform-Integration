@@ -52,7 +52,8 @@ import java.net.URL;
 import java.util.EmptyStackException;
 import java.util.Locale;
 import java.util.Stack;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.StdUtil;
 
 import org.xml.sax.AttributeList;
@@ -123,8 +124,8 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   }
 
   public void parse(final Reader in) throws SAXException, IOException {
-  final Vector attributeNames = StdUtil.getInstance().createVector();
-  final Vector attributeValues = StdUtil.getInstance().createVector();
+  final BasicArrayList attributeNames = new BasicArrayListD();
+  final BasicArrayList attributeValues = new BasicArrayListD();
 
   final AttributeList attrs = new AttributeList() {
     public int getLength() {
@@ -132,7 +133,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     }
 
     public String getName(final int i) {
-      return (String)attributeNames.elementAt(i);
+      return (String)attributeNames.get(i);
     }
 
     public String getType(final int i) {
@@ -140,7 +141,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     }
 
     public String getValue(final int i) {
-      return (String)attributeValues.elementAt(i);
+      return (String)attributeValues.get(i);
     }
 
     public String getType(final String name) {
@@ -150,7 +151,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     public String getValue(final String name) {
     final int index = attributeNames.indexOf(name);
 
-      return (index == -1) ? null : (String)attributeValues.elementAt(index);
+      return (index == -1) ? null : (String)attributeValues.get(index);
     }
   };
 
@@ -229,8 +230,8 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
             buffer.pushWriter(newWriter);
             this.tags.push(elementName);
 
-            attributeValues.removeAllElements();
-            attributeNames.removeAllElements();
+            attributeValues.clear();
+            attributeNames.clear();
 
             if (mixedContentLevel != -1) mixedContentLevel++;
 
@@ -290,13 +291,13 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           case MinML.saveAttributeName:
           // save attribute name
 
-            attributeNames.addElement(buffer.getString());
+            attributeNames.add(buffer.getString());
             break;  // change state to operand
 
           case MinML.saveAttributeValue:
           // save attribute value
 
-            attributeValues.addElement(buffer.getString());
+            attributeValues.add(buffer.getString());
             break;  // change state to operand
 
           case MinML.startComment:
@@ -484,7 +485,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     finally {
       this.errorHandler = this;
       this.documentHandler = this.extDocumentHandler = this;
-      this.tags.removeAllElements();
+      this.tags.clear();
     }
   }
 

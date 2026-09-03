@@ -58,7 +58,8 @@ package org.apache.xmlrpc;
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Stack;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 import org.xml.sax.AttributeList;
 import org.xml.sax.HandlerBase;
@@ -513,7 +514,7 @@ public abstract class XmlRpc extends HandlerBase
             // arrays here.  For objects contained in structs, wait
             // for </member> (see code below).
             int depth = this.values.size ();
-            if (depth < 2 || this.values.elementAt(depth - 2).hashCode() != XmlRpc.STRUCT)
+            if (depth < 2 || this.values.get(depth - 2).hashCode() != XmlRpc.STRUCT)
             {
                 Value v = this.currentValue;
                 this.values.pop();
@@ -661,7 +662,7 @@ public abstract class XmlRpc extends HandlerBase
         String nextMemberName;
 
         Hashtable struct;
-        Vector array;
+        BasicArrayList array;
 
         /**
          * Constructor.
@@ -679,7 +680,7 @@ public abstract class XmlRpc extends HandlerBase
             switch (this.type)
             {
                 case XmlRpc.ARRAY:
-                    this.array.addElement(child.value);
+                    this.array.add(child.value);
                     break;
                 case XmlRpc.STRUCT:
                     this.struct.put(this.nextMemberName, child.value);
@@ -697,7 +698,7 @@ public abstract class XmlRpc extends HandlerBase
             switch (type)
             {
                 case XmlRpc.ARRAY:
-                    this.value = this.array = new Vector ();
+                    this.value = this.array = new BasicArrayListD();
                     break;
                 case XmlRpc.STRUCT:
                     this.value = this.struct = new Hashtable ();

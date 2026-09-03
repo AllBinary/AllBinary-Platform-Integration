@@ -66,7 +66,8 @@ import java.net.URL;
 import java.util.EmptyStackException;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonSeps;
 
@@ -171,7 +172,7 @@ public class XmlRpcClientLite extends XmlRpcClient
          * @throws IOException
          */
         @Override
-        Object execute(String method, Vector params)
+        Object execute(String method, BasicArrayList params)
                 throws XmlRpcException, IOException
         {
             long now = System.currentTimeMillis();
@@ -494,16 +495,16 @@ public class XmlRpcClientLite extends XmlRpcClient
             String url = args[0];
             String method = args[1];
             XmlRpcClientLite client = new XmlRpcClientLite (url);
-            Vector v = new Vector ();
+            BasicArrayList v = new BasicArrayListD();
             for (int i = 2; i < args.length; i++)
             {
                 try
                 {
-                    v.addElement(new Integer(Integer.parseInt(args[i])));
+                    v.add(new Integer(Integer.parseInt(args[i])));
                 }
                 catch (NumberFormatException nfx)
                 {
-                    v.addElement(args[i]);
+                    v.add(args[i]);
                 }
             }
             // XmlRpc.setEncoding ("UTF-8");

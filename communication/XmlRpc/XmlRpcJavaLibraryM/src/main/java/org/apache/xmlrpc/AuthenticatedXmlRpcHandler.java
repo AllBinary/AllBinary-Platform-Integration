@@ -55,7 +55,8 @@ package org.apache.xmlrpc;
  * <http://www.apache.org/>.
  */
 
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 /**
  * An XML-RPC handler that also handles HTTP authentication.
@@ -78,7 +79,7 @@ public interface AuthenticatedXmlRpcHandler
      * exception of this type must be thrown.
      * @see org.apache.xmlrpc.AuthenticationFailed
      */
-    Object execute(String method, Vector params, String user,
+    Object execute(String method, BasicArrayList params, String user,
                           String password)
         throws Exception;
 }

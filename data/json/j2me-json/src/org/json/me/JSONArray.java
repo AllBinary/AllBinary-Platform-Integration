@@ -27,9 +27,11 @@ SOFTWARE.
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Hashtable;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.StdUtil;
+import org.allbinary.util.BasicArrayListS;
 
 /**
  * A JSONArray is an ordered sequence of values. Its external text form is a
@@ -86,16 +88,16 @@ public class JSONArray {
     public static final JSONArray NULL_ARRAY = new JSONArray();
 
     /**
-     * The Vector where the JSONArray's properties are kept.
+     * The BasicArrayList where the JSONArray's properties are kept.
      */
-    private Vector myArrayList;
+    private BasicArrayList myArrayList;
 
 
     /**
      * Construct an empty JSONArray.
      */
     public JSONArray() {
-        this.myArrayList = StdUtil.getInstance().createVector();
+        this.myArrayList = new BasicArrayListD();
     }
 
     /**
@@ -115,10 +117,10 @@ public class JSONArray {
         for (;;) {
             if (x.nextClean() == ',') {
                 x.back();
-                this.myArrayList.addElement(null);
+                this.myArrayList.add(null);
             } else {
                 x.back();
-                this.myArrayList.addElement(x.nextValue());
+                this.myArrayList.add(x.nextValue());
             }
             switch (x.nextClean()) {
             case ';':
@@ -153,14 +155,14 @@ public class JSONArray {
      * Construct a JSONArray from a Collection.
      * @param collection     A Collection.
      */
-    public JSONArray(Vector collection) {
+    public JSONArray(BasicArrayList collection) {
         if (collection == null) {
-            this.myArrayList = StdUtil.getInstance().createVector();
+            this.myArrayList = new BasicArrayListD();
         } else {
             int size = collection.size();
-            this.myArrayList = new Vector(size);
+            this.myArrayList = new BasicArrayListS(size);
             for (int i=0; i < size; i++) {
-                this.myArrayList.addElement(collection.elementAt(i));
+                this.myArrayList.add(collection.get(i));
             }
         }
     }
@@ -323,7 +325,7 @@ public class JSONArray {
             if (i > 0) {
                 sb.append(separator);
             }
-            sb.append(JSONObject.valueToString(this.myArrayList.elementAt(i)));
+            sb.append(JSONObject.valueToString(this.myArrayList.get(i)));
         }
         return sb.toString();
     }
@@ -347,7 +349,7 @@ public class JSONArray {
      */
     public Object opt(int index) {
         return (index < 0 || index >= this.length()) ?
-            null : this.myArrayList.elementAt(index);
+            null : this.myArrayList.get(index);
     }
 
 
@@ -552,7 +554,7 @@ public class JSONArray {
      * @param value A Collection value.
      * @return      this.
      */
-    public JSONArray put(Vector value) {
+    public JSONArray put(BasicArrayList value) {
         this.put(new JSONArray(value));
         return this;
     }
@@ -617,7 +619,7 @@ public class JSONArray {
      * @return this.
      */
     public JSONArray put(Object value) {
-        this.myArrayList.addElement(value);
+        this.myArrayList.add(value);
         return this;
     }
 
@@ -646,7 +648,7 @@ public class JSONArray {
      * @throws JSONException If the index is negative or if the value is
      * not finite.
      */
-    public JSONArray put(int index, Vector value) throws JSONException {
+    public JSONArray put(int index, BasicArrayList value) throws JSONException {
         this.put(index, new JSONArray(value));
         return this;
     }
@@ -731,7 +733,7 @@ public class JSONArray {
             throw new JSONException("JSONArray[" + index + "] not found.");
         }
         if (index < this.length()) {
-            this.myArrayList.setElementAt(value, index);
+            this.myArrayList.set(index, value);
         } else {
             while (index != this.length()) {
                 this.put(JSONObject.NULL);
@@ -817,7 +819,7 @@ public class JSONArray {
         int i;
         StringBuffer sb = new StringBuffer("[");
         if (len == 1) {
-            sb.append(JSONObject.valueToString(this.myArrayList.elementAt(0),
+            sb.append(JSONObject.valueToString(this.myArrayList.get(0),
                     indentFactor, indent));
         } else {
             int newindent = indent + indentFactor;
@@ -829,7 +831,7 @@ public class JSONArray {
                 for (int j = 0; j < newindent; j += 1) {
                     sb.append(' ');
                 }
-                sb.append(JSONObject.valueToString(this.myArrayList.elementAt(i),
+                sb.append(JSONObject.valueToString(this.myArrayList.get(i),
                         indentFactor, newindent));
             }
             sb.append('\n');
@@ -862,7 +864,7 @@ public class JSONArray {
                 if (b) {
                     writer.write(',');
                 }
-                Object v = this.myArrayList.elementAt(i);
+                Object v = this.myArrayList.get(i);
                 if (v instanceof JSONObject) {
                     ((JSONObject)v).write(writer);
                 } else if (v instanceof JSONArray) {

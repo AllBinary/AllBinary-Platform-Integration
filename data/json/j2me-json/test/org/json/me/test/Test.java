@@ -2,7 +2,8 @@ package org.json.me.test;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 import org.json.me.*;
 
 /**
@@ -234,7 +235,7 @@ public class Test {
             System.out.println(j.write(new StringWriter()));
             System.out.println("");
 
-            Vector c = null;
+            BasicArrayList c = null;
             Hashtable m = null;
             
             j = new JSONObject(m);

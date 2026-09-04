@@ -5,22 +5,21 @@
  */
 package org.microemu.graphics.form;
 
-import java.util.Vector;
-
 import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
 import org.allbinary.graphics.paint.Paintable;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 public class CustomDisplayable extends Paintable
 {
     protected StringComponent title;
 
-    private final Vector<Object> commands = new Vector<Object>();
+    private final BasicArrayList commands = new BasicArrayListD();
 
     CustomDisplayable(String title, 
             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
@@ -34,7 +33,7 @@ public class CustomDisplayable extends Paintable
         final int size = this.commands.size();
         for (int i = 0; i < size; i++)
         {
-            command = (Command) this.commands.elementAt(i);
+            command = (Command) this.commands.get(i);
             if (cmd == command)
             {
                 return;
@@ -44,23 +43,23 @@ public class CustomDisplayable extends Paintable
         boolean inserted = false;
         for (int i = 0; i < this.commands.size(); i++)
         {
-            command = (Command) this.commands.elementAt(i);
+            command = (Command) this.commands.get(i);
             if (cmd.getPriority() < command.getPriority())
             {
-                this.commands.insertElementAt(cmd, i);
+                this.commands.addAt(i, cmd);
                 inserted = true;
                 break;
             }
         }
         if (inserted == false)
         {
-            this.commands.addElement(cmd);
+            this.commands.add(cmd);
         }
     }
 
     public void removeCommand(Command cmd)
     {
-        this.commands.removeElement(cmd);
+        this.commands.remove(cmd);
     }
 
     public int getWidth()
@@ -92,7 +91,7 @@ public class CustomDisplayable extends Paintable
     {
     }
 
-    public Vector<Object> getCommands()
+    public BasicArrayList getCommands()
     {
         return this.commands;
     }

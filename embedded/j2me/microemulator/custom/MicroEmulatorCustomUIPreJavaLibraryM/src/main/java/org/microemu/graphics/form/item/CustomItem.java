@@ -27,8 +27,9 @@
 package org.microemu.graphics.form.item;
 
 import jsinterop.annotations.JsType;
-
-import java.util.Vector;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
@@ -43,9 +44,8 @@ import org.allbinary.logic.communication.log.ForcedLogUtil;
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
 import org.allbinary.graphics.displayable.command.MyCommandsFactory;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
 
 
 @JsType
@@ -93,7 +93,7 @@ public class CustomItem
 
     // MIDP2
     private int layout;
-    private Vector<Object> commands;
+    private BasicArrayList commands;
     private Command defaultCommand = MyCommandsFactory.getInstance().NO_COMMAND;
     
     private CustomItemCommandListener commandListener = CustomItemCommand.NULL_CUSTOM_ITEM_COMMAND;
@@ -105,7 +105,7 @@ public class CustomItem
     {
         this.labelStringComponent = new ABStringComponent(backgroundBasicColor, foregroundBasicColor);
         this.labelStringComponent.setText(label);
-        this.commands = new Vector<Object>();
+        this.commands = new BasicArrayListD();
     }
 
     @JsMethod
@@ -123,10 +123,10 @@ public class CustomItem
             Command command;
             for (int i = 0; i < this.commands.size(); i++)
             {
-                command = (Command) this.commands.elementAt(i);
+                command = (Command) this.commands.get(i);
                 if (cmd.getPriority() < command.getPriority())
                 {
-                    this.commands.insertElementAt(cmd, i);
+                    this.commands.addAt(i, cmd);
                     inserted = true;
                     break;
                 }
@@ -135,7 +135,7 @@ public class CustomItem
             if (!inserted)
             {
                 // Not inserted just place it at the end
-                this.commands.addElement(cmd);
+                this.commands.add(cmd);
             }
         }
 
@@ -211,7 +211,7 @@ public class CustomItem
     @JsMethod
     public void removeCommand(Command cmd)
     {
-        this.commands.removeElement(cmd);
+        this.commands.remove(cmd);
         if (this.defaultCommand == cmd)
             this.defaultCommand = MyCommandsFactory.getInstance().NO_COMMAND;
     }

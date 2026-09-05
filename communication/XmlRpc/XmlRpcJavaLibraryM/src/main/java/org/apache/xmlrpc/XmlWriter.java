@@ -62,10 +62,10 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Properties;
+import org.allbinary.util.ABHashtable;
+
 import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
 
 /**
  * A quick and dirty XML writer.  If you feed it a
@@ -248,10 +248,10 @@ class XmlWriter extends OutputStreamWriter
             this.endElement("data");
             this.endElement("array");
         }
-        else if (obj instanceof Hashtable)
+        else if (obj instanceof ABHashtable)
         {
             this.startElement("struct");
-            Hashtable struct = (Hashtable) obj;
+            ABHashtable struct = (ABHashtable) obj;
             for (Enumeration enumeration = struct.keys(); enumeration.hasMoreElements(); )
             {
                 String key = (String) enumeration.nextElement();

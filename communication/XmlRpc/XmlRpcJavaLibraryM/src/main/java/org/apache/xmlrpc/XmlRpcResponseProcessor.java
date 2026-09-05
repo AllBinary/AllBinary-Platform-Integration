@@ -58,9 +58,10 @@ package org.apache.xmlrpc;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Hashtable;
+
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.StdUtil;
+import org.allbinary.util.ABHashtable;
 
 /**
  * Process an Object and produce byte array that represents the specified
@@ -191,7 +192,7 @@ public class XmlRpcResponseProcessor
         throws XmlRpcException, IOException
     {
         // System.err.println("error: "+message);
-        Hashtable h = StdUtil.getInstance().createHashtable();
+        ABHashtable h = StdUtil.getInstance().createHashtable();
         h.put("faultCode", new Integer(code));
         h.put("faultString", message);
         writer.startElement("methodResponse");

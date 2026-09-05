@@ -64,12 +64,13 @@ import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.EmptyStackException;
-import java.util.Hashtable;
 import java.util.StringTokenizer;
+
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonSeps;
+import org.allbinary.util.ABHashtable;
 
 /**
  * A multithreaded, reusable XML-RPC client object. This version uses a homegrown
@@ -274,7 +275,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 XmlRpcException exception = null;
                 try
                 {
-                    Hashtable f = (Hashtable) this.result;
+                    ABHashtable f = (ABHashtable) this.result;
                     String faultString = (String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());

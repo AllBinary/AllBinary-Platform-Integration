@@ -56,8 +56,8 @@ package org.apache.xmlrpc;
  */
 
 import java.io.InputStream;
-import java.util.Hashtable;
 import java.util.Stack;
+import org.allbinary.util.ABHashtable;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -112,7 +112,7 @@ public abstract class XmlRpc extends HandlerBase
      * The class name of SAX parser to use.
      */
     private static Class parserClass;
-    private static Hashtable saxDrivers = new Hashtable (8);
+    private static ABHashtable saxDrivers = new ABHashtable (8);
 
     static
     {
@@ -661,7 +661,7 @@ public abstract class XmlRpc extends HandlerBase
         // the name to use for the next member of struct values
         String nextMemberName;
 
-        Hashtable struct;
+        ABHashtable struct;
         BasicArrayList array;
 
         /**
@@ -701,7 +701,7 @@ public abstract class XmlRpc extends HandlerBase
                     this.value = this.array = new BasicArrayListD();
                     break;
                 case XmlRpc.STRUCT:
-                    this.value = this.struct = new Hashtable ();
+                    this.value = this.struct = new ABHashtable ();
                     break;
             }
         }

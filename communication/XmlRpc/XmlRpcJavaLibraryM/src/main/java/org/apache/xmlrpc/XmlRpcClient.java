@@ -63,8 +63,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.EmptyStackException;
-import java.util.Hashtable;
 import java.util.Stack;
+
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -73,6 +73,7 @@ import org.allbinary.init.crypt.jcehelper.CryptInterface;
 import org.allbinary.logic.StdUtil;
 
 import org.allbinary.logic.communication.log.LogUtil;
+import org.allbinary.util.ABHashtable;
 
 //import abcs.logic.communication.log.LogUtil;
 
@@ -490,7 +491,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 XmlRpcException exception = null;
                 try
                 {
-                    Hashtable f =(Hashtable) this.result;
+                    ABHashtable f =(ABHashtable) this.result;
                     String faultString =(String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());
@@ -618,7 +619,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 XmlRpcException exception = null;
                 try
                 {
-                    Hashtable f =(Hashtable) this.result;
+                    ABHashtable f =(ABHashtable) this.result;
                     String faultString =(String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());

@@ -113,7 +113,7 @@ public final class Font
 	
 	
 	@JsMethod
-	public static Font getFont(int specifier) {
+	public static Font getFontWithSpecifier(int specifier) {
 		if (specifier != Font.FONT_INPUT_TEXT &&
 					specifier != Font.FONT_STATIC_TEXT)
 			throw new IllegalArgumentException("Bad specifier");

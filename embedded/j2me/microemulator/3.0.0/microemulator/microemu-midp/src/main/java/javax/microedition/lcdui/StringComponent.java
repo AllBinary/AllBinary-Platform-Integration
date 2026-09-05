@@ -25,9 +25,13 @@
 package javax.microedition.lcdui;
 
 import org.allbinary.graphics.ItemColorFactory;
+import org.allbinary.logic.ABSystemWrapper;
 import org.microemu.device.DeviceFactory;
 
 class StringComponent {
+    
+    private final ABSystemWrapper systemWrapper = ABSystemWrapper.getInstance();
+    
 	private String text;
 
 	private int breaks[] = new int[4];
@@ -232,10 +236,10 @@ class StringComponent {
 		}
 		if (this.numOfBreaks + 1 == this.breaks.length) {
 			int newbreaks[] = new int[breaks.length + 4];
-			System.arraycopy(breaks, 0, newbreaks, 0, numOfBreaks);
+                        this.systemWrapper.arraycopy(breaks, 0, newbreaks, 0, numOfBreaks);
 			breaks = newbreaks;
 		}
-		System.arraycopy(breaks, i, breaks, i + 1, numOfBreaks - i);
+		this.systemWrapper.arraycopy(breaks, i, breaks, i + 1, numOfBreaks - i);
 		breaks[i] = pos;
 		numOfBreaks++;
 	}

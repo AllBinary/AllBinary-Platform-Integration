@@ -5,11 +5,14 @@
  */
 package org.microemu.graphics.form;
 
-import jsinterop.annotations.JsType;
-
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Graphics;
+
+import jsinterop.annotations.JsType;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsProperty;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
 import org.allbinary.graphics.form.item.ABCustomItemStateListener;
@@ -27,13 +30,10 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.color.BasicColorFactory;
 import org.allbinary.graphics.form.item.CustomItemState;
 import org.allbinary.layer.AllBinaryLayerManager;
+import org.allbinary.logic.ABSystemWrapper;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonLabels;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
-
 
 @JsType
 public class CustomForm extends CustomScreen {
@@ -51,6 +51,8 @@ public class CustomForm extends CustomScreen {
 
     @JsProperty
     protected final LogUtil logUtil = LogUtil.getInstance();
+    
+    private final ABSystemWrapper systemWrapper = ABSystemWrapper.getInstance();
 
     private final GameKeyFactory gameKeyFactory = GameKeyFactory.getInstance();
     @JsProperty
@@ -69,7 +71,7 @@ public class CustomForm extends CustomScreen {
         super(title, backgroundBasicColor, foregroundBasicColor);
 
         this.items = new ABCustomItem[items.length];
-        System.arraycopy(items, 0, this.items, 0, items.length);
+        systemWrapper.arraycopy(items, 0, this.items, 0, items.length);
         this.numOfItems = this.items.length;
         for (int i = 0; i < this.numOfItems; i++) {
             this.verifyItem(this.items[i]);
@@ -99,7 +101,7 @@ public class CustomForm extends CustomScreen {
 
         if (this.numOfItems + 1 >= this.items.length) {
             ABCustomItem newitems[] = new ABCustomItem[this.numOfItems + 4];
-            System.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
+            systemWrapper.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
             this.items = newitems;
         }
         this.items[this.numOfItems] = item;
@@ -128,7 +130,7 @@ public class CustomForm extends CustomScreen {
         this.verifyItemNum(itemNum);
 
         this.items[itemNum].setOwner(CustomForm.getNullForm());
-        System.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
+        systemWrapper.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
         this.numOfItems--;
     }
 
@@ -166,15 +168,10 @@ public class CustomForm extends CustomScreen {
 
         if (this.numOfItems + 1 == this.items.length) {
             ABCustomItem[] newitems = new ABCustomItem[this.numOfItems + 4];
-            System.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
+            systemWrapper.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
             this.items = newitems;
         }
-        System.arraycopy(
-            this.items,
-            itemNum,
-            this.items,
-            itemNum + 1,
-            this.numOfItems - itemNum);
+        systemWrapper.arraycopy(this.items, itemNum, this.items, itemNum + 1, this.numOfItems - itemNum);
         this.items[itemNum] = item;
         //items[itemNum].setOwner(this);
         this.numOfItems++;

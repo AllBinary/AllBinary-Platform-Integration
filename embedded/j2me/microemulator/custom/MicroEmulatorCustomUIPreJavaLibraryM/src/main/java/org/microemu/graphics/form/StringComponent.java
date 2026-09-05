@@ -31,12 +31,15 @@ import javax.microedition.lcdui.Graphics;
 
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.displayable.DisplayInfoSingleton;
+import org.allbinary.logic.ABSystemWrapper;
 import org.allbinary.logic.string.StringUtil;
 
 public class StringComponent
 {
     //protected final LogUtil logUtil = LogUtil.getInstance();
 
+    private final ABSystemWrapper systemWrapper = ABSystemWrapper.getInstance();
+    
     private final StringComponentProperties paintComponentProperties = new StringComponentProperties();
     
     private Font font;
@@ -297,10 +300,10 @@ public class StringComponent
         if (this.stringComponentProperties.numOfBreaks + 1 == breaks.length)
         {
             int newbreaks[] = new int[breaks.length + 4];
-            System.arraycopy(breaks, 0, newbreaks, 0, this.stringComponentProperties.numOfBreaks);
+            this.systemWrapper.arraycopy(breaks, 0, newbreaks, 0, this.stringComponentProperties.numOfBreaks);
             this.stringComponentProperties.breaks = newbreaks;
         }
-        System.arraycopy(breaks, i, breaks, i + 1, this.stringComponentProperties.numOfBreaks - i);
+        this.systemWrapper.arraycopy(breaks, i, breaks, i + 1, this.stringComponentProperties.numOfBreaks - i);
         this.stringComponentProperties.breaks[i] = pos;
         this.stringComponentProperties.numOfBreaks++;
     }

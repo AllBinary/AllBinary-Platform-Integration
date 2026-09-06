@@ -23,25 +23,20 @@
 
 package javax.microedition.lcdui;
 
-import jsinterop.annotations.JsType;
 
 import java.util.Vector;
 
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.ui.FormUI;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
 
 //TODO implement pointer events
 
-@JsType
 public class Form extends Screen 
 {
 	Item items[] = new Item[4];
 	int numOfItems = 0;
 	int focusItemIndex;
 	
-	@JsConstructor
 	public Form(String title) 
 	{
 		super(title);
@@ -51,7 +46,6 @@ public class Form extends Screen
 	}
 
 	
-	@JsConstructor
 	public Form(String title, Item[] items) 
 	{
 		this(title);
@@ -64,7 +58,6 @@ public class Form extends Screen
 	}
 
 	
-	@JsMethod
 	public int append(Item item) 
 	{
 		this.verifyItem(item);
@@ -97,14 +90,12 @@ public class Form extends Screen
 	}
 
 	
-	@JsMethod
 	public int append(Image img) 
 	{
 		return this.append(new ImageItem(null, img, ImageItem.LAYOUT_DEFAULT, null));
 	}
 
 	
-	@JsMethod
 	public int append(String str) 
 	{
 		if (str == null) {
@@ -115,7 +106,6 @@ public class Form extends Screen
 	} 
 
 	
-	@JsMethod
 	public void delete(int itemNum) 
 	{
 		this.verifyItemNum(itemNum);
@@ -137,7 +127,6 @@ public class Form extends Screen
 	}
 	
 	
-	@JsMethod
 	public void deleteAll()
 	{
 		if (ui.getClass().getName().equals("org.microemu.android.device.ui.AndroidFormUI")) {
@@ -154,7 +143,6 @@ public class Form extends Screen
 	}
 
 	
-	@JsMethod
 	public Item get(int itemNum) 
 	{
 		this.verifyItemNum(itemNum);
@@ -164,21 +152,18 @@ public class Form extends Screen
 	
 	
         @Override
-	       @JsMethod
 	       public int getHeight()
 	{
 		return super.getHeight();
 	}
 	
 	@Override
-	@JsMethod
 	public int getWidth()
 	{
 		return super.getWidth();
 	}
 
 	
-	@JsMethod
 	public void insert(int itemNum, Item item) 
 	{
 		if (itemNum != this.numOfItems) {
@@ -209,7 +194,6 @@ public class Form extends Screen
 	}
 
 	
-	@JsMethod
 	public void set(int itemNum, Item item) 
 	{
 		this.verifyItemNum(itemNum);
@@ -229,14 +213,12 @@ public class Form extends Screen
 	}
 
 	
-	@JsMethod
 	public void setItemStateListener(ItemStateListener iListener) 
 	{
 		((FormUI) ui).setItemStateListener(iListener);
 	}
 
 	
-	@JsMethod
 	public int size() 
 	{
 		return this.numOfItems;
@@ -244,7 +226,6 @@ public class Form extends Screen
 
 	
         @Override
-	       @JsMethod
 	       int paintContent(Graphics g) 
 	{
 		int contentHeight = 0;
@@ -260,7 +241,6 @@ public class Form extends Screen
 	}
     
     
-	@JsMethod
 	void fireItemStateListener(Item item) {
 		ItemStateListener listener = ((FormUI) ui).getItemStateListener();
         if (listener != null) {
@@ -268,7 +248,6 @@ public class Form extends Screen
         }
 	}
 	
-	@JsMethod
 	void fireItemStateListener()
     {
 		if (this.focusItemIndex >= 0 && this.focusItemIndex < this.items.length)
@@ -276,7 +255,6 @@ public class Form extends Screen
     }
 	
         @Override
-	       @JsMethod
 	       public void keyPressed(int keyCode) 
 	{
 		if (this.focusItemIndex != -1) {
@@ -310,7 +288,6 @@ public class Form extends Screen
 	}
 	
         @Override
-	       @JsMethod
 	       void hideNotify()
 	{
 		super.hideNotify();
@@ -321,7 +298,6 @@ public class Form extends Screen
 	}
 
         @Override
-	       @JsMethod
 	       int traverse(int gameKeyCode, int top, int bottom) 
 	{
 		int height, testItemIndex, traverse, i;
@@ -478,7 +454,6 @@ public class Form extends Screen
 	}
 
 	
-	@JsMethod
 	private int getTopVisibleIndex(int top) 
 	{
 		int height = 0;
@@ -494,7 +469,6 @@ public class Form extends Screen
 	}
 
 	
-	@JsMethod
 	private int getBottomVisibleIndex(int bottom) 
 	{
 		int height = 0;
@@ -510,7 +484,6 @@ public class Form extends Screen
 	}
 
 	
-	@JsMethod
 	private int getHeightToItem(int itemIndex) 
 	{
 		int height = 0;
@@ -530,7 +503,6 @@ public class Form extends Screen
 	 * @throws IllegalStateException
 	 * @throws NullPointerException
 	 */
-	@JsMethod
 	private void verifyItem(Item item) 
 	{
 		// Check that we are being passed valid items
@@ -551,7 +523,6 @@ public class Form extends Screen
 	 * @param itemNum the number of the item
 	 * @throws IndexOutOfBoundsException
 	 */
-	@JsMethod
 	private void verifyItemNum(int itemNum) 
 	{
 		if (itemNum < 0 || itemNum >= this.numOfItems) {
@@ -560,7 +531,6 @@ public class Form extends Screen
 	}
 
         @Override
-	       @JsMethod
 	       public Vector getCommands() {
 		Vector formCommands = super.getCommands();
 		if (this.focusItemIndex < 0)

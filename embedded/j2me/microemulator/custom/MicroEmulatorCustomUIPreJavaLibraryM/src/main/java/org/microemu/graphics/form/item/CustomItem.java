@@ -26,10 +26,6 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
@@ -48,43 +44,28 @@ import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
 
-@JsType
 public class CustomItem
 {
     //protected final LogUtil logUtil = LogUtil.getInstance();
 
-    @JsProperty
     public static final int LAYOUT_DEFAULT = 0x0000;
 
-    @JsProperty
     public static final int LAYOUT_LEFT = 0x0001;
-    @JsProperty
     public static final int LAYOUT_RIGHT = 0x0002;
-    @JsProperty
     public static final int LAYOUT_CENTER = 0x0003;
 
-    @JsProperty
     public static final int LAYOUT_TOP = 0x0010;
-    @JsProperty
     public static final int LAYOUT_BOTTOM = 0x0020;
-    @JsProperty
     public static final int LAYOUT_VCENTER = 0x0030;
 
-    @JsProperty
     public static final int LAYOUT_NEWLINE_BEFORE = 0x0100;
-    @JsProperty
     public static final int LAYOUT_NEWLINE_AFTER = 0x0200;
 
-    @JsProperty
     public static final int LAYOUT_SHRINK = 0x0400;
-    @JsProperty
     public static final int LAYOUT_EXPAND = 0x0800;
-    @JsProperty
     public static final int LAYOUT_VSHRINK = 0x1000;
-    @JsProperty
     public static final int LAYOUT_VEXPAND = 0x2000;
 
-    @JsProperty
     public static final int LAYOUT_2 = 0x4000;
 
     private final ABStringComponent labelStringComponent;
@@ -100,7 +81,6 @@ public class CustomItem
 
     private int prefWidth, prefHeight;
 
-    @JsConstructor
     protected CustomItem(final String label, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
     {
         this.labelStringComponent = new ABStringComponent(backgroundBasicColor, foregroundBasicColor);
@@ -108,7 +88,6 @@ public class CustomItem
         this.commands = new BasicArrayListD();
     }
 
-    @JsMethod
     public void addCommand(final Command cmd)
     {
         if (cmd == null) {
@@ -141,19 +120,16 @@ public class CustomItem
 
     }
 
-    @JsMethod
     public String getLabel()
     {
         return this.getLabelStringComponent().getText();
     }
 
-    @JsMethod
     public int getLayout()
     {
         return this.layout;
     }
 
-    @JsMethod
     public int getMinimumHeight()
     {
         if (this.getLabelStringComponent() != null) {
@@ -163,13 +139,11 @@ public class CustomItem
         }
     }
 
-    @JsMethod
     public int getMinimumWidth()
     {
         return this.getMaximumWidth();
     }
 
-    @JsMethod
     public int getPreferredHeight()
     {
         int ret = this.prefHeight;
@@ -188,7 +162,6 @@ public class CustomItem
         return ret;
     }
 
-    @JsMethod
     public int getPreferredWidth()
     {
         int ret = this.prefWidth;
@@ -208,7 +181,6 @@ public class CustomItem
         return ret;
     }
 
-    @JsMethod
     public void removeCommand(Command cmd)
     {
         this.commands.remove(cmd);
@@ -216,7 +188,6 @@ public class CustomItem
             this.defaultCommand = MyCommandsFactory.getInstance().NO_COMMAND;
     }
 
-    @JsMethod
     public void setDefaultCommand(Command cmd)
     {
         this.defaultCommand = cmd;
@@ -230,19 +201,16 @@ public class CustomItem
         }
     }
 
-    @JsMethod
     public void setItemCommandListener(CustomItemCommandListener l)
     {
         this.commandListener = l;
     }
 
-    @JsMethod
     public void setLabel(String label)
     {
         this.getLabelStringComponent().setText(label);
     }
 
-    @JsMethod
     public void setLayout(int layout)
     {
         // TODO validate container is not Alert
@@ -260,7 +228,6 @@ public class CustomItem
         this.layout = layout;
     }
 
-    @JsMethod
     public void setPreferredSize(int width, int height)
     {
         if (width < -1 || height < -1)
@@ -271,24 +238,20 @@ public class CustomItem
         this.prefHeight = height;
     }
 
-    @JsMethod
     public int getHeight()
     {
         return this.getLabelStringComponent().getHeight() + 4;
     }
 
-    @JsMethod
     public boolean isFocusable()
     {
         return false;
     }
 
-    @JsMethod
     public void keyPressed(int keyCode)
     {
     }
 
-    @JsMethod
     public int paint(Graphics graphics)
     {
         ForcedLogUtil.log(CommonStrings.getInstance().NOT_IMPLEMENTED, this);
@@ -303,25 +266,21 @@ public class CustomItem
     }
     */
 
-    @JsMethod
     public boolean hasFocus()
     {
         return this.focus;
     }
 
-    @JsMethod
     public void setFocus(boolean state)
     {
         this.focus = state;
     }
 
-    @JsMethod
     Displayable getOwner()
     {
         return this.owner;
     }
 
-    @JsMethod
     public void setOwner(Screen owner)
     //public void setOwner(Displayable owner)
     {
@@ -333,7 +292,6 @@ public class CustomItem
         }
     }
 
-    @JsMethod
     public boolean select()
     {
         // call the default command (if there is one)
@@ -350,13 +308,11 @@ public class CustomItem
         }
     }
 
-    @JsMethod
     public int traverse(int gameKeyCode, int top, int bottom, boolean action)
     {
         return 0;
     }
 
-    @JsMethod
     int getMaximumHeight()
     {
         if (this.owner != null)
@@ -369,7 +325,6 @@ public class CustomItem
         }
     }
 
-    @JsMethod
     int getMaximumWidth()
     {
         if (this.owner != null)
@@ -382,19 +337,16 @@ public class CustomItem
         }
     }
 
-    @JsMethod
     protected final void repaint()
     {
         
     }
     
-    @JsMethod
     CustomItemCommandListener getItemCommandListener()
     {
         return this.commandListener;
     }
 
-    @JsMethod
     public ABStringComponent getLabelStringComponent()
     {
         return this.labelStringComponent;

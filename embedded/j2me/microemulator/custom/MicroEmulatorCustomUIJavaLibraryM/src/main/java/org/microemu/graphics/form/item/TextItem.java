@@ -9,10 +9,6 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Screen;
 
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsProperty;
-import jsinterop.annotations.JsType;
 
 import org.allbinary.AndroidUtil;
 import org.allbinary.J2MEUtil;
@@ -24,20 +20,17 @@ import org.allbinary.graphics.opengles.OpenGLFeatureFactory;
 import org.allbinary.graphics.threed.SWTJOGLProcessor;
 
 
-@JsType
 public class TextItem extends CustomCustomItem
         implements ABCustomItemInterface
 {
     //private Screen owner;
 
-    @JsProperty
     protected int fontHeightP;
     private int offsetX;
     private int offsetY;
     //private int offsetWidth;
     private int width;
 
-    @JsConstructor
     public TextItem(String label, int layout, String altText,
                     BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
@@ -45,7 +38,6 @@ public class TextItem extends CustomCustomItem
     }
 
     @Override
-    @JsMethod
     public void updateMeasurement(final Graphics graphics) {
         final Font font = graphics.getFont();
         this.fontHeightP = font.getHeight();
@@ -83,56 +75,48 @@ public class TextItem extends CustomCustomItem
     }
 
     @Override
-    @JsMethod
     public void setOwner(Screen owner)
     {
         //this.owner = owner;
     }
 
     @Override
-    @JsMethod
     public int getMinimumWidth()
     {
         return this.width;
     }
 
     @Override
-    @JsMethod
     public int getMinimumHeight()
     {
         return this.fontHeightP;
     }
 
     @Override
-    @JsMethod
     protected int getMinContentHeight()
     {
         return this.fontHeightP;
     }
 
     @Override
-    @JsMethod
     protected int getMinContentWidth()
     {
         return this.width;
     }
 
     @Override
-    @JsMethod
     protected int getPrefContentHeight(int width)
     {
         return this.fontHeightP;
     }
 
     @Override
-    @JsMethod
     protected int getPrefContentWidth(int height)
     {
         return this.width;
     }
 
     @Override
-    @JsMethod
     public void paintXY(Graphics graphics, int x, int y)
     {
         this.myFontProcessor.process(graphics);
@@ -142,7 +126,6 @@ public class TextItem extends CustomCustomItem
     }
 
     @Override
-    @JsMethod
     public void paintUnselected(Graphics graphics, int x, int y)
     {
         this.myFontProcessor.process(graphics);

@@ -24,7 +24,6 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Graphics;
 
@@ -35,82 +34,58 @@ import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.font.MyFontProcessor;
 import org.allbinary.graphics.font.UpdateMyFontInterface;
 import org.allbinary.graphics.font.UpdateMyFontProcessor;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 
-@JsType
 public class CustomCustomItem extends ABCustomItem implements UpdateMyFontInterface {
 
-    @JsProperty
     protected static final int TRAVERSE_HORIZONTAL = 1;
-    @JsProperty
     protected static final int TRAVERSE_VERTICAL = 2;
-    @JsProperty
     protected static final int KEY_PRESS = 4;
-    @JsProperty
     protected static final int KEY_RELEASE = 8;
-    @JsProperty
     protected static final int KEY_REPEAT = 0x10;
-    @JsProperty
     protected static final int POINTER_PRESS = 0x20;
-    @JsProperty
     protected static final int POINTER_RELEASE = 0x40;
-    @JsProperty
     protected static final int POINTER_DRAG = 0x80;
-    @JsProperty
     protected static final int NONE = 0x00;
 
     //protected final LogUtil logUtil = LogUtil.getInstance();
 
-    @JsProperty
     protected final CommonStrings commonStrings = CommonStrings.getInstance();
 
-    @JsProperty
     protected final MyFontProcessor updateMyFontProcessor = new UpdateMyFontProcessor(this);
-    @JsProperty
     protected MyFontProcessor myFontProcessor = this.updateMyFontProcessor;
     
-    @JsConstructor
     protected CustomCustomItem(String label, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor) {
         super(label, backgroundBasicColor, foregroundBasicColor);
     }
 
     @Override
-    @JsMethod
     public void updateMeasurement(final Graphics graphics) {
     }
     
-    @JsMethod
     public int getGameAction(int keycode) {
         return 0;
     }
 
-    @JsMethod
     protected final int getInteractionModes() {
         return CustomCustomItem.NONE;
     }
 
-    @JsMethod
     protected int getMinContentHeight() {
         ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
         return 0;
     }
 
-    @JsMethod
     protected int getMinContentWidth() {
         ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
         return 0;
     }
 
-    @JsMethod
     protected int getPrefContentHeight(int width) {
         ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
         return 0;
     }
 
-    @JsMethod
     protected int getPrefContentWidth(int height) {
         ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
         return 0;
@@ -119,26 +94,21 @@ public class CustomCustomItem extends ABCustomItem implements UpdateMyFontInterf
     protected void hideNotify() {
     }
 
-    @JsMethod
     protected final void invalidate() {
 
     }
 
     @Override
-    @JsMethod
     public void keyPressed(int keyCode) {
     }
 
-    @JsMethod
     public void keyReleased(int keyCode) {
     }
 
-    @JsMethod
     protected void keyRepeated(int keyCode) {
     }
 
     @Override
-    @JsMethod
     public void paintXY(Graphics graphics, int x, int y) {
 
     }
@@ -149,19 +119,15 @@ public class CustomCustomItem extends ABCustomItem implements UpdateMyFontInterf
 	    ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
         }
      */
-    @JsMethod
     protected void pointerDragged(int x, int y) {
     }
 
-    @JsMethod
     protected void pointerPressed(int x, int y) {
     }
 
-    @JsMethod
     protected void pointerReleased(int x, int y) {
     }
 
-    @JsMethod
     protected final void repaintXYWH(int x, int y, int w, int h) {
         this.repaint();
     }
@@ -169,21 +135,17 @@ public class CustomCustomItem extends ABCustomItem implements UpdateMyFontInterf
     protected void showNotify() {
     }
 
-    @JsMethod
     protected void sizeChanged(int w, int h) {
     }
 
-    @JsMethod
     protected boolean traverseViewport(int dir, int viewportWidth, int viewportHeight, int[] visRect_inout) {
         return false;
     }
 
-    @JsMethod
     protected void traverseOut() {
     }
 
     @Override
-    @JsMethod
     public int paint(Graphics graphics) {
 
         //logUtil.putF(commonStrings.START, this, "paint");
@@ -193,7 +155,6 @@ public class CustomCustomItem extends ABCustomItem implements UpdateMyFontInterf
     }
     
     @Override
-    @JsMethod
     public void preMeasurement(final Graphics graphics) {
         this.myFontProcessor.process(graphics);
     }

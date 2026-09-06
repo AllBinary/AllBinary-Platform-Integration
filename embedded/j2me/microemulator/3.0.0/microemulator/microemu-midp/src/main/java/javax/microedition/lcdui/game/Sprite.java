@@ -19,14 +19,10 @@
 
 package javax.microedition.lcdui.game;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import org.allbinary.logic.string.StringMaker;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 /**
  *
@@ -37,24 +33,15 @@ import jsinterop.annotations.JsProperty;
 // TODO add more synchronization
 
 
-@JsType
 public class Sprite extends Layer {
     // transform constants
-    @JsProperty
     public static final int TRANS_NONE = 0;
-    @JsProperty
     public static final int TRANS_ROT90 = 5;
-    @JsProperty
     public static final int TRANS_ROT180 = 3;
-    @JsProperty
     public static final int TRANS_ROT270 = 6;
-    @JsProperty
     public static final int TRANS_MIRROR = 2;
-    @JsProperty
     public static final int TRANS_MIRROR_ROT90 = 7;
-    @JsProperty
     public static final int TRANS_MIRROR_ROT180 = 1;
-    @JsProperty
     public static final int TRANS_MIRROR_ROT270 = 4;
 
     // current frame index (within the sequence, not the absolut index)
@@ -88,12 +75,10 @@ public class Sprite extends Layer {
 //    private int []rgbData;
 //    private int []rgbDataAux;
     
-    @JsConstructor
     public Sprite(Image img) {
         this(img, img.getWidth(), img.getHeight());
     }
     
-    @JsConstructor
     public Sprite(Image img, int frameWidth, int frameHeight) {
         // initial state is visible, positioned at 0, 0
         // with a bound rectangle the same as the frame
@@ -131,7 +116,6 @@ public class Sprite extends Layer {
         this.collHeight = frameHeight;
     }
     
-    @JsConstructor
     public Sprite(Sprite otherSprite) {
         // copy the otherSprite
         super(otherSprite.getX(), otherSprite.getY(), 
@@ -152,7 +136,6 @@ public class Sprite extends Layer {
     }
     
     //TWB - OpenGL Only
-    @JsConstructor
     public Sprite(Image img, int frameWidth, int frameHeight, int cols, int rows)
     {
         this(img, frameWidth, frameHeight);
@@ -215,23 +198,19 @@ public class Sprite extends Layer {
 //            return collidesWith(otherSprite, 0, 0);
 //    }
     
-    @JsMethod
     public void defineReferencePixel(int x, int y) {
         this.refX = x;
         this.refY = y;
     }
     
-    @JsMethod
     public int getRefPixelX() {
         return getX() + this.refX;
     }
     
-    @JsMethod
     public int getRefPixelY() {
         return getY() + this.refY;
     }
 
-    @JsMethod
     public void setRefPixelPosition(int x, int y) {
         int curRefX, curRefY;
         int width = getWidth();
@@ -279,7 +258,6 @@ public class Sprite extends Layer {
         setPosition(x - curRefX, y - curRefY);
     }
    
-    @JsMethod
     public void defineCollisionRectangle(int x, int y, int width, int height) {
         if (width < 0 || height < 0)
             throw new IllegalArgumentException();
@@ -289,7 +267,6 @@ public class Sprite extends Layer {
         this.collHeight = height;
     }
     
-    @JsMethod
     public void setFrameSequence(int []sequence) {
         if (sequence == null) {
             // return to default sequence
@@ -315,17 +292,14 @@ public class Sprite extends Layer {
         this.frame = 0;
     }
     
-    @JsMethod
     public final int getFrame() {
 		return this.frame;
     }
     
-    @JsMethod
     public int getFrameSequenceLength() {
     	return (this.sequence == null) ? this.rows*this.cols : this.sequence.length; 
     }
     
-    @JsMethod
     public void setFrame(int frame) {
         int l = (sequence == null) ? rows*cols : sequence.length; 
         if (frame < 0 || frame >= l) {
@@ -334,7 +308,6 @@ public class Sprite extends Layer {
         this.frame = frame;
     }
     
-    @JsMethod
     public void nextFrame() {
         if (this.frame == ((this.sequence == null)? this.rows*this.cols : this.sequence.length) - 1)
             this.frame = 0;
@@ -342,7 +315,6 @@ public class Sprite extends Layer {
             this.frame++;
     }
     
-    @JsMethod
     public void prevFrame() {
         if (this.frame == 0)
             this.frame = ((this.sequence == null)? this.rows*this.cols : this.sequence.length) - 1;
@@ -350,7 +322,6 @@ public class Sprite extends Layer {
             this.frame--;
     }
  
-    @JsMethod
     public void setImage(Image img, int frameWidth, int frameHeight) {
     	synchronized (this) {
 	        int oldW = getWidth();
@@ -429,7 +400,6 @@ public class Sprite extends Layer {
     }
     
     @Override
-    @JsMethod
     public final void paint(Graphics g) {
         if (!isVisible())
             return;
@@ -443,12 +413,10 @@ public class Sprite extends Layer {
         g.drawRegion(this.img, fx, fy, w, h, transform, getX(), getY(), Graphics.TOP | Graphics.LEFT);
     }
     
-    @JsMethod
     public int getRawFrameCount() {
         return this.cols * this.rows;
     }
     
-    @JsMethod
     public void setTransform (int transform) {
         if (this.transform == transform)
             return;

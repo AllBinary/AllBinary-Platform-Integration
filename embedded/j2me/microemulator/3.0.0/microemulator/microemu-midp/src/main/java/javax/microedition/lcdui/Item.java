@@ -23,7 +23,6 @@
 
 package javax.microedition.lcdui;
 
-import jsinterop.annotations.JsType;
 
 import java.util.Vector;
 import static javax.microedition.lcdui.Item.LAYOUT_EXPAND;
@@ -33,59 +32,37 @@ import static javax.microedition.lcdui.Item.LAYOUT_VSHRINK;
 
 import org.microemu.device.DeviceFactory;
 import org.microemu.device.ui.ItemUI;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 //TWB - name concrete
 
-@JsType
 public class Item
 {
 
-	@JsProperty
 	public static final int OUTOFITEM = Integer.MAX_VALUE;
 
-	@JsProperty
 	public static final int LAYOUT_DEFAULT          = 0x0000;
 
-    @JsProperty
     public static final int LAYOUT_LEFT             = 0x0001;
-    @JsProperty
     public static final int LAYOUT_RIGHT            = 0x0002;
-    @JsProperty
     public static final int LAYOUT_CENTER           = 0x0003;
 
-    @JsProperty
     public static final int LAYOUT_TOP              = 0x0010;
-    @JsProperty
     public static final int LAYOUT_BOTTOM           = 0x0020;
-    @JsProperty
     public static final int LAYOUT_VCENTER          = 0x0030;
 
-    @JsProperty
     public static final int LAYOUT_NEWLINE_BEFORE   = 0x0100;
-    @JsProperty
     public static final int LAYOUT_NEWLINE_AFTER    = 0x0200;
 
-    @JsProperty
     public static final int LAYOUT_SHRINK           = 0x0400;
-    @JsProperty
     public static final int LAYOUT_EXPAND           = 0x0800;
-    @JsProperty
     public static final int LAYOUT_VSHRINK          = 0x1000;
-    @JsProperty
     public static final int LAYOUT_VEXPAND          = 0x2000;
 
-    @JsProperty
     public static final int LAYOUT_2                = 0x4000;
 
 
-    @JsProperty
     public static final int PLAIN = 0;
-    @JsProperty
     public static final int HYPERLINK = 1;
-    @JsProperty
     public static final int BUTTON = 2;
     
     ItemUI ui;
@@ -107,19 +84,16 @@ public class Item
     
     int prefHeight;
   
-    @JsConstructor
     Item(String label) {
 		labelComponent = new StringComponent(label);
 		this.commands = new Vector();
 		this.setPreferredSize(-1, -1);
 	}
 	
-    @JsMethod
     void setUI(ItemUI ui) {
     	this.ui = ui;
     }
     
-	@JsMethod
 	public void addCommand(Command cmd) {
 	    if (cmd == null)
 	        throw new NullPointerException();
@@ -144,18 +118,15 @@ public class Item
 
 	}
   
-	@JsMethod
 	public String getLabel()
 	{
 		return this.labelComponent.getText();
 	}
 
-	@JsMethod
 	public int getLayout() {
 		return this.layout;
 	}
 	
-	@JsMethod
 	public int getMinimumHeight() {
 		if (this.labelComponent != null)
 			return this.labelComponent.getHeight();
@@ -163,12 +134,10 @@ public class Item
 			return 0;
     }
 
-    @JsMethod
     public int getMinimumWidth() {
     	return this.getMaximumWidth();
     }
     
-    @JsMethod
     public int getPreferredHeight() {
         int ret = this.prefHeight;
         int min = this.getMinimumHeight();
@@ -184,7 +153,6 @@ public class Item
     	return ret;
     }
 
-    @JsMethod
     public int getPreferredWidth() {
         int ret = this.prefWidth;
         int min = this.getMinimumWidth();
@@ -201,7 +169,6 @@ public class Item
     }
 
     //TWB changed to displayable
-	@JsMethod
 	public void notifyStateChanged() {
 		Displayable owner = this.getOwner();
 		if (owner != null && owner instanceof Form) {
@@ -211,7 +178,6 @@ public class Item
 		
     }
 
-	@JsMethod
 	public void removeCommand(Command cmd) {
         this.commands.removeElement(cmd);
         if (this.defaultCommand == cmd)
@@ -219,7 +185,6 @@ public class Item
         this.repaintOwner();
     }
 	
-    @JsMethod
     public void setDefaultCommand(Command cmd) {
         
         this.ui.setDefaultCommand(cmd);
@@ -237,12 +202,10 @@ public class Item
         }
     }
 
-    @JsMethod
     public void setItemCommandListener(ItemCommandListener l) {
         this.commandListener = l;
     }
     
-    @JsMethod
     public void setLabel(String label)	
 	{
     	this.ui.setLabel(label);
@@ -251,7 +214,6 @@ public class Item
 		this.repaint();
 	}
 
-    @JsMethod
     public void setLayout(int layout) {
     	// TODO validate container is not Alert
     	// on add to Alert validate this is default
@@ -270,7 +232,6 @@ public class Item
     	this.repaint();
     }
 
-    @JsMethod
     public void setPreferredSize(int width, int height) {
         if (width < -1 || height < -1) {
             throw new IllegalArgumentException();
@@ -286,7 +247,6 @@ public class Item
     
     // repaint the owner of this item (if any)
     //TWB changed to displayable
-    @JsMethod
     void repaintOwner() {
         Displayable owner = this.getOwner();
         if (owner != null)
@@ -294,42 +254,36 @@ public class Item
     }
 
     //TWB - made public
-  @JsMethod
   public int getHeight()
 	{
 		return this.labelComponent.getHeight();
 	}
 	
 	//TWB - made public
-	@JsMethod
 	public boolean isFocusable()
 	{
 		return false;
 	}
 
   //TWB - made public
-  @JsMethod
   public void keyPressed(int keyCode)
   {
   }
   
 
   //TWB - made public
-  @JsMethod
   public int paint(Graphics g)
   {
       return 0;
   }
 	
 	
-	@JsMethod
 	void paintContent(Graphics g)
 	{
 		this.labelComponent.paint(g);
 	}
 	
 	
-	@JsMethod
 	void repaint()
 	{
 		if (this.owner != null) {
@@ -339,28 +293,24 @@ public class Item
 	
 
         //TWB - made public
-	@JsMethod
 	public boolean hasFocus()
 	{
 		return this.focus;
 	}
   
         //TWB - made public
-	@JsMethod
 	public void setFocus(boolean state)
 	{
 		this.focus = state;
 	}
 
   //TWB - made public
-  @JsMethod
   public Displayable getOwner()
   {
     return this.owner;
   }
 
   //TWB - made public
-  	@JsMethod
   	public void setOwner(Displayable owner)
   	{
 		this.owner = owner;
@@ -372,7 +322,6 @@ public class Item
 
 
 	//TWB - made public
-	@JsMethod
 	public boolean select()
 	{
 		// call the default command (if there is one)
@@ -387,14 +336,12 @@ public class Item
 	}
 
 //TWB - made public
-	@JsMethod
 	public int traverse(int gameKeyCode, int top, int bottom, boolean action)
 	{
 		return 0;
 	}
 
 //TWB - made public
-	@JsMethod
 	public int getMaximumHeight() {
 		if (this.owner != null) {
 			return this.owner.getHeight() * 10;
@@ -404,7 +351,6 @@ public class Item
 	}
 
 	//TWB - made public
-	@JsMethod
 	public int getMaximumWidth() {
 		if (this.owner != null) {
 			return this.owner.getWidth() - 3;
@@ -414,7 +360,6 @@ public class Item
 	}
 
         //TWB - made public
-	@JsMethod
 	public ItemCommandListener getItemCommandListener() {
 		return this.commandListener;
 	}

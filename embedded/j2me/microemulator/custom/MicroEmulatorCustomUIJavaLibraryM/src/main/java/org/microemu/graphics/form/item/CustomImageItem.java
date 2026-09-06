@@ -5,7 +5,6 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
@@ -21,16 +20,12 @@ import org.allbinary.graphics.font.UpdateMyFontProcessor;
 import org.allbinary.graphics.form.item.ABCustomItemInterface;
 import org.allbinary.logic.string.StringUtil;
 import org.microemu.graphics.form.CustomForm;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 /**
  *
  * @author user
  */
 
-@JsType
 public class CustomImageItem
     extends ImageItem
     implements ABCustomItemInterface, UpdateMyFontInterface {
@@ -42,7 +37,6 @@ public class CustomImageItem
 
     private BasicColor basicColor;
 
-    @JsProperty
     protected int yOffset = 0;
 
     private int max;
@@ -54,7 +48,6 @@ public class CustomImageItem
 //        this(label, image, layout, altText, basicColor, 0);
 //    }
 
-    @JsConstructor
     public CustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor, int yOffset) throws Exception {
         super(label, image, layout, altText, ImageItem.PLAIN);
 
@@ -67,7 +60,6 @@ public class CustomImageItem
     }
 
     @Override
-    @JsMethod
     public void updateMeasurement(final Graphics graphics) {
         final Font font = graphics.getFont();
 
@@ -86,19 +78,16 @@ public class CustomImageItem
     }
         
     @Override
-    @JsMethod
     public void setOwner(Screen owner) {
         this.owner = owner;
     }
 
     @Override
-    @JsMethod
     public int getMinimumWidth() {
         return this.getImage().getWidth();
     }
 
     @Override
-    @JsMethod
     public int getMinimumHeight() {
         return this.getImage().getHeight();
     }
@@ -107,7 +96,6 @@ public class CustomImageItem
     private int anchor = Anchor.TOP_LEFT;
 
     @Override
-    @JsMethod
     public void paintXY(Graphics graphics, int x, int y) {
         
         this.myFontProcessor.process(graphics);
@@ -134,7 +122,6 @@ public class CustomImageItem
     }
 
     @Override
-    @JsMethod
     public void paintUnselected(Graphics graphics, int x, int y) {
     }
 }

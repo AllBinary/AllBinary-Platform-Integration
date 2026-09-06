@@ -27,7 +27,6 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
@@ -37,38 +36,25 @@ import javax.microedition.lcdui.NullImage;
 import org.allbinary.graphics.form.item.ABCustomItem;
 
 import org.allbinary.graphics.color.BasicColorFactory;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 
-@JsType
 public class ImageItem extends ABCustomItem
 {
 
-	@JsProperty
 	public static final int LAYOUT_DEFAULT = 0;
 
-	@JsProperty
 	public static final int LAYOUT_LEFT = 1;
 
-	@JsProperty
 	public static final int LAYOUT_RIGHT = 2;
 
-	@JsProperty
 	public static final int LAYOUT_CENTER = 3;
 
-	@JsProperty
 	public static final int LAYOUT_NEWLINE_BEFORE = 0x100;
 
-	@JsProperty
 	public static final int LAYOUT_NEWLINE_AFTER = 0x200;
 
-        @JsProperty
         public static final int PLAIN = 0;
-        @JsProperty
         public static final int HYPERLINK = 1;
-        @JsProperty
         public static final int BUTTON = 2;
         
 	Image img = NullImage.NULL_IMAGE;
@@ -81,7 +67,6 @@ public class ImageItem extends ABCustomItem
 //		this(label, img, layout, altText, ImageItem.PLAIN);
 //	}
 	
-	@JsConstructor
 	public ImageItem(String label, Image img, int layout, String altText, int appearanceMode) 
 	{
 		super(label, 
@@ -101,33 +86,27 @@ public class ImageItem extends ABCustomItem
 		this.appearanceMode = appearanceMode;
 	}
 
-	@JsMethod
 	public String getAltText() {
 		return this.altTextP;
 	}
 
-	@JsMethod
 	public int getAppearanceMode() {
 		return this.appearanceMode;
 	}
 
-	@JsMethod
 	public Image getImage() {
 		return this.img;
 	}
 
         @Override
-	       @JsMethod
 	       public int getLayout() {
 		return super.getLayout();
 	}
 
-	@JsMethod
 	public void setAltText(String text) {
 		this.altTextP = text;
 	}
 	
-	@JsMethod
 	public void setImage(Image img) {
 		if (img != null && img.isMutable()) {
 		  //TWB - I shouldn't have mutables here for OpenGL
@@ -138,13 +117,11 @@ public class ImageItem extends ABCustomItem
 	}
 
         @Override
-	       @JsMethod
 	       public void setLayout(int layout) {
 		super.setLayout(layout);
 	}
 
         @Override
-	       @JsMethod
 	       public int getHeight() {
 		if (this.img == null) {
 			return super.getHeight();
@@ -176,7 +153,6 @@ public class ImageItem extends ABCustomItem
 	*/
 
         @Override
-	       @JsMethod
 	       public int traverse(int gameKeyCode, int top, int bottom, boolean action) {
 		Font f = Font.getDefaultFont();
 

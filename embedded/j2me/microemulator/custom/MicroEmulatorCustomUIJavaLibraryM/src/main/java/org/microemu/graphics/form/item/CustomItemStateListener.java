@@ -5,16 +5,12 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
-import jsinterop.annotations.JsMethod;
 
 
 
-@JsType
 public interface CustomItemStateListener
 {
-  @JsMethod
   void itemStateChanged(ABCustomItem item);
 }

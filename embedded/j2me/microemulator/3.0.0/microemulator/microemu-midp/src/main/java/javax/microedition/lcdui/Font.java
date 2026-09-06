@@ -20,53 +20,33 @@
 
 package javax.microedition.lcdui;
 
-import jsinterop.annotations.JsType;
 
 import java.util.Hashtable;
 
 import org.microemu.device.DeviceFactory;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 
 
-@JsType
 public final class Font 
 {
-	@JsProperty
 	public static final int STYLE_PLAIN = 0;
-	@JsProperty
 	public static final int STYLE_BOLD = 1;
-	@JsProperty
 	public static final int STYLE_ITALIC = 2;
-	@JsProperty
 	public static final int STYLE_UNDERLINED = 4;
 	
-	@JsProperty
 	public static final int SIZE_SMALL = 8;
-        @JsProperty
         public static final int SIZE_MEDIUM = 12;
 	//public static final int SIZE_MEDIUM = 0;
-	@JsProperty
 	public static final int SIZE_LARGE = 16;
-        @JsProperty
         public static final int SIZE_X_LARGE = 20;
-        @JsProperty
         public static final int SIZE_XX_LARGE = 24;
-        @JsProperty
         public static final int SIZE_XXX_LARGE = 28;
 	
-	@JsProperty
 	public static final int FACE_SYSTEM = 0;
-	@JsProperty
 	public static final int FACE_MONOSPACE = 32;
-	@JsProperty
 	public static final int FACE_PROPORTIONAL = 64;
 
-	@JsProperty
 	public static final int FONT_STATIC_TEXT = 0;
-	@JsProperty
 	public static final int FONT_INPUT_TEXT = 1;
 
 	private static final Font DEFAULT_FONT = new Font(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM);
@@ -86,7 +66,6 @@ public final class Font
 	private int height = -1;
 	
 
-	@JsConstructor
 	private Font(int face, int style, int size)
 	{
 		if ((face != Font.FACE_SYSTEM) && (face != Font.FACE_MONOSPACE) && (face != Font.FACE_PROPORTIONAL)) {
@@ -105,14 +84,12 @@ public final class Font
 	}
 
 
-	@JsMethod
 	public static Font getDefaultFont()
 	{
 		return Font.DEFAULT_FONT;
 	}
 	
 	
-	@JsMethod
 	public static Font getFontWithSpecifier(int specifier) {
 		if (specifier != Font.FONT_INPUT_TEXT &&
 					specifier != Font.FONT_STATIC_TEXT)
@@ -121,7 +98,6 @@ public final class Font
 	}
 
 	
-	@JsMethod
 	public static Font getFont(int face, int style, int size)
 	{
 		Integer key = new Integer(style + size + face);
@@ -135,28 +111,24 @@ public final class Font
 	}
 
 	
-	@JsMethod
 	public int getStyle()
 	{
 		return this.style;
 	}
 
 
-	@JsMethod
 	public int getSize()
 	{
 		return this.size;
 	}
 
 	
-	@JsMethod
 	public int getFace()
 	{
 		return this.face;
 	}
 
 
-	@JsMethod
 	public boolean isPlain()
 	{
 		if (this.style == Font.STYLE_PLAIN) {
@@ -167,7 +139,6 @@ public final class Font
 	}
 	
 
-	@JsMethod
 	public boolean isBold()
 	{
 		if ((this.style & Font.STYLE_BOLD) != 0) {
@@ -178,7 +149,6 @@ public final class Font
 	}
 
 
-	@JsMethod
 	public boolean isItalic()
 	{
 		if ((this.style & Font.STYLE_ITALIC) != 0) {
@@ -189,7 +159,6 @@ public final class Font
 	}
 	
 	
-	@JsMethod
 	public boolean isUnderlined()
 	{
 		if ((this.style & Font.STYLE_UNDERLINED) != 0) {
@@ -200,7 +169,6 @@ public final class Font
 	}
 	
 	
-	@JsMethod
 	public int getHeight()
 	{
 		if (this.height == -1 || this.height == 0) {
@@ -211,7 +179,6 @@ public final class Font
 	}
 
 	
-	@JsMethod
 	public int getBaselinePosition()
 	{
 		if (this.baselinePosition == -1) { 
@@ -222,35 +189,30 @@ public final class Font
 	}
 
 	
-	@JsMethod
 	public int charWidth(char ch)
 	{
 		return DeviceFactory.getDevice().getFontManager().charWidth(this, ch);
 	}
 
 	
-	@JsMethod
 	public int charsWidth(char[] ch, int offset, int length)
 	{
 		return DeviceFactory.getDevice().getFontManager().charsWidth(this, ch, offset, length);
 	}
 
 
-	@JsMethod
 	public int stringWidth(String str)
 	{
 		return DeviceFactory.getDevice().getFontManager().stringWidth(this, str);
 	}
 
 	
-	@JsMethod
 	public int substringWidth(String str, int offset, int len)
 	{
 		return DeviceFactory.getDevice().getFontManager().substringWidth(this, str, offset, len);
 	}
 
 
-	@JsMethod
 	public int hashCode() {
 		return this.style + this.size + this.face;
 	}	

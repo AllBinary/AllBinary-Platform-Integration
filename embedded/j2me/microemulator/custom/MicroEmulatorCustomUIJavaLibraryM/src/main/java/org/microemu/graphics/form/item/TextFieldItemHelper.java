@@ -5,7 +5,6 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Canvas;
 import org.allbinary.game.input.GameInputStrings;
@@ -25,25 +24,18 @@ import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.util.visitor.Visitor;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 
-@JsType
 public class TextFieldItemHelper
 {
-    @JsProperty
     protected final LogUtil logUtil = LogUtil.getInstance();
 
-    @JsProperty
     protected final GameInputStrings gameInputStrings = GameInputStrings.getInstance();
     
     private final Canvas canvas;
     private final TextFieldItem textFieldItem;
     private final Visitor textItemVisitor;
     
-    @JsConstructor
     public TextFieldItemHelper(final Canvas canvas, final TextFieldItem textFieldItem, final Visitor textItemVisitor)
     {
         this.canvas = canvas;
@@ -51,7 +43,6 @@ public class TextFieldItemHelper
         this.textItemVisitor = textItemVisitor;
     }
     
-    @JsMethod
     public void setString(final String text)
     {
         this.textFieldItem.setString(text);
@@ -64,7 +55,6 @@ public class TextFieldItemHelper
     
     private final String EMPTY_STRING = StringUtil.getInstance().EMPTY_STRING;
     
-    @JsMethod
     public boolean keyPressed(int keyCode)
     {
         try {
@@ -124,7 +114,6 @@ public class TextFieldItemHelper
         return true;
     }
     
-    @JsMethod
     private void setCaretPosition(int position)
     {
         //logUtil.putF("Position: " + position, this, "setCaretPosition");
@@ -143,7 +132,6 @@ public class TextFieldItemHelper
          */
     }
 
-    @JsMethod
     private void caretPositionChanged(int position)
     {
         this.setCaretPosition(position);
@@ -151,7 +139,6 @@ public class TextFieldItemHelper
         this.canvas.repaint();
     }
 
-    @JsMethod
     private void appendText(String string)
     {
         //tf.setCaretVisible(false);
@@ -166,7 +153,6 @@ public class TextFieldItemHelper
         this.canvas.repaint();
     }
 
-    @JsMethod
     private void deleteBeforeText()
     {
         final String textFieldValue = this.textFieldItem.getString();
@@ -184,7 +170,6 @@ public class TextFieldItemHelper
         }
     }
 
-    @JsMethod
     private void deleteAtText()
     {
         final String textFieldValue = this.textFieldItem.getString();

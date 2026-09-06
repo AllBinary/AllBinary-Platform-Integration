@@ -5,7 +5,6 @@
  */
 package org.microemu.graphics.form;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Graphics;
 
@@ -13,22 +12,15 @@ import org.allbinary.game.input.GameInputStrings;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.communication.log.ForcedLogUtil;
 import org.allbinary.graphics.color.BasicColor;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 
-@JsType
 public class CustomScreen extends CustomDisplayable
 {
     //protected final LogUtil logUtil = LogUtil.getInstance();
 
-    @JsProperty
     protected final CommonStrings commonStrings = CommonStrings.getInstance();
-    @JsProperty
     protected final GameInputStrings gameInputStrings = GameInputStrings.getInstance();
     
-    @JsConstructor
     CustomScreen(String title, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(title, backgroundBasicColor, foregroundBasicColor);
@@ -41,7 +33,6 @@ public class CustomScreen extends CustomDisplayable
     */
     
     //abstract
-	@JsMethod
 	int traverse(int gameKeyCode, int top, int bottom)
 	{
             ForcedLogUtil.log(this.commonStrings.NOT_IMPLEMENTED, this);
@@ -80,14 +71,12 @@ public class CustomScreen extends CustomDisplayable
 	}
 
         @Override
-	       @JsMethod
 	       public void keyRepeated(int keyCode) 
 	{
 		this.keyPressed(keyCode);
 	}
 
         @Override
-	       @JsMethod
 	       public void paint(Graphics g) 
 	{
 		//logUtil.putF(commonStrings.START, this, "paint");
@@ -138,7 +127,6 @@ public class CustomScreen extends CustomDisplayable
 	}
 	
 
-	@JsMethod
 	int paintContent(Graphics g)
 	{
         //abstract

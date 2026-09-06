@@ -13,16 +13,12 @@
 */
 package org.allbinary.graphics.font;
 
-import jsinterop.annotations.JsType;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
 
 /**
  *
  * @author User
  */
 
-@JsType
 public class FontDebugFactory extends FontDebugFactoryBase {
     
     private static final FontDebugFactory instance = new FontDebugFactory(FontDebug.getInstance(), FontDebugBase.getInstance());
@@ -30,12 +26,10 @@ public class FontDebugFactory extends FontDebugFactoryBase {
     /**
      * @return the instance
      */
-    @JsMethod
     public static FontDebugFactory getInstance() {
         return FontDebugFactory.instance;
     }
 
-    @JsConstructor
     public FontDebugFactory(FontDebugBase debug, FontDebugBase noDebug) {
         super(debug, noDebug);
     }

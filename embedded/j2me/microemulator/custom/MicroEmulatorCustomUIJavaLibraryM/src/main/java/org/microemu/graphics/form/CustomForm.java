@@ -9,10 +9,6 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Graphics;
 
-import jsinterop.annotations.JsType;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsProperty;
 
 import org.allbinary.graphics.form.item.ABCustomItem;
 import org.allbinary.graphics.form.item.ABCustomItemStateListener;
@@ -35,12 +31,10 @@ import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonLabels;
 
-@JsType
 public class CustomForm extends CustomScreen {
 
     private static Object NULL_SCREEN = NullUtil.getInstance().NULL_OBJECT;
 
-    @JsMethod
     public static Form getNullForm() {
         if (CustomForm.NULL_SCREEN == NullUtil.getInstance().NULL_OBJECT) {
             CustomForm.NULL_SCREEN = new Form(StringUtil.getInstance().EMPTY_STRING);
@@ -49,13 +43,11 @@ public class CustomForm extends CustomScreen {
         return (Form) CustomForm.NULL_SCREEN;
     }
 
-    @JsProperty
     protected final LogUtil logUtil = LogUtil.getInstance();
     
     private final ABSystemWrapper systemWrapper = ABSystemWrapper.getInstance();
 
     private final GameKeyFactory gameKeyFactory = GameKeyFactory.getInstance();
-    @JsProperty
     protected final InputFactory inputFactory = InputFactory.getInstance();
     
     private ABCustomItem[] items = new ABCustomItem[16];
@@ -66,7 +58,6 @@ public class CustomForm extends CustomScreen {
     int viewPortY = 0;
     final int viewPortHeight = this.getHeight() - this.title.getHeight() - 1;
     
-    @JsConstructor
     public CustomForm(final String title, final ABCustomItem[] items, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor) {
         super(title, backgroundBasicColor, foregroundBasicColor);
 
@@ -80,22 +71,18 @@ public class CustomForm extends CustomScreen {
         this.setSelectedIndex(-1);
     }
 
-    @JsMethod
     public ABCustomItem[] getAllitems() {
         return this.items;
     }
 
-    @JsMethod
     public void processInput(AllBinaryLayerManager layerManager) throws Exception {
 
     }
 
-    @JsMethod
     public void initInputProcessors() {
 
     }
 
-    @JsMethod
     public int append(ABCustomItem item) {
         this.verifyItem(item);
 
@@ -125,7 +112,6 @@ public class CustomForm extends CustomScreen {
 		return append(new StringItem(null, str));
 	}
      */
-    @JsMethod
     public void delete(int itemNum) {
         this.verifyItemNum(itemNum);
 
@@ -134,7 +120,6 @@ public class CustomForm extends CustomScreen {
         this.numOfItems--;
     }
 
-    @JsMethod
     public void deleteAll() {
         for (int i = 0; i < this.numOfItems; i++) {
             this.items[i].setOwner(CustomForm.getNullForm());
@@ -142,7 +127,6 @@ public class CustomForm extends CustomScreen {
         this.numOfItems = 0;
     }
 
-    @JsMethod
     public ABCustomItem get(int itemNum) {
         this.verifyItemNum(itemNum);
 
@@ -161,7 +145,6 @@ public class CustomForm extends CustomScreen {
 		return super.getWidth();
 	}
      */
-    @JsMethod
     public void insert(int itemNum, ABCustomItem item) {
         this.verifyItemNum(itemNum);
         this.verifyItem(item);
@@ -178,7 +161,6 @@ public class CustomForm extends CustomScreen {
 
     }
 
-    @JsMethod
     public void set(int itemNum, ABCustomItem item) {
         this.verifyItemNum(itemNum);
         this.verifyItem(item);
@@ -190,22 +172,18 @@ public class CustomForm extends CustomScreen {
         //items[itemNum].setOwner(this);
     }
 
-    @JsMethod
     public void setItemStateListener(ABCustomItemStateListener iListener) {
         this.itemStateListener = iListener;
     }
 
-    @JsMethod
     public int size() {
         return this.numOfItems;
     }
 
-    @JsMethod
     protected int getItemTotalHeight(int index) {
         return this.items[index].getHeight();
     }
 
-    @JsMethod
     protected int getItemIndexAt(GPoint point) {
         int beginY = 0;
         int endY = 0;
@@ -226,7 +204,6 @@ public class CustomForm extends CustomScreen {
     private final int LIGHT_GREY = BasicColorFactory.getInstance().LIGHT_GREY.intValue();
 
     @Override
-    @JsMethod
     int paintContent(Graphics graphics) {
         //logUtil.putF(commonStrings.START_LABEL + numOfItems, this, "paintContent");
 
@@ -250,14 +227,12 @@ public class CustomForm extends CustomScreen {
         return contentHeight;
     }
 
-    @JsMethod
     void fireItemStateListenerForCustomItem(final ABCustomItem item) {
         if (this.itemStateListener != null) {
             this.itemStateListener.itemStateChanged(item);
         }
     }
 
-    @JsMethod
     void fireItemStateListener() {
         final int selectedIndex = this.getSelectedIndex();
         if (selectedIndex >= 0 && selectedIndex < this.items.length) {
@@ -279,7 +254,6 @@ public class CustomForm extends CustomScreen {
         }
     }
 
-    @JsMethod
     public void traverseFromKey(int keyCode) {
         this.viewPortY = 0;
         this.viewPortY += this.traverse(keyCode, this.viewPortY, this.viewPortY + this.viewPortHeight);
@@ -287,7 +261,6 @@ public class CustomForm extends CustomScreen {
 
 
     @Override
-    @JsMethod
     public void keyPressed(final int keyCode) {
         try {
             GameKey gameKey =
@@ -357,7 +330,6 @@ public class CustomForm extends CustomScreen {
 		//}
 	}
      */
-    @JsMethod
     private int getTotalTraversable() {
         int total = 0;
 
@@ -372,7 +344,6 @@ public class CustomForm extends CustomScreen {
     }
 
     @Override
-    @JsMethod
     int traverse(int gameKeyCode, int top, int bottom) {
         //logUtil.put(commonStrings.START, this, "traverse");
 
@@ -553,7 +524,6 @@ public class CustomForm extends CustomScreen {
         return 0;
     }
 
-    @JsMethod
     private int getTopVisibleIndex(int top) {
         int height = 0;
 
@@ -567,7 +537,6 @@ public class CustomForm extends CustomScreen {
         return this.numOfItems - 1;
     }
 
-    @JsMethod
     private int getBottomVisibleIndex(int bottom) {
         int height = 0;
 
@@ -581,7 +550,6 @@ public class CustomForm extends CustomScreen {
         return this.numOfItems - 1;
     }
 
-    @JsMethod
     private int getHeightToItem(int itemIndex) {
         int height = 0;
 
@@ -600,7 +568,6 @@ public class CustomForm extends CustomScreen {
      * @throws IllegalStateException
      * @throws NullPointerException
      */
-    @JsMethod
     private void verifyItem(ABCustomItem item) {
         // Check that we are being passed valid items
         if (item == null) {
@@ -623,7 +590,6 @@ public class CustomForm extends CustomScreen {
      * @param itemNum the number of the item
      * @throws IndexOutOfBoundsException
      */
-    @JsMethod
     private void verifyItemNum(int itemNum) {
         if (itemNum < 0 || itemNum >= this.numOfItems) {
             throw new IndexOutOfBoundsException("item number is outside range of Form");
@@ -632,7 +598,6 @@ public class CustomForm extends CustomScreen {
 
     private static final String SET_SELECTED_INDEX = "setSelectedIndex";
 
-    @JsMethod
     public void setSelectedIndex(int selectedIndex) {
         final CommonLabels commonLabels = CommonLabels.getInstance();
         final StringMaker stringBuffer = new StringMaker();
@@ -647,7 +612,6 @@ public class CustomForm extends CustomScreen {
         this.selectedIndex = selectedIndex;
     }
 
-    @JsMethod
     public int getSelectedIndex() {
         return this.selectedIndex;
     }

@@ -5,30 +5,21 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Screen;
-import jsinterop.annotations.JsMethod;
 
 /**
  *
  * @author user
  */
 
-@JsType
 public interface CustomItemInterface {
 
-    @JsMethod
     void setOwner(Screen owner);
-    @JsMethod
     int getMinimumWidth();
-    @JsMethod
     int getMinimumHeight();
-    @JsMethod
     String getLabel();
-    @JsMethod
     void paintXY(Graphics graphics, int x, int y);
-    @JsMethod
     void paintUnselected(Graphics graphics, int x, int y);
 }

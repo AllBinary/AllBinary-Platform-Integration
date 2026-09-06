@@ -5,12 +5,10 @@
  */
 package org.allbinary.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import org.microemu.graphics.form.item.CustomItemInterface;
 
 
-@JsType
 public interface ABCustomItemInterface extends CustomItemInterface
 {
 

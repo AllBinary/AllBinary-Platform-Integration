@@ -24,17 +24,13 @@
  
 package javax.microedition.lcdui;
 
-import jsinterop.annotations.JsType;
-import jsinterop.annotations.JsMethod;
 
 
 
-@JsType
 public interface CommandListener
 {
 
 
-	@JsMethod
 	void commandAction(Command c, Displayable d);
 
 }

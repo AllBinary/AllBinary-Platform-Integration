@@ -6,10 +6,6 @@
 package org.allbinary.graphics.form.item;
 
 import javax.microedition.lcdui.Graphics;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsProperty;
-import jsinterop.annotations.JsType;
 
 import org.allbinary.graphics.color.BasicColor;
 import org.allbinary.graphics.color.BasicColorFactory;
@@ -17,13 +13,11 @@ import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringUtil;
 import org.microemu.graphics.form.item.CustomItem;
 
-@JsType
 public class ABCustomItem extends CustomItem
 {
     
     public static Object NULL_CUSTOM_ITEM = NullUtil.getInstance().NULL_OBJECT;
     
-    @JsMethod
     public static ABCustomItem getNullInstance() {
         
         if(ABCustomItem.NULL_CUSTOM_ITEM == NullUtil.getInstance().NULL_OBJECT) {
@@ -33,27 +27,22 @@ public class ABCustomItem extends CustomItem
         return (ABCustomItem) ABCustomItem.NULL_CUSTOM_ITEM;
     }
 
-    @JsProperty
     public static final int OUTOFITEM = Integer.MAX_VALUE;
 
-    @JsConstructor
     protected ABCustomItem(String label, BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
         super(label, backgroundBasicColor, foregroundBasicColor);
     }
 
-    @JsMethod
     public void paintXY(Graphics graphics, int x, int y)
     {
 
     }
 
-    @JsMethod
     public void paintUnselected(Graphics graphics, int x, int y) {
 
     }
 
-    @JsMethod
     public void preMeasurement(final Graphics graphics) {
         
     }

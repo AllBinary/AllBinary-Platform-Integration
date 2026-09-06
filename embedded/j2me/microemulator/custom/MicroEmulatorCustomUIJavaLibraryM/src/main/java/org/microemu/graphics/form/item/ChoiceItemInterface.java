@@ -28,64 +28,45 @@
  
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Image;
-import jsinterop.annotations.JsMethod;
 
 
-@JsType
 public interface ChoiceItemInterface {  
 
-  @JsMethod
   int append(String stringPart, Image imagePart);
     
-  @JsMethod
   void delete(int elementNum);
   
-  @JsMethod
   void deleteAll();
   
-  @JsMethod
   int getFitPolicy();
   
-  @JsMethod
   Font getFont(int elementNum);
   
   //Image getImage(int elementNum);
     
-  @JsMethod
   int getSelectedFlags(boolean[] selectedArray_return);
   
-  @JsMethod
   int getSelectedIndex();
   
-  @JsMethod
   String getString(int elementNum);
     
-  @JsMethod
   void insert(int elementNum, String stringPart, Image imagePart);
   
-  @JsMethod
   boolean isSelected(int elementNum);
   
-  @JsMethod
   void set(int elementNum, String stringPart, Image imagePart);
 
-  @JsMethod
   void setFitPolicy(int fitPolicy);
   
-  @JsMethod
   void setFont(int elementNum, Font font);
   
-  @JsMethod
   void setSelectedFlags(boolean[] selectedArray);
   
-  @JsMethod
   void setSelectedIndex(int elementNum, boolean selected);
   
-  @JsMethod
   int size();
   
 }

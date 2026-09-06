@@ -26,15 +26,11 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Command;
-import jsinterop.annotations.JsMethod;
 
 
-@JsType
 public interface CustomItemCommandListener
 {
-    @JsMethod
     void commandAction(Command c, CustomItem item);
 }

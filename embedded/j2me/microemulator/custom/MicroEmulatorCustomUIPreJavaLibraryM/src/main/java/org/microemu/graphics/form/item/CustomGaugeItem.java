@@ -26,7 +26,6 @@
  */
 package org.microemu.graphics.form.item;
 
-import jsinterop.annotations.JsType;
 
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
@@ -38,11 +37,8 @@ import org.allbinary.graphics.font.MyFontProcessor;
 import org.allbinary.graphics.font.UpdateMyFontInterface;
 import org.allbinary.graphics.font.UpdateMyFontProcessor;
 import org.allbinary.graphics.threed.SWTJOGLProcessor;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsConstructor;
 
 
-@JsType
 public class CustomGaugeItem extends CustomItem 
     implements UpdateMyFontInterface
 {
@@ -70,7 +66,6 @@ public class CustomGaugeItem extends CustomItem
     private int fontHeight = 0;
     private int offsetY = 0;
     
-    @JsConstructor
     public CustomGaugeItem(String label, int maxValue, int initialValue, 
             BasicColor backgroundBasicColor, BasicColor foregroundBasicColor)
     {
@@ -81,7 +76,6 @@ public class CustomGaugeItem extends CustomItem
     }
 
     @Override
-    @JsMethod
     public void updateMeasurement(final Graphics graphics) {
         final Font font = graphics.getFont();
         this.fontHeight = font.getHeight();
@@ -89,13 +83,11 @@ public class CustomGaugeItem extends CustomItem
         this.myFontProcessor = MyFontProcessor.getInstance();
     }
 
-    @JsMethod
     public void setHeight(int height)
     {
         this.height = height;
     }
     
-    @JsMethod
     public void setValue(float value)
     {
 
@@ -132,13 +124,11 @@ public class CustomGaugeItem extends CustomItem
         }
     }
 
-    @JsMethod
     public float getValue()
     {
         return this.value;
     }
 
-    @JsMethod
     public void setMaxValue(int maxValue)
     {
         if (maxValue > 0)
@@ -152,37 +142,31 @@ public class CustomGaugeItem extends CustomItem
         }
     }
 
-    @JsMethod
     public float getMaxValue()
     {
         return this.maxValue;
     }
 
-    @JsMethod
     public int getMinContentWidth()
     {
         return 0;
     }
 
-    @JsMethod
     public int getPrefContentWidth(int width)
     {
         return super.getPreferredWidth();
     }
 
-    @JsMethod
     public int getMinContentHeight()
     {
         return 0;
     }
 
-    @JsMethod
     public int getPrefContentHeight(int height)
     {
         return super.getPreferredHeight();
     }
 
-    @JsMethod
     public void paintXY(Graphics graphics, int xunused, int yunused)
     {
         this.myFontProcessor.process(graphics);
@@ -217,7 +201,6 @@ public class CustomGaugeItem extends CustomItem
         }
     }
 
-    @JsMethod
     private int getCurrentInnerColor()
     {
         return (int) this.currentInnerColor;

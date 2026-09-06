@@ -14,7 +14,6 @@
 
 package org.allbinary.graphics.displayable.screen;
 
-import jsinterop.annotations.JsType;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,17 +28,13 @@ import org.allbinary.business.init.LicenseInitInfoUtil;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.string.CommonStrings;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsProperty;
 
 /**
  *
  * @author User
  */
 
-@JsType
 public class AboutCommandProcessor {
-    @JsProperty
     protected final LogUtil logUtil = LogUtil.getInstance();
 
 
@@ -48,20 +43,16 @@ public class AboutCommandProcessor {
     /**
      * @return the instance
      */
-    @JsMethod
     public static AboutCommandProcessor getInstance() {
         return AboutCommandProcessor.instance;
     }
 
-    @JsProperty
     public final String URL = "url";
-    @JsProperty
     public final String NAME = "name";
     private final String WEB_VIEW_ACTIVITY = "org.allbinary.android.activity.WebViewActivity";
     
     private Object context = NullUtil.getInstance().NULL_OBJECT;
     
-    @JsMethod
     public void process(final CommandListener midletCommandListener, final Command command, final Canvas canvas) {
         try {
             //midletCommandListener.commandAction(command, canvas);
@@ -78,12 +69,10 @@ public class AboutCommandProcessor {
         }
     }
     
-    @JsMethod
     public void setContext(final Context context) {
         this.context = context;
     }
     
-    @JsMethod
     public Context getContext() {
         return (Context) this.context;
     }

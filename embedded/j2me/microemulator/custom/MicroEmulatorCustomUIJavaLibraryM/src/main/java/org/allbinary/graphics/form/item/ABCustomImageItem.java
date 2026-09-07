@@ -9,7 +9,9 @@ import javax.microedition.lcdui.Image;
 
 import org.allbinary.graphics.color.BasicColor;
 
-public class ABCustomImageItem extends org.microemu.graphics.form.item.CustomImageItem
+import org.microemu.graphics.form.item.CustomImageItem;
+
+public class ABCustomImageItem extends CustomImageItem
 {
 //    public ABCustomImageItem(String label, Image image, int layout, String altText, BasicColor basicColor)
 //            throws Exception

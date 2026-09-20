@@ -62,7 +62,7 @@ public class CustomForm extends CustomScreen {
         super(title, backgroundBasicColor, foregroundBasicColor);
 
         this.items = new ABCustomItem[items.length];
-        systemWrapper.arraycopy(items, 0, this.items, 0, items.length);
+        this.systemWrapper.arraycopy(items, 0, this.items, 0, items.length);
         this.numOfItems = this.items.length;
         for (int i = 0; i < this.numOfItems; i++) {
             this.verifyItem(this.items[i]);
@@ -88,7 +88,7 @@ public class CustomForm extends CustomScreen {
 
         if (this.numOfItems + 1 >= this.items.length) {
             ABCustomItem newitems[] = new ABCustomItem[this.numOfItems + 4];
-            systemWrapper.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
+            this.systemWrapper.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
             this.items = newitems;
         }
         this.items[this.numOfItems] = item;
@@ -116,7 +116,7 @@ public class CustomForm extends CustomScreen {
         this.verifyItemNum(itemNum);
 
         this.items[itemNum].setOwner(CustomForm.getNullForm());
-        systemWrapper.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
+        this.systemWrapper.arraycopy(this.items, itemNum + 1, this.items, itemNum, this.numOfItems - itemNum - 1);
         this.numOfItems--;
     }
 
@@ -151,10 +151,10 @@ public class CustomForm extends CustomScreen {
 
         if (this.numOfItems + 1 == this.items.length) {
             ABCustomItem[] newitems = new ABCustomItem[this.numOfItems + 4];
-            systemWrapper.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
+            this.systemWrapper.arraycopy(this.items, 0, newitems, 0, this.numOfItems);
             this.items = newitems;
         }
-        systemWrapper.arraycopy(this.items, itemNum, this.items, itemNum + 1, this.numOfItems - itemNum);
+        this.systemWrapper.arraycopy(this.items, itemNum, this.items, itemNum + 1, this.numOfItems - itemNum);
         this.items[itemNum] = item;
         //items[itemNum].setOwner(this);
         this.numOfItems++;

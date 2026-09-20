@@ -178,7 +178,7 @@ public class CustomGaugeItem extends CustomItem
 
         // Don't use WHITE.intValue() because of static load time
         graphics.setColor(this.getCurrentInnerColor());
-        graphics.drawString(this.getLabel(), 4, offsetY, 0);
+        graphics.drawString(this.getLabel(), 4, this.offsetY, 0);
 
         if(this.height == 30)
         {

@@ -117,7 +117,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             // POPUP has a hidden List to implement it's
             // behaviour
             popupList = new List(label, ChoiceGroupItem.IMPLICIT, StringUtil.getInstance().getArrayInstance(), NullImage.NULL_IMAGE_ARRAY);
-            popupList.setCommandListener(new ImplicitListener());
+            popupList.setCommandListener(new ImplicitListener(this));
         } else {
             popupList = ChoiceGroupItem.NULL_LIST;
         }
@@ -346,7 +346,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
 
         System.arraycopy(this.items, elementNum, this.items, elementNum + 1, this.numOfItems - elementNum);
 
-        this.items[elementNum] = new ChoiceItem(StringUtil.getInstance().EMPTY_STRING, imagePart, stringPart, this
+        this.items[elementNum] = new ChoiceItem(this, StringUtil.getInstance().EMPTY_STRING, imagePart, stringPart, this
                 .getLabelStringComponent().getBackgroundBasicColor(), this
                 .getLabelStringComponent().getForegroundBasicColor());
 
@@ -757,14 +757,15 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
 
     class ChoiceItem extends ABImageStringItem
     {
+        private final ChoiceGroupItem choiceGroupItem;
         private boolean selected;
         private Font font;
         Image box = NullImage.NULL_IMAGE;
 
-        ChoiceItem(String label, Image image, String text, BasicColor backgroundBasicColor,
-                BasicColor foregroundBasicColor)
+        ChoiceItem(final ChoiceGroupItem choiceGroupItem, final String label, final Image image, final String text, final BasicColor backgroundBasicColor, final BasicColor foregroundBasicColor)
         {
             super(label, image, text, backgroundBasicColor, foregroundBasicColor);
+            this.choiceGroupItem = choiceGroupItem;
             this.setSelectedState(false);
             this.font = Font.getDefaultFont();
         }
@@ -909,6 +910,7 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
             this.selected = state;
 
             final Image[] imageArray = ChoiceGroupImageFactory.getInstance().getImageArray();
+            final int choiceType = this.choiceGroupItem.choiceType;
             if (choiceType != ChoiceGroupItem.IMPLICIT
                     && choiceType != ChoiceGroupItem.POPUP)
             {
@@ -931,15 +933,21 @@ public class ChoiceGroupItem extends ABCustomItem implements ABChoiceItemInterfa
 
     class ImplicitListener implements CommandListener
     {
+        private final ChoiceGroupItem choiceGroupItem;
+        
+        public ImplicitListener(final ChoiceGroupItem choiceGroupItem) {
+            this.choiceGroupItem = choiceGroupItem;
+        }
+        
         @Override
         public void commandAction(Command c, Displayable d)
         {
             List list = (List) d;
-            setSelectedIndex(list.getSelectedIndex(), true);
+            this.choiceGroupItem.setSelectedIndex(list.getSelectedIndex(), true);
             try
             {
                 // getOwner().currentDisplay.setCurrent(getOwner());
-                repaint();
+                this.choiceGroupItem.repaint();
             } catch (NullPointerException n)
             {
                 // this happens if the item becomes an orphan

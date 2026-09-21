@@ -35,7 +35,11 @@ import org.allbinary.thread.ARunnable;
 
 //import java.util.TimerTask;
 import javax.microedition.midlet.MIDlet;
+import org.allbinary.logic.communication.log.PreLogUtil;
 import org.allbinary.logic.string.StringMaker;
+import org.allbinary.logic.string.StringUtil;
+import org.allbinary.string.CommonLabels;
+import org.allbinary.string.CommonSeps;
 import org.allbinary.thread.DisplayThreadPool;
 import org.allbinary.thread.EmuThreadPool;
 import org.allbinary.view.EmulatorViewInterface;
@@ -67,6 +71,12 @@ public class Display {
 
 	public static final int COLOR_HIGHLIGHTED_BORDER = 5;
 
+        private final CommonSeps commonSeps = CommonSeps.getInstance();
+        private final CommonLabels commonLabels = CommonLabels.getInstance();
+        private final StringUtil stringUtil = StringUtil.getInstance();
+        
+        private final String SET_CURRENT = "setCurrent";
+        
         private final Displayable DISPLAYABLE = new Canvas();
 	private Displayable current = this.DISPLAYABLE;
 
@@ -617,6 +627,9 @@ public class Display {
 	}
         
 	public void setCurrent(final Displayable nextDisplayable) {
+            
+            PreLogUtil.put(new StringMaker().append(this.commonLabels.CURRENT).append(this.stringUtil.toString(this.current)).append(this.commonSeps.SPACE).append(this.commonLabels.NEXT).append(this.commonLabels.COLON_SEP).append(this.stringUtil.toString(nextDisplayable)).toString(), this, this.SET_CURRENT);
+            
 		if (nextDisplayable == this.current) {
 			return;
 		}

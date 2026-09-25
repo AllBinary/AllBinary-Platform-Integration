@@ -26,11 +26,11 @@ SOFTWARE.
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Hashtable;
+
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.NullUtil;
-import org.allbinary.logic.StdUtil;
+import org.allbinary.util.ABHashtable;
 import org.allbinary.util.BasicArrayListS;
 
 /**
@@ -605,7 +605,7 @@ public class JSONArray {
      * @param value A Map value.
      * @return      this.
      */
-    public JSONArray put(Hashtable value) {
+    public JSONArray put(ABHashtable value) {
         this.put(new JSONObject(value));
         return this;
     }
@@ -709,7 +709,7 @@ public class JSONArray {
      * @throws JSONException If the index is negative or if the the value is
      *  an invalid number.
      */
-    public JSONArray put(int index, Hashtable value) throws JSONException {
+    public JSONArray put(int index, ABHashtable value) throws JSONException {
         this.put(index, new JSONObject(value));
         return this;
     }

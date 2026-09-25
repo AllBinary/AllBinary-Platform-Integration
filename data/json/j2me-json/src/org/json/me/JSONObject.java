@@ -27,14 +27,14 @@ SOFTWARE.
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Enumeration;
-import java.util.Hashtable;
+
 import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.StdUtil;
 import org.allbinary.logic.string.StringUtil;
 
 import org.allbinary.string.CommonSeps;
+import org.allbinary.util.ABHashtable;
 
 /**
  * A JSONObject is an unordered collection of name/value pairs. Its
@@ -133,7 +133,7 @@ public class JSONObject {
     /**
      * The hash map where the JSONObject's properties are kept.
      */
-    private Hashtable myHashMap;
+    private ABHashtable myHashMap;
 
 
     /**
@@ -235,11 +235,13 @@ public class JSONObject {
      * @param map A map object that can be used to initialize the contents of
      *  the JSONObject.
      */
-    public JSONObject(Hashtable map) {
+    public JSONObject(ABHashtable map) {
         if (map == null) {
             this.myHashMap = StdUtil.getInstance().createHashtable();
         } else {
-            this.myHashMap = new Hashtable(map.size());
+            this.myHashMap = new ABHashtable();
+            //new ABHashtable(map.size())
+
             Enumeration keys = map.keys();
             while (keys.hasMoreElements()) {
                 Object key = keys.nextElement();
@@ -887,7 +889,7 @@ public class JSONObject {
      * @return		this.
      * @throws JSONException
      */
-    public JSONObject put(String key, Hashtable value) throws JSONException {
+    public JSONObject put(String key, ABHashtable value) throws JSONException {
         this.put(key, new JSONObject(value));
         return this;
     }

@@ -1,5 +1,6 @@
 package org.json.me.util;
 
+import org.allbinary.util.ABHashtable;
 import org.json.me.JSONException;
 import org.json.me.JSONTokener;
 
@@ -39,10 +40,10 @@ public class XMLTokener extends JSONTokener {
    /** The table of entity values. It initially contains Character values for
     * amp, apos, gt, lt, quot.
     */
-   public static final java.util.Hashtable entity;
+   public static final ABHashtable entity;
 
    static {
-       entity = new java.util.Hashtable(8);
+       entity = new ABHashtable();
        entity.put("amp",  XML.AMP);
        entity.put("apos", XML.APOS);
        entity.put("gt",   XML.GT);

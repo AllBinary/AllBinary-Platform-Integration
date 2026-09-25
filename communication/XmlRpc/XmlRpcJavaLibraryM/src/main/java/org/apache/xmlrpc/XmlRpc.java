@@ -56,8 +56,9 @@ package org.apache.xmlrpc;
  */
 
 import java.io.InputStream;
-import java.util.Stack;
+
 import org.allbinary.util.ABHashtable;
+import org.allbinary.util.ABStack;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -112,7 +113,7 @@ public abstract class XmlRpc extends HandlerBase
      * The class name of SAX parser to use.
      */
     private static Class parserClass;
-    private static ABHashtable saxDrivers = new ABHashtable (8);
+    private static ABHashtable saxDrivers = new ABHashtable();
 
     static
     {
@@ -131,7 +132,7 @@ public abstract class XmlRpc extends HandlerBase
     }
 
     // the stack we're parsing our values into.
-    Stack values;
+    ABStack values;
     Value currentValue;
 
     /**
@@ -384,7 +385,7 @@ public abstract class XmlRpc extends HandlerBase
         // reset values (XmlRpc objects are reusable)
         this.errorLevel = XmlRpc.NONE;
         this.errorMsg = null;
-        this.values = new Stack ();
+        this.values = new ABStack();
         if (this.cdata == null)
         {
             this.cdata = new StringBuffer(128);

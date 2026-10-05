@@ -7,7 +7,7 @@ Public Domain.
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Array;
+//import java.lang.reflect.Array;
 //import java.math.BigDecimal;
 //import java.math.BigInteger;
 import java.util.ArrayList;
@@ -1648,17 +1648,22 @@ public class JSONArray implements Iterable<Object> {
      */
     private void addAll(Object array, boolean wrap) throws JSONException {
         if (array.getClass().isArray()) {
-            int length = Array.getLength(array);
+            //int length = Array.getLength(array);
+            Object[] objectArray = (Object[]) array;
+            //final int length = Array.getLength(array);
+            final int length = objectArray.length;
             this.myArrayList.ensureCapacity(this.myArrayList.size() + length);
             if (wrap) {
                 Object o;
                 for (int i = 0; i < length; i += 1) {
-                    o = JSONObject.wrap(Array.get(array, i));
+                    //o = JSONObject.wrap(Array.get(array, i));
+                    o = JSONObject.wrap(objectArray[i]);
                     this.put(o);
                 }
             } else {
                 for (int i = 0; i < length; i += 1) {
-                    this.put(Array.get(array, i));
+                    //this.put(Array.get(array, i));
+                    this.put(objectArray[i]);
                 }
             }
         } else if (array instanceof JSONArray) {

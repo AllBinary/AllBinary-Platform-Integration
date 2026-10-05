@@ -69,7 +69,7 @@ public class JSONML {
 //      <!   ...   >
 //      <?   ...  ?>
 
-        while (true) {
+       while (true) {
             if (!x.more()) {
                 throw x.syntaxError("Bad XML");
             }
@@ -154,7 +154,7 @@ public class JSONML {
                         }
                     }
                     token = null;
-                    for (;;) {
+                    while (true) {
                         if (token == null) {
                             token = x.nextToken();
                         }

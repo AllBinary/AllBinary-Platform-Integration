@@ -91,7 +91,7 @@ public class XMLTokener extends JSONTokener {
             return XML.LT;
         }
         sb = new StringBuilder();
-        for (;;) {
+        while (true) {
             if (c == 0) {
                 return sb.toString().trim();
             }
@@ -120,7 +120,7 @@ public class XMLTokener extends JSONTokener {
      */
     public Object nextEntity(@SuppressWarnings("unused") char ampersand) throws JSONException {
         StringBuilder sb = new StringBuilder();
-        for (;;) {
+        while (true) {
             char c = next();
             if (Character.isLetterOrDigit(c) || c == '#') {
                 sb.append(Character.toLowerCase(c));
@@ -201,7 +201,7 @@ public class XMLTokener extends JSONTokener {
         case '"':
         case '\'':
             q = c;
-            for (;;) {
+            while (true) {
                 c = next();
                 if (c == 0) {
                     throw this.syntaxError("Unterminated string");
@@ -211,7 +211,7 @@ public class XMLTokener extends JSONTokener {
                 }
             }
         default:
-            for (;;) {
+            while (true) {
                 c = next();
                 if (Character.isWhitespace(c)) {
                     return Boolean.TRUE;
@@ -274,7 +274,7 @@ public class XMLTokener extends JSONTokener {
         case '\'':
             q = c;
             sb = new StringBuilder();
-            for (;;) {
+            while (true) {
                 c = next();
                 if (c == 0) {
                     throw this.syntaxError("Unterminated string");
@@ -293,7 +293,7 @@ public class XMLTokener extends JSONTokener {
 // Name
 
             sb = new StringBuilder();
-            for (;;) {
+            while (true) {
                 sb.append(c);
                 c = next();
                 if (Character.isWhitespace(c)) {
@@ -353,7 +353,7 @@ public class XMLTokener extends JSONTokener {
 
         /* We will loop, possibly for all of the remaining characters. */
 
-        for (;;) {
+        while (true) {
             j = offset;
             b = true;
 

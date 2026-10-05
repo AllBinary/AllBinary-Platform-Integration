@@ -46,7 +46,7 @@ public class CDL {
         case '\'':
             q = c;
             sb = new StringBuilder();
-            for (;;) {
+            while (true) {
                 c = x.next();
                 if (c == q) {
                     //Handle escaped double-quote
@@ -82,7 +82,7 @@ public class CDL {
      */
     public static JSONArray rowToJSONArray(JSONTokener x) throws JSONException {
         JSONArray ja = new JSONArray();
-        for (;;) {
+        while (true) {
             String value = CDL.getValue(x);
             char c = x.next();
             if (value == null ||
@@ -90,7 +90,7 @@ public class CDL {
                 return null;
             }
             ja.put(value);
-            for (;;) {
+            while (true) {
                 if (c == ',') {
                     break;
                 }
@@ -208,7 +208,7 @@ public class CDL {
             return null;
         }
         JSONArray ja = new JSONArray();
-        for (;;) {
+        while (true) {
             JSONObject jo = CDL.rowToJSONObject(names, x);
             if (jo == null) {
                 break;

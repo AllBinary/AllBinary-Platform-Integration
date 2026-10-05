@@ -326,7 +326,7 @@ public class XML {
             jsonObject = new JSONObject();
             boolean nilAttributeFound = false;
             xmlXsiTypeConverter = null;
-            for (;;) {
+            while (true) {
                 if (token == null) {
                     token = x.nextToken();
                 }
@@ -386,7 +386,7 @@ public class XML {
 
                 } else if (token == XML.GT) {
                     // Content, between <...> and </...>
-                    for (;;) {
+                    while (true) {
                         token = x.nextContent();
                         if (token == null) {
                             if (tagName != null) {

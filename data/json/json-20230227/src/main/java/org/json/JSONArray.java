@@ -96,7 +96,7 @@ public class JSONArray implements Iterable<Object> {
         }
         if (nextChar != ']') {
             x.back();
-            for (;;) {
+            while (true) {
                 if (x.nextClean() == ',') {
                     x.back();
                     this.myArrayList.add(JSONObject.NULL);

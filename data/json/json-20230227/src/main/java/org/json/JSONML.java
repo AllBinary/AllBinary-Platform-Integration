@@ -1,5 +1,7 @@
 package org.json;
 
+import org.allbinary.logic.string.StringUtil;
+
 /*
 Public Domain.
 */
@@ -180,7 +182,7 @@ public class JSONML {
                             newjo.accumulate(attribute, config.isKeepStrings() ? ((String)token) :XML.stringToValue((String)token));
                             token = null;
                         } else {
-                            newjo.accumulate(attribute, "");
+                            newjo.accumulate(attribute, StringUtil.getInstance().EMPTY_STRING);
                         }
                     }
                     if (arrayForm && newjo.length() > 0) {

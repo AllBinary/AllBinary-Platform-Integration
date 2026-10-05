@@ -94,7 +94,7 @@ public class JSONPointer {
      * JSONPointer pointer = JSONPointer.builder()
      *       .append("obj")
      *       .append("other~key").append("another/key")
-     *       .append("\"")
+     *       .append(CommonSeps.getInstance().QUOTE)
      *       .append(0)
      *       .build();
      * </code></pre>

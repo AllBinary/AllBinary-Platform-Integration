@@ -6,6 +6,8 @@ Public Domain.
 
 import java.io.Reader;
 
+import org.allbinary.logic.string.StringUtil;
+
 /**
  * The XMLTokener extends the JSONTokener to provide additional methods
  * for the parsing of XML texts.
@@ -142,7 +144,7 @@ public class XMLTokener extends JSONTokener {
     static String unescapeEntity(String e) {
         // validate
         if (e == null || e.isEmpty()) {
-            return "";
+            return StringUtil.getInstance().EMPTY_STRING;
         }
         // if our entity is an encoded unicode point, parse it.
         if (e.charAt(0) == '#') {

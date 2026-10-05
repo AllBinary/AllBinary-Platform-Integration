@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.allbinary.logic.string.StringUtil;
+
 /*
 Public Domain.
  */
@@ -251,7 +253,7 @@ public class JSONTokener {
      */
     public String next(int n) throws JSONException {
         if (n == 0) {
-            return "";
+            return StringUtil.getInstance().EMPTY_STRING;
         }
 
         char[] chars = new char[n];
@@ -447,7 +449,7 @@ public class JSONTokener {
         }
 
         string = sb.toString().trim();
-        if ("".equals(string)) {
+        if (StringUtil.getInstance().EMPTY_STRING.equals(string)) {
             throw this.syntaxError("Missing value");
         }
         return JSONObject.stringToValue(string);

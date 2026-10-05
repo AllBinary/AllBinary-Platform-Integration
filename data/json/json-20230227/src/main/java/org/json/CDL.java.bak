@@ -67,7 +67,7 @@ public class CDL {
             return sb.toString();
         case ',':
             x.back();
-            return "";
+            return StringUtil.getInstance().EMPTY_STRING;
         default:
             x.back();
             return x.nextTo(',');
@@ -230,16 +230,16 @@ public class CDL {
      * @return A comma delimited text.
      * @throws JSONException if a called function fails
      */
-    public static String toString(JSONArray ja) throws JSONException {
-        JSONObject jo = ja.optJSONObject(0);
-        if (jo != null) {
-            JSONArray names = jo.names();
-            if (names != null) {
-                return CDL.rowToString(names) + CDL.toString(names, ja);
-            }
-        }
-        return null;
-    }
+//    public static String toString(JSONArray ja) throws JSONException {
+//        JSONObject jo = ja.optJSONObject(0);
+//        if (jo != null) {
+//            JSONArray names = jo.names();
+//            if (names != null) {
+//                return CDL.rowToString(names) + CDL.toString(names, ja);
+//            }
+//        }
+//        return null;
+//    }
 
     /**
      * Produce a comma delimited text from a JSONArray of JSONObjects using
@@ -250,18 +250,19 @@ public class CDL {
      * @return A comma delimited text.
      * @throws JSONException if a called function fails
      */
-    public static String toString(JSONArray names, JSONArray ja)
-            throws JSONException {
-        if (names == null || names.length() == 0) {
-            return null;
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < ja.length(); i += 1) {
-            JSONObject jo = ja.optJSONObject(i);
-            if (jo != null) {
-                sb.append(CDL.rowToString(jo.toJSONArray(names)));
-            }
-        }
-        return sb.toString();
-    }
+//    public static String toString(JSONArray names, JSONArray ja)
+//            throws JSONException {
+//        if (names == null || names.length() == 0) {
+//            return null;
+//        }
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < ja.length(); i += 1) {
+//            JSONObject jo = ja.optJSONObject(i);
+//            if (jo != null) {
+//                sb.append(CDL.rowToString(jo.toJSONArray(names)));
+//            }
+//        }
+//        return sb.toString();
+//    }
+    
 }

@@ -143,9 +143,10 @@ public class JSONWriter {
      */
     private JSONWriter end(char m, char c) throws JSONException {
         if (this.mode != m) {
-            throw new JSONException(m == 'a'
-                ? "Misplaced endArray."
-                : "Misplaced endObject.");
+            final String M = "Misplaced endArray.";
+            final String M2 = "Misplaced endObject.";
+            final String message = (m == 'a') ?  M : M2;
+            throw new JSONException(message);
         }
         this.pop(m);
         try {
@@ -197,7 +198,7 @@ public class JSONWriter {
                 JSONObject topObject = this.stack[this.top - 1];
                 // don't use the built in putOnce method to maintain Android support
 				if(topObject.has(string)) {
-					throw new JSONException("Duplicate key \"" + string + "\"");
+					throw new JSONException("Duplicate key \"" + string + CommonSeps.getInstance().QUOTE);
 				}
                 topObject.put(string, true);
                 if (this.comma) {

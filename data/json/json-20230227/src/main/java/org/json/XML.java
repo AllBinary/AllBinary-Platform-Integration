@@ -6,11 +6,12 @@ Public Domain.
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.math.BigDecimal;
-import java.math.BigInteger;
+//import java.math.BigDecimal;
+//import java.math.BigInteger;
 import java.util.Iterator;
-import org.allbinary.string.CommonSeps;
 
+import org.allbinary.logic.string.StringUtil;
+import org.allbinary.string.CommonSeps;
 
 /**
  * This provides static methods to convert an XML text into a JSONObject, and to
@@ -178,7 +179,8 @@ public class XML {
      */
     public static String unescape(String string) {
         StringBuilder sb = new StringBuilder(string.length());
-        for (int i = 0, length = string.length(); i < length; i++) {
+        final int length = string.length();
+        for (int i = 0; i < length; i++) {
             char c = string.charAt(i);
             if (c == '&') {
                 final int semic = string.indexOf(';', i);
@@ -355,7 +357,7 @@ public class XML {
                         }
                         token = null;
                     } else {
-                        jsonObject.accumulate(string, "");
+                        jsonObject.accumulate(string, StringUtil.getInstance().EMPTY_STRING);
                     }
 
 
@@ -379,7 +381,7 @@ public class XML {
                         } else if (jsonObject.length() > 0) {
                             context.accumulate(tagName, jsonObject);
                         } else {
-                            context.accumulate(tagName, "");
+                            context.accumulate(tagName, StringUtil.getInstance().EMPTY_STRING);
                         }
                     }
                     return false;
@@ -424,7 +426,7 @@ public class XML {
                                     }
                                 } else {
                                     if (jsonObject.length() == 0) {
-                                        context.accumulate(tagName, "");
+                                        context.accumulate(tagName, StringUtil.getInstance().EMPTY_STRING);
                                     } else if (jsonObject.length() == 1
                                             && jsonObject.opt(config.getcDataTagName()) != null) {
                                         context.accumulate(tagName, jsonObject.opt(config.getcDataTagName()));
@@ -467,7 +469,7 @@ public class XML {
     // the one in JSONObject. Changes made here should be reflected there.
     // This method should not make calls out of the XML object.
     public static Object stringToValue(String string) {
-        if ("".equals(string)) {
+        if (StringUtil.getInstance().EMPTY_STRING.equals(string)) {
             return string;
         }
 
@@ -500,44 +502,44 @@ public class XML {
     /**
      * direct copy of {@link JSONObject#stringToNumber(String)} to maintain Android support.
      */
-    private static Number stringToNumber(final String val) throws NumberFormatException {
-        char initial = val.charAt(0);
+    private static Number stringToNumber(final String value) throws NumberFormatException {
+        char initial = value.charAt(0);
         if ((initial >= '0' && initial <= '9') || initial == '-') {
             // decimal representation
-            if (isDecimalNotation(val)) {
+            if (isDecimalNotation(value)) {
                 // Use a BigDecimal all the time so we keep the original
                 // representation. BigDecimal doesn't support -0.0, ensure we
                 // keep that by forcing a decimal.
-                try {
-                    BigDecimal bd = new BigDecimal(val);
-                    if(initial == '-' && BigDecimal.ZERO.compareTo(bd)==0) {
-                        return Double.valueOf(-0.0);
-                    }
-                    return bd;
-                } catch (NumberFormatException retryAsDouble) {
+//                try {
+//                    BigDecimal bd = new BigDecimal(value);
+//                    if(initial == '-' && BigDecimal.ZERO.compareTo(bd)==0) {
+//                        return Double.valueOf(-0.0);
+//                    }
+//                    return bd;
+//                } catch (NumberFormatException retryAsDouble) {
                     // this is to support "Hex Floats" like this: 0x1.0P-1074
                     try {
-                        Double d = Double.valueOf(val);
+                        Double d = Double.valueOf(value);
                         if(d.isNaN() || d.isInfinite()) {
-                            throw new NumberFormatException("val ["+val+"] is not a valid number.");
+                            throw new NumberFormatException("value ["+value+"] is not a valid number.");
                         }
                         return d;
                     } catch (NumberFormatException ignore) {
-                        throw new NumberFormatException("val ["+val+"] is not a valid number.");
+                        throw new NumberFormatException("value ["+value+"] is not a valid number.");
                     }
-                }
+//                }
             }
             // block items like 00 01 etc. Java number parsers treat these as Octal.
-            if(initial == '0' && val.length() > 1) {
-                char at1 = val.charAt(1);
+            if(initial == '0' && value.length() > 1) {
+                char at1 = value.charAt(1);
                 if(at1 >= '0' && at1 <= '9') {
-                    throw new NumberFormatException("val ["+val+"] is not a valid number.");
+                    throw new NumberFormatException("value ["+value+"] is not a valid number.");
                 }
-            } else if (initial == '-' && val.length() > 2) {
-                char at1 = val.charAt(1);
-                char at2 = val.charAt(2);
+            } else if (initial == '-' && value.length() > 2) {
+                char at1 = value.charAt(1);
+                char at2 = value.charAt(2);
                 if(at1 == '0' && at2 >= '0' && at2 <= '9') {
-                    throw new NumberFormatException("val ["+val+"] is not a valid number.");
+                    throw new NumberFormatException("value ["+value+"] is not a valid number.");
                 }
             }
             // integer representation.
@@ -548,24 +550,24 @@ public class XML {
             // BigInteger#intValueExact uses. Increases GC, but objects hold
             // only what they need. i.e. Less runtime overhead if the value is
             // long lived.
-            BigInteger bi = new BigInteger(val);
-            if(bi.bitLength() <= 31){
-                return Integer.valueOf(bi.intValue());
-            }
-            if(bi.bitLength() <= 63){
-                return Long.valueOf(bi.longValue());
-            }
-            return bi;
+//            BigInteger bi = new BigInteger(value);
+//            if(bi.bitLength() <= 31){
+//                return Integer.valueOf(bi.intValue());
+//            }
+//            if(bi.bitLength() <= 63){
+//                return Long.valueOf(bi.longValue());
+//            }
+//            return bi;
         }
-        throw new NumberFormatException("val ["+val+"] is not a valid number.");
+        throw new NumberFormatException("value ["+value+"] is not a valid number.");
     }
 
     /**
      * direct copy of {@link JSONObject#isDecimalNotation(String)} to maintain Android support.
      */
-    private static boolean isDecimalNotation(final String val) {
-        return val.indexOf('.') > -1 || val.indexOf('e') > -1
-                || val.indexOf('E') > -1 || "-0".equals(val);
+    private static boolean isDecimalNotation(final String value) {
+        return value.indexOf('.') > -1 || value.indexOf('e') > -1
+                || value.indexOf('E') > -1 || "-0".equals(value);
     }
 
 
@@ -808,7 +810,7 @@ public class XML {
             for (final String key : jo.keySet()) {
                 Object value = jo.opt(key);
                 if (value == null) {
-                    value = "";
+                    value = StringUtil.getInstance().EMPTY_STRING;
                 } else if (value.getClass().isArray()) {
                     value = new JSONArray(value);
                 }
@@ -823,8 +825,8 @@ public class XML {
                             if (i > 0) {
                                 sb.append('\n');
                             }
-                            Object val = ja.opt(i);
-                            sb.append(XML.escape(val.toString()));
+                            Object value2 = ja.opt(i);
+                            sb.append(XML.escape(value2.toString()));
                         }
                     } else {
                         sb.append(XML.escape(value.toString()));
@@ -837,20 +839,20 @@ public class XML {
                     int jaLength = ja.length();
                     // don't use the new iterator API to maintain support for Android
 					for (int i = 0; i < jaLength; i++) {
-                        Object val = ja.opt(i);
-                        if (val instanceof JSONArray) {
+                        Object value2 = ja.opt(i);
+                        if (value instanceof JSONArray) {
                             sb.append('<');
                             sb.append(key);
                             sb.append('>');
-                            sb.append(XML.toString(val, null, config, indentFactor, indent));
+                            sb.append(XML.toString(value2, null, config, indentFactor, indent));
                             sb.append("</");
                             sb.append(key);
                             sb.append('>');
                         } else {
-                            sb.append(XML.toString(val, key, config, indentFactor, indent));
+                            sb.append(XML.toString(value2, key, config, indentFactor, indent));
                         }
                     }
-                } else if ("".equals(value)) {
+                } else if (StringUtil.getInstance().EMPTY_STRING.equals(value)) {
                     sb.append(indent(indent));
                     sb.append('<');
                     sb.append(key);
@@ -889,11 +891,11 @@ public class XML {
             int jaLength = ja.length();
             // don't use the new iterator API to maintain support for Android
 			for (int i = 0; i < jaLength; i++) {
-                Object val = ja.opt(i);
+                Object value = ja.opt(i);
                 // XML does not have good support for arrays. If an array
                 // appears in a place where XML is lacking, synthesize an
                 // <array> element.
-                sb.append(XML.toString(val, tagName == null ? "array" : tagName, config, indentFactor, indent));
+                sb.append(XML.toString(value, tagName == null ? "array" : tagName, config, indentFactor, indent));
             }
             return sb.toString();
         }
@@ -902,12 +904,12 @@ public class XML {
         string = (object == null) ? "null" : XML.escape(object.toString());
 
         if(tagName == null){
-            return XML.indent(indent) + "\"" + string + "\"" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : "");
+            return XML.indent(indent) + CommonSeps.getInstance().QUOTE + string + CommonSeps.getInstance().QUOTE + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
         } else if(string.length() == 0){
-            return XML.indent(indent) + "<" + tagName + "/>" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : "");
+            return XML.indent(indent) + "<" + tagName + "/>" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
         } else {
             return XML.indent(indent) + "<" + tagName
-                    + ">" + string + "</" + tagName + ">" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : "");
+                    + ">" + string + "</" + tagName + ">" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
         }
     }
 

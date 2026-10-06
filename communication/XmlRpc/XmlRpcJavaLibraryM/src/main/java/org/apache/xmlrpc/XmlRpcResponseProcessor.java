@@ -192,7 +192,7 @@ public class XmlRpcResponseProcessor
         throws XmlRpcException, IOException
     {
         // System.err.println("error: "+message);
-        ABHashtable h = StdUtil.getInstance().createHashtable();
+        ABHashtable<Object, Object> h = StdUtil.getInstance().createHashtable();
         h.put("faultCode", new Integer(code));
         h.put("faultString", message);
         writer.startElement("methodResponse");

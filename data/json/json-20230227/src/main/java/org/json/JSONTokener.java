@@ -50,7 +50,7 @@ public class JSONTokener {
                         : new BufferedReader(reader);
         this.eof = false;
         this.usePrevious = false;
-        this.previous = 0;
+        this.previous = '\0';
         this.index = 0;
         this.character = 1;
         this.characterPreviousLine = 0;
@@ -175,7 +175,7 @@ public class JSONTokener {
         int c;
         if (this.usePrevious) {
             this.usePrevious = false;
-            c = this.previous;
+            c = (int) this.previous;
         } else {
             try {
                 c = this.reader.read();
@@ -185,7 +185,7 @@ public class JSONTokener {
         }
         if (c <= 0) { // End of stream
             this.eof = true;
-            return 0;
+            return '\0';
         }
         this.incrementIndexes(c);
         this.previous = (char) c;
@@ -206,11 +206,11 @@ public class JSONTokener {
     private void incrementIndexes(int c) {
         if(c > 0) {
             this.index++;
-            if(c=='\r') {
+            if(c == 13) {
                 this.line++;
                 this.characterPreviousLine = this.character;
                 this.character=0;
-            }else if (c=='\n') {
+            }else if (c == 10) {
                 if(this.previous != '\r') {
                     this.line++;
                     this.characterPreviousLine = this.character;
@@ -232,7 +232,7 @@ public class JSONTokener {
     public char next(char c) throws JSONException {
         char n = this.next();
         if (n != c) {
-            if(n > 0) {
+            if(n != '\0') {
                 throw this.syntaxError("Expected '" + c + "' and instead saw '" +
                         n + "'");
             }
@@ -278,7 +278,7 @@ public class JSONTokener {
     public char nextClean() throws JSONException {
         while (true) {
             char c = this.next();
-            if (c == 0 || c > ' ') {
+            if (c == '\0' || c > ' ') {
                 return c;
             }
         }
@@ -326,7 +326,8 @@ public class JSONTokener {
                     break;
                 case 'u':
                     try {
-                        sb.append((char)Integer.parseInt(this.next(4), 16));
+                        final int value = Integer.parseInt(this.next(4), 16);
+                        sb.append((char) value);
                     } catch (NumberFormatException e) {
                         throw this.syntaxError("Illegal escape.", e);
                     }
@@ -363,8 +364,8 @@ public class JSONTokener {
         StringBuilder sb = new StringBuilder();
         while (true) {
             char c = this.next();
-            if (c == delimiter || c == 0 || c == '\n' || c == '\r') {
-                if (c != 0) {
+            if (c == delimiter || c == '\0' || c == '\n' || c == '\r') {
+                if (c != '\0') {
                     this.back();
                 }
                 return sb.toString().trim();
@@ -387,9 +388,9 @@ public class JSONTokener {
         StringBuilder sb = new StringBuilder();
         while (true) {
             c = this.next();
-            if (delimiters.indexOf(c) >= 0 || c == 0 ||
+            if (delimiters.indexOf(c) >= 0 || c == '\0' ||
                     c == '\n' || c == '\r') {
-                if (c != 0) {
+                if (c != '\0') {
                     this.back();
                 }
                 return sb.toString().trim();
@@ -474,7 +475,7 @@ public class JSONTokener {
             this.reader.mark(1000000);
             do {
                 c = this.next();
-                if (c == 0) {
+                if (c == '\0') {
                     // in some readers, reset() may throw an exception if
                     // the remaining portion of the input is greater than
                     // the mark size (1,000,000 above).
@@ -482,7 +483,7 @@ public class JSONTokener {
                     this.index = startIndex;
                     this.character = startCharacter;
                     this.line = startLine;
-                    return 0;
+                    return '\0';
                 }
             } while (c != to);
             this.reader.mark(1);

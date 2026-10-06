@@ -270,12 +270,12 @@ public class JSONWriter {
      * @param jo The scope to open.
      * @throws JSONException If nesting is too deep.
      */
-    private void push(JSONObject jo) throws JSONException {
+    private void push(JSONObject joCanBeNull) throws JSONException {
         if (this.top >= JSONWriter.maxdepth) {
             throw new JSONException("Nesting too deep.");
         }
-        this.stack[this.top] = jo;
-        this.mode = jo == null ? 'a' : 'k';
+        this.stack[this.top] = joCanBeNull;
+        this.mode = joCanBeNull == null ? 'a' : 'k';
         this.top += 1;
     }
 

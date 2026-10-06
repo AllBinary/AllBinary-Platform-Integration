@@ -5,6 +5,7 @@ Public Domain.
 */
 
 import java.io.StringWriter;
+import org.allbinary.logic.string.StringUtil;
 
 /**
  * JSONStringer provides a quick and convenient way of producing JSON text.
@@ -54,6 +55,6 @@ public class JSONStringer extends JSONWriter {
      */
     @Override
     public String toString() {
-        return this.mode == 'd' ? this.writer.toString() : null;
+        return this.mode == 'd' ? this.writer.toString() : StringUtil.getInstance().EMPTY_STRING;
     }
 }

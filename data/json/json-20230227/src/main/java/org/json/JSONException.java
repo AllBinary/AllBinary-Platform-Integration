@@ -32,8 +32,8 @@ public class JSONException extends RuntimeException {
      * @param cause
      *            The cause.
      */
-    public JSONException(final String message, final Throwable cause) {
-        super(message, cause);
+    public JSONException(final String message, final Throwable causeCanBeNull) {
+        super(message, causeCanBeNull);
     }
 
     /**

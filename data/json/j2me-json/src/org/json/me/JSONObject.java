@@ -133,7 +133,7 @@ public class JSONObject {
     /**
      * The hash map where the JSONObject's properties are kept.
      */
-    private ABHashtable myHashMap;
+    private ABHashtable<Object, Object> myHashMap;
 
 
     /**
@@ -235,7 +235,7 @@ public class JSONObject {
      * @param map A map object that can be used to initialize the contents of
      *  the JSONObject.
      */
-    public JSONObject(ABHashtable map) {
+    public JSONObject(ABHashtable<Object, Object> map) {
         if (map == null) {
             this.myHashMap = StdUtil.getInstance().createHashtable();
         } else {
@@ -889,7 +889,7 @@ public class JSONObject {
      * @return		this.
      * @throws JSONException
      */
-    public JSONObject put(String key, ABHashtable value) throws JSONException {
+    public JSONObject put(String key, ABHashtable<Object, Object> value) throws JSONException {
         this.put(key, new JSONObject(value));
         return this;
     }

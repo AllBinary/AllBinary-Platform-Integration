@@ -113,7 +113,7 @@ public abstract class XmlRpc extends HandlerBase
      * The class name of SAX parser to use.
      */
     private static Class parserClass;
-    private static ABHashtable saxDrivers = new ABHashtable();
+    private static ABHashtable<Object, Object> saxDrivers = new ABHashtable();
 
     static
     {
@@ -662,7 +662,7 @@ public abstract class XmlRpc extends HandlerBase
         // the name to use for the next member of struct values
         String nextMemberName;
 
-        ABHashtable struct;
+        ABHashtable<Object, Object> struct;
         BasicArrayList array;
 
         /**
@@ -702,7 +702,7 @@ public abstract class XmlRpc extends HandlerBase
                     this.value = this.array = new BasicArrayListD();
                     break;
                 case XmlRpc.STRUCT:
-                    this.value = this.struct = new ABHashtable ();
+                    this.value = this.struct = new ABHashtable<Object, Object> ();
                     break;
             }
         }

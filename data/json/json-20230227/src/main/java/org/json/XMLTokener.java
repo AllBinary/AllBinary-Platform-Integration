@@ -5,6 +5,7 @@ Public Domain.
 */
 
 import java.io.Reader;
+import org.allbinary.logic.java.bool.BooleanFactory;
 
 import org.allbinary.logic.string.StringUtil;
 
@@ -209,14 +210,16 @@ public class XMLTokener extends JSONTokener {
                     throw this.syntaxError("Unterminated string");
                 }
                 if (c == q) {
-                    return Boolean.TRUE;
+                    final BooleanFactory booleanFactory = BooleanFactory.getInstance();
+                    return booleanFactory.TRUE;
                 }
             }
         default:
             while (true) {
                 c = next();
+                final BooleanFactory booleanFactory = BooleanFactory.getInstance();
                 if (Character.isWhitespace(c)) {
-                    return Boolean.TRUE;
+                    return booleanFactory.TRUE;
                 }
                 switch (c) {
                 case 0:
@@ -230,7 +233,7 @@ public class XMLTokener extends JSONTokener {
                 case '"':
                 case '\'':
                     back();
-                    return Boolean.TRUE;
+                    return booleanFactory.TRUE;
                 }
             }
         }

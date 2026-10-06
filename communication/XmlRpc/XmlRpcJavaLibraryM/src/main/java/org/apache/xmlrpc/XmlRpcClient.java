@@ -491,7 +491,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 XmlRpcException exception = null;
                 try
                 {
-                    ABHashtable f =(ABHashtable) this.result;
+                    ABHashtable<Object, Object> f =(ABHashtable) this.result;
                     String faultString =(String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());
@@ -619,7 +619,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 XmlRpcException exception = null;
                 try
                 {
-                    ABHashtable f =(ABHashtable) this.result;
+                    ABHashtable<Object, Object> f =(ABHashtable) this.result;
                     String faultString =(String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());

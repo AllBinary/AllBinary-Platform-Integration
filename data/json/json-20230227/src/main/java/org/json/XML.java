@@ -8,7 +8,9 @@ import java.io.Reader;
 import java.io.StringReader;
 //import java.math.BigDecimal;
 //import java.math.BigInteger;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
+import org.allbinary.logic.java.bool.BooleanFactory;
 
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonSeps;
@@ -69,32 +71,14 @@ public class XML {
      *      "http://stackoverflow.com/a/21791059/6030888">http://stackoverflow.com/a/21791059/6030888</a>
      */
     private static Iterable<Integer> codePointIterator(final String string) {
-        return new Iterable<Integer>() {
-            @Override
-            public Iterator<Integer> iterator() {
-                return new Iterator<Integer>() {
-                    private int nextIndex = 0;
-                    private int length = string.length();
-
-                    @Override
-                    public boolean hasNext() {
-                        return this.nextIndex < this.length;
-                    }
-
-                    @Override
-                    public Integer next() {
-                        int result = string.codePointAt(this.nextIndex);
-                        this.nextIndex += Character.charCount(result);
-                        return result;
-                    }
-
-                    @Override
-                    public void remove() {
-                        throw new UnsupportedOperationException();
-                    }
-                };
-            }
-        };
+        List<Integer> codePoints = new ArrayList<Integer>();
+        int nextIndex = 0;
+        while (nextIndex < string.length()) {
+            int result = string.codePointAt(nextIndex);
+            codePoints.add(result);
+            nextIndex += Character.charCount(result);
+        }
+        return codePoints;
     }
 
     /**
@@ -180,7 +164,8 @@ public class XML {
     public static String unescape(String string) {
         StringBuilder sb = new StringBuilder(string.length());
         final int length = string.length();
-        for (int i = 0; i < length; i++) {
+        int i = 0;
+        while (i < length) {
             char c = string.charAt(i);
             if (c == '&') {
                 final int semic = string.indexOf(';', i);
@@ -198,6 +183,7 @@ public class XML {
                 // not part of an entity
                 sb.append(c);
             }
+            i++;
         }
         return sb.toString();
     }
@@ -239,15 +225,15 @@ public class XML {
      * @return true if the close tag is processed.
      * @throws JSONException Thrown if any parsing error occurs.
      */
-    private static boolean parse(XMLTokener x, JSONObject context, String name, XMLParserConfiguration config, int currentNestingDepth)
+    private static boolean parse(XMLTokener x, JSONObject context, String nameCanBeNull, XMLParserConfiguration config, int currentNestingDepth)
             throws JSONException {
         char c;
         int i;
-        JSONObject jsonObject = null;
+        JSONObject jsonObjectCanBeNull = null;
         String string;
         String tagName;
-        Object token;
-        XMLXsiTypeConverter<?> xmlXsiTypeConverter;
+        Object tokenCanBeNull;
+        XMLXsiTypeConverter<?> xmlXsiTypeConverterCanBeNull;
 
         // Test for and skip past these forms:
         // <!-- ... -->
@@ -259,11 +245,11 @@ public class XML {
         // <=
         // <<
 
-        token = x.nextToken();
+        tokenCanBeNull = x.nextToken();
 
         // <!
 
-        if (token == XML.BANG) {
+        if (tokenCanBeNull == XML.BANG) {
             c = x.next();
             if (c == '-') {
                 if (x.next() == '-') {
@@ -272,8 +258,8 @@ public class XML {
                 }
                 x.back();
             } else if (c == '[') {
-                token = x.nextToken();
-                if ("CDATA".equals(token)) {
+                tokenCanBeNull = x.nextToken();
+                if ("CDATA".equals(tokenCanBeNull)) {
                     if (x.next() == '[') {
                         string = x.nextCDATA();
                         if (string.length() > 0) {
@@ -286,82 +272,82 @@ public class XML {
             }
             i = 1;
             do {
-                token = x.nextMeta();
-                if (token == null) {
+                tokenCanBeNull = x.nextMeta();
+                if (tokenCanBeNull == null) {
                     throw x.syntaxError("Missing '>' after '<!'.");
-                } else if (token == XML.LT) {
+                } else if (tokenCanBeNull == XML.LT) {
                     i += 1;
-                } else if (token == XML.GT) {
+                } else if (tokenCanBeNull == XML.GT) {
                     i -= 1;
                 }
             } while (i > 0);
             return false;
-        } else if (token == XML.QUEST) {
+        } else if (tokenCanBeNull == XML.QUEST) {
 
             // <?
             x.skipPast("?>");
             return false;
-        } else if (token == XML.SLASH) {
+        } else if (tokenCanBeNull == XML.SLASH) {
 
             // Close tag </
 
-            token = x.nextToken();
-            if (name == null) {
-                throw x.syntaxError("Mismatched close tag " + token);
+            tokenCanBeNull = x.nextToken();
+            if (nameCanBeNull == null) {
+                throw x.syntaxError("Mismatched close tag " + tokenCanBeNull);
             }
-            if (!token.equals(name)) {
-                throw x.syntaxError("Mismatched " + name + " and " + token);
+            if (!tokenCanBeNull.equals(nameCanBeNull)) {
+                throw x.syntaxError("Mismatched " + nameCanBeNull + " and " + tokenCanBeNull);
             }
             if (x.nextToken() != XML.GT) {
                 throw x.syntaxError("Misshaped close tag");
             }
             return true;
 
-        } else if (token instanceof Character) {
+        } else if (tokenCanBeNull instanceof Character) {
             throw x.syntaxError("Misshaped tag");
 
             // Open tag <
 
         } else {
-            tagName = (String) token;
-            token = null;
-            jsonObject = new JSONObject();
+            tagName = (String) tokenCanBeNull;
+            tokenCanBeNull = null;
+            jsonObjectCanBeNull = new JSONObject();
             boolean nilAttributeFound = false;
-            xmlXsiTypeConverter = null;
+            xmlXsiTypeConverterCanBeNull = null;
             while (true) {
-                if (token == null) {
-                    token = x.nextToken();
+                if (tokenCanBeNull == null) {
+                    tokenCanBeNull = x.nextToken();
                 }
                 // attribute = value
-                if (token instanceof String) {
-                    string = (String) token;
-                    token = x.nextToken();
-                    if (token == XML.EQ) {
-                        token = x.nextToken();
-                        if (!(token instanceof String)) {
+                if (tokenCanBeNull instanceof String) {
+                    string = (String) tokenCanBeNull;
+                    tokenCanBeNull = x.nextToken();
+                    if (tokenCanBeNull == XML.EQ) {
+                        tokenCanBeNull = x.nextToken();
+                        if (!(tokenCanBeNull instanceof String)) {
                             throw x.syntaxError("Missing value");
                         }
 
                         if (config.isConvertNilAttributeToNull()
                                 && XML.NULL_ATTR.equals(string)
-                                && Boolean.parseBoolean((String) token)) {
+                                && Boolean.parseBoolean((String) tokenCanBeNull)) {
                             nilAttributeFound = true;
                         } else if(config.getXsiTypeMap() != null && !config.getXsiTypeMap().isEmpty()
                                 && XML.TYPE_ATTR.equals(string)) {
-                            xmlXsiTypeConverter = config.getXsiTypeMap().get(token);
+                            xmlXsiTypeConverterCanBeNull = config.getXsiTypeMap().get(tokenCanBeNull);
                         } else if (!nilAttributeFound) {
-                            jsonObject.accumulate(string,
+                            jsonObjectCanBeNull.accumulate(string,
                                     config.isKeepStrings()
-                                            ? ((String) token)
-                                            : stringToValue((String) token));
+                                            ? ((String) tokenCanBeNull)
+                                            : stringToValue((String) tokenCanBeNull));
                         }
-                        token = null;
+                        tokenCanBeNull = null;
                     } else {
-                        jsonObject.accumulate(string, StringUtil.getInstance().EMPTY_STRING);
+                        jsonObjectCanBeNull.accumulate(string, StringUtil.getInstance().EMPTY_STRING);
                     }
 
 
-                } else if (token == XML.SLASH) {
+                } else if (tokenCanBeNull == XML.SLASH) {
                     // Empty tag <.../>
                     if (x.nextToken() != XML.GT) {
                         throw x.syntaxError("Misshaped tag");
@@ -370,68 +356,68 @@ public class XML {
                         // Force the value to be an array
                         if (nilAttributeFound) {
                             context.append(tagName, JSONObject.NULL);
-                        } else if (jsonObject.length() > 0) {
-                            context.append(tagName, jsonObject);
+                        } else if (jsonObjectCanBeNull.length() > 0) {
+                            context.append(tagName, jsonObjectCanBeNull);
                         } else {
                             context.put(tagName, new JSONArray());
                         }
                     } else {
                         if (nilAttributeFound) {
                             context.accumulate(tagName, JSONObject.NULL);
-                        } else if (jsonObject.length() > 0) {
-                            context.accumulate(tagName, jsonObject);
+                        } else if (jsonObjectCanBeNull.length() > 0) {
+                            context.accumulate(tagName, jsonObjectCanBeNull);
                         } else {
                             context.accumulate(tagName, StringUtil.getInstance().EMPTY_STRING);
                         }
                     }
                     return false;
 
-                } else if (token == XML.GT) {
+                } else if (tokenCanBeNull == XML.GT) {
                     // Content, between <...> and </...>
                     while (true) {
-                        token = x.nextContent();
-                        if (token == null) {
+                        tokenCanBeNull = x.nextContent();
+                        if (tokenCanBeNull == null) {
                             if (tagName != null) {
                                 throw x.syntaxError("Unclosed tag " + tagName);
                             }
                             return false;
-                        } else if (token instanceof String) {
-                            string = (String) token;
+                        } else if (tokenCanBeNull instanceof String) {
+                            string = (String) tokenCanBeNull;
                             if (string.length() > 0) {
-                                if(xmlXsiTypeConverter != null) {
-                                    jsonObject.accumulate(config.getcDataTagName(),
-                                            stringToValue(string, xmlXsiTypeConverter));
+                                if(xmlXsiTypeConverterCanBeNull != null) {
+                                    jsonObjectCanBeNull.accumulate(config.getcDataTagName(),
+                                            stringToValue(string, xmlXsiTypeConverterCanBeNull));
                                 } else {
-                                    jsonObject.accumulate(config.getcDataTagName(),
+                                    jsonObjectCanBeNull.accumulate(config.getcDataTagName(),
                                             config.isKeepStrings() ? string : stringToValue(string));
                                 }
                             }
 
-                        } else if (token == XML.LT) {
+                        } else if (tokenCanBeNull == XML.LT) {
                             // Nested element
                             if (currentNestingDepth == config.getMaxNestingDepth()) {
                                 throw x.syntaxError("Maximum nesting depth of " + config.getMaxNestingDepth() + " reached");
                             }
 
-                            if (XML.parse(x, jsonObject, tagName, config, currentNestingDepth + 1)) {
+                            if (XML.parse(x, jsonObjectCanBeNull, tagName, config, currentNestingDepth + 1)) {
                                 if (config.getForceList().contains(tagName)) {
                                     // Force the value to be an array
-                                    if (jsonObject.length() == 0) {
+                                    if (jsonObjectCanBeNull.length() == 0) {
                                         context.put(tagName, new JSONArray());
-                                    } else if (jsonObject.length() == 1
-                                            && jsonObject.opt(config.getcDataTagName()) != null) {
-                                        context.append(tagName, jsonObject.opt(config.getcDataTagName()));
+                                    } else if (jsonObjectCanBeNull.length() == 1
+                                            && jsonObjectCanBeNull.opt(config.getcDataTagName()) != null) {
+                                        context.append(tagName, jsonObjectCanBeNull.opt(config.getcDataTagName()));
                                     } else {
-                                        context.append(tagName, jsonObject);
+                                        context.append(tagName, jsonObjectCanBeNull);
                                     }
                                 } else {
-                                    if (jsonObject.length() == 0) {
+                                    if (jsonObjectCanBeNull.length() == 0) {
                                         context.accumulate(tagName, StringUtil.getInstance().EMPTY_STRING);
-                                    } else if (jsonObject.length() == 1
-                                            && jsonObject.opt(config.getcDataTagName()) != null) {
-                                        context.accumulate(tagName, jsonObject.opt(config.getcDataTagName()));
+                                    } else if (jsonObjectCanBeNull.length() == 1
+                                            && jsonObjectCanBeNull.opt(config.getcDataTagName()) != null) {
+                                        context.accumulate(tagName, jsonObjectCanBeNull.opt(config.getcDataTagName()));
                                     } else {
-                                        context.accumulate(tagName, jsonObject);
+                                        context.accumulate(tagName, jsonObjectCanBeNull);
                                     }
                                 }
 
@@ -452,9 +438,9 @@ public class XML {
      * @param typeConverter value converter to convert string to integer, boolean e.t.c
      * @return JSON value of this string or the string
      */
-    public static Object stringToValue(String string, XMLXsiTypeConverter<?> typeConverter) {
-        if(typeConverter != null) {
-            return typeConverter.convert(string);
+    public static Object stringToValue(String string, XMLXsiTypeConverter<?> typeConverterCanBeNull) {
+        if (typeConverterCanBeNull != null) {
+            return typeConverterCanBeNull.convert(string);
         }
         return XML.stringToValue(string);
     }
@@ -473,12 +459,14 @@ public class XML {
             return string;
         }
 
+        final BooleanFactory booleanFactory = BooleanFactory.getInstance();
+        
         // check JSON key words true/false/null
         if ("true".equalsIgnoreCase(string)) {
-            return Boolean.TRUE;
+            return booleanFactory.TRUE;
         }
         if ("false".equalsIgnoreCase(string)) {
-            return Boolean.FALSE;
+            return booleanFactory.FALSE;
         }
         if ("null".equalsIgnoreCase(string)) {
             return JSONObject.NULL;
@@ -519,7 +507,7 @@ public class XML {
 //                } catch (NumberFormatException retryAsDouble) {
                     // this is to support "Hex Floats" like this: 0x1.0P-1074
                     try {
-                        Double d = Double.valueOf(value);
+                        Double d = Double.parseDouble(value);
                         if(d.isNaN() || d.isInfinite()) {
                             throw new NumberFormatException("value ["+value+"] is not a valid number.");
                         }
@@ -731,8 +719,8 @@ public class XML {
      * @return A string.
      * @throws JSONException Thrown if there is an error parsing the string
      */
-    public static String toString(Object object) throws JSONException {
-        return XML.toString(object, null, XMLParserConfiguration.ORIGINAL);
+    public static String toString(Object objectCanBeNull) throws JSONException {
+        return XML.toString(objectCanBeNull, null, XMLParserConfiguration.ORIGINAL);
     }
 
     /**
@@ -745,8 +733,8 @@ public class XML {
      * @return A string.
      * @throws JSONException Thrown if there is an error parsing the string
      */
-    public static String toString(final Object object, final String tagName) {
-        return XML.toString(object, tagName, XMLParserConfiguration.ORIGINAL);
+    public static String toString(final Object objectCanBeNull, final String tagNameCanBeNull) {
+        return XML.toString(objectCanBeNull, tagNameCanBeNull, XMLParserConfiguration.ORIGINAL);
     }
 
     /**
@@ -761,9 +749,9 @@ public class XML {
      * @return A string.
      * @throws JSONException Thrown if there is an error parsing the string
      */
-    public static String toString(final Object object, final String tagName, final XMLParserConfiguration config)
+    public static String toString(final Object objectCanBeNull, final String tagNameCanBeNull, final XMLParserConfiguration config)
             throws JSONException {
-        return XML.toString(object, tagName, config, 0, 0);
+        return XML.toString(objectCanBeNull, tagNameCanBeNull, config, 0, 0);
     }
 
     /**
@@ -783,20 +771,20 @@ public class XML {
      * @return
      * @throws JSONException
      */
-    private static String toString(final Object object, final String tagName, final XMLParserConfiguration config, int indentFactor, int indent)
+    private static String toString(final Object objectCanBeNull, final String tagNameCanBeNull, final XMLParserConfiguration config, int indentFactor, int indent)
             throws JSONException {
         StringBuilder sb = new StringBuilder();
         JSONArray ja;
         JSONObject jo;
         String string;
 
-        if (object instanceof JSONObject) {
+        if (objectCanBeNull instanceof JSONObject) {
 
             // Emit <tagName>
-            if (tagName != null) {
+            if (tagNameCanBeNull != null) {
                 sb.append(indent(indent));
                 sb.append('<');
-                sb.append(tagName);
+                sb.append(tagNameCanBeNull);
                 sb.append('>');
                 if(indentFactor > 0){
                     sb.append(CommonSeps.getInstance().NEW_LINE);
@@ -806,7 +794,7 @@ public class XML {
 
             // Loop thru the keys.
             // don't use the new entrySet accessor to maintain Android Support
-            jo = (JSONObject) object;
+            jo = (JSONObject) objectCanBeNull;
             for (final String key : jo.keySet()) {
                 Object value = jo.opt(key);
                 if (value == null) {
@@ -867,12 +855,12 @@ public class XML {
                     sb.append(XML.toString(value, key, config, indentFactor, indent));
                 }
             }
-            if (tagName != null) {
+            if (tagNameCanBeNull != null) {
 
                 // Emit the </tagName> close tag
                 sb.append(indent(indent - indentFactor));
                 sb.append("</");
-                sb.append(tagName);
+                sb.append(tagNameCanBeNull);
                 sb.append('>');
                 if(indentFactor > 0){
                     sb.append(CommonSeps.getInstance().NEW_LINE);
@@ -882,11 +870,11 @@ public class XML {
 
         }
 
-        if (object != null && (object instanceof JSONArray ||  object.getClass().isArray())) {
-            if(object.getClass().isArray()) {
-                ja = new JSONArray(object);
+        if (objectCanBeNull != null && (objectCanBeNull instanceof JSONArray ||  objectCanBeNull.getClass().isArray())) {
+            if(objectCanBeNull.getClass().isArray()) {
+                ja = new JSONArray(objectCanBeNull);
             } else {
-                ja = (JSONArray) object;
+                ja = (JSONArray) objectCanBeNull;
             }
             int jaLength = ja.length();
             // don't use the new iterator API to maintain support for Android
@@ -895,21 +883,21 @@ public class XML {
                 // XML does not have good support for arrays. If an array
                 // appears in a place where XML is lacking, synthesize an
                 // <array> element.
-                sb.append(XML.toString(value, tagName == null ? "array" : tagName, config, indentFactor, indent));
+                sb.append(XML.toString(value, tagNameCanBeNull == null ? "array" : tagNameCanBeNull, config, indentFactor, indent));
             }
             return sb.toString();
         }
 
 
-        string = (object == null) ? "null" : XML.escape(object.toString());
+        string = (objectCanBeNull == null) ? "null" : XML.escape(objectCanBeNull.toString());
 
-        if(tagName == null){
+        if(tagNameCanBeNull == null){
             return XML.indent(indent) + CommonSeps.getInstance().QUOTE + string + CommonSeps.getInstance().QUOTE + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
         } else if(string.length() == 0){
-            return XML.indent(indent) + "<" + tagName + "/>" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
+            return XML.indent(indent) + "<" + tagNameCanBeNull + "/>" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
         } else {
-            return XML.indent(indent) + "<" + tagName
-                    + ">" + string + "</" + tagName + ">" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
+            return XML.indent(indent) + "<" + tagNameCanBeNull
+                    + ">" + string + "</" + tagNameCanBeNull + ">" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
         }
     }
 
@@ -923,8 +911,8 @@ public class XML {
      * @return A string.
      * @throws JSONException Thrown if there is an error parsing the string
      */
-    public static String toString(Object object, int indentFactor){
-        return XML.toString(object, null, XMLParserConfiguration.ORIGINAL, indentFactor);
+    public static String toString(Object objectCanBeNull, int indentFactor){
+        return XML.toString(objectCanBeNull, null, XMLParserConfiguration.ORIGINAL, indentFactor);
     }
 
     /**
@@ -939,8 +927,8 @@ public class XML {
      * @return A string.
      * @throws JSONException Thrown if there is an error parsing the string
      */
-    public static String toString(final Object object, final String tagName, int indentFactor) {
-        return XML.toString(object, tagName, XMLParserConfiguration.ORIGINAL, indentFactor);
+    public static String toString(final Object objectCanBeNull, final String tagNameCanBeNull, int indentFactor) {
+        return XML.toString(objectCanBeNull, tagNameCanBeNull, XMLParserConfiguration.ORIGINAL, indentFactor);
     }
 
     /**
@@ -957,9 +945,9 @@ public class XML {
      * @return A string.
      * @throws JSONException Thrown if there is an error parsing the string
      */
-    public static String toString(final Object object, final String tagName, final XMLParserConfiguration config, int indentFactor)
+    public static String toString(final Object objectCanBeNull, final String tagNameCanBeNull, final XMLParserConfiguration config, int indentFactor)
             throws JSONException {
-        return XML.toString(object, tagName, config, indentFactor, 0);
+        return XML.toString(objectCanBeNull, tagNameCanBeNull, config, indentFactor, 0);
     }
 
     /**

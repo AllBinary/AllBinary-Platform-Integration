@@ -251,7 +251,7 @@ class XmlWriter extends OutputStreamWriter
         else if (obj instanceof ABHashtable)
         {
             this.startElement("struct");
-            ABHashtable struct = (ABHashtable) obj;
+            ABHashtable<Object, Object> struct = (ABHashtable) obj;
             for (Enumeration enumeration = struct.keys(); enumeration.hasMoreElements(); )
             {
                 String key = (String) enumeration.nextElement();

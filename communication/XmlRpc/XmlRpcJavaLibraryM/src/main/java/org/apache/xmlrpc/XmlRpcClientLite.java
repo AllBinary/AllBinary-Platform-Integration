@@ -275,7 +275,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 XmlRpcException exception = null;
                 try
                 {
-                    ABHashtable f = (ABHashtable) this.result;
+                    ABHashtable<Object, Object> f = (ABHashtable) this.result;
                     String faultString = (String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());

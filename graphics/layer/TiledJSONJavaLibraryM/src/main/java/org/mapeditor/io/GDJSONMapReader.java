@@ -38,6 +38,7 @@ import java.io.File;
 //import java.io.File;
 import java.io.InputStream;
 import java.util.Hashtable;
+
 import org.allbinary.logic.StdUtil;
 //import java.util.Base64;
 //import java.util.Map.Entry;
@@ -49,10 +50,14 @@ import org.allbinary.logic.string.StringUtil;
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.math.PositionStrings;
 import org.allbinary.string.CommonSeps;
+
+import org.apache.xmlrpc.Base64;
+
 //import java.util.zip.GZIPInputStream;
 //import java.util.zip.InflaterInputStream;
 import org.json.me.JSONArray;
 import org.json.me.JSONObject;
+
 import org.mapeditor.core.Animation;
 import org.mapeditor.core.Frame;
 
@@ -475,7 +480,7 @@ public class GDJSONMapReader {
                 if ("base64".equalsIgnoreCase(encoding)) {
                         final String enc = t.getString(this.mapReaderData.DATA);
                         final byte[] dec = 
-                                org.apache.xmlrpc.Base64.decode(enc.getBytes());
+                                Base64.decode(enc.getBytes());
                                 //org.apache.commons.codec.binary.Base64.decodeBase64(enc); 
                                 //Base64.getDecoder().decode(enc);
                                 //DatatypeConverter.parseBase64Binary(enc);

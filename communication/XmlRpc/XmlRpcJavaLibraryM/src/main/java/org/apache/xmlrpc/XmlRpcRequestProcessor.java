@@ -84,11 +84,11 @@ public class XmlRpcRequestProcessor extends XmlRpc
     /**
      * Process a request.
      *
-     * @param is the stream to read the request from.
+     * @param inputStream the stream to read the request from.
      * @returns XMLRpcRequest the request.
      * @throws ParseFailed if unable to parse the request.
      */
-    public XmlRpcRequest processRequest(InputStream is)
+    public XmlRpcRequest processRequest(InputStream inputStream)
     {
         long now = 0;
 
@@ -100,7 +100,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
         {
             try
             {
-                this.parse(is);
+                this.parse(inputStream);
             }
             catch (Exception e)
             {
@@ -118,8 +118,10 @@ public class XmlRpcRequestProcessor extends XmlRpc
             }
 
             return new XmlRpcRequest(this.methodName, (BasicArrayList) this.requestParams.clone());
-        }
-        finally
+
+        } catch(Exception e) {
+            throw e;
+        } finally
         {
             this.requestParams.clear();
             if (XmlRpc.debug)

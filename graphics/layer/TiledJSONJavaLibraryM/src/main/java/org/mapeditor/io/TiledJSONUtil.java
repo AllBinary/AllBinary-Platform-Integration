@@ -16,6 +16,8 @@ package org.mapeditor.io;
 import org.allbinary.string.CommonSeps;
 import org.allbinary.logic.string.StringUtil;
 
+import org.apache.xmlrpc.Base64;
+
 /**
  *
  * @author User
@@ -87,7 +89,7 @@ public class TiledJSONUtil {
         
         final byte[] byteArray = new byte[width * height * 4];
         final int size = new GDJSONMapDataWriter().write(width, height, mapData, byteArray, stringBuilder);
-        final byte[] encodeData = org.apache.xmlrpc.Base64.encode(byteArray);
+        final byte[] encodeData = Base64.encode(byteArray);
         //stringBuilder.delete(0, stringBuilder.length());
         //logUtil.putF(stringBuilder.append("size: ").append(size).toString(), this, commonStrings.PROCESS);
 

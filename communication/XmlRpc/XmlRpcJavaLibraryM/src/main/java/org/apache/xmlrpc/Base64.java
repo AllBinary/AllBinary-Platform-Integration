@@ -117,14 +117,21 @@ public final class Base64
         Base64.base64Alphabet['+']  = 62;
         Base64.base64Alphabet['/']  = 63;
 
-        for (int i = 0; i <= 25; i++ )
+        for (int i = 0; i <= 25; i++ ) {
             Base64.lookUpBase64Alphabet[i] = (byte) ('A' + i);
+        }
 
-        for (int i = 26,  j = 0; i <= 51; i++, j++ )
+        int j = 0;
+        for (int i = 26; i <= 51; i++) {
             Base64.lookUpBase64Alphabet[i] = (byte) ('a'+ j);
+            j++;
+        }
 
-        for (int i = 52,  j = 0; i <= 61; i++, j++ )
+        j = 0;
+        for (int i = 52; i <= 61; i++) {
             Base64.lookUpBase64Alphabet[i] = (byte) ('0' + j);
+            j++;
+        }
 
         Base64.lookUpBase64Alphabet[62] = (byte) '+';
         Base64.lookUpBase64Alphabet[63] = (byte) '/';
@@ -191,6 +198,11 @@ public final class Base64
         encodedData = new byte[encodedDataLength];
 
         byte k = 0, l = 0, b1 = 0, b2 = 0, b3 = 0;
+        byte b1s;
+        byte b2s;
+        byte b3s;
+        byte val1;
+        byte val2;
 
         int encodedIndex = 0;
         int dataIndex   = 0;
@@ -211,9 +223,12 @@ public final class Base64
             l  = (byte)(b2 & 0x0f);
             k  = (byte)(b1 & 0x03);
 
-            byte val1 = ((b1 & Base64.SIGN)==0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
-            byte val2 = ((b2 & Base64.SIGN)==0)?(byte)(b2>>4):(byte)((b2)>>4^0xf0);
-            byte val3 = ((b3 & Base64.SIGN)==0)?(byte)(b3>>6):(byte)((b3)>>6^0xfc);
+            b1s = (byte) (b1 >> 2);
+            b2s = (byte) (b2 >> 4);
+            b3s = (byte) (b3 >> 6);
+            val1 = ((b1 & Base64.SIGN)==0) ? b1s : (byte) (b1s^0xc0);
+            val2 = ((b2 & Base64.SIGN)==0) ? b2s : (byte) (b2s^0xf0);
+            byte val3 = ((b3 & Base64.SIGN)==0) ? b3s : (byte) (b3s^0xfc);
 
             encodedData[encodedIndex]   = Base64.lookUpBase64Alphabet[ val1 ];
             //log.debug( "val2 = " + val2 );
@@ -244,10 +259,11 @@ public final class Base64
         if (fewerThan24bits == Base64.EIGHTBIT )
         {
             b1 = binaryData[dataIndex];
+            b1s = (byte) (b1 >> 2);
             k = (byte) ( b1 &0x03 );
             //log.debug("b1=" + b1);
             //log.debug("b1<<2 = " + (b1>>2) );
-            byte val1 = ((b1 & Base64.SIGN)==0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
+            val1 = ((b1 & Base64.SIGN)==0) ? b1s : (byte) (b1s^0xc0);
             encodedData[encodedIndex]     = Base64.lookUpBase64Alphabet[ val1 ];
             encodedData[encodedIndex + 1] = Base64.lookUpBase64Alphabet[ k<<4 ];
             encodedData[encodedIndex + 2] = Base64.PAD;
@@ -261,8 +277,11 @@ public final class Base64
             l = (byte) (b2 & 0x0f);
             k = (byte) (b1 & 0x03);
 
-            byte val1 = ((b1 & Base64.SIGN) == 0)?(byte)(b1>>2):(byte)((b1)>>2^0xc0);
-            byte val2 = ((b2 & Base64.SIGN) == 0)?(byte)(b2>>4):(byte)((b2)>>4^0xf0);
+            b1s = (byte) (b1 >> 2);
+            b2s = (byte) (b2 >> 4);
+            
+            val1 = ((b1 & Base64.SIGN) == 0) ? b1s : (byte) (b1s^0xc0);
+            val2 = ((b2 & Base64.SIGN) == 0) ? b1s : (byte) (b1s^0xf0);
 
             encodedData[encodedIndex]     = Base64.lookUpBase64Alphabet[ val1 ];
             encodedData[encodedIndex + 1] =
@@ -372,14 +391,16 @@ public final class Base64
         byte groomedData[] = new byte[data.length];
         int bytesCopied = 0;
 
+        byte nextByte;
         for (int i = 0; i < data.length; i++)
         {
-            switch (data[i])
+            nextByte = data[i];
+            switch (nextByte)
             {
-            case (byte) ' ':
-            case (byte) '\n':
-            case (byte) '\r':
-            case (byte) '\t':
+            case ' ':
+            case '\n':
+            case '\r':
+            case '\t':
                 break;
             default:
                 if(Base64.isBase64(data[i])){

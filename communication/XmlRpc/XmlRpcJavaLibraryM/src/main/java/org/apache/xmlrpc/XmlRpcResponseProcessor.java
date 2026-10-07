@@ -99,13 +99,13 @@ public class XmlRpcResponseProcessor
             this.writeResponse(responseParam, writer);
             writer.flush();
             return buffer.toByteArray();
-        }
-        finally
+        } catch(Exception e) {
+            throw e;
+        } finally
         {
             if (XmlRpc.debug)
             {
-                System.out.println("Spent " + (System.currentTimeMillis() - now)
-                        + " millis encoding response");
+                System.out.println("Spent " + (System.currentTimeMillis() - now) + " millis encoding response");
             }
         }
     }

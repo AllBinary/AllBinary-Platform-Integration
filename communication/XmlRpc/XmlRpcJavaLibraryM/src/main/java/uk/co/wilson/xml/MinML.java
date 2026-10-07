@@ -123,7 +123,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     this(256, 128);
   }
 
-  public void parse(final Reader in) throws SAXException, IOException {
+  public void parse(final Reader reader) throws SAXException, IOException {
   final BasicArrayList attributeNames = new BasicArrayListD();
   final BasicArrayList attributeValues = new BasicArrayListD();
 
@@ -155,7 +155,18 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     }
   };
 
-  final MinMLBuffer buffer = new MinMLBuffer(in);
+  final String S = "#amp;&pos;'quot;\"gt;>lt;<";
+  final String S3 = "\u0001\u000b\u0006\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff" +
+//                               #     a     m     p     ;     &     p     o     s     ;     '
+//                               0     1     2     3     4     5     6     7     8     9     a
+                             "\u0011\u00ff\u00ff\u00ff\u00ff\u00ff\u0015\u00ff\u00ff\u00ff" +
+//                               q     u     o     t     ;     "     g     t     ;     >
+//                               b     b     d     e     f     10    11    12    13    14
+                             "\u00ff\u00ff\u00ff";
+//                               l     t     ;
+//                               15    16    17
+ 
+  final MinMLBuffer buffer = new MinMLBuffer(reader);
   int currentChar = 0, charCount = 0;
   int level = 0;
   int mixedContentLevel = -1;
@@ -173,7 +184,11 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
         // this is to try and make the loop a bit faster
         // currentChar = buffer.read(); is simpler but is a bit slower.
         //
-        currentChar = (buffer.nextIn == buffer.lastIn) ? buffer.read() : buffer.chars[buffer.nextIn++];
+        if(buffer.nextIn == buffer.lastIn) {
+            currentChar = buffer.read();
+        } else {
+            currentChar = buffer.chars[buffer.nextIn++];
+        }
 
         final int transition;
 
@@ -211,11 +226,14 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
         String operand = MinML.operands[transition >>> 8];
 
-        switch (transition & 0XFF) {
+        final int value = transition & 0XFF;
+        switch (value) {
           case MinML.endStartName:
           // end of start element name
             elementName = buffer.getString();
-            if (currentChar != '>' && currentChar != '/') break;  // change state to operand
+            if (currentChar != '>' && currentChar != '/') {
+                break;
+            }  // change state to operand
             // drop through to emit start element (we have no attributes)
 
           case MinML.emitStartElement:
@@ -371,11 +389,12 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
             currentChar = buffer.read();
 
             while (true) {
-              if ("#amp;&pos;'quot;\"gt;>lt;<".charAt(crefState) == currentChar) {
+              char c = S.charAt(crefState);
+              if (c == currentChar) {
                 crefState++;
 
                 if (currentChar == ';') {
-                  buffer.write("#amp;&pos;'quot;\"gt;>lt;<".charAt(crefState));
+                  buffer.write(c);
                   break;
 
                 } else if (currentChar == '#') {
@@ -412,15 +431,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
                   currentChar = buffer.read();
                 }
               } else {
-                crefState = ("\u0001\u000b\u0006\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff" +
-//                               #     a     m     p     ;     &     p     o     s     ;     '
-//                               0     1     2     3     4     5     6     7     8     9     a
-                             "\u0011\u00ff\u00ff\u00ff\u00ff\u00ff\u0015\u00ff\u00ff\u00ff" +
-//                               q     u     o     t     ;     "     g     t     ;     >
-//                               b     b     d     e     f     10    11    12    13    14
-                             "\u00ff\u00ff\u00ff").charAt(crefState);
-//                               l     t     ;
-//                               15    16    17
+                crefState = S3.charAt(crefState);
 
                 if (crefState == 255)
                 {
@@ -481,8 +492,9 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     catch (final IOException e) {
       buffer.reset();
       this.errorHandler.fatalError(new SAXParseException(e.toString(), null, null, this.lineNumber, this.columnNumber, e));
-    }
-    finally {
+    } catch (Exception e) {
+        throw e;
+    } finally {
       this.errorHandler = this;
       this.documentHandler = this.extDocumentHandler = this;
       this.tags.clear();
@@ -492,12 +504,13 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   public void parse(final InputSource source) throws SAXException, IOException {
       try {
           
-    if (source.getCharacterStream() != null)
+    if (source.getCharacterStream() != null) {
       this.parse(source.getCharacterStream());
-    else if (source.getByteStream() != null)
+    } else if (source.getByteStream() != null) {
       this.parse(new InputStreamReader(source.getByteStream()));
-    else
-     this.parse(new InputStreamReader(new URL(source.getSystemId()).openStream()));
+    } else {
+      this.parse(new InputStreamReader(new URL(source.getSystemId()).openStream()));
+    }
           
     //Avian does not extend IOException
       } catch(MalformedURLException e) {
@@ -603,8 +616,8 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   }
 
   private class MinMLBuffer extends Writer {
-    public MinMLBuffer(final Reader in) {
-      this.in = in;
+    public MinMLBuffer(final Reader reader) {
+      this.reader = reader;
     }
 
     @Override
@@ -617,8 +630,9 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
       try {
         this._flush();
         if (this.writer != this) this.writer.flush();
-      }
-      finally {
+      } catch (Exception e) {
+          throw e;
+      } finally {
         this.flushed = true;
       }
     }
@@ -656,8 +670,9 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     public void popWriter() throws IOException {
       try {
         if (!this.flushed && this.writer != this) this.writer.flush();
-      }
-      finally {
+      } catch (Exception e) {
+          throw e;
+      } finally {
         this.writer = (Writer)MinML.this.tags.pop();
         this.flushed = this.written = false;
       }
@@ -687,7 +702,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           }
         }
 
-        final int numRead = this.in.read(this.chars, this.count, this.chars.length - this.count);
+        final int numRead = this.reader.read(this.chars, this.count, this.chars.length - this.count);
 
         if (numRead == -1) return -1;
 
@@ -711,8 +726,9 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           } else {
             this.writer.write(this.chars, 0, this.count);
           }
-        }
-        finally {
+        } catch(Exception e) {
+            throw e;
+        } finally {
           this.count = 0;
         }
       }
@@ -720,7 +736,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
     private int nextIn = 0, lastIn = 0;
     private char[] chars = new char[MinML.this.initialBufferSize];
-    private final Reader in;
+    private final Reader reader;
     private int count = 0;
     private Writer writer = this;
     private boolean flushed = false;

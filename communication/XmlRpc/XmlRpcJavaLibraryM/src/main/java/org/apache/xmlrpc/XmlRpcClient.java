@@ -177,8 +177,9 @@ public class XmlRpcClient implements XmlRpcHandler
         {
             Object retval = worker.execute(method, params);
             return retval;
-        }
-        finally
+        } catch(Exception e) {
+          throw e;  
+        } finally
         {
             this.releaseWorker(worker, false);
         }
@@ -192,8 +193,9 @@ public class XmlRpcClient implements XmlRpcHandler
         {
             Object retval = worker.execute(method, params, abCrypt);
             return retval;
-        }
-        finally
+        } catch(Exception e) {
+          throw e;  
+        } finally
         {
             this.releaseWorker(worker, false);
         }
@@ -472,12 +474,12 @@ public class XmlRpcClient implements XmlRpcHandler
                 {
                     con.setRequestProperty("Authorization", "Basic " + XmlRpcClient.this.auth);
                 }
-                OutputStream out = con.getOutputStream();
-                out.write(request);
-                out.flush();
-                out.close();
-                InputStream in = con.getInputStream();
-                this.parse(in);
+                OutputStream outputStream = con.getOutputStream();
+                outputStream.write(request);
+                outputStream.flush();
+                outputStream.close();
+                InputStream inputStream = con.getInputStream();
+                this.parse(inputStream);
             }
             catch(Exception x)
             {
@@ -570,7 +572,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 {
                     con.setRequestProperty("Authorization", "Basic " + XmlRpcClient.this.auth);
                 }
-                OutputStream out = con.getOutputStream();
+                OutputStream outputStream = con.getOutputStream();
 
                 //encrypt data for wire
                 if(XmlRpc.debug)
@@ -587,19 +589,19 @@ public class XmlRpcClient implements XmlRpcHandler
                     ////PreLogUtil.put(new String(crypted), this, "encSendXMLRPC");
                 }
 
-                out.write(crypted);
-                out.flush();
-                out.close();
+                outputStream.write(crypted);
+                outputStream.flush();
+                outputStream.close();
                 
                 //System.out.println("XmlRpcClient - execute - call - getInputStream");
                 
-                InputStream in = con.getInputStream();
+                InputStream inputStream = con.getInputStream();
                 //parse(in);
 
                 //System.out.println("XmlRpcClient - execute - response obtained");
                 
                 InputStream decryptedInputStream =
-                        BasicCryptUtil.getInstance().getDecryptedInputStream(in, cryptInterface);
+                        BasicCryptUtil.getInstance().getDecryptedInputStream(inputStream, cryptInterface);
 
                 //System.out.println("XmlRpcClient - execute - response decrypted so parse now");
                 

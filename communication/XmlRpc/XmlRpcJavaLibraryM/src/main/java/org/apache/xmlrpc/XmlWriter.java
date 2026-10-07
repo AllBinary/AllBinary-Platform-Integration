@@ -185,8 +185,7 @@ class XmlWriter extends OutputStreamWriter
         this.startElement("value");
         if (obj == null)
         {
-            throw new IllegalArgumentException
-                ("null values not supported by XML-RPC");
+            throw new IllegalArgumentException("null values not supported by XML-RPC");
         }
         else if (obj instanceof String)
         {
@@ -201,7 +200,8 @@ class XmlWriter extends OutputStreamWriter
         else if (obj instanceof Boolean)
         {
             this.startElement("boolean");
-            this.write(((Boolean) obj).booleanValue() ? "1" : "0");
+            final Boolean objBoolean = (Boolean) obj;
+            this.write(objBoolean.booleanValue() ? "1" : "0");
             this.endElement("boolean");
         }
         else if (obj instanceof Double || obj instanceof Float)
@@ -362,9 +362,7 @@ class XmlWriter extends OutputStreamWriter
                     // does not allow this range of characters,
                     // resulting in a parse error from most XML
                     // parsers.
-                    throw new XmlRpcException(0, "Invalid character data " +
-                                              "corresponding to XML entity &#" +
-                                              String.valueOf((int) c) + ';');
+                    throw new XmlRpcException(0, "Invalid character data " + "corresponding to XML entity &#" + Integer.valueOf((int) c) + ';');
                 }
                 else
                 {

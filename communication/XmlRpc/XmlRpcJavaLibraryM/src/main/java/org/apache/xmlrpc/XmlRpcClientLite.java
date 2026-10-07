@@ -65,6 +65,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.EmptyStackException;
 import java.util.StringTokenizer;
+import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
@@ -199,13 +200,13 @@ public class XmlRpcClientLite extends XmlRpcClient
                     this.client = new HttpClient(XmlRpcClientLite.this.url);
                 }
 
-                InputStream in = null;
+                InputStream inputStream = null;
 
                // send request to the server and get an input stream
                // from which to read the response
                 try
                 {
-                    in = this.client.sendRequest(request);
+                    inputStream = this.client.sendRequest(request);
                 }
                 catch (IOException iox)
                 {
@@ -216,7 +217,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                     {
                         this.client.closeConnection();
                         this.client.initConnection();
-                        in = this.client.sendRequest(request);
+                        inputStream = this.client.sendRequest(request);
                     }
                     else
                     {
@@ -225,7 +226,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 }
 
                 // parse the response
-                this.parse(in);
+                this.parse(inputStream);
 
                 // client keepalive is always false if XmlRpc.keepalive is false
                 if (!this.client.keepalive)
@@ -367,11 +368,17 @@ public class XmlRpcClientLite extends XmlRpcClient
          * @return
          * @throws IOException
          */
-        public InputStream sendRequest(byte[] request) throws IOException
+        public InputStream sendRequest(final byte[] request) throws IOException
         {
-            this.output.write(("POST " + this.uri + " HTTP/1.0\r\n").getBytes());
-            this.output.write(("User-Agent: " + XmlRpc.version + "\r\n").getBytes());
-            this.output.write(("Host: " + this.host + "\r\n").getBytes());
+            final StringMaker stringMaker = new StringMaker();
+            String w = stringMaker.append("POST ").append(this.uri).append(" HTTP/1.0\r\n").toString();
+            this.output.write(w.getBytes());
+            stringMaker.delete(0, stringMaker.length());
+            w = stringMaker.append("User-Agent: ").append(XmlRpc.version).append("\r\n").toString();
+            this.output.write(w.getBytes());
+            stringMaker.delete(0, stringMaker.length());
+            w = stringMaker.append("Host: ").append(this.host).append("\r\n").toString();
+            this.output.write(w.getBytes());
             if (XmlRpc.getKeepAlive())
             {
                 this.output.write("Connection: Keep-Alive\r\n".getBytes());
@@ -379,10 +386,13 @@ public class XmlRpcClientLite extends XmlRpcClient
             this.output.write("Content-Type: text/xml\r\n".getBytes());
             if (XmlRpcClientLite.auth != null)
             {
-                this.output.write(("Authorization: Basic " + XmlRpcClientLite.auth + "\r\n").getBytes());
+                stringMaker.delete(0, stringMaker.length());
+                w = stringMaker.append("Authorization: Basic ").append(XmlRpcClientLite.auth).append("\r\n").toString();
+                this.output.write(w.getBytes());
             }
-            this.output.write(("Content-Length: " + request.length)
-                    .getBytes());
+            stringMaker.delete(0, stringMaker.length());
+            w = stringMaker.append("Content-Length: ").appendint(request.length).toString();            
+            this.output.write(w.getBytes());
             this.output.write("\r\n\r\n".getBytes());
             this.output.write(request);
             this.output.flush();

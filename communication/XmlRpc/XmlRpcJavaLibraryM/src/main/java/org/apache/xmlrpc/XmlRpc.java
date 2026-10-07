@@ -353,17 +353,17 @@ public abstract class XmlRpc extends HandlerBase
     /**
      * Switch debugging output on/off.
      */
-    public static void setDebug(boolean val)
+    public static void setDebug(boolean debug)
     {
-        XmlRpc.debug = val;
+        XmlRpc.debug = debug;
     }
 
     /**
      * Switch HTTP keepalive on/off.
      */
-    public static void setKeepAlive(boolean val)
+    public static void setKeepAlive(boolean keepalive)
     {
-        XmlRpc.keepalive = val;
+        XmlRpc.keepalive = keepalive;
     }
 
     /**
@@ -378,7 +378,7 @@ public abstract class XmlRpc extends HandlerBase
      * Parse the input stream. For each root level object, method
      * <code>objectParsed</code> is called.
      */
-    synchronized void parse(InputStream is) throws Exception
+    synchronized void parse(InputStream inputStream) throws Exception
     {
        try
        {           
@@ -440,7 +440,12 @@ public abstract class XmlRpc extends HandlerBase
         }
         try
         {
-            parser.parse(new InputSource (is));
+            parser.parse(new InputSource (inputStream));
+        }
+        catch (Exception e)
+        {
+           //System.out.println ("Parsing Error: " + Log.get(e));
+           throw e;
         }
         finally
         {

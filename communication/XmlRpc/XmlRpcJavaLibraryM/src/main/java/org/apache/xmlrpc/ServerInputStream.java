@@ -74,16 +74,16 @@ class ServerInputStream extends InputStream
     private long available = -1;
     private long markedAvailable;
 
-    private BufferedInputStream in;
+    private BufferedInputStream inputStream;
 
     /**
      *
-     * @param in
+     * @param inputStream
      * @param available
      */
-    public ServerInputStream(BufferedInputStream in, int available)
+    public ServerInputStream(BufferedInputStream inputStream, int available)
     {
-        this.in = in;
+        this.inputStream = inputStream;
         this.available = available;
     }
 
@@ -98,11 +98,11 @@ class ServerInputStream extends InputStream
         if (this.available > 0)
         {
             this.available--;
-            return this.in.read();
+            return this.inputStream.read();
         }
         else if (this.available == -1)
         {
-            return this.in.read ();
+            return this.inputStream.read ();
         }
         return -1;
     }
@@ -137,7 +137,7 @@ class ServerInputStream extends InputStream
                 // shrink len
                 len = (int) this.available;
             }
-            int read = this.in.read(b, off, len);
+            int read = this.inputStream.read(b, off, len);
             if (read != -1)
             {
                 this.available -= read;
@@ -150,7 +150,7 @@ class ServerInputStream extends InputStream
         }
         else if (this.available == -1)
         {
-            return this.in.read(b, off, len);
+            return this.inputStream.read(b, off, len);
         }
         return -1;
     }
@@ -164,7 +164,7 @@ class ServerInputStream extends InputStream
     @Override
     public long skip(long n) throws IOException
     {
-        long skip = this.in.skip(n);
+        long skip = this.inputStream.skip(n);
         if (this.available > 0)
         {
             this.available -= skip;
@@ -179,7 +179,7 @@ class ServerInputStream extends InputStream
     @Override
     public void mark(int readlimit)
     {
-        this.in.mark(readlimit);
+        this.inputStream.mark(readlimit);
         this.markedAvailable = this.available;
     }
 
@@ -190,7 +190,7 @@ class ServerInputStream extends InputStream
     @Override
     public synchronized void reset() throws IOException
     {
-        this.in.reset();
+        this.inputStream.reset();
         this.available = this.markedAvailable;
     }
 

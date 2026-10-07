@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -286,14 +285,15 @@ public class JSONObject {
         if (m == null) {
             this.map = new HashMap<String, Object>();
         } else {
-            this.map = new HashMap<String, Object>(m.size());
-        	for (final Entry<?, ?> e : m.entrySet()) {
-        	    if(e.getKey() == null) {
+            //this.map = new HashMap<String, Object>(m.size());
+            this.map = new HashMap<String, Object>();
+        	for (final Object key : m.keySet()) {
+        	    if(key == null) {
         	        throw new NullPointerException("Null key.");
         	    }
-                final Object value = e.getValue();
+                final Object value = m.get(key);
                 if (value != null) {
-                    this.map.put(String.valueOf(e.getKey()), wrap(value));
+                    this.map.put(String.valueOf(key), wrap(value));
                 }
             }
         }
@@ -460,7 +460,7 @@ public class JSONObject {
      *
      * @param initialCapacity initial capacity of the internal map.
      */
-    protected JSONObject(int initialCapacity){
+    public JSONObject(int initialCapacity){
         this.map = new HashMap<String, Object>(initialCapacity);
     }
 
@@ -828,7 +828,10 @@ public class JSONObject {
         if (jo.isEmpty()) {
             return null;
         }
-        return jo.keySet().toArray(new String[jo.length()]);
+        
+        //final String[] newStringArray = new String[jo.length()];
+        final String[] stringArray = (String[]) jo.keySet().toArray();
+        return stringArray;
     }
 
     /**
@@ -973,9 +976,9 @@ public class JSONObject {
      *
      * @return An Entry Set
      */
-    protected Set<Entry<String, Object>> entrySet() {
-        return this.map.entrySet();
-    }
+//    protected Set<Entry<String, Object>> entrySet() {
+//        return this.map.entrySet();
+//    }
 
     /**
      * Get the number of keys stored in the JSONObject.
@@ -1963,8 +1966,10 @@ public class JSONObject {
      * @return the item matched by the JSONPointer, otherwise null
      */
     public Object query(String jsonPointer) {
-        return this.query(new JSONPointer(jsonPointer));
+        final Object objectCanBeNull = this.query(new JSONPointer(jsonPointer));
+        return objectCanBeNull;
     }
+
     /**
      * Uses a user initialized JSONPointer  and tries to
      * match it to an item within this JSONObject. For example, given a
@@ -1985,7 +1990,8 @@ public class JSONObject {
      * @return the item matched by the JSONPointer, otherwise null
      */
     public Object query(JSONPointer jsonPointer) {
-        return jsonPointer.queryFrom(this);
+        final Object objectCanBeNull = jsonPointer.queryFrom(this);
+        return objectCanBeNull;
     }
 
     /**
@@ -2056,19 +2062,19 @@ public class JSONObject {
         int i;
         int len = string.length();
 
-        w.write('"');
+        w.write((int) '"');
         for (i = 0; i < len; i += 1) {
             b = c;
             c = string.charAt(i);
             switch (c) {
             case '\\':
             case '"':
-                w.write('\\');
+                w.write((int) '\\');
                 w.write(c);
                 break;
             case '/':
                 if (b == '<') {
-                    w.write('\\');
+                    w.write((int) '\\');
                 }
                 w.write(c);
                 break;
@@ -2099,7 +2105,7 @@ public class JSONObject {
                 }
             }
         }
-        w.write('"');
+        w.write((int) '"');
         return w;
     }
 
@@ -2135,9 +2141,9 @@ public class JSONObject {
             if (!this.keySet().equals(((JSONObject)other).keySet())) {
                 return false;
             }
-            for (final Entry<String,?> entry : this.entrySet()) {
-                String name = entry.getKey();
-                Object valueThis = entry.getValue();
+            for (final Object k : this.keySet()) {
+                String name = (String) k;
+                Object valueThis = this.get(name);
                 Object valueOther = ((JSONObject)other).get(name);
                 if(valueThis == valueOther) {
                 	continue;
@@ -2432,8 +2438,8 @@ public class JSONObject {
      *             If the object contains an invalid number.
      */
     @SuppressWarnings("resource")
-    public String toString(int indentFactor) throws JSONException {
-        StringWriter w = new StringWriter();
+    public String toString(final int indentFactor) throws JSONException {
+        final StringWriter w = new StringWriter();
         synchronized (w.getBuffer()) {
             return this.write(w, indentFactor, 0).toString();
         }
@@ -2463,7 +2469,7 @@ public class JSONObject {
      * @throws JSONException
      *             If the value is or contains an invalid number.
      */
-    public static String valueToString(Object value) throws JSONException {
+    public static String valueToString(final Object value) throws JSONException {
     	// moves the implementation to JSONWriter as:
     	// 1. It makes more sense to be part of the writer class
     	// 2. For Android support this method is not available. By implementing it in the Writer
@@ -2483,11 +2489,11 @@ public class JSONObject {
      *            The object to wrap
      * @return The wrapped value
      */
-    public static Object wrap(Object object) {
+    public static Object wrap(final Object object) {
         return JSONObject.wrap(object, null);
     }
 
-    private static Object wrap(Object object, Set<Object> objectsRecordCanBeNull) {
+    private static Object wrap(final Object object, final Set<Object> objectsRecordCanBeNull) {
         try {
             if (JSONObject.NULL.equals(object)) {
                 return JSONObject.NULL;
@@ -2525,7 +2531,7 @@ public class JSONObject {
 //            if (objectsRecord != null) {
 //                return new JSONObject(object, objectsRecord);
 //            }
-            return new JSONObject(object);
+            return new JSONObject((Object) object);
         }
         catch (JSONException exception) {
             throw exception;
@@ -2597,7 +2603,7 @@ public class JSONObject {
 
     static final void indent(Writer writer, int indent) throws IOException {
         for (int i = 0; i < indent; i += 1) {
-            writer.write(' ');
+            writer.write((int) ' ');
         }
     }
 
@@ -2634,50 +2640,50 @@ public class JSONObject {
         try {
             boolean needsComma = false;
             final int length = this.length();
-            writer.write('{');
+            writer.write((int) '{');
 
             if (length == 1) {
-            	final Entry<String,?> entry = this.entrySet().iterator().next();
-                final String key = entry.getKey();
+            	final Object firstKey = this.keySet().iterator().next();
+                final String key = (String) firstKey;
                 writer.write(JSONObject.quote(key));
-                writer.write(':');
+                writer.write((int) ':');
                 if (indentFactor > 0) {
-                    writer.write(' ');
+                    writer.write((int) ' ');
                 }
                 try{
-                    JSONObject.writeValue(writer, entry.getValue(), indentFactor, indent);
+                    JSONObject.writeValue(writer, this.get(key), indentFactor, indent);
                 } catch (Exception e) {
                     throw new JSONException("Unable to write JSONObject value for key: " + key, e);
                 }
             } else if (length != 0) {
                 final int newIndent = indent + indentFactor;
-                for (final Entry<String,?> entry : this.entrySet()) {
+                for (final Object o : this.keySet()) {
                     if (needsComma) {
-                        writer.write(',');
+                        writer.write((int) ',');
                     }
                     if (indentFactor > 0) {
-                        writer.write('\n');
+                        writer.write((int) '\n');
                     }
                     JSONObject.indent(writer, newIndent);
-                    final String key = entry.getKey();
+                    final String key = (String) o;
                     writer.write(JSONObject.quote(key));
-                    writer.write(':');
+                    writer.write((int) ':');
                     if (indentFactor > 0) {
-                        writer.write(' ');
+                        writer.write((int) ' ');
                     }
                     try {
-                        JSONObject.writeValue(writer, entry.getValue(), indentFactor, newIndent);
+                        JSONObject.writeValue(writer, this.get(key), indentFactor, newIndent);
                     } catch (Exception e) {
                         throw new JSONException("Unable to write JSONObject value for key: " + key, e);
                     }
                     needsComma = true;
                 }
                 if (indentFactor > 0) {
-                    writer.write('\n');
+                    writer.write((int) '\n');
                 }
                 JSONObject.indent(writer, indent);
             }
-            writer.write('}');
+            writer.write((int) '}');
             return writer;
         } catch (IOException exception) {
             throw new JSONException(exception);
@@ -2693,20 +2699,21 @@ public class JSONObject {
      *
      * @return a java.util.Map containing the entries of this object
      */
-    public Map<String, Object> toMap() {
-        Map<String, Object> results = new HashMap<String, Object>();
-        for (Entry<String, Object> entry : this.entrySet()) {
+    public HashMap<String, Object> toMap() {
+        HashMap<String, Object> results = new HashMap<String, Object>();
+        for (String key : this.keySet()) {
+            Object aValue = this.get(key);
             Object value;
-            if (entry.getValue() == null || JSONObject.NULL.equals(entry.getValue())) {
+            if (aValue == null || JSONObject.NULL.equals(aValue)) {
                 value = null;
-            } else if (entry.getValue() instanceof JSONObject) {
-                value = ((JSONObject) entry.getValue()).toMap();
-            } else if (entry.getValue() instanceof JSONArray) {
-                value = ((JSONArray) entry.getValue()).toList();
+            } else if (aValue instanceof JSONObject) {
+                value = ((JSONObject) aValue).toMap();
+            } else if (aValue instanceof JSONArray) {
+                value = ((JSONArray) aValue).toList();
             } else {
-                value = entry.getValue();
+                value = aValue;
             }
-            results.put(entry.getKey(), value);
+            results.put(key, value);
         }
         return results;
     }

@@ -13,11 +13,12 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.allbinary.logic.java.bool.BooleanFactory;
 import org.allbinary.logic.string.StringUtil;
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListS;
 
 
 /**
@@ -244,11 +245,13 @@ public class JSONArray implements Iterable<Object> {
      *             If there is no value for the index.
      */
     public Object get(int index) throws JSONException {
-        Object object = this.opt(index);
-        if (object == null) {
+        Object objectCanBeNull = this.opt(index);
+        if (objectCanBeNull == null) {
             throw new JSONException("JSONArray[" + index + "] not found.");
+        } else {
+            Object object = objectCanBeNull;
+            return object;
         }
-        return object;
     }
 
     /**
@@ -805,9 +808,10 @@ public class JSONArray implements Iterable<Object> {
      *         value is not a JSONArray.
      */
     public JSONArray optJSONArray(int index) {
-        Object o = this.opt(index);
-        if(o instanceof JSONArray) {
-            return (JSONArray) o;
+        Object objectCanBeNull = this.opt(index);
+        if(objectCanBeNull instanceof JSONArray) {
+            final JSONArray jsonArray = (JSONArray) objectCanBeNull;
+            return jsonArray;
         } else {
             return null;
         }
@@ -928,9 +932,8 @@ public class JSONArray implements Iterable<Object> {
      * @return A String value.
      */
     public String optString(int index, String defaultValue) {
-        Object object = this.opt(index);
-        return JSONObject.NULL.equals(object) ? defaultValue : object
-                .toString();
+        Object objectCanBeNull = this.opt(index);
+        return JSONObject.NULL.equals(objectCanBeNull) ? defaultValue : objectCanBeNull.toString();
     }
 
     /**
@@ -1276,7 +1279,8 @@ public class JSONArray implements Iterable<Object> {
      * @return the item matched by the JSONPointer, otherwise null
      */
     public Object query(String jsonPointer) {
-        return this.query(new JSONPointer(jsonPointer));
+        final Object objectCanBeNull = this.query(new JSONPointer(jsonPointer));
+        return objectCanBeNull;
     }
     
     /**
@@ -1299,7 +1303,8 @@ public class JSONArray implements Iterable<Object> {
      * @return the item matched by the JSONPointer, otherwise null
      */
     public Object query(JSONPointer jsonPointer) {
-        return jsonPointer.queryFrom(this);
+        final Object objectCanBeNull = jsonPointer.queryFrom(this);
+        return objectCanBeNull;
     }
     
     /**
@@ -1525,7 +1530,7 @@ public class JSONArray implements Iterable<Object> {
         try {
             boolean needsComma = false;
             int length = this.length();
-            writer.write('[');
+            writer.write((int) '[');
 
             if (length == 1) {
                 try {
@@ -1539,10 +1544,10 @@ public class JSONArray implements Iterable<Object> {
 
                 for (int i = 0; i < length; i += 1) {
                     if (needsComma) {
-                        writer.write(',');
+                        writer.write((int) ',');
                     }
                     if (indentFactor > 0) {
-                        writer.write('\n');
+                        writer.write((int) '\n');
                     }
                     JSONObject.indent(writer, newIndent);
                     try {
@@ -1554,11 +1559,11 @@ public class JSONArray implements Iterable<Object> {
                     needsComma = true;
                 }
                 if (indentFactor > 0) {
-                    writer.write('\n');
+                    writer.write((int)  '\n');
                 }
                 JSONObject.indent(writer, indent);
             }
-            writer.write(']');
+            writer.write((int) ']');
             return writer;
         } catch (IOException e) {
             throw new JSONException(e);
@@ -1574,8 +1579,8 @@ public class JSONArray implements Iterable<Object> {
      *
      * @return a java.util.List containing the elements of this array
      */
-    public List<Object> toList() {
-        List<Object> results = new ArrayList<Object>(this.myArrayList.size());
+    public BasicArrayList toList() {
+        BasicArrayList results = new BasicArrayListS(this.myArrayList.size());
         for (Object element : this.myArrayList) {
             if (element == null || JSONObject.NULL.equals(element)) {
                 results.add(null);

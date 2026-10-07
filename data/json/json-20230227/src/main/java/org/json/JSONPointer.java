@@ -1,13 +1,12 @@
 package org.json;
 
-import static java.lang.String.format;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+import org.allbinary.util.BasicArrayListS;
 
 /*
 Public Domain.
@@ -43,7 +42,7 @@ public class JSONPointer {
     public static class Builder {
 
         // Segments for the eventual JSONPointer string
-        private final List<String> refTokens = new ArrayList<String>();
+        private final BasicArrayList refTokens = new BasicArrayListD();
 
         /**
          * Creates a {@code JSONPointer} instance using the tokens previously set using the
@@ -82,7 +81,8 @@ public class JSONPointer {
          * @return {@code this}
          */
         public Builder append(int arrayIndex) {
-            this.refTokens.add(String.valueOf(arrayIndex));
+            final String value = Integer.toString(arrayIndex);
+            this.refTokens.add(value);
             return this;
         }
     }
@@ -107,7 +107,7 @@ public class JSONPointer {
     }
 
     // Segments for the JSONPointer string
-    private final List<String> refTokens;
+    private final BasicArrayList refTokens;
 
     /**
      * Pre-parses and initializes a new {@code JSONPointer} instance. If you want to
@@ -122,7 +122,7 @@ public class JSONPointer {
             throw new NullPointerException("pointer cannot be null");
         }
         if (pointer.isEmpty() || pointer.equals("#")) {
-            this.refTokens = Collections.emptyList();
+            this.refTokens = new BasicArrayListS(0);
             return;
         }
         String refs;
@@ -138,7 +138,7 @@ public class JSONPointer {
         } else {
             throw new IllegalArgumentException("a JSON pointer should start with '/' or '#/'");
         }
-        this.refTokens = new ArrayList<String>();
+        this.refTokens = new BasicArrayListD();
         int slashIdx = -1;
         int prevSlashIdx = 0;
         do {
@@ -163,8 +163,9 @@ public class JSONPointer {
         //}
     }
 
-    public JSONPointer(List<String> refTokens) {
-        this.refTokens = new ArrayList<String>(refTokens);
+    public JSONPointer(BasicArrayList refTokens) {
+        this.refTokens = new BasicArrayListD();
+        this.refTokens.addAll2(refTokens);
     }
 
     /**
@@ -188,19 +189,21 @@ public class JSONPointer {
         if (this.refTokens.isEmpty()) {
             return document;
         }
-        Object current = document;
-        for (String token : this.refTokens) {
-            if (current instanceof JSONObject) {
-                current = ((JSONObject) current).opt(JSONPointer.unescape(token));
-            } else if (current instanceof JSONArray) {
-                current = JSONPointer.readByIndexToken(current, token);
+        Object currentCanBeNull = document;
+        final int size = this.refTokens.size();
+        String token;
+        for (int index = 0; index < size; index++) {
+            token = (String) this.refTokens.get(index);
+            if (currentCanBeNull instanceof JSONObject) {
+                final JSONObject currentJSONObject = (JSONObject) currentCanBeNull;
+                currentCanBeNull = currentJSONObject.opt(JSONPointer.unescape(token));
+            } else if (currentCanBeNull instanceof JSONArray) {
+                currentCanBeNull = JSONPointer.readByIndexToken(currentCanBeNull, token);
             } else {
-                throw new JSONPointerException(String.format(
-                        "value [%s] is not an array or object therefore its key %s cannot be resolved", current,
-                        token));
+                throw new JSONPointerException(String.format("value [%s] is not an array or object therefore its key %s cannot be resolved", currentCanBeNull, token));
             }
         }
-        return current;
+        return currentCanBeNull;
     }
 
     /**
@@ -234,8 +237,11 @@ public class JSONPointer {
      */
     @Override
     public String toString() {
-        StringBuilder rval = new StringBuilder("");
-        for (String token: this.refTokens) {
+        final StringBuilder rval = new StringBuilder();
+        final int size = this.refTokens.size();
+        String token;
+        for (int index = 0; index < size; index++) {
+            token = (String) this.refTokens.get(index);
             rval.append('/').append(JSONPointer.escape(token));
         }
         return rval.toString();
@@ -262,10 +268,15 @@ public class JSONPointer {
      */
     public String toURIFragment() {
         try {
-            StringBuilder rval = new StringBuilder("#");
-            for (String token : this.refTokens) {
+            final StringBuilder rval = new StringBuilder("#");
+
+            final int size = this.refTokens.size();
+            String token;
+            for (int index = 0; index < size; index++) {
+                token = (String) this.refTokens.get(index);
                 rval.append('/').append(URLEncoder.encode(token, JSONPointer.ENCODING));
             }
+
             return rval.toString();
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);

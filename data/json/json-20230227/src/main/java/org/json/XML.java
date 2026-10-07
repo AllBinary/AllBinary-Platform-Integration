@@ -9,7 +9,6 @@ import java.io.StringReader;
 //import java.math.BigDecimal;
 //import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.List;
 import org.allbinary.logic.java.bool.BooleanFactory;
 
 import org.allbinary.logic.string.StringUtil;
@@ -71,7 +70,7 @@ public class XML {
      *      "http://stackoverflow.com/a/21791059/6030888">http://stackoverflow.com/a/21791059/6030888</a>
      */
     private static Iterable<Integer> codePointIterator(final String string) {
-        List<Integer> codePoints = new ArrayList<Integer>();
+        final ArrayList<Integer> codePoints = new ArrayList<Integer>();
         int nextIndex = 0;
         while (nextIndex < string.length()) {
             int result = string.codePointAt(nextIndex);

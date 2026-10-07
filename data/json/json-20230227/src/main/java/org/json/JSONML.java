@@ -32,9 +32,10 @@ public class JSONML {
         boolean keepStrings,
         int currentNestingDepth
     ) throws JSONException {
-        return JSONML.parse(x,arrayForm, jaCanBeNull,
+        final Object resultCanBeNull = JSONML.parse(x,arrayForm, jaCanBeNull,
             keepStrings ? JSONMLParserConfiguration.KEEP_STRINGS : JSONMLParserConfiguration.ORIGINAL,
             currentNestingDepth);
+        return resultCanBeNull;
     }
 
     /**

@@ -57,12 +57,13 @@ public class XMLTokener extends JSONTokener {
         char         c;
         int          i;
         StringBuilder sb = new StringBuilder();
+        int total = 0;
         while (more()) {
             c = next();
             sb.append(c);
-            i = sb.length() - 3;
-            if (i >= 0 && sb.charAt(i) == ']' &&
-                          sb.charAt(i + 1) == ']' && sb.charAt(i + 2) == '>') {
+            total++;
+            i = total - 3;
+            if (i >= 0 && sb.charAt(i) == ']' && sb.charAt(i + 1) == ']' && sb.charAt(i + 2) == '>') {
                 sb.setLength(i);
                 return sb.toString();
             }
@@ -87,7 +88,7 @@ public class XMLTokener extends JSONTokener {
         do {
             c = next();
         } while (Character.isWhitespace(c));
-        if (c == 0) {
+        if (c == '\0') {
             return null;
         }
         if (c == '<') {
@@ -95,7 +96,7 @@ public class XMLTokener extends JSONTokener {
         }
         sb = new StringBuilder();
         while (true) {
-            if (c == 0) {
+            if (c == '\0') {
                 return sb.toString().trim();
             }
             if (c == '<') {
@@ -157,7 +158,9 @@ public class XMLTokener extends JSONTokener {
                 // decimal encoded unicode
                 cp = Integer.parseInt(e.substring(1));
             }
-            return new String(new int[] {cp},0,1);
+            //final int[] cdIntArray = new int[] {(char) cp};
+            //return new String(cdIntArray,0,1);
+            return Character.toString(cp);
         } 
         Character knownEntity = entity.get(e);
         if(knownEntity==null) {
@@ -206,7 +209,7 @@ public class XMLTokener extends JSONTokener {
             q = c;
             while (true) {
                 c = next();
-                if (c == 0) {
+                if (c == '\0') {
                     throw this.syntaxError("Unterminated string");
                 }
                 if (c == q) {
@@ -281,7 +284,7 @@ public class XMLTokener extends JSONTokener {
             sb = new StringBuilder();
             while (true) {
                 c = next();
-                if (c == 0) {
+                if (c == '\0') {
                     throw this.syntaxError("Unterminated string");
                 }
                 if (c == q) {
@@ -350,7 +353,7 @@ public class XMLTokener extends JSONTokener {
 
         for (i = 0; i < length; i += 1) {
             c = next();
-            if (c == 0) {
+            if (c == '\0') {
                 return;
             }
             circle[i] = c;
@@ -384,7 +387,7 @@ public class XMLTokener extends JSONTokener {
             /* Get the next character. If there isn't one, then defeat is ours. */
 
             c = next();
-            if (c == 0) {
+            if (c == '\0') {
                 return;
             }
             /*

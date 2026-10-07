@@ -74,7 +74,7 @@ public class XML {
         int nextIndex = 0;
         while (nextIndex < string.length()) {
             int result = string.codePointAt(nextIndex);
-            codePoints.add(result);
+            codePoints.add(new Integer(result));
             nextIndex += Character.charCount(result);
         }
         return codePoints;
@@ -439,7 +439,8 @@ public class XML {
      */
     public static Object stringToValue(String string, XMLXsiTypeConverter<?> typeConverterCanBeNull) {
         if (typeConverterCanBeNull != null) {
-            return typeConverterCanBeNull.convert(string);
+            final Object object = typeConverterCanBeNull.convert(string);
+            return object;
         }
         return XML.stringToValue(string);
     }

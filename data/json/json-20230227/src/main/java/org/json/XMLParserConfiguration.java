@@ -3,10 +3,8 @@ package org.json;
 Public Domain.
 */
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -57,13 +55,13 @@ public class XMLParserConfiguration {
     /**
      * This will allow type conversion for values in XML if xsi:type attribute is defined
      */
-    private Map<String, XMLXsiTypeConverter<?>> xsiTypeMap;
+    private HashMap<String, XMLXsiTypeConverter<?>> xsiTypeMap;
 
     /**
      * When parsing the XML into JSON, specifies the tags whose values should be converted
      * to arrays
      */
-    private Set<String> forceList;
+    private HashSet<String> forceList;
 
     /**
      * The maximum nesting depth when parsing a XML document to JSON.
@@ -78,8 +76,8 @@ public class XMLParserConfiguration {
         this.keepStrings = false;
         this.cDataTagName = "content";
         this.convertNilAttributeToNull = false;
-        this.xsiTypeMap = Collections.emptyMap();
-        this.forceList = Collections.emptySet();
+        this.xsiTypeMap = new HashMap<String, XMLXsiTypeConverter<?>>();
+        this.forceList = new HashSet();
     }
 
     /**
@@ -90,10 +88,10 @@ public class XMLParserConfiguration {
      *      pattern for the configuration.
      *      This constructor may be removed in a future release.
      */
-    @Deprecated
-    public XMLParserConfiguration (final boolean keepStrings) {
-        this(keepStrings, "content", false);
-    }
+//    @Deprecated
+//    public XMLParserConfiguration (final boolean keepStrings) {
+//        this(keepStrings, "content", false);
+//    }
 
     /**
      * Configure the parser string processing to try and convert XML values to JSON values and
@@ -105,10 +103,10 @@ public class XMLParserConfiguration {
      *      pattern for the configuration.
      *      This constructor may be removed in a future release.
      */
-    @Deprecated
-    public XMLParserConfiguration (final String cDataTagName) {
-        this(false, cDataTagName, false);
-    }
+//    @Deprecated
+//    public XMLParserConfiguration (final String cDataTagName) {
+//        this(false, cDataTagName, false);
+//    }
 
     /**
      * Configure the parser to use custom settings.
@@ -120,12 +118,12 @@ public class XMLParserConfiguration {
      *      pattern for the configuration.
      *      This constructor may be removed in a future release.
      */
-    @Deprecated
-    public XMLParserConfiguration (final boolean keepStrings, final String cDataTagName) {
-        this.keepStrings = keepStrings;
-        this.cDataTagName = cDataTagName;
-        this.convertNilAttributeToNull = false;
-    }
+//    @Deprecated
+//    public XMLParserConfiguration (final boolean keepStrings, final String cDataTagName) {
+//        this.keepStrings = keepStrings;
+//        this.cDataTagName = cDataTagName;
+//        this.convertNilAttributeToNull = false;
+//    }
 
     /**
      * Configure the parser to use custom settings.
@@ -139,12 +137,12 @@ public class XMLParserConfiguration {
      *      pattern for the configuration.
      *      This constructor may be removed or marked private in a future release.
      */
-    @Deprecated
-    public XMLParserConfiguration (final boolean keepStrings, final String cDataTagName, final boolean convertNilAttributeToNull) {
-        this.keepStrings = keepStrings;
-        this.cDataTagName = cDataTagName;
-        this.convertNilAttributeToNull = convertNilAttributeToNull;
-    }
+//    @Deprecated
+//    public XMLParserConfiguration (final boolean keepStrings, final String cDataTagName, final boolean convertNilAttributeToNull) {
+//        this.keepStrings = keepStrings;
+//        this.cDataTagName = cDataTagName;
+//        this.convertNilAttributeToNull = convertNilAttributeToNull;
+//    }
 
     /**
      * Configure the parser to use custom settings.
@@ -160,13 +158,15 @@ public class XMLParserConfiguration {
      * @param maxNestingDepth <code>int</code> to limit the nesting depth
      */
     private XMLParserConfiguration (final boolean keepStrings, final String cDataTagName,
-            final boolean convertNilAttributeToNull, final Map<String, XMLXsiTypeConverter<?>> xsiTypeMap, final Set<String> forceList,
+            final boolean convertNilAttributeToNull, final HashMap<String, XMLXsiTypeConverter<?>> xsiTypeMap, final Set<String> forceList,
             final int maxNestingDepth) {
         this.keepStrings = keepStrings;
         this.cDataTagName = cDataTagName;
         this.convertNilAttributeToNull = convertNilAttributeToNull;
-        this.xsiTypeMap = Collections.unmodifiableMap(xsiTypeMap);
-        this.forceList = Collections.unmodifiableSet(forceList);
+        this.xsiTypeMap = new HashMap<String, XMLXsiTypeConverter<?>>();
+        this.xsiTypeMap.putAll(xsiTypeMap);
+        this.forceList = new HashSet();
+        this.forceList.addAll(forceList);
         this.maxNestingDepth = maxNestingDepth;
     }
 
@@ -276,7 +276,7 @@ public class XMLParserConfiguration {
      * xsi:type="integer" as integer,  xsi:type="string" as string
      * @return <code>xsiTypeMap</code> unmodifiable configuration map.
      */
-    public Map<String, XMLXsiTypeConverter<?>> getXsiTypeMap() {
+    public HashMap<String, XMLXsiTypeConverter<?>> getXsiTypeMap() {
         return this.xsiTypeMap;
     }
 
@@ -289,10 +289,11 @@ public class XMLParserConfiguration {
      *                   xsi:type="integer" as integer,  xsi:type="string" as string
      * @return The existing configuration will not be modified. A new configuration is returned.
      */
-    public XMLParserConfiguration withXsiTypeMap(final Map<String, XMLXsiTypeConverter<?>> xsiTypeMap) {
+    public XMLParserConfiguration withXsiTypeMap(final HashMap<String, XMLXsiTypeConverter<?>> xsiTypeMap) {
         XMLParserConfiguration newConfig = this.clone();
-        Map<String, XMLXsiTypeConverter<?>> cloneXsiTypeMap = new HashMap<String, XMLXsiTypeConverter<?>>(xsiTypeMap);
-        newConfig.xsiTypeMap = Collections.unmodifiableMap(cloneXsiTypeMap);
+        HashMap<String, XMLXsiTypeConverter<?>> cloneXsiTypeMap = new HashMap<String, XMLXsiTypeConverter<?>>(xsiTypeMap);
+        newConfig.xsiTypeMap = new HashMap<String, XMLXsiTypeConverter<?>>();
+        newConfig.xsiTypeMap.putAll(cloneXsiTypeMap);
         return newConfig;
     }
 
@@ -314,7 +315,8 @@ public class XMLParserConfiguration {
     public XMLParserConfiguration withForceList(final Set<String> forceList) {
         XMLParserConfiguration newConfig = this.clone();
         Set<String> cloneForceList = new HashSet<String>(forceList);
-        newConfig.forceList = Collections.unmodifiableSet(cloneForceList);
+        newConfig.forceList = new HashSet();
+        newConfig.forceList.addAll(cloneForceList);
         return newConfig;
     }
 

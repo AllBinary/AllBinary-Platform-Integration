@@ -67,6 +67,8 @@ import org.allbinary.util.BasicArrayListS;
  */
 public class JSONArray implements Iterable<Object> {
 
+    public static final JSONArray NULL_JSONARRAY = new JSONArray();
+    
     private final BooleanFactory booleanFactory = BooleanFactory.getInstance();
 
     /**
@@ -269,11 +271,11 @@ public class JSONArray implements Iterable<Object> {
         Object object = this.get(index);
         if (object.equals(this.booleanFactory.FALSE)
                 || (object instanceof String && ((String) object)
-                        .equalsIgnoreCase("false"))) {
+                        .equalsIgnoreCase(BooleanFactory.getInstance().FALSE_STRING))) {
             return false;
         } else if (object.equals(this.booleanFactory.TRUE)
                 || (object instanceof String && ((String) object)
-                        .equalsIgnoreCase("true"))) {
+                        .equalsIgnoreCase(BooleanFactory.getInstance().TRUE_STRING))) {
             return true;
         }
         throw JSONArray.wrongValueFormatException(index, "boolean", object, null);
@@ -1390,12 +1392,12 @@ public class JSONArray implements Iterable<Object> {
                 if (!JSONObject.isNumberSimilar((Number)valueThis, (Number)valueOther)) {
                 	return false;
                 }
-            } else if (valueThis instanceof JSONString && valueOther instanceof JSONString) {
-                JSONString valueThisJSONString = (JSONString) valueThis;
-                JSONString valueOtherJSONString = (JSONString) valueOther;
-                if (!valueThisJSONString.toJSONString().equals(valueOtherJSONString.toJSONString())) {
-                    return false;
-                }
+//            } else if (valueThis instanceof JSONString && valueOther instanceof JSONString) {
+//                JSONString valueThisJSONString = (JSONString) valueThis;
+//                JSONString valueOtherJSONString = (JSONString) valueOther;
+//                if (!valueThisJSONString.toJSONString().equals(valueOtherJSONString.toJSONString())) {
+//                    return false;
+//                }
             } else if (!valueThis.equals(valueOther)) {
                 return false;
             }

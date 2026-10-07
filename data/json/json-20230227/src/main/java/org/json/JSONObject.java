@@ -82,6 +82,8 @@ import org.allbinary.string.CommonSeps;
  * @version 2016-08-15
  */
 public class JSONObject {
+
+    public static final JSONObject NULL_JSONOBJECT = new JSONObject();
     
     /**
      * JSONObject.NULL is equivalent to the value that JavaScript calls null,
@@ -541,7 +543,7 @@ public class JSONObject {
      */
     public static String doubleToString(double d) {
         if (Double.isInfinite(d) || Double.isNaN(d)) {
-            return "null";
+            return StringUtil.getInstance().NULL_STRING;
         }
 
 // Shave off trailing zeros and decimal point, if possible.
@@ -618,11 +620,10 @@ public class JSONObject {
         Object object = this.get(key);
         if (object.equals(this.booleanFactory.FALSE)
                 || (object instanceof String && ((String) object)
-                        .equalsIgnoreCase("false"))) {
+                        .equalsIgnoreCase(BooleanFactory.getInstance().FALSE_STRING))) {
             return false;
         } else if (object.equals(this.booleanFactory.TRUE)
-                || (object instanceof String && ((String) object)
-                        .equalsIgnoreCase("true"))) {
+                || (object instanceof String && ((String) object).equalsIgnoreCase(BooleanFactory.getInstance().TRUE_STRING))) {
             return true;
         }
         throw JSONObject.wrongValueFormatException(key, "Boolean", object, null);
@@ -2163,10 +2164,10 @@ public class JSONObject {
                     if (!JSONObject.isNumberSimilar((Number)valueThis, (Number)valueOther)) {
                     	return false;
                     }
-                } else if (valueThis instanceof JSONString && valueOther instanceof JSONString) {
-                    if (!((JSONString) valueThis).toJSONString().equals(((JSONString) valueOther).toJSONString())) {
-                    	return false;
-                    }
+//                } else if (valueThis instanceof JSONString && valueOther instanceof JSONString) {
+//                    if (!((JSONString) valueThis).toJSONString().equals(((JSONString) valueOther).toJSONString())) {
+//                    	return false;
+//                    }
                 } else if (!valueThis.equals(valueOther)) {
                     return false;
                 }
@@ -2499,7 +2500,8 @@ public class JSONObject {
                 return JSONObject.NULL;
             }
             if (object instanceof JSONObject || object instanceof JSONArray
-                    || JSONObject.NULL.equals(object) || object instanceof JSONString
+                    || JSONObject.NULL.equals(object) 
+                    //|| object instanceof JSONString
                     || object instanceof Byte || object instanceof Character
                     || object instanceof Short || object instanceof Integer
                     || object instanceof Long || object instanceof Boolean
@@ -2507,7 +2509,8 @@ public class JSONObject {
                     || object instanceof String 
                     //|| object instanceof BigInteger
                     //|| object instanceof BigDecimal
-                    || object instanceof Enum) {
+                    //|| object instanceof Enum
+                    ) {
                 return object;
             }
 
@@ -2558,15 +2561,15 @@ public class JSONObject {
     static final Writer writeValue(Writer writer, Object value,
             int indentFactor, int indent) throws JSONException, IOException {
         if (value == null || value.equals(null)) {
-            writer.write("null");
-        } else if (value instanceof JSONString) {
-            Object o;
-            try {
-                o = ((JSONString) value).toJSONString();
-            } catch (Exception e) {
-                throw new JSONException(e);
-            }
-            writer.write(o != null ? o.toString() : JSONObject.quote(value.toString()));
+            writer.write(StringUtil.getInstance().NULL_STRING);
+//        } else if (value instanceof JSONString) {
+//            Object o;
+//            try {
+//                o = ((JSONString) value).toJSONString();
+//            } catch (Exception e) {
+//                throw new JSONException(e);
+//            }
+//            writer.write(o != null ? o.toString() : JSONObject.quote(value.toString()));
         } else if (value instanceof Number) {
             // not all Numbers may match JSON Numbers. i.e. fractions or Imaginary
             final String numberAsString = JSONObject.numberToString((Number) value);
@@ -2579,8 +2582,8 @@ public class JSONObject {
             }
         } else if (value instanceof Boolean) {
             writer.write(value.toString());
-        } else if (value instanceof Enum<?>) {
-            writer.write(JSONObject.quote(((Enum<?>)value).name()));
+//        } else if (value instanceof Enum<?>) {
+//            writer.write(JSONObject.quote(((Enum<?>)value).name()));
         } else if (value instanceof JSONObject) {
             JSONObject jsonObject = (JSONObject) value;
             jsonObject.write(writer, indentFactor, indent);

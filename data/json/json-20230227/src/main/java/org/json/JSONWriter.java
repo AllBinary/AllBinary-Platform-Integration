@@ -3,6 +3,8 @@ package org.json;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import org.allbinary.logic.java.bool.BooleanFactory;
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonSeps;
 
 /*
@@ -305,20 +307,20 @@ public class JSONWriter {
      */
     public static String valueToString(Object value) throws JSONException {
         if (value == null || value.equals(null)) {
-            return "null";
+            return StringUtil.getInstance().NULL_STRING;
         }
-        if (value instanceof JSONString) {
-            String object;
-            try {
-                object = ((JSONString) value).toJSONString();
-            } catch (Exception e) {
-                throw new JSONException(e);
-            }
-            if (object != null) {
-                return object;
-            }
-            throw new JSONException("Bad value from toJSONString: " + object);
-        }
+//        if (value instanceof JSONString) {
+//            String object;
+//            try {
+//                object = ((JSONString) value).toJSONString();
+//            } catch (Exception e) {
+//                throw new JSONException(e);
+//            }
+//            if (object != null) {
+//                return object;
+//            }
+//            throw new JSONException("Bad value from toJSONString: " + object);
+//        }
         if (value instanceof Number) {
             // not all Numbers may match JSON Numbers. i.e. Fractions or Complex
             final String numberAsString = JSONObject.numberToString((Number) value);
@@ -345,9 +347,9 @@ public class JSONWriter {
         if (value.getClass().isArray()) {
             return new JSONArray(value).toString();
         }
-        if(value instanceof Enum<?>){
-            return JSONObject.quote(((Enum<?>)value).name());
-        }
+//        if(value instanceof Enum<?>){
+//            return JSONObject.quote(((Enum<?>)value).name());
+//        }
         return JSONObject.quote(value.toString());
     }
 
@@ -359,7 +361,7 @@ public class JSONWriter {
      * @throws JSONException if a called function has an error
      */
     public JSONWriter value(boolean b) throws JSONException {
-        return this.append(b ? "true" : "false");
+        return this.append(b ? BooleanFactory.getInstance().TRUE_STRING : BooleanFactory.getInstance().FALSE_STRING);
     }
 
     /**

@@ -10,6 +10,7 @@ import java.io.StringReader;
 //import java.math.BigInteger;
 import java.util.ArrayList;
 import org.allbinary.logic.java.bool.BooleanFactory;
+import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonSeps;
@@ -462,13 +463,13 @@ public class XML {
         final BooleanFactory booleanFactory = BooleanFactory.getInstance();
         
         // check JSON key words true/false/null
-        if ("true".equalsIgnoreCase(string)) {
+        if (BooleanFactory.getInstance().TRUE_STRING.equalsIgnoreCase(string)) {
             return booleanFactory.TRUE;
         }
-        if ("false".equalsIgnoreCase(string)) {
+        if (BooleanFactory.getInstance().FALSE_STRING.equalsIgnoreCase(string)) {
             return booleanFactory.FALSE;
         }
-        if ("null".equalsIgnoreCase(string)) {
+        if (StringUtil.getInstance().NULL_STRING.equalsIgnoreCase(string)) {
             return JSONObject.NULL;
         }
 
@@ -809,7 +810,7 @@ public class XML {
                         ja = (JSONArray) value;
                         int jaLength = ja.length();
                         // don't use the new iterator API to maintain support for Android
-						for (int i = 0; i < jaLength; i++) {
+                        for (int i = 0; i < jaLength; i++) {
                             if (i > 0) {
                                 sb.append('\n');
                             }
@@ -826,9 +827,9 @@ public class XML {
                     ja = (JSONArray) value;
                     int jaLength = ja.length();
                     // don't use the new iterator API to maintain support for Android
-					for (int i = 0; i < jaLength; i++) {
+                    for (int i = 0; i < jaLength; i++) {
                         Object value2 = ja.opt(i);
-                        if (value instanceof JSONArray) {
+                        if (value2 instanceof JSONArray) {
                             sb.append('<');
                             sb.append(key);
                             sb.append('>');
@@ -889,15 +890,15 @@ public class XML {
         }
 
 
-        string = (objectCanBeNull == null) ? "null" : XML.escape(objectCanBeNull.toString());
+        string = (objectCanBeNull == null) ? StringUtil.getInstance().NULL_STRING : XML.escape(objectCanBeNull.toString());
 
+        final String END = (indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING;
         if(tagNameCanBeNull == null){
-            return XML.indent(indent) + CommonSeps.getInstance().QUOTE + string + CommonSeps.getInstance().QUOTE + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
+            return new StringMaker().append(XML.indent(indent)).append(CommonSeps.getInstance().QUOTE).append(string).append(CommonSeps.getInstance().QUOTE).append(END).toString();
         } else if(string.length() == 0){
-            return XML.indent(indent) + "<" + tagNameCanBeNull + "/>" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
+            return new StringMaker().append(XML.indent(indent)).append("<").append(tagNameCanBeNull).append("/>").append(END).toString();
         } else {
-            return XML.indent(indent) + "<" + tagNameCanBeNull
-                    + ">" + string + "</" + tagNameCanBeNull + ">" + ((indentFactor > 0) ? CommonSeps.getInstance().NEW_LINE : StringUtil.getInstance().EMPTY_STRING);
+            return new StringMaker().append(XML.indent(indent)).append("<").append(tagNameCanBeNull).append(">").append(string).append("</").append(tagNameCanBeNull).append(">").append(END).toString();
         }
     }
 
@@ -958,7 +959,7 @@ public class XML {
      * @return
      */
     private static final String indent(int indent) {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < indent; i++) {
             sb.append(' ');
         }

@@ -354,7 +354,7 @@ public class JSONObject {
     public Object get(String key) throws JSONException {
         Object o = this.opt(key);
         if (o == null) {
-            throw new JSONException("JSONObject[" + quote(key) + "] not found.");
+            throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] not found.");
         }
         return o;
     }
@@ -379,7 +379,7 @@ public class JSONObject {
                 ((String)o).equalsIgnoreCase("true"))) {
             return true;
         }
-        throw new JSONException("JSONObject[" + quote(key) + "] is not a Boolean.");
+        throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] is not a Boolean.");
     }
 
 
@@ -408,10 +408,10 @@ public class JSONObject {
             try {
                 return Double.valueOf((String)o).doubleValue();
             } catch (Exception e) {
-                throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
+                throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] is not a number.");
             }
         } 
-        throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
+        throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] is not a number.");
     }
 
 
@@ -441,7 +441,7 @@ public class JSONObject {
         } else if (o instanceof String) {
             return (int) this.getDouble(key);
         } 
-        throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
+        throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] is not a number.");
     }
 
 
@@ -458,7 +458,7 @@ public class JSONObject {
         if (o instanceof JSONArray) {
             return (JSONArray)o;
         }
-        throw new JSONException("JSONObject[" + quote(key) + "] is not a JSONArray.");
+        throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] is not a JSONArray.");
     }
 
 
@@ -475,7 +475,7 @@ public class JSONObject {
         if (o instanceof JSONObject) {
             return (JSONObject)o;
         }
-        throw new JSONException("JSONObject[" + quote(key) + "] is not a JSONObject.");
+        throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] is not a JSONObject.");
     }
 
 
@@ -505,7 +505,7 @@ public class JSONObject {
         } else if (o instanceof String) {
             return (long) this.getDouble(key);
         } 
-        throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
+        throw new JSONException("JSONObject[" + JSONObject.quote(key) + "] is not a number.");
     }
 
 
@@ -539,7 +539,7 @@ public class JSONObject {
      *  the value is the JSONObject.NULL object.
      */
     public boolean isNull(String key) {
-        return JSONObject.NULL.equals(opt(key));
+        return JSONObject.NULL.equals(this.opt(key));
     }
 
 
@@ -1077,9 +1077,9 @@ public class JSONObject {
                     sb.append(',');
                 }
                 Object o = keys.nextElement();
-                sb.append(quote(o.toString()));
+                sb.append(JSONObject.quote(o.toString()));
                 sb.append(commonSeps.COLON);
-                sb.append(valueToString(this.myHashMap.get(o)));
+                sb.append(JSONObject.valueToString(this.myHashMap.get(o)));
             }
             sb.append('}');
             return sb.toString();
@@ -1131,9 +1131,9 @@ public class JSONObject {
         Object       o;
         if (n == 1) {
             o = keys.nextElement();
-            sb.append(quote(o.toString()));
+            sb.append(JSONObject.quote(o.toString()));
             sb.append(": ");
-            sb.append(valueToString(this.myHashMap.get(o), indentFactor,
+            sb.append(JSONObject.valueToString(this.myHashMap.get(o), indentFactor,
                     indent));
         } else {
             while (keys.hasMoreElements()) {
@@ -1146,9 +1146,9 @@ public class JSONObject {
                 for (i = 0; i < newindent; i += 1) {
                     sb.append(' ');
                 }
-                sb.append(quote(o.toString()));
+                sb.append(JSONObject.quote(o.toString()));
                 sb.append(": ");
-                sb.append(valueToString(this.myHashMap.get(o), indentFactor,
+                sb.append(JSONObject.valueToString(this.myHashMap.get(o), indentFactor,
                         newindent));
             }
             if (sb.length() > 1) {
@@ -1275,7 +1275,7 @@ public class JSONObject {
                     writer.write(',');
                 }
                 Object k = keys.nextElement();
-                writer.write(quote(k.toString()));
+                writer.write(JSONObject.quote(k.toString()));
                 writer.write(':');
                 Object v = this.myHashMap.get(k);
                 if (v instanceof JSONObject) {
@@ -1283,7 +1283,7 @@ public class JSONObject {
                 } else if (v instanceof JSONArray) {
                     ((JSONArray)v).write(writer);
                 } else {
-                    writer.write(valueToString(v));
+                    writer.write(JSONObject.valueToString(v));
                 }
                 b = true;
             }

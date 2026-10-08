@@ -169,6 +169,7 @@ public class XmlRpcClient implements XmlRpcHandler
      * @exception IOException: If the call could not be made because of lower
      *          level problems.
      */
+    @Override
     public Object execute(String method, BasicArrayList params)
             throws XmlRpcException, IOException
     {
@@ -391,6 +392,7 @@ public class XmlRpcClient implements XmlRpcHandler
         /**
          *
          */
+        @Override
         public void run()
         {
             while (this.call != null)

@@ -26,16 +26,19 @@ public class DownFormInputProcessor extends PlatformFormInputProcessor {
     private final DownKeyEventHandler downKeyEventHandler = DownKeyEventHandler.getInstance();
     //private final DownGameKeyEventHandler downGameKeyEventHandler = DownGameKeyEventHandler.getInstance();
     
+    @Override
     public void addListener(final EventListenerInterface eventListenerInterface) {
         //this.downGameKeyEventHandler.addListener(eventListenerInterface);
         this.downKeyEventHandler.addListenerInterface(eventListenerInterface);
     }
     
+    @Override
     public void addListeners(final BasicArrayList list) {
         //this.downGameKeyEventHandler.addListeners(list);
         this.downKeyEventHandler.addListeners(list);
     }
     
+    @Override
     public void removeListener(final EventListenerInterface eventListenerInterface) {
         //this.downGameKeyEventHandler.removeListener(eventListenerInterface);
         this.downKeyEventHandler.removeListener(eventListenerInterface);

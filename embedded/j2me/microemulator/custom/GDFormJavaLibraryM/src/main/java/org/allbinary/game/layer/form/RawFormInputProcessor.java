@@ -26,10 +26,12 @@ public class RawFormInputProcessor extends PlatformFormInputProcessor {
     
     private final RawKeyEventHandler rawKeyEventHandler = RawKeyEventHandler.getInstance();
     
+    @Override
     public void addListener(final EventListenerInterface eventListenerInterface) {
         this.rawKeyEventHandler.addListener((RawKeyEventListener) eventListenerInterface);
     }
     
+    @Override
     public void addListeners(final BasicArrayList list) {
         this.rawKeyEventHandler.addListeners(list);
     }

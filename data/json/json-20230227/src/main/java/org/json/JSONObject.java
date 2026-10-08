@@ -295,7 +295,7 @@ public class JSONObject {
         	    }
                 final Object value = m.get(key);
                 if (value != null) {
-                    this.map.put(String.valueOf(key), wrap(value));
+                    this.map.put(String.valueOf(key), JSONObject.wrap(value));
                 }
             }
         }
@@ -2194,7 +2194,7 @@ public class JSONObject {
      * @return true if the numbers are similar, false otherwise.
      */
     static boolean isNumberSimilar(Number l, Number r) {
-        if (!numberIsFinite(l) || !numberIsFinite(r)) {
+        if (!JSONObject.numberIsFinite(l) || !JSONObject.numberIsFinite(r)) {
             // non-finite numbers are never similar
             return false;
         }
@@ -2253,7 +2253,7 @@ public class JSONObject {
         char initial = value.charAt(0);
         if ((initial >= '0' && initial <= '9') || initial == '-') {
             // decimal representation
-            if (isDecimalNotation(value)) {
+            if (JSONObject.isDecimalNotation(value)) {
                 // Use a BigDecimal all the time so we keep the original
                 // representation. BigDecimal doesn't support -0.0, ensure we
                 // keep that by forcing a decimal.
@@ -2363,7 +2363,7 @@ public class JSONObject {
      *             If o is a non-finite number.
      */
     public static void testValidity(Object oCanBeNull) throws JSONException {
-        if (oCanBeNull instanceof Number && !numberIsFinite((Number) oCanBeNull)) {
+        if (oCanBeNull instanceof Number && !JSONObject.numberIsFinite((Number) oCanBeNull)) {
             throw new JSONException("JSON does not allow non-finite numbers.");
         }
     }

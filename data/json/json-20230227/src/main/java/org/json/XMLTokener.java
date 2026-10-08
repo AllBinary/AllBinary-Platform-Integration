@@ -24,12 +24,12 @@ public class XMLTokener extends JSONTokener {
    public static final java.util.HashMap<String, Character> entity;
 
    static {
-       entity = new java.util.HashMap<String, Character>(8);
-       entity.put("amp",  XML.AMP);
-       entity.put("apos", XML.APOS);
-       entity.put("gt",   XML.GT);
-       entity.put("lt",   XML.LT);
-       entity.put("quot", XML.QUOT);
+       XMLTokener.entity = new java.util.HashMap<String, Character>(8);
+       XMLTokener.entity.put("amp",  XML.AMP);
+       XMLTokener.entity.put("apos", XML.APOS);
+       XMLTokener.entity.put("gt",   XML.GT);
+       XMLTokener.entity.put("lt",   XML.LT);
+       XMLTokener.entity.put("quot", XML.QUOT);
    }
 
     /**
@@ -58,8 +58,8 @@ public class XMLTokener extends JSONTokener {
         int          i;
         StringBuilder sb = new StringBuilder();
         int total = 0;
-        while (more()) {
-            c = next();
+        while (this.more()) {
+            c = this.next();
             sb.append(c);
             total++;
             i = total - 3;
@@ -86,7 +86,7 @@ public class XMLTokener extends JSONTokener {
         char         c;
         StringBuilder sb;
         do {
-            c = next();
+            c = this.next();
         } while (Character.isWhitespace(c));
         if (c == '\0') {
             return null;
@@ -100,15 +100,15 @@ public class XMLTokener extends JSONTokener {
                 return sb.toString().trim();
             }
             if (c == '<') {
-                back();
+                this.back();
                 return sb.toString().trim();
             }
             if (c == '&') {
-                sb.append(nextEntity(c));
+                sb.append(this.nextEntity(c));
             } else {
                 sb.append(c);
             }
-            c = next();
+            c = this.next();
         }
     }
 
@@ -125,7 +125,7 @@ public class XMLTokener extends JSONTokener {
     public Object nextEntity(@SuppressWarnings("unused") char ampersand) throws JSONException {
         StringBuilder sb = new StringBuilder();
         while (true) {
-            char c = next();
+            char c = this.next();
             if (Character.isLetterOrDigit(c) || c == '#') {
                 sb.append(Character.toLowerCase(c));
             } else if (c == ';') {
@@ -162,7 +162,7 @@ public class XMLTokener extends JSONTokener {
             //return new String(cdIntArray,0,1);
             return Character.toString(cp);
         } 
-        Character knownEntity = entity.get(e);
+        Character knownEntity = XMLTokener.entity.get(e);
         if(knownEntity==null) {
             // we don't know the entity so keep it encoded
             return '&' + e + ';';
@@ -187,7 +187,7 @@ public class XMLTokener extends JSONTokener {
         char c;
         char q;
         do {
-            c = next();
+            c = this.next();
         } while (Character.isWhitespace(c));
         switch (c) {
         case 0:
@@ -208,7 +208,7 @@ public class XMLTokener extends JSONTokener {
         case '\'':
             q = c;
             while (true) {
-                c = next();
+                c = this.next();
                 if (c == '\0') {
                     throw this.syntaxError("Unterminated string");
                 }
@@ -219,7 +219,7 @@ public class XMLTokener extends JSONTokener {
             }
         default:
             while (true) {
-                c = next();
+                c = this.next();
                 final BooleanFactory booleanFactory = BooleanFactory.getInstance();
                 if (Character.isWhitespace(c)) {
                     return booleanFactory.TRUE;
@@ -235,7 +235,7 @@ public class XMLTokener extends JSONTokener {
                 case '?':
                 case '"':
                 case '\'':
-                    back();
+                    this.back();
                     return booleanFactory.TRUE;
                 }
             }
@@ -258,7 +258,7 @@ public class XMLTokener extends JSONTokener {
         char q;
         StringBuilder sb;
         do {
-            c = next();
+            c = this.next();
         } while (Character.isWhitespace(c));
         switch (c) {
         case 0:
@@ -283,7 +283,7 @@ public class XMLTokener extends JSONTokener {
             q = c;
             sb = new StringBuilder();
             while (true) {
-                c = next();
+                c = this.next();
                 if (c == '\0') {
                     throw this.syntaxError("Unterminated string");
                 }
@@ -291,7 +291,7 @@ public class XMLTokener extends JSONTokener {
                     return sb.toString();
                 }
                 if (c == '&') {
-                    sb.append(nextEntity(c));
+                    sb.append(this.nextEntity(c));
                 } else {
                     sb.append(c);
                 }
@@ -303,7 +303,7 @@ public class XMLTokener extends JSONTokener {
             sb = new StringBuilder();
             while (true) {
                 sb.append(c);
-                c = next();
+                c = this.next();
                 if (Character.isWhitespace(c)) {
                     return sb.toString();
                 }
@@ -317,7 +317,7 @@ public class XMLTokener extends JSONTokener {
                 case '?':
                 case '[':
                 case ']':
-                    back();
+                    this.back();
                     return sb.toString();
                 case '<':
                 case '"':
@@ -352,7 +352,7 @@ public class XMLTokener extends JSONTokener {
          */
 
         for (i = 0; i < length; i += 1) {
-            c = next();
+            c = this.next();
             if (c == '\0') {
                 return;
             }
@@ -386,7 +386,7 @@ public class XMLTokener extends JSONTokener {
 
             /* Get the next character. If there isn't one, then defeat is ours. */
 
-            c = next();
+            c = this.next();
             if (c == '\0') {
                 return;
             }

@@ -489,6 +489,7 @@ public class XmlRpcClientLite extends XmlRpcClient
          *
          * @throws Throwable
          */
+        @Override
         protected void finalize() throws Throwable
         {
             this.closeConnection ();

@@ -128,18 +128,22 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   final BasicArrayList attributeValues = new BasicArrayListD();
 
   final AttributeList attrs = new AttributeList() {
+    @Override
     public int getLength() {
       return attributeNames.size();
     }
 
+    @Override
     public String getName(final int i) {
       return (String)attributeNames.get(i);
     }
 
+    @Override
     public String getType(final int i) {
       return "CDATA";
     }
 
+    @Override
     public String getValue(final int i) {
       return (String)attributeValues.get(i);
     }

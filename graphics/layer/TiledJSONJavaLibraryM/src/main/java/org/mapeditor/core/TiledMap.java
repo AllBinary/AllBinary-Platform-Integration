@@ -75,7 +75,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return the size of the layer list
      */
     public int getLayerCount() {
-        return getLayers().size();
+        return this.getLayers().size();
     }
 
     /**
@@ -87,7 +87,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
 
         Rectangle layerBounds = new Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0);
 
-        for (int i = 0; i < getLayers().size(); i++) {
+        for (int i = 0; i < this.getLayers().size(); i++) {
             this.getLayer(i).getBounds(layerBounds);
             if (width < layerBounds.getWidth()) {
                 width = layerBounds.getWidth();
@@ -108,7 +108,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return a new rectangle containing the maximum bounds of this plane
      */
     public Rectangle getBounds() {
-        return new Rectangle(PointFactory.getInstance().createXY(this.width, height), 0, 0);
+        return new Rectangle(PointFactory.getInstance().createXY(this.width, this.height), 0, 0);
     }
 
     /**
@@ -119,7 +119,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public MapLayer addLayer(MapLayer layer) {
         layer.setMap(this);
-        getLayers().add(layer);
+        this.getLayers().add(layer);
         return layer;
     }
 
@@ -131,7 +131,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public void setLayer(int index, TileLayer layer) {
         layer.setMap(this);
-        getLayers().set(index, layer);
+        this.getLayers().set(index, layer);
     }
 
     /**
@@ -142,7 +142,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public void insertLayer(int index, TileLayer layer) {
         layer.setMap(this);
-        getLayers().addAt(index, layer);
+        this.getLayers().addAt(index, layer);
     }
 
     /**
@@ -153,14 +153,14 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return the layer that was removed from the list
      */
     public MapLayer removeLayer(int index) {
-        return (MapLayer) getLayers().removeAt(index);
+        return (MapLayer) this.getLayers().removeAt(index);
     }
 
     /**
      * Removes all layers from the plane.
      */
     public void removeAllLayers() {
-        getLayers().clear();
+        this.getLayers().clear();
     }
 
     /**
@@ -172,7 +172,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public MapLayer getLayer(int i) {
         try {
-            return (MapLayer) getLayers().get(i);
+            return (MapLayer) this.getLayers().get(i);
         } catch (IndexOutOfBoundsException e) {
             // todo: we should log this
         }
@@ -197,7 +197,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
         for (int index = 0; index < size; index++) {
             layer = (MapLayer) this.layers.get(index);
             Rectangle layerBounds = layer.getBounds();
-            if (layerBounds.equals(getBounds())) {
+            if (layerBounds.equals(this.getBounds())) {
                 layer.resize(width, height, dx, dy);
             } else {
                 layer.setOffset(layerBounds.getPoint().getX() + dx, layerBounds.getPoint().getY() + dy);
@@ -217,7 +217,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * <code>false</code> otherwise
      */
     public boolean inBounds(int x, int y) {
-        return x >= 0 && y >= 0 && x < this.width && y < height;
+        return x >= 0 && y >= 0 && x < this.width && y < this.height;
     }
 
     /**
@@ -241,9 +241,9 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
         if (t != null) {
             int tw = t.getWidth();
             int th = t.getHeight();
-            if (tw != tileWidth && tileWidth == 0) {
-                tileWidth = tw;
-                tileHeight = th;
+            if (tw != this.tileWidth && this.tileWidth == 0) {
+                this.tileWidth = tw;
+                this.tileHeight = th;
             }
         }
 
@@ -286,7 +286,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * <code>false</code> otherwise
      */
     public boolean contains(int x, int y) {
-        return x >= 0 && y >= 0 && x < this.width && y < height;
+        return x >= 0 && y >= 0 && x < this.width && y < this.height;
     }
 
     /**
@@ -296,7 +296,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return int The maximum tile height
      */
     public int getTileHeightMax() {
-        int maxHeight = tileHeight;
+        int maxHeight = this.tileHeight;
 
         TileSet tileset;
         final int size = this.tileSets.size();
@@ -368,8 +368,8 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     @Override
     public String toString() {
-        return new StringMaker().append("Map[").appendint(this.width).append("x").appendint(height)
-                .append("x").appendint(getLayerCount()).append("][").appendint(tileWidth).append("x")
-                .appendint(tileHeight).append("]").toString();
+        return new StringMaker().append("Map[").appendint(this.width).append("x").appendint(this.height)
+                .append("x").appendint(this.getLayerCount()).append("][").appendint(this.tileWidth).append("x")
+                .appendint(this.tileHeight).append("]").toString();
     }
 }

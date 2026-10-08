@@ -88,23 +88,27 @@ public class DefaultTypeFactory
     {
     }
 
+    @Override
     public Object createInteger(String cdata)
     {
         return new Integer(cdata.trim());
     }
 
+    @Override
     public Object createBoolean(String cdata)
     {
         return ("1".equals(cdata.trim ())
                ? Boolean.TRUE : Boolean.FALSE);
     }
 
+    @Override
     public Object createDouble(String cdata)
     {
         return new Double(cdata.trim ());
 
     }
 
+    @Override
     public Object createDate(String cdata)
     {
         try
@@ -118,11 +122,13 @@ public class DefaultTypeFactory
         }
     }
 
+    @Override
     public Object createBase64(String cdata)
     {
         return Base64.decode(cdata.getBytes());
     }
 
+    @Override
     public Object createString(String cdata)
     {
         return cdata;

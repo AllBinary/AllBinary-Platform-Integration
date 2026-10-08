@@ -498,6 +498,7 @@ public abstract class XmlRpc extends HandlerBase
     /**
      * Method called by SAX driver.
      */
+    @Override
     public void endElement(String name) throws SAXException
     {
 
@@ -560,6 +561,7 @@ public abstract class XmlRpc extends HandlerBase
     /**
      * Method called by SAX driver.
      */
+    @Override
     public void startElement(String name, AttributeList atts)
             throws SAXException
     {
@@ -638,6 +640,7 @@ public abstract class XmlRpc extends HandlerBase
      * @param e
      * @throws SAXException
      */
+    @Override
     public void error(SAXParseException e) throws SAXException
     {
         System.err.println("Error parsing XML: " + e);
@@ -650,6 +653,7 @@ public abstract class XmlRpc extends HandlerBase
      * @param e
      * @throws SAXException
      */
+    @Override
     public void fatalError(SAXParseException e) throws SAXException
     {
         System.err.println("Fatal error parsing XML: " + e);
@@ -752,6 +756,7 @@ public abstract class XmlRpc extends HandlerBase
          * method hashCode, but it doesn't matter since Value objects
          * are never used as keys in Hashtables.
          */
+        @Override
         public int hashCode()
         {
             return this.type;

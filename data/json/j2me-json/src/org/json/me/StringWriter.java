@@ -50,8 +50,8 @@ public class StringWriter extends Writer {
      * size.
      */
     public StringWriter() {
-        buf = new StringBuffer();
-        lock = this.buf;
+        this.buf = new StringBuffer();
+        this.lock = this.buf;
     }
 
     /**
@@ -70,7 +70,7 @@ public class StringWriter extends Writer {
             throw new IllegalArgumentException("Negative buffer size");
         }
         this.buf = new StringBuffer(initialSize);
-        lock = this.buf;
+        this.lock = this.buf;
     }
 
     /**
@@ -102,6 +102,7 @@ public class StringWriter extends Writer {
     /**
      * Write a string.
      */
+    @Override
     public void write(String str) {
         this.buf.append(str);
     }
@@ -113,6 +114,7 @@ public class StringWriter extends Writer {
      * @param  off  Offset from which to start writing characters
      * @param  len  Number of characters to write
      */
+    @Override
     public void write(String str, int off, int len)  {
         this.buf.append(str.substring(off, off + len));
     }
@@ -141,6 +143,7 @@ public class StringWriter extends Writer {
      *
      * @since  1.5
      */
+    @Override
     public StringWriter append(CharSequence csq) {
         if (csq == null)
             this.write(StringUtil.getInstance().NULL_STRING);
@@ -181,6 +184,7 @@ public class StringWriter extends Writer {
      *
      * @since  1.5
      */
+    @Override
     public StringWriter append(CharSequence csq, int start, int end) {
         CharSequence cs = (csq == null ? StringUtil.getInstance().NULL_STRING : csq);
         this.write(cs.subSequence(start, end).toString());
@@ -203,6 +207,7 @@ public class StringWriter extends Writer {
      *
      * @since 1.5
      */
+    @Override
     public StringWriter append(char c) {
         this.write(c);
         return this;
@@ -227,6 +232,7 @@ public class StringWriter extends Writer {
     /**
      * Flush the stream.
      */
+    @Override
     public void flush() {
     }
 
@@ -235,6 +241,7 @@ public class StringWriter extends Writer {
      * class can be called after the stream has been closed without generating
      * an <tt>IOException</tt>.
      */
+    @Override
     public void close() throws IOException {
     }
 

@@ -50,6 +50,7 @@ public class GDTextInputAnimationBehavior extends GDItemAnimationBehavior
         this.virtualKeyboardEventHandler.open();
     }
 
+    @Override
     public IndexedAnimation[] init(final GDObject gdObject, final AnimationInterfaceFactoryInterface[] animationInterfaceFactoryInterfaceArray) {
         final IndexedAnimation[] indexedAnimation = super.init(gdObject, animationInterfaceFactoryInterfaceArray);
         this.animationArray = indexedAnimation;

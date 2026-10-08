@@ -91,8 +91,8 @@ public final class Base64
     static private final int  FOURBYTE           = 4;
     static private final int  SIGN               = -128;
     static private final byte PAD                = (byte) '=';
-    static private byte [] base64Alphabet       = new byte[Base64.BASELENGTH];
-    static private byte [] lookUpBase64Alphabet = new byte[Base64.LOOKUPLENGTH];
+    static private byte[] base64Alphabet       = new byte[Base64.BASELENGTH];
+    static private byte[] lookUpBase64Alphabet = new byte[Base64.LOOKUPLENGTH];
     //static private final Log log = LogSource.getInstance("org.apache.commons.util.Base64");
 
     static

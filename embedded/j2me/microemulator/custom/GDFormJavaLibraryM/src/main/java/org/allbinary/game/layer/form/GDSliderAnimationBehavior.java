@@ -48,6 +48,7 @@ implements GDGameLayerItemStateListener {
     public GDSliderAnimationBehavior() {
     }
 
+    @Override
     public IndexedAnimation[] init(final GDObject gdObject, final AnimationInterfaceFactoryInterface[] animationInterfaceFactoryInterfaceArray) {
         final IndexedAnimation[] indexedAnimation = super.init(gdObject, animationInterfaceFactoryInterfaceArray);
         this.animationArray = indexedAnimation;

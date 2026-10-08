@@ -112,7 +112,7 @@ public class GDJSONMapReader {
             //load .tsj instead
             if(jsonObject.has(this.SOURCE)) {
                 final String source = jsonObject.getString(this.SOURCE);
-                this.logUtil.putF("Loading TileSet (source): " + source, this, commonStrings.PROCESS);                
+                this.logUtil.putF("Loading TileSet (source): " + source, this, this.commonStrings.PROCESS);                
                 actualTileSetJSONObjectArray[tileSetIndex] = tileSetJSONObjectArray[tileSetIndex];
                 return this.processTileset(tileSet, tileSetJSONObjectArray[tileSetIndex], tileSetImageHeight, tileSetIndex);
             } else {
@@ -129,7 +129,7 @@ public class GDJSONMapReader {
                 final String name = jsonObject.getString(this.mapReaderData.NAME);
                 tileSet.setName(name);
             } else {
-                this.logUtil.putF("TileSet without name:" + jsonObject, this, commonStrings.PROCESS);                
+                this.logUtil.putF("TileSet without name:" + jsonObject, this, this.commonStrings.PROCESS);                
                 tileSet.setName("Unamed_TileSet");
             }
 
@@ -138,14 +138,14 @@ public class GDJSONMapReader {
             if(jsonObject.has(this.COLUMNS)) {
                 tileSet.setColumns(jsonObject.getInt(this.COLUMNS));
             } else {
-                this.logUtil.putF("TileSet without columns:" + jsonObject, this, commonStrings.PROCESS);
+                this.logUtil.putF("TileSet without columns:" + jsonObject, this, this.commonStrings.PROCESS);
             }
                         
             if(jsonObject.has(this.IMAGE)) { 
                 this.addTileSet(tileSet, jsonObject);
             }
             
-            this.logUtil.putF("Adding TileSet firstGid:" + firstGid, this, commonStrings.PROCESS);
+            this.logUtil.putF("Adding TileSet firstGid:" + firstGid, this, this.commonStrings.PROCESS);
             this.tilesetPerFirstGid.put(firstGid, tileSet);
             this.tilesetFirstGid[tileSetIndex] = firstGid;
             
@@ -217,7 +217,7 @@ public class GDJSONMapReader {
 
     private void addTileSet(final TileSet tileSet, final JSONObject jsonObject) throws Exception {
 
-        final String path = jsonObject.getString(IMAGE);
+        final String path = jsonObject.getString(this.IMAGE);
 
         final int imageWidth = jsonObject.getInt(this.IMAGE_WIDTH);
         final int imageHeight = jsonObject.getInt(this.IMAGE_HEIGHT);
@@ -259,19 +259,19 @@ public class GDJSONMapReader {
                 this.processTile(tile, jsonObject2);
             }
         } else {
-            this.logUtil.putF("Found TileSet without tiles", this, commonStrings.PROCESS);
+            this.logUtil.putF("Found TileSet without tiles", this, this.commonStrings.PROCESS);
         }
 
     }
 
     public void processTilesets(final TiledMap map, final JSONArray jsonArray, final JSONObject[] tileSetJSONObjectArray, final JSONObject[] actualTileSetJSONObjectArray, final int[] tileSetImageHeightArray) throws Exception {
-        this.logUtil.putF("Tileset JSON:" + jsonArray.toString(3), this, commonStrings.PROCESS);
+        this.logUtil.putF("Tileset JSON:" + jsonArray.toString(3), this, this.commonStrings.PROCESS);
 
         final String LOADING_TILESET = "Loading Tileset: ";
         final int size = jsonArray.length();
         TileSet tileset;
         for (int i = 0; i < size; i++) {
-            this.logUtil.putF(LOADING_TILESET + i, this, commonStrings.PROCESS);
+            this.logUtil.putF(LOADING_TILESET + i, this, this.commonStrings.PROCESS);
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
             //If TileLayer ever supports more than 1 tileSet image then change index from 0 to the index.
             tileset = this.processTileset(jsonObject, tileSetJSONObjectArray, actualTileSetJSONObjectArray, tileSetImageHeightArray[0], i);
@@ -286,12 +286,12 @@ public class GDJSONMapReader {
             final WangSets wangSets = new WangSets();
             tileSet.setWangsets(wangSets);
             
-            this.logUtil.putF("Found wangset", this, commonStrings.PROCESS);
+            this.logUtil.putF("Found wangset", this, this.commonStrings.PROCESS);
             final JSONArray jsonArray = jsonObject.getJSONArray(this.WANG_SETS);
 
             final int size = jsonArray.length();
             for (int i = 0; i < size; i++) {
-                this.logUtil.putF("Loading wangset JSON: " + i, this, commonStrings.PROCESS);
+                this.logUtil.putF("Loading wangset JSON: " + i, this, this.commonStrings.PROCESS);
                 final JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                 this.processWangSet(wangSets, jsonObject2);
             }
@@ -309,13 +309,13 @@ public class GDJSONMapReader {
         if (jsonObject.has(this.WANG_TILES)) {
             final String WANG_ID = "wangid";
 
-            this.logUtil.putF("Found wangtiles", this, commonStrings.PROCESS);
+            this.logUtil.putF("Found wangtiles", this, this.commonStrings.PROCESS);
             final JSONArray jsonArray = jsonObject.getJSONArray(this.WANG_TILES);
             final int size = jsonArray.length();
             Tile tile;
             int tileId;
             for (int i = 0; i < size; i++) {
-                this.logUtil.putF("Loading wangtiles JSON: " + i, this, commonStrings.PROCESS);
+                this.logUtil.putF("Loading wangtiles JSON: " + i, this, this.commonStrings.PROCESS);
                 final JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                 tileId = jsonObject2.getInt(this.TILE_ID);
                 tile = this.getTileForTileGID(tileId);
@@ -337,7 +337,7 @@ public class GDJSONMapReader {
             final JSONArray jsonArray = jsonObject.getJSONArray(this.COLORS);
             final int size = jsonArray.length();
             for (int i = 0; i < size; i++) {
-                this.logUtil.putF("Loading color JSON: " + i, this, commonStrings.PROCESS);
+                this.logUtil.putF("Loading color JSON: " + i, this, this.commonStrings.PROCESS);
                 final JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                 final WangCornerColor wangCornerColor = new WangCornerColor();
                 
@@ -498,7 +498,7 @@ public class GDJSONMapReader {
 //                            throw new IOException("Unrecognized compression method \"" + comp + "\" for map layer " + ml.getName());
                               throw new RuntimeException();
                         } else {
-                            this.logUtil.putF("Loading TileLayer - uncompressed", this, commonStrings.PROCESS);
+                            this.logUtil.putF("Loading TileLayer - uncompressed", this, this.commonStrings.PROCESS);
                             is = bais;
                         }
 
@@ -751,13 +751,13 @@ public class GDJSONMapReader {
             final String LOADING_LAYER = "Loading Layer at: ";
             
             final TiledBehavior tildeBehavior = tiledBehaviorFactory.getBehavior(map.getVersion());
-            this.logUtil.putF("tildeBehavior: " + tildeBehavior.getClass().getName(), this, commonStrings.PROCESS);
+            this.logUtil.putF("tildeBehavior: " + tildeBehavior.getClass().getName(), this, this.commonStrings.PROCESS);
             
             final JSONArray layerJSONArray = mapJSONObject.getJSONArray(this.mapReaderData.LAYERS);
             final int size2 = layerJSONArray.length();
             TileLayer layer;
             for(int index = 0; index < size2; index++) {
-                this.logUtil.putF(LOADING_LAYER + index, this, commonStrings.PROCESS);
+                this.logUtil.putF(LOADING_LAYER + index, this, this.commonStrings.PROCESS);
                 layer = this.readLayer(tildeBehavior, layerJSONArray.getJSONObject(index));
                 if (layer != null) {
                     map.addLayer(layer);
@@ -781,7 +781,7 @@ public class GDJSONMapReader {
         for (int i = 0; i < size; i++) {
             //final JSONObject jsonObject = jsonArray.getJSONObject(i);
             final JSONObject jsonObject = actualTileSetJSONObjectArray[i];
-            this.logUtil.putF(PROCESS_TILE_SET + i, this, commonStrings.PROCESS);
+            this.logUtil.putF(PROCESS_TILE_SET + i, this, this.commonStrings.PROCESS);
             this.processTileset(jsonObject);
         }
 
@@ -828,14 +828,17 @@ public class GDJSONMapReader {
             this.parent = parent;
         }
 
+        @Override
         public K getKey() {
             return this.key;
         }
 
+        @Override
         public V getValue() {
             return this.value;
         }
 
+        @Override
         public V setValue(V value) {
             V oldValue = this.value;
             this.value = value;
@@ -848,12 +851,13 @@ public class GDJSONMapReader {
                 return false;
             java.util.Map.Entry<?,?> e = (java.util.Map.Entry<?,?>)o;
 
-            return valEquals(key,e.getKey()) && valEquals(this.value,e.getValue());
+            return GDJSONMapReader.valEquals(this.key,e.getKey()) && GDJSONMapReader.valEquals(this.value,e.getValue());
         }
 
+        @Override
         public int hashCode() {
-            int keyHash = (key==null ? 0 : key.hashCode());
-            int valueHash = (value==null ? 0 : value.hashCode());
+            int keyHash = (this.key==null ? 0 : this.key.hashCode());
+            int valueHash = (this.value==null ? 0 : this.value.hashCode());
             return keyHash ^ valueHash;
         }
 
@@ -877,7 +881,7 @@ public class GDJSONMapReader {
      * <code>null</code> when no such tileset exists
      */
     private Entry<Integer, TileSet> findTileSetForTileGID(final int tileId) {
-        final TileSet tileSet = (TileSet) tilesetPerFirstGid.get(this.getTileSetFirtTileIdForTileId(tileId));
+        final TileSet tileSet = (TileSet) this.tilesetPerFirstGid.get(this.getTileSetFirtTileIdForTileId(tileId));
         if(tileSet != null) {
             final Entry entry = new Entry(tileId, tileSet, null);
             return entry;

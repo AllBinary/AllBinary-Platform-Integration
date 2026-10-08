@@ -43,12 +43,12 @@ public class XMLTokener extends JSONTokener {
    public static final ABHashtable<Object, Object> entity;
 
    static {
-       entity = new ABHashtable();
-       entity.put("amp",  XML.AMP);
-       entity.put("apos", XML.APOS);
-       entity.put("gt",   XML.GT);
-       entity.put("lt",   XML.LT);
-       entity.put("quot", XML.QUOT);
+       XMLTokener.entity = new ABHashtable();
+       XMLTokener.entity.put("amp",  XML.AMP);
+       XMLTokener.entity.put("apos", XML.APOS);
+       XMLTokener.entity.put("gt",   XML.GT);
+       XMLTokener.entity.put("lt",   XML.LT);
+       XMLTokener.entity.put("quot", XML.QUOT);
    }
 
     /**
@@ -69,9 +69,9 @@ public class XMLTokener extends JSONTokener {
         int          i;
         StringBuffer sb = new StringBuffer();
         for (;;) {
-            c = next();
+            c = this.next();
             if (c == 0) {
-                throw syntaxError("Unclosed CDATA.");
+                throw this.syntaxError("Unclosed CDATA.");
             }
             sb.append(c);
             i = sb.length() - 3;
@@ -97,7 +97,7 @@ public class XMLTokener extends JSONTokener {
         char         c;
         StringBuffer sb;
         do {
-            c = next();
+            c = this.next();
         } while (XMLTokener.isWhitespace(c));
         if (c == 0) {
             return null;
@@ -108,7 +108,7 @@ public class XMLTokener extends JSONTokener {
         sb = new StringBuffer();
         for (;;) {
             if (c == '<' || c == 0) {
-                back();
+                this.back();
                 return sb.toString().trim();
             }
             if (c == '&') {
@@ -116,7 +116,7 @@ public class XMLTokener extends JSONTokener {
             } else {
                 sb.append(c);
             }
-            c = next();
+            c = this.next();
         }
     }
 
@@ -131,17 +131,17 @@ public class XMLTokener extends JSONTokener {
     public Object nextEntity(char a) throws JSONException {
         StringBuffer sb = new StringBuffer();
         for (;;) {
-            char c = next();
-            if (isLetterOrDigit(c) || c == '#') {
+            char c = this.next();
+            if (XMLTokener.isLetterOrDigit(c) || c == '#') {
                 sb.append(Character.toLowerCase(c));
             } else if (c == ';') {
                 break;
             } else {
-                throw syntaxError("Missing ';' in XML entity: &" + sb);
+                throw this.syntaxError("Missing ';' in XML entity: &" + sb);
             }
         }
         String s = sb.toString();
-        Object e = entity.get(s);
+        Object e = XMLTokener.entity.get(s);
         return e != null ? e : a + s + ";";
     }
 
@@ -159,11 +159,11 @@ public class XMLTokener extends JSONTokener {
         char c;
         char q;
         do {
-            c = next();
+            c = this.next();
         } while (XMLTokener.isWhitespace(c));
         switch (c) {
         case 0:
-            throw syntaxError("Misshaped meta tag.");
+            throw this.syntaxError("Misshaped meta tag.");
         case '<':
             return XML.LT;
         case '>':
@@ -180,9 +180,9 @@ public class XMLTokener extends JSONTokener {
         case '\'':
             q = c;
             for (;;) {
-                c = next();
+                c = this.next();
                 if (c == 0) {
-                    throw syntaxError("Unterminated string.");
+                    throw this.syntaxError("Unterminated string.");
                 }
                 if (c == q) {
                     return Boolean.TRUE;
@@ -190,7 +190,7 @@ public class XMLTokener extends JSONTokener {
             }
         default:
             for (;;) {
-                c = next();
+                c = this.next();
                 if (XMLTokener.isWhitespace(c)) {
                     return Boolean.TRUE;
                 }
@@ -204,7 +204,7 @@ public class XMLTokener extends JSONTokener {
                 case '?':
                 case '"':
                 case '\'':
-                    back();
+                    this.back();
                     return Boolean.TRUE;
                 }
             }
@@ -225,13 +225,13 @@ public class XMLTokener extends JSONTokener {
         char q;
         StringBuffer sb;
         do {
-            c = next();
+            c = this.next();
         } while (XMLTokener.isWhitespace(c));
         switch (c) {
         case 0:
-            throw syntaxError("Misshaped element.");
+            throw this.syntaxError("Misshaped element.");
         case '<':
-            throw syntaxError("Misplaced '<'.");
+            throw this.syntaxError("Misplaced '<'.");
         case '>':
             return XML.GT;
         case '/':
@@ -250,9 +250,9 @@ public class XMLTokener extends JSONTokener {
             q = c;
             sb = new StringBuffer();
             for (;;) {
-                c = next();
+                c = this.next();
                 if (c == 0) {
-                    throw syntaxError("Unterminated string.");
+                    throw this.syntaxError("Unterminated string.");
                 }
                 if (c == q) {
                     return sb.toString();
@@ -270,7 +270,7 @@ public class XMLTokener extends JSONTokener {
             sb = new StringBuffer();
             for (;;) {
                 sb.append(c);
-                c = next();
+                c = this.next();
                 if (XMLTokener.isWhitespace(c)) {
                     return sb.toString();
                 }
@@ -283,12 +283,12 @@ public class XMLTokener extends JSONTokener {
                 case '?':
                 case '[':
                 case ']':
-                    back();
+                    this.back();
                     return sb.toString();
                 case '<':
                 case '"':
                 case '\'':
-                    throw syntaxError("Bad character in a name.");
+                    throw this.syntaxError("Bad character in a name.");
                 }
             }
         }

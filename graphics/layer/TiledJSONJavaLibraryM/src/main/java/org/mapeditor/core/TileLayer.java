@@ -191,16 +191,16 @@ public class TileLayer extends TileLayerData {
      * @param dir a int.
      */
     public void mirror(final int dir) {
-        final Tile[][] mirror = new Tile[this.height][width];
-        final int[][] mirrorFlags = new int[this.height][width];
+        final Tile[][] mirror = new Tile[this.height][this.width];
+        final int[][] mirrorFlags = new int[this.height][this.width];
         for (int y = 0; y < this.height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (dir == MIRROR_VERTICAL) {
+            for (int x = 0; x < this.width; x++) {
+                if (dir == MapLayer.MIRROR_VERTICAL) {
                     mirror[y][x] = this.tileMap[this.height - 1 - y][x];
                     mirrorFlags[y][x] = this.flags[this.height - 1 - y][x];
                 } else {
-                    mirror[y][x] = this.tileMap[y][width - 1 - x];
-                    mirrorFlags[y][x] = this.flags[y][width - 1 - x];
+                    mirror[y][x] = this.tileMap[y][this.width - 1 - x];
+                    mirrorFlags[y][x] = this.flags[y][this.width - 1 - x];
                 }
             }
         }
@@ -217,7 +217,7 @@ public class TileLayer extends TileLayerData {
      */
     public boolean isUsed(Tile t) {
         for (int y = 0; y < this.height; y++) {
-            for (int x = 0; x < width; x++) {
+            for (int x = 0; x < this.width; x++) {
                 if (this.tileMap[y][x] == t) {
                     return true;
                 }
@@ -234,7 +234,7 @@ public class TileLayer extends TileLayerData {
     public boolean isEmpty() {
         for (int p = 0; p < 2; p++) {
             for (int y = 0; y < this.height; y++) {
-                for (int x = p; x < width; x += 2) {
+                for (int x = p; x < this.width; x += 2) {
                     if (this.tileMap[y][x] != null) {
                         return false;
                     }
@@ -253,14 +253,14 @@ public class TileLayer extends TileLayerData {
     @Override
     protected void setBounds(Rectangle bounds) {
         super.setBounds(bounds);
-        this.tileMap = new Tile[this.height][width];
-        this.tileToIdArray = new int[this.height][width];
-        this.flags = new int[this.height][width];
+        this.tileMap = new Tile[this.height][this.width];
+        this.tileToIdArray = new int[this.height][this.width];
+        this.flags = new int[this.height][this.width];
 
         // Tile instance properties is null when this method is called from
         // the constructor of TileLayer
         if (this.tileInstanceProperties != null) {
-            tileInstanceProperties.clear();
+            this.tileInstanceProperties.clear();
         }
     }
 
@@ -325,7 +325,7 @@ public class TileLayer extends TileLayerData {
      * @param tile the tile object to place
      */
     public void setTileAt(final int tx, final int ty, final Tile tile) {
-        final Rectangle rect = getBounds();
+        final Rectangle rect = this.getBounds();
         final GPoint point = rect.getPoint();
         if (this.rectangleCollisionUtil.isInside(point.getX(), point.getY(), rect.getMaxX(), rect.getMaxY(), tx, ty)) {
         //if (.contains(tx, ty)) {
@@ -359,7 +359,7 @@ public class TileLayer extends TileLayerData {
      * @param flags int containing bit flags
      */
     public void setFlagsAt(final int tx, final int ty, final int flags) {
-        final Rectangle rect = getBounds();
+        final Rectangle rect = this.getBounds();
         final GPoint point = rect.getPoint();
         if (this.rectangleCollisionUtil.isInside(point.getX(), point.getY(), rect.getMaxX(), rect.getMaxY(), tx, ty)) {
         //if (getBounds().contains(tx, ty)) {

@@ -98,7 +98,7 @@ public class XML {
      */
     public static String escape(String string) {
         StringBuilder sb = new StringBuilder(string.length());
-        for (final int cp : codePointIterator(string)) {
+        for (final int cp : XML.codePointIterator(string)) {
             switch (cp) {
             case '&':
                 sb.append("&amp;");
@@ -339,7 +339,7 @@ public class XML {
                             jsonObjectCanBeNull.accumulate(string,
                                     config.isKeepStrings()
                                             ? ((String) tokenCanBeNull)
-                                            : stringToValue((String) tokenCanBeNull));
+                                            : XML.stringToValue((String) tokenCanBeNull));
                         }
                         tokenCanBeNull = null;
                     } else {
@@ -386,10 +386,10 @@ public class XML {
                             if (string.length() > 0) {
                                 if(xmlXsiTypeConverterCanBeNull != null) {
                                     jsonObjectCanBeNull.accumulate(config.getcDataTagName(),
-                                            stringToValue(string, xmlXsiTypeConverterCanBeNull));
+                                            XML.stringToValue(string, xmlXsiTypeConverterCanBeNull));
                                 } else {
                                     jsonObjectCanBeNull.accumulate(config.getcDataTagName(),
-                                            config.isKeepStrings() ? string : stringToValue(string));
+                                            config.isKeepStrings() ? string : XML.stringToValue(string));
                                 }
                             }
 
@@ -495,7 +495,7 @@ public class XML {
         char initial = value.charAt(0);
         if ((initial >= '0' && initial <= '9') || initial == '-') {
             // decimal representation
-            if (isDecimalNotation(value)) {
+            if (XML.isDecimalNotation(value)) {
                 // Use a BigDecimal all the time so we keep the original
                 // representation. BigDecimal doesn't support -0.0, ensure we
                 // keep that by forcing a decimal.
@@ -783,7 +783,7 @@ public class XML {
 
             // Emit <tagName>
             if (tagNameCanBeNull != null) {
-                sb.append(indent(indent));
+                sb.append(XML.indent(indent));
                 sb.append('<');
                 sb.append(tagNameCanBeNull);
                 sb.append('>');
@@ -842,7 +842,7 @@ public class XML {
                         }
                     }
                 } else if (StringUtil.getInstance().EMPTY_STRING.equals(value)) {
-                    sb.append(indent(indent));
+                    sb.append(XML.indent(indent));
                     sb.append('<');
                     sb.append(key);
                     sb.append("/>");
@@ -859,7 +859,7 @@ public class XML {
             if (tagNameCanBeNull != null) {
 
                 // Emit the </tagName> close tag
-                sb.append(indent(indent - indentFactor));
+                sb.append(XML.indent(indent - indentFactor));
                 sb.append("</");
                 sb.append(tagNameCanBeNull);
                 sb.append('>');

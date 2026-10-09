@@ -1,5 +1,7 @@
 package org.json.me;
 
+import org.allbinary.logic.string.StringUtil;
+
 /*
 Copyright (c) 2006 JSON.org
 
@@ -71,6 +73,10 @@ public class JSONStringer extends JSONWriter {
      * @return The JSON text.
      */
     public String toString() {
-        return this.mode == 'd' ? this.writer.toString() : null;
+        if(this.mode == 'd') {
+            return this.writer.toString();
+        } else {
+            return StringUtil.getInstance().EMPTY_STRING;
+        }
     }
 }

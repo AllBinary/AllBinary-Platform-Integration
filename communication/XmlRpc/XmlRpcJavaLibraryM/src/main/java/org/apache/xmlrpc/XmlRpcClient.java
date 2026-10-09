@@ -70,9 +70,10 @@ import org.allbinary.util.BasicArrayListD;
 
 import org.allbinary.init.crypt.jcehelper.BasicCryptUtil;
 import org.allbinary.init.crypt.jcehelper.CryptInterface;
-import org.allbinary.logic.StdUtil;
 
 import org.allbinary.logic.communication.log.LogUtil;
+import org.allbinary.logic.string.StringMaker;
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.ABHashtable;
 
 //import abcs.logic.communication.log.LogUtil;
@@ -91,15 +92,15 @@ public class XmlRpcClient implements XmlRpcHandler
     protected final LogUtil logUtil = LogUtil.getInstance();
 
     protected URL url;
-    private String auth;
+        private String auth = StringUtil.getInstance().EMPTY_STRING;
 
     // pool of worker instances
-    protected Stack pool = StdUtil.getInstance().createStack();
+    protected Stack<Worker> pool = new Stack<Worker>();
+
     protected int workers = 0;
     protected int asyncWorkers = 0;
 
-    // a queue of calls to be handled asynchronously
-    private CallData first, last;
+    
 
     /**
      * Construct a XML-RPC client with this URL.
@@ -120,7 +121,7 @@ public class XmlRpcClient implements XmlRpcHandler
     {
 //        this(new URL(url));
         this.url = new URL(url);
-        if (XmlRpc.debug) {
+        if (XmlRpc.debugP) {
             System.out.println("XmlRpcClient - Created client to url space " + url);
         }
 
@@ -152,12 +153,25 @@ public class XmlRpcClient implements XmlRpcHandler
     {
         if (user == null || password == null)
         {
-            this.auth = null;
+            this.auth = StringUtil.getInstance().EMPTY_STRING;
         }
         else
         {
-            this.auth = new String(Base64.encode((user + ':' + password)
-                    .getBytes())).trim();
+            
+            final StringMaker stringBuilder = new StringMaker();
+            final String string = stringBuilder.append(user).appendchar(':').append(password).toString();
+            byte[] encoded = Base64.encode(string.getBytes());
+            stringBuilder.delete(0, stringBuilder.length());
+            stringBuilder.appendint(encoded.length);
+            char aChar;
+            for (int index = 0; index < encoded.length; index++)
+            {
+                aChar = (char) ((int) encoded[index]);
+
+                stringBuilder.appendchar(aChar);
+            }
+            this.auth = stringBuilder.toString().trim();
+
         }
     }
 
@@ -282,17 +296,18 @@ public class XmlRpcClient implements XmlRpcHandler
             }
             return new Worker();
         }
-        return null;
+                throw new IllegalStateException("XML-RPC System overload");
     }
     
     /**
      * Release possibly big per-call object references to allow them to be
+
      * garbage collected
      */
     synchronized void releaseWorker(Worker w, boolean async)
     {
-        w.result = null;
-        w.call = null;
+                w.result = new Object();
+
         if (this.pool.size() < 20 && !w.fault)
         {
             this.pool.push(w);
@@ -307,48 +322,7 @@ public class XmlRpcClient implements XmlRpcHandler
         }
     }
 
-    /**
-     *
-     * @param method
-     * @param params
-     * @param callback
-     */
-    synchronized void enqueue(String method, BasicArrayList params,
-            AsyncCallback callback)
-    {
-        CallData call = new CallData(method, params, callback);
-        if (this.last == null)
-        {
-            this.first = this.last = call;
-        }
-        else
-        {
-            this.last.next = call;
-            this.last = call;
-        }
-    }
-
-    /**
-     *
-     * @return
-     */
-    synchronized CallData dequeue()
-    {
-        if (this.first == null)
-        {
-            return null;
-        }
-        CallData call = this.first;
-        if (this.first == this.last)
-        {
-            this.first = this.last = null;
-        }
-        else
-        {
-            this.first = this.first.next;
-        }
-        return call;
-    }
+    
 
     /**
      *
@@ -356,14 +330,14 @@ public class XmlRpcClient implements XmlRpcHandler
     class Worker extends XmlRpc implements Runnable
     {
         boolean fault;
-        Object result = null;
+                Object result = new Object();
+
 
         /**
          * The output buffer used in creating a request.
          */
-        ByteArrayOutputStream buffer;
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-        CallData call;
 
         /**
          *
@@ -393,22 +367,19 @@ public class XmlRpcClient implements XmlRpcHandler
          *
          */
         @Override
-        public void run()
+                public void run()
         {
-            while (this.call != null)
-            {
-                this.executeAsync(this.call.method, this.call.params, this.call.callback);
-                this.call = XmlRpcClient.this.dequeue();
-            }
             XmlRpcClient.this.releaseWorker(this, true);
         }
+
 
         /**
          * Execute an XML-RPC call and handle asyncronous callback.
          */
         void executeAsync(String method, BasicArrayList params, AsyncCallback callback)
         {
-            Object res = null;
+                        Object res = new Object();
+
             try
             {
                 res = this.execute(method, params);
@@ -442,7 +413,7 @@ public class XmlRpcClient implements XmlRpcHandler
             this.fault = false;
             long now = 0;
 
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 now = System.currentTimeMillis();
             }
@@ -458,7 +429,7 @@ public class XmlRpcClient implements XmlRpcHandler
                     this.buffer.reset();
                 }
 
-                final XmlWriter writer = new XmlWriter(this.buffer, XmlRpc.encoding);
+                final XmlWriter writer = new XmlWriter(this.buffer, XmlRpc.encodingP);
                 this.writeRequest(writer, method, params);
                 writer.flush();
                 byte[] request = this.buffer.toByteArray();
@@ -492,10 +463,12 @@ public class XmlRpcClient implements XmlRpcHandler
             if (this.fault)
             {
                 // generate an XmlRpcException
-                XmlRpcException exception = null;
+                                XmlRpcException exception = new XmlRpcException(0, "Invalid fault response");
+
                 try
                 {
-                    ABHashtable<Object, Object> f =(ABHashtable) this.result;
+                                        ABHashtable<Object, Object> f = (ABHashtable<Object, Object>) this.result;
+
                     String faultString =(String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());
@@ -508,7 +481,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 }
                 throw exception;
             }
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 System.out.println("XmlRpcClient - Spent " + (System.currentTimeMillis() - now) + " in request");
             }
@@ -524,7 +497,7 @@ public class XmlRpcClient implements XmlRpcHandler
             this.fault = false;
             long now = 0;
 
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 System.out.println("XmlRpcClient - execute - Client calling procedure '" + method + "' with parameters " + params);
                 now = System.currentTimeMillis();
@@ -543,14 +516,14 @@ public class XmlRpcClient implements XmlRpcHandler
                     this.buffer.reset();
                 }
 
-                XmlWriter writer = new XmlWriter(this.buffer, XmlRpc.encoding);
+                XmlWriter writer = new XmlWriter(this.buffer, XmlRpc.encodingP);
                 this.writeRequest(writer, method, params);
                 writer.flush();
                 byte[] request = this.buffer.toByteArray();
                 URLConnection con = XmlRpcClient.this.url.openConnection();
                 
                 /*
-                StringBuffer stringBuffer = new StringBuffer();
+                StringMaker stringBuffer = new StringMaker();
                 
                 stringBuffer.append("ConnectTimeout: ");
                 stringBuffer.append(con.getConnectTimeout());
@@ -577,7 +550,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 OutputStream outputStream = con.getOutputStream();
 
                 //encrypt data for wire
-                if(XmlRpc.debug)
+                if(XmlRpc.debugP)
                 {
                   XmlRpcClient.this.logUtil.putF("XmlRpcClient - execute - Sending: " + new String(request), this, "decSendXMLRPC");  
                 }
@@ -585,7 +558,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 byte[] crypted = cryptInterface.encrypt(request);
                 ////String PHPCRYPTHEADER = "RandomIV";
                 ////String cryptedData = PHPCRYPTHEADER + new String(crypted);
-                if(XmlRpc.debug)
+                if(XmlRpc.debugP)
                 {
                     XmlRpcClient.this.logUtil.putF(new String(crypted), this, "encSendXMLRPC");
                     ////PreLogUtil.put(new String(crypted), this, "encSendXMLRPC");
@@ -620,10 +593,12 @@ public class XmlRpcClient implements XmlRpcHandler
             if (this.fault)
             {
                 // generate an XmlRpcException
-                XmlRpcException exception = null;
+                                XmlRpcException exception = new XmlRpcException(0, "Invalid fault response");
+
                 try
                 {
-                    ABHashtable<Object, Object> f =(ABHashtable) this.result;
+                                        ABHashtable<Object, Object> f = (ABHashtable<Object, Object>) this.result;
+
                     String faultString =(String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());
@@ -636,7 +611,7 @@ public class XmlRpcClient implements XmlRpcHandler
                 }
                 throw exception;
             }
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 System.out.println("XmlRpcClient - Spent " + (System.currentTimeMillis() - now) + " in request");
             }
@@ -667,7 +642,8 @@ public class XmlRpcClient implements XmlRpcHandler
             for (int i = 0; i < l; i++)
             {
                 writer.startElement("param");
-                writer.writeObject(params.get(i));
+                                writer.writeObject((Object) params.get(i));
+
                 writer.endElement("param");
             }
             writer.endElement("params");
@@ -693,25 +669,7 @@ public class XmlRpcClient implements XmlRpcHandler
          */
     } // end of inner class Worker
 
-    class CallData
-    {
-        String method;
-        BasicArrayList params;
-        AsyncCallback callback;
-        CallData next;
-
-        /**
-         * Make a call to be queued and then executed by the next free async
-         * thread
-         */
-        public CallData(String method, BasicArrayList params, AsyncCallback callback)
-        {
-            this.method = method;
-            this.params = params;
-            this.callback = callback;
-            this.next = null;
-        }
-    }
+    
 
     /**
      * Just for testing.
@@ -730,7 +688,7 @@ public class XmlRpcClient implements XmlRpcHandler
             {
                 try
                 {
-                    v.add(new Integer(Integer.parseInt(args[i])));
+                    v.add(new Integer(args[i]));
                 }
                 catch(NumberFormatException nfx)
                 {

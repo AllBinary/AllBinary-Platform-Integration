@@ -114,7 +114,7 @@ public class JSONWriter {
         if (this.mode == 'o' || this.mode == 'a') {
             try {
                 if (this.comma && this.mode == 'a') {
-                    this.writer.write(',');
+                    this.writer.write((int) ',');
                 }
                 this.writer.write(s);
             } catch (IOException e) {
@@ -205,10 +205,10 @@ public class JSONWriter {
         if (this.mode == 'k') {
             try {
                 if (this.comma) {
-                    this.writer.write(',');
+                    this.writer.write((int) ',');
                 }
                 this.writer.write(JSONObject.quote(s));
-                this.writer.write(':');
+                this.writer.write((int) ':');
                 this.comma = false;
                 this.mode = 'o';
                 return this;

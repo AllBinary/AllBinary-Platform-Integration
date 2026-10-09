@@ -92,7 +92,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
     {
         long now = 0;
 
-        if (XmlRpc.debug)
+        if (XmlRpc.debugP)
         {
             now = System.currentTimeMillis();
         }
@@ -106,7 +106,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
             {
                 throw new ParseFailed(e);
             }
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 System.out.println("XML-RPC method name: " + this.methodName);
                 System.out.println("Request parameters: " + this.requestParams);
@@ -124,7 +124,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
         } finally
         {
             this.requestParams.clear();
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 System.out.println("Spent " + (System.currentTimeMillis() - now) + " millis decoding request");
             }

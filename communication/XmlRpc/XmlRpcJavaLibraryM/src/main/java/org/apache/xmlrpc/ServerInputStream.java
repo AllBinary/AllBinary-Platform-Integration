@@ -71,8 +71,9 @@ class ServerInputStream extends InputStream
     // This is used in order to correctly return a -1 when all the
     // data POSTed was read. If this is left to -1, content length is
     // assumed as unknown and the standard InputStream methods will be used
-    private long available = -1;
-    private long markedAvailable;
+        private long available = -1L;
+    private long markedAvailable = 0L;
+
 
     private BufferedInputStream inputStream;
 
@@ -84,7 +85,8 @@ class ServerInputStream extends InputStream
     public ServerInputStream(BufferedInputStream inputStream, int available)
     {
         this.inputStream = inputStream;
-        this.available = available;
+                this.available = (long) available;
+
     }
 
     /**
@@ -100,7 +102,7 @@ class ServerInputStream extends InputStream
             this.available--;
             return this.inputStream.read();
         }
-        else if (this.available == -1)
+        else if (this.available == -1L)
         {
             return this.inputStream.read ();
         }
@@ -144,11 +146,12 @@ class ServerInputStream extends InputStream
             }
             else
             {
-                this.available = -1;
+                                this.available = -1L;
+
             }
             return read;
         }
-        else if (this.available == -1)
+        else if (this.available == -1L)
         {
             return this.inputStream.read(b, off, len);
         }

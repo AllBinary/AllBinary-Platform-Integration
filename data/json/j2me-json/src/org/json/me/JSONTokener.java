@@ -161,7 +161,7 @@ public class JSONTokener {
      * @return  A character, or 0 if there are no more characters.
      */
     public char nextClean() throws JSONException {
-        for (;;) {
+        while(true) {
             char c = this.next();
             if (c == '/') {
                 switch (this.next()) {
@@ -171,7 +171,7 @@ public class JSONTokener {
                     } while (c != '\n' && c != '\r' && c != 0);
                     break;
                 case '*':
-                    for (;;) {
+                    while(true) {
                         c = this.next();
                         if (c == 0) {
                             throw this.syntaxError("Unclosed comment.");
@@ -212,8 +212,8 @@ public class JSONTokener {
      */
     public String nextString(char quote) throws JSONException {
         char c;
-        StringBuffer sb = new StringBuffer();
-        for (;;) {
+        StringMaker sb = new StringMaker();
+        while(true) {
             c = this.next();
             switch (c) {
             case 0:
@@ -224,35 +224,35 @@ public class JSONTokener {
                 c = this.next();
                 switch (c) {
                 case 'b':
-                    sb.append('\b');
+                    sb.appendchar('\b');
                     break;
                 case 't':
-                    sb.append('\t');
+                    sb.appendchar('\t');
                     break;
                 case 'n':
-                    sb.append('\n');
+                    sb.appendchar('\n');
                     break;
                 case 'f':
-                    sb.append('\f');
+                    sb.appendchar('\f');
                     break;
                 case 'r':
-                    sb.append('\r');
+                    sb.appendchar('\r');
                     break;
                 case 'u':
-                    sb.append((char)Integer.parseInt(this.next(4), 16));
+                    sb.appendchar((char)Integer.parseInt(this.next(4), 16));
                     break;
                 case 'x' :
-                    sb.append((char) Integer.parseInt(this.next(2), 16));
+                    sb.appendchar((char) Integer.parseInt(this.next(2), 16));
                     break;
                 default:
-                    sb.append(c);
+                    sb.appendchar(c);
                 }
                 break;
             default:
                 if (c == quote) {
                     return sb.toString();
                 }
-                sb.append(c);
+                sb.appendchar(c);
             }
         }
     }
@@ -265,8 +265,8 @@ public class JSONTokener {
      * @return   A string.
      */
     public String nextTo(char d) {
-        StringBuffer sb = new StringBuffer();
-        for (;;) {
+        StringMaker sb = new StringMaker();
+        while(true) {
             char c = this.next();
             if (c == d || c == 0 || c == '\n' || c == '\r') {
                 if (c != 0) {
@@ -274,7 +274,7 @@ public class JSONTokener {
                 }
                 return sb.toString().trim();
             }
-            sb.append(c);
+            sb.appendchar(c);
         }
     }
 
@@ -287,8 +287,8 @@ public class JSONTokener {
      */
     public String nextTo(String delimiters) {
         char c;
-        StringBuffer sb = new StringBuffer();
-        for (;;) {
+        StringMaker sb = new StringMaker();
+        while(true) {
             c = this.next();
             if (delimiters.indexOf(c) >= 0 || c == 0 ||
                     c == '\n' || c == '\r') {
@@ -297,7 +297,7 @@ public class JSONTokener {
                 }
                 return sb.toString().trim();
             }
-            sb.append(c);
+            sb.appendchar(c);
         }
     }
 
@@ -334,10 +334,10 @@ public class JSONTokener {
          * formatting character.
          */
 
-        StringBuffer sb = new StringBuffer();
+        StringMaker sb = new StringMaker();
         char b = c;
         while (c >= ' ' && ",:]}/\\\"[{;=#".indexOf(c) < 0) {
-            sb.append(c);
+            sb.appendchar(c);
             c = this.next();
         }
         this.back();
@@ -347,7 +347,7 @@ public class JSONTokener {
          */
 
         s = sb.toString().trim();
-        if (s.equals("")) {
+        if (s.equals(StringUtil.getInstance().EMPTY_STRING)) {
             throw this.syntaxError("Missing value.");
         }
         if (s.equalsIgnoreCase("true")) {

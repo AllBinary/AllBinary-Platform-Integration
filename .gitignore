@@ -2,6 +2,7 @@ graphify-out
 *.class
 *.iml
 .github/*.md
+.continue
 .idea
 .project
 .classpath

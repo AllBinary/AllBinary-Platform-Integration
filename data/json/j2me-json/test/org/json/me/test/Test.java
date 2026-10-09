@@ -113,11 +113,11 @@ public class Test {
             System.out.println(jj.toString());
 
             System.out.println(new JSONArray(jj.toString()).toString(4));
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
 
             j = new JSONObject("{slashes: '///', closetag: '</script>', backslash:'\\\\', ei: {quotes: '\"\\''},eo: {a: '\"quoted\"', b:\"don't\"}, quotes: [\"'\", '\"']}");
             System.out.println(j.toString(2));
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
 
             j = new JSONObject(
                 "/*comment*/{foo: [true, false,9876543210,    0.0, 1.00000001,  1.000000000001, 1.00000000000000001," +
@@ -144,7 +144,7 @@ public class Test {
             a.put(new JSONArray());
             a.put(new JSONObject());
             System.out.println(j.toString(4));
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
 
             System.out.println("String: " + j.getDouble("String"));
             System.out.println("  bool: " + j.getBoolean("bool"));
@@ -154,7 +154,7 @@ public class Test {
             System.out.println("    op: " + j.getString("op"));
             System.out.println("   ten: " + j.getInt("ten"));
             System.out.println("  oops: " + j.optBoolean("oops"));
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
 
             JSONTokener jt = new JSONTokener("{op:'test', to:'session', pre:1}{op:'test', to:'session', pre:2}");
             j = new JSONObject(jt);
@@ -164,24 +164,24 @@ public class Test {
             System.out.println(i);
             j = new JSONObject(jt);
             System.out.println(j.toString());
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
 
             a = new JSONArray(" [\"<escape>\", next is an implied null , , ok,] ");
             System.out.println(a.toString());
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
 
             j = new JSONObject("{ fun => with non-standard forms ; forgiving => This package can be used to parse formats that are similar to but not stricting conforming to JSON; why=To make it easier to migrate existing data to JSON,one = [[1.00]]; uno=[[{1=>1}]];'+':+6e66 ;pluses=+++;empty = '' , 'double':0.666,true: TRUE, false: FALSE, null=NULL;[true] = [[!,@;*]]; string=>  o. k. ; # comment\r oct=0666; hex=0x666; dec=666; o=0999; noh=0x0x}");
             System.out.println(j.toString(4));
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
             if (j.getBoolean("true") && !j.getBoolean("false")) {
                 System.out.println("It's all good");
             }
 
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
             j = new JSONObject(j, new String[]{"dec", "oct", "hex", "missing"});
             System.out.println(j.toString(4));
 
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
             System.out.println(new JSONStringer().array().value(a).value(j).endArray());
 
             j = new JSONObject("{string: \"98.6\", long: 2147483648, int: 2147483647, longer: 9223372036854775807, double: 9223372036854775808}");
@@ -233,7 +233,7 @@ public class Test {
 
             System.out.println("\nwrite:");
             System.out.println(j.write(new StringWriter()));
-            System.out.println("");
+            System.out.println(StringUtil.getInstance().EMPTY_STRING);
 
             BasicArrayList c = null;
             Hashtable m = null;

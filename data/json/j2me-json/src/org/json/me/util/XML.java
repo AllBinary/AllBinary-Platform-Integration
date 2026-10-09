@@ -1,7 +1,10 @@
 package org.json.me.util;
 
 import java.util.Enumeration;
+import org.allbinary.logic.string.StringMaker;
+
 import org.allbinary.logic.string.StringUtil;
+
 import org.json.me.JSONArray;
 import org.json.me.JSONException;
 import org.json.me.JSONObject;
@@ -77,7 +80,7 @@ public class XML {
      * @return The escaped string.
      */
     public static String escape(String string) {
-        StringBuffer sb = new StringBuffer();
+        StringMaker sb = new StringMaker();
         for (int i = 0, len = string.length(); i < len; i++) {
             char c = string.charAt(i);
             switch (c) {
@@ -94,7 +97,7 @@ public class XML {
                 sb.append("&quot;");
                 break;
             default:
-                sb.append(c);
+                sb.appendchar(c);
             }
         }
         return sb.toString();
@@ -191,7 +194,7 @@ public class XML {
             n = (String)t;
             t = null;
             o = new JSONObject();
-            for (;;) {
+            while(true) {
                 if (t == null) {
                     t = x.nextToken();
                 }
@@ -209,7 +212,7 @@ public class XML {
                         o.accumulate(s, t);
                         t = null;
                     } else {
-                        o.accumulate(s, "");
+                        o.accumulate(s, StringUtil.getInstance().EMPTY_STRING);
                     }
 
 // Empty tag <.../>
@@ -224,7 +227,7 @@ public class XML {
 // Content, between <...> and </...>
 
                 } else if (t == XML.GT) {
-                    for (;;) {
+                    while(true) {
                         t = x.nextContent();
                         if (t == null) {
                             if (name != null) {
@@ -242,7 +245,7 @@ public class XML {
                         } else if (t == XML.LT) {
                             if (XML.parse(x, o, n)) {
                                 if (o.length() == 0) {
-                                    context.accumulate(n, "");
+                                    context.accumulate(n, StringUtil.getInstance().EMPTY_STRING);
                                 } else if (o.length() == 1 &&
                                        o.opt("content") != null) {
                                     context.accumulate(n, o.opt("content"));
@@ -306,7 +309,7 @@ public class XML {
      */
     public static String toString(Object o, String tagName)
             throws JSONException {
-        StringBuffer b = new StringBuffer();
+        StringMaker b = new StringMaker();
         int          i;
         JSONArray    ja;
         JSONObject   jo;
@@ -320,9 +323,9 @@ public class XML {
 // Emit <tagName>
 
             if (tagName != null) {
-                b.append('<');
+                b.appendchar('<');
                 b.append(tagName);
-                b.append('>');
+                b.appendchar('>');
             }
 
 // Loop thru the keys.
@@ -346,7 +349,7 @@ public class XML {
                         len = ja.length();
                         for (i = 0; i < len; i += 1) {
                             if (i > 0) {
-                                b.append('\n');
+                                b.appendchar('\n');
                             }
                             b.append(XML.escape(ja.get(i).toString()));
                         }
@@ -362,8 +365,8 @@ public class XML {
                     for (i = 0; i < len; i += 1) {
                         b.append(XML.toString(ja.get(i), k));
                     }
-                } else if (v.equals("")) {
-                    b.append('<');
+                } else if (v.equals(StringUtil.getInstance().EMPTY_STRING)) {
+                    b.appendchar('<');
                     b.append(k);
                     b.append("/>");
 
@@ -379,7 +382,7 @@ public class XML {
 
                 b.append("</");
                 b.append(tagName);
-                b.append('>');
+                b.appendchar('>');
             }
             return b.toString();
 

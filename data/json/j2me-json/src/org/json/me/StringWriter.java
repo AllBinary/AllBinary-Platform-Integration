@@ -27,6 +27,7 @@ package org.json.me;
 
 import java.io.IOException;
 import java.io.Writer;
+import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
 
 /**
@@ -43,14 +44,14 @@ import org.allbinary.logic.string.StringUtil;
 
 public class StringWriter extends Writer {
 
-    private StringBuffer buf;
+    private StringMaker buf;
 
     /**
      * Create a new string writer using the default initial string-buffer
      * size.
      */
     public StringWriter() {
-        this.buf = new StringBuffer();
+        this.buf = new StringMaker();
         this.lock = this.buf;
     }
 
@@ -69,7 +70,8 @@ public class StringWriter extends Writer {
         if (initialSize < 0) {
             throw new IllegalArgumentException("Negative buffer size");
         }
-        this.buf = new StringBuffer(initialSize);
+        this.buf = new StringMaker();
+        this.buf.ensureCapacity(initialSize);
         this.lock = this.buf;
     }
 
@@ -78,7 +80,7 @@ public class StringWriter extends Writer {
      */
     @Override
     public void write(int c) {
-        this.buf.append((char) c);
+        this.buf.appendchar((char) c);
     }
 
     /**
@@ -96,7 +98,7 @@ public class StringWriter extends Writer {
         } else if (len == 0) {
             return;
         }
-        this.buf.append(cbuf, off, len);
+        this.buf.appendCharArray(cbuf, off, len);
     }
 
     /**
@@ -223,9 +225,9 @@ public class StringWriter extends Writer {
     /**
      * Return the string buffer itself.
      *
-     * @return StringBuffer holding the current buffer value.
+     * @return StringMaker holding the current buffer value.
      */
-    public StringBuffer getBuffer() {
+    public StringMaker getBuffer() {
         return this.buf;
     }
 

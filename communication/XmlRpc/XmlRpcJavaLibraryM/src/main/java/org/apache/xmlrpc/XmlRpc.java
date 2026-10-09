@@ -56,6 +56,8 @@ package org.apache.xmlrpc;
  */
 
 import java.io.InputStream;
+import org.allbinary.logic.string.StringMaker;
+import org.allbinary.logic.string.StringUtil;
 
 import org.allbinary.util.ABHashtable;
 import org.allbinary.util.ABStack;
@@ -100,20 +102,20 @@ public abstract class XmlRpc extends HandlerBase
     /**
      * The default parser to use (MinML).
      */
-    private static final String DEFAULT_PARSER = MinML.class.getName();
+    private static final String DEFAULT_PARSER = "uk.co.wilson.xml.MinML";
+
 
     /**
      * The maximum number of threads which can be used concurrently.
      */
     private static int maxThreads = 100;
 
-    String methodName;
-
     /**
      * The class name of SAX parser to use.
      */
-    private static Class parserClass;
-    private static ABHashtable<Object, Object> saxDrivers = new ABHashtable();
+    private static Class parserClass = MinML.class;
+
+    private static final ABHashtable<Object, Object> saxDrivers = new ABHashtable();
 
     static
     {
@@ -131,17 +133,6 @@ public abstract class XmlRpc extends HandlerBase
         XmlRpc.saxDrivers.put("openxml", "org.openxml.parser.XMLSAXParser");
     }
 
-    // the stack we're parsing our values into.
-    ABStack values;
-    Value currentValue;
-
-    /**
-     * Used to collect character data (<code>CDATA</code>) of
-     * parameter values.
-     */
-    StringBuffer cdata;
-    boolean readCdata;
-
     // XML RPC parameter types used for dataMode
     static final int STRING = 0;
     static final int INTEGER = 1;
@@ -151,10 +142,6 @@ public abstract class XmlRpc extends HandlerBase
     static final int BASE64 = 5;
     static final int STRUCT = 6;
     static final int ARRAY = 7;
-
-    // Error level + message
-    int errorLevel;
-    String errorMsg;
 
     static final int NONE = 0;
     static final int RECOVERABLE = 1;
@@ -169,7 +156,7 @@ public abstract class XmlRpc extends HandlerBase
      * Whether to log debugging output.
      */
     //best to unremark BasicCryptUtil logging as well
-    public static boolean debug = false;
+    public static boolean debugP = false;
 
     /**
      * The list of valid XML elements used for RPC.
@@ -190,7 +177,26 @@ public abstract class XmlRpc extends HandlerBase
      * Java's name for the encoding we're using.  Defaults to
      * <code>ISO8859_1</code>.
      */
-    static String encoding = XmlWriter.ISO8859_1;
+    static String encodingP = XmlWriter.ISO8859_1;
+    
+    public String methodName = StringUtil.getInstance().EMPTY_STRING;
+    
+    // the stack we're parsing our values into.
+    ABStack<Value> values = new ABStack<Value>();
+    Value currentValue = new Value();
+
+
+    /**
+     * Used to collect character data (<code>CDATA</code>) of
+     * parameter values.
+     */
+    StringMaker stringBuilder = new StringMaker();
+
+    boolean readCdata;
+
+    // Error level + message
+    int errorLevel;
+    String errorMsg = StringUtil.getInstance().EMPTY_STRING;
 
     private TypeFactory typeFactory;
 
@@ -247,28 +253,11 @@ public abstract class XmlRpc extends HandlerBase
      * @param typeFactory The implementation to use.
      * @return The new type mapping.
      */
-    private TypeFactory createTypeFactory(Class typeFactory)
+        private TypeFactory createTypeFactory(Class typeFactory)
     {
-        // If we're using the default, serve it up immediately.
-        if (typeFactory == null ||
-            DefaultTypeFactory.class.equals(typeFactory))
-        {
-            return new DefaultTypeFactory();
-        }
-
-        try
-        {
-            return (TypeFactory) typeFactory.newInstance();
-        }
-        catch (Exception e)
-        {
-            System.err.println("Unable to create configured TypeFactory '" +
-                               typeFactory.getName() + "': " + e.getMessage() +
-                               ": Using default");
-            // Call self recursively to acquire default.
-            return this.createTypeFactory(null);
-        }
+        return new DefaultTypeFactory();
     }
+
 
     /**
      * Set the SAX Parser to be used. The argument can either be the
@@ -283,7 +272,8 @@ public abstract class XmlRpc extends HandlerBase
      */
     public static void setDriver(String driver) throws ClassNotFoundException
     {
-        String parserClassName = null;
+                String parserClassName = StringUtil.getInstance().EMPTY_STRING;
+
         try
         {
             parserClassName = (String) XmlRpc.saxDrivers.get(driver);
@@ -320,7 +310,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public static void setEncoding(String enc)
     {
-        XmlRpc.encoding = enc;
+        XmlRpc.encodingP = enc;
     }
 
     /**
@@ -331,7 +321,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public String getEncoding ()
     {
-        return XmlWriter.canonicalizeEncoding(XmlRpc.encoding);
+        return XmlWriter.canonicalizeEncoding(XmlRpc.encodingP);
     }
 
     /**
@@ -355,7 +345,7 @@ public abstract class XmlRpc extends HandlerBase
      */
     public static void setDebug(boolean debug)
     {
-        XmlRpc.debug = debug;
+        XmlRpc.debugP = debug;
     }
 
     /**
@@ -384,19 +374,23 @@ public abstract class XmlRpc extends HandlerBase
        {           
         // reset values (XmlRpc objects are reusable)
         this.errorLevel = XmlRpc.NONE;
-        this.errorMsg = null;
-        this.values = new ABStack();
-        if (this.cdata == null)
+                this.errorMsg = StringUtil.getInstance().EMPTY_STRING;
+        this.values = new ABStack<Value>();
+
+        if (this.stringBuilder == null)
         {
-            this.cdata = new StringBuffer(128);
+            this.stringBuilder = new StringMaker();
+            this.stringBuilder.ensureCapacity(128);
         }
         else
         {
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
         }
         
         this.readCdata = false;
-        this.currentValue = null;
+                this.currentValue = new Value();
+
 
         long now = System.currentTimeMillis();
         if (XmlRpc.parserClass == null)
@@ -418,23 +412,13 @@ public abstract class XmlRpc extends HandlerBase
             XmlRpc.setDriver(driver);
         }
 
-        Parser parser = null;
+                Parser parser = new MinML();
 
-        try
-        {
-            parser = (Parser) XmlRpc.parserClass.newInstance();
-        }
-        catch (NoSuchMethodError nsm)
-        {
-            // This is thrown if no constructor exists for the parser class
-            // and is transformed into a regular exception.
-            throw new Exception("Can't create Parser: " + XmlRpc.parserClass);
-        }
 
         parser.setDocumentHandler(this);
         parser.setErrorHandler(this);
 
-        if (XmlRpc.debug)
+        if (XmlRpc.debugP)
         {
             System.out.println("Beginning parsing XML input stream");
         }
@@ -450,14 +434,16 @@ public abstract class XmlRpc extends HandlerBase
         finally
         {
             // Clear any huge buffers.
-            if (this.cdata.length() > 128 * 4)
+            if (this.stringBuilder.length() > 128 * 4)
             {
                 // Exceeded original capacity by greater than 4x; release
                 // buffer to prevent leakage.
-                this.cdata = null;
+                //set to size 128
+                this.stringBuilder = new StringMaker();
+
             }
         }
-        if (XmlRpc.debug)
+        if (XmlRpc.debugP)
         {
             System.out.println ("Spent " + (System.currentTimeMillis() - now) + " millis parsing");
         }
@@ -491,7 +477,7 @@ public abstract class XmlRpc extends HandlerBase
     {
         if (this.readCdata)
         {
-            this.cdata.append(ch, start, length);
+            this.stringBuilder.appendCharArray(ch, start, length);
         }
     }
 
@@ -502,7 +488,7 @@ public abstract class XmlRpc extends HandlerBase
     public void endElement(String name) throws SAXException
     {
 
-        if (XmlRpc.debug)
+        if (XmlRpc.debugP)
         {
             System.out.println("endElement: " + name);
         }
@@ -510,8 +496,9 @@ public abstract class XmlRpc extends HandlerBase
         // finalize character data, if appropriate
         if (this.currentValue != null && this.readCdata)
         {
-            this.currentValue.characterData(this.cdata.toString());
-            this.cdata.setLength(0);
+            this.currentValue.characterData(this.stringBuilder.toString());
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = false;
         }
 
@@ -529,7 +516,8 @@ public abstract class XmlRpc extends HandlerBase
                 {
                     // This is a top-level object
                     this.objectParsed(v.value);
-                    this.currentValue = null;
+                    this.currentValue = new Value();
+
                 }
                 else
                 {
@@ -552,8 +540,9 @@ public abstract class XmlRpc extends HandlerBase
 
         else if ("methodName".equals(name))
         {
-            this.methodName = this.cdata.toString();
-            this.cdata.setLength(0);
+            this.methodName = this.stringBuilder.toString();
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = false;
         }
     }
@@ -565,7 +554,7 @@ public abstract class XmlRpc extends HandlerBase
     public void startElement(String name, AttributeList atts)
             throws SAXException
     {
-        if (XmlRpc.debug)
+        if (XmlRpc.debugP)
         {
             System.out.println("startElement: " + name);
         }
@@ -576,53 +565,62 @@ public abstract class XmlRpc extends HandlerBase
             this.values.push(v);
             this.currentValue = v;
             // cdata object is reused
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("methodName".equals(name))
         {
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("name".equals(name))
         {
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("string".equals(name))
         {
             // currentValue.setType (STRING);
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("i4".equals(name) || "int".equals(name))
         {
             this.currentValue.setType(XmlRpc.INTEGER);
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("boolean".equals(name))
         {
             this.currentValue.setType(XmlRpc.BOOLEAN);
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("double".equals(name))
         {
             this.currentValue.setType(XmlRpc.DOUBLE);
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("dateTime.iso8601".equals(name))
         {
             this.currentValue.setType(XmlRpc.DATE);
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("base64".equals(name))
         {
             this.currentValue.setType(XmlRpc.BASE64);
-            this.cdata.setLength(0);
+            this.stringBuilder.delete(0, this.stringBuilder.length());
+            //this.cdata.setLength(0);
             this.readCdata = true;
         }
         else if ("struct".equals(name))
@@ -666,20 +664,21 @@ public abstract class XmlRpc extends HandlerBase
      */
     class Value
     {
-        int type;
-        Object value;
+        int typeP;
+                Object value = new Object();
         // the name to use for the next member of struct values
-        String nextMemberName;
+        String nextMemberName = StringUtil.getInstance().EMPTY_STRING;
 
-        ABHashtable<Object, Object> struct;
-        BasicArrayList array;
+        ABHashtable<Object, Object> struct = new ABHashtable<Object, Object>();
+        BasicArrayList array = new BasicArrayListD();
+
 
         /**
          * Constructor.
          */
         public Value()
         {
-            this.type = XmlRpc.STRING;
+            this.typeP = XmlRpc.STRING;
         }
 
         /**
@@ -687,7 +686,7 @@ public abstract class XmlRpc extends HandlerBase
          */
         public void endElement(Value child)
         {
-            switch (this.type)
+            switch (this.typeP)
             {
                 case XmlRpc.ARRAY:
                     this.array.add(child.value);
@@ -704,14 +703,18 @@ public abstract class XmlRpc extends HandlerBase
         public void setType(int type)
         {
             //System.out.println ("setting type to "+types[type]);
-            this.type = type;
+            this.typeP = type;
             switch (type)
             {
                 case XmlRpc.ARRAY:
-                    this.value = this.array = new BasicArrayListD();
+                                        this.array = new BasicArrayListD();
+                    this.value = this.array;
+
                     break;
                 case XmlRpc.STRUCT:
-                    this.value = this.struct = new ABHashtable<Object, Object> ();
+                                        this.struct = new ABHashtable<Object, Object>();
+                    this.value = this.struct;
+
                     break;
             }
         }
@@ -723,7 +726,7 @@ public abstract class XmlRpc extends HandlerBase
         public void characterData(String cdata)
         {
             final TypeFactory typeFactory = XmlRpc.this.typeFactory;
-            switch (this.type)
+            switch (this.typeP)
             {
                 case XmlRpc.INTEGER:
                     this.value = typeFactory.createInteger(cdata);
@@ -759,7 +762,7 @@ public abstract class XmlRpc extends HandlerBase
         @Override
         public int hashCode()
         {
-            return this.type;
+            return this.typeP;
         }
 
         /**
@@ -768,7 +771,7 @@ public abstract class XmlRpc extends HandlerBase
          */
         public String toString()
         {
-            return (XmlRpc.types[this.type] + " element " + this.value);
+            return (XmlRpc.types[this.typeP] + " element " + this.value);
         }
     }
 }

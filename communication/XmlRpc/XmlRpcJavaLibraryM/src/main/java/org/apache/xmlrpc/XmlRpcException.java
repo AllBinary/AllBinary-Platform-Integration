@@ -72,7 +72,7 @@ public class XmlRpcException extends Exception
      * will always be 0. (If there are predefined error codes, they should be in
      * the XML-RPC spec.)
      */
-    public final int code;
+    public final int faultCode;
 
     /**
      *
@@ -82,6 +82,6 @@ public class XmlRpcException extends Exception
     public XmlRpcException(int code, String message)
     {
         super(message);
-        this.code = code;
+        this.faultCode = code;
     }
 }

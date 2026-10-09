@@ -57,7 +57,9 @@ package org.apache.xmlrpc;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -83,7 +85,7 @@ import org.allbinary.util.ABHashtable;
  */
 public class XmlRpcClientLite extends XmlRpcClient
 {
-    static String auth;
+    static String auth = "";
 
     /**
      * Construct a XML-RPC client with this URL.
@@ -155,7 +157,19 @@ public class XmlRpcClientLite extends XmlRpcClient
      */
     class LiteWorker extends Worker implements Runnable
     {
-        HttpClient client = null;
+        HttpClient client = this.createHttpClient();
+
+        private HttpClient createHttpClient()
+        {
+            try
+            {
+                return new HttpClient(XmlRpcClientLite.this.url);
+            }
+            catch (IOException exception)
+            {
+                throw new IllegalStateException(exception);
+            }
+        }
 
         /**
          *
@@ -189,21 +203,16 @@ public class XmlRpcClientLite extends XmlRpcClient
                 {
                     this.buffer.reset();
                 }
-                XmlWriter writer = new XmlWriter(this.buffer, XmlRpc.encoding);
+                XmlWriter writer = new XmlWriter(this.buffer, XmlRpc.encodingP);
                 this.writeRequest(writer, method, params);
                 writer.flush();
                 byte[] request = this.buffer.toByteArray();
 
                 // and send it to the server
-                if (this.client == null)
-                {
-                    this.client = new HttpClient(XmlRpcClientLite.this.url);
-                }
+                InputStream inputStream = new ByteArrayInputStream(new byte[0]);
 
-                InputStream inputStream = null;
-
-               // send request to the server and get an input stream
-               // from which to read the response
+                // send request to the server and get an input stream
+                // from which to read the response
                 try
                 {
                     inputStream = this.client.sendRequest(request);
@@ -231,11 +240,11 @@ public class XmlRpcClientLite extends XmlRpcClient
                 // client keepalive is always false if XmlRpc.keepalive is false
                 if (!this.client.keepalive)
                 {
-                    this.client.closeConnection ();
-                    this.client = null;
+                    this.client.closeConnection();
+                    this.client = this.createHttpClient();
                 }
 
-                if (XmlRpc.debug)
+                if (XmlRpc.debugP)
                 {
                     System.out.println ("result = " + this.result);
                 }
@@ -256,7 +265,7 @@ public class XmlRpcClientLite extends XmlRpcClient
             {
                 // same as above, but exception has to be converted to
                 // IOException.
-                if (XmlRpc.debug)
+                if (XmlRpc.debugP)
                 {
                     x.printStackTrace ();
                 }
@@ -273,10 +282,11 @@ public class XmlRpcClientLite extends XmlRpcClient
             {
                 // this is an XML-RPC-level problem, i.e. the server reported an error.
                 // throw an XmlRpcException.
-                XmlRpcException exception = null;
+                XmlRpcException exception = new XmlRpcException(0, "Server returned an invalid fault response.");
+
                 try
                 {
-                    ABHashtable<Object, Object> f = (ABHashtable) this.result;
+                    ABHashtable<Object, Object> f = (ABHashtable<Object, Object>) this.result;
                     String faultString = (String) f.get("faultString");
                     int faultCode = Integer.parseInt(
                             f.get("faultCode").toString());
@@ -290,7 +300,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 }
                 throw exception;
             }
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 System.out.println ("Spent " + (System.currentTimeMillis()
                         - now) + " millis in request");
@@ -309,11 +319,11 @@ public class XmlRpcClientLite extends XmlRpcClient
         String host;
         int port;
         String uri;
-        Socket socket = null;
-        BufferedOutputStream output;
-        BufferedInputStream input;
+        Socket socket = new Socket();
+        BufferedOutputStream output = new BufferedOutputStream(new ByteArrayOutputStream());
+        BufferedInputStream input = new BufferedInputStream(new ByteArrayInputStream(new byte[0]));
         boolean keepalive;
-        byte[] buffer;
+        byte[] buffer = new byte[0];
 
         /**
          *
@@ -399,7 +409,7 @@ public class XmlRpcClientLite extends XmlRpcClient
 
             // start reading  server response headers
             String line = this.readLine();
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 System.out.println(line);
             }
@@ -432,7 +442,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                 line = this.readLine ();
                 if (line != null)
                 {
-                    if (XmlRpc.debug)
+                    if (XmlRpc.debugP)
                     {
                         System.out.println(line);
                     }
@@ -449,7 +459,7 @@ public class XmlRpcClientLite extends XmlRpcClient
                     }
                 }
             }
-            while (line != null && ! line.equals(""));
+            while (line != null && ! line.equals(StringUtil.getInstance().EMPTY_STRING));
             return new ServerInputStream(this.input, contentLength);
         }
 
@@ -469,11 +479,11 @@ public class XmlRpcClientLite extends XmlRpcClient
             while (true)
             {
                 next = this.input.read();
-                if (next < 0 || next == '\n')
+                if (next < 0 || next == (int) '\n')
                 {
                     break;
                 }
-                if (next != '\r')
+                if (next != (int) '\r')
                 {
                     this.buffer[count++] = (byte) next;
                 }
@@ -512,7 +522,7 @@ public class XmlRpcClientLite extends XmlRpcClient
             {
                 try
                 {
-                    v.add(new Integer(Integer.parseInt(args[i])));
+                    v.add(new Integer(args[i]));
                 }
                 catch (NumberFormatException nfx)
                 {

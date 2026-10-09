@@ -230,7 +230,7 @@ class XmlWriter extends OutputStreamWriter
             Object[] array = (Object []) obj;
             for (int i = 0; i < array.length; i++)
             {
-                this.writeObject(array[i]);
+                this.writeObject((Object) array[i]);
             }
             this.endElement("data");
             this.endElement("array");
@@ -243,24 +243,26 @@ class XmlWriter extends OutputStreamWriter
             int size = array.size();
             for (int i = 0; i < size; i++)
             {
-                this.writeObject(array.get(i));
+                this.writeObject((Object) array.get(i));
             }
             this.endElement("data");
             this.endElement("array");
         }
-        else if (obj instanceof ABHashtable)
+        else if (obj instanceof ABHashtable<?, ?>)
         {
             this.startElement("struct");
-            ABHashtable<Object, Object> struct = (ABHashtable) obj;
-            for (Enumeration enumeration = struct.keys(); enumeration.hasMoreElements(); )
+            ABHashtable<Object, Object> struct = (ABHashtable<Object, Object>) obj;
+            Enumeration<Object> enumeration = struct.keys();
+            while (enumeration.hasMoreElements())
             {
                 String key = (String) enumeration.nextElement();
-                Object value = struct.get(key);
+                Object value = (Object) struct.get(key);
+
                 this.startElement("member");
                 this.startElement("name");
                 this.chardata(key);
                 this.endElement("name");
-                this.writeObject(value);
+                this.writeObject((Object) value);
                 this.endElement("member");
             }
             this.endElement("struct");
@@ -295,9 +297,9 @@ class XmlWriter extends OutputStreamWriter
      */
     protected void startElement(String elem) throws IOException
     {
-        this.write('<');
+        this.write((int) '<');
         this.write(elem);
-        this.write('>');
+        this.write((int) '>');
     }
 
     /**
@@ -309,7 +311,7 @@ class XmlWriter extends OutputStreamWriter
     {
         this.write(XmlWriter.CLOSING_TAG_START);
         this.write(elem);
-        this.write('>');
+        this.write((int) '>');
     }
 
     /**
@@ -319,7 +321,7 @@ class XmlWriter extends OutputStreamWriter
      */
     protected void emptyElement(String elem) throws IOException
     {
-        this.write('<');
+        this.write((int) '<');
         this.write(elem);
         this.write(XmlWriter.SINGLE_TAG_END);
     }
@@ -343,7 +345,7 @@ class XmlWriter extends OutputStreamWriter
             case '\t':
             case '\r':
             case '\n':
-                this.write(c);
+                this.write((int) c);
                 break;
             case '<':
                 this.write(XmlWriter.LESS_THAN_ENTITY);
@@ -355,7 +357,7 @@ class XmlWriter extends OutputStreamWriter
                 this.write(XmlWriter.AMPERSAND_ENTITY);
                 break;
             default:
-                if (c < 0x20 || c > 0xff)
+                if ((int) c < 0x20 || (int) c > 0xff)
                 {
                     // Though the XML-RPC spec allows any ASCII
                     // characters except '<' and '&', the XML spec
@@ -366,7 +368,7 @@ class XmlWriter extends OutputStreamWriter
                 }
                 else
                 {
-                    this.write(c);
+                    this.write((int) c);
                 }
             }
         }

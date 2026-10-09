@@ -1,5 +1,7 @@
 package org.apache.xmlrpc;
 
+
+
 /*
  * The Apache Software License, Version 1.1
  *
@@ -66,23 +68,14 @@ public class ParseFailed extends RuntimeException
 {
     public static final long serialVersionUID = 1L;
     
-    protected Exception cause;
-
     public ParseFailed(String message)
     {
         super(message);
-        this.cause = null;
     }
 
     public ParseFailed(Exception cause)
     {
-        super(cause.getMessage());
-        this.cause = cause;
+        super(cause);
     }
 
-    @Override
-    public Throwable getCause()
-    {
-        return this.cause;
-    }
 }

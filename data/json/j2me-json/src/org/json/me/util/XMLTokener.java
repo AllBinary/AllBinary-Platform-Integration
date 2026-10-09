@@ -1,5 +1,6 @@
 package org.json.me.util;
 
+import org.allbinary.logic.string.StringMaker;
 import org.allbinary.util.ABHashtable;
 import org.json.me.JSONException;
 import org.json.me.JSONTokener;
@@ -43,7 +44,7 @@ public class XMLTokener extends JSONTokener {
    public static final ABHashtable<Object, Object> entity;
 
    static {
-       XMLTokener.entity = new ABHashtable();
+       entity = new ABHashtable();
        XMLTokener.entity.put("amp",  XML.AMP);
        XMLTokener.entity.put("apos", XML.APOS);
        XMLTokener.entity.put("gt",   XML.GT);
@@ -67,16 +68,15 @@ public class XMLTokener extends JSONTokener {
     public String nextCDATA() throws JSONException {
         char         c;
         int          i;
-        StringBuffer sb = new StringBuffer();
-        for (;;) {
+        final StringBuilder sb = new StringBuilder();
+        while(true) {
             c = this.next();
             if (c == 0) {
                 throw this.syntaxError("Unclosed CDATA.");
             }
             sb.append(c);
             i = sb.length() - 3;
-            if (i >= 0 && sb.charAt(i) == ']' &&
-                          sb.charAt(i + 1) == ']' && sb.charAt(i + 2) == '>') {
+            if (i >= 0 && sb.charAt(i) == ']' && sb.charAt(i + 1) == ']' && sb.charAt(i + 2) == '>') {
                 sb.setLength(i);
                 return sb.toString();
             }
@@ -95,7 +95,7 @@ public class XMLTokener extends JSONTokener {
      */
     public Object nextContent() throws JSONException {
         char         c;
-        StringBuffer sb;
+        StringMaker sb;
         do {
             c = this.next();
         } while (XMLTokener.isWhitespace(c));
@@ -105,16 +105,16 @@ public class XMLTokener extends JSONTokener {
         if (c == '<') {
             return XML.LT;
         }
-        sb = new StringBuffer();
-        for (;;) {
+        sb = new StringMaker();
+        while(true) {
             if (c == '<' || c == 0) {
                 this.back();
                 return sb.toString().trim();
             }
             if (c == '&') {
-                sb.append(this.nextEntity(c));
+                sb.append(this.nextEntity(c).toString());
             } else {
-                sb.append(c);
+                sb.appendchar(c);
             }
             c = this.next();
         }
@@ -129,11 +129,11 @@ public class XMLTokener extends JSONTokener {
      * @throws JSONException If missing ';' in XML entity.
      */
     public Object nextEntity(char a) throws JSONException {
-        StringBuffer sb = new StringBuffer();
-        for (;;) {
+        StringMaker sb = new StringMaker();
+        while(true) {
             char c = this.next();
             if (XMLTokener.isLetterOrDigit(c) || c == '#') {
-                sb.append(Character.toLowerCase(c));
+                sb.appendchar(Character.toLowerCase(c));
             } else if (c == ';') {
                 break;
             } else {
@@ -179,7 +179,7 @@ public class XMLTokener extends JSONTokener {
         case '"':
         case '\'':
             q = c;
-            for (;;) {
+            while(true) {
                 c = this.next();
                 if (c == 0) {
                     throw this.syntaxError("Unterminated string.");
@@ -189,7 +189,7 @@ public class XMLTokener extends JSONTokener {
                 }
             }
         default:
-            for (;;) {
+            while(true) {
                 c = this.next();
                 if (XMLTokener.isWhitespace(c)) {
                     return Boolean.TRUE;
@@ -223,7 +223,7 @@ public class XMLTokener extends JSONTokener {
     public Object nextToken() throws JSONException {
         char c;
         char q;
-        StringBuffer sb;
+        StringMaker sb;
         do {
             c = this.next();
         } while (XMLTokener.isWhitespace(c));
@@ -248,8 +248,8 @@ public class XMLTokener extends JSONTokener {
         case '"':
         case '\'':
             q = c;
-            sb = new StringBuffer();
-            for (;;) {
+            sb = new StringMaker();
+            while(true) {
                 c = this.next();
                 if (c == 0) {
                     throw this.syntaxError("Unterminated string.");
@@ -258,18 +258,18 @@ public class XMLTokener extends JSONTokener {
                     return sb.toString();
                 }
                 if (c == '&') {
-                    sb.append(this.nextEntity(c));
+                    sb.append(this.nextEntity(c).toString());
                 } else {
-                    sb.append(c);
+                    sb.appendchar(c);
                 }
             }
         default:
 
 // Name
 
-            sb = new StringBuffer();
-            for (;;) {
-                sb.append(c);
+            sb = new StringMaker();
+            while(true) {
+                sb.appendchar(c);
                 c = this.next();
                 if (XMLTokener.isWhitespace(c)) {
                     return sb.toString();

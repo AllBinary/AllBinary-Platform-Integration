@@ -74,7 +74,7 @@ import org.allbinary.util.ABHashtable;
  */
 public class XmlRpcResponseProcessor
 {
-
+    
     /**
      * Process a successful response, and return output in the
      * specified encoding.
@@ -87,7 +87,7 @@ public class XmlRpcResponseProcessor
         throws IOException, UnsupportedEncodingException, XmlRpcException
     {
         long now = 0;
-        if (XmlRpc.debug)
+        if (XmlRpc.debugP)
         {
             now = System.currentTimeMillis();
         }
@@ -103,13 +103,32 @@ public class XmlRpcResponseProcessor
             throw e;
         } finally
         {
-            if (XmlRpc.debug)
+            if (XmlRpc.debugP)
             {
                 System.out.println("Spent " + (System.currentTimeMillis() - now) + " millis encoding response");
             }
         }
     }
 
+    public XmlWriter createXmlWriter(ByteArrayOutputStream buffer, String encoding) throws Exception {
+        try
+        {
+            return new XmlWriter(buffer, encoding);
+        }
+        catch (UnsupportedEncodingException encx)
+        {
+            System.err.println("XmlRpcServer attempted to use " + "unsupported encoding: " + encx);
+            // NOTE: If we weren't already using the default
+            // encoding, we could try it here.
+            throw encx;
+        }
+        catch (IOException iox)
+        {
+            System.err.println("XmlRpcServer experienced I/O error "+ "writing error response: " + iox);
+            throw iox;
+        }
+    }
+    
     /**
      * Process an exception, and return output in the specified
      * encoding.
@@ -120,7 +139,7 @@ public class XmlRpcResponseProcessor
      */
     public byte[] processException(Exception x, String encoding)
     {
-        if (XmlRpc.debug)
+        if (XmlRpc.debugP)
         {
             x.printStackTrace();
         }
@@ -131,42 +150,27 @@ public class XmlRpcResponseProcessor
         // call above.
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-        XmlWriter writer = null;
         try
         {
-            writer = new XmlWriter(buffer, encoding);
-        }
-        catch (UnsupportedEncodingException encx)
-        {
-            System.err.println("XmlRpcServer attempted to use "
-                    + "unsupported encoding: " + encx);
-            // NOTE: If we weren't already using the default
-            // encoding, we could try it here.
-        }
-        catch (IOException iox)
-        {
-            System.err.println("XmlRpcServer experienced I/O error "
-                    + "writing error response: " + iox);
-        }
+            XmlWriter writer = this.createXmlWriter(buffer, encoding);
+            String message = x.toString();
 
-        String message = x.toString();
-        // Retrieve XmlRpcException error code(if possible).
-        int code = x instanceof XmlRpcException ?
-               ((XmlRpcException) x).code : 0;
-        try
-        {
+            int code = 0;            
+            if(x instanceof XmlRpcException) {
+                final XmlRpcException xmlRpcException = ((XmlRpcException) x);
+                code = xmlRpcException.faultCode;
+            }
+
             this.writeError(code, message, writer);
             writer.flush();
+            return buffer.toByteArray();
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            // Unlikely to occur, as we just sent a struct
-            // with an int and a string.
-            System.err.println("Unable to send error response to "
-                    + "client: " + e);
+            System.err.println("Unable to send error response to client: " + exception);
+            return NullUtil.getInstance().NULL_BYTE_ARRAY;
         }
 
-        return (writer != null ? buffer.toByteArray() : NullUtil.getInstance().NULL_BYTE_ARRAY);
     }
 
      /**
@@ -176,10 +180,10 @@ public class XmlRpcResponseProcessor
         throws XmlRpcException, IOException
     {
         writer.startElement("methodResponse");
-        // if (param == null) param = ""; // workaround for Frontier bug
+        // if (param == null) param = StringUtil.getInstance().EMPTY_STRING; // workaround for Frontier bug
         writer.startElement("params");
         writer.startElement("param");
-        writer.writeObject(param);
+        writer.writeObject((Object) param);
         writer.endElement("param");
         writer.endElement("params");
         writer.endElement("methodResponse");
@@ -197,7 +201,7 @@ public class XmlRpcResponseProcessor
         h.put("faultString", message);
         writer.startElement("methodResponse");
         writer.startElement("fault");
-        writer.writeObject(h);
+        writer.writeObject((Object) h);
         writer.endElement("fault");
         writer.endElement("methodResponse");
     }

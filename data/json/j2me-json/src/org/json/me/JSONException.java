@@ -6,7 +6,6 @@ package org.json.me;
  * @version 2
  */
 public class JSONException extends Exception {
-    private Throwable cause;
 
     /**
      * Constructs a JSONException with an explanatory message.
@@ -18,11 +17,6 @@ public class JSONException extends Exception {
 
     public JSONException(Throwable t) {
         super(t.getMessage());
-        this.cause = t;
     }
 
-    @Override
-    public Throwable getCause() {
-        return this.cause;
-    }
 }

@@ -104,7 +104,8 @@ public class DefaultTypeFactory
     @Override
     public Object createDouble(String cdata)
     {
-        return new Double(cdata.trim ());
+        return Double.valueOf(cdata.trim ());
+        //return new Double(cdata.trim ());
 
     }
 

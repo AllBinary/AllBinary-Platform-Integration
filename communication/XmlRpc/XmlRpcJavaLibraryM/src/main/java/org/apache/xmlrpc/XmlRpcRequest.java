@@ -67,27 +67,27 @@ import org.allbinary.util.BasicArrayListD;
  */
 public class XmlRpcRequest
 {
-    protected final String methodName;
-    protected final BasicArrayList parameters;
+    protected final String methodNameP;
+    protected final BasicArrayList parametersP;
 
     public XmlRpcRequest(String methodName, BasicArrayList parameters)
     {
-        this.parameters = parameters;
-        this.methodName = methodName;
+        this.parametersP = parameters;
+        this.methodNameP = methodName;
     }
 
     public BasicArrayList getParameters()
     {
-        return this.parameters;
+        return this.parametersP;
     }
 
     public Object getParameter(int index)
     {
-        return this.parameters.get(index);
+        return this.parametersP.get(index);
     }
 
     public String getMethodName()
     {
-        return this.methodName;
+        return this.methodNameP;
     }
 }

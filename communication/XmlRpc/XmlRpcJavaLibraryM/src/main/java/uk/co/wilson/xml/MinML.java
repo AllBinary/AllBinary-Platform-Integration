@@ -55,6 +55,7 @@ import java.util.Stack;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.StdUtil;
+import org.allbinary.logic.string.StringUtil;
 
 import org.xml.sax.AttributeList;
 import org.xml.sax.DTDHandler;
@@ -113,7 +114,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   public static final int inCDATA1 = 19;
   public static final int inComment =20;
   public static final int inDTD = 21;
-
+  
   public MinML(final int initialBufferSize, final int bufferIncrement) {
     this.initialBufferSize = initialBufferSize;
     this.bufferIncrement = bufferIncrement;
@@ -127,37 +128,39 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   final BasicArrayList attributeNames = new BasicArrayListD();
   final BasicArrayList attributeValues = new BasicArrayListD();
 
-  final AttributeList attrs = new AttributeList() {
-    @Override
-    public int getLength() {
-      return attributeNames.size();
+  class MinMLAttributeList implements AttributeList {
+    private final BasicArrayList attributeNames;
+    private final BasicArrayList attributeValues;
+
+    MinMLAttributeList(BasicArrayList attributeNames, BasicArrayList attributeValues) {
+      this.attributeNames = attributeNames;
+      this.attributeValues = attributeValues;
     }
 
     @Override
-    public String getName(final int i) {
-      return (String)attributeNames.get(i);
-    }
-
+    public int getLength() { return this.attributeNames.size(); }
+    
     @Override
-    public String getType(final int i) {
-      return "CDATA";
-    }
-
+    public String getName(int i) { return (String) this.attributeNames.get(i); }
+    
     @Override
-    public String getValue(final int i) {
-      return (String)attributeValues.get(i);
+    public String getType(int i) { return "CDATA"; }
+    
+    @Override
+    public String getValue(int i) { return (String) this.attributeValues.get(i); }
+    
+    @Override
+    public String getType(String name) { return "CDATA"; }
+    
+    @Override
+    public String getValue(String name) {
+      int index = this.attributeNames.indexOf(name);
+      return index == -1 ? StringUtil.getInstance().EMPTY_STRING : (String) this.attributeValues.get(index);
     }
+  }
+  
+  final AttributeList attrs = new MinMLAttributeList(attributeNames, attributeValues);
 
-    public String getType(final String name) {
-      return "CDATA";
-    }
-
-    public String getValue(final String name) {
-    final int index = attributeNames.indexOf(name);
-
-      return (index == -1) ? null : (String)attributeValues.get(index);
-    }
-  };
 
   final String S = "#amp;&pos;'quot;\"gt;>lt;<";
   final String S3 = "\u0001\u000b\u0006\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff\u00ff" +
@@ -174,7 +177,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   int currentChar = 0, charCount = 0;
   int level = 0;
   int mixedContentLevel = -1;
-  String elementName = null;
+  String elementName = "";
   String state = MinML.operands[MinML.inSkipping];
 
     this.lineNumber = 1;
@@ -191,15 +194,15 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
         if(buffer.nextIn == buffer.lastIn) {
             currentChar = buffer.read();
         } else {
-            currentChar = buffer.chars[buffer.nextIn++];
+            currentChar = (int) buffer.chars[buffer.nextIn++];
         }
 
         final int transition;
 
-        if (currentChar > ']') {
-          transition = state.charAt(14);
+        if (currentChar > (int) ']') {
+          transition = (int) state.charAt(14);
         } else {
-        final int charClass = MinML.charClasses[currentChar + 1];
+        final int charClass = (int) MinML.charClasses[currentChar + 1];
 
           if (charClass == -1)
           {
@@ -208,12 +211,12 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           }
 
           if (charClass == 12) {
-            if (currentChar == '\r') {
-              currentChar = '\n';
+            if (currentChar == (int) '\r') {
+              currentChar = (int) '\n';
               charCount = -1;
             }
 
-            if (currentChar == '\n') {
+            if (currentChar == (int) '\n') {
               if (charCount == 0) continue;  // preceeded by '\r' so ignore
 
               if (charCount != -1) charCount = 0;
@@ -223,7 +226,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
             }
           }
 
-          transition = state.charAt(charClass);
+          transition = (int) state.charAt(charClass);
        }
 
         this.columnNumber++;
@@ -235,7 +238,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           case MinML.endStartName:
           // end of start element name
             elementName = buffer.getString();
-            if (currentChar != '>' && currentChar != '/') {
+            if (currentChar != (int) '>' && currentChar != (int) '/') {
                 break;
             }  // change state to operand
             // drop through to emit start element (we have no attributes)
@@ -257,7 +260,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
             if (mixedContentLevel != -1) mixedContentLevel++;
 
-            if (currentChar != '/') break;  // change state to operand
+            if (currentChar != (int) '/') break;  // change state to operand
 
             // <element/> drop through
 
@@ -270,7 +273,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
               buffer.popWriter();
               elementName = buffer.getString();
 
-              if (currentChar != '/' && !elementName.equals(begin)) {
+              if (currentChar != (int) '/' && !elementName.equals(begin)) {
                  buffer.reset();
                 this.fatalError("end tag </" + elementName + "> does not match begin tag <" + begin + ">",
                            this.lineNumber, this.columnNumber);
@@ -325,22 +328,25 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           case MinML.startComment:
           // change state if we have found "<!--"
 
-            if (buffer.read() != '-') continue; // not "<!--"
+            if (buffer.read() != (int) '-') continue; // not "<!--"
 
             break;  // change state to operand
 
           case MinML.endComment:
           // change state if we find "-->"
 
-            if ((currentChar = buffer.read()) == '-') {
+            currentChar = buffer.read();
+            if (currentChar == (int) '-') {
               // deal with the case where we might have "------->"
-              while ((currentChar = buffer.read()) == '-')
+              while (true)
               {
-                  
+                currentChar = buffer.read();
+                if (currentChar != (int) '-') break;
               }
 
-              if (currentChar == '>') break;  // end of comment, change state to operand
+              if (currentChar == (int) '>') break;  // end of comment, change state to operand
             }
+
 
             continue;   // not end of comment, don't change state
 
@@ -361,27 +367,32 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           case MinML.startCDATA:
           // change state if we have found "<![CDATA["
 
-            if (buffer.read() != 'C') continue;   // don't change state
-            if (buffer.read() != 'D') continue;   // don't change state
-            if (buffer.read() != 'A') continue;   // don't change state
-            if (buffer.read() != 'T') continue;   // don't change state
-            if (buffer.read() != 'A') continue;   // don't change state
-            if (buffer.read() != '[') continue;   // don't change state
+            if (buffer.read() != (int) 'C') continue;   // don't change state
+            if (buffer.read() != (int) 'D') continue;   // don't change state
+            if (buffer.read() != (int) 'A') continue;   // don't change state
+            if (buffer.read() != (int) 'T') continue;   // don't change state
+            if (buffer.read() != (int) 'A') continue;   // don't change state
+            if (buffer.read() != (int) '[') continue;   // don't change state
             break;  // change state to operand
 
           case MinML.endCDATA:
           // change state if we find "]]>"
 
-            if ((currentChar = buffer.read()) == ']') {
+            currentChar = buffer.read();
+            if (currentChar == (int) ']') {
               // deal with the case where we might have "]]]]]]]>"
-              while ((currentChar = buffer.read()) == ']') buffer.write(']');
+              while (true) {
+                currentChar = buffer.read();
+                if (currentChar != (int) ']') break;
+                buffer.write((int) ']');
+              }
 
-              if (currentChar == '>') break;  // end of CDATA section, change state to operand
+              if (currentChar == (int) '>') break;  // end of CDATA section, change state to operand
 
-              buffer.write(']');
+              buffer.write((int) ']');
             }
 
-            buffer.write(']');
+            buffer.write((int) ']');
             buffer.write(currentChar);
             continue;   // not end of CDATA section, don't change state
 
@@ -394,19 +405,19 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
             while (true) {
               char c = S.charAt(crefState);
-              if (c == currentChar) {
+              if ((int) c == currentChar) {
                 crefState++;
 
-                if (currentChar == ';') {
-                  buffer.write(c);
+                if (currentChar == (int) ';') {
+                  buffer.write((int) c);
                   break;
 
-                } else if (currentChar == '#') {
+                } else if (currentChar == (int) '#') {
                 final int radix;
 
                   currentChar = buffer.read();
 
-                  if (currentChar == 'x') {
+                  if (currentChar == (int) 'x') {
                     radix = 16;
                     currentChar = buffer.read();
                   } else {
@@ -422,10 +433,10 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
 
                     if (digit == -1) break;
 
-                    charRef = (char)((charRef * radix) + digit);
+                    charRef = (int) ((char) ((charRef * radix) + digit));
                   }
 
-                  if (currentChar == ';' && charRef != -1) {
+                  if (currentChar == (int) ';' && charRef != -1) {
                     buffer.write(charRef);
                     break;
                   }
@@ -435,7 +446,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
                   currentChar = buffer.read();
                 }
               } else {
-                crefState = S3.charAt(crefState);
+                crefState = (int) S3.charAt(crefState);
 
                 if (crefState == 255)
                 {
@@ -500,11 +511,13 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
         throw e;
     } finally {
       this.errorHandler = this;
-      this.documentHandler = this.extDocumentHandler = this;
+      this.extDocumentHandler = this;
+      this.documentHandler = this.extDocumentHandler;
       this.tags.clear();
     }
   }
 
+  @Override
   public void parse(final InputSource source) throws SAXException, IOException {
       try {
           
@@ -522,53 +535,67 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
       }
   }
 
+  @Override
   public void parse(final String systemId) throws SAXException, IOException {
     this.parse(new InputSource(systemId));
   }
 
+  @Override
   public void setLocale(final Locale locale) throws SAXException {
     throw new SAXException("Not supported");
   }
 
+  @Override
   public void setEntityResolver(final EntityResolver resolver) {
     // not supported
   }
 
+  @Override
   public void setDTDHandler(final DTDHandler handler) {
     // not supported
   }
 
+  @Override
   public void setDocumentHandler(final org.xml.sax.DocumentHandler handler) {
-   this.documentHandler = (handler == null) ? this : handler;
+   this.documentHandler = handler;
    this.extDocumentHandler = this;
   }
 
+  @Override
   public void setDocumentHandler(final DocumentHandler handler) {
-   this.documentHandler = this.extDocumentHandler = (handler == null) ? this : handler;
-   this.documentHandler.setDocumentLocator(this);
+      this.extDocumentHandler = handler;
+      this.documentHandler = this.extDocumentHandler;
+      this.documentHandler.setDocumentLocator(this);
   }
 
+  @Override
   public void setErrorHandler(final ErrorHandler handler) {
-   this.errorHandler = (handler == null) ? this : handler;
+   this.errorHandler = handler;
   }
 
+  @Override
   public void setDocumentLocator(final Locator locator) {
   }
 
+  @Override
   public void startDocument() throws SAXException {
   }
 
+  @Override
   public Writer startDocument(final Writer writer) throws SAXException {
     this.documentHandler.startDocument();
     return writer;
   }
 
+  @Override
   public void endDocument() throws SAXException {
   }
 
+  @Override
   public void startElement(final String name, final AttributeList attributes) throws SAXException {
   }
 
+  @Override
   public Writer startElement(final String name, final AttributeList attributes, final Writer writer)
         throws SAXException
   {
@@ -576,41 +603,52 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     return writer;
   }
 
+  @Override
   public void endElement(final String name) throws SAXException {
   }
 
+  @Override
   public void characters(final char ch[], final int start, final int length) throws SAXException {
   }
 
+  @Override
   public void ignorableWhitespace(final char ch[], final int start, final int length) throws SAXException {
   }
 
+  @Override
   public void processingInstruction(final String target, final String data) throws SAXException {
   }
 
+  @Override
   public void warning(final SAXParseException e) throws SAXException {
   }
 
+  @Override
   public void error(final SAXParseException e) throws SAXException {
   }
 
+  @Override
   public void fatalError(final SAXParseException e) throws SAXException {
     throw e;
   }
 
+  @Override
   public String getPublicId() {
-    return "";
+    return StringUtil.getInstance().EMPTY_STRING;
   }
 
 
+  @Override
   public String getSystemId() {
-    return "";
+    return StringUtil.getInstance().EMPTY_STRING;
   }
 
+  @Override
   public int getLineNumber () {
     return this.lineNumber;
   }
 
+  @Override
   public int getColumnNumber () {
     return this.columnNumber;
   }
@@ -620,6 +658,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   }
 
   private class MinMLBuffer extends Writer {
+
     public MinMLBuffer(final Reader reader) {
       this.reader = reader;
     }
@@ -662,9 +701,10 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
     public void pushWriter(final Writer writer) {
       MinML.this.tags.push(this.writer);
 
-      this.writer = (writer == null) ? this : writer;
+      this.writer = writer;
 
-      this.flushed = this.written = false;
+      this.written = false;
+      this.flushed = this.written;
     }
 
     public Writer getWriter() {
@@ -678,7 +718,9 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
           throw e;
       } finally {
         this.writer = (Writer)MinML.this.tags.pop();
-        this.flushed = this.written = false;
+        this.written = false;
+        this.flushed = this.written;
+
       }
     }
 
@@ -714,7 +756,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
         this.lastIn = this.count + numRead;
       }
 
-      return this.chars[this.nextIn++];
+      return (int) this.chars[this.nextIn++];
     }
 
     private void _flush() throws IOException {
@@ -738,8 +780,10 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
       }
     }
 
-    private int nextIn = 0, lastIn = 0;
-    private char[] chars = new char[MinML.this.initialBufferSize];
+    public int nextIn = 0;
+    public int lastIn = 0;
+    public char[] chars = new char[MinML.this.initialBufferSize];
+
     private final Reader reader;
     private int count = 0;
     private Writer writer = this;
@@ -750,7 +794,7 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   private DocumentHandler extDocumentHandler = this;
   private org.xml.sax.DocumentHandler documentHandler = this;
   private ErrorHandler errorHandler = this;
-  private final Stack tags = StdUtil.getInstance().createStack();
+  private final Stack<Object> tags = new Stack<Object>();
   private int lineNumber = 1;
   private int columnNumber = 0;
   private final int initialBufferSize;

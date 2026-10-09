@@ -254,7 +254,11 @@ public class JSONWriter {
             throw new JSONException("Nesting error.");
         }
         this.top -= 1;
-        this.mode = this.top == 0 ? 'd' : this.stack[this.top - 1];
+        if (this.top == 0) {
+            this.mode = 'd';
+        } else {
+            this.mode = this.stack[this.top - 1];
+        }
     }
 
     /**
@@ -290,7 +294,7 @@ public class JSONWriter {
      * @throws JSONException If the number is not finite.
      */
     public JSONWriter value(double d) throws JSONException {
-        return this.value(new Double(d));
+        return this.value(Double.valueOf(d));
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.json.me.util;
 
 import java.util.Enumeration;
+import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.logic.string.StringUtil;
@@ -42,31 +43,31 @@ SOFTWARE.
 public class XML {
 
     /** The Character '&'. */
-    public static final Character AMP   = new Character('&');
+    public static final Character AMP   = '&';
 
     /** The Character '''. */
-    public static final Character APOS  = new Character('\'');
+    public static final Character APOS  = '\'';
 
     /** The Character '!'. */
-    public static final Character BANG  = new Character('!');
+    public static final Character BANG  = '!';
 
     /** The Character '='. */
-    public static final Character EQ    = new Character('=');
+    public static final Character EQ    = '=';
 
     /** The Character '>'. */
-    public static final Character GT    = new Character('>');
+    public static final Character GT    = '>';
 
     /** The Character '<'. */
-    public static final Character LT    = new Character('<');
+    public static final Character LT    = '<';
 
     /** The Character '?'. */
-    public static final Character QUEST = new Character('?');
+    public static final Character QUEST = '?';
 
     /** The Character '"'. */
-    public static final Character QUOT  = new Character('"');
+    public static final Character QUOT  = '"';
 
     /** The Character '/'. */
-    public static final Character SLASH = new Character('/');
+    public static final Character SLASH = '/';
 
     /**
      * Replace special characters with XML escapes:
@@ -81,7 +82,8 @@ public class XML {
      */
     public static String escape(String string) {
         StringMaker sb = new StringMaker();
-        for (int i = 0, len = string.length(); i < len; i++) {
+        final int len = string.length();
+        for (int i = 0; i < len; i++) {
             char c = string.charAt(i);
             switch (c) {
             case '&':
@@ -116,9 +118,10 @@ public class XML {
         char       c;
         int        i;
         String     n;
-        JSONObject o = null;
+        JSONObject o = new JSONObject();
         String     s;
         Object     t;
+        final Object nullObject = NullUtil.getInstance().NULL_OBJECT;
 
 // Test for and skip past these forms:
 //      <!-- ... -->
@@ -158,7 +161,7 @@ public class XML {
             i = 1;
             do {
                 t = x.nextMeta();
-                if (t == null) {
+                if (t == nullObject) {
                     throw x.syntaxError("Missing '>' after '<!'.");
                 } else if (t == XML.LT) {
                     i += 1;
@@ -177,7 +180,7 @@ public class XML {
 
 // Close tag </
 
-            if (name == null || !x.nextToken().equals(name)) {
+            if (name.length() == 0 || !x.nextToken().equals(name)) {
                 throw x.syntaxError("Mismatched close tag");
             }
             if (x.nextToken() != XML.GT) {
@@ -192,10 +195,10 @@ public class XML {
 
         } else {
             n = (String)t;
-            t = null;
+            t = nullObject;
             o = new JSONObject();
             while(true) {
-                if (t == null) {
+                if (t == nullObject) {
                     t = x.nextToken();
                 }
 
@@ -210,7 +213,7 @@ public class XML {
                             throw x.syntaxError("Missing value");
                         }
                         o.accumulate(s, t);
-                        t = null;
+                        t = nullObject;
                     } else {
                         o.accumulate(s, StringUtil.getInstance().EMPTY_STRING);
                     }
@@ -229,8 +232,8 @@ public class XML {
                 } else if (t == XML.GT) {
                     while(true) {
                         t = x.nextContent();
-                        if (t == null) {
-                            if (name != null) {
+                        if (t == nullObject) {
+                            if (name.length() > 0) {
                                 throw x.syntaxError("Unclosed tag " + name);
                             }
                             return false;
@@ -246,9 +249,8 @@ public class XML {
                             if (XML.parse(x, o, n)) {
                                 if (o.length() == 0) {
                                     context.accumulate(n, StringUtil.getInstance().EMPTY_STRING);
-                                } else if (o.length() == 1 &&
-                                       o.opt("content") != null) {
-                                    context.accumulate(n, o.opt("content"));
+                                } else if (o.length() == 1 && o.has("content")) {
+                                    context.accumulate(n, o.get("content"));
                                 } else {
                                     context.accumulate(n, o);
                                 }
@@ -283,7 +285,7 @@ public class XML {
         XMLTokener x = new XMLTokener(string);
         while (x.more()) {
             x.skipPast("<");
-            XML.parse(x, o, null);
+            XML.parse(x, o, StringUtil.getInstance().EMPTY_STRING);
         }
         return o;
     }
@@ -296,7 +298,7 @@ public class XML {
      * @throws  JSONException
      */
     public static String toString(Object o) throws JSONException {
-        return XML.toString(o, null);
+        return XML.toString(o, StringUtil.getInstance().EMPTY_STRING);
     }
 
 
@@ -322,7 +324,7 @@ public class XML {
 
 // Emit <tagName>
 
-            if (tagName != null) {
+            if (tagName.length() > 0) {
                 b.appendchar('<');
                 b.append(tagName);
                 b.appendchar('>');
@@ -333,7 +335,7 @@ public class XML {
             jo = (JSONObject)o;
             keys = jo.keys();
             while (keys.hasMoreElements()) {
-                k = keys.nextElement().toString();
+                k = (String) keys.nextElement();
                 v = jo.get(k);
                 if (v instanceof String) {
                     s = (String)v;
@@ -376,7 +378,7 @@ public class XML {
                     b.append(XML.toString(v, k));
                 }
             }
-            if (tagName != null) {
+            if (tagName.length() > 0) {
 
 // Emit the </tagname> close tag
 
@@ -394,12 +396,12 @@ public class XML {
             len = ja.length();
             for (i = 0; i < len; ++i) {
                 b.append(XML.toString(
-                    ja.opt(i), (tagName == null) ? "array" : tagName));
+                    ja.get(i), (tagName.length() == 0) ? "array" : tagName));
             }
             return b.toString();
         } else {
             s = (o == null) ? StringUtil.getInstance().NULL_STRING : XML.escape(o.toString());
-            return (tagName == null) ? new StringMaker().append("\"").append(s).append("\"").toString() :
+            return (tagName.length() == 0) ? new StringMaker().append("\"").append(s).append("\"").toString() :
                 (s.length() == 0) ? new StringMaker().append("<").append(tagName).append("/>").toString() : 
                 new StringMaker().append("<").append(tagName).append(">").append(s).append("</").append(tagName).append(">").toString();
         }

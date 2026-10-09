@@ -147,10 +147,11 @@ public class StringWriter extends Writer {
      */
     @Override
     public StringWriter append(CharSequence csq) {
-        if (csq == null)
+        if (csq == null) {
             this.write(StringUtil.getInstance().NULL_STRING);
-        else
+        } else {
             this.write(csq.toString());
+        }
         return this;
     }
 
@@ -188,7 +189,12 @@ public class StringWriter extends Writer {
      */
     @Override
     public StringWriter append(CharSequence csq, int start, int end) {
-        CharSequence cs = (csq == null ? StringUtil.getInstance().NULL_STRING : csq);
+        CharSequence cs;
+        if (csq == null) {
+            cs = StringUtil.getInstance().NULL_STRING;
+        } else {
+            cs = csq;
+        }
         this.write(cs.subSequence(start, end).toString());
         return this;
     }

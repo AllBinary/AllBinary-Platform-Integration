@@ -1,5 +1,6 @@
 package org.json.me.util;
 
+import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.util.ABHashtable;
 import org.json.me.JSONException;
@@ -75,10 +76,10 @@ public class XMLTokener extends JSONTokener {
                 throw this.syntaxError("Unclosed CDATA.");
             }
             sb.append(c);
-            i = sb.length() - 3;
+            final String string = sb.toString();
+            i = string.length() - 3;
             if (i >= 0 && sb.charAt(i) == ']' && sb.charAt(i + 1) == ']' && sb.charAt(i + 2) == '>') {
-                sb.setLength(i);
-                return sb.toString();
+                return sb.toString().substring(0, i);
             }
         }
     }
@@ -100,7 +101,7 @@ public class XMLTokener extends JSONTokener {
             c = this.next();
         } while (XMLTokener.isWhitespace(c));
         if (c == '\0') {
-            return null;
+            return NullUtil.getInstance().NULL_OBJECT;
         }
         if (c == '<') {
             return XML.LT;
@@ -162,7 +163,7 @@ public class XMLTokener extends JSONTokener {
             c = this.next();
         } while (XMLTokener.isWhitespace(c));
         switch (c) {
-        case 0:
+        case '\0':
             throw this.syntaxError("Misshaped meta tag.");
         case '<':
             return XML.LT;
@@ -195,7 +196,7 @@ public class XMLTokener extends JSONTokener {
                     return Boolean.TRUE;
                 }
                 switch (c) {
-                case 0:
+                case '\0':
                 case '<':
                 case '>':
                 case '/':
@@ -228,7 +229,7 @@ public class XMLTokener extends JSONTokener {
             c = this.next();
         } while (XMLTokener.isWhitespace(c));
         switch (c) {
-        case 0:
+        case '\0':
             throw this.syntaxError("Misshaped element.");
         case '<':
             throw this.syntaxError("Misplaced '<'.");
@@ -275,7 +276,7 @@ public class XMLTokener extends JSONTokener {
                     return sb.toString();
                 }
                 switch (c) {
-                case 0:
+                case '\0':
                 case '>':
                 case '/':
                 case '=':

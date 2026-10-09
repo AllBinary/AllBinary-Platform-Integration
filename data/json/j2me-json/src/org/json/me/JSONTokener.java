@@ -113,7 +113,7 @@ public class JSONTokener {
             this.myIndex += 1;
             return c;
         }
-        return 0;
+        return '\0';
     }
 
 
@@ -168,12 +168,12 @@ public class JSONTokener {
                 case '/':
                     do {
                         c = this.next();
-                    } while (c != '\n' && c != '\r' && c != 0);
+                    } while (c != '\n' && c != '\r' && c != '\0');
                     break;
                 case '*':
                     while(true) {
                         c = this.next();
-                        if (c == 0) {
+                        if (c == '\0') {
                             throw this.syntaxError("Unclosed comment.");
                         }
                         if (c == '*') {
@@ -191,8 +191,8 @@ public class JSONTokener {
             } else if (c == '#') {
                 do {
                     c = this.next();
-                } while (c != '\n' && c != '\r' && c != 0);
-            } else if (c == 0 || c > ' ') {
+                } while (c != '\n' && c != '\r' && c != '\0');
+            } else if (c == '\0' || c > ' ') {
                 return c;
             }
         }
@@ -216,7 +216,7 @@ public class JSONTokener {
         while(true) {
             c = this.next();
             switch (c) {
-            case 0:
+            case '\0':
             case '\n':
             case '\r':
                 throw this.syntaxError("Unterminated string");
@@ -268,8 +268,8 @@ public class JSONTokener {
         StringMaker sb = new StringMaker();
         while(true) {
             char c = this.next();
-            if (c == d || c == 0 || c == '\n' || c == '\r') {
-                if (c != 0) {
+            if (c == d || c == '\0' || c == '\n' || c == '\r') {
+                if (c != '\0') {
                     this.back();
                 }
                 return sb.toString().trim();
@@ -290,9 +290,9 @@ public class JSONTokener {
         StringMaker sb = new StringMaker();
         while(true) {
             c = this.next();
-            if (delimiters.indexOf(c) >= 0 || c == 0 ||
+            if (delimiters.indexOf(c) >= 0 || c == '\0' ||
                     c == '\n' || c == '\r') {
-                if (c != 0) {
+                if (c != '\0') {
                     this.back();
                 }
                 return sb.toString().trim();
@@ -416,7 +416,7 @@ public class JSONTokener {
         int index = this.myIndex;
         do {
             c = this.next();
-            if (c == 0) {
+            if (c == '\0') {
                 this.myIndex = index;
                 return c;
             }

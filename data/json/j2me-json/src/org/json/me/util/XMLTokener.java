@@ -71,7 +71,7 @@ public class XMLTokener extends JSONTokener {
         final StringBuilder sb = new StringBuilder();
         while(true) {
             c = this.next();
-            if (c == 0) {
+            if (c == '\0') {
                 throw this.syntaxError("Unclosed CDATA.");
             }
             sb.append(c);
@@ -99,7 +99,7 @@ public class XMLTokener extends JSONTokener {
         do {
             c = this.next();
         } while (XMLTokener.isWhitespace(c));
-        if (c == 0) {
+        if (c == '\0') {
             return null;
         }
         if (c == '<') {
@@ -107,7 +107,7 @@ public class XMLTokener extends JSONTokener {
         }
         sb = new StringMaker();
         while(true) {
-            if (c == '<' || c == 0) {
+            if (c == '<' || c == '\0') {
                 this.back();
                 return sb.toString().trim();
             }
@@ -181,7 +181,7 @@ public class XMLTokener extends JSONTokener {
             q = c;
             while(true) {
                 c = this.next();
-                if (c == 0) {
+                if (c == '\0') {
                     throw this.syntaxError("Unterminated string.");
                 }
                 if (c == q) {
@@ -251,7 +251,7 @@ public class XMLTokener extends JSONTokener {
             sb = new StringMaker();
             while(true) {
                 c = this.next();
-                if (c == 0) {
+                if (c == '\0') {
                     throw this.syntaxError("Unterminated string.");
                 }
                 if (c == q) {

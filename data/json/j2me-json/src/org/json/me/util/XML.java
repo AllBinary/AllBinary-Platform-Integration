@@ -309,7 +309,7 @@ public class XML {
      */
     public static String toString(Object o, String tagName)
             throws JSONException {
-        StringMaker b = new StringMaker();
+        final StringMaker b = new StringMaker();
         int          i;
         JSONArray    ja;
         JSONObject   jo;
@@ -338,7 +338,7 @@ public class XML {
                 if (v instanceof String) {
                     s = (String)v;
                 } else {
-                    s = null;
+                    s = StringUtil.getInstance().EMPTY_STRING;
                 }
 
 // Emit content in body
@@ -399,9 +399,9 @@ public class XML {
             return b.toString();
         } else {
             s = (o == null) ? StringUtil.getInstance().NULL_STRING : XML.escape(o.toString());
-            return (tagName == null) ? "\"" + s + "\"" :
-                (s.length() == 0) ? "<" + tagName + "/>" :
-                "<" + tagName + ">" + s + "</" + tagName + ">";
+            return (tagName == null) ? new StringMaker().append("\"").append(s).append("\"").toString() :
+                (s.length() == 0) ? new StringMaker().append("<").append(tagName).append("/>").toString() : 
+                new StringMaker().append("<").append(tagName).append(">").append(s).append("</").append(tagName).append(">").toString();
         }
     }
 }

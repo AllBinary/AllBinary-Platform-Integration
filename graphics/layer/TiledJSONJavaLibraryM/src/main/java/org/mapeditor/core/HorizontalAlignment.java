@@ -2,7 +2,7 @@
  * #%L
  * TiledJSONJavaLibrary
  * %%
- * Copyright (C) 2004 - 2023 Thorbjørn Lindeijer <thorbjorn@lindeijer.nl>
+ * Copyright (C) 2004 - 2023 ThorbjUNICODEcharrrn Lindeijer <thorbjorn@lindeijer.nl>
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

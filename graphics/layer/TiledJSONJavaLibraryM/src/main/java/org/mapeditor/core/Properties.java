@@ -2,7 +2,7 @@
  * #%L
  * This file is part of libtiled-java.
  * %%
- * Copyright (C) 2004 - 2020 Thorbjørn Lindeijer <thorbjorn@lindeijer.nl>
+ * Copyright (C) 2004 - 2020 ThorbjUNICODEcharrrn Lindeijer <thorbjorn@lindeijer.nl>
  * Copyright (C) 2016 - 2020 Mike Thomas <mikepthomas@outlook.com>
  * %%
  * Redistribution and use in source and binary forms, with or without

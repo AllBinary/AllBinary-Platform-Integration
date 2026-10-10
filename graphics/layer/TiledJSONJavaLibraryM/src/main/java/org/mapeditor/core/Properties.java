@@ -56,7 +56,7 @@ public class Properties extends PropertiesData implements Cloneable {
         Property property = new Property();
         property.setName(name);
         property.setValue(value);
-        this.properties.add(property);
+        this.propertiesP.add(property);
     }
 
     /**
@@ -78,9 +78,9 @@ public class Properties extends PropertiesData implements Cloneable {
      */
     public String getProperty(String name, String defaultValue) {
         Property property;
-        final int size = this.properties.size();
+        final int size = this.propertiesP.size();
         for (int index = 0; index < size; index++) {
-            property = (Property) this.properties.get(index);
+            property = (Property) this.propertiesP.get(index);
             if (name.equals(property.getName())) {
                 return property.getValue();
             }
@@ -92,7 +92,7 @@ public class Properties extends PropertiesData implements Cloneable {
      * clear.
      */
     public void clear() {
-        this.properties.clear();
+        this.propertiesP.clear();
     }
 
     /**
@@ -101,7 +101,7 @@ public class Properties extends PropertiesData implements Cloneable {
      * @return a boolean.
      */
     public boolean isEmpty() {
-        return this.properties.isEmpty();
+        return this.propertiesP.isEmpty();
     }
 
     /**
@@ -122,7 +122,7 @@ public class Properties extends PropertiesData implements Cloneable {
      * @param props a {@link org.mapeditor.core.Properties} object.
      */
     public void putAll(Properties props) {
-        this.properties.addAllList(props.getProperties());
+        this.propertiesP.addAllList(props.getProperties());
     }
 
     /** {@inheritDoc} */

@@ -36,7 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.logic.math.SmallIntegerSingletonFactory;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
@@ -51,31 +50,31 @@ public class TileData {
      * 
      */
         
-    protected Properties properties = new Properties();
+    protected Properties propertiesP = new Properties();
     /**
      * @since 0.9
      * 
      */
         
-    protected ImageData imageData = new ImageData();
+    protected ImageData imageDataP = new ImageData();
     /**
      * @since 0.10
      * 
      */
         
-    protected final BasicArrayList objectgroup = new BasicArrayListD();
+    protected final BasicArrayList objectgroupP = new BasicArrayListD();
     /**
      * @since 0.10
      * 
      */
     
-    protected Animation animation = Animation.NULL_ANIMATION;
+    protected Animation animationP = Animation.NULL_ANIMATION;
     /**
      * The local tile ID within its tileset.
      * 
      */
         
-    protected int id;
+    protected int idP;
     /**
      * The type of the tile. Refers to an object type and is used<br>
      * by tile objects. (optional)<br>
@@ -84,7 +83,7 @@ public class TileData {
      * 
      */
         
-    protected String type = StringUtil.getInstance().EMPTY_STRING;
+    protected String typeP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Defines the terrain type of each corner of the tile, given<br>
      * as comma-separated indexes in the terrain types array in the<br>
@@ -96,7 +95,7 @@ public class TileData {
      * 
      */
         
-    protected String terrain = StringUtil.getInstance().EMPTY_STRING;
+    protected String terrainP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * A percentage indicating the probability that this tile is<br>
      * chosen when it competes with others while editing with the<br>
@@ -106,7 +105,7 @@ public class TileData {
      * 
      */
         
-    protected Double probability = Double.valueOf(0.0f);
+    protected Double probabilityP = Double.valueOf(0.0f);
 
     /**
      * 
@@ -117,7 +116,7 @@ public class TileData {
      */
     
     public Properties getProperties() {
-        return this.properties;
+        return this.propertiesP;
     }
 
     /**
@@ -129,7 +128,7 @@ public class TileData {
      */
     
     public void setProperties(Properties value) {
-        this.properties = value;
+        this.propertiesP = value;
     }
 
     /**
@@ -142,7 +141,7 @@ public class TileData {
      */
     
     public ImageData getImageData() {
-        return this.imageData;
+        return this.imageDataP;
     }
 
     /**
@@ -155,7 +154,7 @@ public class TileData {
      */
     
     public void setImageData(ImageData value) {
-        this.imageData = value;
+        this.imageDataP = value;
     }
 
     /**
@@ -164,7 +163,7 @@ public class TileData {
      */
     
     public BasicArrayList getObjectgroup() {
-        return this.objectgroup;
+        return this.objectgroupP;
     }
 
     /**
@@ -177,7 +176,7 @@ public class TileData {
      */
     
     public Animation getAnimation() {
-        return this.animation;
+        return this.animationP;
     }
 
     /**
@@ -190,7 +189,7 @@ public class TileData {
      */
     
     public void setAnimation(Animation value) {
-        this.animation = value;
+        this.animationP = value;
     }
 
     /**
@@ -203,7 +202,7 @@ public class TileData {
      */
     
     public int getId() {
-        return this.id;
+        return this.idP;
     }
 
     /**
@@ -216,7 +215,7 @@ public class TileData {
      */
     
     public void setId(int value) {
-        this.id = value;
+        this.idP = value;
     }
 
     /**
@@ -232,7 +231,7 @@ public class TileData {
      */
     
     public String getType() {
-        return this.type;
+        return this.typeP;
     }
 
     /**
@@ -248,7 +247,7 @@ public class TileData {
      */
     
     public void setType(String value) {
-        this.type = value;
+        this.typeP = value;
     }
 
     /**
@@ -267,7 +266,7 @@ public class TileData {
      */
     
     public String getTerrain() {
-        return this.terrain;
+        return this.terrainP;
     }
 
     /**
@@ -286,7 +285,7 @@ public class TileData {
      */
     
     public void setTerrain(String value) {
-        this.terrain = value;
+        this.terrainP = value;
     }
 
     /**
@@ -303,7 +302,7 @@ public class TileData {
      */
     
     public Double getProbability() {
-        return this.probability;
+        return this.probabilityP;
     }
 
     /**
@@ -320,7 +319,7 @@ public class TileData {
      */
     
     public void setProbability(Double value) {
-        this.probability = value;
+        this.probabilityP = value;
     }
 
 }

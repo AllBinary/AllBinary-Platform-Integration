@@ -55,13 +55,13 @@ public class TileOffset {
      * 
      */
         
-    protected Integer x = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer xP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Vertical offset in pixels (positive is down)
      * 
      */
         
-    protected Integer y = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer yP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * Horizontal offset in pixels
@@ -73,7 +73,7 @@ public class TileOffset {
      */
     
     public Integer getX() {
-        return this.x;
+        return this.xP;
     }
 
     /**
@@ -86,7 +86,7 @@ public class TileOffset {
      */
     
     public void setX(Integer value) {
-        this.x = value;
+        this.xP = value;
     }
 
     /**
@@ -99,7 +99,7 @@ public class TileOffset {
      */
     
     public Integer getY() {
-        return this.y;
+        return this.yP;
     }
 
     /**
@@ -112,7 +112,7 @@ public class TileOffset {
      */
     
     public void setY(Integer value) {
-        this.y = value;
+        this.yP = value;
     }
 
 }

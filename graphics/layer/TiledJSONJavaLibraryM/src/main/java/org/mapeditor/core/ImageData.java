@@ -36,7 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.logic.math.SmallIntegerSingletonFactory;
 import org.allbinary.logic.string.StringUtil;
 
 
@@ -56,7 +55,7 @@ public class ImageData {
      * 
      */
      
-    protected Data data = Data.NULL_DATA;
+    protected Data dataP = Data.NULL_DATA;
     /**
      * Used for embedded images, in combination with a `data` child<br>
      * element. Valid values are file extensions like `png`, `gif`,<br>
@@ -66,7 +65,7 @@ public class ImageData {
      * 
      */
         
-    protected String format = StringUtil.getInstance().EMPTY_STRING;
+    protected String formatP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Used by some versions of Tiled Java.<br>
      * <br>
@@ -74,7 +73,7 @@ public class ImageData {
      * 
      */
     //@Deprecated
-    protected int id;
+    protected int idP;
     /**
      * The reference to the tileset image file<br>
      * (Tiled supports most common image formats).<br>
@@ -83,7 +82,7 @@ public class ImageData {
      * 
      */
             
-    protected String source = StringUtil.getInstance().EMPTY_STRING;
+    protected String sourceP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Defines a specific color that is treated as transparent<br>
      * (example value: "#FF00FF" for magenta). Up until Tiled 0.12,<br>
@@ -92,20 +91,20 @@ public class ImageData {
      * 
      */
         
-    protected String trans = StringUtil.getInstance().EMPTY_STRING;
+    protected String transP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The image width in pixels (optional, used for tile index<br>
      * correction when the image changes)
      * 
      */
         
-    protected int width;
+    protected int widthP;
     /**
      * The image height in pixels (optional)
      * 
      */
         
-    protected int height;
+    protected int heightP;
 
     public String path = StringUtil.getInstance().EMPTY_STRING;
     
@@ -119,7 +118,7 @@ public class ImageData {
      */
     
     public Data getData() {
-        return this.data;
+        return this.dataP;
     }
 
     /**
@@ -132,7 +131,7 @@ public class ImageData {
      */
     
     public void setData(Data value) {
-        this.data = value;
+        this.dataP = value;
     }
 
     /**
@@ -149,7 +148,7 @@ public class ImageData {
      */
     
     public String getFormat() {
-        return this.format;
+        return this.formatP;
     }
 
     /**
@@ -166,7 +165,7 @@ public class ImageData {
      */
     
     public void setFormat(String value) {
-        this.format = value;
+        this.formatP = value;
     }
 
     /**
@@ -182,7 +181,7 @@ public class ImageData {
     //@Deprecated
     
     public int getId() {
-        return this.id;
+        return this.idP;
     }
 
     /**
@@ -198,7 +197,7 @@ public class ImageData {
     //@Deprecated
     
     public void setId(int value) {
-        this.id = value;
+        this.idP = value;
     }
 
     /**
@@ -214,7 +213,7 @@ public class ImageData {
      */
     
     public String getSource() {
-        return this.source;
+        return this.sourceP;
     }
 
     /**
@@ -230,7 +229,7 @@ public class ImageData {
      */
     
     public void setSource(String value) {
-        this.source = value;
+        this.sourceP = value;
     }
 
     /**
@@ -246,7 +245,7 @@ public class ImageData {
      */
     
     public String getTrans() {
-        return this.trans;
+        return this.transP;
     }
 
     /**
@@ -262,7 +261,7 @@ public class ImageData {
      */
     
     public void setTrans(String value) {
-        this.trans = value;
+        this.transP = value;
     }
 
     /**
@@ -276,7 +275,7 @@ public class ImageData {
      */
     
     public int getWidth() {
-        return this.width;
+        return this.widthP;
     }
 
     /**
@@ -290,7 +289,7 @@ public class ImageData {
      */
     
     public void setWidth(int value) {
-        this.width = value;
+        this.widthP = value;
     }
 
     /**
@@ -303,7 +302,7 @@ public class ImageData {
      */
     
     public int getHeight() {
-        return this.height;
+        return this.heightP;
     }
 
     /**
@@ -316,7 +315,7 @@ public class ImageData {
      */
     
     public void setHeight(int value) {
-        this.height = value;
+        this.heightP = value;
     }
 
 }

@@ -51,20 +51,20 @@ public class Terrain {
      * 
      */
         
-    protected Properties properties = new Properties();
+    protected Properties propertiesP = new Properties();
     /**
      * The name of the terrain type.
      * 
      */
         
-    protected String name = StringUtil.getInstance().EMPTY_STRING;
+    protected String nameP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The local tile-id of the tile that represents the terrain<br>
      * visually.
      * 
      */
         
-    protected Integer tile = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer tileP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * 
@@ -75,7 +75,7 @@ public class Terrain {
      */
     
     public PropertiesData getProperties() {
-        return this.properties;
+        return this.propertiesP;
     }
 
     /**
@@ -87,7 +87,7 @@ public class Terrain {
      */
     
     public void setProperties(PropertiesData value) {
-        this.properties = ((Properties) value);
+        this.propertiesP = ((Properties) value);
     }
 
     /**
@@ -100,7 +100,7 @@ public class Terrain {
      */
     
     public String getName() {
-        return this.name;
+        return this.nameP;
     }
 
     /**
@@ -113,7 +113,7 @@ public class Terrain {
      */
     
     public void setName(String value) {
-        this.name = value;
+        this.nameP = value;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Terrain {
      */
     
     public Integer getTile() {
-        return this.tile;
+        return this.tileP;
     }
 
     /**
@@ -141,7 +141,7 @@ public class Terrain {
      */
     
     public void setTile(Integer value) {
-        this.tile = value;
+        this.tileP = value;
     }
 
 }

@@ -36,10 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.logic.math.SmallIntegerSingletonFactory;
-
-
-
 /**
  * 
  */
@@ -52,14 +48,14 @@ public class Frame {
      * 
      */
         
-    protected int tileid;
+    protected int tileidP;
     /**
      * How long (in milliseconds) this frame should be displayed<br>
      * before advancing to the next frame.
      * 
      */
         
-    protected int duration;
+    protected int durationP;
 
     /**
      * The local ID of a tile within the parent tileset.
@@ -71,7 +67,7 @@ public class Frame {
      */
     
     public int getTileid() {
-        return this.tileid;
+        return this.tileidP;
     }
 
     /**
@@ -84,7 +80,7 @@ public class Frame {
      */
     
     public void setTileid(int value) {
-        this.tileid = value;
+        this.tileidP = value;
     }
 
     /**
@@ -98,7 +94,7 @@ public class Frame {
      */
     
     public int getDuration() {
-        return this.duration;
+        return this.durationP;
     }
 
     /**
@@ -112,7 +108,7 @@ public class Frame {
      */
     
     public void setDuration(int value) {
-        this.duration = value;
+        this.durationP = value;
     }
 
 }

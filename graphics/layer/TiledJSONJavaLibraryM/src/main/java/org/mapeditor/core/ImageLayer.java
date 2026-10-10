@@ -50,7 +50,7 @@ public class ImageLayer
      * 
      */
         
-    protected ImageData image = new ImageData();
+    protected ImageData imageP = new ImageData();
 
     /**
      * 
@@ -61,7 +61,7 @@ public class ImageLayer
      */
     
     public ImageData getImage() {
-        return this.image;
+        return this.imageP;
     }
 
     /**
@@ -73,7 +73,7 @@ public class ImageLayer
      */
     
     public void setImage(ImageData value) {
-        this.image = value;
+        this.imageP = value;
     }
 
 }

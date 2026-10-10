@@ -36,7 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.logic.math.SmallIntegerSingletonFactory;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
@@ -52,36 +51,36 @@ public class WangSet {
      * 
      */
         
-    protected final BasicArrayList wangcornercolor = new BasicArrayListD();
+    protected final BasicArrayList wangcornercolorP = new BasicArrayListD();
     /**
      * 
      */
         
-    protected final BasicArrayList wangedgecolor = new BasicArrayListD();
+    protected final BasicArrayList wangedgecolorP = new BasicArrayListD();
     /**
      * 
      */
         
-    protected final BasicArrayList wangtile = new BasicArrayListD();
+    protected final BasicArrayList wangtileP = new BasicArrayListD();
     /**
      * The name of the Wang set.
      * 
      */
         
-    protected String name = StringUtil.getInstance().EMPTY_STRING;
+    protected String nameP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The tile ID of the tile representing this Wang set.
      * 
      */
         
-    protected int tile;
+    protected int tileP;
 
     /**
      * 
      */
     
     public BasicArrayList getWangcornercolor() {
-        return this.wangcornercolor;
+        return this.wangcornercolorP;
     }
 
     /**
@@ -89,7 +88,7 @@ public class WangSet {
      */
     
     public BasicArrayList getWangedgecolor() {
-        return this.wangedgecolor;
+        return this.wangedgecolorP;
     }
 
     /**
@@ -97,7 +96,7 @@ public class WangSet {
      */
     
     public BasicArrayList getWangtile() {
-        return this.wangtile;
+        return this.wangtileP;
     }
 
     /**
@@ -110,7 +109,7 @@ public class WangSet {
      */
     
     public String getName() {
-        return this.name;
+        return this.nameP;
     }
 
     /**
@@ -123,7 +122,7 @@ public class WangSet {
      */
     
     public void setName(String value) {
-        this.name = value;
+        this.nameP = value;
     }
 
     /**
@@ -136,7 +135,7 @@ public class WangSet {
      */
     
     public int getTile() {
-        return this.tile;
+        return this.tileP;
     }
 
     /**
@@ -149,7 +148,7 @@ public class WangSet {
      */
     
     public void setTile(int value) {
-        this.tile = value;
+        this.tileP = value;
     }
 
 }

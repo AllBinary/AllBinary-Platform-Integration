@@ -52,7 +52,7 @@ public class TileLayerData
      * 
      */
         
-    protected Data data = Data.NULL_DATA;
+    protected Data dataP = Data.NULL_DATA;
 
     /**
      * 
@@ -63,7 +63,7 @@ public class TileLayerData
      */
     
     public Data getData() {
-        return this.data;
+        return this.dataP;
     }
 
     /**
@@ -75,7 +75,7 @@ public class TileLayerData
      */
     
     public void setData(Data value) {
-        this.data = value;
+        this.dataP = value;
     }
 
 }

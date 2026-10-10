@@ -36,7 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.logic.math.SmallIntegerSingletonFactory;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
@@ -56,54 +55,54 @@ public class TileSetData {
      * 
      */
         
-    protected TileOffset tileoffset = new TileOffset();
+    protected TileOffset tileoffsetP = new TileOffset();
     /**
      * @since 1.0
      * 
      */
         
-    protected Grid grid = new Grid();
+    protected Grid gridP = new Grid();
     /**
      * @since 0.8
      * 
      */
         
-    protected Properties properties = new Properties();
+    protected Properties propertiesP = new Properties();
     /**
      * 
      */
         
-    protected ImageData imageData = new ImageData();
+    protected ImageData imageDataP = new ImageData();
     /**
      * @since 0.9
      * 
      */
     
-    protected TerrainTypes terraintypes = new TerrainTypes();
+    protected TerrainTypes terraintypesP = new TerrainTypes();
     /**
      * 
      */
         
-    protected final BasicArrayList internalTiles = new BasicArrayListD();
+    protected final BasicArrayList internalTilesP = new BasicArrayListD();
     /**
      * @since 1.1
      * 
      */
         
-    protected WangSets wangsets = new WangSets();
+    protected WangSets wangsetsP = new WangSets();
     /**
      * The first global tile ID of this tileset (this global ID<br>
      * maps to the first tile in this tileset).
      * 
      */
         
-    protected int firstgid;
+    protected int firstgidP;
     /**
      * The name of this tileset.
      * 
      */
         
-    protected String name = StringUtil.getInstance().EMPTY_STRING;
+    protected String nameP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * If this tileset is stored in an external TSX (Tile Set XML)<br>
      * file, this attribute refers to that file. That TSX file has<br>
@@ -114,33 +113,33 @@ public class TileSetData {
      * 
      */
             
-    protected String source = StringUtil.getInstance().EMPTY_STRING;
+    protected String sourceP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The (maximum) width of the tiles in this tileset.
      * 
      */
         
-    protected int tileWidth;
+    protected int tileWidthP;
     /**
      * The (maximum) height of the tiles in this tileset.
      * 
      */
         
-    protected int tileHeight;
+    protected int tileHeightP;
     /**
      * The spacing in pixels between the tiles in this tileset<br>
      * (applies to the tileset image).
      * 
      */
         
-    protected int tileSpacing;
+    protected int tileSpacingP;
     /**
      * The margin around the tiles in this tileset (applies to the<br>
      * tileset image).
      * 
      */
         
-    protected int tileMargin;
+    protected int tileMarginP;
     /**
      * The number of tiles in this tileset<br>
      * <br>
@@ -148,7 +147,7 @@ public class TileSetData {
      * 
      */
         
-    protected int tilecount;
+    protected int tilecountP;
     /**
      * The number of tile columns in the tileset. For image<br>
      * collection tilesets it is editable and is used when<br>
@@ -158,7 +157,7 @@ public class TileSetData {
      * 
      */
         
-    protected int columns;
+    protected int columnsP;
 
     /**
      * @since 0.8
@@ -170,7 +169,7 @@ public class TileSetData {
      */
     
     public TileOffset getTileoffset() {
-        return this.tileoffset;
+        return this.tileoffsetP;
     }
 
     /**
@@ -183,7 +182,7 @@ public class TileSetData {
      */
     
     public void setTileoffset(TileOffset value) {
-        this.tileoffset = value;
+        this.tileoffsetP = value;
     }
 
     /**
@@ -196,7 +195,7 @@ public class TileSetData {
      */
     
     public Grid getGrid() {
-        return this.grid;
+        return this.gridP;
     }
 
     /**
@@ -209,7 +208,7 @@ public class TileSetData {
      */
     
     public void setGrid(Grid value) {
-        this.grid = value;
+        this.gridP = value;
     }
 
     /**
@@ -222,7 +221,7 @@ public class TileSetData {
      */
     
     public Properties getProperties() {
-        return this.properties;
+        return this.propertiesP;
     }
 
     /**
@@ -235,7 +234,7 @@ public class TileSetData {
      */
     
     public void setProperties(Properties value) {
-        this.properties = value;
+        this.propertiesP = value;
     }
 
     /**
@@ -247,7 +246,7 @@ public class TileSetData {
      */
     
     public ImageData getImageData() {
-        return this.imageData;
+        return this.imageDataP;
     }
 
     /**
@@ -259,7 +258,7 @@ public class TileSetData {
      */
     
     public void setImageData(ImageData value) {
-        this.imageData = value;
+        this.imageDataP = value;
     }
 
     /**
@@ -272,7 +271,7 @@ public class TileSetData {
      */
     
     public TerrainTypes getTerraintypes() {
-        return this.terraintypes;
+        return this.terraintypesP;
     }
 
     /**
@@ -285,7 +284,7 @@ public class TileSetData {
      */
     
     public void setTerraintypes(TerrainTypes value) {
-        this.terraintypes = value;
+        this.terraintypesP = value;
     }
 
     /**
@@ -293,7 +292,7 @@ public class TileSetData {
      */
     
     public BasicArrayList getInternalTiles() {
-        return this.internalTiles;
+        return this.internalTilesP;
     }
 
     /**
@@ -306,7 +305,7 @@ public class TileSetData {
      */
     
     public WangSets getWangsets() {
-        return this.wangsets;
+        return this.wangsetsP;
     }
 
     /**
@@ -319,7 +318,7 @@ public class TileSetData {
      */
     
     public void setWangsets(WangSets value) {
-        this.wangsets = value;
+        this.wangsetsP = value;
     }
 
     /**
@@ -333,7 +332,7 @@ public class TileSetData {
      */
     
     public int getFirstgid() {
-        return this.firstgid;
+        return this.firstgidP;
     }
 
     /**
@@ -347,7 +346,7 @@ public class TileSetData {
      */
     
     public void setFirstgid(int value) {
-        this.firstgid = value;
+        this.firstgidP = value;
     }
 
     /**
@@ -360,7 +359,7 @@ public class TileSetData {
      */
     
     public String getName() {
-        return this.name;
+        return this.nameP;
     }
 
     /**
@@ -373,7 +372,7 @@ public class TileSetData {
      */
     
     public void setName(String value) {
-        this.name = value;
+        this.nameP = value;
     }
 
     /**
@@ -391,7 +390,7 @@ public class TileSetData {
      */
     
     public String getSource() {
-        return this.source;
+        return this.sourceP;
     }
 
     /**
@@ -409,7 +408,7 @@ public class TileSetData {
      */
     
     public void setSource(String value) {
-        this.source = value;
+        this.sourceP = value;
     }
 
     /**
@@ -418,7 +417,7 @@ public class TileSetData {
      */
     
     public int getTileWidth() {
-        return this.tileWidth;
+        return this.tileWidthP;
     }
 
     /**
@@ -427,7 +426,7 @@ public class TileSetData {
      */
     
     public void setTileWidth(int value) {
-        this.tileWidth = value;
+        this.tileWidthP = value;
     }
 
     /**
@@ -436,7 +435,7 @@ public class TileSetData {
      */
     
     public int getTileHeight() {
-        return this.tileHeight;
+        return this.tileHeightP;
     }
 
     /**
@@ -445,7 +444,7 @@ public class TileSetData {
      */
     
     public void setTileHeight(int value) {
-        this.tileHeight = value;
+        this.tileHeightP = value;
     }
 
     /**
@@ -459,7 +458,7 @@ public class TileSetData {
      */
     
     public int getTileSpacing() {
-        return this.tileSpacing;
+        return this.tileSpacingP;
     }
 
     /**
@@ -473,7 +472,7 @@ public class TileSetData {
      */
     
     public void setTileSpacing(int value) {
-        this.tileSpacing = value;
+        this.tileSpacingP = value;
     }
 
     /**
@@ -487,7 +486,7 @@ public class TileSetData {
      */
     
     public int getTileMargin() {
-        return this.tileMargin;
+        return this.tileMarginP;
     }
 
     /**
@@ -501,7 +500,7 @@ public class TileSetData {
      */
     
     public void setTileMargin(int value) {
-        this.tileMargin = value;
+        this.tileMarginP = value;
     }
 
     /**
@@ -516,7 +515,7 @@ public class TileSetData {
      */
     
     public int getTilecount() {
-        return this.tilecount;
+        return this.tilecountP;
     }
 
     /**
@@ -531,7 +530,7 @@ public class TileSetData {
      */
     
     public void setTilecount(int value) {
-        this.tilecount = value;
+        this.tilecountP = value;
     }
 
     /**
@@ -544,7 +543,7 @@ public class TileSetData {
      */
     
     public int getColumns() {
-        return this.columns;
+        return this.columnsP;
     }
 
     /**
@@ -557,7 +556,7 @@ public class TileSetData {
      */
     
     public void setColumns(int value) {
-        this.columns = value;
+        this.columnsP = value;
     }
 
 }

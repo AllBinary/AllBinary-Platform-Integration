@@ -52,7 +52,7 @@ public class Property {
      * 
      */
         
-    protected String name = StringUtil.getInstance().EMPTY_STRING;
+    protected String nameP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The type of the property. Can be `string` (default), `int`,<br>
      * `float`, `bool`, `color` or `file` (since 0.16, with `color`<br>
@@ -60,13 +60,13 @@ public class Property {
      * 
      */
         
-    protected PropertyType type = PropertyType.BOOL;
+    protected PropertyType typeP = PropertyType.BOOL;
     /**
      * The value of the property.
      * 
      */
         
-    protected String value = StringUtil.getInstance().EMPTY_STRING;
+    protected String valueP = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * The name of the property.
@@ -78,7 +78,7 @@ public class Property {
      */
     
     public String getName() {
-        return this.name;
+        return this.nameP;
     }
 
     /**
@@ -91,7 +91,7 @@ public class Property {
      */
     
     public void setName(String value) {
-        this.name = value;
+        this.nameP = value;
     }
 
     /**
@@ -106,7 +106,7 @@ public class Property {
      */
     
     public PropertyType getType() {
-        return this.type;
+        return this.typeP;
     }
 
     /**
@@ -121,7 +121,7 @@ public class Property {
      */
     
     public void setType(PropertyType value) {
-        this.type = value;
+        this.typeP = value;
     }
 
     /**
@@ -134,7 +134,7 @@ public class Property {
      */
     
     public String getValue() {
-        return this.value;
+        return this.valueP;
     }
 
     /**
@@ -147,7 +147,7 @@ public class Property {
      */
     
     public void setValue(String value) {
-        this.value = value;
+        this.valueP = value;
     }
 
 }

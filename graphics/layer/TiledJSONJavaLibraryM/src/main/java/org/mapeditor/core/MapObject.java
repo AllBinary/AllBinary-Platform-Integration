@@ -58,8 +58,8 @@ public class MapObject extends MapObjectData implements Cloneable {
      */
     public MapObject() {
         super();
-        this.name = StringUtil.getInstance().EMPTY_STRING;
-        this.type = StringUtil.getInstance().EMPTY_STRING;
+        this.nameP = StringUtil.getInstance().EMPTY_STRING;
+        this.typeP = StringUtil.getInstance().EMPTY_STRING;
         this.displayImageSource = StringUtil.getInstance().EMPTY_STRING;
         this.flipHorizontal = false;
         this.flipVertical = false;
@@ -78,11 +78,11 @@ public class MapObject extends MapObjectData implements Cloneable {
      */
     public MapObject(double x, double y, double width, double height, double rotation) {
         this();
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.rotation = rotation;
+        this.xP = x;
+        this.yP = y;
+        this.widthP = width;
+        this.heightP = height;
+        this.rotationP = rotation;
     }
 
     /** {@inheritDoc} */
@@ -127,10 +127,10 @@ public class MapObject extends MapObjectData implements Cloneable {
      */
 //      public void setBounds(Rectangle bounds) {
 //          System.out.println("TWB = MapObject:setBounds");
-//        this.x = bounds.getPoint().getX();
-//        this.y = bounds.getPoint().getY();
-//        this.width = new Double(bounds.getWidth());
-//        this.height =  new Double(bounds.getHeight());
+//        this.xP = bounds.getPoint().getX();
+//        this.yP = bounds.getPoint().getY();
+//        this.widthP = new Double(bounds.getWidth());
+//        this.heightP =  new Double(bounds.getHeight());
 //    }
 
     /**
@@ -245,13 +245,13 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @param dy a double.
      */
     public void translate(double dx, double dy) {
-        this.x += dx;
-        this.y += dy;
+        this.xP += dx;
+        this.yP += dy;
     }
 
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return this.type + " (" + this.getX() + "," + this.getY() + ")";
+        return this.typeP + " (" + this.getX() + "," + this.getY() + ")";
     }
 }

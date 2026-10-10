@@ -55,7 +55,7 @@ public class Tile extends TileData {
      */
     public Tile() {
         super();
-        this.id = -1;
+        this.idP = -1;
     }
 
     /**
@@ -95,7 +95,7 @@ public class Tile extends TileData {
     @Override
     public void setId(int value) {
         if (value >= 0) {
-            this.id = value;
+            this.idP = value;
             //final CommonStrings commonStrings = CommonStrings.getInstance();
             //logUtil.putF(new StringMaker().append("tileId: ").append(this.id).toString(), this, commonStrings.PROCESS);
         }
@@ -182,6 +182,6 @@ public class Tile extends TileData {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return new StringMaker().append("Tile ").appendint(this.id).append(" (").appendint(this.getWidth()).append("x").appendint(this.getHeight()).append(")").toString();
+        return new StringMaker().append("Tile ").appendint(this.idP).append(" (").appendint(this.getWidth()).append("x").appendint(this.getHeight()).append(")").toString();
     }
 }

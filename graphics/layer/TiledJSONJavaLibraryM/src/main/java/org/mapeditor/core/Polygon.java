@@ -57,7 +57,7 @@ public class Polygon {
      * 
      */
         
-    protected String points = StringUtil.getInstance().EMPTY_STRING;
+    protected String pointsP = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * A list of x,y coordinates in pixels.
@@ -69,7 +69,7 @@ public class Polygon {
      */
     
     public String getPoints() {
-        return this.points;
+        return this.pointsP;
     }
 
     /**
@@ -82,7 +82,7 @@ public class Polygon {
      */
     
     public void setPoints(String value) {
-        this.points = value;
+        this.pointsP = value;
     }
 
 }

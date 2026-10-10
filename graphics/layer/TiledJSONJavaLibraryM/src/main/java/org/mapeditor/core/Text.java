@@ -53,13 +53,13 @@ public class Text {
      * 
      */
         
-    protected String value = StringUtil.getInstance().EMPTY_STRING;
+    protected String valueP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The font family used (default: "sand-serif")
      * 
      */
         
-    protected String fontfamily = StringUtil.getInstance().EMPTY_STRING;
+    protected String fontfamilyP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The size of the font in pixels (not using points,<br>
      * because other sizes in the TMX format are also using<br>
@@ -67,70 +67,70 @@ public class Text {
      * 
      */
         
-    protected Integer pixelsize = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer pixelsizeP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Whether word wrapping is enabled (1) or disabled<br>
      * (0). Defaults to 0.
      * 
      */
         
-    protected Boolean wrap = BooleanFactory.getInstance().FALSE;
+    protected Boolean wrapP = BooleanFactory.getInstance().FALSE;
     /**
      * Color of the text in `#AARRGGBB` or `#RRGGBB` format<br>
      * (default: #000000)
      * 
      */
         
-    protected String color = StringUtil.getInstance().EMPTY_STRING;
+    protected String colorP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Whether the font is bold (1) or not (0). Defaults to<br>
      *  0.
      * 
      */
         
-    protected Boolean bold = BooleanFactory.getInstance().FALSE;
+    protected Boolean boldP = BooleanFactory.getInstance().FALSE;
     /**
      * Whether the font is italic (1) or not (0). Defaults<br>
      * to 0.
      * 
      */
         
-    protected Boolean italic = BooleanFactory.getInstance().FALSE;
+    protected Boolean italicP = BooleanFactory.getInstance().FALSE;
     /**
      * Whether a line should be drawn below the text (1) or<br>
      * not (0). Defaults to 0.
      * 
      */
         
-    protected Boolean underline = BooleanFactory.getInstance().FALSE;
+    protected Boolean underlineP = BooleanFactory.getInstance().FALSE;
     /**
      * Whether a line should be drawn through the text (1)<br>
      * or not (0). Defaults to 0.
      * 
      */
         
-    protected Boolean strikeout = BooleanFactory.getInstance().FALSE;
+    protected Boolean strikeoutP = BooleanFactory.getInstance().FALSE;
     /**
      * Whether kerning should be used while rendering the<br>
      * text (1) or not (0). Default to 1.
      * 
      */
         
-    protected Boolean kerning = BooleanFactory.getInstance().FALSE;
+    protected Boolean kerningP = BooleanFactory.getInstance().FALSE;
     /**
      * Horizontal alignment of the text within the object<br>
      * (`left` (default), `center` or `right`)
      * 
      */
         
-    protected HorizontalAlignment halign = HorizontalAlignment.CENTER;
+    protected HorizontalAlignment halignP = HorizontalAlignment.CENTER;
     /**
      * Vertical alignment of the text within the object<br>
      * (`left` (default), `center` or `right`)
      * 
      */
         
-    protected VerticalAlignment valign = VerticalAlignment.CENTER;
+    protected VerticalAlignment valignP = VerticalAlignment.CENTER;
 
     /**
      * 
@@ -141,7 +141,7 @@ public class Text {
      */
     
     public String getValue() {
-        return this.value;
+        return this.valueP;
     }
 
     /**
@@ -153,7 +153,7 @@ public class Text {
      */
     
     public void setValue(String value) {
-        this.value = value;
+        this.valueP = value;
     }
 
     /**
@@ -166,7 +166,7 @@ public class Text {
      */
     
     public String getFontfamily() {
-        return this.fontfamily;
+        return this.fontfamilyP;
     }
 
     /**
@@ -179,7 +179,7 @@ public class Text {
      */
     
     public void setFontfamily(String value) {
-        this.fontfamily = value;
+        this.fontfamilyP = value;
     }
 
     /**
@@ -194,7 +194,7 @@ public class Text {
      */
     
     public Integer getPixelsize() {
-        return this.pixelsize;
+        return this.pixelsizeP;
     }
 
     /**
@@ -209,7 +209,7 @@ public class Text {
      */
     
     public void setPixelsize(Integer value) {
-        this.pixelsize = value;
+        this.pixelsizeP = value;
     }
 
     /**
@@ -223,7 +223,7 @@ public class Text {
      */
     
     public Boolean isWrap() {
-        return this.wrap;
+        return this.wrapP;
     }
 
     /**
@@ -237,7 +237,7 @@ public class Text {
      */
     
     public void setWrap(Boolean value) {
-        this.wrap = value;
+        this.wrapP = value;
     }
 
     /**
@@ -251,7 +251,7 @@ public class Text {
      */
     
     public String getColor() {
-        return this.color;
+        return this.colorP;
     }
 
     /**
@@ -265,7 +265,7 @@ public class Text {
      */
     
     public void setColor(String value) {
-        this.color = value;
+        this.colorP = value;
     }
 
     /**
@@ -279,7 +279,7 @@ public class Text {
      */
     
     public Boolean isBold() {
-        return this.bold;
+        return this.boldP;
     }
 
     /**
@@ -293,7 +293,7 @@ public class Text {
      */
     
     public void setBold(Boolean value) {
-        this.bold = value;
+        this.boldP = value;
     }
 
     /**
@@ -307,7 +307,7 @@ public class Text {
      */
     
     public Boolean isItalic() {
-        return this.italic;
+        return this.italicP;
     }
 
     /**
@@ -321,7 +321,7 @@ public class Text {
      */
     
     public void setItalic(Boolean value) {
-        this.italic = value;
+        this.italicP = value;
     }
 
     /**
@@ -335,7 +335,7 @@ public class Text {
      */
     
     public Boolean isUnderline() {
-        return this.underline;
+        return this.underlineP;
     }
 
     /**
@@ -349,7 +349,7 @@ public class Text {
      */
     
     public void setUnderline(Boolean value) {
-        this.underline = value;
+        this.underlineP = value;
     }
 
     /**
@@ -363,7 +363,7 @@ public class Text {
      */
     
     public Boolean isStrikeout() {
-        return this.strikeout;
+        return this.strikeoutP;
     }
 
     /**
@@ -377,7 +377,7 @@ public class Text {
      */
     
     public void setStrikeout(Boolean value) {
-        this.strikeout = value;
+        this.strikeoutP = value;
     }
 
     /**
@@ -391,7 +391,7 @@ public class Text {
      */
     
     public Boolean isKerning() {
-        return this.kerning;
+        return this.kerningP;
     }
 
     /**
@@ -405,7 +405,7 @@ public class Text {
      */
     
     public void setKerning(Boolean value) {
-        this.kerning = value;
+        this.kerningP = value;
     }
 
     /**
@@ -419,7 +419,7 @@ public class Text {
      */
     
     public HorizontalAlignment getHalign() {
-        return this.halign;
+        return this.halignP;
     }
 
     /**
@@ -433,7 +433,7 @@ public class Text {
      */
     
     public void setHalign(HorizontalAlignment value) {
-        this.halign = value;
+        this.halignP = value;
     }
 
     /**
@@ -447,7 +447,7 @@ public class Text {
      */
     
     public VerticalAlignment getValign() {
-        return this.valign;
+        return this.valignP;
     }
 
     /**
@@ -461,7 +461,7 @@ public class Text {
      */
     
     public void setValign(VerticalAlignment value) {
-        this.valign = value;
+        this.valignP = value;
     }
 
 }

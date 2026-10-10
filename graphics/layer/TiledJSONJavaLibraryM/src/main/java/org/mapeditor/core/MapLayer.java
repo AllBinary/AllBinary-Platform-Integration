@@ -63,7 +63,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public static final int ROTATE_270 = 270;
 
-    protected TiledMap map = new TiledMap();
+    protected TiledMap mapP = new TiledMap();
 
     /**
      * Constructor for MapLayer.
@@ -117,8 +117,8 @@ public class MapLayer extends LayerData implements Cloneable {
      * @param y distance over y axis
      */
     public void translate(int x, int y) {
-        this.x += x;
-        this.y += y;
+        this.xP += x;
+        this.yP += y;
     }
 
     /**
@@ -126,10 +126,10 @@ public class MapLayer extends LayerData implements Cloneable {
      *
      */
     protected void setBounds(Rectangle bounds) {
-        this.x = bounds.getPoint().getX();
-        this.y = bounds.getPoint().getY();
-        this.width = bounds.getWidth();
-        this.height = bounds.getHeight();
+        this.xP = bounds.getPoint().getX();
+        this.yP = bounds.getPoint().getY();
+        this.widthP = bounds.getWidth();
+        this.heightP = bounds.getHeight();
     }
 
     /**
@@ -138,7 +138,7 @@ public class MapLayer extends LayerData implements Cloneable {
      * @param map the Map object
      */
     public final void setMap(TiledMap map) {
-        this.map = map;
+        this.mapP = map;
     }
 
     /**
@@ -147,7 +147,7 @@ public class MapLayer extends LayerData implements Cloneable {
      * @return a {@link org.mapeditor.core.TiledMap} object.
      */
     public TiledMap getMap() {
-        return this.map;
+        return this.mapP;
     }
 
     /**
@@ -158,8 +158,8 @@ public class MapLayer extends LayerData implements Cloneable {
      * @param y y offset in tiles
      */
     public void setOffset(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.xP = x;
+        this.yP = y;
     }
 
     /**
@@ -169,7 +169,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public Rectangle getBounds() {
 
-        return new Rectangle(PointFactory.getInstance().createXY(this.x, this.y), this.width, this.height);
+        return new Rectangle(PointFactory.getInstance().createXY(this.xP, this.yP), this.widthP, this.heightP);
     }
 
     /**
@@ -178,9 +178,9 @@ public class MapLayer extends LayerData implements Cloneable {
      * @param rect the rectangle to which the layer bounds are assigned
      */
     public void getBounds(Rectangle rect) {
-        rect.setPoint(PointFactory.getInstance().createXY(this.x, this.y));
-        rect.setWidth(this.width);
-        rect.setHeight(this.height);
+        rect.setPoint(PointFactory.getInstance().createXY(this.xP, this.yP));
+        rect.setWidth(this.widthP);
+        rect.setHeight(this.heightP);
     }
 
     /**

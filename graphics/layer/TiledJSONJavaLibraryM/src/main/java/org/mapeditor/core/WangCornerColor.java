@@ -36,7 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.logic.math.SmallIntegerSingletonFactory;
 import org.allbinary.logic.string.StringUtil;
 
 
@@ -54,26 +53,26 @@ public class WangCornerColor {
      * 
      */
         
-    protected String name = StringUtil.getInstance().EMPTY_STRING;
+    protected String nameP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The color in `#RRGGBB` format (example: `#c17d11`).
      * 
      */
         
-    protected String color = StringUtil.getInstance().EMPTY_STRING;
+    protected String colorP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The tile ID of the tile representing this color.
      * 
      */
         
-    protected int tile;
+    protected int tileP;
     /**
      * The relative probability that this color is chosen over<br>
      * others in case of multiple options.
      * 
      */
         
-    protected int probability;
+    protected int probabilityP;
 
     /**
      * The name of this color.
@@ -85,7 +84,7 @@ public class WangCornerColor {
      */
     
     public String getName() {
-        return this.name;
+        return this.nameP;
     }
 
     /**
@@ -98,7 +97,7 @@ public class WangCornerColor {
      */
     
     public void setName(String value) {
-        this.name = value;
+        this.nameP = value;
     }
 
     /**
@@ -111,7 +110,7 @@ public class WangCornerColor {
      */
     
     public String getColor() {
-        return this.color;
+        return this.colorP;
     }
 
     /**
@@ -124,7 +123,7 @@ public class WangCornerColor {
      */
     
     public void setColor(String value) {
-        this.color = value;
+        this.colorP = value;
     }
 
     /**
@@ -137,7 +136,7 @@ public class WangCornerColor {
      */
     
     public int getTile() {
-        return this.tile;
+        return this.tileP;
     }
 
     /**
@@ -150,7 +149,7 @@ public class WangCornerColor {
      */
     
     public void setTile(int value) {
-        this.tile = value;
+        this.tileP = value;
     }
 
     /**
@@ -164,7 +163,7 @@ public class WangCornerColor {
      */
     
     public int getProbability() {
-        return this.probability;
+        return this.probabilityP;
     }
 
     /**
@@ -178,7 +177,7 @@ public class WangCornerColor {
      */
     
     public void setProbability(int value) {
-        this.probability = value;
+        this.probabilityP = value;
     }
 
 }

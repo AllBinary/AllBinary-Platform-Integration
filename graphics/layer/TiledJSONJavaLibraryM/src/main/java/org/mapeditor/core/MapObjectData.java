@@ -65,40 +65,40 @@ public class MapObjectData {
      * 
      */
         
-    protected Properties properties = new Properties();
+    protected Properties propertiesP = new Properties();
     /**
      * @since 1.1
      * 
      */
         
-    protected Point point = new Point();
+    protected Point pointP = new Point();
     /**
      * @since 0.9
      * 
      */
         
-    protected Ellipse ellipse = new Ellipse();
+    protected Ellipse ellipseP = new Ellipse();
     /**
      * 
      */
         
-    protected Polygon polygon = new Polygon();
+    protected Polygon polygonP = new Polygon();
     /**
      * 
      */
         
-    protected Polyline polyline = new Polyline();
+    protected Polyline polylineP = new Polyline();
     /**
      * @since 1.0
      * 
      */
         
-    protected Text text = new Text();
+    protected Text textP = new Text();
     /**
      * 
      */
         
-    protected ImageData image = new ImageData();
+    protected ImageData imageP = new ImageData();
     /**
      * Unique ID of the object. Each object that is placed on a map<br>
      * gets a unique id. Even if an object was deleted, no object<br>
@@ -108,43 +108,43 @@ public class MapObjectData {
      * 
      */
         
-    protected Integer id = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer idP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The name of the object. An arbitrary string.
      * 
      */
         
-    protected String name = StringUtil.getInstance().EMPTY_STRING;
+    protected String nameP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The type of the object. An arbitrary string.
      * 
      */
         
-    protected String type = StringUtil.getInstance().EMPTY_STRING;
+    protected String typeP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The x coordinate of the object in pixels.
      * 
      */
         
-    protected double x;
+    protected double xP;
     /**
      * The y coordinate of the object in pixels.
      * 
      */
         
-    protected double y;
+    protected double yP;
     /**
      * The width of the object in pixels (defaults to 0).
      * 
      */
         
-    protected Double width = Double.valueOf(0);
+    protected Double widthP = Double.valueOf(0);
     /**
      * The height of the object in pixels (defaults to 0).
      * 
      */
         
-    protected Double height = Double.valueOf(0);
+    protected Double heightP = Double.valueOf(0);
     /**
      * The rotation of the object in degrees clockwise (defaults to<br>
      *  0).<br>
@@ -153,13 +153,13 @@ public class MapObjectData {
      * 
      */
         
-    protected double rotation;
+    protected double rotationP;
     /**
      * An reference to a tile (optional).
      * 
      */
         
-    protected Integer gid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer gidP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Whether the object is shown (1) or hidden (0). Defaults to<br>
      *  1.<br>
@@ -168,13 +168,13 @@ public class MapObjectData {
      * 
      */
         
-    protected Boolean visible = BooleanFactory.getInstance().FALSE;
+    protected Boolean visibleP = BooleanFactory.getInstance().FALSE;
     /**
      * A reference to a template file (optional).
      * 
      */
         
-    protected String template = StringUtil.getInstance().EMPTY_STRING;
+    protected String templateP = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * 
@@ -185,7 +185,7 @@ public class MapObjectData {
      */
     
     public Properties getProperties() {
-        return this.properties;
+        return this.propertiesP;
     }
 
     /**
@@ -197,7 +197,7 @@ public class MapObjectData {
      */
     
     public void setProperties(Properties value) {
-        this.properties = value;
+        this.propertiesP = value;
     }
 
     /**
@@ -210,7 +210,7 @@ public class MapObjectData {
      */
     
     public Point getPoint() {
-        return this.point;
+        return this.pointP;
     }
 
     /**
@@ -223,7 +223,7 @@ public class MapObjectData {
      */
     
     public void setPoint(Point value) {
-        this.point = value;
+        this.pointP = value;
     }
 
     /**
@@ -236,7 +236,7 @@ public class MapObjectData {
      */
     
     public Ellipse getEllipse() {
-        return this.ellipse;
+        return this.ellipseP;
     }
 
     /**
@@ -249,7 +249,7 @@ public class MapObjectData {
      */
     
     public void setEllipse(Ellipse value) {
-        this.ellipse = value;
+        this.ellipseP = value;
     }
 
     /**
@@ -261,7 +261,7 @@ public class MapObjectData {
      */
     
     public Polygon getPolygon() {
-        return this.polygon;
+        return this.polygonP;
     }
 
     /**
@@ -273,7 +273,7 @@ public class MapObjectData {
      */
     
     public void setPolygon(Polygon value) {
-        this.polygon = value;
+        this.polygonP = value;
     }
 
     /**
@@ -285,7 +285,7 @@ public class MapObjectData {
      */
     
     public Polyline getPolyline() {
-        return this.polyline;
+        return this.polylineP;
     }
 
     /**
@@ -297,7 +297,7 @@ public class MapObjectData {
      */
     
     public void setPolyline(Polyline value) {
-        this.polyline = value;
+        this.polylineP = value;
     }
 
     /**
@@ -310,7 +310,7 @@ public class MapObjectData {
      */
     
     public Text getText() {
-        return this.text;
+        return this.textP;
     }
 
     /**
@@ -323,7 +323,7 @@ public class MapObjectData {
      */
     
     public void setText(Text value) {
-        this.text = value;
+        this.textP = value;
     }
 
     /**
@@ -335,7 +335,7 @@ public class MapObjectData {
      */
     
     public ImageData getImage() {
-        return this.image;
+        return this.imageP;
     }
 
     /**
@@ -347,7 +347,7 @@ public class MapObjectData {
      */
     
     public void setImage(ImageData value) {
-        this.image = value;
+        this.imageP = value;
     }
 
     /**
@@ -364,7 +364,7 @@ public class MapObjectData {
      */
     
     public Integer getId() {
-        return this.id;
+        return this.idP;
     }
 
     /**
@@ -381,7 +381,7 @@ public class MapObjectData {
      */
     
     public void setId(Integer value) {
-        this.id = value;
+        this.idP = value;
     }
 
     /**
@@ -394,7 +394,7 @@ public class MapObjectData {
      */
     
     public String getName() {
-        return this.name;
+        return this.nameP;
     }
 
     /**
@@ -407,7 +407,7 @@ public class MapObjectData {
      */
     
     public void setName(String value) {
-        this.name = value;
+        this.nameP = value;
     }
 
     /**
@@ -420,7 +420,7 @@ public class MapObjectData {
      */
     
     public String getType() {
-        return this.type;
+        return this.typeP;
     }
 
     /**
@@ -433,7 +433,7 @@ public class MapObjectData {
      */
     
     public void setType(String value) {
-        this.type = value;
+        this.typeP = value;
     }
 
     /**
@@ -442,7 +442,7 @@ public class MapObjectData {
      */
     
     public double getX() {
-        return this.x;
+        return this.xP;
     }
 
     /**
@@ -451,7 +451,7 @@ public class MapObjectData {
      */
     
     public void setX(double value) {
-        this.x = value;
+        this.xP = value;
     }
 
     /**
@@ -460,7 +460,7 @@ public class MapObjectData {
      */
     
     public double getY() {
-        return this.y;
+        return this.yP;
     }
 
     /**
@@ -469,7 +469,7 @@ public class MapObjectData {
      */
     
     public void setY(double value) {
-        this.y = value;
+        this.yP = value;
     }
 
     /**
@@ -482,7 +482,7 @@ public class MapObjectData {
      */
     
     public Double getWidth() {
-        return this.width;
+        return this.widthP;
     }
 
     /**
@@ -495,7 +495,7 @@ public class MapObjectData {
      */
     
     public void setWidth(Double value) {
-        this.width = value;
+        this.widthP = value;
     }
 
     /**
@@ -508,7 +508,7 @@ public class MapObjectData {
      */
     
     public Double getHeight() {
-        return this.height;
+        return this.heightP;
     }
 
     /**
@@ -521,7 +521,7 @@ public class MapObjectData {
      */
     
     public void setHeight(Double value) {
-        this.height = value;
+        this.heightP = value;
     }
 
     /**
@@ -533,7 +533,7 @@ public class MapObjectData {
      */
     
     public double getRotation() {
-        return this.rotation;
+        return this.rotationP;
     }
 
     /**
@@ -545,7 +545,7 @@ public class MapObjectData {
      */
     
     public void setRotation(double value) {
-        this.rotation = value;
+        this.rotationP = value;
     }
 
     /**
@@ -558,7 +558,7 @@ public class MapObjectData {
      */
     
     public Integer getGid() {
-        return this.gid;
+        return this.gidP;
     }
 
     /**
@@ -571,7 +571,7 @@ public class MapObjectData {
      */
     
     public void setGid(Integer value) {
-        this.gid = value;
+        this.gidP = value;
     }
 
     /**
@@ -587,7 +587,7 @@ public class MapObjectData {
      */
     
     public Boolean isVisible() {
-        return this.visible;
+        return this.visibleP;
     }
 
     /**
@@ -603,7 +603,7 @@ public class MapObjectData {
      */
     
     public void setVisible(Boolean value) {
-        this.visible = value;
+        this.visibleP = value;
     }
 
     /**
@@ -616,7 +616,7 @@ public class MapObjectData {
      */
     
     public String getTemplate() {
-        return this.template;
+        return this.templateP;
     }
 
     /**
@@ -629,7 +629,7 @@ public class MapObjectData {
      */
     
     public void setTemplate(String value) {
-        this.template = value;
+        this.templateP = value;
     }
 
 }

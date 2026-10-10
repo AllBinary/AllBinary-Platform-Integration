@@ -157,7 +157,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
 
     public void addTiles() {
         
-        final int size = this.columns;
+        final int size = this.columnsP;
         //final int size2 = this.tileSetImage.getHeight();
         final int size2 = this.tileSetImageHeight;
         
@@ -165,7 +165,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
         
         int row = 0;
         Tile tile;
-        for(int index2 = 0; index2 < size2; index2 += this.tileHeight) {
+        for(int index2 = 0; index2 < size2; index2 += this.tileHeightP) {
             for(int index = 0; index < size; index++) {
                 tile = new Tile();
                 this.addNewTile(tile);
@@ -283,12 +283,12 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
             t.setId(this.getMaxTileId() + 1);
         }
 
-        if (this.tileWidth < t.getWidth()) {
-            this.tileWidth = t.getWidth();
+        if (this.tileWidthP < t.getWidth()) {
+            this.tileWidthP = t.getWidth();
         }
 
-        if (this.tileHeight < t.getHeight()) {
-            this.tileHeight = t.getHeight();
+        if (this.tileHeightP < t.getHeight()) {
+            this.tileHeightP = t.getHeight();
         }
 
         //logUtil.putF(t.toString(), this, "addTile");

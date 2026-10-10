@@ -54,26 +54,26 @@ public class WangEdgeColor {
      * 
      */
         
-    protected String name = StringUtil.getInstance().EMPTY_STRING;
+    protected String nameP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The color in `#RRGGBB` format (example: `#c17d11`).
      * 
      */
         
-    protected String color = StringUtil.getInstance().EMPTY_STRING;
+    protected String colorP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The tile ID of the tile representing this color.
      * 
      */
         
-    protected Integer tile = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer tileP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The relative probability that this color is chosen over<br>
      * others in case of multiple options.
      * 
      */
         
-    protected Integer probability = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer probabilityP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * The name of this color.
@@ -85,7 +85,7 @@ public class WangEdgeColor {
      */
     
     public String getName() {
-        return this.name;
+        return this.nameP;
     }
 
     /**
@@ -98,7 +98,7 @@ public class WangEdgeColor {
      */
     
     public void setName(String value) {
-        this.name = value;
+        this.nameP = value;
     }
 
     /**
@@ -111,7 +111,7 @@ public class WangEdgeColor {
      */
     
     public String getColor() {
-        return this.color;
+        return this.colorP;
     }
 
     /**
@@ -124,7 +124,7 @@ public class WangEdgeColor {
      */
     
     public void setColor(String value) {
-        this.color = value;
+        this.colorP = value;
     }
 
     /**
@@ -137,7 +137,7 @@ public class WangEdgeColor {
      */
     
     public Integer getTile() {
-        return this.tile;
+        return this.tileP;
     }
 
     /**
@@ -150,7 +150,7 @@ public class WangEdgeColor {
      */
     
     public void setTile(Integer value) {
-        this.tile = value;
+        this.tileP = value;
     }
 
     /**
@@ -164,7 +164,7 @@ public class WangEdgeColor {
      */
     
     public Integer getProbability() {
-        return this.probability;
+        return this.probabilityP;
     }
 
     /**
@@ -178,7 +178,7 @@ public class WangEdgeColor {
      */
     
     public void setProbability(Integer value) {
-        this.probability = value;
+        this.probabilityP = value;
     }
 
 }

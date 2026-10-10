@@ -57,7 +57,7 @@ public class ObjectGroup extends ObjectGroupData implements Cloneable //, Iterab
      */
     public ObjectGroup(TiledMap map) {
         this();
-        this.map = map;
+        this.mapP = map;
     }
 
     /**
@@ -70,8 +70,8 @@ public class ObjectGroup extends ObjectGroupData implements Cloneable //, Iterab
      */
     public ObjectGroup(TiledMap map, int x, int y) {
         this(map);
-        this.x = x;
-        this.y = y;
+        this.xP = x;
+        this.yP = y;
     }
 
     /**

@@ -50,14 +50,14 @@ public class TerrainTypes {
      * 
      */
         
-    protected final BasicArrayList terrain = new BasicArrayListD();
+    protected final BasicArrayList terrainP = new BasicArrayListD();
 
     /**
      * 
      */
     
     public BasicArrayList getTerrain() {
-        return this.terrain;
+        return this.terrainP;
     }
 
 }

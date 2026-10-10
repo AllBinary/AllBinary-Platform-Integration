@@ -51,12 +51,12 @@ public class Template {
      * 
      */
         
-    protected TileSet tileset = new TileSet();
+    protected TileSet tilesetP = new TileSet();
     /**
      * 
      */
         
-    protected MapObject object = new MapObject();
+    protected MapObject objectP = new MapObject();
 
     /**
      * 
@@ -67,7 +67,7 @@ public class Template {
      */
     
     public TileSetData getTileset() {
-        return this.tileset;
+        return this.tilesetP;
     }
 
     /**
@@ -79,7 +79,7 @@ public class Template {
      */
     
     public void setTileset(TileSetData value) {
-        this.tileset = ((TileSet) value);
+        this.tilesetP = ((TileSet) value);
     }
 
     /**
@@ -91,7 +91,7 @@ public class Template {
      */
     
     public MapObjectData getObject() {
-        return this.object;
+        return this.objectP;
     }
 
     /**
@@ -103,7 +103,7 @@ public class Template {
      */
     
     public void setObject(MapObjectData value) {
-        this.object = ((MapObject) value);
+        this.objectP = ((MapObject) value);
     }
 
 }

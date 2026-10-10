@@ -49,14 +49,14 @@ public class WangSets {
      * 
      */
         
-    protected final BasicArrayList wangset = new BasicArrayListD();
+    protected final BasicArrayList wangsetP = new BasicArrayListD();
 
     /**
      * 
      */
     
     public BasicArrayList getWangset() {
-        return this.wangset;
+        return this.wangsetP;
     }
 
 }

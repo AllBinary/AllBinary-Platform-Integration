@@ -68,7 +68,7 @@ public class Data {
      * 
      */
                 
-    protected String value = StringUtil.getInstance().EMPTY_STRING;
+    protected String valueP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The encoding used to encode the tile layer data.<br>
      * When used, it can be "base64" and "csv" at the<br>
@@ -76,14 +76,14 @@ public class Data {
      * 
      */
         
-    protected Encoding encoding = Encoding.BASE_64;
+    protected Encoding encodingP = Encoding.BASE_64;
     /**
      * The compression used to compress the tile layer<br>
      * data. Tiled Qt supports "gzip" and "zlib".
      * 
      */
         
-    protected Compression compression = Compression.ZLIB;
+    protected Compression compressionP = Compression.ZLIB;
 
     /**
      * 
@@ -94,7 +94,7 @@ public class Data {
      */
     
     public String getValue() {
-        return this.value;
+        return this.valueP;
     }
 
     /**
@@ -106,7 +106,7 @@ public class Data {
      */
     
     public void setValue(String value) {
-        this.value = value;
+        this.valueP = value;
     }
 
     /**
@@ -121,7 +121,7 @@ public class Data {
      */
     
     public Encoding getEncoding() {
-        return this.encoding;
+        return this.encodingP;
     }
 
     /**
@@ -136,7 +136,7 @@ public class Data {
      */
     
     public void setEncoding(Encoding value) {
-        this.encoding = value;
+        this.encodingP = value;
     }
 
     /**
@@ -150,7 +150,7 @@ public class Data {
      */
     
     public Compression getCompression() {
-        return this.compression;
+        return this.compressionP;
     }
 
     /**
@@ -164,7 +164,7 @@ public class Data {
      */
     
     public void setCompression(Compression value) {
-        this.compression = value;
+        this.compressionP = value;
     }
 
 }

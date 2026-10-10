@@ -54,14 +54,14 @@ public class Animation {
     /**
      * 
      */
-    protected final BasicArrayList frame = new BasicArrayListD();
+    protected final BasicArrayList frameP = new BasicArrayListD();
 
     /**
      * 
      */
     
     public BasicArrayList getFrame() {
-        return this.frame;
+        return this.frameP;
     }
 
 }

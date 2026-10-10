@@ -55,7 +55,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public TiledMap() {
         super();
-        this.orientation = Orientation.ORTHOGONAL;
+        this.orientationP = Orientation.ORTHOGONAL;
     }
 
     /**
@@ -66,8 +66,8 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public TiledMap(int width, int height) {
         this();
-        this.width = width;
-        this.height = height;
+        this.widthP = width;
+        this.heightP = height;
     }
 
     /**
@@ -98,8 +98,8 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
             }
         }
 
-        this.width = width;
-        this.height = height;
+        this.widthP = width;
+        this.heightP = height;
     }
 
     /**
@@ -109,7 +109,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return a new rectangle containing the maximum bounds of this plane
      */
     public Rectangle getBounds() {
-        return new Rectangle(PointFactory.getInstance().createXY(this.width, this.height), 0, 0);
+        return new Rectangle(PointFactory.getInstance().createXY(this.widthP, this.heightP), 0, 0);
     }
 
     /**
@@ -193,10 +193,10 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @param dy The shift in y direction in tiles.
      */
     public void resize(int width, int height, int dx, int dy) {
-        final int size = this.layers.size();
+        final int size = this.layersP.size();
         MapLayer layer;
         for (int index = 0; index < size; index++) {
-            layer = (MapLayer) this.layers.get(index);
+            layer = (MapLayer) this.layersP.get(index);
             Rectangle layerBounds = layer.getBounds();
             if (layerBounds.equals(this.getBounds())) {
                 layer.resize(width, height, dx, dy);
@@ -205,8 +205,8 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
             }
         }
 
-        this.width = width;
-        this.height = height;
+        this.widthP = width;
+        this.heightP = height;
     }
 
     /**
@@ -218,7 +218,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * <code>false</code> otherwise
      */
     public boolean inBounds(int x, int y) {
-        return x >= 0 && y >= 0 && x < this.width && y < this.height;
+        return x >= 0 && y >= 0 && x < this.widthP && y < this.heightP;
     }
 
     /**
@@ -242,13 +242,13 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
         if (t != null) {
             int tw = t.getWidth();
             int th = t.getHeight();
-            if (tw != this.tileWidth && this.tileWidth == 0) {
-                this.tileWidth = tw;
-                this.tileHeight = th;
+            if (tw != this.tileWidthP && this.tileWidthP == 0) {
+                this.tileWidthP = tw;
+                this.tileHeightP = th;
             }
         }
 
-        this.tileSets.add(tileset);
+        this.tileSetsP.add(tileset);
     }
 
     /**
@@ -287,7 +287,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * <code>false</code> otherwise
      */
     public boolean contains(int x, int y) {
-        return x >= 0 && y >= 0 && x < this.width && y < this.height;
+        return x >= 0 && y >= 0 && x < this.widthP && y < this.heightP;
     }
 
     /**
@@ -297,12 +297,12 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @return int The maximum tile height
      */
     public int getTileHeightMax() {
-        int maxHeight = this.tileHeight;
+        int maxHeight = this.tileHeightP;
 
         TileSet tileset;
-        final int size = this.tileSets.size();
+        final int size = this.tileSetsP.size();
         for (int index = 0; index < size; index++) {
-            tileset = (TileSet) this.tileSets.get(index);
+            tileset = (TileSet) this.tileSetsP.get(index);
             int height = tileset.getTileHeight();
             if (height > maxHeight) {
                 maxHeight = height;
@@ -319,12 +319,12 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @param index1 a int.
      */
     public void swapTileSets(int index0, int index1) {
-        if (index0 == index1 || this.tileSets == null) {
+        if (index0 == index1 || this.tileSetsP == null) {
             return;
         }
-        TileSet set = (TileSet) this.tileSets.get(index0);
-        this.tileSets.set(index0, this.tileSets.get(index1));
-        this.tileSets.set(index1, set);
+        TileSet set = (TileSet) this.tileSetsP.get(index0);
+        this.tileSetsP.set(index0, this.tileSetsP.get(index1));
+        this.tileSetsP.set(index1, set);
     }
 
     /**
@@ -360,8 +360,8 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     @Override
     public String toString() {
-        return new StringMaker().append("Map[").appendint(this.width).append("x").appendint(this.height)
-                .append("x").appendint(this.getLayerCount()).append("][").appendint(this.tileWidth).append("x")
-                .appendint(this.tileHeight).append("]").toString();
+        return new StringMaker().append("Map[").appendint(this.widthP).append("x").appendint(this.heightP)
+                .append("x").appendint(this.getLayerCount()).append("][").appendint(this.tileWidthP).append("x")
+                .appendint(this.tileHeightP).append("]").toString();
     }
 }

@@ -54,13 +54,13 @@ public class ObjectGroupData
      * 
      */
         
-    protected final BasicArrayList objects = new BasicArrayListD();
+    protected final BasicArrayList objectsP = new BasicArrayListD();
     /**
      * The color used to display the objects in this group.
      * 
      */
         
-    protected String color = StringUtil.getInstance().EMPTY_STRING;
+    protected String colorP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Whether the objects are drawn according to the order<br>
      * of appearance ("index") or sorted by their<br>
@@ -68,14 +68,14 @@ public class ObjectGroupData
      * 
      */
         
-    protected String draworder = StringUtil.getInstance().EMPTY_STRING;
+    protected String draworderP = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * 
      */
     
     public BasicArrayList getObjects() {
-        return this.objects;
+        return this.objectsP;
     }
 
     /**
@@ -88,7 +88,7 @@ public class ObjectGroupData
      */
     
     public String getColor() {
-        return this.color;
+        return this.colorP;
     }
 
     /**
@@ -101,7 +101,7 @@ public class ObjectGroupData
      */
     
     public void setColor(String value) {
-        this.color = value;
+        this.colorP = value;
     }
 
     /**
@@ -116,7 +116,7 @@ public class ObjectGroupData
      */
     
     public String getDraworder() {
-        return this.draworder;
+        return this.draworderP;
     }
 
     /**
@@ -131,7 +131,7 @@ public class ObjectGroupData
      */
     
     public void setDraworder(String value) {
-        this.draworder = value;
+        this.draworderP = value;
     }
 
 }

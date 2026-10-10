@@ -53,14 +53,14 @@ public class PropertiesData {
      * 
      */
         
-    protected final BasicArrayList properties = new BasicArrayListD();
+    protected final BasicArrayList propertiesP = new BasicArrayListD();
 
     /**
      * 
      */
     
     public BasicArrayList getProperties() {
-        return this.properties;
+        return this.propertiesP;
     }
 
 }

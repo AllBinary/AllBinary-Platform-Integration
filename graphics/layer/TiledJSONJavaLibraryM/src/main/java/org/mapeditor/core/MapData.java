@@ -36,7 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.logic.math.SmallIntegerSingletonFactory;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
@@ -59,21 +58,21 @@ public class MapData {
     /**
      * 
      */
-    protected Properties properties = new Properties();
+    protected Properties propertiesP = new Properties();
     /**
      * 
      */
-    protected BasicArrayList tileSets = new BasicArrayListD();
+    protected BasicArrayList tileSetsP = new BasicArrayListD();
     /**
      * 
      */
-    protected BasicArrayList layers = new BasicArrayListD();
+    protected BasicArrayList layersP = new BasicArrayListD();
     /**
      * The TMX format version. Was "1.0" so far, and will be<br>
      * incremented to match minor Tiled releases.
      * 
      */
-    protected String version = StringUtil.getInstance().EMPTY_STRING;
+    protected String versionP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The Tiled version used to save the file.<br>
      * May be a date (for snapshot builds).<br>
@@ -81,13 +80,13 @@ public class MapData {
      * @since 1.0.1
      * 
      */
-    protected String tiledversion = StringUtil.getInstance().EMPTY_STRING;
+    protected String tiledversionP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Map orientation. Tiled supports "orthogonal", "isometric",<br>
      * "staggered" (since 0.9) and "hexagonal" (since 0.11).
      * 
      */
-    protected Orientation orientation = Orientation.HEXAGONAL;
+    protected Orientation orientationP = Orientation.HEXAGONAL;
     /**
      * The order in which tiles on tile layers are rendered. Valid<br>
      * values are `right-down` (the default), `right-up`,<br>
@@ -96,41 +95,41 @@ public class MapData {
      * maps at the moment)
      * 
      */
-    protected RenderOrder renderorder = RenderOrder.LEFT_UP;
+    protected RenderOrder renderorderP = RenderOrder.LEFT_UP;
     /**
      * The map width in tiles.
      * 
      */
-    protected int width;
+    protected int widthP;
     /**
      * The map height in tiles.
      * 
      */
-    protected int height;
+    protected int heightP;
     /**
      * The width of a tile.
      * 
      */
-    protected int tileWidth;
+    protected int tileWidthP;
     /**
      * The height of a tile.
      * 
      */
-    protected int tileHeight;
+    protected int tileHeightP;
     /**
      * Infinite maps give you independence from bounds of the map.<br>
      * <br>
      * @since 1.1
      * 
      */
-    protected int infinite;
+    protected int infiniteP;
     /**
      * Only for hexagonal maps. Determines the width or height<br>
      * (depending on the staggered axis) of the tile's edge, in<br>
      * pixels.
      * 
      */
-    protected int hexSideLength;
+    protected int hexSideLengthP;
     /**
      * For staggered and hexagonal maps, determines which axis<br>
      * ("x" or "y") is staggered.<br>
@@ -138,7 +137,7 @@ public class MapData {
      * @since 0.11
      * 
      */
-    protected StaggerAxis staggerAxis = StaggerAxis.X;
+    protected StaggerAxis staggerAxisP = StaggerAxis.X;
     /**
      * For staggered and hexagonal maps, determines whether the<br>
      * "even" or "odd" indexes along the staggered axis are<br>
@@ -147,7 +146,7 @@ public class MapData {
      * @since 0.11
      * 
      */
-    protected StaggerIndex staggerIndex = StaggerIndex.EVEN;
+    protected StaggerIndex staggerIndexP = StaggerIndex.EVEN;
     /**
      * The background color of the map. (optional, may include<br>
      * alpha value since 0.15 in the form `#AARRGGBB`)<br>
@@ -155,7 +154,7 @@ public class MapData {
      * @since 0.9
      * 
      */
-    protected String backgroundcolor = StringUtil.getInstance().EMPTY_STRING;
+    protected String backgroundcolorP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Stores the next available ID for new layers. This number is<br>
      * stored to prevent reuse of the same ID after layers have been<br>
@@ -164,7 +163,7 @@ public class MapData {
      * @since 1.2
      * 
      */
-    protected int nextlayerid;
+    protected int nextlayeridP;
     /**
      * Stores the next available ID for new objects. This number<br>
      * is stored to prevent reuse of the same ID after objects<br>
@@ -173,7 +172,7 @@ public class MapData {
      * @since 0.11
      * 
      */
-    protected int nextobjectid;
+    protected int nextobjectidP;
 
     /**
      * 
@@ -183,7 +182,7 @@ public class MapData {
      *     
      */
     public Properties getProperties() {
-        return this.properties;
+        return this.propertiesP;
     }
 
     /**
@@ -194,21 +193,21 @@ public class MapData {
      *     
      */
     public void setProperties(Properties value) {
-        this.properties = value;
+        this.propertiesP = value;
     }
 
     /**
      * 
      */
     public BasicArrayList getTileSets() {
-        return this.tileSets;
+        return this.tileSetsP;
     }
 
     /**
      * 
      */
     public BasicArrayList getLayers() {
-        return this.layers;
+        return this.layersP;
     }
 
     /**
@@ -221,10 +220,10 @@ public class MapData {
      *     
      */
     public String getVersion() {
-        if (this.version == null) {
+        if (this.versionP == null) {
             return "1.0";
         } else {
-            return this.version;
+            return this.versionP;
         }
     }
 
@@ -238,7 +237,7 @@ public class MapData {
      *     
      */
     public void setVersion(String value) {
-        this.version = value;
+        this.versionP = value;
     }
 
     /**
@@ -254,7 +253,7 @@ public class MapData {
      */
     
     public String getTiledversion() {
-        return this.tiledversion;
+        return this.tiledversionP;
     }
 
     /**
@@ -270,7 +269,7 @@ public class MapData {
      */
     
     public void setTiledversion(String value) {
-        this.tiledversion = value;
+        this.tiledversionP = value;
     }
 
     /**
@@ -284,7 +283,7 @@ public class MapData {
      */
     
     public Orientation getOrientation() {
-        return this.orientation;
+        return this.orientationP;
     }
 
     /**
@@ -298,7 +297,7 @@ public class MapData {
      */
     
     public void setOrientation(Orientation value) {
-        this.orientation = value;
+        this.orientationP = value;
     }
 
     /**
@@ -315,10 +314,10 @@ public class MapData {
      */
     
     public RenderOrder getRenderorder() {
-        if (this.renderorder == null) {
+        if (this.renderorderP == null) {
             return RenderOrder.RIGHT_DOWN;
         } else {
-            return this.renderorder;
+            return this.renderorderP;
         }
     }
 
@@ -336,7 +335,7 @@ public class MapData {
      */
     
     public void setRenderorder(RenderOrder value) {
-        this.renderorder = value;
+        this.renderorderP = value;
     }
 
     /**
@@ -345,7 +344,7 @@ public class MapData {
      */
     
     public int getWidth() {
-        return this.width;
+        return this.widthP;
     }
 
     /**
@@ -354,7 +353,7 @@ public class MapData {
      */
     
     public void setWidth(int value) {
-        this.width = value;
+        this.widthP = value;
     }
 
     /**
@@ -363,7 +362,7 @@ public class MapData {
      */
     
     public int getHeight() {
-        return this.height;
+        return this.heightP;
     }
 
     /**
@@ -372,7 +371,7 @@ public class MapData {
      */
     
     public void setHeight(int value) {
-        this.height = value;
+        this.heightP = value;
     }
 
     /**
@@ -381,7 +380,7 @@ public class MapData {
      */
     
     public int getTileWidth() {
-        return this.tileWidth;
+        return this.tileWidthP;
     }
 
     /**
@@ -390,7 +389,7 @@ public class MapData {
      */
     
     public void setTileWidth(int value) {
-        this.tileWidth = value;
+        this.tileWidthP = value;
     }
 
     /**
@@ -399,7 +398,7 @@ public class MapData {
      */
     
     public int getTileHeight() {
-        return this.tileHeight;
+        return this.tileHeightP;
     }
 
     /**
@@ -408,7 +407,7 @@ public class MapData {
      */
     
     public void setTileHeight(int value) {
-        this.tileHeight = value;
+        this.tileHeightP = value;
     }
 
     /**
@@ -423,7 +422,7 @@ public class MapData {
      */
     
     public int getInfinite() {
-        return this.infinite;
+        return this.infiniteP;
     }
 
     /**
@@ -438,7 +437,7 @@ public class MapData {
      */
     
     public void setInfinite(int value) {
-        this.infinite = value;
+        this.infiniteP = value;
     }
 
     /**
@@ -453,7 +452,7 @@ public class MapData {
      */
     
     public int getHexSideLength() {
-        return this.hexSideLength;
+        return this.hexSideLengthP;
     }
 
     /**
@@ -468,7 +467,7 @@ public class MapData {
      */
     
     public void setHexSideLength(int value) {
-        this.hexSideLength = value;
+        this.hexSideLengthP = value;
     }
 
     /**
@@ -484,7 +483,7 @@ public class MapData {
      */
     
     public StaggerAxis getStaggerAxis() {
-        return this.staggerAxis;
+        return this.staggerAxisP;
     }
 
     /**
@@ -500,7 +499,7 @@ public class MapData {
      */
     
     public void setStaggerAxis(StaggerAxis value) {
-        this.staggerAxis = value;
+        this.staggerAxisP = value;
     }
 
     /**
@@ -517,7 +516,7 @@ public class MapData {
      */
     
     public StaggerIndex getStaggerIndex() {
-        return this.staggerIndex;
+        return this.staggerIndexP;
     }
 
     /**
@@ -534,7 +533,7 @@ public class MapData {
      */
     
     public void setStaggerIndex(StaggerIndex value) {
-        this.staggerIndex = value;
+        this.staggerIndexP = value;
     }
 
     /**
@@ -550,7 +549,7 @@ public class MapData {
      */
     
     public String getBackgroundcolor() {
-        return this.backgroundcolor;
+        return this.backgroundcolorP;
     }
 
     /**
@@ -566,7 +565,7 @@ public class MapData {
      */
     
     public void setBackgroundcolor(String value) {
-        this.backgroundcolor = value;
+        this.backgroundcolorP = value;
     }
 
     /**
@@ -583,7 +582,7 @@ public class MapData {
      */
     
     public int getNextlayerid() {
-        return this.nextlayerid;
+        return this.nextlayeridP;
     }
 
     /**
@@ -600,7 +599,7 @@ public class MapData {
      */
     
     public void setNextlayerid(int value) {
-        this.nextlayerid = value;
+        this.nextlayeridP = value;
     }
 
     /**
@@ -617,7 +616,7 @@ public class MapData {
      */
     
     public int getNextobjectid() {
-        return this.nextobjectid;
+        return this.nextobjectidP;
     }
 
     /**
@@ -634,7 +633,7 @@ public class MapData {
      */
     
     public void setNextobjectid(int value) {
-        this.nextobjectid = value;
+        this.nextobjectidP = value;
     }
 
 }

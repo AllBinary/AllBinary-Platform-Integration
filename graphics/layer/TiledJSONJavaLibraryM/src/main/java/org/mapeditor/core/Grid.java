@@ -56,19 +56,19 @@ public class Grid {
      * 
      */
         
-    protected Orientation orientation = Orientation.ORTHOGONAL;
+    protected Orientation orientationP = Orientation.ORTHOGONAL;
     /**
      * Width of a grid cell
      * 
      */
         
-    protected Integer width = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer widthP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Height of a grid cell
      * 
      */
         
-    protected Integer height = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer heightP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * Orientation of the grid for the tiles in this tileset<br>
@@ -81,7 +81,7 @@ public class Grid {
      */
     
     public Orientation getOrientation() {
-        return this.orientation;
+        return this.orientationP;
     }
 
     /**
@@ -95,7 +95,7 @@ public class Grid {
      */
     
     public void setOrientation(Orientation value) {
-        this.orientation = value;
+        this.orientationP = value;
     }
 
     /**
@@ -108,7 +108,7 @@ public class Grid {
      */
     
     public Integer getWidth() {
-        return this.width;
+        return this.widthP;
     }
 
     /**
@@ -121,7 +121,7 @@ public class Grid {
      */
     
     public void setWidth(Integer value) {
-        this.width = value;
+        this.widthP = value;
     }
 
     /**
@@ -134,7 +134,7 @@ public class Grid {
      */
     
     public Integer getHeight() {
-        return this.height;
+        return this.heightP;
     }
 
     /**
@@ -147,7 +147,7 @@ public class Grid {
      */
     
     public void setHeight(Integer value) {
-        this.height = value;
+        this.heightP = value;
     }
 
 }

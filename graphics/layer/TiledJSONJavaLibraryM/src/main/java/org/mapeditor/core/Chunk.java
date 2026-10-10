@@ -53,38 +53,38 @@ public class Chunk {
      * 
      */
         
-    protected final BasicArrayList tile = new BasicArrayListD();
+    protected final BasicArrayList tileP = new BasicArrayListD();
     /**
      * The x coordinate of the chunk in tiles.
      * 
      */
         
-    protected Integer x = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer xP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The y coordinate of the chunk in tiles.
      * 
      */
         
-    protected Integer y = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer yP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The width of the chunk in tiles.
      * 
      */
         
-    protected Integer width = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer widthP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The height of the chunk in tiles.
      * 
      */
         
-    protected Integer height = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected Integer heightP = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * 
      */
     
     public BasicArrayList getTile() {
-        return this.tile;
+        return this.tileP;
     }
 
     /**
@@ -97,7 +97,7 @@ public class Chunk {
      */
     
     public Integer getX() {
-        return this.x;
+        return this.xP;
     }
 
     /**
@@ -110,7 +110,7 @@ public class Chunk {
      */
     
     public void setX(Integer value) {
-        this.x = value;
+        this.xP = value;
     }
 
     /**
@@ -123,7 +123,7 @@ public class Chunk {
      */
     
     public Integer getY() {
-        return this.y;
+        return this.yP;
     }
 
     /**
@@ -136,7 +136,7 @@ public class Chunk {
      */
     
     public void setY(Integer value) {
-        this.y = value;
+        this.yP = value;
     }
 
     /**
@@ -149,7 +149,7 @@ public class Chunk {
      */
     
     public Integer getWidth() {
-        return this.width;
+        return this.widthP;
     }
 
     /**
@@ -162,7 +162,7 @@ public class Chunk {
      */
     
     public void setWidth(Integer value) {
-        this.width = value;
+        this.widthP = value;
     }
 
     /**
@@ -175,7 +175,7 @@ public class Chunk {
      */
     
     public Integer getHeight() {
-        return this.height;
+        return this.heightP;
     }
 
     /**
@@ -188,7 +188,7 @@ public class Chunk {
      */
     
     public void setHeight(Integer value) {
-        this.height = value;
+        this.heightP = value;
     }
 
 }

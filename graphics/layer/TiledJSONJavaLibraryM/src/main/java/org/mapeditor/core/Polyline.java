@@ -54,7 +54,7 @@ public class Polyline {
      * 
      */
         
-    protected String points = StringUtil.getInstance().EMPTY_STRING;
+    protected String pointsP = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * A list of x,y coordinates in pixels.
@@ -66,7 +66,7 @@ public class Polyline {
      */
     
     public String getPoints() {
-        return this.points;
+        return this.pointsP;
     }
 
     /**
@@ -79,7 +79,7 @@ public class Polyline {
      */
     
     public void setPoints(String value) {
-        this.points = value;
+        this.pointsP = value;
     }
 
 }

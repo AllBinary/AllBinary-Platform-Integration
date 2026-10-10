@@ -37,7 +37,6 @@
 package org.mapeditor.core;
 
 import org.allbinary.logic.java.bool.BooleanFactory;
-import org.allbinary.logic.math.SmallIntegerSingletonFactory;
 import org.allbinary.logic.string.StringUtil;
 
 /**
@@ -45,7 +44,7 @@ import org.allbinary.logic.string.StringUtil;
  */
 public abstract class LayerData {
 
-    protected Properties properties = new Properties();
+    protected Properties propertiesP = new Properties();
     /**
      * Unique ID of the layer. Each layer that is added to a map gets a<br>
      * unique id. Even if a layer is deleted, no layer ever gets the<br>
@@ -54,13 +53,13 @@ public abstract class LayerData {
      * @since 1.2
      * 
      */
-    protected int id;
+    protected int idP;
     /**
      * The name of the layer.
      * 
      */
         
-    protected String name = StringUtil.getInstance().EMPTY_STRING;
+    protected String nameP = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The x coordinate of the layer in tiles. Defaults to 0 and<br>
      * can no longer be changed in Tiled Qt.<br>
@@ -69,7 +68,7 @@ public abstract class LayerData {
      * 
      */
     //@Deprecated
-    protected int x;
+    protected int xP;
     /**
      * The y coordinate of the layer in tiles. Defaults to 0 and<br>
      * can no longer be changed in Tiled Qt.<br>
@@ -78,7 +77,7 @@ public abstract class LayerData {
      * 
      */
     //@Deprecated    
-    protected int y;
+    protected int yP;
     /**
      * The width of the layer in tiles. Traditionally required, but<br>
      * as of Tiled Qt always the same as the map width.<br>
@@ -87,7 +86,7 @@ public abstract class LayerData {
      * 
      */
     //@Deprecated
-    protected int width;
+    protected int widthP;
     /**
      * The height of the layer in tiles. Traditionally required,<br>
      * but as of Tiled Qt always the same as the map height.<br>
@@ -97,20 +96,20 @@ public abstract class LayerData {
      */
         //@Deprecated
     
-    protected int height;
+    protected int heightP;
     /**
      * The opacity of the layer as a value from 0 to 1. Defaults to<br>
      *  1.
      * 
      */
         
-    protected Float opacity = Float.valueOf(0.0f);
+    protected Float opacityP = Float.valueOf(0.0f);
     /**
      * Whether the layer is shown (1) or hidden (0). Defaults to 1.
      * 
      */
         
-    protected Boolean visible = BooleanFactory.getInstance().FALSE;
+    protected Boolean visibleP = BooleanFactory.getInstance().FALSE;
     /**
      * Rendering offset for this layer in pixels. Defaults to 0.<br>
      * <br>
@@ -118,7 +117,7 @@ public abstract class LayerData {
      * 
      */
         
-    protected int offsetX;
+    protected int offsetXP;
     /**
      * Rendering offset for this layer in pixels. Defaults to 0.<br>
      * <br>
@@ -126,13 +125,13 @@ public abstract class LayerData {
      * 
      */
         
-    protected int offsetY;
+    protected int offsetYP;
     /**
      * Locking flag of the layer (used by Tiled).
      * 
      */
         
-    protected int locked;
+    protected int lockedP;
 
     /**
      * 
@@ -143,7 +142,7 @@ public abstract class LayerData {
      */
     
     public Properties getProperties() {
-        return this.properties;
+        return this.propertiesP;
     }
 
     /**
@@ -155,7 +154,7 @@ public abstract class LayerData {
      */
     
     public void setProperties(Properties value) {
-        this.properties = value;
+        this.propertiesP = value;
     }
 
     /**
@@ -172,7 +171,7 @@ public abstract class LayerData {
      */
     
     public int getId() {
-        return this.id;
+        return this.idP;
     }
 
     /**
@@ -189,7 +188,7 @@ public abstract class LayerData {
      */
     
     public void setId(int value) {
-        this.id = value;
+        this.idP = value;
     }
 
     /**
@@ -202,7 +201,7 @@ public abstract class LayerData {
      */
     
     public String getName() {
-        return this.name;
+        return this.nameP;
     }
 
     /**
@@ -215,7 +214,7 @@ public abstract class LayerData {
      */
     
     public void setName(String value) {
-        this.name = value;
+        this.nameP = value;
     }
 
     /**
@@ -232,7 +231,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public int getX() {
-        return this.x;
+        return this.xP;
     }
 
     /**
@@ -249,7 +248,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public void setX(int value) {
-        this.x = value;
+        this.xP = value;
     }
 
     /**
@@ -266,7 +265,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public int getY() {
-        return this.y;
+        return this.yP;
     }
 
     /**
@@ -283,7 +282,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public void setY(int value) {
-        this.y = value;
+        this.yP = value;
     }
 
     /**
@@ -296,7 +295,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public int getWidth() {
-        return this.width;
+        return this.widthP;
     }
 
     /**
@@ -309,7 +308,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public void setWidth(int value) {
-        this.width = value;
+        this.widthP = value;
     }
 
     /**
@@ -322,7 +321,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public int getHeight() {
-        return this.height;
+        return this.heightP;
     }
 
     /**
@@ -335,7 +334,7 @@ public abstract class LayerData {
     //@Deprecated
     
     public void setHeight(int value) {
-        this.height = value;
+        this.heightP = value;
     }
 
     /**
@@ -349,7 +348,7 @@ public abstract class LayerData {
      */
     
     public Float getOpacity() {
-        return this.opacity;
+        return this.opacityP;
     }
 
     /**
@@ -363,7 +362,7 @@ public abstract class LayerData {
      */
     
     public void setOpacity(Float value) {
-        this.opacity = value;
+        this.opacityP = value;
     }
 
     /**
@@ -376,7 +375,7 @@ public abstract class LayerData {
      */
     
     public Boolean isVisible() {
-        return this.visible;
+        return this.visibleP;
     }
 
     /**
@@ -389,7 +388,7 @@ public abstract class LayerData {
      */
     
     public void setVisible(Boolean value) {
-        this.visible = value;
+        this.visibleP = value;
     }
 
     /**
@@ -404,7 +403,7 @@ public abstract class LayerData {
      */
     
     public int getOffsetX() {
-        return this.offsetX;
+        return this.offsetXP;
     }
 
     /**
@@ -419,7 +418,7 @@ public abstract class LayerData {
      */
     
     public void setOffsetX(int value) {
-        this.offsetX = value;
+        this.offsetXP = value;
     }
 
     /**
@@ -434,7 +433,7 @@ public abstract class LayerData {
      */
     
     public int getOffsetY() {
-        return this.offsetY;
+        return this.offsetYP;
     }
 
     /**
@@ -449,7 +448,7 @@ public abstract class LayerData {
      */
     
     public void setOffsetY(int value) {
-        this.offsetY = value;
+        this.offsetYP = value;
     }
 
     /**
@@ -462,7 +461,7 @@ public abstract class LayerData {
      */
     
     public int getLocked() {
-        return this.locked;
+        return this.lockedP;
     }
 
     /**
@@ -475,7 +474,7 @@ public abstract class LayerData {
      */
     
     public void setLocked(int value) {
-        this.locked = value;
+        this.lockedP = value;
     }
 
 }

@@ -94,7 +94,7 @@ public class BasicTileCutter implements TileCutter {
             //return tile;
         }
 
-        return null;
+        return NullImage.NULL_IMAGE;
     }
 
     /** {@inheritDoc} */

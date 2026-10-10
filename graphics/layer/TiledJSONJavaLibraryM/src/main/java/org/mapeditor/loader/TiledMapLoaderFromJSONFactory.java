@@ -44,7 +44,6 @@ public class TiledMapLoaderFromJSONFactory {
 
         final CommonStrings commonStrings = CommonStrings.getInstance();
 
-        TiledMap map = null;
         try {
             
             //logUtil.put("Loading Tiled Map available: " + inputStream.available(), this, commonStrings.PROCESS);
@@ -60,7 +59,7 @@ public class TiledMapLoaderFromJSONFactory {
             
             //logUtil.put("Loading Tiled Map JSON", this, commonStrings.PROCESS);
             
-            map = mapReader.buildMap(tileMapJSONObject, tileSetJSONObjectArray, tileSetImageHeightArray);
+            final TiledMap map = mapReader.buildMap(tileMapJSONObject, tileSetJSONObjectArray, tileSetImageHeightArray);
             
             //logUtil.putF("Loading Tiled Map BuildMap", this, commonStrings.PROCESS);
             

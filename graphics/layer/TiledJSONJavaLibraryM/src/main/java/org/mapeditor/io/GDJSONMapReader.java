@@ -33,14 +33,13 @@
 package org.mapeditor.io;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
+//import java.io.File;
 //import java.io.IOException;
 //import java.io.File;
 import java.io.InputStream;
 //import java.util.Base64;
 //import java.util.Map.Entry;
 
-import org.allbinary.logic.StdUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
@@ -247,14 +246,16 @@ public class GDJSONMapReader {
 
             //logUtil.putF("Tiles JSON:" + jsonArray.toString(3), this, commonStrings.PROCESS);
             final int size = jsonArray.length();
-            Tile tile;
+            Tile tileCanBeNull;
             int tileId;
             for (int i = 0; i < size; i++) {
                 //logUtil.putF("Loading Tile JSON: " + i, this, commonStrings.PROCESS);
                 final JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                 tileId = jsonObject2.getInt(this.ID);
-                tile = this.getTileForTileGID(tileId);
-                this.processTile(tile, jsonObject2);
+                tileCanBeNull = this.getTileForTileGID(tileId);
+                if(tileCanBeNull != null) {
+                    this.processTile(tileCanBeNull, jsonObject2);
+                }
             }
         } else {
             this.logUtil.putF("Found TileSet without tiles", this, this.commonStrings.PROCESS);
@@ -310,14 +311,16 @@ public class GDJSONMapReader {
             this.logUtil.putF("Found wangtiles", this, this.commonStrings.PROCESS);
             final JSONArray jsonArray = jsonObject.getJSONArray(this.WANG_TILES);
             final int size = jsonArray.length();
-            Tile tile;
+            Tile tileCanBeNull;
             int tileId;
             for (int i = 0; i < size; i++) {
                 this.logUtil.putF("Loading wangtiles JSON: " + i, this, this.commonStrings.PROCESS);
                 final JSONObject jsonObject2 = jsonArray.getJSONObject(i);
                 tileId = jsonObject2.getInt(this.TILE_ID);
-                tile = this.getTileForTileGID(tileId);
-                this.processTile(tile, jsonObject2);
+                tileCanBeNull = this.getTileForTileGID(tileId);
+                if(tileCanBeNull != null) {
+                    this.processTile(tileCanBeNull, jsonObject2);
+                }
                 final WangTile wangTile = new WangTile();
                 wangTile.setTileid(tileId);
                 wangTile.setWangid(jsonObject2.getString(WANG_ID));

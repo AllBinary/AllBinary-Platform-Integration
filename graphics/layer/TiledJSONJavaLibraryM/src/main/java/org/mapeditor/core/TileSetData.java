@@ -56,30 +56,30 @@ public class TileSetData {
      * 
      */
         
-    protected TileOffset tileoffset;
+    protected TileOffset tileoffset = new TileOffset();
     /**
      * @since 1.0
      * 
      */
         
-    protected Grid grid;
+    protected Grid grid = new Grid();
     /**
      * @since 0.8
      * 
      */
         
-    protected Properties properties;
+    protected Properties properties = new Properties();
     /**
      * 
      */
         
-    protected ImageData imageData;
+    protected ImageData imageData = new ImageData();
     /**
      * @since 0.9
      * 
      */
     
-    protected TerrainTypes terraintypes;
+    protected TerrainTypes terraintypes = new TerrainTypes();
     /**
      * 
      */
@@ -90,7 +90,7 @@ public class TileSetData {
      * 
      */
         
-    protected WangSets wangsets;
+    protected WangSets wangsets = new WangSets();
     /**
      * The first global tile ID of this tileset (this global ID<br>
      * maps to the first tile in this tileset).

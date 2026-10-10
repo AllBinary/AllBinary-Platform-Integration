@@ -51,12 +51,12 @@ public class Template {
      * 
      */
         
-    protected TileSet tileset;
+    protected TileSet tileset = new TileSet();
     /**
      * 
      */
         
-    protected MapObject object;
+    protected MapObject object = new MapObject();
 
     /**
      * 

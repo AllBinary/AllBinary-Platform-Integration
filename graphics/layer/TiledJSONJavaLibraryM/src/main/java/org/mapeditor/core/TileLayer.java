@@ -47,10 +47,11 @@ public class TileLayer extends TileLayerData {
 
     private final RectangleCollisionUtil rectangleCollisionUtil = RectangleCollisionUtil.getInstance();
     
-    private Tile[][] tileMap;
-    private int[][] tileToIdArray;
-    private int[][] flags;
-    private ABHashtable<Object, Properties> tileInstanceProperties = new ABHashtable<Object, Properties>();
+    private final ABHashtable<Object, Properties> tileInstanceProperties = new ABHashtable<Object, Properties>();
+    
+    private Tile[][] tileMap = new Tile[0][0];
+    private int[][] tileToIdArray = new int[0][0];
+    private int[][] flags = new int[0][0];
 
     /**
      * getTileInstancePropertiesAt.

@@ -31,6 +31,7 @@
 package org.mapeditor.util;
 
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.NullImage;
 
 /**
  * Cuts tiles from a tileset image according to a regular rectangular pattern.
@@ -41,7 +42,7 @@ import javax.microedition.lcdui.Image;
 public class BasicTileCutter implements TileCutter {
 
     private int nextX, nextY;
-    private Image image;
+    private Image image = NullImage.NULL_IMAGE;
     private final int tileWidth;
     private final int tileHeight;
     private final int tileSpacing;
@@ -55,8 +56,7 @@ public class BasicTileCutter implements TileCutter {
      * @param tileSpacing a int.
      * @param tileMargin a int.
      */
-    public BasicTileCutter(int tileWidth, int tileHeight, int tileSpacing,
-            int tileMargin) {
+    public BasicTileCutter(int tileWidth, int tileHeight, int tileSpacing, int tileMargin) {
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
         this.tileSpacing = tileSpacing;
@@ -81,7 +81,7 @@ public class BasicTileCutter implements TileCutter {
     @Override
     public Image getNextTile() {
         if (this.nextY + this.tileHeight + this.tileMargin <= this.image.getHeight()) {
-            Image tile = null;
+            //Image tile = null;
                     //= image.getSubimage(nextX, nextY, tileWidth, tileHeight);
             this.nextX += this.tileWidth + this.tileSpacing;
 

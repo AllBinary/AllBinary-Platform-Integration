@@ -31,8 +31,7 @@
 package org.mapeditor.core;
 
 import javax.microedition.lcdui.Image;
-import org.allbinary.graphics.PointFactory;
-import org.allbinary.graphics.Rectangle;
+import javax.microedition.lcdui.NullImage;
 
 import org.allbinary.logic.string.StringUtil;
 
@@ -43,13 +42,13 @@ import org.allbinary.logic.string.StringUtil;
  */
 public class MapObject extends MapObjectData implements Cloneable {
 
-    private ObjectGroup objectGroup;
+    private ObjectGroup objectGroup = new ObjectGroup();
     //private Shape shape = new Rectangle2D.Double(0,0,0,0);
     //private Rectangle shape = new Rectangle(PointFactory.getInstance().ZERO_ZERO,0,0);
     private String imageSource = StringUtil.getInstance().EMPTY_STRING;
-    private Image image;
-    private Image scaledImage;
-    private Tile tile;
+    private Image image = NullImage.NULL_IMAGE;
+    private Image scaledImage = NullImage.NULL_IMAGE;
+    private Tile tile = new Tile();
     private boolean flipHorizontal;
     private boolean flipVertical;
     private boolean flipDiagonal;
@@ -223,8 +222,8 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @return the image to be used when drawing this object
      */
     public Image getImage(double zoom) {
-        if (this.image == null) {
-            return null;
+        if (this.image == NullImage.NULL_IMAGE) {
+            return NullImage.NULL_IMAGE;
         }
 
         final int zoomedWidth = (int) (this.getWidth() * zoom);

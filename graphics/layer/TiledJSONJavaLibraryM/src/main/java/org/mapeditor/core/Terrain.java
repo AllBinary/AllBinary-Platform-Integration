@@ -51,7 +51,7 @@ public class Terrain {
      * 
      */
         
-    protected Properties properties;
+    protected Properties properties = new Properties();
     /**
      * The name of the terrain type.
      * 

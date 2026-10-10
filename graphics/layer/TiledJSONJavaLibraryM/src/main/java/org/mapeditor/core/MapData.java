@@ -87,7 +87,7 @@ public class MapData {
      * "staggered" (since 0.9) and "hexagonal" (since 0.11).
      * 
      */
-    protected Orientation orientation;
+    protected Orientation orientation = Orientation.HEXAGONAL;
     /**
      * The order in which tiles on tile layers are rendered. Valid<br>
      * values are `right-down` (the default), `right-up`,<br>

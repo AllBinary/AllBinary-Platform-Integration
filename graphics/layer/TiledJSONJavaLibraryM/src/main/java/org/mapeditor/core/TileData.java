@@ -57,7 +57,7 @@ public class TileData {
      * 
      */
         
-    protected ImageData imageData;
+    protected ImageData imageData = new ImageData();
     /**
      * @since 0.10
      * 
@@ -106,7 +106,7 @@ public class TileData {
      * 
      */
         
-    protected Double probability;
+    protected Double probability = Double.valueOf(0.0f);
 
     /**
      * 

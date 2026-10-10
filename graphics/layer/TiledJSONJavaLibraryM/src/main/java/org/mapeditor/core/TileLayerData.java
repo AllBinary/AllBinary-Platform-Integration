@@ -52,7 +52,7 @@ public class TileLayerData
      * 
      */
         
-    protected Data data;
+    protected Data data = Data.NULL_DATA;
 
     /**
      * 

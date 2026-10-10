@@ -90,10 +90,10 @@ public class GDJSONMapReader {
     protected final MapReaderData mapReaderData = MapReaderData.getInstance();
 
     //private TiledMap map;
-    protected ABHashtable tilesetPerFirstGid;
+    protected ABHashtable tilesetPerFirstGid = StdUtil.getInstance().NULL_TABLE;
     private final int[] tilesetFirstGid = new int[30];
 
-    protected TilesetCache tilesetCache;
+//    protected TilesetCache tilesetCache;
 
     /**
      * Constructor for TMXMapReader.
@@ -624,8 +624,8 @@ public class GDJSONMapReader {
     }
 
 
-    private final String TILE_LABEL = " tile: ";
-    private final String SET_TILE_AT_FROM_TILE_ID = "setTileAtFromTileId";
+    //private final String TILE_LABEL = " tile: ";
+    //private final String SET_TILE_AT_FROM_TILE_ID = "setTileAtFromTileId";
     
     /**
      * Helper method to set the tile based on its global id.
@@ -663,9 +663,11 @@ public class GDJSONMapReader {
      */
     private Tile getTileForTileGID(final int tileId) {
         Tile tile = null;
-        final java.util.Map.Entry<Integer, TileSet> ts = this.findTileSetForTileGID(tileId);
+        //final java.util.Map.Entry<Integer, TileSet> ts = this.findTileSetForTileGID(tileId);
+        final TileSet ts = this.findTileSetForTileGID(tileId);
         if (ts != null) {
-            final TileSet tileSet = ts.getValue();
+            //final TileSet tileSet = ts.getValue();
+            final TileSet tileSet = ts;
             //logUtil.putF("tileId: " + tileId, this, "getTile");
             //tile = tileSet.getTile(tileId - ts.getKey());
             tile = tileSet.getTile(tileId);
@@ -697,9 +699,9 @@ public class GDJSONMapReader {
     private final String OBJECT_GROUP = "objectgroup";
     private final String CLASS = "class";
     private final String TYPE = "type";
-    private final String OBJECTS = "objects";
-    private final String DRAW_ORDER = "draworder";
-    private final String ROTATION = "rotation";
+    //private final String OBJECTS = "objects";
+    //private final String DRAW_ORDER = "draworder";
+    //private final String ROTATION = "rotation";
     
     private final String ANIMATION = "animation";
     private final String DURATION = "duration";
@@ -813,59 +815,59 @@ public class GDJSONMapReader {
 //        return false;
 //    }
 
-    static final class Entry<K,V> implements java.util.Map.Entry<K,V> {
-        K key;
-        V value;
-        Entry<K,V> left;
-        Entry<K,V> right;
-        Entry<K,V> parent;
-        //boolean color = BLACK;
-
-        Entry(K key, V value, Entry<K,V> parent) {
-            this.key = key;
-            this.value = value;
-            this.parent = parent;
-        }
-
-        @Override
-        public K getKey() {
-            return this.key;
-        }
-
-        @Override
-        public V getValue() {
-            return this.value;
-        }
-
-        @Override
-        public V setValue(V value) {
-            V oldValue = this.value;
-            this.value = value;
-            return oldValue;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (!(o instanceof java.util.Map.Entry))
-                return false;
-            java.util.Map.Entry<?,?> e = (java.util.Map.Entry<?,?>)o;
-
-            return GDJSONMapReader.valEquals(this.key,e.getKey()) && GDJSONMapReader.valEquals(this.value,e.getValue());
-        }
-
-        @Override
-        public int hashCode() {
-            int keyHash = (this.key==null ? 0 : this.key.hashCode());
-            int valueHash = (this.value==null ? 0 : this.value.hashCode());
-            return keyHash ^ valueHash;
-        }
-
-        public String toString() {
-            final String key = (this.key == null) ? StringUtil.getInstance().NULL_STRING : this.key.toString();
-            final String value = (this.value == null) ? StringUtil.getInstance().NULL_STRING : this.value.toString();
-            return new StringMaker().append(key).append(CommonSeps.getInstance().EQUALS).append(value).toString();
-        }
-    }
+//    static final class Entry<K,V> implements java.util.Map.Entry<K,V> {
+//        K key;
+//        V value;
+//        Entry<K,V> left;
+//        Entry<K,V> right;
+//        Entry<K,V> parent;
+//        //boolean color = BLACK;
+//
+//        Entry(K key, V value, Entry<K,V> parent) {
+//            this.key = key;
+//            this.value = value;
+//            this.parent = parent;
+//        }
+//
+//        @Override
+//        public K getKey() {
+//            return this.key;
+//        }
+//
+//        @Override
+//        public V getValue() {
+//            return this.value;
+//        }
+//
+//        @Override
+//        public V setValue(V value) {
+//            V oldValue = this.value;
+//            this.value = value;
+//            return oldValue;
+//        }
+//
+//        @Override
+//        public boolean equals(Object o) {
+//            if (!(o instanceof java.util.Map.Entry))
+//                return false;
+//            java.util.Map.Entry<?,?> e = (java.util.Map.Entry<?,?>)o;
+//
+//            return GDJSONMapReader.valEquals(this.key,e.getKey()) && GDJSONMapReader.valEquals(this.value,e.getValue());
+//        }
+//
+//        @Override
+//        public int hashCode() {
+//            int keyHash = (this.key==null ? 0 : this.key.hashCode());
+//            int valueHash = (this.value==null ? 0 : this.value.hashCode());
+//            return keyHash ^ valueHash;
+//        }
+//
+//        public String toString() {
+//            final String key = (this.key == null) ? StringUtil.getInstance().NULL_STRING : this.key.toString();
+//            final String value = (this.value == null) ? StringUtil.getInstance().NULL_STRING : this.value.toString();
+//            return new StringMaker().append(key).append(CommonSeps.getInstance().EQUALS).append(value).toString();
+//        }
+//    }
 
     static final boolean valEquals(Object o1, Object o2) {
         return (o1==null ? o2==null : o1.equals(o2));
@@ -879,17 +881,27 @@ public class GDJSONMapReader {
      * @return the tileset containing the tile with the given global tile id, or
      * <code>null</code> when no such tileset exists
      */
-    private Entry<Integer, TileSet> findTileSetForTileGID(final int tileId) {
+//    private Entry<Integer, TileSet> findTileSetForTileGID(final int tileId) {
+//        final TileSet tileSet = (TileSet) this.tilesetPerFirstGid.get(this.getTileSetFirtTileIdForTileId(tileId));
+//        if(tileSet != null) {
+//            final Entry entry = new Entry(tileId, tileSet, null);
+//            return entry;
+//        } else {
+//            return null;
+//        }
+//        //return tilesetPerFirstGid.floorEntry(gid);
+//    }
+
+    private TileSet findTileSetForTileGID(final int tileId) {
         final TileSet tileSet = (TileSet) this.tilesetPerFirstGid.get(this.getTileSetFirtTileIdForTileId(tileId));
         if(tileSet != null) {
-            final Entry entry = new Entry(tileId, tileSet, null);
-            return entry;
+            return tileSet;
         } else {
             return null;
         }
         //return tilesetPerFirstGid.floorEntry(gid);
     }
-
+    
     private int getTileSetFirtTileIdForTileId(final int tileId) {
         final int size = this.tilesetFirstGid.length;
         for(int index = 0; index < size; index++) {
@@ -913,8 +925,8 @@ public class GDJSONMapReader {
 //        return path.replace("/", File.separator);
 //    }
 
-    public GDJSONMapReader setTilesetCache(TilesetCache tilesetCache) {
-        this.tilesetCache = tilesetCache;
-        return this;
-    }
+//    public GDJSONMapReader setTilesetCache(TilesetCache tilesetCache) {
+//        this.tilesetCache = tilesetCache;
+//        return this;
+//    }
 }

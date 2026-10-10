@@ -60,7 +60,7 @@ public class Property {
      * 
      */
         
-    protected PropertyType type;
+    protected PropertyType type = PropertyType.BOOL;
     /**
      * The value of the property.
      * 

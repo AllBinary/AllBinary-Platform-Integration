@@ -34,6 +34,7 @@ import javax.microedition.lcdui.Image;
 
 import org.allbinary.graphics.PointFactory;
 import org.allbinary.graphics.Rectangle;
+import org.allbinary.graphics.RectangleFactory;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.string.CommonSeps;
 import org.allbinary.util.BasicArrayList;
@@ -46,13 +47,14 @@ import org.allbinary.util.BasicArrayListD;
  */
 public class Sprite {
 
-    private BasicArrayList keys;
+    private final BasicArrayList keys;
+
     private int borderWidth = 0;
     private int fpl = 0;
     private int totalKeys = -1;
 
     private float currentFrame = 0;
-    private Rectangle frameSize;
+    private Rectangle frameSize = RectangleFactory.SINGLETON;
     private boolean bPlaying = true;
 
     public class KeyFrame {
@@ -70,7 +72,7 @@ public class Sprite {
         private int id = -1;
         private int flags = KeyFrame.KEY_LOOP;
         private float frameRate = 1.0f;   //one fps
-        private Tile[] frames;
+        private Tile[] frames = new Tile[0];
 
         public KeyFrame() {
             this.flags = KeyFrame.KEY_LOOP;
@@ -164,6 +166,7 @@ public class Sprite {
      */
     public Sprite(Tile[] frames) {
         this.setFrames(frames);
+        this.keys = new BasicArrayListD();
     }
 
     /**
@@ -174,6 +177,7 @@ public class Sprite {
      * @param totalFrames a int.
      */
     public Sprite(Image image, int fpl, int border, int totalFrames) {
+        this.keys = new BasicArrayListD();
         Tile[] frames = null;
         this.fpl = fpl;
         this.borderWidth = border;

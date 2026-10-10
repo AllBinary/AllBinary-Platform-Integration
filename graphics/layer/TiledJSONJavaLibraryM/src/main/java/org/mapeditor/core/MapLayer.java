@@ -63,7 +63,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public static final int ROTATE_270 = 270;
 
-    protected TiledMap map;
+    protected TiledMap map = new TiledMap();
 
     /**
      * Constructor for MapLayer.

@@ -62,6 +62,8 @@ import org.allbinary.logic.string.StringUtil;
  */
 public class Data {
 
+    public static final Data NULL_DATA = new Data();
+    
     /**
      * 
      */

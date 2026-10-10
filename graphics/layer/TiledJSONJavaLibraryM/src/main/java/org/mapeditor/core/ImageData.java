@@ -56,7 +56,7 @@ public class ImageData {
      * 
      */
      
-    protected Data data = new Data();
+    protected Data data = Data.NULL_DATA;
     /**
      * Used for embedded images, in combination with a `data` child<br>
      * element. Valid values are file extensions like `png`, `gif`,<br>

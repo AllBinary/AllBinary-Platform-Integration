@@ -31,7 +31,7 @@
 package org.mapeditor.core;
 
 import javax.microedition.lcdui.Image;
-import org.allbinary.string.CommonStrings;
+import javax.microedition.lcdui.NullImage;
 import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.logic.communication.log.LogUtil;
@@ -46,9 +46,9 @@ public class Tile extends TileData {
     
     protected final LogUtil logUtil = LogUtil.getInstance();
 
-    private Image image;
+    private Image image = NullImage.NULL_IMAGE;
     private String source = StringUtil.getInstance().EMPTY_STRING;
-    private TileSet tileset;
+    private TileSet tileset = new TileSet();
 
     /**
      * Constructor for Tile.

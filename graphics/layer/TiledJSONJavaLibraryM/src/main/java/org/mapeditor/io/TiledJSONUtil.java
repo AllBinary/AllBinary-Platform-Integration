@@ -13,6 +13,7 @@
  */
 package org.mapeditor.io;
 
+import org.allbinary.logic.string.StringMaker;
 import org.allbinary.string.CommonSeps;
 import org.allbinary.logic.string.StringUtil;
 
@@ -55,31 +56,31 @@ public class TiledJSONUtil {
 
     public final String DEFAULT_TILE_SET = "atlas_tsj.tsj";
 
-    public void append(final int width, final int height, final String tileSetFileName, final int tileHeight, final int tileWidth, final String dataAsString, final StringBuilder stringBuilder) {
+    public void append(final int width, final int height, final String tileSetFileName, final int tileHeight, final int tileWidth, final String dataAsString, final StringMaker stringBuilder) {
         stringBuilder.append(this.BEFORE_HEIGHT_0);
-        stringBuilder.append(height);
+        stringBuilder.appendint(height);
         stringBuilder.append(this.BEFORE_DATA_1);
         stringBuilder.append(dataAsString);
         stringBuilder.append(this.AFTER_HEIGHT_0);
-        stringBuilder.append(height);
+        stringBuilder.appendint(height);
         stringBuilder.append(this.AFTER_WIDTH_1);
-        stringBuilder.append(width);
+        stringBuilder.appendint(width);
         stringBuilder.append(this.AFTER_TILE_HEIGHT_2);
-        stringBuilder.append(tileHeight);
+        stringBuilder.appendint(tileHeight);
         //stringBuilder.append(this.DEFAULT_TILE_HEIGHT);
         stringBuilder.append(this.AFTER_TILE_SET_3);
         //stringBuilder.append(this.DEFAULT_TILE_SET);
         stringBuilder.append(tileSetFileName);
         stringBuilder.append(this.AFTER_TILE_WIDTH_4);
         //stringBuilder.append(this.DEFAULT_TILE_WIDTH);
-        stringBuilder.append(tileWidth);
+        stringBuilder.appendint(tileWidth);
         stringBuilder.append(this.AFTER_WIDTH_5);
-        stringBuilder.append(width);
+        stringBuilder.appendint(width);
         stringBuilder.append(this.END);
     }
 
     public String generateJSONAsString(final int[][] mapData, final int tileWidth, final int tileHeight) {
-        final StringBuilder stringBuilder = new StringBuilder();
+        final StringMaker stringBuilder = new StringMaker();
         
         final int width = mapData[0].length;
         final int height = mapData.length;
@@ -95,7 +96,7 @@ public class TiledJSONUtil {
 
         final String dataAsString = new String(encodeData).replace(CommonSeps.getInstance().NEW_LINE, StringUtil.getInstance().EMPTY_STRING);
         stringBuilder.delete(0, stringBuilder.length());
-        //public void append(final int width, final int height, final String tileSetFileName, final int tileHeight, final int tileWidth, final String dataAsString, final StringBuilder stringBuilder)
+        //public void append(final int width, final int height, final String tileSetFileName, final int tileHeight, final int tileWidth, final String dataAsString, final StringMaker stringBuilder)
         this.append(width, height, this.DEFAULT_TILE_SET, tileWidth, tileHeight, dataAsString, stringBuilder);
         
         final String tiledAsString = stringBuilder.toString();

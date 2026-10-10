@@ -13,9 +13,9 @@
  */
 package org.mapeditor.io;
 
-import org.allbinary.string.CommonStrings;
 
 import org.allbinary.logic.communication.log.LogUtil;
+import org.allbinary.logic.string.StringMaker;
 
 /**
  *
@@ -27,7 +27,7 @@ public class GDJSONMapDataWriter {
     
     private final int LAST_BYTE = 0x000000FF;
     
-    public int write(final int width, final int height, final int[][] mapData, byte[] byteArray, final StringBuilder stringBuilder) {
+    public int write(final int width, final int height, final int[][] mapData, byte[] byteArray, final StringMaker stringBuilder) {
         
         //final CommonStrings commonStrings = CommonStrings.getInstance();
         int index = 0;

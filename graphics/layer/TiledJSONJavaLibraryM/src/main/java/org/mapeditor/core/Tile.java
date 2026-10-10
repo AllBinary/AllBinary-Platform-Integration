@@ -35,6 +35,7 @@ import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.logic.communication.log.LogUtil;
+import org.allbinary.logic.string.StringUtil;
 
 /**
  * The core class for our tiles.
@@ -42,11 +43,11 @@ import org.allbinary.logic.communication.log.LogUtil;
  * @version 1.4.2
  */
 public class Tile extends TileData {
+    
     protected final LogUtil logUtil = LogUtil.getInstance();
 
-
     private Image image;
-    private String source;
+    private String source = StringUtil.getInstance().EMPTY_STRING;
     private TileSet tileset;
 
     /**
@@ -176,15 +177,6 @@ public class Tile extends TileData {
      */
     public void setSource(String source) {
         this.source = source;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Properties getProperties() {
-        if (this.properties == null) {
-            this.properties = new Properties();
-        }
-        return super.getProperties();
     }
 
     /** {@inheritDoc} */

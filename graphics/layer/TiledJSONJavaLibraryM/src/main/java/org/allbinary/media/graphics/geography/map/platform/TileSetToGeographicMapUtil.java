@@ -13,11 +13,10 @@
  */
 package org.allbinary.media.graphics.geography.map.platform;
 
-import java.util.Hashtable;
 import org.allbinary.logic.StdUtil;
-
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.logic.string.StringMaker;
+import org.allbinary.util.ABHashtable;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 import org.mapeditor.core.ObjectGroupData;
@@ -43,11 +42,11 @@ public class TileSetToGeographicMapUtil {
 
     private final String OTHER = "Other";
     
-    public Hashtable convert(final TileSet tileSet) {
+    public ABHashtable convert(final TileSet tileSet) {
         final StringMaker stringMaker = 
                 null;
                 //new StringMaker();
-        final Hashtable map = StdUtil.getInstance().createHashtable();
+        final ABHashtable map = StdUtil.getInstance().createHashtable();
         final int tileCount = tileSet.getTilecount();
         Tile tile;
         BasicArrayList objectGroupList;
@@ -80,7 +79,7 @@ public class TileSetToGeographicMapUtil {
         return map;
     }
     
-    protected void add(final Hashtable map, final String name, final int id, final StringMaker stringMaker) {
+    protected void add(final ABHashtable map, final String name, final int id, final StringMaker stringMaker) {
         
         //stringMaker.delete(0, stringMaker.length());
         //logUtil.putF(stringMaker.append(name).append(CommonSeps.getInstance().EQUALS).append(id).toString(), this, commonStrings.PROCESS);

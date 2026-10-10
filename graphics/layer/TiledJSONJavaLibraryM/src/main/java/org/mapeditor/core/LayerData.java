@@ -36,12 +36,16 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.java.bool.BooleanFactory;
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
+
 /**
  * 
  */
 public abstract class LayerData {
 
-    protected Properties properties;
+    protected Properties properties = new Properties();
     /**
      * Unique ID of the layer. Each layer that is added to a map gets a<br>
      * unique id. Even if a layer is deleted, no layer ever gets the<br>
@@ -50,13 +54,13 @@ public abstract class LayerData {
      * @since 1.2
      * 
      */
-    protected Integer id;
+    protected Integer id = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The name of the layer.
      * 
      */
         
-    protected String name;
+    protected String name = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The x coordinate of the layer in tiles. Defaults to 0 and<br>
      * can no longer be changed in Tiled Qt.<br>
@@ -65,7 +69,7 @@ public abstract class LayerData {
      * 
      */
     //@Deprecated
-    protected Integer x;
+    protected Integer x = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The y coordinate of the layer in tiles. Defaults to 0 and<br>
      * can no longer be changed in Tiled Qt.<br>
@@ -74,7 +78,7 @@ public abstract class LayerData {
      * 
      */
     //@Deprecated    
-    protected Integer y;
+    protected Integer y = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The width of the layer in tiles. Traditionally required, but<br>
      * as of Tiled Qt always the same as the map width.<br>
@@ -82,8 +86,7 @@ public abstract class LayerData {
      * @deprecated
      * 
      */
-        //@Deprecated
-    
+    //@Deprecated
     protected int width;
     /**
      * The height of the layer in tiles. Traditionally required,<br>
@@ -101,13 +104,13 @@ public abstract class LayerData {
      * 
      */
         
-    protected Float opacity;
+    protected Float opacity = Float.valueOf(0.0f);
     /**
      * Whether the layer is shown (1) or hidden (0). Defaults to 1.
      * 
      */
         
-    protected Boolean visible;
+    protected Boolean visible = BooleanFactory.getInstance().FALSE;
     /**
      * Rendering offset for this layer in pixels. Defaults to 0.<br>
      * <br>
@@ -115,7 +118,7 @@ public abstract class LayerData {
      * 
      */
         
-    protected Integer offsetX;
+    protected Integer offsetX = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Rendering offset for this layer in pixels. Defaults to 0.<br>
      * <br>
@@ -123,13 +126,13 @@ public abstract class LayerData {
      * 
      */
         
-    protected Integer offsetY;
+    protected Integer offsetY = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Locking flag of the layer (used by Tiled).
      * 
      */
         
-    protected Integer locked;
+    protected Integer locked = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * 

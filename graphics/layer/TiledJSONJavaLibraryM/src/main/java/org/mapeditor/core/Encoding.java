@@ -36,28 +36,35 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+
 
 
 /**
  * 
  */
+//enum
+public class Encoding {
 
-public enum Encoding {
-
-
-    /**
-     * 
-     */
-        BASE_64("base64"),
 
     /**
      * 
      */
-        CSV("csv");
+    public static final Encoding BASE_64 = new Encoding("base64");
+
+    /**
+     * 
+     */
+    public static final Encoding CSV = new Encoding("csv");
+
+    private static final BasicArrayList ENCODING_LIST = new BasicArrayListD();
+
     private final String value;
 
     Encoding(String v) {
         this.value = v;
+        Encoding.ENCODING_LIST.add(this);
     }
 
     public String value() {
@@ -65,7 +72,10 @@ public enum Encoding {
     }
 
     public static Encoding fromValue(String v) {
-        for (Encoding c: Encoding.values()) {
+        final int size = Encoding.ENCODING_LIST.size();
+        Encoding c;
+        for (int index = 0; index < size; index++) {
+            c = (Encoding) Encoding.ENCODING_LIST.get(index);
             if (c.value.equals(v)) {
                 return c;
             }

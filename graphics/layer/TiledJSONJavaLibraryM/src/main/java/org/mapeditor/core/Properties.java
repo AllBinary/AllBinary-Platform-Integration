@@ -30,7 +30,6 @@
 package org.mapeditor.core;
 
 import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
 
 /**
  * Properties class.
@@ -44,7 +43,6 @@ public class Properties extends PropertiesData implements Cloneable {
      */
     public Properties() {
         super();
-        this.properties = new BasicArrayListD();
     }
 
     /**

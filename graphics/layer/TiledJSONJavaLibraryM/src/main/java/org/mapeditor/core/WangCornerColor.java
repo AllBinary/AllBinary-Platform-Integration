@@ -36,6 +36,9 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -51,26 +54,26 @@ public class WangCornerColor {
      * 
      */
         
-    protected String name;
+    protected String name = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The color in `#RRGGBB` format (example: `#c17d11`).
      * 
      */
         
-    protected String color;
+    protected String color = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The tile ID of the tile representing this color.
      * 
      */
         
-    protected Integer tile;
+    protected Integer tile = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The relative probability that this color is chosen over<br>
      * others in case of multiple options.
      * 
      */
         
-    protected Integer probability;
+    protected Integer probability = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * The name of this color.

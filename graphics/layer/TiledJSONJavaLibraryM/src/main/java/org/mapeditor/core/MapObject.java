@@ -46,7 +46,7 @@ public class MapObject extends MapObjectData implements Cloneable {
     private ObjectGroup objectGroup;
     //private Shape shape = new Rectangle2D.Double(0,0,0,0);
     //private Rectangle shape = new Rectangle(PointFactory.getInstance().ZERO_ZERO,0,0);
-    private String imageSource;
+    private String imageSource = StringUtil.getInstance().EMPTY_STRING;
     private Image image;
     private Image scaledImage;
     private Tile tile;
@@ -59,7 +59,6 @@ public class MapObject extends MapObjectData implements Cloneable {
      */
     public MapObject() {
         super();
-        this.properties = new Properties();
         this.name = StringUtil.getInstance().EMPTY_STRING;
         this.type = StringUtil.getInstance().EMPTY_STRING;
         this.imageSource = StringUtil.getInstance().EMPTY_STRING;

@@ -36,40 +36,47 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+
 
 
 /**
  * 
  */
+//enum
+public class Orientation {
 
-public enum Orientation {
-
-
-    /**
-     * 
-     */
-        ORTHOGONAL("orthogonal"),
 
     /**
      * 
      */
-        ISOMETRIC("isometric"),
+    public static final Orientation ORTHOGONAL = new Orientation("orthogonal");
+
+    /**
+     * 
+     */
+    public static final Orientation ISOMETRIC = new Orientation("isometric");
 
     /**
      * @since 0.9
      * 
      */
-        STAGGERED("staggered"),
+    public static final Orientation STAGGERED = new Orientation("staggered");
 
     /**
      * @since 0.11
      * 
      */
-        HEXAGONAL("hexagonal");
+    public static final Orientation HEXAGONAL = new Orientation("hexagonal");
+        
+    private static final BasicArrayList ORIENTATION_LIST = new BasicArrayListD();
+
     private final String value;
 
     Orientation(String v) {
         this.value = v;
+        Orientation.ORIENTATION_LIST.add(this);
     }
 
     public String value() {
@@ -77,7 +84,10 @@ public enum Orientation {
     }
 
     public static Orientation fromValue(String v) {
-        for (Orientation c: Orientation.values()) {
+        final int size = Orientation.ORIENTATION_LIST.size();
+        Orientation c;
+        for (int index = 0; index < size; index++) {
+            c = (Orientation) Orientation.ORIENTATION_LIST.get(index);
             if (c.value.equals(v)) {
                 return c;
             }

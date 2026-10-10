@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+
 
 
 /**
@@ -53,13 +55,13 @@ public class TileOffset {
      * 
      */
         
-    protected Integer x;
+    protected Integer x = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Vertical offset in pixels (positive is down)
      * 
      */
         
-    protected Integer y;
+    protected Integer y = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * Horizontal offset in pixels

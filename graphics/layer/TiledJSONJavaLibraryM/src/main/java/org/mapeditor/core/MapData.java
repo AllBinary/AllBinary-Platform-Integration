@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -57,21 +59,21 @@ public class MapData {
     /**
      * 
      */
-    protected Properties properties;
+    protected Properties properties = new Properties();
     /**
      * 
      */
-    protected BasicArrayList tileSets;
+    protected BasicArrayList tileSets = new BasicArrayListD();
     /**
      * 
      */
-    protected BasicArrayList layers;
+    protected BasicArrayList layers = new BasicArrayListD();
     /**
      * The TMX format version. Was "1.0" so far, and will be<br>
      * incremented to match minor Tiled releases.
      * 
      */
-    protected String version;
+    protected String version = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The Tiled version used to save the file.<br>
      * May be a date (for snapshot builds).<br>
@@ -79,7 +81,7 @@ public class MapData {
      * @since 1.0.1
      * 
      */
-    protected String tiledversion;
+    protected String tiledversion = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Map orientation. Tiled supports "orthogonal", "isometric",<br>
      * "staggered" (since 0.9) and "hexagonal" (since 0.11).
@@ -94,7 +96,7 @@ public class MapData {
      * maps at the moment)
      * 
      */
-    protected RenderOrder renderorder;
+    protected RenderOrder renderorder = RenderOrder.LEFT_UP;
     /**
      * The map width in tiles.
      * 
@@ -121,14 +123,14 @@ public class MapData {
      * @since 1.1
      * 
      */
-    protected Integer infinite;
+    protected Integer infinite = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Only for hexagonal maps. Determines the width or height<br>
      * (depending on the staggered axis) of the tile's edge, in<br>
      * pixels.
      * 
      */
-    protected Integer hexSideLength;
+    protected Integer hexSideLength = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * For staggered and hexagonal maps, determines which axis<br>
      * ("x" or "y") is staggered.<br>
@@ -136,7 +138,7 @@ public class MapData {
      * @since 0.11
      * 
      */
-    protected StaggerAxis staggerAxis;
+    protected StaggerAxis staggerAxis = StaggerAxis.X;
     /**
      * For staggered and hexagonal maps, determines whether the<br>
      * "even" or "odd" indexes along the staggered axis are<br>
@@ -145,7 +147,7 @@ public class MapData {
      * @since 0.11
      * 
      */
-    protected StaggerIndex staggerIndex;
+    protected StaggerIndex staggerIndex = StaggerIndex.EVEN;
     /**
      * The background color of the map. (optional, may include<br>
      * alpha value since 0.15 in the form `#AARRGGBB`)<br>
@@ -153,7 +155,7 @@ public class MapData {
      * @since 0.9
      * 
      */
-    protected String backgroundcolor;
+    protected String backgroundcolor = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Stores the next available ID for new layers. This number is<br>
      * stored to prevent reuse of the same ID after layers have been<br>
@@ -162,7 +164,7 @@ public class MapData {
      * @since 1.2
      * 
      */
-    protected Integer nextlayerid;
+    protected Integer nextlayerid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Stores the next available ID for new objects. This number<br>
      * is stored to prevent reuse of the same ID after objects<br>
@@ -171,7 +173,7 @@ public class MapData {
      * @since 0.11
      * 
      */
-    protected Integer nextobjectid;
+    protected Integer nextobjectid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * 
@@ -199,9 +201,6 @@ public class MapData {
      * 
      */
     public BasicArrayList getTileSets() {
-        if (this.tileSets == null) {
-            this.tileSets = new BasicArrayListD();
-        }
         return this.tileSets;
     }
 
@@ -209,9 +208,6 @@ public class MapData {
      * 
      */
     public BasicArrayList getLayers() {
-        if (this.layers == null) {
-            this.layers = new BasicArrayListD();
-        }
         return this.layers;
     }
 

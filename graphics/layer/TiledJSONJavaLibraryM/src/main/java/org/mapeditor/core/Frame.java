@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+
 
 
 /**
@@ -50,14 +52,14 @@ public class Frame {
      * 
      */
         
-    protected Integer tileid;
+    protected Integer tileid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * How long (in milliseconds) this frame should be displayed<br>
      * before advancing to the next frame.
      * 
      */
         
-    protected Integer duration;
+    protected Integer duration = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * The local ID of a tile within the parent tileset.

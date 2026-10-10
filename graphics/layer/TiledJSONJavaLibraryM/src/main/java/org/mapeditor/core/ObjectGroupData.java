@@ -36,6 +36,7 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -53,13 +54,13 @@ public class ObjectGroupData
      * 
      */
         
-    protected BasicArrayList objects;
+    protected final BasicArrayList objects = new BasicArrayListD();
     /**
      * The color used to display the objects in this group.
      * 
      */
         
-    protected String color;
+    protected String color = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Whether the objects are drawn according to the order<br>
      * of appearance ("index") or sorted by their<br>
@@ -67,16 +68,13 @@ public class ObjectGroupData
      * 
      */
         
-    protected String draworder;
+    protected String draworder = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * 
      */
     
     public BasicArrayList getObjects() {
-        if (this.objects == null) {
-            this.objects = new BasicArrayListD();
-        }
         return this.objects;
     }
 

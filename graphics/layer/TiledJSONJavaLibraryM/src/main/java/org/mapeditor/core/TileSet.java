@@ -59,12 +59,13 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
 {
     protected final LogUtil logUtil = LogUtil.getInstance();
 
+    private final ABHashtable<Integer, Tile> tiles;
+    
     private long tilebmpFileLastModified;
     //private TileCutter tileCutter;
     private BasicColor transparentColor;
     //private Image tileSetImage;
     private int tileSetImageHeight;
-    private ABHashtable<Integer, Tile> tiles;
     private int lastKey = -1;
 
     /**
@@ -72,7 +73,6 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      */
     public TileSet() {
         super();
-        this.internalTiles = new BasicArrayListD();
         this.tiles = new ABHashtable<Integer, Tile>();
     }
 

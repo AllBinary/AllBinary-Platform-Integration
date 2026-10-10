@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -64,7 +66,7 @@ public class Data {
      * 
      */
                 
-    protected String value;
+    protected String value = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The encoding used to encode the tile layer data.<br>
      * When used, it can be "base64" and "csv" at the<br>
@@ -72,14 +74,14 @@ public class Data {
      * 
      */
         
-    protected Encoding encoding;
+    protected Encoding encoding = Encoding.BASE_64;
     /**
      * The compression used to compress the tile layer<br>
      * data. Tiled Qt supports "gzip" and "zlib".
      * 
      */
         
-    protected Compression compression;
+    protected Compression compression = Compression.ZLIB;
 
     /**
      * 

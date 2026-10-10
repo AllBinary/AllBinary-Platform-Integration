@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -50,7 +52,7 @@ public class Property {
      * 
      */
         
-    protected String name;
+    protected String name = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The type of the property. Can be `string` (default), `int`,<br>
      * `float`, `bool`, `color` or `file` (since 0.16, with `color`<br>
@@ -64,7 +66,7 @@ public class Property {
      * 
      */
         
-    protected String value;
+    protected String value = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * The name of the property.

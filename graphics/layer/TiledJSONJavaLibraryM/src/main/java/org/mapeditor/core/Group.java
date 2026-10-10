@@ -53,16 +53,13 @@ public class Group
     /**
      * 
      */
-    protected BasicArrayList layers;
+    protected final BasicArrayList layers = new BasicArrayListD();
 
     /**
      * 
      */
     
     public BasicArrayList getLayers() {
-        if (this.layers == null) {
-            this.layers = new BasicArrayListD();
-        }
         return this.layers;
     }
 

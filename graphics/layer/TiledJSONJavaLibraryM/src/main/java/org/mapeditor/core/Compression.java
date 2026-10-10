@@ -36,29 +36,36 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+
 
 
 /**
  * 
  */
-
-public enum Compression {
+//enum
+public class Compression {
 
 
     /**
      * @deprecated since 0.15
      * 
      */
-        GZIP("gzip"),
+    public static final Compression GZIP = new Compression("gzip");
 
     /**
      * 
      */
-        ZLIB("zlib");
+    public static final Compression ZLIB = new Compression("zlib");
+
+    private static final BasicArrayList COMPRESSION_LIST = new BasicArrayListD();
+    
     private final String value;
 
     Compression(String v) {
         this.value = v;
+        Compression.COMPRESSION_LIST.add(this);
     }
 
     public String value() {
@@ -66,7 +73,10 @@ public enum Compression {
     }
 
     public static Compression fromValue(String v) {
-        for (Compression c: Compression.values()) {
+        final int size = Compression.COMPRESSION_LIST.size();
+        Compression c;
+        for (int index = 0; index < size; index++) {
+            c = (Compression) Compression.COMPRESSION_LIST.get(index);
             if (c.value.equals(v)) {
                 return c;
             }

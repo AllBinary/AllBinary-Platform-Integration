@@ -36,13 +36,16 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+
 
 
 /**
  * 
  */
-
-public enum PropertyType {
+//enum
+public class PropertyType {
 
 
     /**
@@ -57,19 +60,19 @@ public enum PropertyType {
      * @since 0.16
      * 
      */
-        STRING("string"),
+    public static final PropertyType STRING = new PropertyType("string");
 
     /**
      * @since 0.16
      * 
      */
-        INT("int"),
+    public static final PropertyType INT = new PropertyType("int");
 
     /**
      * @since 0.16
      * 
      */
-        FLOAT("float"),
+    public static final PropertyType FLOAT = new PropertyType("float");
 
     /**
      * Boolean properties have a value of either "true"<br>
@@ -78,7 +81,7 @@ public enum PropertyType {
      * @since 0.16
      * 
      */
-        BOOL("bool"),
+    public static final PropertyType BOOL = new PropertyType("bool");
 
     /**
      * Color properties are stored in the format `#AARRGGBB`.<br>
@@ -86,7 +89,7 @@ public enum PropertyType {
      * @since 0.17
      * 
      */
-        COLOR("color"),
+    public static final PropertyType COLOR = new PropertyType("color");
 
     /**
      * File properties are stored as paths relative from<br>
@@ -95,11 +98,15 @@ public enum PropertyType {
      * @since 0.17
      * 
      */
-        FILE("file");
+    public static final PropertyType FILE = new PropertyType("file");
+        
+    private static final BasicArrayList PROPERTY_TYPE_LIST = new BasicArrayListD();
+
     private final String value;
 
     PropertyType(String v) {
         this.value = v;
+        PropertyType.PROPERTY_TYPE_LIST.add(this);
     }
 
     public String value() {
@@ -107,7 +114,10 @@ public enum PropertyType {
     }
 
     public static PropertyType fromValue(String v) {
-        for (PropertyType c: PropertyType.values()) {
+        final int size = PropertyType.PROPERTY_TYPE_LIST.size();
+        PropertyType c;
+        for (int index = 0; index < size; index++) {
+            c = (PropertyType) PropertyType.PROPERTY_TYPE_LIST.get(index);
             if (c.value.equals(v)) {
                 return c;
             }

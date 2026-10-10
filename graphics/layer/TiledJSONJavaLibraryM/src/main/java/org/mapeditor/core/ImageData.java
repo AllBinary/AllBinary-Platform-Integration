@@ -36,6 +36,9 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -53,7 +56,7 @@ public class ImageData {
      * 
      */
      
-    protected Data data;
+    protected Data data = new Data();
     /**
      * Used for embedded images, in combination with a `data` child<br>
      * element. Valid values are file extensions like `png`, `gif`,<br>
@@ -63,16 +66,15 @@ public class ImageData {
      * 
      */
         
-    protected String format;
+    protected String format = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Used by some versions of Tiled Java.<br>
      * <br>
      * @deprecated and unsupported by Tiled Qt.
      * 
      */
-        //@Deprecated
-    
-    protected Integer id;
+    //@Deprecated
+    protected Integer id = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The reference to the tileset image file<br>
      * (Tiled supports most common image formats).<br>
@@ -81,7 +83,7 @@ public class ImageData {
      * 
      */
             
-    protected String source;
+    protected String source = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Defines a specific color that is treated as transparent<br>
      * (example value: "#FF00FF" for magenta). Up until Tiled 0.12,<br>
@@ -90,21 +92,23 @@ public class ImageData {
      * 
      */
         
-    protected String trans;
+    protected String trans = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The image width in pixels (optional, used for tile index<br>
      * correction when the image changes)
      * 
      */
         
-    protected Integer width;
+    protected Integer width = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The image height in pixels (optional)
      * 
      */
         
-    protected Integer height;
+    protected Integer height = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
+    public String path = StringUtil.getInstance().EMPTY_STRING;
+    
     /**
      * @since 0.9
      * 
@@ -315,5 +319,4 @@ public class ImageData {
         this.height = value;
     }
 
-    public String path;
 }

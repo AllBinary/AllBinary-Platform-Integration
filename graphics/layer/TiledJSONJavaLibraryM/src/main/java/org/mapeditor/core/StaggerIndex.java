@@ -36,28 +36,35 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+
 
 
 /**
  * 
  */
+//enum
+public class StaggerIndex {
 
-public enum StaggerIndex {
-
-
-    /**
-     * 
-     */
-        EVEN("even"),
 
     /**
      * 
      */
-        ODD("odd");
+    public static final StaggerIndex EVEN = new StaggerIndex("even");
+
+    /**
+     * 
+     */
+    public static final StaggerIndex ODD = new StaggerIndex("odd");
+        
+    private static final BasicArrayList STAGGER_INDEX_LIST = new BasicArrayListD();
+    
     private final String value;
 
     StaggerIndex(String v) {
         this.value = v;
+        StaggerIndex.STAGGER_INDEX_LIST.add(this);
     }
 
     public String value() {
@@ -65,7 +72,10 @@ public enum StaggerIndex {
     }
 
     public static StaggerIndex fromValue(String v) {
-        for (StaggerIndex c: StaggerIndex.values()) {
+        final int size = StaggerIndex.STAGGER_INDEX_LIST.size();
+        StaggerIndex c;
+        for (int index = 0; index < size; index++) {
+            c = (StaggerIndex) StaggerIndex.STAGGER_INDEX_LIST.get(index);
             if (c.value.equals(v)) {
                 return c;
             }

@@ -37,19 +37,17 @@ import java.io.File;
 //import java.io.IOException;
 //import java.io.File;
 import java.io.InputStream;
-import java.util.Hashtable;
-
-import org.allbinary.logic.StdUtil;
 //import java.util.Base64;
 //import java.util.Map.Entry;
 
+import org.allbinary.logic.StdUtil;
 import org.allbinary.string.CommonStrings;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
-
 import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.math.PositionStrings;
 import org.allbinary.string.CommonSeps;
+import org.allbinary.util.ABHashtable;
 
 import org.apache.xmlrpc.Base64;
 
@@ -92,7 +90,7 @@ public class GDJSONMapReader {
     protected final MapReaderData mapReaderData = MapReaderData.getInstance();
 
     //private TiledMap map;
-    protected Hashtable tilesetPerFirstGid;
+    protected ABHashtable tilesetPerFirstGid;
     private final int[] tilesetFirstGid = new int[30];
 
     protected TilesetCache tilesetCache;
@@ -405,7 +403,8 @@ public class GDJSONMapReader {
 //
 //                mapObjectList.add(mapObject);
 //            }
-                objectGroup.setOpacity(Float.valueOf((float) jsonObject.getDouble(this.mapReaderData.OPACITY)));
+                final float opacity = (float) jsonObject.getDouble(this.mapReaderData.OPACITY);
+                objectGroup.setOpacity(Float.valueOf(opacity));
                 //objectGroup.setVisible(jsonObject.getBoolean(this.mapReaderData.VISIBLE));
                 //objectGroup.setX();
                 //objectGroup.setY();
@@ -485,7 +484,7 @@ public class GDJSONMapReader {
                                 //Base64.getDecoder().decode(enc);
                                 //DatatypeConverter.parseBase64Binary(enc);
                         final ByteArrayInputStream bais = new ByteArrayInputStream(dec);
-                        InputStream is;
+                        InputStream inputStream;
 
                         if ("gzip".equalsIgnoreCase(comp)) {
 //                            final int len = layerWidth * layerHeight * 4;
@@ -499,7 +498,7 @@ public class GDJSONMapReader {
                               throw new RuntimeException();
                         } else {
                             this.logUtil.putF("Loading TileLayer - uncompressed", this, this.commonStrings.PROCESS);
-                            is = bais;
+                            inputStream = bais;
                         }
 
                         //final int size = ml.getHeight() * ml.getWidth();
@@ -518,19 +517,19 @@ public class GDJSONMapReader {
 
                                 stringMaker.delete(0, stringMaker.length());
 
-                                nextInt = is.read();
+                                nextInt = inputStream.read();
                                 //tileId |= nextInt;
                                 tileId = tiledBehavior.getTileId0(tileId, nextInt, stringMaker);
 
-                                nextInt = is.read();
+                                nextInt = inputStream.read();
                                 //tileId |= (nextInt) << Byte.SIZE;
                                 tileId = tiledBehavior.getTileId1(tileId, nextInt, stringMaker);
 
-                                nextInt = is.read();
+                                nextInt = inputStream.read();
                                 //tileId |= (nextInt) << Byte.SIZE * 2;
                                 tileId = tiledBehavior.getTileId2(tileId, nextInt, stringMaker);
 
-                                nextInt = is.read();
+                                nextInt = inputStream.read();
                                 //tileId |= (nextInt) << Byte.SIZE * 3;
                                 tileId = tiledBehavior.getTileId3(tileId, nextInt, stringMaker);
 

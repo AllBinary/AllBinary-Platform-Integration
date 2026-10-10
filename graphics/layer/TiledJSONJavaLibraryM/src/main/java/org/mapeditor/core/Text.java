@@ -36,6 +36,10 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.java.bool.BooleanFactory;
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -49,13 +53,13 @@ public class Text {
      * 
      */
         
-    protected String value;
+    protected String value = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The font family used (default: "sand-serif")
      * 
      */
         
-    protected String fontfamily;
+    protected String fontfamily = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The size of the font in pixels (not using points,<br>
      * because other sizes in the TMX format are also using<br>
@@ -63,70 +67,70 @@ public class Text {
      * 
      */
         
-    protected Integer pixelsize;
+    protected Integer pixelsize = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Whether word wrapping is enabled (1) or disabled<br>
      * (0). Defaults to 0.
      * 
      */
         
-    protected Boolean wrap;
+    protected Boolean wrap = BooleanFactory.getInstance().FALSE;
     /**
      * Color of the text in `#AARRGGBB` or `#RRGGBB` format<br>
      * (default: #000000)
      * 
      */
         
-    protected String color;
+    protected String color = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Whether the font is bold (1) or not (0). Defaults to<br>
      *  0.
      * 
      */
         
-    protected Boolean bold;
+    protected Boolean bold = BooleanFactory.getInstance().FALSE;
     /**
      * Whether the font is italic (1) or not (0). Defaults<br>
      * to 0.
      * 
      */
         
-    protected Boolean italic;
+    protected Boolean italic = BooleanFactory.getInstance().FALSE;
     /**
      * Whether a line should be drawn below the text (1) or<br>
      * not (0). Defaults to 0.
      * 
      */
         
-    protected Boolean underline;
+    protected Boolean underline = BooleanFactory.getInstance().FALSE;
     /**
      * Whether a line should be drawn through the text (1)<br>
      * or not (0). Defaults to 0.
      * 
      */
         
-    protected Boolean strikeout;
+    protected Boolean strikeout = BooleanFactory.getInstance().FALSE;
     /**
      * Whether kerning should be used while rendering the<br>
      * text (1) or not (0). Default to 1.
      * 
      */
         
-    protected Boolean kerning;
+    protected Boolean kerning = BooleanFactory.getInstance().FALSE;
     /**
      * Horizontal alignment of the text within the object<br>
      * (`left` (default), `center` or `right`)
      * 
      */
         
-    protected HorizontalAlignment halign;
+    protected HorizontalAlignment halign = HorizontalAlignment.CENTER;
     /**
      * Vertical alignment of the text within the object<br>
      * (`left` (default), `center` or `right`)
      * 
      */
         
-    protected VerticalAlignment valign;
+    protected VerticalAlignment valign = VerticalAlignment.CENTER;
 
     /**
      * 

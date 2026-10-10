@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -49,7 +51,7 @@ public class TileData {
      * 
      */
         
-    protected Properties properties;
+    protected Properties properties = new Properties();
     /**
      * @since 0.9
      * 
@@ -61,7 +63,7 @@ public class TileData {
      * 
      */
         
-    protected BasicArrayList objectgroup;
+    protected final BasicArrayList objectgroup = new BasicArrayListD();
     /**
      * @since 0.10
      * 
@@ -73,7 +75,7 @@ public class TileData {
      * 
      */
         
-    protected Integer id;
+    protected Integer id = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The type of the tile. Refers to an object type and is used<br>
      * by tile objects. (optional)<br>
@@ -82,7 +84,7 @@ public class TileData {
      * 
      */
         
-    protected String type;
+    protected String type = StringUtil.getInstance().EMPTY_STRING;
     /**
      * Defines the terrain type of each corner of the tile, given<br>
      * as comma-separated indexes in the terrain types array in the<br>
@@ -94,7 +96,7 @@ public class TileData {
      * 
      */
         
-    protected String terrain;
+    protected String terrain = StringUtil.getInstance().EMPTY_STRING;
     /**
      * A percentage indicating the probability that this tile is<br>
      * chosen when it competes with others while editing with the<br>
@@ -162,9 +164,6 @@ public class TileData {
      */
     
     public BasicArrayList getObjectgroup() {
-        if (this.objectgroup == null) {
-            this.objectgroup = new BasicArrayListD();
-        }
         return this.objectgroup;
     }
 

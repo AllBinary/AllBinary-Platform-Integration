@@ -66,7 +66,7 @@ public class Sprite {
 
         public static final int KEY_NAME_LENGTH_MAX = 32;
 
-        private String name = null;
+        private String name = StringUtil.getInstance().EMPTY_STRING;
         private int id = -1;
         private int flags = KeyFrame.KEY_LOOP;
         private float frameRate = 1.0f;   //one fps
@@ -231,8 +231,9 @@ public class Sprite {
      * @param c a float.
      */
     public void setCurrentFrame(float c) {
+        final int maskedFlags = this.currentKey.flags & KeyFrame.MASK_ANIMATION;
         if (c < 0) {
-            switch (this.currentKey.flags & KeyFrame.MASK_ANIMATION) {
+            switch (maskedFlags) {
                 case KeyFrame.KEY_LOOP:
                     this.currentFrame = this.currentKey.getLastFrame();
                     break;
@@ -250,7 +251,7 @@ public class Sprite {
                     break;
             }
         } else if (c > this.currentKey.getLastFrame()) {
-            switch (this.currentKey.flags & KeyFrame.MASK_ANIMATION) {
+            switch (maskedFlags) {
                 case KeyFrame.KEY_LOOP:
                     this.currentFrame = 0;
                     break;

@@ -36,6 +36,9 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -54,14 +57,14 @@ public class Terrain {
      * 
      */
         
-    protected String name;
+    protected String name = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The local tile-id of the tile that represents the terrain<br>
      * visually.
      * 
      */
         
-    protected Integer tile;
+    protected Integer tile = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * 

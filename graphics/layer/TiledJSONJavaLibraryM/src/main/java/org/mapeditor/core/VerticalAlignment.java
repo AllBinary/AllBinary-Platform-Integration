@@ -36,33 +36,40 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+
 
 
 /**
  * 
  */
+//enum
+public class VerticalAlignment {
 
-public enum VerticalAlignment {
-
-
-    /**
-     * 
-     */
-        TOP("top"),
 
     /**
      * 
      */
-        CENTER("center"),
+    public static final VerticalAlignment TOP = new VerticalAlignment("top");
 
     /**
      * 
      */
-        BOTTOM("bottom");
+    public static final VerticalAlignment CENTER = new VerticalAlignment("center");
+
+    /**
+     * 
+     */
+    public static final VerticalAlignment BOTTOM = new VerticalAlignment("bottom");
+        
+    private static final BasicArrayList VERTICAL_ALIGNMENT_LIST = new BasicArrayListD();
+
     private final String value;
 
     VerticalAlignment(String v) {
         this.value = v;
+        VerticalAlignment.VERTICAL_ALIGNMENT_LIST.add(this);
     }
 
     public String value() {
@@ -70,7 +77,10 @@ public enum VerticalAlignment {
     }
 
     public static VerticalAlignment fromValue(String v) {
-        for (VerticalAlignment c: VerticalAlignment.values()) {
+        final int size = VerticalAlignment.VERTICAL_ALIGNMENT_LIST.size();
+        VerticalAlignment c;
+        for (int index = 0; index < size; index++) {
+            c = (VerticalAlignment) VerticalAlignment.VERTICAL_ALIGNMENT_LIST.get(index);
             if (c.value.equals(v)) {
                 return c;
             }

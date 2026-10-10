@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -50,38 +52,35 @@ public class WangSet {
      * 
      */
         
-    protected BasicArrayList wangcornercolor;
+    protected final BasicArrayList wangcornercolor = new BasicArrayListD();
     /**
      * 
      */
         
-    protected BasicArrayList wangedgecolor;
+    protected final BasicArrayList wangedgecolor = new BasicArrayListD();
     /**
      * 
      */
         
-    protected BasicArrayList wangtile;
+    protected final BasicArrayList wangtile = new BasicArrayListD();
     /**
      * The name of the Wang set.
      * 
      */
         
-    protected String name;
+    protected String name = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The tile ID of the tile representing this Wang set.
      * 
      */
         
-    protected Integer tile;
+    protected Integer tile = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * 
      */
     
     public BasicArrayList getWangcornercolor() {
-        if (this.wangcornercolor == null) {
-            this.wangcornercolor = new BasicArrayListD();
-        }
         return this.wangcornercolor;
     }
 
@@ -90,9 +89,6 @@ public class WangSet {
      */
     
     public BasicArrayList getWangedgecolor() {
-        if (this.wangedgecolor == null) {
-            this.wangedgecolor = new BasicArrayListD();
-        }
         return this.wangedgecolor;
     }
 
@@ -101,9 +97,6 @@ public class WangSet {
      */
     
     public BasicArrayList getWangtile() {
-        if (this.wangtile == null) {
-            this.wangtile = new BasicArrayListD();
-        }
         return this.wangtile;
     }
 

@@ -36,38 +36,45 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+
 
 
 /**
  * 
  */
+//enum
+public class RenderOrder {
 
-public enum RenderOrder {
-
-
-    /**
-     * 
-     */
-        RIGHT_DOWN("right-down"),
 
     /**
      * 
      */
-        RIGHT_UP("right-up"),
+    public static final RenderOrder RIGHT_DOWN = new RenderOrder("right-down");
 
     /**
      * 
      */
-        LEFT_DOWN("left-down"),
+    public static final RenderOrder RIGHT_UP = new RenderOrder("right-up");
 
     /**
      * 
      */
-        LEFT_UP("left-up");
+    public static final RenderOrder LEFT_DOWN = new RenderOrder("left-down");
+
+    /**
+     * 
+     */
+    public static final RenderOrder LEFT_UP = new RenderOrder("left-up");
+        
+    private static final BasicArrayList RENDER_ORDER_LIST = new BasicArrayListD();
+
     private final String value;
 
     RenderOrder(String v) {
         this.value = v;
+        RenderOrder.RENDER_ORDER_LIST.add(this);
     }
 
     public String value() {
@@ -75,7 +82,10 @@ public enum RenderOrder {
     }
 
     public static RenderOrder fromValue(String v) {
-        for (RenderOrder c: RenderOrder.values()) {
+        final int size = RenderOrder.RENDER_ORDER_LIST.size();
+        RenderOrder c;
+        for (int index = 0; index < size; index++) {
+            c = (RenderOrder) RenderOrder.RENDER_ORDER_LIST.get(index);
             if (c.value.equals(v)) {
                 return c;
             }

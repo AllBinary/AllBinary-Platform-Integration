@@ -36,6 +36,7 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -52,40 +53,37 @@ public class Chunk {
      * 
      */
         
-    protected BasicArrayList tile;
+    protected final BasicArrayList tile = new BasicArrayListD();
     /**
      * The x coordinate of the chunk in tiles.
      * 
      */
         
-    protected Integer x;
+    protected Integer x = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The y coordinate of the chunk in tiles.
      * 
      */
         
-    protected Integer y;
+    protected Integer y = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The width of the chunk in tiles.
      * 
      */
         
-    protected Integer width;
+    protected Integer width = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The height of the chunk in tiles.
      * 
      */
         
-    protected Integer height;
+    protected Integer height = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * 
      */
     
     public BasicArrayList getTile() {
-        if (this.tile == null) {
-            this.tile = new BasicArrayListD();
-        }
         return this.tile;
     }
 

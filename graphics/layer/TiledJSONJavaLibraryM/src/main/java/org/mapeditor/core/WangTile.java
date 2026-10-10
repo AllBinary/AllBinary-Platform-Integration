@@ -36,6 +36,9 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -52,7 +55,7 @@ public class WangTile {
      * 
      */
         
-    protected Integer tileid;
+    protected Integer tileid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The Wang ID, which is a 32-bit unsigned integer stored in<br>
      * the format 0xCECECECE (where each C is a corner color and<br>
@@ -61,7 +64,7 @@ public class WangTile {
      * 
      */
         
-    protected String wangid;
+    protected String wangid = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * The tile ID.

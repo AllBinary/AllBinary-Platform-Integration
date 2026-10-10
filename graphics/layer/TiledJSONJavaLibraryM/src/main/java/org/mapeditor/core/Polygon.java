@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -55,7 +57,7 @@ public class Polygon {
      * 
      */
         
-    protected String points;
+    protected String points = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * A list of x,y coordinates in pixels.

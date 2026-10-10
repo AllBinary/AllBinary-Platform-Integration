@@ -36,6 +36,10 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.java.bool.BooleanFactory;
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
+
 
 
 /**
@@ -61,40 +65,40 @@ public class MapObjectData {
      * 
      */
         
-    protected Properties properties;
+    protected Properties properties = new Properties();
     /**
      * @since 1.1
      * 
      */
         
-    protected Point point;
+    protected Point point = new Point();
     /**
      * @since 0.9
      * 
      */
         
-    protected Ellipse ellipse;
+    protected Ellipse ellipse = new Ellipse();
     /**
      * 
      */
         
-    protected Polygon polygon;
+    protected Polygon polygon = new Polygon();
     /**
      * 
      */
         
-    protected Polyline polyline;
+    protected Polyline polyline = new Polyline();
     /**
      * @since 1.0
      * 
      */
         
-    protected Text text;
+    protected Text text = new Text();
     /**
      * 
      */
         
-    protected ImageData image;
+    protected ImageData image = new ImageData();
     /**
      * Unique ID of the object. Each object that is placed on a map<br>
      * gets a unique id. Even if an object was deleted, no object<br>
@@ -104,19 +108,19 @@ public class MapObjectData {
      * 
      */
         
-    protected Integer id;
+    protected Integer id = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The name of the object. An arbitrary string.
      * 
      */
         
-    protected String name;
+    protected String name = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The type of the object. An arbitrary string.
      * 
      */
         
-    protected String type;
+    protected String type = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The x coordinate of the object in pixels.
      * 
@@ -134,13 +138,13 @@ public class MapObjectData {
      * 
      */
         
-    protected Double width;
+    protected Double width = Double.valueOf(0);
     /**
      * The height of the object in pixels (defaults to 0).
      * 
      */
         
-    protected Double height;
+    protected Double height = Double.valueOf(0);
     /**
      * The rotation of the object in degrees clockwise (defaults to<br>
      *  0).<br>
@@ -155,7 +159,7 @@ public class MapObjectData {
      * 
      */
         
-    protected Integer gid;
+    protected Integer gid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Whether the object is shown (1) or hidden (0). Defaults to<br>
      *  1.<br>
@@ -164,13 +168,13 @@ public class MapObjectData {
      * 
      */
         
-    protected Boolean visible;
+    protected Boolean visible = BooleanFactory.getInstance().FALSE;
     /**
      * A reference to a template file (optional).
      * 
      */
         
-    protected String template;
+    protected String template = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * 

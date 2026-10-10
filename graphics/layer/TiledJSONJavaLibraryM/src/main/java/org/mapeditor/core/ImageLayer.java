@@ -50,7 +50,7 @@ public class ImageLayer
      * 
      */
         
-    protected ImageData image;
+    protected ImageData image = new ImageData();
 
     /**
      * 

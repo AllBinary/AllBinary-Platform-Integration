@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
 
@@ -82,7 +84,7 @@ public class TileSetData {
      * 
      */
         
-    protected BasicArrayList internalTiles;
+    protected final BasicArrayList internalTiles = new BasicArrayListD();
     /**
      * @since 1.1
      * 
@@ -95,13 +97,13 @@ public class TileSetData {
      * 
      */
         
-    protected Integer firstgid;
+    protected Integer firstgid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The name of this tileset.
      * 
      */
         
-    protected String name;
+    protected String name = StringUtil.getInstance().EMPTY_STRING;
     /**
      * If this tileset is stored in an external TSX (Tile Set XML)<br>
      * file, this attribute refers to that file. That TSX file has<br>
@@ -112,7 +114,7 @@ public class TileSetData {
      * 
      */
             
-    protected String source;
+    protected String source = StringUtil.getInstance().EMPTY_STRING;
     /**
      * The (maximum) width of the tiles in this tileset.
      * 
@@ -131,14 +133,14 @@ public class TileSetData {
      * 
      */
         
-    protected Integer tileSpacing;
+    protected Integer tileSpacing = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The margin around the tiles in this tileset (applies to the<br>
      * tileset image).
      * 
      */
         
-    protected Integer tileMargin;
+    protected Integer tileMargin = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The number of tiles in this tileset<br>
      * <br>
@@ -146,7 +148,7 @@ public class TileSetData {
      * 
      */
         
-    protected Integer tilecount;
+    protected Integer tilecount = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * The number of tile columns in the tileset. For image<br>
      * collection tilesets it is editable and is used when<br>
@@ -291,9 +293,6 @@ public class TileSetData {
      */
     
     public BasicArrayList getInternalTiles() {
-        if (this.internalTiles == null) {
-            this.internalTiles = new BasicArrayListD();
-        }
         return this.internalTiles;
     }
 

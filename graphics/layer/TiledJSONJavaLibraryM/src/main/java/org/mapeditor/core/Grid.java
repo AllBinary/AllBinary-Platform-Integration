@@ -36,6 +36,8 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.logic.math.SmallIntegerSingletonFactory;
+
 
 
 /**
@@ -54,19 +56,19 @@ public class Grid {
      * 
      */
         
-    protected Orientation orientation;
+    protected Orientation orientation = Orientation.ORTHOGONAL;
     /**
      * Width of a grid cell
      * 
      */
         
-    protected Integer width;
+    protected Integer width = SmallIntegerSingletonFactory.getInstance().getAt(-1);
     /**
      * Height of a grid cell
      * 
      */
         
-    protected Integer height;
+    protected Integer height = SmallIntegerSingletonFactory.getInstance().getAt(-1);
 
     /**
      * Orientation of the grid for the tiles in this tileset<br>

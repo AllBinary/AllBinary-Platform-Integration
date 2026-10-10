@@ -35,6 +35,7 @@ import org.allbinary.graphics.Rectangle;
 import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.logic.communication.log.LogUtil;
+import org.allbinary.logic.string.StringUtil;
 
 /**
  * The Map class is the focal point of the <code>org.mapeditor.core</code>
@@ -47,7 +48,7 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
     protected final LogUtil logUtil = LogUtil.getInstance();
 
 
-    private String filename;
+    private String filename = StringUtil.getInstance().EMPTY_STRING;
 
     /**
      * Constructor for Map.
@@ -342,15 +343,6 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      */
     public void setFilename(String filename) {
         this.filename = filename;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Properties getProperties() {
-        if (this.properties == null) {
-            this.properties = new Properties();
-        }
-        return super.getProperties();
     }
 
     /** {@inheritDoc} */

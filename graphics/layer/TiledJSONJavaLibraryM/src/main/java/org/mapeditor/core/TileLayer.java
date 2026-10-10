@@ -30,11 +30,11 @@
  */
 package org.mapeditor.core;
 
-import java.util.Hashtable;
 import org.allbinary.graphics.GPoint;
 import org.allbinary.graphics.PointFactory;
 import org.allbinary.graphics.Rectangle;
 import org.allbinary.math.RectangleCollisionUtil;
+import org.allbinary.util.ABHashtable;
 
 /**
  * A TileLayer is a specialized Layer, used for tracking two dimensional tile
@@ -50,7 +50,7 @@ public class TileLayer extends TileLayerData {
     private Tile[][] tileMap;
     private int[][] tileToIdArray;
     private int[][] flags;
-    private Hashtable<Object, Properties> tileInstanceProperties = new Hashtable<>();
+    private ABHashtable<Object, Properties> tileInstanceProperties = new ABHashtable<Object, Properties>();
 
     /**
      * getTileInstancePropertiesAt.

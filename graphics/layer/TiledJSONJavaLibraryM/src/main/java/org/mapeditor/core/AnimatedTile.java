@@ -30,6 +30,8 @@
  */
 package org.mapeditor.core;
 
+import org.allbinary.logic.NullUtil;
+
 /**
  * Animated tiles take advantage of the Sprite class internally to handle
  * animation using an array of tiles.
@@ -39,7 +41,7 @@ package org.mapeditor.core;
  */
 public class AnimatedTile extends Tile {
 
-    private Sprite sprite;
+    private Object sprite = NullUtil.getInstance().NULL_OBJECT;
 
     /**
      * Constructor for AnimatedTile.
@@ -91,7 +93,8 @@ public class AnimatedTile extends Tile {
      * @return a int.
      */
     public int countAnimationFrames() {
-        return this.sprite.getTotalFrames();
+        final Sprite sprite = (Sprite) this.sprite;
+        return sprite.getTotalFrames();
     }
 
     /**
@@ -100,7 +103,8 @@ public class AnimatedTile extends Tile {
      * @return a int.
      */
     public int countKeys() {
-        return this.sprite.getTotalKeys();
+        final Sprite sprite = (Sprite) this.sprite;
+        return sprite.getTotalKeys();
     }
 
     /**
@@ -109,6 +113,7 @@ public class AnimatedTile extends Tile {
      * @return a {@link org.mapeditor.core.Sprite} object.
      */
     public Sprite getSprite() {
-        return this.sprite;
+        final Sprite sprite = (Sprite) this.sprite;
+        return sprite;
     }
 }

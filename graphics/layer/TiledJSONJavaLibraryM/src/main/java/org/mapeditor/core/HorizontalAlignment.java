@@ -36,33 +36,40 @@
 
 package org.mapeditor.core;
 
+import org.allbinary.util.BasicArrayList;
+import org.allbinary.util.BasicArrayListD;
+
 
 
 /**
  * 
  */
+//enum
+public class HorizontalAlignment {
 
-public enum HorizontalAlignment {
-
-
-    /**
-     * 
-     */
-        LEFT("left"),
 
     /**
      * 
      */
-        CENTER("center"),
+    public static final HorizontalAlignment LEFT = new HorizontalAlignment("left");
 
     /**
      * 
      */
-        RIGHT("right");
+    public static final HorizontalAlignment CENTER = new HorizontalAlignment("center");
+
+    /**
+     * 
+     */
+    public static final HorizontalAlignment RIGHT = new HorizontalAlignment("right");
+        
+    private static final BasicArrayList HORIZONTAL_ALIGNMENT_LIST = new BasicArrayListD();
+
     private final String value;
 
     HorizontalAlignment(String v) {
         this.value = v;
+        HorizontalAlignment.HORIZONTAL_ALIGNMENT_LIST.add(this);
     }
 
     public String value() {
@@ -70,7 +77,10 @@ public enum HorizontalAlignment {
     }
 
     public static HorizontalAlignment fromValue(String v) {
-        for (HorizontalAlignment c: HorizontalAlignment.values()) {
+        final int size = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LIST.size();
+        HorizontalAlignment c;
+        for (int index = 0; index < size; index++) {
+            c = (HorizontalAlignment) HorizontalAlignment.HORIZONTAL_ALIGNMENT_LIST.get(index);
             if (c.value.equals(v)) {
                 return c;
             }

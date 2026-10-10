@@ -24,7 +24,7 @@ public class XMLTokener extends JSONTokener {
    public static final java.util.HashMap<String, Character> entity;
 
    static {
-       XMLTokener.entity = new java.util.HashMap<String, Character>(8);
+       entity = new java.util.HashMap<String, Character>(8);
        XMLTokener.entity.put("amp",  XML.AMP);
        XMLTokener.entity.put("apos", XML.APOS);
        XMLTokener.entity.put("gt",   XML.GT);

@@ -74,7 +74,7 @@ public class ImageData {
      * 
      */
     //@Deprecated
-    protected Integer id = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int id;
     /**
      * The reference to the tileset image file<br>
      * (Tiled supports most common image formats).<br>
@@ -99,13 +99,13 @@ public class ImageData {
      * 
      */
         
-    protected Integer width = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int width;
     /**
      * The image height in pixels (optional)
      * 
      */
         
-    protected Integer height = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int height;
 
     public String path = StringUtil.getInstance().EMPTY_STRING;
     
@@ -181,7 +181,7 @@ public class ImageData {
      */
     //@Deprecated
     
-    public Integer getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -197,7 +197,7 @@ public class ImageData {
      */
     //@Deprecated
     
-    public void setId(Integer value) {
+    public void setId(int value) {
         this.id = value;
     }
 
@@ -275,7 +275,7 @@ public class ImageData {
      *     
      */
     
-    public Integer getWidth() {
+    public int getWidth() {
         return this.width;
     }
 
@@ -289,7 +289,7 @@ public class ImageData {
      *     
      */
     
-    public void setWidth(Integer value) {
+    public void setWidth(int value) {
         this.width = value;
     }
 
@@ -302,7 +302,7 @@ public class ImageData {
      *     
      */
     
-    public Integer getHeight() {
+    public int getHeight() {
         return this.height;
     }
 
@@ -315,7 +315,7 @@ public class ImageData {
      *     
      */
     
-    public void setHeight(Integer value) {
+    public void setHeight(int value) {
         this.height = value;
     }
 

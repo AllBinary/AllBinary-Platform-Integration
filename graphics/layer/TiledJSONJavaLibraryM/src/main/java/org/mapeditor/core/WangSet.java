@@ -74,7 +74,7 @@ public class WangSet {
      * 
      */
         
-    protected Integer tile = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int tile;
 
     /**
      * 
@@ -135,7 +135,7 @@ public class WangSet {
      *     
      */
     
-    public Integer getTile() {
+    public int getTile() {
         return this.tile;
     }
 
@@ -148,7 +148,7 @@ public class WangSet {
      *     
      */
     
-    public void setTile(Integer value) {
+    public void setTile(int value) {
         this.tile = value;
     }
 

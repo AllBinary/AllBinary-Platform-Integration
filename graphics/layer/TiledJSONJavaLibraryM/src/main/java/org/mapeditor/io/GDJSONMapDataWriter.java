@@ -62,7 +62,7 @@ public class GDJSONMapDataWriter {
         int gid;
         final int size = mapData.length;
         for(int index = 0; index < size; index += 4) {
-            gid = mapData[index];
+            gid = mapData[index] & this.LAST_BYTE;
             //gid |= tile.getFlagsAt(x, y);
             byteArray[index] = (byte) (gid & this.LAST_BYTE);
         }

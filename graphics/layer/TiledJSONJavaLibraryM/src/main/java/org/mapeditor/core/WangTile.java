@@ -55,7 +55,7 @@ public class WangTile {
      * 
      */
         
-    protected Integer tileid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int tileid;
     /**
      * The Wang ID, which is a 32-bit unsigned integer stored in<br>
      * the format 0xCECECECE (where each C is a corner color and<br>
@@ -75,7 +75,7 @@ public class WangTile {
      *     
      */
     
-    public Integer getTileid() {
+    public int getTileid() {
         return this.tileid;
     }
 
@@ -88,7 +88,7 @@ public class WangTile {
      *     
      */
     
-    public void setTileid(Integer value) {
+    public void setTileid(int value) {
         this.tileid = value;
     }
 

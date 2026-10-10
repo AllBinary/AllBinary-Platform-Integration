@@ -123,14 +123,14 @@ public class MapData {
      * @since 1.1
      * 
      */
-    protected Integer infinite = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int infinite;
     /**
      * Only for hexagonal maps. Determines the width or height<br>
      * (depending on the staggered axis) of the tile's edge, in<br>
      * pixels.
      * 
      */
-    protected Integer hexSideLength = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int hexSideLength;
     /**
      * For staggered and hexagonal maps, determines which axis<br>
      * ("x" or "y") is staggered.<br>
@@ -164,7 +164,7 @@ public class MapData {
      * @since 1.2
      * 
      */
-    protected Integer nextlayerid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int nextlayerid;
     /**
      * Stores the next available ID for new objects. This number<br>
      * is stored to prevent reuse of the same ID after objects<br>
@@ -173,7 +173,7 @@ public class MapData {
      * @since 0.11
      * 
      */
-    protected Integer nextobjectid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int nextobjectid;
 
     /**
      * 
@@ -422,7 +422,7 @@ public class MapData {
      *     
      */
     
-    public Integer getInfinite() {
+    public int getInfinite() {
         return this.infinite;
     }
 
@@ -437,7 +437,7 @@ public class MapData {
      *     
      */
     
-    public void setInfinite(Integer value) {
+    public void setInfinite(int value) {
         this.infinite = value;
     }
 
@@ -452,7 +452,7 @@ public class MapData {
      *     
      */
     
-    public Integer getHexSideLength() {
+    public int getHexSideLength() {
         return this.hexSideLength;
     }
 
@@ -467,7 +467,7 @@ public class MapData {
      *     
      */
     
-    public void setHexSideLength(Integer value) {
+    public void setHexSideLength(int value) {
         this.hexSideLength = value;
     }
 
@@ -582,7 +582,7 @@ public class MapData {
      *     
      */
     
-    public Integer getNextlayerid() {
+    public int getNextlayerid() {
         return this.nextlayerid;
     }
 
@@ -599,7 +599,7 @@ public class MapData {
      *     
      */
     
-    public void setNextlayerid(Integer value) {
+    public void setNextlayerid(int value) {
         this.nextlayerid = value;
     }
 
@@ -616,7 +616,7 @@ public class MapData {
      *     
      */
     
-    public Integer getNextobjectid() {
+    public int getNextobjectid() {
         return this.nextobjectid;
     }
 
@@ -633,7 +633,7 @@ public class MapData {
      *     
      */
     
-    public void setNextobjectid(Integer value) {
+    public void setNextobjectid(int value) {
         this.nextobjectid = value;
     }
 

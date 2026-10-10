@@ -66,14 +66,14 @@ public class WangCornerColor {
      * 
      */
         
-    protected Integer tile = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int tile;
     /**
      * The relative probability that this color is chosen over<br>
      * others in case of multiple options.
      * 
      */
         
-    protected Integer probability = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int probability;
 
     /**
      * The name of this color.
@@ -136,7 +136,7 @@ public class WangCornerColor {
      *     
      */
     
-    public Integer getTile() {
+    public int getTile() {
         return this.tile;
     }
 
@@ -149,7 +149,7 @@ public class WangCornerColor {
      *     
      */
     
-    public void setTile(Integer value) {
+    public void setTile(int value) {
         this.tile = value;
     }
 
@@ -163,7 +163,7 @@ public class WangCornerColor {
      *     
      */
     
-    public Integer getProbability() {
+    public int getProbability() {
         return this.probability;
     }
 
@@ -177,7 +177,7 @@ public class WangCornerColor {
      *     
      */
     
-    public void setProbability(Integer value) {
+    public void setProbability(int value) {
         this.probability = value;
     }
 

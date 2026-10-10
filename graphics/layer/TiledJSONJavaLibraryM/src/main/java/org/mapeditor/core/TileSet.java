@@ -59,7 +59,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
 {
     protected final LogUtil logUtil = LogUtil.getInstance();
 
-    private final ABHashtable<Integer, Tile> tiles;
+    private final ABHashtable<Object, Tile> tiles;
     
     private long tilebmpFileLastModified;
     //private TileCutter tileCutter;
@@ -73,7 +73,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      */
     public TileSet() {
         super();
-        this.tiles = new ABHashtable<Integer, Tile>();
+        this.tiles = new ABHashtable<Object, Tile>();
     }
 
     /**
@@ -331,7 +331,7 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      * @since 0.13
      */
     public int size() {
-        return this.tiles.size();
+        return this.lastKey + 1;
     }
 
     /**
@@ -367,11 +367,11 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
     public Tile getTile(int i) {
         try {
             //logUtil.putF("i: " + i, this, "getTile");
-            final Tile tile = this.tiles.get(i);
-            if(tile == null) {
+            final Tile tileCanBeNull = this.tiles.get(i);
+            if(tileCanBeNull == null) {
                 this.logUtil.putF("was null for i: " + i, this, "getTile");
             }
-            return tile;
+            return tileCanBeNull;
         } catch (IndexOutOfBoundsException e) {
             this.logUtil.put(CommonStrings.getInstance().EXCEPTION, this, "getTile", e);
         }
@@ -385,13 +385,13 @@ public class TileSet extends TileSetData //implements Iterable<Tile>
      * exists.
      */
     public Tile getFirstTile() {
-        Tile ret = null;
+        Tile retCanBeNull = null;
         int i = 0;
-        while (ret == null && i <= this.getMaxTileId()) {
-            ret = this.getTile(i);
+        while (retCanBeNull == null && i <= this.getMaxTileId()) {
+            retCanBeNull = this.getTile(i);
             i++;
         }
-        return ret;
+        return retCanBeNull;
     }
 
     /**

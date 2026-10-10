@@ -90,7 +90,7 @@ public class GDJSONMapReader {
     protected final MapReaderData mapReaderData = MapReaderData.getInstance();
 
     //private TiledMap map;
-    protected ABHashtable tilesetPerFirstGid = StdUtil.getInstance().NULL_TABLE;
+    protected ABHashtable<Object, TileSet> tilesetPerFirstGid = new ABHashtable<Object, TileSet>();
     private final int[] tilesetFirstGid = new int[30];
 
 //    protected TilesetCache tilesetCache;
@@ -404,7 +404,7 @@ public class GDJSONMapReader {
 //                mapObjectList.add(mapObject);
 //            }
                 final float opacity = (float) jsonObject.getDouble(this.mapReaderData.OPACITY);
-                objectGroup.setOpacity(Float.valueOf(opacity));
+                objectGroup.setOpacity(opacity);
                 //objectGroup.setVisible(jsonObject.getBoolean(this.mapReaderData.VISIBLE));
                 //objectGroup.setX();
                 //objectGroup.setY();
@@ -474,7 +474,7 @@ public class GDJSONMapReader {
             //String nodeName = child.getNodeName();
             if (t.has(this.mapReaderData.DATA)) {
                 String encoding = t.getString(this.mapReaderData.ENCODING);
-                String comp = t.has(this.mapReaderData.COMPRESSION) ? t.getString(this.mapReaderData.COMPRESSION) : null;
+                String comp = t.has(this.mapReaderData.COMPRESSION) ? t.getString(this.mapReaderData.COMPRESSION) : StringUtil.getInstance().EMPTY_STRING;
 
                 if ("base64".equalsIgnoreCase(encoding)) {
                         final String enc = t.getString(this.mapReaderData.DATA);
@@ -493,7 +493,7 @@ public class GDJSONMapReader {
                         } else if ("zlib".equalsIgnoreCase(comp)) {
 //                            is = new InflaterInputStream(bais);
                               throw new RuntimeException();
-                        } else if (comp != null && !comp.isEmpty()) {
+                        } else if (!comp.isEmpty()) {
 //                            throw new IOException("Unrecognized compression method \"" + comp + "\" for map layer " + ml.getName());
                               throw new RuntimeException();
                         } else {
@@ -639,7 +639,7 @@ public class GDJSONMapReader {
         //(tileGid & (int)~this.mapReaderData.ALL_FLAGS)
         final Tile tile = this.getTileForTileGID(tileGid);
 
-        final long flags = tileGid & this.mapReaderData.ALL_FLAGS;
+        final int flags = tileGid & (int) this.mapReaderData.ALL_FLAGS;
 
         final String tileAsString = tile != null ? tile.toString() : StringUtil.getInstance().NULL_STRING;
         if(tile != null) {
@@ -662,20 +662,21 @@ public class GDJSONMapReader {
      * found</li><li><code>null</code>, otherwise</li></ul>
      */
     private Tile getTileForTileGID(final int tileId) {
-        Tile tile = null;
+
+        Tile tileCanBeNull = null;
         //final java.util.Map.Entry<Integer, TileSet> ts = this.findTileSetForTileGID(tileId);
-        final TileSet ts = this.findTileSetForTileGID(tileId);
-        if (ts != null) {
+        final TileSet tsCanBeNull = this.findTileSetForTileGID(tileId);
+        if (tsCanBeNull != null) {
             //final TileSet tileSet = ts.getValue();
-            final TileSet tileSet = ts;
+            final TileSet tileSet = tsCanBeNull;
             //logUtil.putF("tileId: " + tileId, this, "getTile");
             //tile = tileSet.getTile(tileId - ts.getKey());
-            tile = tileSet.getTile(tileId);
+            tileCanBeNull = tileSet.getTile(tileId);
         } else {
             this.logUtil.putF("tileIdToTileSet was null for tileId: " + tileId, this, "getTileForTileGID");
             throw new RuntimeException();
         }
-        return tile;
+        return tileCanBeNull;
     }
 
     private final String TILESETS = "tilesets";
@@ -733,7 +734,7 @@ public class GDJSONMapReader {
         map.setRenderorder(RenderOrder.fromValue(mapJSONObject.getString(this.RENDER_ORDER)));
         map.setTiledversion(mapJSONObject.getString(this.TILED_VERSION));
 
-        this.tilesetPerFirstGid = StdUtil.getInstance().createHashtable();
+        this.tilesetPerFirstGid = new ABHashtable<Object, TileSet>();
 
         final JSONArray jsonArray = mapJSONObject.getJSONArray(this.TILESETS);
         final int size = jsonArray.length();
@@ -786,7 +787,7 @@ public class GDJSONMapReader {
             this.processTileset(jsonObject);
         }
 
-        this.tilesetPerFirstGid = null;
+        this.tilesetPerFirstGid.clear();
         return map;
     }
 
@@ -892,10 +893,10 @@ public class GDJSONMapReader {
 //        //return tilesetPerFirstGid.floorEntry(gid);
 //    }
 
-    private TileSet findTileSetForTileGID(final int tileId) {
-        final TileSet tileSet = (TileSet) this.tilesetPerFirstGid.get(this.getTileSetFirtTileIdForTileId(tileId));
-        if(tileSet != null) {
-            return tileSet;
+        private TileSet findTileSetForTileGID(final int tileId) {
+        final TileSet tileSetCanBeNull = this.tilesetPerFirstGid.get(this.getTileSetFirtTileIdForTileId(tileId));
+        if(tileSetCanBeNull != null) {
+            return tileSetCanBeNull;
         } else {
             return null;
         }

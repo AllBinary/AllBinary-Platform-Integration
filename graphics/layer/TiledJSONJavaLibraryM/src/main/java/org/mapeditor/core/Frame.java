@@ -52,14 +52,14 @@ public class Frame {
      * 
      */
         
-    protected Integer tileid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int tileid;
     /**
      * How long (in milliseconds) this frame should be displayed<br>
      * before advancing to the next frame.
      * 
      */
         
-    protected Integer duration = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int duration;
 
     /**
      * The local ID of a tile within the parent tileset.
@@ -70,7 +70,7 @@ public class Frame {
      *     
      */
     
-    public Integer getTileid() {
+    public int getTileid() {
         return this.tileid;
     }
 
@@ -83,7 +83,7 @@ public class Frame {
      *     
      */
     
-    public void setTileid(Integer value) {
+    public void setTileid(int value) {
         this.tileid = value;
     }
 
@@ -97,7 +97,7 @@ public class Frame {
      *     
      */
     
-    public Integer getDuration() {
+    public int getDuration() {
         return this.duration;
     }
 
@@ -111,7 +111,7 @@ public class Frame {
      *     
      */
     
-    public void setDuration(Integer value) {
+    public void setDuration(int value) {
         this.duration = value;
     }
 

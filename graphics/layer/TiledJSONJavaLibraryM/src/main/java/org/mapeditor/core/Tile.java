@@ -93,7 +93,7 @@ public class Tile extends TileData {
      * Sets the id of the tile as long as it is at least 0.
      */
     @Override
-    public void setId(Integer value) {
+    public void setId(int value) {
         if (value >= 0) {
             this.id = value;
             //final CommonStrings commonStrings = CommonStrings.getInstance();
@@ -182,6 +182,6 @@ public class Tile extends TileData {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return new StringMaker().append("Tile ").append(this.id.toString()).append(" (").appendint(this.getWidth()).append("x").appendint(this.getHeight()).append(")").toString();
+        return new StringMaker().append("Tile ").appendint(this.id).append(" (").appendint(this.getWidth()).append("x").appendint(this.getHeight()).append(")").toString();
     }
 }

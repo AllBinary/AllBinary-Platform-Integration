@@ -30,10 +30,10 @@
  */
 package org.mapeditor.core;
 
-import org.allbinary.graphics.PointFactory;
-import org.allbinary.graphics.Rectangle;
-import org.allbinary.math.RectangleCollisionUtil;
-import org.allbinary.util.BasicArrayList;
+//import org.allbinary.graphics.PointFactory;
+//import org.allbinary.graphics.Rectangle;
+//import org.allbinary.math.RectangleCollisionUtil;
+//import org.allbinary.util.BasicArrayList;
 
 /**
  * A layer containing {@link MapObject map objects}.
@@ -125,8 +125,7 @@ public class ObjectGroup extends ObjectGroupData implements Cloneable //, Iterab
      * @param o a {@link org.mapeditor.core.MapObject} object.
      */
     public void removeObject(MapObject o) {
-        this.getObjects().remove(o);
-        o.setObjectGroup(null);
+                this.getObjects().remove(o);
     }
 
     /** {@inheritDoc} */

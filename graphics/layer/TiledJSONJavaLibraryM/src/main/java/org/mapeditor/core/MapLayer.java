@@ -69,7 +69,6 @@ public class MapLayer extends LayerData implements Cloneable {
      * Constructor for MapLayer.
      */
     public MapLayer() {
-        this.setMap(null);
     }
 
     /**
@@ -170,7 +169,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public Rectangle getBounds() {
 
-        return new Rectangle(this.x == null && this.y == null ? PointFactory.getInstance().ZERO_ZERO : PointFactory.getInstance().createXY(this.x, this.y), this.width, this.height);
+        return new Rectangle(PointFactory.getInstance().createXY(this.x, this.y), this.width, this.height);
     }
 
     /**

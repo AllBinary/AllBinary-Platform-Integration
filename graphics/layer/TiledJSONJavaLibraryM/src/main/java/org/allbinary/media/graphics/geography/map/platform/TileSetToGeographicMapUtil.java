@@ -42,26 +42,27 @@ public class TileSetToGeographicMapUtil {
 
     private final String OTHER = "Other";
     
-    public ABHashtable convert(final TileSet tileSet) {
-        final StringMaker stringMaker = 
-                null;
-                //new StringMaker();
-        final ABHashtable map = StdUtil.getInstance().createHashtable();
+    public ABHashtable<String, BasicArrayList> convert(final TileSet tileSet) {
+        final StringMaker stringMaker = new StringMaker();
+        final ABHashtable<String, BasicArrayList> map = new ABHashtable<String, BasicArrayList>();
         final int tileCount = tileSet.getTilecount();
-        Tile tile;
         BasicArrayList objectGroupList;
         ObjectGroupData objectGroupData;
         
         //stringMaker.delete(0, stringMaker.length());
         //logUtil.putF(stringMaker.append("tileCount: ").append(tileCount).toString(), this, commonStrings.PROCESS);
 
+        Tile tileCanBeNull;
         for(int index = 0; index < tileCount; index++) {
             
             //stringMaker.delete(0, stringMaker.length());
             //logUtil.putF(stringMaker.append("tile index: ").append(index).toString(), this, commonStrings.PROCESS);
             
-            tile = tileSet.getTile(index);
-            objectGroupList = tile.getObjectgroup();
+            tileCanBeNull = tileSet.getTile(index);
+            if (tileCanBeNull == null) {
+                continue;
+            }
+            objectGroupList = tileCanBeNull.getObjectgroup();
             final int size2 = objectGroupList.size();
             
             if(size2 > 0) {
@@ -79,12 +80,12 @@ public class TileSetToGeographicMapUtil {
         return map;
     }
     
-    protected void add(final ABHashtable map, final String name, final int id, final StringMaker stringMaker) {
+    protected void add(final ABHashtable<String, BasicArrayList> map, final String name, final int id, final StringMaker stringMaker) {
         
         //stringMaker.delete(0, stringMaker.length());
         //logUtil.putF(stringMaker.append(name).append(CommonSeps.getInstance().EQUALS).append(id).toString(), this, commonStrings.PROCESS);
 
-        BasicArrayList idsWithTypeList = (BasicArrayList) map.get(name);
+        BasicArrayList idsWithTypeList = map.get(name);
         if (idsWithTypeList == null) {
             idsWithTypeList = new BasicArrayListD();
             idsWithTypeList.add(id);

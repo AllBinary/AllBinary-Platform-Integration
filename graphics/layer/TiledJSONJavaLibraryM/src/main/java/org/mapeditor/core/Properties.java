@@ -29,6 +29,7 @@
  */
 package org.mapeditor.core;
 
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 
 /**
@@ -65,7 +66,7 @@ public class Properties extends PropertiesData implements Cloneable {
      * @return a {@link java.lang.String} object.
      */
     public String getProperty(String name) {
-        return this.getProperty(name, null);
+        return this.getProperty(name, StringUtil.getInstance().EMPTY_STRING);
     }
 
     /**

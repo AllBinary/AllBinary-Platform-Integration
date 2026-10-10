@@ -75,7 +75,7 @@ public class TileData {
      * 
      */
         
-    protected Integer id = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int id;
     /**
      * The type of the tile. Refers to an object type and is used<br>
      * by tile objects. (optional)<br>
@@ -202,7 +202,7 @@ public class TileData {
      *     
      */
     
-    public Integer getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -215,7 +215,7 @@ public class TileData {
      *     
      */
     
-    public void setId(Integer value) {
+    public void setId(int value) {
         this.id = value;
     }
 

@@ -45,9 +45,9 @@ public class MapObject extends MapObjectData implements Cloneable {
     private ObjectGroup objectGroup = new ObjectGroup();
     //private Shape shape = new Rectangle2D.Double(0,0,0,0);
     //private Rectangle shape = new Rectangle(PointFactory.getInstance().ZERO_ZERO,0,0);
-    private String imageSource = StringUtil.getInstance().EMPTY_STRING;
-    private Image image = NullImage.NULL_IMAGE;
-    private Image scaledImage = NullImage.NULL_IMAGE;
+    private String displayImageSource = StringUtil.getInstance().EMPTY_STRING;
+    private Image displayImage = NullImage.NULL_IMAGE;
+    private Image scaledDisplayImage = NullImage.NULL_IMAGE;
     private Tile tile = new Tile();
     private boolean flipHorizontal;
     private boolean flipVertical;
@@ -60,7 +60,7 @@ public class MapObject extends MapObjectData implements Cloneable {
         super();
         this.name = StringUtil.getInstance().EMPTY_STRING;
         this.type = StringUtil.getInstance().EMPTY_STRING;
-        this.imageSource = StringUtil.getInstance().EMPTY_STRING;
+        this.displayImageSource = StringUtil.getInstance().EMPTY_STRING;
         this.flipHorizontal = false;
         this.flipVertical = false;
 
@@ -157,7 +157,7 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @return a {@link java.lang.String} object.
      */
     public String getImageSource() {
-        return this.imageSource;
+        return this.displayImageSource;
     }
 
     /**
@@ -166,25 +166,25 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @param source a {@link java.lang.String} object.
      */
     public void setImageSource(String source) {
-        if (this.imageSource.equals(source)) {
+        if (this.displayImageSource.equals(source)) {
             return;
         }
 
-        this.imageSource = source;
+        this.displayImageSource = source;
 
         // Attempt to read the image
-        if (this.imageSource.length() > 0) {
+        if (this.displayImageSource.length() > 0) {
             try {
                 throw new RuntimeException();
                 //image = ImageIO.read(new File(imageSource));
             } catch (Exception e) {
-                this.image = null;
+                this.displayImage = NullImage.NULL_IMAGE;
             }
         } else {
-            this.image = null;
+            this.displayImage = NullImage.NULL_IMAGE;
         }
 
-        this.scaledImage = null;
+        this.scaledDisplayImage = NullImage.NULL_IMAGE;
     }
 
     /**
@@ -222,20 +222,20 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @return the image to be used when drawing this object
      */
     public Image getImage(double zoom) {
-        if (this.image == NullImage.NULL_IMAGE) {
+        if (this.displayImage == NullImage.NULL_IMAGE) {
             return NullImage.NULL_IMAGE;
         }
 
         final int zoomedWidth = (int) (this.getWidth() * zoom);
         final int zoomedHeight = (int) (this.getHeight() * zoom);
 
-        if (this.scaledImage == null || this.scaledImage.getWidth() != zoomedWidth
-                || this.scaledImage.getHeight() != zoomedHeight) {
+        if (this.scaledDisplayImage == NullImage.NULL_IMAGE || this.scaledDisplayImage.getWidth() != zoomedWidth
+                || this.scaledDisplayImage.getHeight() != zoomedHeight) {
             //scaledImage = image.getScaledInstance(zoomedWidth, zoomedHeight, Image.SCALE_SMOOTH);
             throw new RuntimeException();
         }
 
-        return this.scaledImage;
+        return this.scaledDisplayImage;
     }
 
     /**

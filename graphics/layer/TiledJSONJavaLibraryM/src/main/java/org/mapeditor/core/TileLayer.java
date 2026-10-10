@@ -85,9 +85,8 @@ public class TileLayer extends TileLayerData {
     /**
      * Default constructor.
      */
-    public TileLayer() {
+        public TileLayer() {
         super();
-        this.setMap(null);
     }
 
     /**

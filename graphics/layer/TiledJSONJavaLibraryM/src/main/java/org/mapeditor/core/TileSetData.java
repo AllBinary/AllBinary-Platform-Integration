@@ -97,7 +97,7 @@ public class TileSetData {
      * 
      */
         
-    protected Integer firstgid = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int firstgid;
     /**
      * The name of this tileset.
      * 
@@ -133,14 +133,14 @@ public class TileSetData {
      * 
      */
         
-    protected Integer tileSpacing = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int tileSpacing;
     /**
      * The margin around the tiles in this tileset (applies to the<br>
      * tileset image).
      * 
      */
         
-    protected Integer tileMargin = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int tileMargin;
     /**
      * The number of tiles in this tileset<br>
      * <br>
@@ -148,7 +148,7 @@ public class TileSetData {
      * 
      */
         
-    protected Integer tilecount = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int tilecount;
     /**
      * The number of tile columns in the tileset. For image<br>
      * collection tilesets it is editable and is used when<br>
@@ -332,7 +332,7 @@ public class TileSetData {
      *     
      */
     
-    public Integer getFirstgid() {
+    public int getFirstgid() {
         return this.firstgid;
     }
 
@@ -346,7 +346,7 @@ public class TileSetData {
      *     
      */
     
-    public void setFirstgid(Integer value) {
+    public void setFirstgid(int value) {
         this.firstgid = value;
     }
 
@@ -458,7 +458,7 @@ public class TileSetData {
      *     
      */
     
-    public Integer getTileSpacing() {
+    public int getTileSpacing() {
         return this.tileSpacing;
     }
 
@@ -472,7 +472,7 @@ public class TileSetData {
      *     
      */
     
-    public void setTileSpacing(Integer value) {
+    public void setTileSpacing(int value) {
         this.tileSpacing = value;
     }
 
@@ -486,7 +486,7 @@ public class TileSetData {
      *     
      */
     
-    public Integer getTileMargin() {
+    public int getTileMargin() {
         return this.tileMargin;
     }
 
@@ -500,7 +500,7 @@ public class TileSetData {
      *     
      */
     
-    public void setTileMargin(Integer value) {
+    public void setTileMargin(int value) {
         this.tileMargin = value;
     }
 
@@ -515,7 +515,7 @@ public class TileSetData {
      *     
      */
     
-    public Integer getTilecount() {
+    public int getTilecount() {
         return this.tilecount;
     }
 
@@ -530,7 +530,7 @@ public class TileSetData {
      *     
      */
     
-    public void setTilecount(Integer value) {
+    public void setTilecount(int value) {
         this.tilecount = value;
     }
 

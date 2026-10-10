@@ -54,7 +54,7 @@ public abstract class LayerData {
      * @since 1.2
      * 
      */
-    protected Integer id = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int id;
     /**
      * The name of the layer.
      * 
@@ -69,7 +69,7 @@ public abstract class LayerData {
      * 
      */
     //@Deprecated
-    protected Integer x = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int x;
     /**
      * The y coordinate of the layer in tiles. Defaults to 0 and<br>
      * can no longer be changed in Tiled Qt.<br>
@@ -78,7 +78,7 @@ public abstract class LayerData {
      * 
      */
     //@Deprecated    
-    protected Integer y = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int y;
     /**
      * The width of the layer in tiles. Traditionally required, but<br>
      * as of Tiled Qt always the same as the map width.<br>
@@ -118,7 +118,7 @@ public abstract class LayerData {
      * 
      */
         
-    protected Integer offsetX = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int offsetX;
     /**
      * Rendering offset for this layer in pixels. Defaults to 0.<br>
      * <br>
@@ -126,13 +126,13 @@ public abstract class LayerData {
      * 
      */
         
-    protected Integer offsetY = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int offsetY;
     /**
      * Locking flag of the layer (used by Tiled).
      * 
      */
         
-    protected Integer locked = SmallIntegerSingletonFactory.getInstance().getAt(-1);
+    protected int locked;
 
     /**
      * 
@@ -171,7 +171,7 @@ public abstract class LayerData {
      *     
      */
     
-    public Integer getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -188,7 +188,7 @@ public abstract class LayerData {
      *     
      */
     
-    public void setId(Integer value) {
+    public void setId(int value) {
         this.id = value;
     }
 
@@ -231,7 +231,7 @@ public abstract class LayerData {
      */
     //@Deprecated
     
-    public Integer getX() {
+    public int getX() {
         return this.x;
     }
 
@@ -248,7 +248,7 @@ public abstract class LayerData {
      */
     //@Deprecated
     
-    public void setX(Integer value) {
+    public void setX(int value) {
         this.x = value;
     }
 
@@ -265,7 +265,7 @@ public abstract class LayerData {
      */
     //@Deprecated
     
-    public Integer getY() {
+    public int getY() {
         return this.y;
     }
 
@@ -282,7 +282,7 @@ public abstract class LayerData {
      */
     //@Deprecated
     
-    public void setY(Integer value) {
+    public void setY(int value) {
         this.y = value;
     }
 
@@ -403,7 +403,7 @@ public abstract class LayerData {
      *     
      */
     
-    public Integer getOffsetX() {
+    public int getOffsetX() {
         return this.offsetX;
     }
 
@@ -418,7 +418,7 @@ public abstract class LayerData {
      *     
      */
     
-    public void setOffsetX(Integer value) {
+    public void setOffsetX(int value) {
         this.offsetX = value;
     }
 
@@ -433,7 +433,7 @@ public abstract class LayerData {
      *     
      */
     
-    public Integer getOffsetY() {
+    public int getOffsetY() {
         return this.offsetY;
     }
 
@@ -448,7 +448,7 @@ public abstract class LayerData {
      *     
      */
     
-    public void setOffsetY(Integer value) {
+    public void setOffsetY(int value) {
         this.offsetY = value;
     }
 
@@ -461,7 +461,7 @@ public abstract class LayerData {
      *     
      */
     
-    public Integer getLocked() {
+    public int getLocked() {
         return this.locked;
     }
 
@@ -474,7 +474,7 @@ public abstract class LayerData {
      *     
      */
     
-    public void setLocked(Integer value) {
+    public void setLocked(int value) {
         this.locked = value;
     }
 

@@ -58,7 +58,7 @@ public class GDForm extends GDFormInput
     private final BasicArrayList list = new BasicArrayListD();
 
     private int focusItemIndex;
-    private GDGameLayerItemStateListener itemStateListener = null;
+    private GDGameLayerItemStateListener itemStateListener = NullGDGameLayerItemStateListener.NULL_GDGAMELAYER_ITEMSTATE_LISTENER;
     //private int viewPortY;
     //private int viewPortHeight;
 
@@ -67,7 +67,7 @@ public class GDForm extends GDFormInput
     
     public GDForm() {
         
-        focusItemIndex = -2;
+        this.focusItemIndex = -2;
         
     }
 
@@ -267,7 +267,7 @@ public class GDForm extends GDFormInput
 
             // Don't process as traversal if letter or number
             if (name.length() >= 2) {
-                final int beforeFocusItemIndex = focusItemIndex;
+                final int beforeFocusItemIndex = this.focusItemIndex;
                 if (this.gameKeyUtil.isDirectionKey(keyCode)) {
                     //logUtil.putF("d focusItemIndex: " + focusItemIndex + " KeyCode: " + keyCode, this, gameInputStrings.KEY_PRESSED);
                     this.traverse(gameKey.getId(), 0, this.getHeight());

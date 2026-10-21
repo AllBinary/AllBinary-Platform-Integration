@@ -15,17 +15,18 @@ package org.allbinary.game.layer.form;
 
 import org.allbinary.animation.AnimationInterfaceFactoryInterface;
 import org.allbinary.animation.IndexedAnimation;
+import org.allbinary.animation.NullIndexedAnimationFactory;
 import org.allbinary.animation.compound.SliderAnimation;
 import org.allbinary.game.input.GameKey;
 import org.allbinary.game.input.Input;
 import org.allbinary.game.input.PlatformKeyFactory;
 import org.allbinary.game.layer.GDGameLayer;
+import org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer;
 import org.allbinary.game.layout.GDObject;
 import org.allbinary.graphics.GPoint;
+import org.allbinary.graphics.PointFactory;
 import org.allbinary.input.motion.gesture.MotionGestureInput;
 import org.allbinary.input.motion.gesture.observer.MotionGestureEvent;
-
-import org.allbinary.logic.communication.log.LogUtil;
 import org.allbinary.math.RectangleCollisionUtil;
 
 /**
@@ -34,14 +35,12 @@ import org.allbinary.math.RectangleCollisionUtil;
  */
 public class GDSliderAnimationBehavior extends GDItemAnimationBehavior 
 implements GDGameLayerItemStateListener {
-    protected final LogUtil logUtil = LogUtil.getInstance();
-
 
     private final RectangleCollisionUtil rectangleCollisionUtil = RectangleCollisionUtil.getInstance();
     
-    private IndexedAnimation[] animationArray;
-    private GDGameLayer gameLayer;
-    private GPoint point;
+    private IndexedAnimation[] animationArray = NullIndexedAnimationFactory.NULL_INDEXED_ANIMATION_ARRAY;
+    private CollidableDestroyableDamageableLayer gameLayer = CollidableDestroyableDamageableLayer.getNullInstance();
+    private GPoint point = PointFactory.getInstance().ZERO_ZERO;
     private int deltaFromPointToStartOfThumb;
     private boolean draggingThumb;
     
@@ -55,6 +54,7 @@ implements GDGameLayerItemStateListener {
         return indexedAnimation;
     }
     
+    @Override
     public void setAnimationArray(final IndexedAnimation[] animationArray)
     {
         this.animationArray = animationArray;
@@ -68,21 +68,24 @@ implements GDGameLayerItemStateListener {
         ((SliderAnimation) this.animationArray[0]).setValue2(value);
     }
     
+    @Override
     public void add(final GDGameLayer gameLayer) {
         this.gameLayer = gameLayer;
         GDFormInputProcessor.gdForm.append(gameLayer);
         GDFormInputProcessor.getInstance().append(GDFormInputProcessor.gdForm);
     }
 
+    @Override
     public void itemStateChanged(GDGameLayer gameLayerAsItem) {
         
     }
 
+    @Override
     public void onMotionGestureEvent(final MotionGestureEvent motionGestureEvent) {
 
         final MotionGestureInput motionGestureInput = motionGestureEvent.getMotionGesture();
         final GPoint point = motionGestureEvent.getCurrentPoint();
-        if(motionGestureInput == touchMotionGestureFactory.PRESSED) {
+        if(motionGestureInput == this.touchMotionGestureFactory.PRESSED) {
             final SliderAnimation sliderAnimation = ((SliderAnimation) this.animationArray[0]);
             
             if (this.rectangleCollisionUtil.isInside(this.gameLayer.getXP() + sliderAnimation.getThumbDx(), this.gameLayer.getYP() - 2, 
@@ -97,25 +100,27 @@ implements GDGameLayerItemStateListener {
                 //logUtil.putF("moveThumbTo: " + value2, this, "onMotionGestureEvent");
                 this.setValue2(value2);
             }
-        } else if(motionGestureInput == touchMotionGestureFactory.RELEASED) {
+        } else if(motionGestureInput == this.touchMotionGestureFactory.RELEASED) {
             this.draggingThumb = false;
-        } else if((motionGestureInput == touchMotionGestureFactory.LEFT || motionGestureInput == touchMotionGestureFactory.RIGHT) && this.draggingThumb) {
-            final int value2 = point.getX() - this.deltaFromPointToStartOfThumb - gameLayer.getXP();
+        } else if((motionGestureInput == this.touchMotionGestureFactory.LEFT || motionGestureInput == this.touchMotionGestureFactory.RIGHT) && this.draggingThumb) {
+            final int value2 = point.getX() - this.deltaFromPointToStartOfThumb - this.gameLayer.getXP();
             this.setValue2(value2);
         }
     }
 
+    @Override
     public int select(final GameKey gameKey, final int keyCode) {
-        if(gameKey == gameKeyFactory.LEFT) {
+        if(gameKey == this.gameKeyFactory.LEFT) {
             this.setValue(((SliderAnimation) this.animationArray[0]).getValue() - 1);
             return 1;
-        } else if(gameKey == gameKeyFactory.RIGHT) {
+        } else if(gameKey == this.gameKeyFactory.RIGHT) {
             this.setValue(((SliderAnimation) this.animationArray[0]).getValue() + 1);
             return 1;
         }
         return 0;
     }
 
+    @Override
     public void keyPressed(final int keyCode) {
 
         final PlatformKeyFactory platformKeyFactory = PlatformKeyFactory.getInstance();
@@ -128,6 +133,7 @@ implements GDGameLayerItemStateListener {
         }
     }
 
+    @Override
     public void setFocus(final boolean hasFocus) {    
         super.setFocus(hasFocus);
         

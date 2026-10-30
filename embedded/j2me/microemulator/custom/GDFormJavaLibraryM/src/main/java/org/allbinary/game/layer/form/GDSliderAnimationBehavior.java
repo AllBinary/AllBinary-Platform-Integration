@@ -111,10 +111,12 @@ implements GDGameLayerItemStateListener {
     @Override
     public int select(final GameKey gameKey, final int keyCode) {
         if(gameKey == this.gameKeyFactory.LEFT) {
-            this.setValue(((SliderAnimation) this.animationArray[0]).getValue() - 1);
+            final SliderAnimation sliderAnimation = ((SliderAnimation) this.animationArray[0]);
+            this.setValue(sliderAnimation.getValue() - 1);
             return 1;
         } else if(gameKey == this.gameKeyFactory.RIGHT) {
-            this.setValue(((SliderAnimation) this.animationArray[0]).getValue() + 1);
+            final SliderAnimation sliderAnimation = ((SliderAnimation) this.animationArray[0]);
+            this.setValue(sliderAnimation.getValue() + 1);
             return 1;
         }
         return 0;
@@ -125,11 +127,12 @@ implements GDGameLayerItemStateListener {
 
         final PlatformKeyFactory platformKeyFactory = PlatformKeyFactory.getInstance();
         final Input input = this.inputFactory.getInstanceById(keyCode);
+        final SliderAnimation sliderAnimation = ((SliderAnimation) this.animationArray[0]);
         
         if(platformKeyFactory.isLeft(input)) {
-            this.setValue(((SliderAnimation) this.animationArray[0]).getValue() - 1);
+            this.setValue(sliderAnimation.getValue() - 1);
         } else if(platformKeyFactory.isRight(input)) {
-            this.setValue(((SliderAnimation) this.animationArray[0]).getValue() + 1);
+            this.setValue(sliderAnimation.getValue() + 1);
         }
     }
 
@@ -137,11 +140,13 @@ implements GDGameLayerItemStateListener {
     public void setFocus(final boolean hasFocus) {    
         super.setFocus(hasFocus);
         
-        ((SliderAnimation) this.animationArray[0]).setFocus(hasFocus);
+        final SliderAnimation sliderAnimation = ((SliderAnimation) this.animationArray[0]);
+        sliderAnimation.setFocus(hasFocus);
     }
     
     public int Value() {
-        return ((SliderAnimation) this.animationArray[0]).getValue();
+        final SliderAnimation sliderAnimation = ((SliderAnimation) this.animationArray[0]);
+        return sliderAnimation.getValue();
     }
 
 }

@@ -36,8 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
 
 
 
@@ -58,29 +56,16 @@ public class StaggerAxis {
      */
     public static final StaggerAxis Y = new StaggerAxis("y");
         
-    private static final BasicArrayList STAGGER_AXIS_LIST = new BasicArrayListD();
 
-    private final String value;
+    private final String valueP;
 
     StaggerAxis(String v) {
-        this.value = v;
-        StaggerAxis.STAGGER_AXIS_LIST.add(this);
+        this.valueP = v;
+        StaggerAxisFactory.getInstance().STAGGER_AXIS_LIST.add(this);
     }
 
     public String value() {
-        return this.value;
-    }
-
-    public static StaggerAxis fromValue(String v) {
-        final int size = StaggerAxis.STAGGER_AXIS_LIST.size();
-        StaggerAxis c;
-        for (int index = 0; index < size; index++) {
-            c = (StaggerAxis) StaggerAxis.STAGGER_AXIS_LIST.get(index);
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
+        return this.valueP;
     }
 
 }

@@ -65,7 +65,9 @@ import org.mapeditor.core.ImageData;
 import org.mapeditor.core.ObjectGroup;
 import org.mapeditor.core.TiledMap;
 import org.mapeditor.core.Orientation;
+import org.mapeditor.core.OrientationFactory;
 import org.mapeditor.core.RenderOrder;
+import org.mapeditor.core.RenderOrderFactory;
 import org.mapeditor.core.Tile;
 import org.mapeditor.core.TileLayer;
 import org.mapeditor.core.TileSet;
@@ -733,8 +735,8 @@ public class GDJSONMapReader {
         map.setInfinite(mapJSONObject.getBoolean(this.INFINITE) ? 1 : 0);
         map.setNextlayerid(mapJSONObject.getInt(this.NEXT_LAYER_ID));
         map.setNextobjectid(mapJSONObject.getInt(this.NEXT_OBJECT_ID));
-        map.setOrientation(Orientation.fromValue(mapJSONObject.getString(this.ORIENTATION)));
-        map.setRenderorder(RenderOrder.fromValue(mapJSONObject.getString(this.RENDER_ORDER)));
+        map.setOrientation(OrientationFactory.getInstance().fromValue(mapJSONObject.getString(this.ORIENTATION)));
+        map.setRenderorder(RenderOrderFactory.getInstance().fromValue(mapJSONObject.getString(this.RENDER_ORDER)));
         map.setTiledversion(mapJSONObject.getString(this.TILED_VERSION));
 
         this.tilesetPerFirstGid = new ABHashtable<Object, TileSet>();

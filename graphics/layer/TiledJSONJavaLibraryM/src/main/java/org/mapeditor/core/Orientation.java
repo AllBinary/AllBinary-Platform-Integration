@@ -36,8 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
 
 
 
@@ -70,29 +68,16 @@ public class Orientation {
      */
     public static final Orientation HEXAGONAL = new Orientation("hexagonal");
         
-    private static final BasicArrayList ORIENTATION_LIST = new BasicArrayListD();
 
-    private final String value;
+    private final String valueP;
 
     Orientation(String v) {
-        this.value = v;
-        Orientation.ORIENTATION_LIST.add(this);
+        this.valueP = v;
+        OrientationFactory.getInstance().ORIENTATION_LIST.add(this);
     }
 
     public String value() {
-        return this.value;
-    }
-
-    public static Orientation fromValue(String v) {
-        final int size = Orientation.ORIENTATION_LIST.size();
-        Orientation c;
-        for (int index = 0; index < size; index++) {
-            c = (Orientation) Orientation.ORIENTATION_LIST.get(index);
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
+        return this.valueP;
     }
 
 }

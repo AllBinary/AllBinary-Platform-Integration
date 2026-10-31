@@ -66,9 +66,9 @@ public class AuthenticationFailed extends RuntimeException
 {
     public static final long serialVersionUID = 1L;
     
-    public AuthenticationFailed()
-    {
-    }
+//    public AuthenticationFailed()
+//    {
+//    }
 
     public AuthenticationFailed(String msg)
     {

@@ -54,29 +54,29 @@ public class AnimatedTile extends Tile {
      *
      * @param set a {@link org.mapeditor.core.TileSet} object.
      */
-    public AnimatedTile(TileSet set) {
-        super(set);
-    }
+//    public AnimatedTile(TileSet set) {
+//        super(set);
+//    }
 
     /**
      * Constructor for AnimatedTile.
      *
      * @param frames an array of {@link org.mapeditor.core.Tile} objects.
      */
-    public AnimatedTile(Tile[] frames) {
-        this();
-        this.sprite = new Sprite(frames);
-    }
+//    public AnimatedTile(Tile[] frames) {
+//        this();
+//        this.sprite = new Sprite(frames);
+//    }
 
     /**
      * Constructor for AnimatedTile.
      *
      * @param s a {@link org.mapeditor.core.Sprite} object.
      */
-    public AnimatedTile(Sprite s) {
-        this();
-        this.setSprite(s);
-    }
+//    public AnimatedTile(Sprite s) {
+//        this();
+//        this.setSprite(s);
+//    }
 
     /**
      * Setter for the field <code>sprite</code>.

@@ -82,7 +82,7 @@ public final class Base64
     static final int CHUNK_SIZE = 76;
     static final byte[] CHUNK_SEPARATOR = CommonSeps.getInstance().NEW_LINE.getBytes();
 
-    static private final int  BASELENGTH         = 255;
+    static private final int  BASELENGTH         = 256;
     static private final int  LOOKUPLENGTH       = 64;
     static private final int  TWENTYFOURBITGROUP = 24;
     static private final int  EIGHTBIT           = 8;
@@ -233,9 +233,9 @@ public final class Base64
             b1s = ((int) b1) >> 2;
             b2s = ((int) b2) >> 4;
             b3s = ((int) b3) >> 6;
-            val1 = ((((int) b1) & Base64.SIGN)==0) ? b1s : b1s^0xc0;
-            val2 = ((((int) b2) & Base64.SIGN)==0) ? b2s : b2s^0xf0;
-            int val3 = ((((int) b3) & Base64.SIGN)==0) ? b3s : b3s^0xfc;
+            val1 = b1s & 0x3f;
+            val2 = b2s & 0x0f;
+            int val3 = b3s & 0x03;
 
             encodedData[encodedIndex]   = Base64.lookUpBase64Alphabet[ val1 ];
             //log.debug( "val2 = " + val2 );
@@ -271,7 +271,7 @@ public final class Base64
 
             //log.debug("b1=" + b1);
             //log.debug("b1<<2 = " + (b1>>2) );
-            val1 = ((((int) b1) & Base64.SIGN)==0) ? b1s : b1s^0xc0;
+            val1 = b1s & 0x3f;
 
             encodedData[encodedIndex]     = Base64.lookUpBase64Alphabet[ val1 ];
             encodedData[encodedIndex + 1] = Base64.lookUpBase64Alphabet[ k<<4 ];
@@ -289,8 +289,8 @@ public final class Base64
             b1s = ((int) b1) >> 2;
             b2s = ((int) b2) >> 4;
 
-            val1 = ((((int) b1) & Base64.SIGN)==0) ? b1s : b1s^0xc0;
-            val2 = ((((int) b2) & Base64.SIGN) == 0) ? b1s : b1s^0xf0;
+            val1 = b1s & 0x3f;
+            val2 = b2s & 0x0f;
 
             encodedData[encodedIndex]     = Base64.lookUpBase64Alphabet[ val1 ];
             encodedData[encodedIndex + 1] =

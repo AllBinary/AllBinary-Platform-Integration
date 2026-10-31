@@ -36,8 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
 
 
 
@@ -58,29 +56,16 @@ public class Encoding {
      */
     public static final Encoding CSV = new Encoding("csv");
 
-    private static final BasicArrayList ENCODING_LIST = new BasicArrayListD();
 
-    private final String value;
+    private final String valueP;
 
     Encoding(String v) {
-        this.value = v;
-        Encoding.ENCODING_LIST.add(this);
+        this.valueP = v;
+        EncodingFactory.getInstance().ENCODING_LIST.add(this);
     }
 
     public String value() {
-        return this.value;
-    }
-
-    public static Encoding fromValue(String v) {
-        final int size = Encoding.ENCODING_LIST.size();
-        Encoding c;
-        for (int index = 0; index < size; index++) {
-            c = (Encoding) Encoding.ENCODING_LIST.get(index);
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
+        return this.valueP;
     }
 
 }

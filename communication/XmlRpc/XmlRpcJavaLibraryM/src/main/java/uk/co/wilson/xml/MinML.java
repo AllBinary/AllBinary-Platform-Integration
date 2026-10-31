@@ -115,13 +115,15 @@ public class MinML implements Parser, Locator, DocumentHandler, ErrorHandler {
   public static final int inComment =20;
   public static final int inDTD = 21;
   
-  public MinML(final int initialBufferSize, final int bufferIncrement) {
-    this.initialBufferSize = initialBufferSize;
-    this.bufferIncrement = bufferIncrement;
-  }
+//  public MinML(final int initialBufferSize, final int bufferIncrement) {
+//    this.initialBufferSize = initialBufferSize;
+//    this.bufferIncrement = bufferIncrement;
+//  }
 
   public MinML() {
-    this(256, 128);
+//    this(256, 128);
+    this.initialBufferSize = 256;
+    this.bufferIncrement = 128;
   }
 
   public void parse(final Reader reader) throws SAXException, IOException {

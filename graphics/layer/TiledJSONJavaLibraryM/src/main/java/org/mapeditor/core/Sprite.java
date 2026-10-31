@@ -76,15 +76,15 @@ public class Sprite {
             this.flags = Sprite.KEY_LOOP;
         }
 
-        public KeyFrame(String name) {
-            this();
-            this.name = name;
-        }
+//        public KeyFrame(String name) {
+//            this();
+//            this.name = name;
+//        }
 
-        public KeyFrame(String name, Tile[] tile) {
-            this(name);
-            this.frames = tile;
-        }
+//        public KeyFrame(String name, Tile[] tile) {
+//            this(name);
+//            this.frames = tile;
+//        }
 
         public void setName(String name) {
             this.name = name;
@@ -162,10 +162,10 @@ public class Sprite {
      *
      * @param frames an array of {@link org.mapeditor.core.Tile} objects.
      */
-        public Sprite(Tile[] frames) {
-        this.keys = new BasicArrayListD();
-        this.setFrames(frames);
-    }
+//    public Sprite(Tile[] frames) {
+//        this.keys = new BasicArrayListD();
+//        this.setFrames(frames);
+//    }
 
     /**
      * Constructor for Sprite.
@@ -174,29 +174,29 @@ public class Sprite {
      * @param border a int.
      * @param totalFrames a int.
      */
-    public Sprite(Image image, int fpl, int border, int totalFrames) {
-        this.keys = new BasicArrayListD();
-        Tile[] frames = new Tile[0];
-        this.fpl = fpl;
-        this.borderWidth = border;
-
-        //TODO: break up the image into tiles
-        //given this information, extrapolate the rest...
-        this.frameSize.setWidth(image.getWidth() / (fpl + this.borderWidth * fpl));
-        this.frameSize.setHeight((int) (image.getHeight() / (Math.ceil((double) totalFrames / (double) fpl) + Math.ceil((double) totalFrames / (double) fpl) * this.borderWidth)));
-        this.createKey(StringUtil.getInstance().EMPTY_STRING, frames, Sprite.KEY_LOOP);
-    }
+//    public Sprite(Image image, int fpl, int border, int totalFrames) {
+//        this.keys = new BasicArrayListD();
+//        Tile[] frames = new Tile[0];
+//        this.fpl = fpl;
+//        this.borderWidth = border;
+//
+//        //TODO: break up the image into tiles
+//        //given this information, extrapolate the rest...
+//        this.frameSize.setWidth(image.getWidth() / (fpl + this.borderWidth * fpl));
+//        this.frameSize.setHeight((int) (image.getHeight() / (Math.ceil((double) totalFrames / (double) fpl) + Math.ceil((double) totalFrames / (double) fpl) * this.borderWidth)));
+//        this.createKey(StringUtil.getInstance().EMPTY_STRING, frames, Sprite.KEY_LOOP);
+//    }
 
     /**
      * setFrames.
      *
      * @param frames an array of {@link org.mapeditor.core.Tile} objects.
      */
-    public final void setFrames(Tile[] frames) {
-        this.frameSize = new Rectangle(PointFactory.getInstance().ZERO_ZERO, frames[0].getWidth(), frames[0].getHeight());
-
-        this.createKey(StringUtil.getInstance().EMPTY_STRING, frames, Sprite.KEY_LOOP);
-    }
+//    public final void setFrames(Tile[] frames) {
+//        this.frameSize = new Rectangle(PointFactory.getInstance().ZERO_ZERO, frames[0].getWidth(), frames[0].getHeight());
+//
+//        this.createKey(StringUtil.getInstance().EMPTY_STRING, frames, Sprite.KEY_LOOP);
+//    }
 
     /**
      * Setter for the field <code>frameSize</code>.
@@ -429,15 +429,15 @@ public class Sprite {
      * @param frames an array of {@link org.mapeditor.core.Tile} objects.
      * @param flags a int.
      */
-    public final void createKey(String name, Tile[] frames, int flags) {
-        KeyFrame kf = new KeyFrame(name, frames);
-        kf.setName(name);
-        kf.setFlags(flags);
-        this.addKey(kf);
-        if (this.keys.size() == 1) {
-            this.currentKey = kf;
-        }
-    }
+//    public final void createKey(String name, Tile[] frames, int flags) {
+//        KeyFrame kf = new KeyFrame(name, frames);
+//        kf.setName(name);
+//        kf.setFlags(flags);
+//        this.addKey(kf);
+//        if (this.keys.size() == 1) {
+//            this.currentKey = kf;
+//        }
+//    }
 
     /**
      * iterateFrame.

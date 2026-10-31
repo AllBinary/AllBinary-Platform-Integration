@@ -36,8 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
 
 
 
@@ -100,29 +98,16 @@ public class PropertyType {
      */
     public static final PropertyType FILE = new PropertyType("file");
         
-    private static final BasicArrayList PROPERTY_TYPE_LIST = new BasicArrayListD();
 
-    private final String value;
+    private final String valueP;
 
     PropertyType(String v) {
-        this.value = v;
-        PropertyType.PROPERTY_TYPE_LIST.add(this);
+        this.valueP = v;
+        PropertyTypeFactory.getInstance().PROPERTY_TYPE_LIST.add(this);
     }
 
     public String value() {
-        return this.value;
-    }
-
-    public static PropertyType fromValue(String v) {
-        final int size = PropertyType.PROPERTY_TYPE_LIST.size();
-        PropertyType c;
-        for (int index = 0; index < size; index++) {
-            c = (PropertyType) PropertyType.PROPERTY_TYPE_LIST.get(index);
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
+        return this.valueP;
     }
 
 }

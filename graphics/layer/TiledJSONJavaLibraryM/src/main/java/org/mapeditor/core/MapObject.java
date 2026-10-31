@@ -56,16 +56,16 @@ public class MapObject extends MapObjectData implements Cloneable {
     /**
      * Constructor for MapObject.
      */
-    public MapObject() {
-        super();
-        this.nameP = StringUtil.getInstance().EMPTY_STRING;
-        this.typeP = StringUtil.getInstance().EMPTY_STRING;
-        this.displayImageSource = StringUtil.getInstance().EMPTY_STRING;
-        this.flipHorizontal = false;
-        this.flipVertical = false;
-
-        //System.out.println("TWB = MapObject");
-    }
+//    public MapObject() {
+//        super();
+//        this.nameP = StringUtil.getInstance().EMPTY_STRING;
+//        this.typeP = StringUtil.getInstance().EMPTY_STRING;
+//        this.displayImageSource = StringUtil.getInstance().EMPTY_STRING;
+//        this.flipHorizontal = false;
+//        this.flipVertical = false;
+//
+//        //System.out.println("TWB = MapObject");
+//    }
 
     /**
      * Constructor for MapObject.
@@ -77,7 +77,14 @@ public class MapObject extends MapObjectData implements Cloneable {
      * @param rotation a double.
      */
     public MapObject(double x, double y, double width, double height, double rotation) {
-        this();
+        
+        this.nameP = StringUtil.getInstance().EMPTY_STRING;
+        this.typeP = StringUtil.getInstance().EMPTY_STRING;
+        this.displayImageSource = StringUtil.getInstance().EMPTY_STRING;
+        this.flipHorizontal = false;
+        this.flipVertical = false;
+        
+        //this();
         this.xP = x;
         this.yP = y;
         this.widthP = width;

@@ -53,10 +53,10 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
     /**
      * Constructor for Map.
      */
-    public TiledMap() {
-        super();
-        this.orientationP = Orientation.ORTHOGONAL;
-    }
+//    public TiledMap() {
+//        super();
+//        this.orientationP = Orientation.ORTHOGONAL;
+//    }
 
     /**
      * Constructor for Map.
@@ -65,7 +65,8 @@ public class TiledMap extends MapData //implements Iterable<MapLayer>
      * @param height the map height in tiles.
      */
     public TiledMap(int width, int height) {
-        this();
+        this.orientationP = Orientation.ORTHOGONAL;
+        //this();
         this.widthP = width;
         this.heightP = height;
     }

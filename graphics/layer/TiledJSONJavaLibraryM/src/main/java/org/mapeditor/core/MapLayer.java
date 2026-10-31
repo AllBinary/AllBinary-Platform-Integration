@@ -63,7 +63,7 @@ public class MapLayer extends LayerData implements Cloneable {
      */
     public static final int ROTATE_270 = 270;
 
-    protected TiledMap mapP = new TiledMap();
+    protected TiledMap mapP = new TiledMap(0, 0);
 
     /**
      * Constructor for MapLayer.
@@ -77,26 +77,26 @@ public class MapLayer extends LayerData implements Cloneable {
      * @param w width in tiles
      * @param h height in tiles
      */
-    public MapLayer(int w, int h) {
-        this(new Rectangle(PointFactory.getInstance().ZERO_ZERO, w, h));
-    }
+//    public MapLayer(int w, int h) {
+//        this(new Rectangle(PointFactory.getInstance().ZERO_ZERO, w, h));
+//    }
 
     /**
      * Constructor for MapLayer.
      *
      */
-    public MapLayer(Rectangle r) {
-        this();
-        this.setBounds(r);
-    }
+//    public MapLayer(Rectangle r) {
+//        this();
+//        this.setBounds(r);
+//    }
 
     /**
      * @param map the map this layer is part of
      */
-    MapLayer(TiledMap map) {
-        this();
-        this.setMap(map);
-    }
+//    MapLayer(TiledMap map) {
+//        this();
+//        this.setMap(map);
+//    }
 
     /**
      * Constructor for MapLayer.
@@ -105,10 +105,10 @@ public class MapLayer extends LayerData implements Cloneable {
      * @param w width in tiles
      * @param h height in tiles
      */
-    public MapLayer(TiledMap map, int w, int h) {
-        this(w, h);
-        this.setMap(map);
-    }
+//    public MapLayer(TiledMap map, int w, int h) {
+//        this(w, h);
+//        this.setMap(map);
+//    }
 
     /**
      * Performs a linear translation of this layer by (<i>x, y</i>).

@@ -32,21 +32,13 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2023.07.16 at 03:17:09 AM CDT 
 //
-
-
 package org.mapeditor.core;
 
-import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
-
-
-
 /**
- * 
+ *
  */
 //enum
 public class Compression {
-
 
     /**
      * @deprecated since 0.15
@@ -58,30 +50,16 @@ public class Compression {
      * 
      */
     public static final Compression ZLIB = new Compression("zlib");
-
-    private static final BasicArrayList COMPRESSION_LIST = new BasicArrayListD();
     
-    private final String value;
+    private final String valueP;
 
     Compression(String v) {
-        this.value = v;
-        Compression.COMPRESSION_LIST.add(this);
+        this.valueP = v;
+        CompressionFactory.getInstance().COMPRESSION_LIST.add(this);
     }
 
     public String value() {
-        return this.value;
-    }
-
-    public static Compression fromValue(String v) {
-        final int size = Compression.COMPRESSION_LIST.size();
-        Compression c;
-        for (int index = 0; index < size; index++) {
-            c = (Compression) Compression.COMPRESSION_LIST.get(index);
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
+        return this.valueP;
     }
 
 }

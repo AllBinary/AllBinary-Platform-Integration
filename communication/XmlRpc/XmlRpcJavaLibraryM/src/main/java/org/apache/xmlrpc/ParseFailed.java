@@ -73,9 +73,9 @@ public class ParseFailed extends RuntimeException
         super(message);
     }
 
-    public ParseFailed(Exception cause)
-    {
-        super(cause);
-    }
+//    public ParseFailed(Exception cause)
+//    {
+//        super(cause);
+//    }
 
 }

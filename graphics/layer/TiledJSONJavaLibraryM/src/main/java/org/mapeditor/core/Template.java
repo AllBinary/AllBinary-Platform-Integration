@@ -56,7 +56,7 @@ public class Template {
      * 
      */
         
-    protected MapObject objectP = new MapObject();
+    protected MapObject objectP = new MapObject(0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     /**
      * 

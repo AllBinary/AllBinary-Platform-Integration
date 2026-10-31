@@ -104,7 +104,7 @@ public class XmlRpcRequestProcessor extends XmlRpc
             }
             catch (Exception e)
             {
-                throw new ParseFailed(e);
+                throw new ParseFailed(e.getMessage());
             }
             if (XmlRpc.debugP)
             {

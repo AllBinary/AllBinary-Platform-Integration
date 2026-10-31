@@ -92,7 +92,7 @@ public class XmlRpcClient implements XmlRpcHandler
     protected final LogUtil logUtil = LogUtil.getInstance();
 
     protected URL url;
-        private String auth = StringUtil.getInstance().EMPTY_STRING;
+        protected String auth = StringUtil.getInstance().EMPTY_STRING;
 
     // pool of worker instances
     protected Stack<Worker> pool = new Stack<Worker>();
@@ -162,7 +162,7 @@ public class XmlRpcClient implements XmlRpcHandler
             final String string = stringBuilder.append(user).appendchar(':').append(password).toString();
             byte[] encoded = Base64.encode(string.getBytes());
             stringBuilder.delete(0, stringBuilder.length());
-            stringBuilder.appendint(encoded.length);
+
             char aChar;
             for (int index = 0; index < encoded.length; index++)
             {
@@ -635,7 +635,7 @@ public class XmlRpcClient implements XmlRpcHandler
         {
             writer.startElement("methodCall");
             writer.startElement("methodName");
-            writer.write(method);
+            writer.chardata(method);
             writer.endElement("methodName");
             writer.startElement("params");
             int l = params.size();
@@ -695,7 +695,7 @@ public class XmlRpcClient implements XmlRpcHandler
                     v.add(args[i]);
                 }
             }
-            XmlRpcClient client = new XmlRpcClientLite(url);
+            XmlRpcClient client = new XmlRpcClient(url);
             try
             {
                 System.out.println("XmlRpcClient - main: " + client.execute(method, v));

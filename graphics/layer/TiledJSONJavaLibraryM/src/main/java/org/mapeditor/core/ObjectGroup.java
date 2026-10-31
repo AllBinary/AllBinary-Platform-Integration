@@ -55,10 +55,10 @@ public class ObjectGroup extends ObjectGroupData implements Cloneable //, Iterab
      *
      * @param map the map this object group is part of
      */
-    public ObjectGroup(TiledMap map) {
-        this();
-        this.mapP = map;
-    }
+//    public ObjectGroup(TiledMap map) {
+//        this();
+//        this.mapP = map;
+//    }
 
     /**
      * Creates an object group that is part of the given map and has the given
@@ -68,11 +68,11 @@ public class ObjectGroup extends ObjectGroupData implements Cloneable //, Iterab
      * @param x the x origin of this layer
      * @param y the y origin of this layer
      */
-    public ObjectGroup(TiledMap map, int x, int y) {
-        this(map);
-        this.xP = x;
-        this.yP = y;
-    }
+//    public ObjectGroup(TiledMap map, int x, int y) {
+//        this(map);
+//        this.xP = x;
+//        this.yP = y;
+//    }
 
     /**
      * Creates an object group with a given area. The size of area is

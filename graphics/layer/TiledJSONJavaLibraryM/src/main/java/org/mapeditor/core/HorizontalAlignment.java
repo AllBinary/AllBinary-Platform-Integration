@@ -36,8 +36,6 @@
 
 package org.mapeditor.core;
 
-import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
 
 
 
@@ -63,29 +61,16 @@ public class HorizontalAlignment {
      */
     public static final HorizontalAlignment RIGHT = new HorizontalAlignment("right");
         
-    private static final BasicArrayList HORIZONTAL_ALIGNMENT_LIST = new BasicArrayListD();
 
-    private final String value;
+    private final String valueP;
 
     HorizontalAlignment(String v) {
-        this.value = v;
-        HorizontalAlignment.HORIZONTAL_ALIGNMENT_LIST.add(this);
+        this.valueP = v;
+        HorizontalAlignmentFactory.getInstance().HORIZONTAL_ALIGNMENT_LIST.add(this);
     }
 
     public String value() {
-        return this.value;
-    }
-
-    public static HorizontalAlignment fromValue(String v) {
-        final int size = HorizontalAlignment.HORIZONTAL_ALIGNMENT_LIST.size();
-        HorizontalAlignment c;
-        for (int index = 0; index < size; index++) {
-            c = (HorizontalAlignment) HorizontalAlignment.HORIZONTAL_ALIGNMENT_LIST.get(index);
-            if (c.value.equals(v)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(v);
+        return this.valueP;
     }
 
 }

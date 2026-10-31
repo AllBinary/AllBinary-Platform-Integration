@@ -63,10 +63,10 @@ public class Tile extends TileData {
      *
      * @param set a {@link org.mapeditor.core.TileSet} object.
      */
-    public Tile(TileSet set) {
-        this();
-        this.tileset = set;
-    }
+//    public Tile(TileSet set) {
+//        this();
+//        this.tileset = set;
+//    }
 
     /**
      * Copy constructor

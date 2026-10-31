@@ -85,7 +85,7 @@ import org.allbinary.util.ABHashtable;
  */
 public class XmlRpcClientLite extends XmlRpcClient
 {
-    static String auth = "";
+
 
     /**
      * Construct a XML-RPC client with this URL.
@@ -119,11 +119,11 @@ public class XmlRpcClientLite extends XmlRpcClient
      * @throws IOException
      */
     @Override
-    synchronized Worker getWorker(boolean async) throws IOException
+    synchronized XmlRpcClient.Worker getWorker(boolean async) throws IOException
     {
         try
         {
-            Worker w = (Worker) this.pool.pop();
+            XmlRpcClient.Worker w = (XmlRpcClient.Worker) this.pool.pop();
             if (async)
             {
                 this.asyncWorkers += 1;
@@ -155,7 +155,7 @@ public class XmlRpcClientLite extends XmlRpcClient
     /**
      *
      */
-    class LiteWorker extends Worker implements Runnable
+    class LiteWorker extends XmlRpcClient.Worker implements Runnable
     {
         HttpClient client = this.createHttpClient();
 
@@ -323,7 +323,7 @@ public class XmlRpcClientLite extends XmlRpcClient
         BufferedOutputStream output = new BufferedOutputStream(new ByteArrayOutputStream());
         BufferedInputStream input = new BufferedInputStream(new ByteArrayInputStream(new byte[0]));
         boolean keepalive;
-        byte[] buffer = new byte[0];
+        byte[] buffer = new byte[2048];
 
         /**
          *
@@ -394,10 +394,10 @@ public class XmlRpcClientLite extends XmlRpcClient
                 this.output.write("Connection: Keep-Alive\r\n".getBytes());
             }
             this.output.write("Content-Type: text/xml\r\n".getBytes());
-            if (XmlRpcClientLite.auth != null)
+            if (XmlRpcClientLite.this.auth != null)
             {
                 stringMaker.delete(0, stringMaker.length());
-                w = stringMaker.append("Authorization: Basic ").append(XmlRpcClientLite.auth).append("\r\n").toString();
+                w = stringMaker.append("Authorization: Basic ").append(XmlRpcClientLite.this.auth).append("\r\n").toString();
                 this.output.write(w.getBytes());
             }
             stringMaker.delete(0, stringMaker.length());

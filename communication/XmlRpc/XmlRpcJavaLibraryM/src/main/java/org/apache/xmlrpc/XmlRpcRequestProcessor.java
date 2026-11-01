@@ -58,7 +58,7 @@ package org.apache.xmlrpc;
 import java.io.InputStream;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
-import org.allbinary.logic.StdUtil;
+import org.allbinary.logic.string.StringUtil;
 
 /**
  * Process an InputStream and produce and XmlRpcRequest.  This class
@@ -104,7 +104,11 @@ public class XmlRpcRequestProcessor extends XmlRpc
             }
             catch (Exception e)
             {
-                throw new ParseFailed(e.getMessage());
+                String message = e.getMessage();
+                if(message == null) {
+                    message = StringUtil.getInstance().EMPTY_STRING;
+                }
+                throw new ParseFailed(message);
             }
             if (XmlRpc.debugP)
             {

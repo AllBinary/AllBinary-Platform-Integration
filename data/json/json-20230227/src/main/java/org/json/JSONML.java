@@ -1,5 +1,6 @@
 package org.json;
 
+import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
 
 /*
@@ -502,7 +503,7 @@ public class JSONML {
         JSONObject          jo;
         int                 length;
         Object              objectCanBeNull;
-        StringBuilder        sb = new StringBuilder();
+        StringMaker        sb = new StringMaker();
         String              tagName;
 
 // Emit <tagName
@@ -510,7 +511,7 @@ public class JSONML {
         tagName = ja.getString(0);
         XML.noSpace(tagName);
         tagName = XML.escape(tagName);
-        sb.append('<');
+        sb.appendchar('<');
         sb.append(tagName);
 
         objectCanBeNull = ja.opt(1);
@@ -525,12 +526,12 @@ public class JSONML {
                 final Object valueCanBeNull = jo.opt(key);
                 XML.noSpace(key);
                 if (valueCanBeNull != null) {
-                    sb.append(' ');
+                    sb.appendchar(' ');
                     sb.append(XML.escape(key));
-                    sb.append('=');
-                    sb.append('"');
+                    sb.appendchar('=');
+                    sb.appendchar('"');
                     sb.append(XML.escape(valueCanBeNull.toString()));
-                    sb.append('"');
+                    sb.appendchar('"');
                 }
             }
         } else {
@@ -541,10 +542,10 @@ public class JSONML {
 
         length = ja.length();
         if (i >= length) {
-            sb.append('/');
-            sb.append('>');
+            sb.appendchar('/');
+            sb.appendchar('>');
         } else {
-            sb.append('>');
+            sb.appendchar('>');
             do {
                 objectCanBeNull = ja.get(i);
                 i += 1;
@@ -560,10 +561,10 @@ public class JSONML {
                     }
                 }
             } while (i < length);
-            sb.append('<');
-            sb.append('/');
+            sb.appendchar('<');
+            sb.appendchar('/');
             sb.append(tagName);
-            sb.append('>');
+            sb.appendchar('>');
         }
         return sb.toString();
     }
@@ -579,7 +580,7 @@ public class JSONML {
      * @throws JSONException Thrown on error converting to a string
      */
     public static String toString(JSONObject jo) throws JSONException {
-        StringBuilder sb = new StringBuilder();
+        StringMaker sb = new StringMaker();
         int                 i;
         JSONArray           jaCanBeNull;
         int                 length;
@@ -595,7 +596,7 @@ public class JSONML {
         }
         XML.noSpace(tagName);
         tagName = XML.escape(tagName);
-        sb.append('<');
+        sb.appendchar('<');
         sb.append(tagName);
 
 //Emit the attributes
@@ -606,12 +607,12 @@ public class JSONML {
                 XML.noSpace(key);
                 valueCanBeNull = jo.opt(key);
                 if (valueCanBeNull != null) {
-                    sb.append(' ');
+                    sb.appendchar(' ');
                     sb.append(XML.escape(key));
-                    sb.append('=');
-                    sb.append('"');
+                    sb.appendchar('=');
+                    sb.appendchar('"');
                     sb.append(XML.escape(valueCanBeNull.toString()));
-                    sb.append('"');
+                    sb.appendchar('"');
                 }
             }
         }
@@ -620,10 +621,10 @@ public class JSONML {
 
         jaCanBeNull = jo.optJSONArray("childNodes");
         if (jaCanBeNull == null) {
-            sb.append('/');
-            sb.append('>');
+            sb.appendchar('/');
+            sb.appendchar('>');
         } else {
-            sb.append('>');
+            sb.appendchar('>');
             length = jaCanBeNull.length();
             for (i = 0; i < length; i += 1) {
                 objectCanBeNull = jaCanBeNull.get(i);
@@ -639,10 +640,10 @@ public class JSONML {
                     }
                 }
             }
-            sb.append('<');
-            sb.append('/');
+            sb.appendchar('<');
+            sb.appendchar('/');
             sb.append(tagName);
-            sb.append('>');
+            sb.appendchar('>');
         }
         return sb.toString();
     }

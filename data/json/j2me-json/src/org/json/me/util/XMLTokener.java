@@ -42,10 +42,9 @@ public class XMLTokener extends JSONTokener {
    /** The table of entity values. It initially contains Character values for
     * amp, apos, gt, lt, quot.
     */
-   public static final ABHashtable<Object, Object> entity;
+   public static final ABHashtable<Object, Object> entity = new ABHashtable();
 
    static {
-       entity = new ABHashtable();
        XMLTokener.entity.put("amp",  XML.AMP);
        XMLTokener.entity.put("apos", XML.APOS);
        XMLTokener.entity.put("gt",   XML.GT);
@@ -69,17 +68,17 @@ public class XMLTokener extends JSONTokener {
     public String nextCDATA() throws JSONException {
         char         c;
         int          i;
-        final StringBuilder sb = new StringBuilder();
+        final StringMaker sb = new StringMaker();
         while(true) {
             c = this.next();
             if (c == '\0') {
                 throw this.syntaxError("Unclosed CDATA.");
             }
-            sb.append(c);
+            sb.appendchar(c);
             final String string = sb.toString();
             i = string.length() - 3;
-            if (i >= 0 && sb.charAt(i) == ']' && sb.charAt(i + 1) == ']' && sb.charAt(i + 2) == '>') {
-                return sb.toString().substring(0, i);
+            if (i >= 0 && string.charAt(i) == ']' && string.charAt(i + 1) == ']' && string.charAt(i + 2) == '>') {
+                return string.substring(0, i);
             }
         }
     }

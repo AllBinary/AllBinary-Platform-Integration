@@ -26,16 +26,16 @@ SOFTWARE.
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Enumeration;
 
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.StdUtil;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
-
+import org.allbinary.string.CommonPhoneStrings;
 import org.allbinary.string.CommonSeps;
 import org.allbinary.util.ABHashtable;
+import org.allbinary.util.EnumerationUtil;
 
 /**
  * A JSONObject is an unordered collection of name/value pairs. Its
@@ -244,12 +244,15 @@ public class JSONObject {
         if (map == null) {
             this.myHashMap = StdUtil.getInstance().createHashtable();
         } else {
-            this.myHashMap = new ABHashtable();
+            this.myHashMap = StdUtil.getInstance().createHashtable();
             //new ABHashtable(map.size())
 
-            Enumeration keys = map.keys();
-            while (keys.hasMoreElements()) {
-                Object key = keys.nextElement();
+            final EnumerationUtil enumerationUtil = EnumerationUtil.getInstance();
+            final Object[] objectArray = enumerationUtil.getAsArray(map.keys());
+            final int size = objectArray.length;
+            Object key;
+            for(int index = 0; index < size; index++) {
+                key = objectArray[index];
                 this.myHashMap.put(key, map.get(key));
             }
         }
@@ -576,8 +579,12 @@ public class JSONObject {
      *
      * @return An iterator of the keys.
      */
-    public Enumeration keys() {
-        return this.myHashMap.keys();
+//    public Enumeration keys() {
+//        return this.myHashMap.keys();
+//    }
+    public Object[] keysAsArray() {
+        final EnumerationUtil enumerationUtil = EnumerationUtil.getInstance();
+        return enumerationUtil.getAsArray(this.myHashMap.keys());
     }
 
 
@@ -598,10 +605,12 @@ public class JSONObject {
      * is empty.
      */
     public JSONArray names() {
-        JSONArray ja = new JSONArray();
-        Enumeration  keys = this.keys();
-        while (keys.hasMoreElements()) {
-            ja.put(keys.nextElement());
+        final JSONArray ja = new JSONArray();
+        final EnumerationUtil enumerationUtil = EnumerationUtil.getInstance();
+        final Object[] objectArray = enumerationUtil.getAsArray(this.myHashMap.keys());
+        final int size = objectArray.length;
+        for(int index = 0; index < size; index++) {
+            ja.put(objectArray[index]);
         }
         return ja.length() == 0 ? null : ja;
     }
@@ -612,7 +621,7 @@ public class JSONObject {
      */
     static public String trimNumber(String s) {
         if (s.indexOf('.') > 0 && s.indexOf('e') < 0 && s.indexOf('E') < 0) {
-            while (s.endsWith("0")) {
+            while (s.endsWith(CommonPhoneStrings.getInstance().ZERO)) {
                 s = s.substring(0, s.length() - 1);
             }
             if (s.endsWith(CommonSeps.getInstance().PERIOD)) {
@@ -1124,19 +1133,24 @@ public class JSONObject {
     public String toString() {
         try {
             final CommonSeps commonSeps = CommonSeps.getInstance();
-            final Enumeration keys = this.keys();
+            final EnumerationUtil enumerationUtil = EnumerationUtil.getInstance();
+            final Object[] objectArray = enumerationUtil.getAsArray(this.myHashMap.keys());
+            
             final StringMaker sb = new StringMaker();
-            sb.append("{");
+            sb.appendchar('{');
 
             Object o;
-            while (keys.hasMoreElements()) {
+            final int size = objectArray.length;
+            for(int index = 0; index < size; index++) {
+
                 if (sb.length() > 1) {
                     sb.appendchar(',');
                 }
-                o = keys.nextElement();
+                o = objectArray[index];
                 sb.append(JSONObject.quote(o.toString()));
                 sb.append(commonSeps.COLON);
                 sb.append(JSONObject.valueToString(this.get(o.toString())));
+
             }
             sb.appendchar('}');
             return sb.toString();
@@ -1182,30 +1196,35 @@ public class JSONObject {
         if (n == 0) {
             return "{}";
         }
-        final Enumeration keys = this.keys();
+        final EnumerationUtil enumerationUtil = EnumerationUtil.getInstance();
+        final Object[] objectArray = enumerationUtil.getAsArray(this.myHashMap.keys());
+
         final StringMaker sb = new StringMaker();
-        sb.append("{");
-        int          newindent = indent + indentFactor;
-        Object       o;
+        sb.appendchar('{');
+        int newindent = indent + indentFactor;
+        Object o;
         if (n == 1) {
-            o = keys.nextElement();
+            o = objectArray[0];
             sb.append(JSONObject.quote(o.toString()));
             sb.append(": ");
             sb.append(JSONObject.valueToString(this.get(o.toString()), indentFactor, indent));
         } else {
-            while (keys.hasMoreElements()) {
-                o = keys.nextElement();
+            final int size = objectArray.length;
+            String value;
+            for(int index = 0; index < size; index++) {
+                o = objectArray[index];
                 if (sb.length() > 1) {
-                    sb.append(",\n");
-                } else {
-                    sb.appendchar('\n');
+                    sb.appendchar(',');
                 }
+                sb.appendchar('\n');
                 for (i = 0; i < newindent; i += 1) {
                     sb.appendchar(' ');
                 }
                 sb.append(JSONObject.quote(o.toString()));
-                sb.append(": ");
-                sb.append(JSONObject.valueToString(this.get(o.toString()), indentFactor,newindent));
+                sb.appendchar(':');
+                sb.appendchar(' ');
+                value = JSONObject.valueToString(this.get(o.toString()), indentFactor,newindent);
+                sb.append(value);
             }
             if (sb.length() > 1) {
                 sb.appendchar('\n');
@@ -1327,14 +1346,17 @@ public class JSONObject {
      public Writer write(Writer writer) throws JSONException {
         try {
             boolean  b = false;
-            Enumeration keys = this.keys();
+            final EnumerationUtil enumerationUtil = EnumerationUtil.getInstance();
+            final Object[] objectArray = enumerationUtil.getAsArray(this.myHashMap.keys());
+
             writer.write((int) '{');
 
-            while (keys.hasMoreElements()) {
+            final int size = objectArray.length;
+            for(int index = 0; index < size; index++) {
                 if (b) {
                     writer.write((int) ',');
                 }
-                Object k = keys.nextElement();
+                Object k = objectArray[index];
                 writer.write(JSONObject.quote(k.toString()));
                 writer.write((int) ':');
                 Object v = this.myHashMap.get(k);

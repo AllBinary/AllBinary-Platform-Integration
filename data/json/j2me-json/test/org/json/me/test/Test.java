@@ -1,10 +1,18 @@
 package org.json.me.test;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.io.StringWriter;
+import org.allbinary.logic.string.StringMaker;
+
+import org.json.me.JSONArray;
+import org.json.me.JSONObject;
+import org.json.me.JSONString;
+import org.json.me.JSONStringer;
+import org.json.me.JSONTokener;
+
+import org.allbinary.logic.string.StringUtil;
+import org.allbinary.string.CommonSeps;
+import org.allbinary.util.ABHashtable;
 import org.allbinary.util.BasicArrayList;
-import org.allbinary.util.BasicArrayListD;
-import org.json.me.*;
 
 /**
  * Test class. This file is not formally a member of the org.json library.
@@ -17,7 +25,6 @@ public class Test {
      * @param args
      */
     public static void main(String args[]) {
-        Enumeration it;
         JSONArray a;
         JSONObject j;
         JSONStringer jj;
@@ -215,12 +222,13 @@ public class Test {
             System.out.println(a.toString(4));
 
             System.out.println("\nKeys: ");
-            it = j.keys();
-            while (it.hasMoreElements()) {
-                s = (String)it.nextElement();
-                System.out.println(s + ": " + j.getString(s));
+            final StringMaker stringMaker = new StringMaker();
+            final Object[] objectArray = j.keysAsArray();
+            final int size = objectArray.length;
+            for(int index = 0; index < size; index++) {
+                s = (String) objectArray[index];
+                System.out.println(stringMaker.append(s).append(CommonSeps.getInstance().COLON_SEP).append(j.getString(s)).toString());
             }
-
 
             System.out.println("\naccumulate: ");
             j = new JSONObject();
@@ -236,7 +244,7 @@ public class Test {
             System.out.println(StringUtil.getInstance().EMPTY_STRING);
 
             BasicArrayList c = null;
-            Hashtable m = null;
+            ABHashtable m = null;
             
             j = new JSONObject(m);
             a = new JSONArray(c);

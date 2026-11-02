@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.logic.string.StringUtil;
 
@@ -295,7 +296,7 @@ public class JSONTokener {
      */
     public String nextString(char quote) throws JSONException {
         char c;
-        StringBuilder sb = new StringBuilder();
+        final StringMaker sb = new StringMaker();
         while (true) {
             c = this.next();
             switch (c) {
@@ -307,24 +308,24 @@ public class JSONTokener {
                 c = this.next();
                 switch (c) {
                 case 'b':
-                    sb.append('\b');
+                    sb.appendchar('\b');
                     break;
                 case 't':
-                    sb.append('\t');
+                    sb.appendchar('\t');
                     break;
                 case 'n':
-                    sb.append('\n');
+                    sb.appendchar('\n');
                     break;
                 case 'f':
-                    sb.append('\f');
+                    sb.appendchar('\f');
                     break;
                 case 'r':
-                    sb.append('\r');
+                    sb.appendchar('\r');
                     break;
                 case 'u':
                     try {
                         final int value = Integer.parseInt(this.next(4), 16);
-                        sb.append((char) value);
+                        sb.appendchar((char) value);
                     } catch (NumberFormatException e) {
                         throw this.syntaxError("Illegal escape.", e);
                     }
@@ -333,7 +334,7 @@ public class JSONTokener {
                 case '\'':
                 case '\\':
                 case '/':
-                    sb.append(c);
+                    sb.appendchar(c);
                     break;
                 default:
                     throw this.syntaxError("Illegal escape.");
@@ -343,7 +344,7 @@ public class JSONTokener {
                 if (c == quote) {
                     return sb.toString();
                 }
-                sb.append(c);
+                sb.appendchar(c);
             }
         }
     }
@@ -358,7 +359,7 @@ public class JSONTokener {
      *  for the delimiter
      */
     public String nextTo(char delimiter) throws JSONException {
-        StringBuilder sb = new StringBuilder();
+        final StringMaker sb = new StringMaker();
         while (true) {
             char c = this.next();
             if (c == delimiter || c == '\0' || c == '\n' || c == '\r') {
@@ -367,7 +368,7 @@ public class JSONTokener {
                 }
                 return sb.toString().trim();
             }
-            sb.append(c);
+            sb.appendchar(c);
         }
     }
 
@@ -382,7 +383,7 @@ public class JSONTokener {
      */
     public String nextTo(String delimiters) throws JSONException {
         char c;
-        StringBuilder sb = new StringBuilder();
+        final StringMaker sb = new StringMaker();
         while (true) {
             c = this.next();
             if (delimiters.indexOf(c) >= 0 || c == '\0' ||
@@ -392,7 +393,7 @@ public class JSONTokener {
                 }
                 return sb.toString().trim();
             }
-            sb.append(c);
+            sb.appendchar(c);
         }
     }
 
@@ -437,9 +438,9 @@ public class JSONTokener {
          * formatting character.
          */
 
-        StringBuilder sb = new StringBuilder();
+        final StringMaker sb = new StringMaker();
         while (c >= ' ' && ",:]}/\\\"[{;=#".indexOf(c) < 0) {
-            sb.append(c);
+            sb.appendchar(c);
             c = this.next();
         }
         if (!this.eof) {

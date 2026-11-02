@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.allbinary.logic.java.bool.BooleanFactory;
+import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListS;
@@ -542,8 +543,8 @@ public class JSONArray implements Iterable<Object> {
             return StringUtil.getInstance().EMPTY_STRING;
         }
         
-        StringBuilder sb = new StringBuilder(
-                   JSONObject.valueToString(this.myArrayList.get(0)));
+        final StringMaker sb = new StringMaker();
+        sb.append(JSONObject.valueToString(this.myArrayList.get(0)));
 
         for (int i = 1; i < len; i++) {
             sb.append(separator)

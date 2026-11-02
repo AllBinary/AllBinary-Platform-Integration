@@ -3,6 +3,7 @@ package org.json;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import org.allbinary.logic.string.StringMaker;
 
 import org.allbinary.util.BasicArrayList;
 import org.allbinary.util.BasicArrayListD;
@@ -237,12 +238,12 @@ public class JSONPointer {
      */
     @Override
     public String toString() {
-        final StringBuilder rval = new StringBuilder();
+        final StringMaker rval = new StringMaker();
         final int size = this.refTokens.size();
         String token;
         for (int index = 0; index < size; index++) {
             token = (String) this.refTokens.get(index);
-            rval.append('/').append(JSONPointer.escape(token));
+            rval.appendchar('/').append(JSONPointer.escape(token));
         }
         return rval.toString();
     }
@@ -268,13 +269,14 @@ public class JSONPointer {
      */
     public String toURIFragment() {
         try {
-            final StringBuilder rval = new StringBuilder("#");
+            final StringMaker rval = new StringMaker();
+            rval.append("#");
 
             final int size = this.refTokens.size();
             String token;
             for (int index = 0; index < size; index++) {
                 token = (String) this.refTokens.get(index);
-                rval.append('/').append(URLEncoder.encode(token, JSONPointer.ENCODING));
+                rval.appendchar('/').append(URLEncoder.encode(token, JSONPointer.ENCODING));
             }
 
             return rval.toString();

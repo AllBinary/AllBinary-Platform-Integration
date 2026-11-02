@@ -32,6 +32,7 @@ import org.allbinary.util.BasicArrayListD;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringMaker;
 import org.allbinary.logic.string.StringUtil;
+import org.allbinary.string.CommonSeps;
 import org.allbinary.util.ABHashtable;
 import org.allbinary.util.BasicArrayListS;
 
@@ -803,7 +804,7 @@ public class JSONArray {
      */
     public String toString() {
         try {
-            return '[' + this.join(",") + ']';
+            return new StringMaker().appendchar('[').append(this.join(CommonSeps.getInstance().COMMA)).appendchar(']').toString();
         } catch (Exception e) {
             return StringUtil.getInstance().EMPTY_STRING;
         }
@@ -836,14 +837,15 @@ public class JSONArray {
      *  representation of the array.
      * @throws JSONException
      */
+    private static final String EMPTY_JSON_ARRAY = "[]";
     String toString(int indentFactor, int indent) throws JSONException {
         int len = this.length();
         if (len == 0) {
-            return "[]";
+            return JSONArray.EMPTY_JSON_ARRAY;
         }
         int i;
         final StringMaker sb = new StringMaker();
-        sb.append("[");
+        sb.appendchar('[');
         if (len == 1) {
             final Object object = this.myArrayList.get(0);
             sb.append(JSONObject.valueToString(object, indentFactor, indent));
@@ -852,7 +854,8 @@ public class JSONArray {
             sb.appendchar('\n');
             for (i = 0; i < len; i += 1) {
                 if (i > 0) {
-                    sb.append(",\n");
+                    sb.appendchar(',');
+                    sb.appendchar('\n');
                 }
                 for (int j = 0; j < newindent; j += 1) {
                     sb.appendchar(' ');

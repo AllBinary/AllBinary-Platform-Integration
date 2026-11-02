@@ -1,6 +1,5 @@
 package org.json.me.util;
 
-import java.util.Enumeration;
 import org.allbinary.logic.NullUtil;
 import org.allbinary.logic.string.StringMaker;
 
@@ -316,7 +315,6 @@ public class XML {
         JSONArray    ja;
         JSONObject   jo;
         String       k;
-        Enumeration  keys;
         int          len;
         String       s;
         Object       v;
@@ -333,9 +331,10 @@ public class XML {
 // Loop thru the keys.
 
             jo = (JSONObject)o;
-            keys = jo.keys();
-            while (keys.hasMoreElements()) {
-                k = (String) keys.nextElement();
+            final Object[] objectArray = jo.keysAsArray();
+            final int size = objectArray.length;
+            for(int index = 0; index < size; index++) {
+                k = (String) objectArray[index];
                 v = jo.get(k);
                 if (v instanceof String) {
                     s = (String)v;

@@ -47,9 +47,9 @@ public class Ticker
 
   public Ticker(String str)
   {
-    if (str == null) {
-      throw new NullPointerException();
-    }
+//    if (str == null) {
+//      throw new NullPointerException();
+//    }
     this.instance = this;
     
     this.text = str;
@@ -64,9 +64,9 @@ public class Ticker
 
   public void setString(String str)
   {
-    if (str == null) {
-      throw new NullPointerException();
-    }
+//    if (str == null) {
+//      throw new NullPointerException();
+//    }
     this.text = str;
   }
   

@@ -200,7 +200,7 @@ public class XmlRpcClient implements XmlRpcHandler
         }
     }
 
-    public Object execute(String method, BasicArrayList params, CryptInterface abCrypt)
+    public Object executeWithCrypt(String method, BasicArrayList params, CryptInterface abCrypt)
             throws XmlRpcException, IOException
     {
         Worker worker = this.getWorker(false);

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.accessibility;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.internal.*;
 
@@ -67,7 +69,7 @@ public class AccessibleTextAttributeEvent extends SWTEventObject {
 	 * 
 	 * @since 3.7
 	 */
-	public String result;
+	public String result = StringUtil.getInstance().INIT_STRING;
 
 	static final long serialVersionUID = 7131825608864332802L;
 

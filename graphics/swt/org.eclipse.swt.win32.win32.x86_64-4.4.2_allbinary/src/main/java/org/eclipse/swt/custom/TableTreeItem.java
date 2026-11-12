@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.custom;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -491,7 +493,7 @@ public String getText () {
 public String getText(int index) {
 	//checkWidget();
 	if (0 <= index && index < texts.length) return texts[index];
-	return null;
+	return StringUtil.getInstance().EMPTY_STRING;
 }
 
 boolean getVisible () {
@@ -814,12 +816,13 @@ public void setImage (Image image) {
  */
 public void setText(int index, String text) {
 	checkWidget();
-	if (text == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (text == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	int columnCount = Math.max(this.parent.getTable().getColumnCount(), 1);
 	if (index < 0 || index >= columnCount) return;
 	if (this.texts.length < columnCount) {
 		String[] newTexts = new String[columnCount];
 		System.arraycopy(texts, 0, newTexts, 0, texts.length);
+		for (int textIndex = this.texts.length; textIndex < columnCount; textIndex++) newTexts[textIndex] = StringUtil.getInstance().EMPTY_STRING;
 		texts = newTexts;
 	}
 	texts[index] = text;
@@ -853,7 +856,7 @@ void setVisible (boolean show) {
 		// ignore any images in the first column
 		int columnCount = Math.max(table.getColumnCount(), 1);
 		for (int i = 0; i < columnCount; i++) {
-			if (i < texts.length && texts[i] != null) setText(i, texts[i]);
+			if (i < texts.length && texts[i] != StringUtil.getInstance().EMPTY_STRING) setText(i, texts[i]);
 			if (i < images.length && images[i] != null) setImage(i, images[i]);
 		}
 

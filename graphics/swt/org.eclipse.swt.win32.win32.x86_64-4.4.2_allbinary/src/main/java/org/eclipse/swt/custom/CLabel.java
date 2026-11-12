@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.custom;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.allbinary.logic.java.exception.ExceptionUtil;
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
@@ -60,7 +62,7 @@ public class CLabel extends Canvas {
 	private int rightMargin = DEFAULT_MARGIN;
 	private int bottomMargin = DEFAULT_MARGIN;
 	/** the current text */
-	private String text;
+	private String text = StringUtil.getInstance().EMPTY_STRING;
 	/** the current icon */
 	private Image image;
 	// The tooltip is used for two purposes - the application can set
@@ -68,7 +70,7 @@ public class CLabel extends Canvas {
 	// the text has been truncated due to the label being too short.
 	// The appToolTip stores the tooltip set by the application.  Control.tooltiptext 
 	// contains whatever tooltip is currently being displayed.
-	private String appToolTipText;
+	private String appToolTipText = StringUtil.getInstance().EMPTY_STRING;
 	private boolean ignoreDispose;
 	
 	private Image backgroundImage;
@@ -184,7 +186,7 @@ private void drawBevelRect(GC gc, int x, int y, int w, int h, Color topleft, Col
  * characters in the given string, return '\0'.
  */
 char _findMnemonic (String string) {
-	if (string == null) return '\0';
+	//if (string == null) return '\0';
 	int index = 0;
 	int length = string.length ();
 	do {
@@ -260,7 +262,7 @@ private Point getTotalSize(Image image, String text) {
 	}
 		
 	GC gc = new GC(this);
-	if (text != null && text.length() > 0) {
+	if (text.length() > 0) {
 		Point e = gc.textExtent(text, DRAW_FLAGS);
 		size.x += e.x;
 		size.y = Math.max(size.y, e.y);
@@ -374,9 +376,9 @@ void onDispose(Event event) {
 	this.gradientColors = null;
 	this.gradientPercents = null;
 	this.backgroundImage = null;
-	this.text = null;
+	this.text = StringUtil.getInstance().EMPTY_STRING;
 	this.image = null;
-	this.appToolTipText = null;
+	this.appToolTipText = StringUtil.getInstance().EMPTY_STRING;
 }
 void onMnemonic(TraverseEvent event) {
 	char mnemonic = _findMnemonic(text);
@@ -419,7 +421,7 @@ void onPaint(PaintEvent event) {
 	}
 	
 	GC gc = event.gc;
-	String[] lines = this.text == null ? null : splitString(this.text); 
+	String[] lines = splitString(this.text); 
 	
 	// shorten the text
 	if (shortenText) {
@@ -433,7 +435,7 @@ void onPaint(PaintEvent event) {
 	    		extent.x = Math.max(extent.x, e.x);
 	    	}
 	    }
-		if (this.appToolTipText == null) {
+		if (this.appToolTipText == StringUtil.getInstance().EMPTY_STRING) {
 			super.setToolTipText(this.text);
 		}
 	} else {
@@ -911,7 +913,7 @@ public void setRightMargin(int rightMargin) {
  */
 public void setText(String text) {
 	checkWidget();
-	if (text == null) text = ""; //$NON-NLS-1$
+	//if (text == null) text = ""; //$NON-NLS-1$
 	if (! text.equals(this.text)) {
 		this.text = text;
 		redraw();
@@ -952,7 +954,7 @@ public void setTopMargin(int topMargin) {
  * @return the shortened text
  */
 protected String shortenText(GC gc, String t, int width) {
-	if (t == null) return null;
+	//if (t == null) return null;
 	int w = gc.textExtent(ELLIPSIS, DRAW_FLAGS).x;
 	if (width<=w) return t;
 	int l = t.length();

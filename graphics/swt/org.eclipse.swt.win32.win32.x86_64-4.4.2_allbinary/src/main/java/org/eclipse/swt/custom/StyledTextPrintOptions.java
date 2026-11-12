@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.custom;
 
+import org.allbinary.logic.string.StringUtil;
+
 /**
  * Use StyledTextPrintOptions to specify printing options for the
  * StyledText.print(Printer, StyledTextPrintOptions) API.
@@ -53,7 +55,7 @@ public class StyledTextPrintOptions {
 	 * left aligned, centered and right aligned. They are separated by a tab
 	 * character (<code>StyledTextPrintOptions.SEPARATOR</code>).
 	 */
-	public String header = null;
+	public String header = StringUtil.getInstance().EMPTY_STRING;
 	/**
 	 * Formatted text to print in the footer of each page.
 	 * <p>"left '\t' center '\t' right"</p>
@@ -64,11 +66,11 @@ public class StyledTextPrintOptions {
 	 * left aligned, centered and right aligned. They are separated by a tab
 	 * character (<code>StyledTextPrintOptions.SEPARATOR</code>).
 	 */
-	public String footer = null;
+	public String footer = StringUtil.getInstance().EMPTY_STRING;
 	/**
 	 * Name of the print job.
 	 */
-	public String jobName = null;
+	public String jobName = StringUtil.getInstance().EMPTY_STRING;
 	
 	/**
 	 * Print the text foreground color. Default value is <code>false</code>.

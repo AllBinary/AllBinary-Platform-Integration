@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.*;
 
@@ -4353,7 +4355,7 @@ public static void error (int code) {
  * @see IllegalArgumentException
  */
 public static void error (int code, Throwable throwable) {
-	error (code, throwable, null);
+	error (code, throwable, StringUtil.getInstance().EMPTY_STRING);
 }
 
 /**
@@ -4413,7 +4415,7 @@ public static void error (int code, Throwable throwable, String detail) {
 	}
 
 	String message = findErrorText (code);
-	if (detail != null) message += detail;
+	if (detail != StringUtil.getInstance().EMPTY_STRING) message += detail;
 	switch (code) {
 		
 		/* Illegal Arguments (non-fatal) */

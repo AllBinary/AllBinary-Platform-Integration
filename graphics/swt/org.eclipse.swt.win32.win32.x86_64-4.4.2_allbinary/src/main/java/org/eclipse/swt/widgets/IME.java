@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
@@ -41,7 +43,7 @@ public class IME extends Widget {
 	int caretOffset;
 	int startOffset;
 	int commitCount;
-	String text;
+	String text = StringUtil.getInstance().EMPTY_STRING;
 	int [] ranges;
 	TextStyle [] styles;
 	
@@ -328,7 +330,7 @@ void releaseParent () {
 void releaseWidget () {
 	super.releaseWidget ();
 	this.parent = null;
-	this.text = null;
+	this.text = StringUtil.getInstance().EMPTY_STRING;
 	this.styles = null;
 	this.ranges = null;
 }
@@ -529,11 +531,11 @@ LRESULT WM_KEYDOWN (long /*int*/ wParam, long /*int*/ lParam) {
 			event.detail = SWT.COMPOSITION_SELECTION;
 			sendEvent (SWT.ImeComposition, event);
 			if (event.start == event.end) { 
-				event.text = null;
+				event.text = StringUtil.getInstance().EMPTY_STRING;
 				event.end = event.start + 1;
 				sendEvent (SWT.ImeComposition, event);
 			}
-			if (event.text != null && event.text.length() > 0) {
+			if (event.text.length() > 0) {
 				int length = event.text.length();
 	            if (length > 1) {
 	            	event.end = event.start + 1;

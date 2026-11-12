@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.win32.*;
@@ -1112,7 +1114,7 @@ boolean updateTextDirection(int textDirection) {
 
 String toolTipText (NMTTDISPINFO hdr) {
 	if ((hdr.uFlags & OS.TTF_IDISHWND) != 0) {
-		return null;
+		return StringUtil.getInstance().INIT_STRING;
 	}
 	/*
 	* Bug in Windows.  On Windows XP, when TB_SETHOTITEM is
@@ -1121,7 +1123,7 @@ String toolTipText (NMTTDISPINFO hdr) {
 	* the hot item.  The fix is to detect this case and fail to
 	* provide the string, causing no tool tip to be displayed.
 	*/
-	if (!hasCursor ()) return ""; //$NON-NLS-1$
+	if (!hasCursor ()) return StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 	int index = (int)/*64*/hdr.idFrom;
 	long /*int*/ hwndToolTip = OS.SendMessage (handle, OS.TB_GETTOOLTIPS, 0, 0);
 	if (hwndToolTip == hdr.hwndFrom) {
@@ -1138,7 +1140,7 @@ String toolTipText (NMTTDISPINFO hdr) {
 		} else {
 			hdr.uFlags &= ~OS.TTF_RTLREADING;
 		}
-		if (toolTipText != null) return ""; //$NON-NLS-1$
+		if (toolTipText != StringUtil.getInstance().EMPTY_STRING) return StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 		if (0 <= index && index < this.items.length) {
 			ToolItem item = this.items [index];
 			if (item != null) {	
@@ -1149,7 +1151,7 @@ String toolTipText (NMTTDISPINFO hdr) {
 				* than next to the current hot item.  This fix is to disallow
 				* tool tips while the user is traversing with the arrow keys.
 				*/
-				if (lastArrowId != -1) return "";
+				if (lastArrowId != -1) return StringUtil.getInstance().EMPTY_STRING;
 				return item.toolTipText;
 			}
 		}

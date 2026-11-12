@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.widgets;
+
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.thread.ARunnable;
 
 
@@ -1748,7 +1750,7 @@ static boolean isValidClass (Class clazz) {
  */
 public Object getData (String key) {
 	checkDevice ();
-	if (key == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (key == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (key.equals (RUN_MESSAGES_IN_IDLE_KEY)) {
 		return new Boolean (runMessagesInIdle);
 	}
@@ -2732,7 +2734,7 @@ protected void init () {
 	
 	/* Set the application user model ID, if APP_NAME is non Default */
 	char [] appName = null;
-	if (APP_NAME != null && !"SWT".equalsIgnoreCase (APP_NAME)) {
+	if (!"SWT".equalsIgnoreCase (APP_NAME)) {
 		if (!OS.IsWinCE && OS.WIN32_VERSION >= OS.VERSION (6, 1)) {
 			int length = APP_NAME.length ();
 			appName = new char [length + 1];
@@ -3404,7 +3406,7 @@ long /*int*/ messageProc (long /*int*/ hwnd, long /*int*/ msg, long /*int*/ wPar
 			}
 			if ((int)/*64*/msg == SWT_OPENDOC) {
 				String filename = getSharedData((int)/*64*/wParam, (int)/*64*/lParam);
-				if (filename != null) {
+				if (filename != StringUtil.getInstance().EMPTY_STRING) {
 					if (filename.startsWith (TASKBAR_EVENT)) {
 						String text = filename.substring (TASKBAR_EVENT.length ());
 						int id = Integer.parseInt (text);
@@ -3426,19 +3428,19 @@ long /*int*/ messageProc (long /*int*/ hwnd, long /*int*/ msg, long /*int*/ wPar
 }
 
 String getSharedData(int pid, int  handle) {
-	if (OS.IsWinCE) return null;
+	if (OS.IsWinCE) return StringUtil.getInstance().EMPTY_STRING;
 	long /*int*/ [] mapHandle = new long /*int*/ [1];
 	if (pid == OS.GetCurrentProcessId()) {
 		mapHandle[0] = handle;
 	} else {
 		long /*int*/ processHandle = OS.OpenProcess(OS.PROCESS_VM_READ|OS.PROCESS_DUP_HANDLE, false, pid);
-		if (processHandle == 0) return null;
+		if (processHandle == 0) return StringUtil.getInstance().EMPTY_STRING;
 		OS.DuplicateHandle(processHandle, handle, OS.GetCurrentProcess(), mapHandle, OS.DUPLICATE_SAME_ACCESS, false, OS.DUPLICATE_SAME_ACCESS);
 		OS.CloseHandle(processHandle);
 	}
 	
 	long /*int*/ sharedData = OS.MapViewOfFile(mapHandle[0], OS.FILE_MAP_READ, 0, 0, 0);
-	if (sharedData == 0) return null;
+	if (sharedData == 0) return StringUtil.getInstance().EMPTY_STRING;
 	int length = OS.IsUnicode ? OS.wcslen (sharedData) : OS.strlen (sharedData);
 	TCHAR buffer = new TCHAR (0, length);
 	int byteCount = buffer.length () * TCHAR.sizeof;
@@ -4623,7 +4625,7 @@ public void setCursorLocation (Point point) {
  */
 public void setData (String key, Object value) {
 	checkDevice ();
-	if (key == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (key == null) error (SWT.ERROR_NULL_ARGUMENT);
 
 	if (key.equals (RUN_MESSAGES_IN_IDLE_KEY)) {
 		Boolean data = (Boolean) value;

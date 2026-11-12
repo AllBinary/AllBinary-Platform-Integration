@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.accessibility;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.internal.*;
 
 /**
@@ -29,7 +31,7 @@ public class AccessibleHyperlinkEvent extends SWTEventObject {
 	 * The value of this field must be set in the accessible hyperlink listener method
 	 * before returning. What to set it to depends on the listener method called.
 	 */
-	public String result;
+	public String result = StringUtil.getInstance().INIT_STRING;
 
 	public int index;
 

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
  
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.win32.*;
@@ -40,7 +42,7 @@ import org.eclipse.swt.events.*;
 public class ToolItem extends Item {
 	ToolBar parent;
 	Control control;
-	String toolTipText;
+	String toolTipText = StringUtil.getInstance().EMPTY_STRING;
 	Image disabledImage, hotImage;
 	Image disabledImage2;
 	int id;
@@ -433,7 +435,7 @@ void releaseWidget () {
 	super.releaseWidget ();
 	releaseImages ();
 	this.control = null;
-	this.toolTipText = null;
+	this.toolTipText = StringUtil.getInstance().EMPTY_STRING;
 	disabledImage = hotImage = null;
 	if (this.disabledImage2 != null) this.disabledImage2.dispose ();
 	this.disabledImage2 = null;
@@ -834,7 +836,7 @@ void _setText (String string) {
  */
 public void setText (String string) {
 	checkWidget();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if ((style & SWT.SEPARATOR) != 0) return;
 	if (string.equals (text)) return;
 	super.setText (string);

@@ -68,6 +68,28 @@ public class Image
 		return DeviceFactory.getDevice().getDeviceDisplay().createImage(imageData, imageOffset, imageLength);
 	}
 
+	//The names without overloading used by microemu-playn, the Android version, and the 2.0.4 version that is converted to the
+	//languages without overloading. Shared code calls them through MIDPUtil so the J2ME build keeps the MIDP overloads.
+	public static Image createImageWH(final int width, final int height)
+	{
+		return Image.createImage(width, height);
+	}
+
+	public static Image createImageFromImage(final Image source)
+	{
+		return Image.createImage(source);
+	}
+
+	public static Image createImageFromByteArray(final byte[] imageData, final int imageOffset, final int imageLength)
+	{
+		return Image.createImage(imageData, imageOffset, imageLength);
+	}
+
+	public static Image createImageFromInputStream(final java.io.InputStream stream) throws IOException
+	{
+		return Image.createImage(stream);
+	}
+
         public static Image createImageLater(final String name, final int width, final int height) throws IOException {
             return DeviceFactory.getDevice().getDeviceDisplay().createImageLater(name, width, height);
         }

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.internal.ole.win32;
 
+import org.allbinary.logic.string.StringUtil;
+
 public class IStorage extends IUnknown
 {
 public IStorage(long /*int*/ address) {
@@ -40,7 +42,7 @@ public int CreateStorage(
 	
 	// create a null terminated array of char
 	char[] buffer = null;
-	if (pwcsName != null) {
+	if (pwcsName != StringUtil.getInstance().EMPTY_STRING) {
 		buffer = (pwcsName+"\0").toCharArray();
 	}
 	
@@ -56,7 +58,7 @@ public int CreateStream(
   
 	// create a null terminated array of char
 	char[] buffer = null;
-	if (pwcsName != null) {
+	if (pwcsName != StringUtil.getInstance().EMPTY_STRING) {
 		buffer = (pwcsName+"\0").toCharArray();
 	}
 
@@ -66,7 +68,7 @@ public int DestroyElement(String pwcsName) {
 
 	// create a null terminated array of char
 	char[] buffer = null;
-	if (pwcsName != null) {
+	if (pwcsName != StringUtil.getInstance().EMPTY_STRING) {
 		buffer = (pwcsName+"\0").toCharArray();
 	}
 	return COM.VtblCall(12, address, buffer);
@@ -92,7 +94,7 @@ public int OpenStorage(
 
 	// create a null terminated array of char
 	char[] buffer = null;
-	if (pwcsName != null) {
+	if (pwcsName != StringUtil.getInstance().EMPTY_STRING) {
 		buffer = (pwcsName+"\0").toCharArray();
 	}
 
@@ -113,7 +115,7 @@ public int OpenStream(
   
 	// create a null terminated array of char
 	char[] buffer = null;
-	if (pwcsName != null) {
+	if (pwcsName != StringUtil.getInstance().EMPTY_STRING) {
 		buffer = (pwcsName+"\0").toCharArray();
 	}
 
@@ -128,12 +130,12 @@ public int RenameElement(
 
 	// create a null terminated array of char
 	char[] buffer1 = null;
-	if (pwcsOldName != null) {
+	if (pwcsOldName != StringUtil.getInstance().EMPTY_STRING) {
 		buffer1 = (pwcsOldName+"\0").toCharArray();
 	}
 	// create a null terminated array of char
 	char[] buffer2 = null;
-	if (pwcsNewName != null) {
+	if (pwcsNewName != StringUtil.getInstance().EMPTY_STRING) {
 		buffer2 = (pwcsNewName+"\0").toCharArray();
 	}
 	return COM.VtblCall(13, address, buffer1, buffer2);

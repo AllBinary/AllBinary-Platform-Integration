@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.graphics;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.allbinary.logic.java.exception.ExceptionUtil;
 import org.eclipse.swt.internal.*;
@@ -74,7 +76,7 @@ public final class FontData {
 	/**
 	 * The locales of the font
 	 */
-	String lang, country, variant;
+	String lang = StringUtil.getInstance().EMPTY_STRING, country = StringUtil.getInstance().EMPTY_STRING, variant = StringUtil.getInstance().EMPTY_STRING;
 	
 /**	 
  * Constructs a new uninitialized font data.
@@ -119,7 +121,7 @@ FontData(LOGFONT data, float height) {
  * @see #toString
  */
 public FontData(String string) {
-	if (string == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	int start = 0;
 	int end = string.indexOf('|');
 	if (end == -1) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
@@ -261,7 +263,7 @@ public FontData(String string) {
  * </ul>
  */
 public FontData(String name, int height, int style) {
-	if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	this.data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
 	setName(name);
 	setHeight(height);
@@ -273,7 +275,7 @@ public FontData(String name, int height, int style) {
 }
 
 /*public*/ FontData(String name, float height, int style) {
-	if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	this.data = OS.IsUnicode ? (LOGFONT)new LOGFONTW() : new LOGFONTA();
 	setName(name);
 	setHeight(height);
@@ -336,7 +338,7 @@ long /*int*/ EnumLocalesProc(long /*int*/ lpLocaleString) {
 	if (size <= 0 || !lang.equals(buffer.toString(0, size - 1))) return 1;
 
 	/* Check the country */
-	if (country != null) {
+	if (country != StringUtil.getInstance().EMPTY_STRING) {
 		size = OS.GetLocaleInfo(lcid, OS.LOCALE_SISO3166CTRYNAME, buffer, length);
 		if (size <= 0 || !country.equals(buffer.toString(0, size - 1))) return 1;
 	}
@@ -387,15 +389,15 @@ public int getHeight() {
 public String getLocale () {
 	StringBuffer buffer = new StringBuffer ();
 	char sep = '_';
-	if (lang != null) {
+	if (lang != StringUtil.getInstance().EMPTY_STRING) {
 		buffer.append (lang);
 		buffer.append (sep);
 	}
-	if (country != null) {
+	if (country != StringUtil.getInstance().EMPTY_STRING) {
 		buffer.append (country);
 		buffer.append (sep);
 	}
-	if (variant != null) {
+	if (variant != StringUtil.getInstance().EMPTY_STRING) {
 		buffer.append (variant);
 	}
 	
@@ -511,8 +513,8 @@ public void setHeight(int height) {
  * @see java.util.Locale#toString
  */
 public void setLocale(String locale) {	
-	lang = country = variant = null;
-	if (locale != null) {
+	lang = country = variant = StringUtil.getInstance().EMPTY_STRING;
+	if (locale != StringUtil.getInstance().EMPTY_STRING) {
 		char sep = '_';
 		int length = locale.length();
 		int firstSep, secondSep;
@@ -528,7 +530,7 @@ public void setLocale(String locale) {
 		if (secondSep > firstSep + 1) country = locale.substring(firstSep + 1, secondSep);
 		if (length > secondSep + 1) variant = locale.substring(secondSep + 1);
 	}
-	if (lang == null) {
+	if (lang == StringUtil.getInstance().EMPTY_STRING) {
 		this.data.lfCharSet = (byte)OS.DEFAULT_CHARSET;
 	} else {
 		Callback callback = new Callback (this, "EnumLocalesProc", 1); //$NON-NLS-1$
@@ -565,7 +567,7 @@ public void setLocale(String locale) {
  * @see #getName
  */
 public void setName(String name) {
-	if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 
 	/* The field lfFaceName must be NULL terminated */
 	TCHAR buffer = new TCHAR(0, name, true);

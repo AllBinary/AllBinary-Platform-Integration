@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+import org.allbinary.string.CommonSeps;
+
 
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
@@ -159,7 +162,7 @@ public Point computeSize (int wHint, int hHint, boolean changed) {
 		* If the group has text, and the text is wider than the
 		* client area, pad the width so the text is not clipped.
 		*/
-		TCHAR buffer = new TCHAR (getCodePage (), string == null ? this.text : string, true);
+		TCHAR buffer = new TCHAR (getCodePage (), string == StringUtil.getInstance().EMPTY_STRING ? this.text : string, true);
 		long /*int*/ newFont, oldFont = 0;
 		long /*int*/ hDC = OS.GetDC (handle);
 		newFont = OS.SendMessage (handle, OS.WM_GETFONT, 0, 0);
@@ -219,7 +222,7 @@ void enableWidget (boolean enabled) {
 	* fix is to add a space to both sides of the text.
 	*/
 	String string = fixText (enabled);
-	if (string != null) {
+	if (string != StringUtil.getInstance().EMPTY_STRING) {
 		TCHAR buffer = new TCHAR (getCodePage (), string, true);
 		OS.SetWindowText (handle, buffer);
 	}
@@ -231,17 +234,17 @@ String fixText (boolean enabled) {
 	* is disabled, the first pixel of the text is clipped.  The
 	* fix is to add a space to both sides of the text.
 	*/
-	if (this.text.length() == 0) return null;
+	if (this.text.length() == 0) return StringUtil.getInstance().EMPTY_STRING;
 	if ((style & SWT.RIGHT_TO_LEFT) != 0) {
-		String string = null;
+		String string = StringUtil.getInstance().EMPTY_STRING;
 		if (!enabled && (OS.COMCTL32_MAJOR < 6 || !OS.IsAppThemed ())) {
-			string = " " + this.text + " ";
+			string = CommonSeps.getInstance().SPACE + this.text + CommonSeps.getInstance().SPACE;
 		}
-		return (style & SWT.FLIP_TEXT_DIRECTION) == 0 ? string : string != null ? LRE + string : LRE + this.text;
+		return (style & SWT.FLIP_TEXT_DIRECTION) == 0 ? string : string != StringUtil.getInstance().EMPTY_STRING ? LRE + string : LRE + this.text;
 	} else if ((style & SWT.FLIP_TEXT_DIRECTION) != 0) {
 		return RLE + this.text;
 	}
-	return null;
+	return StringUtil.getInstance().EMPTY_STRING;
 }
 
 public Rectangle getClientArea () {
@@ -360,7 +363,7 @@ void printWidget (long /*int*/ hwnd, long /*int*/ hdc, GC gc) {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	this.text = null;
+	this.text = StringUtil.getInstance().EMPTY_STRING;
 }
 
 public void setFont (Font font) {
@@ -397,17 +400,17 @@ public void setFont (Font font) {
  */
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	this.text = string;
 	string = fixText (OS.IsWindowEnabled (handle));
-	TCHAR buffer = new TCHAR (getCodePage (), string == null ? this.text : string, true);
+	TCHAR buffer = new TCHAR (getCodePage (), string == StringUtil.getInstance().EMPTY_STRING ? this.text : string, true);
 	OS.SetWindowText (handle, buffer);
 }
 
 boolean updateTextDirection(int textDirection) {
 	if (super.updateTextDirection(textDirection)) {
 		String string = fixText (OS.IsWindowEnabled (handle));
-		if (string != null) {
+		if (string != StringUtil.getInstance().EMPTY_STRING) {
 			TCHAR buffer = new TCHAR (getCodePage (), string, true);
 			OS.SetWindowText (handle, buffer);
 		}

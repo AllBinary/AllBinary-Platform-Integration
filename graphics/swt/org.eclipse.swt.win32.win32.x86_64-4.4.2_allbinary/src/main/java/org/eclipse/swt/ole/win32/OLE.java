@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.ole.win32;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.*;
 import java.io.File;
 import org.eclipse.swt.internal.ole.win32.COM;
@@ -367,18 +369,18 @@ public static void error (int code, int hresult) {
  *	</ul>
  */
 public static String findProgramID (String extension) {
-	if (extension == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	if (extension.length () == 0) return ""; //$NON-NLS-1$
+	//if (extension == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	if (extension.length () == 0) return StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 	
 	if (extension.charAt (0) != '.') extension = "." + extension; //$NON-NLS-1$
 
 	/* Use the character encoding for the default locale */
 	TCHAR extensionKey = new TCHAR(0, extension, true);
 	String result = getKeyValue(extensionKey);
-	if (result != null) {
+	if (result != StringUtil.getInstance().INIT_STRING) {
 		// look for "<programID>\NotInsertable"
 		TCHAR notInsertableKey = new TCHAR(0, result+"\\NotInsertable", true); //$NON-NLS-1$
-		if (getKeyExists(notInsertableKey)) return ""; //$NON-NLS-1$
+		if (getKeyExists(notInsertableKey)) return StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 		// look for "<programID>\Insertable"
 		TCHAR insertableKey = new TCHAR(0, result+"\\Insertable", true); //$NON-NLS-1$
 		if (getKeyExists(insertableKey)) return result;
@@ -387,19 +389,19 @@ public static String findProgramID (String extension) {
 		if (getKeyExists(serverKey)) return result;
 	}
 	
-	return ""; //$NON-NLS-1$
+	return StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 }
 static String getKeyValue (TCHAR key) {
 	long /*int*/ [] phkResult = new long /*int*/ [1];
 	if (OS.RegOpenKeyEx (OS.HKEY_CLASSES_ROOT, key, 0, OS.KEY_READ, phkResult) != 0) {
-		return null;
+		return StringUtil.getInstance().INIT_STRING;
 	}
-	String result = null;
+	String result = StringUtil.getInstance().INIT_STRING;
 	int [] lpcbData = new int [1];
 	if (OS.RegQueryValueEx (phkResult [0], (TCHAR) null, 0, null, (TCHAR) null, lpcbData) == 0) {
 		int length = lpcbData [0] / TCHAR.sizeof;
 		if (length == 0) {
-			result = "";
+			result = StringUtil.getInstance().EMPTY_STRING;
 		} else {
 			/* Use the character encoding for the default locale */
 			TCHAR lpData = new TCHAR (0, length);

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
@@ -430,12 +432,12 @@ public void addVerifyListener (VerifyListener listener) {
  */
 public void append (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	string = Display.withCrLf (string);
 	int length = OS.GetWindowTextLength (handle);
 	if (hooks (SWT.Verify) || filters (SWT.Verify)) {
 		string = verifyText (string, length, length, null);
-		if (string == null) return;
+		if (string == StringUtil.getInstance().INIT_STRING) return;
 	}
 	OS.SendMessage (handle, OS.EM_SETSEL, length, length);
 	clearSegments (true);
@@ -480,7 +482,7 @@ void applySegments () {
 	if (this.segments == null) return;
 	int nSegments = this.segments.length;
 	if (nSegments == 0) return;
-	length = string == null ? 0 : string.length ();
+	length = string.length ();
 
 	for (int i = 1; i < nSegments; i++) {
 		if (event.segments [i] < event.segments [i - 1] || event.segments [i] > length) {
@@ -513,7 +515,7 @@ void applySegments () {
 			char separator = segmentsChars != null && segmentsChars.length > segmentCount ? segmentsChars [segmentCount] : defaultSeparator;
 			newChars [charCount++] = separator;
 			segmentCount++;
-		} else if (string != null) {
+		} else {
 			newChars [charCount] = string.charAt (charCount++ - segmentCount);
 		}
 	}
@@ -741,7 +743,7 @@ public void copy () {
 
 void createWidget () {
 	super.createWidget ();
-	this.message = "";
+	this.message = StringUtil.getInstance().EMPTY_STRING;
 	doubleClick = true;
 	setTabStops (tabs = 8);
 	fixAlignment ();
@@ -1526,13 +1528,13 @@ public int getTopPixel () {
  */
 public void insert (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	string = Display.withCrLf (string);
 	if (hooks (SWT.Verify) || filters (SWT.Verify)) {
 		int [] start = new int [1], end = new int [1];
 		OS.SendMessage (handle, OS.EM_GETSEL, start, end);
 		string = verifyText (string, start [0], end [0], null);
-		if (string == null) return;
+		if (string == StringUtil.getInstance().INIT_STRING) return;
 	}
 	clearSegments (true);
 	TCHAR buffer = new TCHAR (getCodePage (), string, true);
@@ -1613,7 +1615,7 @@ public void paste () {
 
 void releaseWidget () {
 	super.releaseWidget ();
-	this.message = null;
+	this.message = StringUtil.getInstance().EMPTY_STRING;
 }
 
 /**
@@ -1822,7 +1824,7 @@ boolean sendKeyEvent (int type, int msg, long /*int*/ wParam, long /*int*/ lPara
 			break;
 	}
 	String newText = verifyText (oldText, start [0], end [0], event);
-	if (newText == null) return false;
+	if (newText == StringUtil.getInstance().INIT_STRING) return false;
 	if (newText == oldText) return true;
 	newText = Display.withCrLf (newText);
 	TCHAR buffer = new TCHAR (getCodePage (), newText, true);
@@ -2034,7 +2036,7 @@ void setMargins () {
  */
 public void setMessage (String message) {
 	checkWidget ();
-	if (message == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (message == null) error (SWT.ERROR_NULL_ARGUMENT);
 	this.message = message;
 	if (!OS.IsWinCE) {
 		if (OS.WIN32_VERSION >= OS.VERSION (6, 0)) {
@@ -2246,12 +2248,12 @@ void setTabStops (int tabs) {
  */
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	string = Display.withCrLf (string);
 	if (hooks (SWT.Verify) || filters (SWT.Verify)) {
 		int length = OS.GetWindowTextLength (handle);
 		string = verifyText (string, 0, length, null);
-		if (string == null) return;
+		if (string == StringUtil.getInstance().INIT_STRING) return;
 	}
 	clearSegments (false);
 	int limit = (int)/*64*/OS.SendMessage (handle, OS.EM_GETLIMITTEXT, 0, 0) & 0x7FFFFFFF;
@@ -2306,7 +2308,7 @@ public void setTextChars (char[] text) {
 	if (hooks (SWT.Verify) || filters (SWT.Verify)) {
 		int length = OS.GetWindowTextLength (handle);
 		String string = verifyText (new String (text), 0, length, null);
-		if (string == null) return;
+		if (string == StringUtil.getInstance().INIT_STRING) return;
 		text = new char [string.length()];
 		string.getChars (0, text.length, text, 0);
 	}
@@ -2466,7 +2468,7 @@ String verifyText (String string, int start, int end, Event keyEvent) {
 	* the operation.
 	*/
 	sendEvent (SWT.Verify, event);
-	if (!event.doit || isDisposed ()) return null;
+	if (!event.doit || isDisposed ()) return StringUtil.getInstance().INIT_STRING;
 	return event.text;
 }
 
@@ -2873,13 +2875,13 @@ LRESULT wmClipboard (int msg, long /*int*/ wParam, long /*int*/ lParam) {
 	if (!hooks (SWT.Verify) && !filters (SWT.Verify)) return null;
 	boolean call = false;
 	int [] start = new int [1], end = new int [1];
-	String newText = null;
+	String newText = StringUtil.getInstance().INIT_STRING;
 	switch (msg) {
 		case OS.WM_CLEAR:
 		case OS.WM_CUT:
 			OS.SendMessage (handle, OS.EM_GETSEL, start, end);
 			if (start [0] != end [0]) {
-				newText = "";
+				newText = StringUtil.getInstance().EMPTY_STRING;
 				call = true;
 			}
 			break;
@@ -2900,7 +2902,7 @@ LRESULT wmClipboard (int msg, long /*int*/ wParam, long /*int*/ lParam) {
 					OS.GetWindowText (handle, buffer, length + 1);
 					newText = buffer.toString (newStart [0], newEnd [0] - newStart [0]);
 				} else {
-					newText = "";
+					newText = StringUtil.getInstance().EMPTY_STRING;
 				}
 				callWindowProc (handle, msg, wParam, lParam);
 				OS.SendMessage (handle, OS.EM_GETSEL, start, end);
@@ -2908,10 +2910,10 @@ LRESULT wmClipboard (int msg, long /*int*/ wParam, long /*int*/ lParam) {
 			}
 			break;
 	}
-	if (newText != null) {
+	if (newText != StringUtil.getInstance().INIT_STRING) {
 		String oldText = newText;
 		newText = verifyText (newText, start [0], end [0], null);
-		if (newText == null) return LRESULT.ZERO;
+		if (newText == StringUtil.getInstance().INIT_STRING) return LRESULT.ZERO;
 		if (!newText.equals (oldText)) {
 			if (call) {
 				callWindowProc (handle, msg, wParam, lParam);

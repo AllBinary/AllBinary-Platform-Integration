@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
@@ -123,7 +125,7 @@ public class Shell extends Decorations {
 	int minWidth = SWT.DEFAULT, minHeight = SWT.DEFAULT;
 	long /*int*/ [] brushes;
 	boolean showWithParent, fullScreen, wasMaximized, modified, center;
-	String toolTitle, balloonTitle;
+	String toolTitle = StringUtil.getInstance().EMPTY_STRING, balloonTitle = StringUtil.getInstance().EMPTY_STRING;
 	long /*int*/ toolIcon, balloonIcon;
 	long /*int*/ windowProc;
 	Control lastActive;
@@ -812,8 +814,8 @@ void fixShell (Shell newShell, Control control) {
 	if (this == newShell) return;
 	if (control == this.lastActive) setActiveControl (null);
 	String toolTipText = control.toolTipText;
-	if (toolTipText != null) {
-		control.setToolTipText (this, null);
+	if (toolTipText != StringUtil.getInstance().EMPTY_STRING) {
+		control.setToolTipText (this, StringUtil.getInstance().EMPTY_STRING);
 		control.setToolTipText (newShell, toolTipText);
 	}
 }
@@ -1314,7 +1316,7 @@ void releaseWidget () {
 		if (hIMC != 0) OS.ImmDestroyContext (hIMC);
 	}
 	this.lastActive = null;
-	toolTitle = balloonTitle = null;
+	toolTitle = balloonTitle = StringUtil.getInstance().EMPTY_STRING;
 }
 
 void removeMenu (Menu menu) {
@@ -1753,7 +1755,7 @@ void setToolTipText (long /*int*/ hwnd, String text) {
 	lpti.hwnd = handle;
 	lpti.uId = hwnd;
 	long /*int*/ hwndToolTip = toolTipHandle ();
-	if (text == null) {
+	if (text == StringUtil.getInstance().EMPTY_STRING) {
 		OS.SendMessage (hwndToolTip, OS.TTM_DELTOOL, 0, lpti);
 	} else {
 		if (OS.SendMessage (hwndToolTip, OS.TTM_GETTOOLINFO, 0, lpti) != 0) {
@@ -1819,21 +1821,21 @@ void setToolTipTitle (long /*int*/ hwndToolTip, String text, int icon) {
 		return;
 	}
 	if (hwndToolTip == toolTipHandle) {
-		if (text == toolTitle || (toolTitle != null && toolTitle.equals (text))) {
+		if (text == toolTitle || toolTitle.equals (text)) {
 			if (icon == toolIcon) return;
 		}
 		toolTitle = text;
 		toolIcon = icon;
 	} else {
 		if (hwndToolTip == balloonTipHandle) {
-			if (text == balloonTitle || (balloonTitle != null && balloonTitle.equals (text))) {
+			if (text == balloonTitle || balloonTitle.equals (text)) {
 				if (icon == toolIcon) return;
 			}
 			balloonTitle = text;
 			balloonIcon = icon;
 		}
 	}
-	if (text != null) {
+	if (text != StringUtil.getInstance().EMPTY_STRING) {
 		/*
 		* Feature in Windows. The text point to by pszTitle
 		* must not exceed 100 characters in length, including

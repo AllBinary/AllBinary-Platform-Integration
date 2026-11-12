@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.thread.ARunnable;
 
 
@@ -717,7 +719,7 @@ void destroyItem (CTabItem item) {
 		if (control != null && !control.isDisposed()) {
 			control.setVisible(false);
 		}
-		setToolTipText(null);
+		setToolTipText(StringUtil.getInstance().EMPTY_STRING);
 		GC gc = new GC(this);
 		setButtonBounds(gc);
 		gc.dispose();
@@ -912,7 +914,7 @@ int getLeftItemEdge (GC gc, int part){
  * characters in the given string, return '\0'.
  */
 char _findMnemonic (String string) {
-	if (string == null) return '\0';
+	//if (string == null) return '\0';
 	int index = 0;
 	int length = string.length ();
 	do {
@@ -1315,7 +1317,7 @@ void initAccessible() {
 
 		@Override
 		public void getHelp(AccessibleEvent e) {
-			String help = null;
+			String help = StringUtil.getInstance().INIT_STRING;
 			int childID = e.childID;
 			if (childID == ACC.CHILDID_SELF) {
 				help = getToolTipText();
@@ -1327,11 +1329,11 @@ void initAccessible() {
 		
 		@Override
 		public void getKeyboardShortcut(AccessibleEvent e) {
-			String shortcut = null;
+			String shortcut = StringUtil.getInstance().INIT_STRING;
 			int childID = e.childID;
 			if (childID >= 0 && childID < items.length) {
 				String text = items[childID].getText();
-				if (text != null) {
+				if (text != StringUtil.getInstance().EMPTY_STRING) {
 					char mnemonic = _findMnemonic(text);	
 					if (mnemonic != '\0') {
 						shortcut = SWT.getMessage ("SWT_Page_Mnemonic", new Object[] {new Character(mnemonic)}); //$NON-NLS-1$
@@ -1398,7 +1400,7 @@ void initAccessible() {
 		
 		@Override
 		public void getDefaultAction(AccessibleControlEvent e) {
-			String action = null;
+			String action = StringUtil.getInstance().INIT_STRING;
 			int childID = e.childID;
 			if (childID >= 0 && childID < items.length) {
 				action = SWT.getMessage ("SWT_Switch"); //$NON-NLS-1$
@@ -1707,7 +1709,7 @@ void onMouse(Event event) {
 	int x = event.x, y = event.y;
 	switch (event.type) {
 		case SWT.MouseEnter: {
-			setToolTipText(null);
+			setToolTipText(StringUtil.getInstance().EMPTY_STRING);
 			break;
 		}
 		case SWT.MouseExit: {
@@ -2736,7 +2738,7 @@ boolean setItemSize(GC gc) {
 			width = Math.min(width, getRightItemEdge(gc) - getLeftItemEdge(gc, CTabFolderRenderer.PART_BORDER));
 			if (tab.height != this.tabHeight || tab.width != width) {
 				changed = true;
-				tab.shortenedText = null;
+				tab.shortenedText = StringUtil.getInstance().EMPTY_STRING;
 				tab.shortenedTextWidth = 0;
 				tab.height = this.tabHeight;
 				tab.width = width;
@@ -2821,7 +2823,7 @@ boolean setItemSize(GC gc) {
 		int width = widths[i];
 		if (tab.height != this.tabHeight || tab.width != width) {
 			changed = true;
-			tab.shortenedText = null;
+			tab.shortenedText = StringUtil.getInstance().EMPTY_STRING;
 			tab.shortenedTextWidth = 0;
 			tab.height = this.tabHeight;
 			tab.width = width;
@@ -3633,7 +3635,7 @@ public void showSelection () {
 void _setToolTipText (int x, int y) {
 	String oldTip = getToolTipText();
 	String newTip = _getToolTip(x, y);
-	if (newTip == null || !newTip.equals(oldTip)) {
+	if (!newTip.equals(oldTip)) {
 		setToolTipText(newTip);
 	}
 }
@@ -3812,8 +3814,8 @@ void updateBkImages() {
 }
 String _getToolTip(int x, int y) {
 	CTabItem item = getItem(new Point (x, y));
-	if (item == null) return null;
-	if (!item.showing) return null;
+	if (item == null) return StringUtil.getInstance().EMPTY_STRING;
+	if (!item.showing) return StringUtil.getInstance().EMPTY_STRING;
 	if ((this.showClose || item.showClose) && item.closeRect.contains(x, y)) {
 		return SWT.getMessage("SWT_Close"); //$NON-NLS-1$
 	}

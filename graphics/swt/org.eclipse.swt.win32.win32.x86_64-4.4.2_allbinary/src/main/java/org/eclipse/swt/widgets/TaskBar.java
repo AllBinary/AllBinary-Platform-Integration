@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.internal.win32.*;
@@ -152,8 +154,9 @@ long /*int*/ createShellLink (MenuItem item, String directory) {
 		key = PKEY_Title;
 		
 		/*IShellLink::SetPath*/
-		String exePath = (String)item.getData (EXE_PATH_KEY);
-		if (exePath != null) {
+		final Object exePathCanBeNull = item.getData (EXE_PATH_KEY);
+		if (exePathCanBeNull != null) {
+			final String exePath = (String) exePathCanBeNull;
 			length = exePath.length ();
 			buffer = new char [length + 1];
 			exePath.getChars (0, length, buffer, 0);
@@ -163,8 +166,8 @@ long /*int*/ createShellLink (MenuItem item, String directory) {
 		hr = OS.VtblCall (20, pLink, buffer);
 		if (hr != OS.S_OK) error (SWT.ERROR_INVALID_ARGUMENT);
 		
-		text =  (String)item.getData (EXE_ARGS_KEY);
-		if (text == null) text = Display.LAUNCHER_PREFIX + Display.TASKBAR_EVENT + item.id;
+		final Object exeArgsCanBeNull = item.getData (EXE_ARGS_KEY);
+		text = exeArgsCanBeNull == null ? Display.LAUNCHER_PREFIX + Display.TASKBAR_EVENT + item.id : (String) exeArgsCanBeNull;
 		length = text.length ();
 		buffer = new char [length + 1];
 		text.getChars (0, length, buffer, 0);
@@ -183,14 +186,15 @@ long /*int*/ createShellLink (MenuItem item, String directory) {
 //			if (hr != OS.S_OK) error (SWT.ERROR_INVALID_ARGUMENT);
 //		}
 		
-		String icon = (String)item.getData (ICON_KEY);
+		final Object iconCanBeNull = item.getData (ICON_KEY);
+		String icon = iconCanBeNull == null ? StringUtil.getInstance().EMPTY_STRING : (String) iconCanBeNull;
 		int index = 0;
-		if (icon != null) {
-			text = (String)item.getData (ICON_INDEX_KEY);
-			if (text != null) index = Integer.parseInt (text);
+		if (icon != StringUtil.getInstance().EMPTY_STRING) {
+			final Object iconIndexCanBeNull = item.getData (ICON_INDEX_KEY);
+			if (iconIndexCanBeNull != null) index = Integer.parseInt ((String) iconIndexCanBeNull);
 		} else {
 			Image image = item.getImage ();
-			if (image != null && directory != null) {
+			if (image != null && directory != StringUtil.getInstance().EMPTY_STRING) {
 				icon = directory + "\\menu" + item.id + ".ico" ;
 				ImageData data;
 				if (item.hBitmap != 0) {
@@ -204,7 +208,7 @@ long /*int*/ createShellLink (MenuItem item, String directory) {
 				loader.save (icon, SWT.IMAGE_ICO);
 			}
 		}
-		if (icon != null) {
+		if (icon != StringUtil.getInstance().EMPTY_STRING) {
 			length = icon.length ();
 			buffer = new char [length + 1];
 			icon.getChars (0, length, buffer, 0);
@@ -288,7 +292,7 @@ String getDirectory (char[] appName) {
 				appDir [i] = c;
 		}
 	}
-	String result = null;
+	String result = StringUtil.getInstance().EMPTY_STRING;
 	long /*int*/ [] ppv = new long /*int*/ [1];
 	int hr = OS.SHCreateItemInKnownFolder (FOLDERID_LocalAppData, 0, null, IID_IShellItem, ppv);
 	if (hr == OS.S_OK) {
@@ -503,7 +507,7 @@ void setMenu (Menu menu) {
 	long /*int*/ pDestList = ppv[0];
 	String appName = Display.APP_NAME;
 	char [] buffer = {'S', 'W', 'T', '\0'};
-	if (appName != null && appName.length () > 0) {
+	if (appName.length () > 0) {
 		int length = appName.length ();
 		buffer = new char [length + 1];
 		appName.getChars (0, length, buffer, 0);
@@ -511,7 +515,7 @@ void setMenu (Menu menu) {
 	
 	MenuItem [] items = null; 
 	if (menu != null && (items = menu.getItems ()).length != 0) {
-		String directory = null;
+		String directory = StringUtil.getInstance().EMPTY_STRING;
 		for (int i = 0; i < items.length; i++) {
 			MenuItem item = items [i];
 			if (item.getImage () != null && item.getData (ICON_KEY) == null) {
@@ -547,7 +551,7 @@ void setMenu (Menu menu) {
 					Menu subMenu = item.getMenu ();
 					if (subMenu != null) {
 						MenuItem [] subItems = subMenu.getItems ();
-						if (directory == null) {
+						if (directory == StringUtil.getInstance().EMPTY_STRING) {
 							for (int j = 0; j < subItems.length; j++) {
 								MenuItem subItem = subItems [j];
 								if (subItem.getImage () != null && subItem.getData (ICON_KEY) == null) {

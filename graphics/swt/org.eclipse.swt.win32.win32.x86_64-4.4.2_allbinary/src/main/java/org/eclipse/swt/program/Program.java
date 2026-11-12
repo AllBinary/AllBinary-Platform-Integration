@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.program;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.allbinary.logic.java.exception.ExceptionUtil;
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
@@ -27,7 +29,7 @@ public final class Program {
 	String name;
 	String command;
 	String iconName;
-	String extension;
+	String extension = StringUtil.getInstance().EMPTY_STRING;
 	static final String [] ARGUMENTS = new String [] {"%1", "%l", "%L"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 /**
@@ -54,13 +56,13 @@ static String assocQueryString (int assocStr, TCHAR key, boolean expand) {
 				OS.ExpandEnvironmentStrings (pszOut, lpDst, length);
 				return lpDst.toString (0, Math.max (0, length - 1));
 			} else {
-				return "";
+				return StringUtil.getInstance().EMPTY_STRING;
 			}
 		} else {
 			return pszOut.toString (0, Math.max (0, pcchOut [0] - 1));
 		}
 	}
-	return null;
+	return StringUtil.getInstance().INIT_STRING;
 }
 
 /**
@@ -77,7 +79,7 @@ static String assocQueryString (int assocStr, TCHAR key, boolean expand) {
  *	</ul>
  */
 public static Program findProgram (String extension) {
-	if (extension == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (extension == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	if (extension.length () == 0) return null;
 	if (extension.charAt (0) != '.') extension = "." + extension; //$NON-NLS-1$
 	/* Use the character encoding for the default locale */
@@ -98,13 +100,13 @@ public static Program findProgram (String extension) {
 		OS.RegCloseKey (phkResult [0]);
 	} else {
 		String command = assocQueryString (OS.ASSOCSTR_COMMAND, key, true);
-		if (command != null) {
-			String name = null;
-			if (name == null) name = assocQueryString (OS.ASSOCSTR_FRIENDLYDOCNAME, key, false);
-			if (name == null) name = assocQueryString (OS.ASSOCSTR_FRIENDLYAPPNAME, key, false);
-			if (name == null) name = "";
+		if (command != StringUtil.getInstance().INIT_STRING) {
+			String name = StringUtil.getInstance().INIT_STRING;
+			if (name == StringUtil.getInstance().INIT_STRING) name = assocQueryString (OS.ASSOCSTR_FRIENDLYDOCNAME, key, false);
+			if (name == StringUtil.getInstance().INIT_STRING) name = assocQueryString (OS.ASSOCSTR_FRIENDLYAPPNAME, key, false);
+			if (name == StringUtil.getInstance().INIT_STRING) name = StringUtil.getInstance().EMPTY_STRING;
 			String iconName = assocQueryString (OS.ASSOCSTR_DEFAULTICON, key, true);
-			if (iconName == null) iconName = "";
+			if (iconName == StringUtil.getInstance().INIT_STRING) iconName = StringUtil.getInstance().EMPTY_STRING;
 			program = new Program ();
 			program.name = name;
 			program.command = command;
@@ -155,12 +157,12 @@ static String getKeyValue (String string, boolean expand) {
 	TCHAR key = new TCHAR (0, string, true);
 	long /*int*/ [] phkResult = new long /*int*/ [1];
 	if (OS.RegOpenKeyEx (OS.HKEY_CLASSES_ROOT, key, 0, OS.KEY_READ, phkResult) != 0) {
-		return null;
+		return StringUtil.getInstance().EMPTY_STRING;
 	}
-	String result = null;
+	String result = StringUtil.getInstance().EMPTY_STRING;
 	int [] lpcbData = new int [1];
 	if (OS.RegQueryValueEx (phkResult [0], (TCHAR) null, 0, null, (TCHAR) null, lpcbData) == 0) {
-		result = "";
+		result = StringUtil.getInstance().EMPTY_STRING;
 		int length = lpcbData [0] / TCHAR.sizeof;
 		if (length != 0) {
 			/* Use the character encoding for the default locale */
@@ -188,22 +190,22 @@ static Program getProgram (String key, String extension) {
 
 	/* Name */
 	String name = getKeyValue (key, false);
-	if (name == null || name.length () == 0) {
+	if (name.length () == 0) {
 		name = key;
 	}
 
 	/* Command */
 	String DEFAULT_COMMAND = "\\shell"; //$NON-NLS-1$
 	String defaultCommand = getKeyValue (key + DEFAULT_COMMAND, true);
-	if (defaultCommand == null || defaultCommand.length() == 0) defaultCommand = "open"; //$NON-NLS-1$
+	if (defaultCommand.length() == 0) defaultCommand = "open"; //$NON-NLS-1$
 	String COMMAND = "\\shell\\" + defaultCommand + "\\command"; //$NON-NLS-1$
 	String command = getKeyValue (key + COMMAND, true);
-	if (command == null || command.length () == 0) return null;
+	if (command.length () == 0) return null;
 
 	/* Icon */
 	String DEFAULT_ICON = "\\DefaultIcon"; //$NON-NLS-1$
 	String iconName = getKeyValue (key + DEFAULT_ICON, true);
-	if (iconName == null) iconName = ""; //$NON-NLS-1$
+	//if (iconName == null) iconName = ""; //$NON-NLS-1$
 
 	/* Program */
 	Program program = new Program ();
@@ -264,7 +266,7 @@ public static Program [] getPrograms () {
  * </ul>
  */
 public static boolean launch (String fileName) {
-    return launch(fileName, null);
+    return launch(fileName, StringUtil.getInstance().EMPTY_STRING);
 }
 
 /**
@@ -287,7 +289,7 @@ public static boolean launch (String fileName) {
  * @since 3.6
  */
 public static boolean launch (String fileName, String workingDir) {
-	if (fileName == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (fileName == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	
 	/* Use the character encoding for the default locale */
 	long /*int*/ hHeap = OS.GetProcessHeap ();
@@ -297,7 +299,7 @@ public static boolean launch (String fileName, String workingDir) {
 	OS.MoveMemory (lpFile, buffer, byteCount);
 	
 	long /*int*/ lpDirectory = 0;
-	if (workingDir != null && OS.PathIsExe(lpFile)) {
+	if (workingDir != StringUtil.getInstance().EMPTY_STRING && OS.PathIsExe(lpFile)) {
 	    TCHAR buffer1 = new TCHAR (0, workingDir, true);
 	    byteCount = buffer1.length () * TCHAR.sizeof;
 	    lpDirectory = OS.HeapAlloc (hHeap, OS.HEAP_ZERO_MEMORY, byteCount);
@@ -329,7 +331,7 @@ public static boolean launch (String fileName, String workingDir) {
  * </ul>
  */
 public boolean execute (String fileName) {
-	if (fileName == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (fileName == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	int index = 0;
 	boolean append = true;
 	String prefix = this.command, suffix = ""; //$NON-NLS-1$
@@ -369,7 +371,7 @@ public boolean execute (String fileName) {
  * @return the image data for the program, may be null
  */
 public ImageData getImageData () {
-	if (this.extension != null) {
+	if (this.extension != StringUtil.getInstance().EMPTY_STRING) {
 		SHFILEINFO shfi = OS.IsUnicode ? (SHFILEINFO) new SHFILEINFOW () : new SHFILEINFOA ();
 		int flags = OS.SHGFI_ICON | OS.SHGFI_SMALLICON | OS.SHGFI_USEFILEATTRIBUTES;
 		TCHAR pszPath = new TCHAR (0, extension, true);

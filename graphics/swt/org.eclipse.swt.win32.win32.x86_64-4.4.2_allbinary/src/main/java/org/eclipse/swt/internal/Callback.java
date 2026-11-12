@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.internal;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 /**
  * Instances of this class represent entry points into Java
@@ -142,7 +144,7 @@ static native synchronized long /*int*/ bind (Callback callback, Object object, 
 public void dispose () {
 	if (object == null) return;
 	unbind (this);
-	object = method = signature = null;
+	object = null; method = signature = StringUtil.getInstance().EMPTY_STRING;
 	address = 0;
 }
 

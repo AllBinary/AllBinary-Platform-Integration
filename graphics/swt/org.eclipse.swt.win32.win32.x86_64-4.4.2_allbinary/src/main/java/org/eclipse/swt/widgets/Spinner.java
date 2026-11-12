@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.allbinary.logic.java.exception.ExceptionUtil;
 import org.eclipse.swt.*;
@@ -807,7 +809,7 @@ boolean sendKeyEvent (int type, int msg, long /*int*/ wParam, long /*int*/ lPara
 			break;
 	}
 	String newText = verifyText (oldText, start [0], end [0], event);
-	if (newText == null) return false;
+	if (newText == StringUtil.getInstance().INIT_STRING) return false;
 	if (newText == oldText) return true;
 	TCHAR buffer = new TCHAR (getCodePage (), newText, true);
 	OS.SendMessage (hwndText, OS.EM_SETSEL, start [0], end [0]);
@@ -1020,7 +1022,7 @@ void setSelection (int value, boolean setPos, boolean setText, boolean notify) {
 		if (hooks (SWT.Verify) || filters (SWT.Verify)) {
 			int length = OS.GetWindowTextLength (hwndText);
 			string = verifyText (string, 0, length, null);
-			if (string == null) return;
+			if (string == StringUtil.getInstance().INIT_STRING) return;
 		}
 		TCHAR buffer = new TCHAR (getCodePage (), string, true);
 		OS.SetWindowText (hwndText, buffer);
@@ -1170,7 +1172,7 @@ String verifyText (String string, int start, int end, Event keyEvent) {
 		event.end = mbcsToWcsPos (end);
 	}
 	sendEvent (SWT.Verify, event);
-	if (!event.doit || isDisposed ()) return null;
+	if (!event.doit || isDisposed ()) return StringUtil.getInstance().INIT_STRING;
 	return event.text;
 }
 
@@ -1335,13 +1337,13 @@ LRESULT wmClipboard (long /*int*/ hwndText, int msg, long /*int*/ wParam, long /
 //	if (!hooks (SWT.Verify) && !filters (SWT.Verify)) return null;
 	boolean call = false;
 	int [] start = new int [1], end = new int [1];
-	String newText = null;
+	String newText = StringUtil.getInstance().INIT_STRING;
 	switch (msg) {
 		case OS.WM_CLEAR:
 		case OS.WM_CUT:
 			OS.SendMessage (hwndText, OS.EM_GETSEL, start, end);
 			if (start [0] != end [0]) {
-				newText = "";
+				newText = StringUtil.getInstance().EMPTY_STRING;
 				call = true;
 			}
 			break;
@@ -1362,7 +1364,7 @@ LRESULT wmClipboard (long /*int*/ hwndText, int msg, long /*int*/ wParam, long /
 					OS.GetWindowText (hwndText, buffer, length + 1);
 					newText = buffer.toString (newStart [0], newEnd [0] - newStart [0]);
 				} else {
-					newText = "";
+					newText = StringUtil.getInstance().EMPTY_STRING;
 				}
 				OS.CallWindowProc (EditProc, hwndText, msg, wParam, lParam);
 				OS.SendMessage (hwndText, OS.EM_GETSEL, start, end);
@@ -1370,10 +1372,10 @@ LRESULT wmClipboard (long /*int*/ hwndText, int msg, long /*int*/ wParam, long /
 			}
 			break;
 	}
-	if (newText != null) {
+	if (newText != StringUtil.getInstance().INIT_STRING) {
 		String oldText = newText;
 		newText = verifyText (newText, start [0], end [0], null);
-		if (newText == null) return LRESULT.ZERO;
+		if (newText == StringUtil.getInstance().INIT_STRING) return LRESULT.ZERO;
 		if (!newText.equals (oldText)) {
 			if (call) {
 				OS.CallWindowProc (EditProc, hwndText, msg, wParam, lParam);

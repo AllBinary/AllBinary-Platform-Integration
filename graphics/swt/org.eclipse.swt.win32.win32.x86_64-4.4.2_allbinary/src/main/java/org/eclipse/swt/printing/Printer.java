@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.printing;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -129,7 +131,7 @@ public static PrinterData[] getPrinterList() {
  * @since 2.1
  */
 public static PrinterData getDefaultPrinterData() {
-	String deviceName = null;
+	String deviceName = StringUtil.getInstance().INIT_STRING;
 	int length = 1024;
 	/* Use the character encoding for the default locale */
 	TCHAR buf = new TCHAR(0, length);
@@ -141,8 +143,8 @@ public static PrinterData getDefaultPrinterData() {
 	if (commaIndex < length) {
 		deviceName = buf.toString(0, commaIndex);		
 	}
-	if (deviceName == null) return null;
-	String driver = ""; //$NON-NLS-1$
+	if (deviceName == StringUtil.getInstance().INIT_STRING) return null;
+	String driver = StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 	if (OS.GetProfileString(profile, new TCHAR(0, deviceName, true), nullBuf, buf, length) > 0) {
 		commaIndex = 0;
 		while (buf.tcharAt(commaIndex) != ',' && commaIndex < length) commaIndex++;
@@ -347,7 +349,7 @@ public boolean startJob(String jobName) {
 	di.cbSize = DOCINFO.sizeof;
 	long /*int*/ hHeap = OS.GetProcessHeap();
 	long /*int*/ lpszDocName = 0;
-	if (jobName != null && jobName.length() != 0) {
+	if (jobName.length() != 0) {
 		/* Use the character encoding for the default locale */
 		TCHAR buffer = new TCHAR(0, jobName, true);
 		int byteCount = buffer.length() * TCHAR.sizeof;

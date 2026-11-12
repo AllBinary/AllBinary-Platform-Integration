@@ -64,6 +64,14 @@ public final class Manager
     }
     
     
+    //The name without overloading used by the 2.0.4 version that is converted to the languages without overloading.
+    //Shared code calls it through MIDPUtil so the J2ME build keeps the MIDP overload.
+    public static Player createPlayerFromInputStream(InputStream stream, String type)
+            throws IOException, MediaException
+    {
+        return Manager.createPlayer(stream, type);
+    }
+
     public static Player createPlayer(InputStream stream, String type)
             throws IOException, MediaException
     {

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.graphics;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.gdip.*;
 import org.eclipse.swt.internal.win32.*;
@@ -36,7 +38,7 @@ import org.eclipse.swt.*;
  */
 public final class TextLayout extends Resource {
 	Font font;
-	String text, segmentsText;
+	String text = StringUtil.getInstance().EMPTY_STRING, segmentsText = StringUtil.getInstance().EMPTY_STRING;
 	int lineSpacing;
 	int ascent, descent;
 	int alignment;
@@ -467,8 +469,8 @@ void computeRuns (GC gc) {
 void destroy () {
 	freeRuns();
 	this.font = null;	
-	text = null;
-	segmentsText = null;
+	text = StringUtil.getInstance().EMPTY_STRING;
+	segmentsText = StringUtil.getInstance().EMPTY_STRING;
 	this.tabs = null;
 	this.styles = null;
 	this.runs = null;
@@ -1545,7 +1547,7 @@ void freeRuns () {
 	}
 	this.allRuns = null;
 	this.runs = null;
-	segmentsText = null;
+	segmentsText = StringUtil.getInstance().EMPTY_STRING;
 }
 
 /** 
@@ -3193,7 +3195,7 @@ public void setTabs (int[] tabs) {
  */
 public void setText (String text) {
 	checkLayout();
-	if (text == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (text == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (text.equals(this.text)) return;
 	freeRuns();
 	this.text = text;

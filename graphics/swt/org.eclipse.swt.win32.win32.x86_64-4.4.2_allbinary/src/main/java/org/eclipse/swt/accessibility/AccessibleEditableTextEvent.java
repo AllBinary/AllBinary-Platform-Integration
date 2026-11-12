@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.accessibility;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.internal.*;
 
 /**
@@ -60,7 +62,7 @@ public class AccessibleEditableTextEvent extends SWTEventObject {
 	 * @see AccessibleEditableTextListener#pasteText
 	 * @see AccessibleEditableTextListener#replaceText
 	 */
-	public String result;
+	public String result = StringUtil.getInstance().INIT_STRING;
 
 	static final long serialVersionUID = -5045447704486894646L;
 

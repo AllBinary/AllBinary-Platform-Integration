@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.internal;
 
+import org.allbinary.logic.string.StringUtil;
+
 import java.io.*;
 import java.net.*;
 import java.util.jar.*;
@@ -87,8 +89,8 @@ static long longConst() {
 	return 0x1FFFFFFFFL;
 }
 
-static int parseVersion(String version) {
-	if (version == null) return 0;
+static int parseVersion(String versionCanBeNull) {
+	if (versionCanBeNull == null) return 0; final String version = versionCanBeNull;
 	int major = 0, minor = 0, micro = 0;
 	int length = version.length(), index = 0, start = 0;
 	while (index < length && Character.isDigit(version.charAt(index))) index++;
@@ -250,13 +252,13 @@ public static void loadLibrary (String name) {
  * @param mapName true if the name should be mapped, false otherwise
  */
 public static void loadLibrary (String name, boolean mapName) {
-	String prop = System.getProperty ("sun.arch.data.model"); //$NON-NLS-1$
-	if (prop == null) prop = System.getProperty ("com.ibm.vm.bitmode"); //$NON-NLS-1$
-	if (prop != null) {
-		if ("32".equals (prop) && IS_64) { //$NON-NLS-1$
+	String propCanBeNull = System.getProperty ("sun.arch.data.model"); //$NON-NLS-1$
+	if (propCanBeNull == null) propCanBeNull = System.getProperty ("com.ibm.vm.bitmode"); //$NON-NLS-1$
+	if (propCanBeNull != null) {
+		if ("32".equals (propCanBeNull) && IS_64) { //$NON-NLS-1$
 			throw new UnsatisfiedLinkError ("Cannot load 64-bit SWT libraries on 32-bit JVM"); //$NON-NLS-1$
 		}
-		if ("64".equals (prop) && !IS_64) { //$NON-NLS-1$
+		if ("64".equals (propCanBeNull) && !IS_64) { //$NON-NLS-1$
 			throw new UnsatisfiedLinkError ("Cannot load 32-bit SWT libraries on 64-bit JVM"); //$NON-NLS-1$
 		}
 	}
@@ -264,9 +266,9 @@ public static void loadLibrary (String name, boolean mapName) {
 	/* Compute the library name and mapped name */
 	String libName1, libName2, mappedName1, mappedName2;
 	if (mapName) {
-		String version = System.getProperty ("swt.version"); //$NON-NLS-1$
-		if (version == null) {
-			version = "" + MAJOR_VERSION; //$NON-NLS-1$
+		final String versionCanBeNull = System.getProperty ("swt.version"); String version = versionCanBeNull == null ? StringUtil.getInstance().EMPTY_STRING : versionCanBeNull; //$NON-NLS-1$
+		if (versionCanBeNull == null) {
+			version = StringUtil.getInstance().EMPTY_STRING + MAJOR_VERSION; //$NON-NLS-1$
 			/* Force 3 digits in minor version number */
 			if (MINOR_VERSION < 10) {
 				version += "00"; //$NON-NLS-1$
@@ -288,8 +290,8 @@ public static void loadLibrary (String name, boolean mapName) {
 	StringBuffer message = new StringBuffer();
 	
 	/* Try loading library from swt library path */
-	String path = System.getProperty ("swt.library.path"); //$NON-NLS-1$
-	if (path != null) {
+	final String pathCanBeNull = System.getProperty ("swt.library.path"); String path = pathCanBeNull == null ? StringUtil.getInstance().EMPTY_STRING : pathCanBeNull; //$NON-NLS-1$
+	if (pathCanBeNull != null) {
 		path = new File (path).getAbsolutePath ();
 		if (load (path + SEPARATOR + mappedName1, message)) return;
 		if (mapName && load (path + SEPARATOR + mappedName2, message)) return;
@@ -302,8 +304,8 @@ public static void loadLibrary (String name, boolean mapName) {
 	/* Try loading library from the tmp directory if swt library path is not specified */
 	String fileName1 = mappedName1;
 	String fileName2 = mappedName2;
-	if (path == null) {
-		path = System.getProperty ("user.home"); //$NON-NLS-1$
+	if (pathCanBeNull == null) {
+		final String userHomeCanBeNull = System.getProperty ("user.home"); path = userHomeCanBeNull == null ? StringUtil.getInstance().EMPTY_STRING : userHomeCanBeNull; //$NON-NLS-1$
 		File dir = new File (path, SWT_LIB_DIR);
 		if ((dir.exists () && dir.isDirectory ()) || dir.mkdirs ()) {
 			path = dir.getAbsolutePath ();
@@ -319,7 +321,7 @@ public static void loadLibrary (String name, boolean mapName) {
 	}
 		
 	/* Try extracting and loading library from jar */
-	if (path != null) {
+	if (path != StringUtil.getInstance().EMPTY_STRING) {
 		if (extract (path + SEPARATOR + fileName1, mappedName1, message)) return;
 		if (mapName && extract (path + SEPARATOR + fileName2, mappedName2, message)) return;
 	}

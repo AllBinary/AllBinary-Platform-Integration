@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.win32.*;
@@ -796,14 +798,14 @@ LRESULT CDDS_ITEMPOSTPAINT (NMTVCUSTOMDRAW nmcd, long /*int*/ wParam, long /*int
 					* all text drawing for empty rectangles.
 					*/
 					if (rect.left < rect.right) {
-						String string = null;
+						String string = StringUtil.getInstance().INIT_STRING;
 						if (index == 0) {
 							string = item.text;
 						} else {
 							String [] strings  = item.strings;
 							if (strings != null) string = strings [index];
 						}
-						if (string != null) {
+						if (string != StringUtil.getInstance().INIT_STRING) {
 							if (hFont != -1) hFont = OS.SelectObject (hDC, hFont);
 							if (clrText != -1) clrText = OS.SetTextColor (hDC, clrText);
 							if (clrTextBk != -1) clrTextBk = OS.SetBkColor (hDC, clrTextBk);
@@ -1957,6 +1959,7 @@ void createItem (TreeColumn column, int index) {
 			String [] strings = item.strings;
 			if (strings != null) {
 				String [] temp = new String [this.columnCount + 1];
+				temp [index] = StringUtil.getInstance().EMPTY_STRING;
 				System.arraycopy (strings, 0, temp, 0, index);
 				System.arraycopy (strings, index, temp, index + 1, columnCount - index);
 				item.strings = temp;
@@ -1972,9 +1975,10 @@ void createItem (TreeColumn column, int index) {
 				if (columnCount != 0) {
 					if (strings == null) {
 						item.strings = new String [columnCount + 1];
+						for (int stringIndex = 0; stringIndex < columnCount + 1; stringIndex++) item.strings [stringIndex] = StringUtil.getInstance().EMPTY_STRING;
 						item.strings [1] = item.text;
 					}
-					item.text = "";
+					item.text = StringUtil.getInstance().EMPTY_STRING;
 					if (images == null) {
 						item.images = new Image [columnCount + 1];
 						item.images [1] = item.image;
@@ -2460,14 +2464,14 @@ void destroyItem (TreeColumn column) {
 				if (item.strings != null) {
 					String [] strings = item.strings;
 					if (index == 0) {
-						item.text = strings [1] != null ? strings [1] : "";
+						item.text = strings [1];
 					}
 					String [] temp = new String [columnCount];
 					System.arraycopy (strings, 0, temp, 0, index);
 					System.arraycopy (strings, index + 1, temp, index, columnCount - index);
 					item.strings = temp;
 				} else {
-					if (index == 0) item.text = "";
+					if (index == 0) item.text = StringUtil.getInstance().EMPTY_STRING;
 				}
 				if (item.images != null) {
 					Image [] images = item.images;
@@ -5476,7 +5480,7 @@ RECT toolTipRect (RECT rect) {
 
 String toolTipText (NMTTDISPINFO hdr) {
 	long /*int*/ hwndToolTip = OS.SendMessage (handle, OS.TVM_GETTOOLTIPS, 0, 0);
-	if (hwndToolTip == hdr.hwndFrom && toolTipText != null) return ""; //$NON-NLS-1$
+	if (hwndToolTip == hdr.hwndFrom && toolTipText != StringUtil.getInstance().EMPTY_STRING) return StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 	if (headerToolTipHandle == hdr.hwndFrom) {
 		for (int i=0; i<this.columnCount; i++) {
 			TreeColumn column = this.columns [i];
@@ -5485,7 +5489,7 @@ String toolTipText (NMTTDISPINFO hdr) {
 		return super.toolTipText (hdr);
 	}
 	if (itemToolTipHandle == hdr.hwndFrom) {
-		if (toolTipText != null) return "";
+		if (toolTipText != StringUtil.getInstance().EMPTY_STRING) return StringUtil.getInstance().EMPTY_STRING;
 		int pos = OS.GetMessagePos ();
 		POINT pt = new POINT();
 		OS.POINTSTOPOINT (pt, pos);
@@ -5494,7 +5498,7 @@ String toolTipText (NMTTDISPINFO hdr) {
 		TreeItem [] item = new TreeItem [1];
 		RECT [] cellRect = new RECT [1], itemRect = new RECT [1];
 		if (findCell (pt.x, pt.y, item, index, cellRect, itemRect)) {
-			String text = null;
+			String text = StringUtil.getInstance().INIT_STRING;
 			if (index [0] == 0) {
 				text = item [0].text;
 			} else {
@@ -5505,7 +5509,7 @@ String toolTipText (NMTTDISPINFO hdr) {
 			if (!OS.IsWinCE && OS.WIN32_VERSION >= OS.VERSION (6, 0)) {
 				if (isCustomToolTip ()) text = " ";
 			}
-			if (text != null) return text;
+			if (text != StringUtil.getInstance().INIT_STRING) return text;
 		}
 	}
 	return super.toolTipText (hdr);
@@ -5606,7 +5610,7 @@ void updateMenuLocation (Event event) {
 	TreeItem focusItem = getFocusItem ();
 	if (focusItem != null) {
 		Rectangle bounds = focusItem.getBounds (0);
-		if (focusItem.text != null && focusItem.text.length () != 0) {
+		if (focusItem.text.length () != 0) {
 			bounds = focusItem.getBounds ();
 		}
 		x = Math.max (x, bounds.x + bounds.width / 2);
@@ -7414,14 +7418,14 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 				index = (int)/*64*/OS.SendMessage (hwndHeader, OS.HDM_ORDERTOINDEX, 0, 0);
 			}
 			if ((lptvdi.mask & OS.TVIF_TEXT) != 0) {
-				String string = null;
+				String string = StringUtil.getInstance().INIT_STRING;
 				if (index == 0) {
 					string = item.text;
 				} else {
 					String [] strings  = item.strings;
 					if (strings != null) string = strings [index];
 				}
-				if (string != null) {
+				if (string != StringUtil.getInstance().INIT_STRING) {
 					TCHAR buffer = new TCHAR (getCodePage (), string, false);
 					int byteCount = Math.min (buffer.length (), lptvdi.cchTextMax - 1) * TCHAR.sizeof;
 					OS.MoveMemory (lptvdi.pszText, buffer, byteCount);
@@ -8057,7 +8061,7 @@ LRESULT wmNotifyToolTip (NMTTCUSTOMDRAW nmcd, long /*int*/ lParam) {
 								x += INSET;
 							}
 							String string = item [0].getText (index [0]);
-							if (string != null) {
+							if (string != StringUtil.getInstance().EMPTY_STRING) {
 								int flags = OS.DT_NOPREFIX | OS.DT_SINGLELINE | OS.DT_VCENTER;
 								TreeColumn column = this.columns != null ? this.columns [index [0]] : null;
 								if (column != null) {

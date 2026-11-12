@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -1178,11 +1180,11 @@ boolean updateTextDirection(int textDirection) {
 String toolTipText (NMTTDISPINFO hdr) {
 	Shell shell = getShell ();
 	if ((hdr.uFlags & OS.TTF_IDISHWND) == 0) {
-		String string = null;
+		String string = StringUtil.getInstance().INIT_STRING;
 		ToolTip toolTip = shell.findToolTip ((int)/*64*/hdr.idFrom);
 		if (toolTip != null) {
 			string = toolTip.message;
-			if (string == null || string.length () == 0) string = " ";
+			if (string.length () == 0) string = " ";
 			/*
 			* Bug in Windows.  On Windows 7, tool tips hang when displaying large
 			* unwrapped strings. The fix is to wrap the string ourselves.
@@ -1195,10 +1197,10 @@ String toolTipText (NMTTDISPINFO hdr) {
 		}
 		return string;
 	}
-	shell.setToolTipTitle (hdr.hwndFrom, null, 0);
+	shell.setToolTipTitle (hdr.hwndFrom, StringUtil.getInstance().EMPTY_STRING, 0);
 	OS.SendMessage (hdr.hwndFrom, OS.TTM_SETMAXTIPWIDTH, 0, 0x7FFF);
 	Control control = display.getControl (hdr.idFrom);
-	return control != null ? control.toolTipText : null;
+	return control != null && control.toolTipText != StringUtil.getInstance().EMPTY_STRING ? control.toolTipText : StringUtil.getInstance().INIT_STRING;
 }
 
 boolean translateMnemonic (Event event, Control control) {
@@ -1880,7 +1882,7 @@ LRESULT wmNotify (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 					OS.MoveMemory ((NMTTDISPINFOW)lpnmtdi, lParam, NMTTDISPINFOW.sizeof);
 				}
 				String string = toolTipText (lpnmtdi);
-				if (string != null) {
+				if (string != StringUtil.getInstance().INIT_STRING) {
 					Shell shell = getShell ();
 					string = Display.withCrLf (string);
 					/*

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.events;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.widgets.*;
 
@@ -88,7 +90,7 @@ public class SelectionEvent extends TypedEvent {
 	 * @see org.eclipse.swt.widgets.Link#setText(String)
 	 * @since 3.1
 	 */
-	public String text;
+	public String text = StringUtil.getInstance().EMPTY_STRING;
 	
 	/**
 	 * A flag indicating whether the operation should be allowed.

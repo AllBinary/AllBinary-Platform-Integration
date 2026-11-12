@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.accessibility;
+
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.thread.ARunnable;
 
 
@@ -1545,7 +1547,7 @@ public class Accessible {
 			AccessibleTextExtendedListener listener = (AccessibleTextExtendedListener) accessibleTextExtendedListeners.elementAt(i);
 			listener.getText(event);
 		}
-		if (event.result != null) {
+		if (event.result != StringUtil.getInstance().INIT_STRING) {
 			Object[] eventData = new Object[] {
 					new Integer(type),
 					new Integer(startIndex),
@@ -2212,7 +2214,7 @@ public class Accessible {
 		VARIANT v = getVARIANT(varChild);
 		if (v.vt != COM.VT_I4) return COM.E_INVALIDARG;
 		int code = COM.DISP_E_MEMBERNOTFOUND;
-		String osDefaultAction = null;
+		String osDefaultAction = StringUtil.getInstance().INIT_STRING;
 		if (this.iaccessible != null) {
 			/* Get the default defaultAction from the OS. */
 			code = this.iaccessible.get_accDefaultAction(varChild, pszDefaultAction);
@@ -2237,10 +2239,10 @@ public class Accessible {
 			AccessibleControlListener listener = (AccessibleControlListener) accessibleControlListeners.elementAt(i);
 			listener.getDefaultAction(event);
 		}
-		if ((event.result == null || event.result.length() == 0) && v.lVal == COM.CHILDID_SELF) {
+		if ((event.result == StringUtil.getInstance().INIT_STRING || event.result.length() == 0) && v.lVal == COM.CHILDID_SELF) {
 			code = get_name(0, pszDefaultAction);
 		}
-		if (event.result == null) return code;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return code;
 		if (event.result.length() == 0) return COM.S_FALSE;
 		setString(pszDefaultAction, event.result);
 		return COM.S_OK;
@@ -2261,7 +2263,7 @@ public class Accessible {
 		VARIANT v = getVARIANT(varChild);
 		if (v.vt != COM.VT_I4) return COM.E_INVALIDARG;
 		int code = COM.DISP_E_MEMBERNOTFOUND;
-		String osDescription = null;
+		String osDescription = StringUtil.getInstance().INIT_STRING;
 		if (this.iaccessible != null) {
 			/* Get the default description from the OS. */
 			code = this.iaccessible.get_accDescription(varChild, pszDescription);
@@ -2318,8 +2320,8 @@ public class Accessible {
 			AccessibleListener listener = (AccessibleListener) accessibleListeners.elementAt(i);
 			listener.getDescription(event);
 		}
-		if (DEBUG) print(this + ".IAccessible::get_accDescription(" + v.lVal + ") returning " + event.result + hresult(event.result == null ? code : event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
-		if (event.result == null) return code;
+		if (DEBUG) print(this + ".IAccessible::get_accDescription(" + v.lVal + ") returning " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING ? code : event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
+		if (event.result == StringUtil.getInstance().INIT_STRING) return code;
 		if (event.result.length() == 0) return COM.S_FALSE;
 		setString(pszDescription, event.result);
 		return COM.S_OK;
@@ -2382,7 +2384,7 @@ public class Accessible {
 		VARIANT v = getVARIANT(varChild);
 		if (v.vt != COM.VT_I4) return COM.E_INVALIDARG;
 		int code = COM.DISP_E_MEMBERNOTFOUND;
-		String osHelp = null;
+		String osHelp = StringUtil.getInstance().INIT_STRING;
 		if (this.iaccessible != null) {
 			/* Get the default help string from the OS. */
 			code = this.iaccessible.get_accHelp(varChild, pszHelp);
@@ -2407,7 +2409,7 @@ public class Accessible {
 			AccessibleListener listener = (AccessibleListener) accessibleListeners.elementAt(i);
 			listener.getHelp(event);
 		}
-		if (event.result == null) return code;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return code;
 		if (event.result.length() == 0) return COM.S_FALSE;
 		setString(pszHelp, event.result);
 		return COM.S_OK;
@@ -2433,7 +2435,7 @@ public class Accessible {
 		VARIANT v = getVARIANT(varChild);
 		if (v.vt != COM.VT_I4) return COM.E_INVALIDARG;
 		int code = COM.DISP_E_MEMBERNOTFOUND;
-		String osKeyboardShortcut = null;
+		String osKeyboardShortcut = StringUtil.getInstance().INIT_STRING;
 		if (this.iaccessible != null) {
 			/* Get the default keyboard shortcut from the OS. */
 			code = this.iaccessible.get_accKeyboardShortcut(varChild, pszKeyboardShortcut);
@@ -2463,7 +2465,7 @@ public class Accessible {
 			AccessibleListener listener = (AccessibleListener) accessibleListeners.elementAt(i);
 			listener.getKeyboardShortcut(event);
 		}
-		if (event.result == null) return code;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return code;
 		if (event.result.length() == 0) return COM.S_FALSE;
 		setString(pszKeyboardShortcut, event.result);
 		return COM.S_OK;
@@ -2475,7 +2477,7 @@ public class Accessible {
 		VARIANT v = getVARIANT(varChild);
 		if (v.vt != COM.VT_I4) return COM.E_INVALIDARG;
 		int code = COM.S_FALSE;
-		String osName = null;
+		String osName = StringUtil.getInstance().INIT_STRING;
 		if (this.iaccessible != null) {
 			/* Get the default name from the OS. */
 			code = this.iaccessible.get_accName(varChild, pszName);
@@ -2506,15 +2508,15 @@ public class Accessible {
 		* accessible name, however it is not. The fix is to return the message
 		* text here as the accName (unless there is a preceding label).
 		*/
-		if (this.control instanceof Text && (this.control.getStyle() & SWT.SEARCH) != 0 && osName == null) {
+		if (this.control instanceof Text && (this.control.getStyle() & SWT.SEARCH) != 0 && osName == StringUtil.getInstance().INIT_STRING) {
 			event.result = ((Text) this.control).getMessage();
 		}
 		for (int i = 0; i < accessibleListenersSize(); i++) {
 			AccessibleListener listener = (AccessibleListener) accessibleListeners.elementAt(i);
 			listener.getName(event);
 		}
-		if (DEBUG) print(this + ".IAccessible::get_accName(" + v.lVal + ") returning " + event.result + hresult(event.result == null ? code : event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
-		if (event.result == null) return code;
+		if (DEBUG) print(this + ".IAccessible::get_accName(" + v.lVal + ") returning " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING ? code : event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
+		if (event.result == StringUtil.getInstance().INIT_STRING) return code;
 		if (event.result.length() == 0) return COM.S_FALSE;
 		setString(pszName, event.result);
 		return COM.S_OK;
@@ -2698,7 +2700,7 @@ public class Accessible {
 		VARIANT v = getVARIANT(varChild);
 		if (v.vt != COM.VT_I4) return COM.E_INVALIDARG;
 		int code = COM.DISP_E_MEMBERNOTFOUND;
-		String osValue = null;
+		String osValue = StringUtil.getInstance().INIT_STRING;
 		if (this.iaccessible != null) {
 			/* Get the default value string from the OS. */
 			code = this.iaccessible.get_accValue(varChild, pszValue);
@@ -2736,8 +2738,8 @@ public class Accessible {
 			AccessibleControlListener listener = (AccessibleControlListener) accessibleControlListeners.elementAt(i);
 			listener.getValue(event);
 		}
-		if (DEBUG) print(this + ".IAccessible::get_accValue(" + v.lVal + ") returning " + event.result + hresult(event.result == null ? code : COM.S_OK));
-		if (event.result == null) return code;
+		if (DEBUG) print(this + ".IAccessible::get_accValue(" + v.lVal + ") returning " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING ? code : COM.S_OK));
+		if (event.result == StringUtil.getInstance().INIT_STRING) return code;
 		// empty string is a valid value, so do not test for it
 		setString(pszValue, event.result);
 		return COM.S_OK;
@@ -2772,7 +2774,7 @@ public class Accessible {
 					AccessibleEditableTextListener listener = (AccessibleEditableTextListener) accessibleEditableTextListeners.elementAt(i);
 					listener.replaceText(event);
 				}
-				if (event.result != null && event.result.equals(ACC.OK)) code = COM.S_OK;
+				if (event.result != StringUtil.getInstance().INIT_STRING && event.result.equals(ACC.OK)) code = COM.S_OK;
 				if (DEBUG) print(this + ".IAccessible::put_accValue(" + v.lVal + ", \"" + event.string + "\") returning " + hresult(code));
 			}
 		}
@@ -3068,14 +3070,14 @@ public class Accessible {
 	/* IAccessible2::get_extendedRole([out] pbstrExtendedRole) */
 	int get_extendedRole(long /*int*/ pbstrExtendedRole) {
 		/* This feature is not supported. */
-		setString(pbstrExtendedRole, null);
+		setString(pbstrExtendedRole, StringUtil.getInstance().INIT_STRING);
 		return COM.S_FALSE;
 	}
 
 	/* IAccessible2::get_localizedExtendedRole([out] pbstrLocalizedExtendedRole) */
 	int get_localizedExtendedRole(long /*int*/ pbstrLocalizedExtendedRole) {
 		/* This feature is not supported. */
-		setString(pbstrLocalizedExtendedRole, null);
+		setString(pbstrLocalizedExtendedRole, StringUtil.getInstance().INIT_STRING);
 		return COM.S_FALSE;
 	}
 
@@ -3089,7 +3091,7 @@ public class Accessible {
 	/* IAccessible2::get_extendedStates([in] maxExtendedStates, [out] ppbstrExtendedStates, [out] pNExtendedStates) */
 	int get_extendedStates(int maxExtendedStates, long /*int*/ ppbstrExtendedStates, long /*int*/ pNExtendedStates) {
 		/* This feature is not supported. */
-		setString(ppbstrExtendedStates, null);
+		setString(ppbstrExtendedStates, StringUtil.getInstance().INIT_STRING);
 		COM.MoveMemory(pNExtendedStates, new int [] { 0 }, 4);
 		return COM.S_FALSE;
 	}
@@ -3097,7 +3099,7 @@ public class Accessible {
 	/* IAccessible2::get_localizedExtendedStates([in] maxLocalizedExtendedStates, [out] ppbstrLocalizedExtendedStates, [out] pNLocalizedExtendedStates) */
 	int get_localizedExtendedStates(int maxLocalizedExtendedStates, long /*int*/ ppbstrLocalizedExtendedStates, long /*int*/ pNLocalizedExtendedStates) {
 		/* This feature is not supported. */
-		setString(ppbstrLocalizedExtendedStates, null);
+		setString(ppbstrLocalizedExtendedStates, StringUtil.getInstance().INIT_STRING);
 		COM.MoveMemory(pNLocalizedExtendedStates, new int [] { 0 }, 4);
 		return COM.S_FALSE;
 	}
@@ -3254,8 +3256,8 @@ public class Accessible {
 			AccessibleActionListener listener = (AccessibleActionListener) accessibleActionListeners.elementAt(i);
 			listener.doAction(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleAction::doAction(" + actionIndex + ") returning" + hresult(event.result == null || !event.result.equals(ACC.OK) ? COM.E_INVALIDARG : COM.S_OK));
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (DEBUG) print(this + ".IAccessibleAction::doAction(" + actionIndex + ") returning" + hresult(event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK) ? COM.E_INVALIDARG : COM.S_OK));
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -3267,9 +3269,9 @@ public class Accessible {
 			AccessibleActionListener listener = (AccessibleActionListener) accessibleActionListeners.elementAt(i);
 			listener.getDescription(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleAction::get_description(" + actionIndex + ") returning " + event.result + hresult(event.result == null || event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
+		if (DEBUG) print(this + ".IAccessibleAction::get_description(" + actionIndex + ") returning " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING || event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
 		setString(pbstrDescription, event.result);
-		if (event.result == null || event.result.length() == 0) return COM.S_FALSE;
+		if (event.result == StringUtil.getInstance().INIT_STRING || event.result.length() == 0) return COM.S_FALSE;
 		return COM.S_OK;
 	}
 
@@ -3283,7 +3285,7 @@ public class Accessible {
 		}
 		String keyBindings = event.result;
 		int length = 0;
-		if (keyBindings != null) length = keyBindings.length();
+		if (keyBindings != StringUtil.getInstance().INIT_STRING) length = keyBindings.length();
 		int i = 0, count = 0;
 		while (i < length) {
 			if (count == nMaxBindings) break;
@@ -3299,7 +3301,7 @@ public class Accessible {
 		if (DEBUG) print(this + ".IAccessibleAction::get_keyBinding(index=" + actionIndex + " max=" + nMaxBindings + ") returning count=" + count + hresult(count == 0 ? COM.S_FALSE : COM.S_OK));
 		COM.MoveMemory(pNBindings, new int [] { count }, 4);
 		if (count == 0) {
-			setString(ppbstrKeyBindings, null);
+			setString(ppbstrKeyBindings, StringUtil.getInstance().INIT_STRING);
 			return COM.S_FALSE;
 		}
 		return COM.S_OK;
@@ -3314,9 +3316,9 @@ public class Accessible {
 			AccessibleActionListener listener = (AccessibleActionListener) accessibleActionListeners.elementAt(i);
 			listener.getName(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleAction::get_name(" + actionIndex + ") returning " + event.result + hresult(event.result == null || event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
-		if (event.result == null || event.result.length() == 0) {
-			setString(pbstrName, null);
+		if (DEBUG) print(this + ".IAccessibleAction::get_name(" + actionIndex + ") returning " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING || event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
+		if (event.result == StringUtil.getInstance().INIT_STRING || event.result.length() == 0) {
+			setString(pbstrName, StringUtil.getInstance().INIT_STRING);
 			return COM.S_FALSE;
 		}
 		setString(pbstrName, event.result);
@@ -3332,9 +3334,9 @@ public class Accessible {
 			AccessibleActionListener listener = (AccessibleActionListener) accessibleActionListeners.elementAt(i);
 			listener.getName(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleAction::get_localizedName(" + actionIndex + ") returning " + event.result + hresult(event.result == null || event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
-		if (event.result == null || event.result.length() == 0) {
-			setString(pbstrLocalizedName, null);
+		if (DEBUG) print(this + ".IAccessibleAction::get_localizedName(" + actionIndex + ") returning " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING || event.result.length() == 0 ? COM.S_FALSE : COM.S_OK));
+		if (event.result == StringUtil.getInstance().INIT_STRING || event.result.length() == 0) {
+			setString(pbstrLocalizedName, StringUtil.getInstance().INIT_STRING);
 			return COM.S_FALSE;
 		}
 		setString(pbstrLocalizedName, event.result);
@@ -3344,9 +3346,9 @@ public class Accessible {
 	/* IAccessibleApplication::get_appName([out] pbstrName) */
 	int get_appName(long /*int*/ pbstrName) {
 		String appName = Display.getAppName();
-		if (DEBUG) print(this + ".IAccessibleApplication::get_appName() returning " + appName + hresult(appName == null || appName.length() == 0 ? COM.S_FALSE : COM.S_OK));
-		if (appName == null || appName.length() == 0) {
-			setString(pbstrName, null);
+		if (DEBUG) print(this + ".IAccessibleApplication::get_appName() returning " + appName + hresult(appName.length() == 0 ? COM.S_FALSE : COM.S_OK));
+		if (appName.length() == 0) {
+			setString(pbstrName, StringUtil.getInstance().INIT_STRING);
 			return COM.S_FALSE;
 		}
 		setString(pbstrName, appName);
@@ -3356,9 +3358,9 @@ public class Accessible {
 	/* IAccessibleApplication::get_appVersion([out] pbstrVersion) */
 	int get_appVersion(long /*int*/ pbstrVersion) {
 		String appVersion = Display.getAppVersion();
-		if (DEBUG) print(this + ".IAccessibleApplication::get_appVersion() returning" + appVersion + hresult(appVersion == null || appVersion.length() == 0 ? COM.S_FALSE : COM.S_OK));
-		if (appVersion == null || appVersion.length() == 0) {
-			setString(pbstrVersion, null);
+		if (DEBUG) print(this + ".IAccessibleApplication::get_appVersion() returning" + appVersion + hresult(appVersion.length() == 0 ? COM.S_FALSE : COM.S_OK));
+		if (appVersion.length() == 0) {
+			setString(pbstrVersion, StringUtil.getInstance().INIT_STRING);
 			return COM.S_FALSE;
 		}
 		setString(pbstrVersion, appVersion);
@@ -3422,7 +3424,7 @@ public class Accessible {
 			AccessibleEditableTextListener listener = (AccessibleEditableTextListener) accessibleEditableTextListeners.elementAt(i);
 			listener.copyText(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -3437,7 +3439,7 @@ public class Accessible {
 			AccessibleEditableTextListener listener = (AccessibleEditableTextListener) accessibleEditableTextListeners.elementAt(i);
 			listener.replaceText(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -3452,7 +3454,7 @@ public class Accessible {
 			AccessibleEditableTextListener listener = (AccessibleEditableTextListener) accessibleEditableTextListeners.elementAt(i);
 			listener.replaceText(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -3466,7 +3468,7 @@ public class Accessible {
 			AccessibleEditableTextListener listener = (AccessibleEditableTextListener) accessibleEditableTextListeners.elementAt(i);
 			listener.cutText(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -3480,7 +3482,7 @@ public class Accessible {
 			AccessibleEditableTextListener listener = (AccessibleEditableTextListener) accessibleEditableTextListeners.elementAt(i);
 			listener.pasteText(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -3495,7 +3497,7 @@ public class Accessible {
 			AccessibleEditableTextListener listener = (AccessibleEditableTextListener) accessibleEditableTextListeners.elementAt(i);
 			listener.replaceText(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -3504,7 +3506,7 @@ public class Accessible {
 		if (DEBUG) print(this + ".IAccessibleEditableText::setAttributes, start=" + startOffset + ", end=" + endOffset + ", pbstrAttributes=" + pbstrAttributes);
 		AccessibleTextAttributeEvent event = new AccessibleTextAttributeEvent(this);
 		String string = getString(pbstrAttributes);
-		if (string != null && string.length() > 0) {
+		if (string.length() > 0) {
 			event.start = startOffset == COM.IA2_TEXT_OFFSET_LENGTH ? getCharacterCount() : startOffset;
 			event.end = endOffset == COM.IA2_TEXT_OFFSET_LENGTH ? getCharacterCount() : endOffset;
 			TextStyle style = new TextStyle();
@@ -3603,7 +3605,7 @@ public class Accessible {
 				style.background.dispose();
 			}
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -3623,7 +3625,7 @@ public class Accessible {
 			return COM.S_OK;
 		}
 		setStringVARIANT(pAnchor, event.result);
-		if (event.result == null) return COM.S_FALSE;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.S_FALSE;
 		return COM.S_OK;
 	}
 
@@ -3643,7 +3645,7 @@ public class Accessible {
 			return COM.S_OK;
 		}
 		setStringVARIANT(pAnchorTarget, event.result);
-		if (event.result == null) return COM.S_FALSE;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.S_FALSE;
 		return COM.S_OK;
 	}
 
@@ -3735,7 +3737,7 @@ public class Accessible {
 //			listener.getDescription(event);
 //		}
 //		setString(pbstrDescription, event.result);
-//		if (event.result == null) return COM.S_FALSE;
+//		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.S_FALSE;
 //		return COM.S_OK;
 //	}
 //
@@ -3813,7 +3815,7 @@ public class Accessible {
 		}
 		if (DEBUG) print(this + ".IAccessibleTable2::get_columnDescription(column=" + column + ") returning " + event.result);
 		setString(pbstrDescription, event.result);
-		if (event.result == null) return COM.S_FALSE;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.S_FALSE;
 		return COM.S_OK;
 	}
 
@@ -3887,7 +3889,7 @@ public class Accessible {
 		}
 		if (DEBUG) print(this + ".IAccessibleTable2::get_rowDescription(row=" + row + ") returning " + event.result);
 		setString(pbstrDescription, event.result);
-		if (event.result == null) return COM.S_FALSE;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.S_FALSE;
 		return COM.S_OK;
 	}
 
@@ -4014,8 +4016,8 @@ public class Accessible {
 			AccessibleTableListener listener = (AccessibleTableListener) accessibleTableListeners.elementAt(i);
 			listener.setSelectedRow(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleTable2::selectRow() returning " + (event.result == null ? "E_INVALIDARG" : event.result));
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (DEBUG) print(this + ".IAccessibleTable2::selectRow() returning " + (event.result == StringUtil.getInstance().INIT_STRING ? "E_INVALIDARG" : event.result));
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4027,8 +4029,8 @@ public class Accessible {
 			AccessibleTableListener listener = (AccessibleTableListener) accessibleTableListeners.elementAt(i);
 			listener.setSelectedColumn(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleTable2::selectColumn() returning " + (event.result == null ? "E_INVALIDARG" : event.result));
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (DEBUG) print(this + ".IAccessibleTable2::selectColumn() returning " + (event.result == StringUtil.getInstance().INIT_STRING ? "E_INVALIDARG" : event.result));
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4040,8 +4042,8 @@ public class Accessible {
 			AccessibleTableListener listener = (AccessibleTableListener) accessibleTableListeners.elementAt(i);
 			listener.deselectRow(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleTable2::unselectRow() returning " + (event.result == null ? "E_INVALIDARG" : event.result));
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (DEBUG) print(this + ".IAccessibleTable2::unselectRow() returning " + (event.result == StringUtil.getInstance().INIT_STRING ? "E_INVALIDARG" : event.result));
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4053,8 +4055,8 @@ public class Accessible {
 			AccessibleTableListener listener = (AccessibleTableListener) accessibleTableListeners.elementAt(i);
 			listener.deselectColumn(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleTable2::unselectColumn() returning " + (event.result == null ? "E_INVALIDARG" : event.result));
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (DEBUG) print(this + ".IAccessibleTable2::unselectColumn() returning " + (event.result == StringUtil.getInstance().INIT_STRING ? "E_INVALIDARG" : event.result));
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4233,7 +4235,7 @@ public class Accessible {
 			AccessibleTextExtendedListener listener = (AccessibleTextExtendedListener) accessibleTextExtendedListeners.elementAt(i);
 			listener.addSelection(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4419,7 +4421,7 @@ public class Accessible {
 			AccessibleTextExtendedListener listener = (AccessibleTextExtendedListener) accessibleTextExtendedListeners.elementAt(i);
 			listener.getText(event);
 		}
-		if (event.result == null) {
+		if (event.result == StringUtil.getInstance().INIT_STRING) {
 			AccessibleControlEvent e = new AccessibleControlEvent(this);
 			e.childID = ACC.CHILDID_SELF;
 			for (int i = 0; i < accessibleControlListenersSize(); i++) {
@@ -4432,9 +4434,9 @@ public class Accessible {
 				event.result = e.result;
 			}
 		}
-		if (DEBUG) print(this + ".IAccessibleText::get_text(" + startOffset + ", " + endOffset + ") returning " + event.result + hresult(event.result == null ? COM.E_INVALIDARG : COM.S_OK));
+		if (DEBUG) print(this + ".IAccessibleText::get_text(" + startOffset + ", " + endOffset + ") returning " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING ? COM.E_INVALIDARG : COM.S_OK));
 		setString(pbstrText, event.result);
-		if (event.result == null) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4483,11 +4485,11 @@ public class Accessible {
 					}
 			}
 		}
-		if (DEBUG) print(this + ".IAccessibleText::get_textBeforeOffset(" + offset + ") returning start=" + event.start + ", end=" + event.end + " " + event.result + hresult(event.result == null ? COM.S_FALSE : COM.S_OK));
+		if (DEBUG) print(this + ".IAccessibleText::get_textBeforeOffset(" + offset + ") returning start=" + event.start + ", end=" + event.end + " " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING ? COM.S_FALSE : COM.S_OK));
 		COM.MoveMemory(pStartOffset, new int [] { event.start }, 4);
 		COM.MoveMemory(pEndOffset, new int [] { event.end }, 4);
 		setString(pbstrText, event.result);
-		if (event.result == null) return COM.S_FALSE;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.S_FALSE;
 		return COM.S_OK;
 	}
 
@@ -4536,11 +4538,11 @@ public class Accessible {
 					}
 			}
 		}
-		if (DEBUG) print(this + ".IAccessibleText::get_textAfterOffset(" + offset + ") returning start=" + event.start + ", end=" + event.end + " " + event.result + hresult(event.result == null ? COM.S_FALSE : COM.S_OK));
+		if (DEBUG) print(this + ".IAccessibleText::get_textAfterOffset(" + offset + ") returning start=" + event.start + ", end=" + event.end + " " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING ? COM.S_FALSE : COM.S_OK));
 		COM.MoveMemory(pStartOffset, new int [] { event.start }, 4);
 		COM.MoveMemory(pEndOffset, new int [] { event.end }, 4);
 		setString(pbstrText, event.result);
-		if (event.result == null) return COM.S_FALSE;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.S_FALSE;
 		return COM.S_OK;
 	}
 
@@ -4596,11 +4598,11 @@ public class Accessible {
 					}
 			}
 		}
-		if (DEBUG) print(this + ".IAccessibleText::get_textAtOffset(" + offset + ") returning start=" + event.start + ", end=" + event.end + " " + event.result + hresult(event.result == null ? COM.S_FALSE : COM.S_OK));
+		if (DEBUG) print(this + ".IAccessibleText::get_textAtOffset(" + offset + ") returning start=" + event.start + ", end=" + event.end + " " + event.result + hresult(event.result == StringUtil.getInstance().INIT_STRING ? COM.S_FALSE : COM.S_OK));
 		COM.MoveMemory(pStartOffset, new int [] { event.start }, 4);
 		COM.MoveMemory(pEndOffset, new int [] { event.end }, 4);
 		setString(pbstrText, event.result);
-		if (event.result == null) return COM.S_FALSE;
+		if (event.result == StringUtil.getInstance().INIT_STRING) return COM.S_FALSE;
 		return COM.S_OK;
 	}
 
@@ -4612,8 +4614,8 @@ public class Accessible {
 			AccessibleTextExtendedListener listener = (AccessibleTextExtendedListener) accessibleTextExtendedListeners.elementAt(i);
 			listener.removeSelection(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleText::removeSelection(" + selectionIndex + ") returning" + hresult(event.result == null || !event.result.equals(ACC.OK) ? COM.E_INVALIDARG : COM.S_OK));
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (DEBUG) print(this + ".IAccessibleText::removeSelection(" + selectionIndex + ") returning" + hresult(event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK) ? COM.E_INVALIDARG : COM.S_OK));
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4625,8 +4627,8 @@ public class Accessible {
 			AccessibleTextExtendedListener listener = (AccessibleTextExtendedListener) accessibleTextExtendedListeners.elementAt(i);
 			listener.setCaretOffset(event);
 		}
-		if (DEBUG) print(this + ".IAccessibleText::setCaretOffset(" + offset + ") returning" + hresult(event.result == null || !event.result.equals(ACC.OK) ? COM.E_INVALIDARG : COM.S_OK));
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG; // TODO: @retval E_FAIL if the caret cannot be set ?
+		if (DEBUG) print(this + ".IAccessibleText::setCaretOffset(" + offset + ") returning" + hresult(event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK) ? COM.E_INVALIDARG : COM.S_OK));
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG; // TODO: @retval E_FAIL if the caret cannot be set ?
 		return COM.S_OK;
 	}
 
@@ -4641,7 +4643,7 @@ public class Accessible {
 			listener.setSelection(event);
 		}
 		if (DEBUG) print(this + ".IAccessibleText::setSelection(index=" + selectionIndex + ", start=" + event.start + ", end=" + event.end + ") returning " + (event.result.equals(ACC.OK) ? "OK" : "INVALIDARG"));
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4672,7 +4674,7 @@ public class Accessible {
 			AccessibleTextExtendedListener listener = (AccessibleTextExtendedListener) accessibleTextExtendedListeners.elementAt(i);
 			listener.scrollText(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG;
 		return COM.S_OK;
 	}
 
@@ -4689,14 +4691,14 @@ public class Accessible {
 			AccessibleTextExtendedListener listener = (AccessibleTextExtendedListener) accessibleTextExtendedListeners.elementAt(i);
 			listener.scrollText(event);
 		}
-		if (event.result == null || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG; // TODO: @retval S_FALSE if the object is already at the specified location.
+		if (event.result == StringUtil.getInstance().INIT_STRING || !event.result.equals(ACC.OK)) return COM.E_INVALIDARG; // TODO: @retval S_FALSE if the object is already at the specified location.
 		return COM.S_OK;
 	}
 
 	/* IAccessibleText::get_newText([out] pNewText) */
 	int get_newText(long /*int*/ pNewText) {
 		if (DEBUG) print(this + ".IAccessibleText::get_newText");
-		String text = null;
+		String text = StringUtil.getInstance().INIT_STRING;
 		int start = 0;
 		int end = 0;
 		if (this.textInserted != null) {
@@ -4714,7 +4716,7 @@ public class Accessible {
 	/* IAccessibleText::get_oldText([out] pOldText) */
 	int get_oldText(long /*int*/ pOldText) {
 		if (DEBUG) print(this + ".IAccessibleText::get_oldText");
-		String text = null;
+		String text = StringUtil.getInstance().INIT_STRING;
 		int start = 0;
 		int end = 0;
 		if (this.textDeleted != null) {
@@ -5037,7 +5039,7 @@ public class Accessible {
 				listener.getValue(e);
 			}
 			// TODO: Consider passing the value through for other roles as well (i.e. combo, etc). Keep in sync with get_text.
-			event.count = e.detail == ACC.ROLE_TEXT && e.result != null ? e.result.length() : 0;
+			event.count = e.detail == ACC.ROLE_TEXT && e.result != StringUtil.getInstance().INIT_STRING ? e.result.length() : 0;
 		}
 		return event.count;
 	}
@@ -5083,7 +5085,7 @@ public class Accessible {
 		long /*int*/ [] ptr = new long /*int*/ [1];
 		OS.MoveMemory (ptr, psz, OS.PTR_SIZEOF);
 		int size = COM.SysStringByteLen(ptr [0]);
-		if (size == 0) return "";
+		if (size == 0) return StringUtil.getInstance().EMPTY_STRING;
 		char [] buffer = new char [(size + 1) / 2];
 		OS.MoveMemory (buffer, ptr [0], size);
 		return new String (buffer);
@@ -5137,7 +5139,7 @@ public class Accessible {
 
 	void setString(long /*int*/ psz, String string) {
 		long /*int*/ ptr = 0;
-		if (string != null) {
+		if (string != StringUtil.getInstance().INIT_STRING) {
 			char[] data = (string + "\0").toCharArray();
 			ptr = COM.SysAllocString(data);
 		}
@@ -5146,7 +5148,7 @@ public class Accessible {
 	
 	void setStringVARIANT(long /*int*/ variant, String string) {
 		long /*int*/ ptr = 0;
-		if (string != null) {
+		if (string != StringUtil.getInstance().INIT_STRING) {
 			char[] data = (string + "\0").toCharArray();
 			ptr = COM.SysAllocString(data);
 		}

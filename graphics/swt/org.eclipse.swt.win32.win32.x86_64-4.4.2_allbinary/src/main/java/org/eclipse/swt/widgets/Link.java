@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -39,7 +41,7 @@ import org.eclipse.swt.accessibility.*;
  * @noextend This class is not intended to be subclassed by clients.
  */
 public class Link extends Control {
-	String text;
+	String text = StringUtil.getInstance().EMPTY_STRING;
 	TextLayout layout;
 	Color linkColor, disabledColor;
 	Point [] offsets;
@@ -626,7 +628,7 @@ void releaseWidget () {
 	this.offsets = null;
 	this.ids = null;
 	this.mnemonics = null;
-	this.text = null;
+	this.text = StringUtil.getInstance().EMPTY_STRING;
 }
 
 /**
@@ -692,7 +694,7 @@ public void removeSelectionListener (SelectionListener listener) {
  */
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (string.equals (this.text)) return;
 	this.text = string;	
 	if (OS.COMCTL32_MAJOR >= 6) {

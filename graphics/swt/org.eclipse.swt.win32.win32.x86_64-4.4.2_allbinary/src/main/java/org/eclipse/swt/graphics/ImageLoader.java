@@ -168,7 +168,7 @@ public ImageData[] load(InputStream stream) {
  * </ul>
  */
 public ImageData[] load(String filename) {
-	if (filename == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (filename == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	InputStream stream = null;
 	try {
 		stream = Compatibility.newFileInputStream(filename);
@@ -252,7 +252,7 @@ public void save(OutputStream stream, int format) {
  * </ul>
  */
 public void save(String filename, int format) {
-	if (filename == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (filename == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	OutputStream stream = null;
 	try {
 		stream = Compatibility.newFileOutputStream(filename);

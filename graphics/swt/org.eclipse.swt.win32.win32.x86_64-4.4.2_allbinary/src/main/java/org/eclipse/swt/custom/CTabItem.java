@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.custom;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -38,8 +40,8 @@ public class CTabItem extends Item {
 	int x,y,width,height = 0;
 	Control control; // the tab page
 	
-	String toolTipText;
-	String shortenedText;
+	String toolTipText = StringUtil.getInstance().EMPTY_STRING;
+	String shortenedText = StringUtil.getInstance().EMPTY_STRING;
 	int shortenedTextWidth;
 	
 	// Appearance
@@ -128,8 +130,8 @@ public void dispose() {
 	super.dispose();
 	this.parent = null;
 	this.control = null;
-	this.toolTipText = null;
-	this.shortenedText = null;
+	this.toolTipText = StringUtil.getInstance().EMPTY_STRING;
+	this.shortenedText = StringUtil.getInstance().EMPTY_STRING;
 	this.font = null;
 }
 
@@ -242,7 +244,7 @@ public boolean getShowClose() {
  */
 public String getToolTipText () {
 	checkWidget();
-	if (this.toolTipText == null && this.shortenedText != null) {
+	if (this.toolTipText == StringUtil.getInstance().EMPTY_STRING && this.shortenedText != StringUtil.getInstance().EMPTY_STRING) {
 		String text = getText();
 		if (!this.shortenedText.equals(text)) return text;
 	}
@@ -393,10 +395,10 @@ public void setShowClose(boolean close) {
 @Override
 public void setText (String string) {
 	checkWidget();
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	if (string.equals(getText())) return;
 	super.setText(string);
-	this.shortenedText = null;
+	this.shortenedText = StringUtil.getInstance().EMPTY_STRING;
 	this.shortenedTextWidth = 0;
 	this.parent.updateFolder(CTabFolder.UPDATE_TAB_HEIGHT | CTabFolder.REDRAW_TABS);
 }

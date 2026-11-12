@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.graphics;
 
+import org.allbinary.logic.string.StringUtil;
+
  
 import org.allbinary.logic.java.exception.ExceptionUtil;
 import org.eclipse.swt.internal.*;
@@ -143,19 +145,20 @@ public Device(DeviceData data) {
 }
 
 void addFont (String font) {
-	if (this.loadedFonts == null) this.loadedFonts = new String [4];
+	if (this.loadedFonts == null) this.loadedFonts = new String [] {StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING};
 	int length = this.loadedFonts.length;
 	for (int i=0; i<length; i++) {
 		if (font.equals(this.loadedFonts [i])) return;
 	}
 	int index = 0;
 	while (index < length) {
-		if (this.loadedFonts [index] == null) break;
+		if (this.loadedFonts [index] == StringUtil.getInstance().EMPTY_STRING) break;
 		index++;
 	}
 	if (index == length) {
 		String [] temp = new String [length + 4];
 		System.arraycopy (this.loadedFonts, 0, temp, 0, length);
+		for (int fontIndex = length; fontIndex < length + 4; fontIndex++) temp [fontIndex] = StringUtil.getInstance().EMPTY_STRING;
 		this.loadedFonts = temp;
 	}
 	this.loadedFonts [index] = font;
@@ -199,7 +202,7 @@ void checkGDIP() {
 				if (this.fontCollection == 0) SWT.error(SWT.ERROR_NO_HANDLES);
 				for (int i = 0; i < this.loadedFonts.length; i++) {
 					String path = this.loadedFonts[i];
-					if (path == null) break;
+					if (path == StringUtil.getInstance().EMPTY_STRING) break;
 					int length = path.length();
 					char [] buffer = new char [length + 1];
 					path.getChars(0, length, buffer, 0);
@@ -507,7 +510,7 @@ public FontData [] getFontList (String faceName, boolean scalable) {
 	/* Enumerate */
 	int offset = 0;
 	long /*int*/ hDC = internal_new_GC (null);
-	if (faceName == null) {	
+	if (faceName == StringUtil.getInstance().EMPTY_STRING) {	
 		/* The user did not specify a face name, so they want all versions of all available face names */
 		OS.EnumFontFamilies (hDC, null, lpEnumFontFamProc, scalable ? 1 : 0);
 		
@@ -831,7 +834,7 @@ public boolean isDisposed () {
  */
 public boolean loadFont (String path) {
 	checkDevice();
-	if (path == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (path == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	if (OS.IsWinNT && OS.WIN32_VERSION >= OS.VERSION (4, 10)) {
 		TCHAR lpszFilename = new TCHAR (0, path, true);
 		boolean loaded = OS.AddFontResourceEx (lpszFilename, OS.FR_PRIVATE, 0) != 0;

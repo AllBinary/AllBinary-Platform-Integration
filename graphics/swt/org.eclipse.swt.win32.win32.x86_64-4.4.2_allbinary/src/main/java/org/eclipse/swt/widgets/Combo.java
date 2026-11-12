@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.win32.*;
@@ -155,7 +157,7 @@ public Combo (Composite parent, int style) {
  */
 public void add (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	TCHAR buffer = new TCHAR (getCodePage (), string, true);
 	int result = (int)/*64*/OS.SendMessage (handle, OS.CB_ADDSTRING, 0, buffer);
 	if (result == OS.CB_ERR) error (SWT.ERROR_ITEM_NOT_ADDED);
@@ -188,7 +190,7 @@ public void add (String string) {
  */
 public void add (String string, int index) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	int count = (int)/*64*/OS.SendMessage (handle, OS.CB_GETCOUNT, 0, 0);
 	if (!(0 <= index && index <= count)) {
 		error (SWT.ERROR_INVALID_RANGE);
@@ -356,7 +358,7 @@ void applyEditSegments () {
 	if (this.segments == null) return;
 	int nSegments = this.segments.length;
 	if (nSegments == 0) return;
-	length = string == null ? 0 : string.length ();
+	length = string.length ();
 
 	for (int i = 1; i < nSegments; i++) {
 		if (event.segments [i] < event.segments [i - 1] || event.segments [i] > length) {
@@ -376,7 +378,7 @@ void applyEditSegments () {
 			char separator = segmentsChars != null && segmentsChars.length > segmentCount ? segmentsChars [segmentCount] : defaultSeparator;
 			newChars [charCount++] = separator;
 			segmentCount++;
-		} else if (string != null) {
+		} else {
 			newChars [charCount] = string.charAt (charCount++ - segmentCount);
 		}
 	}
@@ -1209,7 +1211,7 @@ Event getSegments (String string) {
 	event.text = string;
 	sendEvent (SWT.Segments, event);
 	if (event.segments != null) {
-		for (int i = 1, segmentCount = event.segments.length, lineLength = string == null ? 0 : string.length(); i < segmentCount; i++) {
+		for (int i = 1, segmentCount = event.segments.length, lineLength = string.length(); i < segmentCount; i++) {
 			if (event.segments[i] < event.segments[i - 1] || event.segments[i] > lineLength) {
 				SWT.error (SWT.ERROR_INVALID_ARGUMENT);
 			}
@@ -1219,7 +1221,7 @@ Event getSegments (String string) {
 }
 
 String getSegmentsText (String text, Event event) {
-	if (text == null || event == null) return text;
+	if (event == null) return text;
 	int[] segments = event.segments;
 	if (segments == null) return text;
 	int nSegments = segments.length;
@@ -1444,7 +1446,7 @@ public int indexOf (String string) {
  */
 public int indexOf (String string, int start) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	
 	/*
 	* Bug in Windows.  For some reason, CB_FINDSTRINGEXACT
@@ -1665,7 +1667,7 @@ public void remove (int start, int end) {
  */
 public void remove (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	int index = indexOf (string, 0);
 	if (index == -1) error (SWT.ERROR_INVALID_ARGUMENT);
 	remove (index);
@@ -1878,7 +1880,7 @@ boolean sendKeyEvent (int type, int msg, long /*int*/ wParam, long /*int*/ lPara
 			break;
 	}
 	String newText = verifyText (oldText, start [0], end [0], event);
-	if (newText == null) return false;
+	if (newText == StringUtil.getInstance().INIT_STRING) return false;
 	if (newText == oldText) return true;
 	TCHAR buffer = new TCHAR (getCodePage (), newText, true);
 	OS.SendMessage (hwndText, OS.EM_SETSEL, start [0], end [0]);
@@ -2020,7 +2022,7 @@ void setForegroundPixel (int pixel) {
  */
 public void setItem (int index, String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	int selection = getSelectionIndex ();
 	remove (index, false);
 	if (isDisposed ()) return;
@@ -2248,7 +2250,7 @@ public void setSelection (Point selection) {
  */
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if ((style & SWT.READ_ONLY) != 0) {
 		int index = indexOf (string);
 		if (index != -1) select (index);
@@ -2512,7 +2514,7 @@ String verifyText (String string, int start, int end, Event keyEvent) {
 	* the operation.
 	*/
 	sendEvent (SWT.Verify, event);
-	if (!event.doit || isDisposed ()) return null;
+	if (!event.doit || isDisposed ()) return StringUtil.getInstance().INIT_STRING;
 	return event.text;
 }
 
@@ -2646,19 +2648,19 @@ long /*int*/ windowProc (long /*int*/ hwnd, int msg, long /*int*/ wParam, long /
 			int index = (int)/*64*/ wParam;
 			if ((style & SWT.READ_ONLY) != 0) {
 				if (hooks (SWT.Verify) || filters (SWT.Verify)) {
-					String oldText = getText (), newText = null;
+					String oldText = getText (), newText = StringUtil.getInstance().INIT_STRING;
 					if (wParam == -1) {
-						newText = "";
+						newText = StringUtil.getInstance().EMPTY_STRING;
 					} else {
 						if (0 <= wParam && wParam < getItemCount ()) {
 							newText = getItem ((int)/*64*/wParam);
 						}
 					}
-					if (newText != null && !newText.equals (oldText)) {
+					if (newText != StringUtil.getInstance().INIT_STRING && !newText.equals (oldText)) {
 						int length = OS.GetWindowTextLength (handle);
 						oldText = newText;
 						newText = verifyText (newText, 0, length, null);
-						if (newText == null) return 0;
+						if (newText == StringUtil.getInstance().INIT_STRING) return 0;
 						if (!newText.equals (oldText)) {
 							index = indexOf (newText);
 							if (index != -1 && index != wParam) {
@@ -2959,13 +2961,13 @@ LRESULT wmClipboard (long /*int*/ hwndText, int msg, long /*int*/ wParam, long /
 	if (!hooks (SWT.Verify) && !filters (SWT.Verify)) return null;
 	boolean call = false;
 	int [] start = new int [1], end = new int [1];
-	String newText = null;
+	String newText = StringUtil.getInstance().INIT_STRING;
 	switch (msg) {
 		case OS.WM_CLEAR:
 		case OS.WM_CUT:
 			OS.SendMessage (hwndText, OS.EM_GETSEL, start, end);
 			if (untranslateOffset (start [0]) != untranslateOffset (end [0])) {
-				newText = "";
+				newText = StringUtil.getInstance().EMPTY_STRING;
 				call = true;
 			}
 			break;
@@ -2986,7 +2988,7 @@ LRESULT wmClipboard (long /*int*/ hwndText, int msg, long /*int*/ wParam, long /
 					OS.GetWindowText (hwndText, buffer, length + 1);
 					newText = buffer.toString (newStart [0], newEnd [0] - newStart [0]);
 				} else {
-					newText = "";
+					newText = StringUtil.getInstance().EMPTY_STRING;
 				}
 				OS.CallWindowProc (EditProc, hwndText, msg, wParam, lParam);
 				OS.SendMessage (hwndText, OS.EM_GETSEL, start, end);
@@ -3003,10 +3005,10 @@ LRESULT wmClipboard (long /*int*/ hwndText, int msg, long /*int*/ wParam, long /
 			newText = buffer.toString (0, length);
 			break;
 	}
-	if (newText != null) {
+	if (newText != StringUtil.getInstance().INIT_STRING) {
 		String oldText = newText;
 		newText = verifyText (newText, start [0], end [0], null);
-		if (newText == null) return LRESULT.ZERO;
+		if (newText == StringUtil.getInstance().INIT_STRING) return LRESULT.ZERO;
 		if (!newText.equals (oldText)) {
 			if (call) {
 				OS.CallWindowProc (EditProc, hwndText, msg, wParam, lParam);

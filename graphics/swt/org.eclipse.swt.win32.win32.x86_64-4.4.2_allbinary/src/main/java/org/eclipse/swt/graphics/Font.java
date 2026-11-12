@@ -135,14 +135,14 @@ public Font(Device device, FontData[] fds) {
  */
 public Font(Device device, String name, int height, int style) {
 	super(device);
-	if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	init(new FontData (name, height, style));
 	init();
 }
 
 /*public*/ Font(Device device, String name, float height, int style) {
 	super(device);
-	if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (name == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	init(new FontData (name, height, style));
 	init();	
 }

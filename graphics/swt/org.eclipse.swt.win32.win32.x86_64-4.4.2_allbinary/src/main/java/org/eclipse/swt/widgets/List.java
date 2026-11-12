@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
@@ -97,7 +99,7 @@ public List (Composite parent, int style) {
  */
 public void add (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	TCHAR buffer = new TCHAR (getCodePage (), string, true);
 	int result = (int)/*64*/OS.SendMessage (handle, OS.LB_ADDSTRING, 0, buffer);
 	if (result == OS.LB_ERR) error (SWT.ERROR_ITEM_NOT_ADDED);
@@ -129,7 +131,7 @@ public void add (String string) {
  */
 public void add (String string, int index) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (index == -1) error (SWT.ERROR_INVALID_RANGE);
 	TCHAR buffer = new TCHAR (getCodePage (), string, true);
 	int result = (int)/*64*/OS.SendMessage (handle, OS.LB_INSERTSTRING, index, buffer);
@@ -664,7 +666,7 @@ public int indexOf (String string) {
  */
 public int indexOf (String string, int start) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	
 	/*
 	* Bug in Windows.  For some reason, LB_FINDSTRINGEXACT
@@ -918,7 +920,7 @@ public void remove (int start, int end) {
  */
 public void remove (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	int index = indexOf (string, 0);
 	if (index == -1) error (SWT.ERROR_INVALID_ARGUMENT);
 	remove (index);
@@ -1168,7 +1170,7 @@ public void setFont (Font font) {
  */
 public void setItem (int index, String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	int topIndex = getTopIndex ();
 	boolean isSelected = isSelected (index);
 	remove (index);
@@ -1371,7 +1373,7 @@ public void setSelection (String [] items) {
 	for (int i=length-1; i>=0; --i) {
 		String string = items [i];
 		int index = 0;
-		if (string != null) {
+		if (string != StringUtil.getInstance().EMPTY_STRING) {
 			int localFocus = -1;
 			while ((index = indexOf (string, index)) != -1) {
 				if (localFocus == -1) localFocus = index;

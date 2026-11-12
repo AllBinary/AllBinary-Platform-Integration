@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.win32.*;
@@ -35,7 +37,7 @@ import org.eclipse.swt.*;
  */
 public class DirectoryDialog extends Dialog {
 	String message = "", filterPath = "";  //$NON-NLS-1$//$NON-NLS-2$
-	String directoryPath;
+	String directoryPath = StringUtil.getInstance().EMPTY_STRING;
 	
 /**
  * Constructs a new instance of this class given only its parent.
@@ -86,7 +88,7 @@ public DirectoryDialog (Shell parent, int style) {
 long /*int*/ BrowseCallbackProc (long /*int*/ hwnd, long /*int*/ uMsg, long /*int*/ lParam, long /*int*/ lpData) {
 	switch ((int)/*64*/uMsg) {
 		case OS.BFFM_INITIALIZED:
-			if (filterPath != null && filterPath.length () != 0) {
+			if (filterPath.length () != 0) {
 				/* Use the character encoding for the default locale */
 				TCHAR buffer = new TCHAR (0, filterPath.replace ('/', '\\'), true);
 				OS.SendMessage (hwnd, OS.BFFM_SETSELECTION, 1, buffer);
@@ -189,7 +191,7 @@ public String open () {
 		display.setModalDialog (this);
 	}
 	
-	this.directoryPath = null;
+	this.directoryPath = StringUtil.getInstance().EMPTY_STRING;
 	BROWSEINFO lpbi = new BROWSEINFO ();
 	lpbi.hwndOwner = hwndOwner;
 	lpbi.lpszTitle = lpszTitle;
@@ -268,7 +270,7 @@ public String open () {
 //	if (hwndOwner != 0) OS.UpdateWindow (hwndOwner);
 	
 	/* Return the directory path */
-	if (!success) return null;
+	if (!success) return StringUtil.getInstance().EMPTY_STRING;
 	return directoryPath;
 }
 
@@ -301,7 +303,7 @@ public void setFilterPath (String string) {
  * </ul>
  */
 public void setMessage (String string) {
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	this.message = string;
 }
 

@@ -227,8 +227,8 @@ static long /*int*/ getMsgProc(long /*int*/ code, long /*int*/ wParam, long /*in
 						if (display.isDisposed()) return 0;
 						display.setData(ACCEL_KEY_HIT, Boolean.FALSE);
 						if (frame.isDisposed()) return 0;
-						String value = (String)frame.getData(CONSUME_KEY); 
-						if (value != null) consumed = value.equals("true"); //$NON-NLS-1$
+						final Object valueCanBeNull = frame.getData(CONSUME_KEY); 
+						if (valueCanBeNull != null) consumed = ((String) valueCanBeNull).equals("true"); //$NON-NLS-1$
 						frame.setData(CONSUME_KEY, null);
 					}
 					boolean accentKey = false;

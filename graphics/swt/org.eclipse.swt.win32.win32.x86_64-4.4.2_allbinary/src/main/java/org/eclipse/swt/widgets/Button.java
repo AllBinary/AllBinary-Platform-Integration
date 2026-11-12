@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.win32.*;
@@ -772,7 +774,7 @@ void releaseWidget () {
 	disabledImage = null;
 	if (image2 != null) image2.dispose ();
 	image2 = null;
-	this.text = null;
+	this.text = StringUtil.getInstance().EMPTY_STRING;
 	image = null;
 }
 
@@ -987,7 +989,7 @@ public void setGrayed (boolean grayed) {
  */
 /*public*/ void setMessage (String message) {
 	checkWidget ();
-	if (message == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (message == null) error (SWT.ERROR_NULL_ARGUMENT);
 	this.message = message;
 	if (OS.COMCTL32_VERSION >= OS.VERSION (6, 1)) {
 		if ((style & SWT.COMMAND) != 0) {
@@ -1085,7 +1087,7 @@ public void setSelection (boolean selected) {
  */
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if ((style & SWT.ARROW) != 0) return;
 	this.text = string;
 	/* This code is intentionally commented */

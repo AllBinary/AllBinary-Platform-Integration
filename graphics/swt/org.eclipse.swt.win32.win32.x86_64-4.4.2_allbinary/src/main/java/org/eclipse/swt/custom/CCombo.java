@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.thread.ARunnable;
 
 
@@ -195,7 +197,7 @@ static int checkStyle (int style) {
  */
 public void add (String string) {
 	checkWidget();
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	this.list.add (string);
 }
 /**
@@ -223,7 +225,7 @@ public void add (String string) {
  */
 public void add (String string, int index) {
 	checkWidget();
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	this.list.add (string, index);
 }
 /**
@@ -618,7 +620,7 @@ void dropDown (boolean drop) {
  * characters in the given string, return '\0'.
  */
 char _findMnemonic (String string) {
-	if (string == null) return '\0';
+	//if (string == null) return '\0';
 	int index = 0;
 	int length = string.length ();
 	do {
@@ -645,7 +647,7 @@ String getAssociatedLabel () {
 			break;
 		}
 	}
-	return null;
+	return StringUtil.getInstance().EMPTY_STRING;
 }
 @Override
 public Control [] getChildren () {
@@ -935,7 +937,7 @@ void handleScroll(Event event) {
  */
 public int indexOf (String string) {
 	checkWidget ();
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	return list.indexOf (string);
 }
 /**
@@ -959,7 +961,7 @@ public int indexOf (String string) {
  */
 public int indexOf (String string, int start) {
 	checkWidget ();
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	return list.indexOf (string, start);
 }
 
@@ -967,18 +969,18 @@ void initAccessible() {
 	AccessibleAdapter accessibleAdapter = new AccessibleAdapter () {
 		@Override
 		public void getName (AccessibleEvent e) {
-			String name = null;
+			String name = StringUtil.getInstance().INIT_STRING;
 			String text = getAssociatedLabel ();
-			if (text != null) {
+			if (text != StringUtil.getInstance().EMPTY_STRING) {
 				name = stripMnemonic (text);
 			}
 			e.result = name;
 		}
 		@Override
 		public void getKeyboardShortcut(AccessibleEvent e) {
-			String shortcut = null;
+			String shortcut = StringUtil.getInstance().INIT_STRING;
 			String text = getAssociatedLabel ();
-			if (text != null) {
+			if (text != StringUtil.getInstance().EMPTY_STRING) {
 				char mnemonic = _findMnemonic (text);
 				if (mnemonic != '\0') {
 					shortcut = "Alt+"+mnemonic; //$NON-NLS-1$
@@ -1335,7 +1337,7 @@ public void remove (int start, int end) {
  */
 public void remove (String string) {
 	checkWidget();
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	this.list.remove (string);
 }
 /**
@@ -1635,7 +1637,7 @@ public void setSelection (Point selection) {
  */
 public void setText (String string) {
 	checkWidget();
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	int index = this.list.indexOf (string);
 	if (index == -1) {
 		this.list.deselectAll ();

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.events;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.widgets.Event;
 
@@ -34,7 +36,7 @@ public final class VerifyEvent extends KeyEvent {
 	 * Setting this field will change the text that is about to
 	 * be inserted or deleted.
 	 */
-	public String text;
+	public String text = StringUtil.getInstance().EMPTY_STRING;
 
 	static final long serialVersionUID = 3257003246269577014L;
 	

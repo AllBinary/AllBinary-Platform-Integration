@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.internal.ole.win32;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.internal.win32.*;
 
 public class IOleObject extends IUnknown
@@ -42,7 +44,7 @@ public int SetHostNames(String szContainerApp, String szContainerObj) {
 
 	// create a null terminated array of char
 	char[] buffer1 = null;
-	if (szContainerApp != null) {
+	if (szContainerApp != StringUtil.getInstance().EMPTY_STRING) {
 		int count1 = szContainerApp.length();
 		buffer1 = new char[count1 + 1];
 		szContainerApp.getChars(0, count1, buffer1, 0);
@@ -50,7 +52,7 @@ public int SetHostNames(String szContainerApp, String szContainerObj) {
 
 	// create a null terminated array of char
 	char[] buffer2 = null;
-	if (szContainerObj != null) {
+	if (szContainerObj != StringUtil.getInstance().EMPTY_STRING) {
 		int count2 = szContainerObj.length();
 		buffer2 = new char[count2 + 1];
 		szContainerObj.getChars(0, count2, buffer2, 0);

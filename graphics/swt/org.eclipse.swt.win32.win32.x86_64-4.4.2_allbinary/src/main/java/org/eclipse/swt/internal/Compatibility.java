@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.internal;
 
+import org.allbinary.logic.string.StringUtil;
+
  
 import java.io.*;
 import java.text.MessageFormat;
@@ -289,7 +291,7 @@ public static void exec(String[] progArray) throws java.io.IOException{
  * @since 3.6
  */
 public static void exec(String[] prog, String[] envp, String workingDir) throws java.io.IOException{
-	Runtime.getRuntime().exec(prog, null, workingDir != null ? new File(workingDir) : null);
+	Runtime.getRuntime().exec(prog, null, workingDir != StringUtil.getInstance().EMPTY_STRING ? new File(workingDir) : null);
 }
 
 private static ResourceBundle msgs = null;
@@ -306,9 +308,9 @@ private static ResourceBundle msgs = null;
 public static String getMessage(String key) {
 	String answer = key;
 	
-	if (key == null) {
-		SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	}	
+	//if (key == null) {
+		//SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//}	
 	if (msgs == null) {
 		try {
 			msgs = ResourceBundle.getBundle("org.eclipse.swt.internal.SWTMessages"); //$NON-NLS-1$
@@ -328,7 +330,7 @@ public static String getMessage(String key) {
 public static String getMessage(String key, Object[] args) {
 	String answer = key;
 	
-	if (key == null || args == null) {
+	if (args == null) {
 		SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	}
 	if (msgs == null) {

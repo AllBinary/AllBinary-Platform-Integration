@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.internal.win32.*;
@@ -297,7 +299,7 @@ void releaseWidget () {
 		this.item.toolTip = null;
 	}
 	this.item = null;
-	this.text = message = null;
+	this.text = message = StringUtil.getInstance().EMPTY_STRING;
 }
 
 /**
@@ -413,7 +415,7 @@ public void setLocation (Point location) {
  */
 public void setMessage (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	message = string;
 	//TODO - update when visible
 }
@@ -433,7 +435,7 @@ public void setMessage (String string) {
  */
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	this.text = string;
 	//TODO - update when visible
 }
@@ -473,7 +475,7 @@ public void setVisible (boolean visible) {
 			if ((style & SWT.ICON_ERROR) != 0) icon = OS.TTI_ERROR;
 			shell.setToolTipTitle (hwndToolTip, text, icon);
 		} else {
-			shell.setToolTipTitle (hwndToolTip, null, 0);
+			shell.setToolTipTitle (hwndToolTip, StringUtil.getInstance().EMPTY_STRING, 0);
 		}
 		OS.SendMessage (hwndToolTip, OS.TTM_SETMAXTIPWIDTH, 0, getWidth ());
 		if (visible) {

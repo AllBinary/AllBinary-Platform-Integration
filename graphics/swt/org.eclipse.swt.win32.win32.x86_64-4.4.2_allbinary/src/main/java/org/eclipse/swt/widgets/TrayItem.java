@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
@@ -41,7 +43,7 @@ public class TrayItem extends Item {
 	int id;
 	Image image2, highlightImage;
 	ToolTip toolTip;
-	String toolTipText;
+	String toolTipText = StringUtil.getInstance().EMPTY_STRING;
 	boolean visible = true;
 	
 /**
@@ -324,7 +326,7 @@ void recreate () {
 	if (!this.visible) setVisible (false);
 	if (text.length () != 0) setText (text);
 	if (image != null) setImage (image);
-	if (this.toolTipText != null) setToolTipText (this.toolTipText);
+	if (this.toolTipText != StringUtil.getInstance().EMPTY_STRING) setToolTipText (this.toolTipText);
 }
 
 void releaseHandle () {
@@ -339,7 +341,7 @@ void releaseWidget () {
 	if (image2 != null) image2.dispose ();
 	image2 = null;
 	highlightImage = null;
-	this.toolTipText = null;
+	this.toolTipText = StringUtil.getInstance().EMPTY_STRING;
 	NOTIFYICONDATA iconData = OS.IsUnicode ? (NOTIFYICONDATA) new NOTIFYICONDATAW () : new NOTIFYICONDATAA ();
 	iconData.cbSize = NOTIFYICONDATA.sizeof;
 	iconData.uID = this.id;
@@ -506,7 +508,7 @@ public void setToolTipText (String string) {
 	checkWidget ();
 	this.toolTipText = string;
 	NOTIFYICONDATA iconData = OS.IsUnicode ? (NOTIFYICONDATA) new NOTIFYICONDATAW () : new NOTIFYICONDATAA ();
-	TCHAR buffer = new TCHAR (0, toolTipText == null ? "" : toolTipText, true);
+	TCHAR buffer = new TCHAR (0, toolTipText, true);
 	/*
 	* Note that the size of the szTip field is different in version 5.0 of shell32.dll.
 	*/

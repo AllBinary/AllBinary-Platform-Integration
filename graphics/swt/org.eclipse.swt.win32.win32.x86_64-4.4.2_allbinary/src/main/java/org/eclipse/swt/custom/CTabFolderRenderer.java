@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.custom;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
@@ -313,11 +315,11 @@ public class CTabFolderRenderer {
 						}
 						height =  bounds.height;
 					}
-					String text = null;
+					String text = StringUtil.getInstance().INIT_STRING;
 					if ((state & MINIMUM_SIZE) != 0) {
 						int minChars = this.parent.minChars;
-						text = minChars == 0 ? null : item.getText();
-						if (text != null && text.length() > minChars) {
+						text = minChars == 0 ? StringUtil.getInstance().INIT_STRING : item.getText();
+						if (text != StringUtil.getInstance().INIT_STRING && text.length() > minChars) {
 							if (useEllipses()) {
 								int end = minChars < ELLIPSIS.length() + 1 ? minChars : minChars - ELLIPSIS.length();
 								text = text.substring(0, end);
@@ -330,7 +332,7 @@ public class CTabFolderRenderer {
 					} else {
 						text = item.getText();
 					}
-					if (text != null) {
+					if (text != StringUtil.getInstance().INIT_STRING) {
 						if (width > 0) width += INTERNAL_SPACING;
 						if (item.font == null) {
 							Point size = gc.textExtent(text, FLAGS);
@@ -1460,7 +1462,7 @@ public class CTabFolderRenderer {
 				Font gcFont = gc.getFont();
 				gc.setFont(item.font == null ? parent.getFont() : item.font);
 				
-				if (item.shortenedText == null || item.shortenedTextWidth != textWidth) {
+				if (item.shortenedText == StringUtil.getInstance().EMPTY_STRING || item.shortenedTextWidth != textWidth) {
 					item.shortenedText = shortenText(gc, item.getText(), textWidth);
 					item.shortenedTextWidth = textWidth;
 				}
@@ -1670,7 +1672,7 @@ public class CTabFolderRenderer {
 			if (textWidth > 0) {
 				Font gcFont = gc.getFont();
 				gc.setFont(item.font == null ? this.parent.getFont() : item.font);
-				if (item.shortenedText == null || item.shortenedTextWidth != textWidth) {
+				if (item.shortenedText == StringUtil.getInstance().EMPTY_STRING || item.shortenedTextWidth != textWidth) {
 					item.shortenedText = shortenText(gc, item.getText(), textWidth);
 					item.shortenedTextWidth = textWidth;
 				}	

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.ole.win32;
 
+import org.allbinary.logic.string.StringUtil;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
@@ -187,7 +189,7 @@ public OleClientSite(Composite parent, int style, File file) {
 		if (result != COM.S_OK)	OLE.error(OLE.ERROR_INVALID_CLASSID, result);
 		// associated CLSID may not be installed on this machine
 		String progID = getProgID(fileClsid); 
-		if (progID == null)	OLE.error(OLE.ERROR_INVALID_CLASSID, result);
+		if (progID == StringUtil.getInstance().EMPTY_STRING)	OLE.error(OLE.ERROR_INVALID_CLASSID, result);
 			
 		this.appClsid = fileClsid;
 		OleCreate(this.appClsid, fileClsid, fileName, file);
@@ -679,7 +681,7 @@ protected GUID getClassID(String clientName) {
 
 	// create a null terminated array of char
 	char[] buffer = null;
-	if (clientName != null) {
+	if (clientName != StringUtil.getInstance().EMPTY_STRING) {
 		int count = clientName.length();
 		buffer = new char[count + 1];
 		clientName.getChars(0, count, buffer, 0);
@@ -748,7 +750,7 @@ String getProgID(GUID clsid) {
 			return result.substring(0, index);
 		}
 	}
-	return null;
+	return StringUtil.getInstance().EMPTY_STRING;
 }
 int ActivateMe(long /*int*/ pViewToActivate) {
 	if (pViewToActivate == 0) {
@@ -872,14 +874,14 @@ public boolean isFocusControl () {
 }
 private boolean isOffice2007(boolean program) {
 	String programID = getProgramID();
-	if (programID == null) return false;
+	if (programID == StringUtil.getInstance().EMPTY_STRING) return false;
 	if (program) {
 		int lastDot = programID.lastIndexOf('.');
 		if (lastDot != -1) {
 			programID = programID.substring(0, lastDot);
 			GUID guid = getClassID(programID); 
 			programID = getProgID(guid);
-			if (programID == null) return false;
+			if (programID == StringUtil.getInstance().EMPTY_STRING) return false;
 		}
 	}
 	if (programID.equals("Word.Document.12")) return true; //$NON-NLS-1$ 
@@ -1437,7 +1439,7 @@ public void showProperties(String title) {
 
 	// create a frame in which to display the pages
 	char[] chTitle = null;
-	if (title != null) {
+	if (title != StringUtil.getInstance().EMPTY_STRING) {
 		chTitle = new char[title.length()];
 		title.getChars(0, title.length(), chTitle, 0);
 	}

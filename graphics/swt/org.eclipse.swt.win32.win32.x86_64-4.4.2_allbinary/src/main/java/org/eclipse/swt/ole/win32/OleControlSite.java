@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.ole.win32;
 
+import org.allbinary.logic.string.StringUtil;
+
 import java.io.*;
 
 import org.eclipse.swt.*;
@@ -354,7 +356,7 @@ public void addEventListener(OleAutomation automation, int eventID, OleListener 
  * </ul>
  */
 public void addEventListener(OleAutomation automation, String eventSinkId, int eventID, OleListener listener) {
-	if (listener == null || automation == null || eventSinkId == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
+	if (listener == null || automation == null) OLE.error (SWT.ERROR_NULL_ARGUMENT);
 	long /*int*/ address = automation.getAddress();
 	if (address == 0) return;
 	char[] buffer = (eventSinkId +"\0").toCharArray();
@@ -670,7 +672,7 @@ protected int OnUIDeactivate(int fUndoable) {
 }
 void onFocusIn(Event e) {
 	String progID = getProgramID();
-	if (progID == null) return;
+	if (progID == StringUtil.getInstance().EMPTY_STRING) return;
 	if (!progID.startsWith(SHELL_PROG_ID)) {
 		super.onFocusIn(e);
 		return;
@@ -686,7 +688,7 @@ void onFocusIn(Event e) {
 void onFocusOut(Event e) {
 	if (objIOleInPlaceObject == null) return;
 	String progID = getProgramID();
-	if (progID == null) return;
+	if (progID == StringUtil.getInstance().EMPTY_STRING) return;
 	if (!progID.startsWith(SHELL_PROG_ID)) {
 		super.onFocusOut(e);
 		return;

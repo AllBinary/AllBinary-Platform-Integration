@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.accessibility;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.SWTEventObject;
 
@@ -43,7 +45,7 @@ public class AccessibleEvent extends SWTEventObject {
 	 * What to set it to depends on the listener method called, and
 	 * the childID specified by the client.
 	 */
-	public String result;
+	public String result = StringUtil.getInstance().INIT_STRING;
 	
 	static final long serialVersionUID = 3257567304224026934L;
 	

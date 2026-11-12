@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.awt;
+
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.thread.ARunnable;
 
 
@@ -56,7 +58,7 @@ public class SWT_AWT {
 	 * The name of the embedded Frame class. The default class name
 	 * for the platform will be used if <code>null</code>. 
 	 */
-	public static String embeddedFrameClass;
+	public static String embeddedFrameClass = StringUtil.getInstance().EMPTY_STRING;
 
 	/**
 	 * Key for looking up the embedded frame for a Composite using
@@ -159,7 +161,7 @@ public static Frame new_Frame (final Composite parent) {
 				 */
 				Class clazz = null;
 				try {
-					String className = embeddedFrameClass != null ? embeddedFrameClass : "sun.awt.windows.WEmbeddedFrame";
+					String className = embeddedFrameClass != StringUtil.getInstance().EMPTY_STRING ? embeddedFrameClass : "sun.awt.windows.WEmbeddedFrame";
 					clazz = Class.forName(className);
 				} catch (Throwable e) {
                                     final String message = ExceptionUtil.getInstance().getStackTrace(e); System.out.println("Exception in SWT: " + message);

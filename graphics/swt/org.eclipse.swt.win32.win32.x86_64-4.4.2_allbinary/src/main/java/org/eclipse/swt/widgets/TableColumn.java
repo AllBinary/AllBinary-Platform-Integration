@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
  
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
@@ -37,7 +39,7 @@ import org.eclipse.swt.events.*;
 public class TableColumn extends Item {
 	Table parent;
 	boolean resizable, moveable;
-	String toolTipText;
+	String toolTipText = StringUtil.getInstance().EMPTY_STRING;
 	int id;
 
 /**
@@ -779,7 +781,7 @@ void setSortDirection (int direction) {
 
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (string.equals (text)) return;
 	int index = this.parent.indexOf (this);
 	if (index == -1) return;

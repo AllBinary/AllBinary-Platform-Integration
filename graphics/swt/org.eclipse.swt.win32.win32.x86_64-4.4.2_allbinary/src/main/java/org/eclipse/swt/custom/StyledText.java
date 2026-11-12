@@ -9,6 +9,8 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 package org.eclipse.swt.custom;
+
+import org.allbinary.logic.string.StringUtil;
 import org.allbinary.thread.ARunnable;
 
 
@@ -418,11 +420,11 @@ public class StyledText extends Canvas {
 		gc.setFont(printerFont);
 		printerRenderer.setFont(printerFont, tabLength);
 		int lineHeight = printerRenderer.getLineHeight();
-		if (printOptions.header != null) {
+		if (printOptions.header != StringUtil.getInstance().EMPTY_STRING) {
 			clientArea.y += lineHeight * 2;
 			clientArea.height -= lineHeight * 2;
 		}
-		if (printOptions.footer != null) {
+		if (printOptions.footer != StringUtil.getInstance().EMPTY_STRING) {
 			clientArea.height -= lineHeight * 2;
 		}
 		
@@ -455,7 +457,7 @@ public class StyledText extends Canvas {
 		int pageBottom = clientArea.y + clientArea.height;
 		int orientation =  gc.getStyle() & (SWT.RIGHT_TO_LEFT | SWT.LEFT_TO_RIGHT);
 		TextLayout printLayout = null;
-		if (printOptions.printLineNumbers || printOptions.header != null || printOptions.footer != null) {
+		if (printOptions.printLineNumbers || printOptions.header != StringUtil.getInstance().EMPTY_STRING || printOptions.footer != StringUtil.getInstance().EMPTY_STRING) {
 			printLayout = new TextLayout(printer);
 			printLayout.setFont(printerFont);
 		}
@@ -550,7 +552,7 @@ public class StyledText extends Canvas {
 	 */
 	void printDecoration(int page, boolean header, TextLayout layout) {
 		String text = header ? printOptions.header : printOptions.footer;
-		if (text == null) return;
+		if (text == StringUtil.getInstance().EMPTY_STRING) return;
 		int lastSegmentIndex = 0;
 		for (int i = 0; i < 3; i++) {
 			int segmentIndex = text.indexOf(StyledTextPrintOptions.SEPARATOR, lastSegmentIndex);
@@ -647,7 +649,7 @@ public class StyledText extends Canvas {
 	 */
 	public void run() {
 		String jobName = printOptions.jobName;
-		if (jobName == null) {
+		if (jobName == StringUtil.getInstance().EMPTY_STRING) {
 			jobName = "Printing";
 		}
 		if (printer.startJob(jobName)) {
@@ -753,13 +755,13 @@ public class StyledText extends Canvas {
 		final String WinME = "windows me";		
 		final String WinNT = "windows nt";
 		String osName = System.getProperty("os.name").toLowerCase();
-		String osVersion = System.getProperty("os.version");
+		String osVersionCanBeNull = System.getProperty("os.version");
 		int majorVersion = 0;
 		
-		if (osName.startsWith(WinNT) && osVersion != null) {
-			int majorIndex = osVersion.indexOf('.');
+		if (osName.startsWith(WinNT) && osVersionCanBeNull != null) {
+			int majorIndex = osVersionCanBeNull.indexOf('.');
 			if (majorIndex != -1) {
-				osVersion = osVersion.substring(0, majorIndex);
+				final String osVersion = osVersionCanBeNull.substring(0, majorIndex);
 				try {
 					majorVersion = Integer.parseInt(osVersion);
 				} catch (NumberFormatException e) {
@@ -1538,9 +1540,9 @@ public void addWordMovementListener(MovementListener movementListener) {
  */
 public void append(String string) {
 	checkWidget();
-	if (string == null) {
-		SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	}
+	//if (string == null) {
+		//SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//}
 	int lastChar = Math.max(getCharCount(), 0);
 	replaceTextRange(lastChar, 0, string);
 }
@@ -2479,7 +2481,7 @@ void doContent(char key) {
 	} else {
 		event.text = new String(new char[] {key});
 	}
-	if (event.text != null) {
+	if (event.text != StringUtil.getInstance().EMPTY_STRING) {
 		if (this.textLimit > 0 && this.content.getCharCount() - (event.end - event.start) >= this.textLimit) {
 			return;
 		}
@@ -5493,9 +5495,9 @@ Point getPointAtOffset(int offset) {
  */
 public void insert(String string) {
 	checkWidget();
-	if (string == null) {
-		SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	}
+	//if (string == null) {
+		//SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//}
 	if (this.blockSelection) {
 		insertBlockSelectionText(string, false); 
 	} else {
@@ -5809,7 +5811,7 @@ void handleCompositionSelection (Event event) {
 		int charCount = getCharCount();
 		event.start = Math.max(0, Math.min(event.start, charCount));
 		event.end = Math.max(0, Math.min(event.end, charCount));
-		if (event.text != null) {
+		if (event.text != StringUtil.getInstance().EMPTY_STRING) {
 			setSelection(event.start, event.end);
 		} else {
 			event.text = getTextRange(event.start, event.end - event.start);
@@ -6041,8 +6043,8 @@ void handleMouseDown(Event event) {
 		
 	//paste clipboard selection
 	if (event.button == 2) {
-		String text = (String)getClipboardContent(DND.SELECTION_CLIPBOARD);
-		if (text != null && text.length() > 0) {
+		final Object textCanBeNull = getClipboardContent(DND.SELECTION_CLIPBOARD); final String text = textCanBeNull == null ? StringUtil.getInstance().EMPTY_STRING : (String) textCanBeNull;
+		if (text.length() > 0) {
 			// position cursor
 			doMouseLocationChange(event.x, event.y, false);
 			// insert text
@@ -6370,9 +6372,9 @@ void initializeAccessible() {
 	accessible.addAccessibleListener(new AccessibleAdapter() {
 		@Override
 		public void getName (AccessibleEvent e) {
-			String name = null;
+			String name = StringUtil.getInstance().INIT_STRING;
 			String text = getAssociatedLabel ();
-			if (text != null) {
+			if (text != StringUtil.getInstance().EMPTY_STRING) {
 				name = stripMnemonic (text);
 			}
 			e.result = name;
@@ -6383,9 +6385,9 @@ void initializeAccessible() {
 		}
 		@Override
 		public void getKeyboardShortcut(AccessibleEvent e) {
-			String shortcut = null;
+			String shortcut = StringUtil.getInstance().INIT_STRING;
 			String text = getAssociatedLabel ();
-			if (text != null) {
+			if (text != StringUtil.getInstance().EMPTY_STRING) {
 				char mnemonic = _findMnemonic (text);
 				if (mnemonic != '\0') {
 					shortcut = "Alt+"+mnemonic; //$NON-NLS-1$
@@ -6894,7 +6896,7 @@ String getAssociatedLabel () {
 			break;
 		}
 	}
-	return null;
+	return StringUtil.getInstance().EMPTY_STRING;
 }
 String stripMnemonic (String string) {
 	int index = 0;
@@ -6915,7 +6917,7 @@ String stripMnemonic (String string) {
  * characters in the given string, return '\0'.
  */
 char _findMnemonic (String string) {
-	if (string == null) return '\0';
+	//if (string == null) return '\0';
 	int index = 0;
 	int length = string.length ();
 	do {
@@ -7312,8 +7314,8 @@ void paintObject(GC gc, int x, int y, int ascent, int descent, StyleRange style,
  */
 public void paste(){
 	checkWidget();	
-	String text = (String) getClipboardContent(DND.CLIPBOARD);
-	if (text != null && text.length() > 0) {
+	final Object textCanBeNull = getClipboardContent(DND.CLIPBOARD); final String text = textCanBeNull == null ? StringUtil.getInstance().EMPTY_STRING : (String) textCanBeNull;
+	if (text.length() > 0) {
 		if (this.blockSelection) {
 			boolean fillWithSpaces = isFixedLineHeight() && this.renderer.fixedPitch;
 			int offset = insertBlockSelectionText(text, fillWithSpaces);
@@ -7860,9 +7862,9 @@ public void replaceStyleRanges(int start, int length, StyleRange[] ranges) {
  */
 public void replaceTextRange(int start, int length, String text) {
 	checkWidget();
-	if (text == null) {
-		SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	}
+	//if (text == null) {
+		//SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//}
 	int contentLength = getCharCount();
 	int end = start + length;
 	if (start > end || start < 0 || end > contentLength) {
@@ -9999,9 +10001,9 @@ public void setTabStops(int [] tabs) {
  */
 public void setText(String text) {
 	checkWidget();
-	if (text == null) {
-		SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	}
+	//if (text == null) {
+		//SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//}
 	Event event = new Event();
 	event.start = 0;
 	event.end = getCharCount();

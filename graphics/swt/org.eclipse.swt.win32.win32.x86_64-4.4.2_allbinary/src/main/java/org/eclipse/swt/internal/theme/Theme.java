@@ -70,7 +70,7 @@ public void drawText(GC gc, Rectangle bounds, DrawData data, String text, int fl
 	if (gc == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (bounds == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (data == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (text == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (text == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (gc.isDisposed()) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	data.drawText(this, text, flags, gc, bounds);
 }
@@ -106,7 +106,7 @@ public Rectangle measureText(GC gc, Rectangle bounds, DrawData data, String text
 	checkTheme();
 	if (gc == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (data == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-	if (text == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (text == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (gc.isDisposed()) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	return data.measureText(this, text, flags, gc, bounds);
 }

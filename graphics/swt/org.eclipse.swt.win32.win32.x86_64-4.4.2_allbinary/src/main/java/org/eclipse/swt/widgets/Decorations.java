@@ -1352,7 +1352,7 @@ void setSystemMenu () {
  */
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	/* Use the character encoding for the default locale */
 	TCHAR buffer = new TCHAR (0, string, true);
 	/* Ensure that the title appears in the task bar.*/

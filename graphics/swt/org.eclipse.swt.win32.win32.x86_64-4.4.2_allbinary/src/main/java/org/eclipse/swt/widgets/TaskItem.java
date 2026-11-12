@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
@@ -200,7 +202,7 @@ void releaseHandle () {
 void releaseWidget () {
 	super.releaseWidget ();
 	this.overlayImage = null;
-	this.overlayText = null;
+	this.overlayText = StringUtil.getInstance().EMPTY_STRING;
 }
 
 /**
@@ -321,7 +323,7 @@ public void setOverlayImage (Image overlayImage) {
  */
 public void setOverlayText (String overlayText) {
 	checkWidget ();
-	if (overlayText == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (overlayText == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (this.shell == null) return;
 	this.overlayText = overlayText;
 	if (overlayText.length () != 0) {

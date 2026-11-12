@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
  
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.win32.*;
@@ -757,7 +759,7 @@ boolean updateTextDirection(int textDirection) {
 
 String toolTipText (NMTTDISPINFO hdr) {
 	if ((hdr.uFlags & OS.TTF_IDISHWND) != 0) {
-		return null;
+		return StringUtil.getInstance().INIT_STRING;
 	}
 	int index = (int)/*64*/hdr.idFrom;
 	long /*int*/ hwndToolTip = OS.SendMessage (handle, OS.TCM_GETTOOLTIPS, 0, 0);
@@ -775,7 +777,7 @@ String toolTipText (NMTTDISPINFO hdr) {
 		} else {
 			hdr.uFlags &= ~OS.TTF_RTLREADING;
 		}
-		if (toolTipText != null) return "";
+		if (toolTipText != StringUtil.getInstance().EMPTY_STRING) return StringUtil.getInstance().EMPTY_STRING;
 		if (0 <= index && index < this.items.length) {
 			TabItem item = this.items [index];
 			if (item != null) return item.toolTipText;

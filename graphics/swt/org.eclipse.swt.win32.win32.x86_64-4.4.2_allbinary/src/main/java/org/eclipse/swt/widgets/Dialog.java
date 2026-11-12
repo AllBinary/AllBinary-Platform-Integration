@@ -265,7 +265,7 @@ public String getText () {
  * </ul>
  */
 public void setText (String string) {
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	this.title = string;
 }
 

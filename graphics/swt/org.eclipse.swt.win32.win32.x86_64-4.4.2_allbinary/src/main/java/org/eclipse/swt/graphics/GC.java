@@ -2182,7 +2182,7 @@ public void drawString (String string, int x, int y) {
  */
 public void drawString (String string, int x, int y, boolean isTransparent) {
 	if (this.handle == 0) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	if (string == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 //	TCHAR buffer = new TCHAR (getCodePage(), string, false);
 	int length = string.length();
 	if (length == 0) return;
@@ -2336,7 +2336,7 @@ public void drawText (String string, int x, int y, boolean isTransparent) {
  */
 public void drawText (String string, int x, int y, int flags) {
 	if (this.handle == 0) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	if (string == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	if (string.length() == 0) return;
 	long /*int*/ gdipGraphics = this.data.gdipGraphics;
 	if (gdipGraphics != 0) {
@@ -4976,7 +4976,7 @@ public void setTransform(Transform transform) {
  */
 public Point stringExtent(String string) {
 	if (this.handle == 0) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	checkGC(FONT);
 	int length = string.length();
 	long /*int*/ gdipGraphics = this.data.gdipGraphics;
@@ -5055,7 +5055,7 @@ public Point textExtent(String string) {
  */
 public Point textExtent(String string, int flags) {
 	if (this.handle == 0) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-	if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	checkGC(FONT);
 	long /*int*/ gdipGraphics = this.data.gdipGraphics;
 	if (gdipGraphics != 0) {

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.ole.win32;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.internal.ole.win32.*;
@@ -208,7 +210,7 @@ GUID getClassID(String clientName) {
 
 	// create a null terminated array of char
 	char[] buffer = null;
-	if (clientName != null) {
+	if (clientName != StringUtil.getInstance().EMPTY_STRING) {
 		int count = clientName.length();
 		buffer = new char[count + 1];
 		clientName.getChars(0, count, buffer, 0);
@@ -227,11 +229,11 @@ GUID getClassID(String clientName) {
  * file or null.
  */
 public String getHelpFile(int dispId) {
-	if (this.objITypeInfo == null) return null;
-	String[] file = new String[1];
+	if (this.objITypeInfo == null) return StringUtil.getInstance().EMPTY_STRING;
+	String[] file = new String[] {StringUtil.getInstance().EMPTY_STRING};
 	int rc = this.objITypeInfo.GetDocumentation(dispId, null, null, null, file );
 	if (rc == OLE.S_OK) return file[0];
-	return null;	
+	return StringUtil.getInstance().EMPTY_STRING;	
 }
 /**
  * Returns the documentation string for the given member ID.
@@ -240,11 +242,11 @@ public String getHelpFile(int dispId) {
  * @return the documentation string if it exists; otherwise return null.
  */
 public String getDocumentation(int dispId) {
-	if (this.objITypeInfo == null) return null;
-	String[] doc = new String[1];
+	if (this.objITypeInfo == null) return StringUtil.getInstance().EMPTY_STRING;
+	String[] doc = new String[] {StringUtil.getInstance().EMPTY_STRING};
 	int rc = this.objITypeInfo.GetDocumentation(dispId, null, doc, null, null );
 	if (rc == OLE.S_OK) return doc[0];
-	return null;
+	return StringUtil.getInstance().EMPTY_STRING;
 }
 /**
  * Returns the property description of a variable at the given index.
@@ -362,11 +364,11 @@ public TYPEATTR getTypeInfoAttributes() {
  * @return the name if it exists; otherwise return null.
  */
 public String getName(int dispId) {
-	if (this.objITypeInfo == null) return null;
-	String[] name = new String[1];
+	if (this.objITypeInfo == null) return StringUtil.getInstance().EMPTY_STRING;
+	String[] name = new String[] {StringUtil.getInstance().EMPTY_STRING};
 	int rc = this.objITypeInfo.GetDocumentation(dispId, name, null, null, null );
 	if (rc == OLE.S_OK) return name[0];
-	return null;
+	return StringUtil.getInstance().EMPTY_STRING;
 }
 /**
  * Returns the name of a function and parameter names for the specified function ID.

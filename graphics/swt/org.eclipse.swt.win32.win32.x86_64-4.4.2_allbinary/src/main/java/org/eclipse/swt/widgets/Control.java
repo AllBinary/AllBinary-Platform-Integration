@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.accessibility.*;
@@ -61,7 +63,7 @@ public abstract class Control extends Widget implements Drawable {
 	Composite parent;
 	Cursor cursor;
 	Menu menu;
-	String toolTipText;
+	String toolTipText = StringUtil.getInstance().EMPTY_STRING;
 	Object layoutData;
 	Accessible accessible;
 	Image backgroundImage;
@@ -2441,10 +2443,10 @@ void releaseWidget () {
 	if (OS.IsDBLocale) {
 		OS.ImmAssociateContext (this.handle, 0);
 	}
-	if (this.toolTipText != null) {
-		setToolTipText (getShell (), null);
+	if (this.toolTipText != StringUtil.getInstance().EMPTY_STRING) {
+		setToolTipText (getShell (), StringUtil.getInstance().EMPTY_STRING);
 	}
-	this.toolTipText = null;
+	this.toolTipText = StringUtil.getInstance().EMPTY_STRING;
 	if (this.menu != null && !this.menu.isDisposed ()) {
 		this.menu.dispose ();
 	}

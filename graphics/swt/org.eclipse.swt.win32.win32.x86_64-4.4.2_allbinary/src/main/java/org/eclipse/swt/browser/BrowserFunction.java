@@ -128,7 +128,7 @@ public BrowserFunction (Browser browser, String name, boolean top, String[] fram
 BrowserFunction (Browser browser, String name, boolean top, String[] frameNames, boolean create) {
 	super ();
 	if (browser == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	if (name == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (name == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	if (browser.isDisposed ()) SWT.error (SWT.ERROR_WIDGET_DISPOSED);
 	browser.checkWidget ();
 	this.browser = browser;

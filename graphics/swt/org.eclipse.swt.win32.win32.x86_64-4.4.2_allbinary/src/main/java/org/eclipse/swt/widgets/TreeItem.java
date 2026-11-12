@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
  
 import org.eclipse.swt.internal.win32.*;
 import org.eclipse.swt.*;
@@ -506,8 +508,8 @@ RECT getBounds (int index, boolean getText, boolean getImage, boolean fullText, 
 					rect.left = rect.right + Tree.INSET;
 					rect.right = headerRect.right;
 				} else {
-					String string = index == 0 ? text : this.strings != null ? this.strings [index] : null;
-					if (string != null) {
+					String string = index == 0 ? text : this.strings != null ? this.strings [index] : StringUtil.getInstance().INIT_STRING;
+					if (string != StringUtil.getInstance().INIT_STRING) {
 						RECT textRect = new RECT ();
 						TCHAR buffer = new TCHAR (this.parent.getCodePage (), string, false);
 						int flags = OS.DT_NOPREFIX | OS.DT_SINGLELINE | OS.DT_CALCRECT;
@@ -903,10 +905,10 @@ public String getText (int index) {
 	if (this.strings != null) {
 		if (0 <= index && index < this.strings.length) {
 			String string = this.strings [index];
-			return string != null ? string : "";
+			return string;
 		}
 	}
-	return "";
+	return StringUtil.getInstance().EMPTY_STRING;
 }
 
 /**
@@ -1753,7 +1755,7 @@ public void setText (String [] strings) {
 	if (strings == null) error (SWT.ERROR_NULL_ARGUMENT);
 	for (int i=0; i<strings.length; i++) {
 		String string = strings [i];
-		if (string != null) setText (i, string);
+		setText (i, string);
 	}
 }
 
@@ -1775,7 +1777,7 @@ public void setText (String [] strings) {
  */
 public void setText (int index, String string) {
 	checkWidget();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	if (index == 0) {
 		if (string.equals (text)) return;
 		super.setText (string);
@@ -1784,6 +1786,7 @@ public void setText (int index, String string) {
 	if (0 > index || index > count - 1) return;
 	if (this.strings == null && index != 0) {
 		this.strings = new String [count];
+		for (int stringIndex = 0; stringIndex < count; stringIndex++) this.strings [stringIndex] = StringUtil.getInstance().EMPTY_STRING;
 		this.strings [0] = text;
 	}
 	if (this.strings != null) {

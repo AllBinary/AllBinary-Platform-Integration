@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
@@ -29,7 +31,7 @@ import org.eclipse.swt.graphics.*;
  */
 
 public abstract class Item extends Widget {
-	String text;
+	String text = StringUtil.getInstance().EMPTY_STRING;
 	Image image;
 
 /**
@@ -143,7 +145,7 @@ public String getText () {
 @Override
 void releaseWidget () {
 	super.releaseWidget ();
-	this.text = null;
+	this.text = StringUtil.getInstance().EMPTY_STRING;
 	this.image = null;
 }
 
@@ -182,7 +184,7 @@ public void setImage (Image image) {
  */
 public void setText (String string) {
 	checkWidget ();
-	if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+	//if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 	this.text = string;
 }
 

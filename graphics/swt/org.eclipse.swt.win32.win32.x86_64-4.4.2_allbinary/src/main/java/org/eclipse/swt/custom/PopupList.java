@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.custom;
 
+import org.allbinary.logic.string.StringUtil;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
@@ -185,7 +187,7 @@ public String open (Rectangle rect) {
 		if (!display.readAndDispatch()) display.sleep();
 	}
 	
-	String result = null;
+	String result = StringUtil.getInstance().EMPTY_STRING;
 	if (!this.shell.isDisposed ()) {
 		String [] strings = this.list.getSelection ();
 		this.shell.dispose();
@@ -212,7 +214,7 @@ public void select(String string) {
 
 	// find the first entry in the list that starts with the
 	// specified string
-	if (string != null){
+	if (string != StringUtil.getInstance().EMPTY_STRING){
 		for (int i = 0; i < items.length; i++) {
 			if (items[i].startsWith(string)){
 				int index = this.list.indexOf(items[i]);

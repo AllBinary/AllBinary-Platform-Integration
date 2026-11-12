@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.graphics.*;
 
@@ -201,7 +203,7 @@ public class Event {
 	 * Setting this field will change the text that is about to
 	 * be inserted or deleted.
 	 */
-	public String text;
+	public String text = StringUtil.getInstance().EMPTY_STRING;
 
 	/** 
 	 * Bidi segment offsets

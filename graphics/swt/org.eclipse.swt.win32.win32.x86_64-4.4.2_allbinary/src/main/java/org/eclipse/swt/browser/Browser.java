@@ -238,8 +238,8 @@ public static void clearSessions () {
  * @since 3.5
  */
 public static String getCookie (String name, String url) {
-	if (name == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	if (url == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (name == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (url == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	return WebBrowser.GetCookie (name, url);
 }
 
@@ -268,8 +268,8 @@ public static String getCookie (String name, String url) {
  * @since 3.5
  */
 public static boolean setCookie (String value, String url) {
-	if (value == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
-	if (url == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (value == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (url == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	return WebBrowser.SetCookie (value, url, true);
 }
 
@@ -536,7 +536,7 @@ protected void checkSubclass () {
  */
 public boolean execute (String script) {
 	checkWidget();
-	if (script == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (script == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	return webBrowser.execute (script);
 }
 
@@ -612,7 +612,7 @@ public boolean close () {
  */
 public Object evaluate (String script) throws SWTException {
 	checkWidget();
-	if (script == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (script == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	return webBrowser.evaluate (script);
 }
 
@@ -1069,7 +1069,7 @@ public boolean setText (String html) {
  */
 public boolean setText (String html, boolean trusted) {
 	checkWidget();
-	if (html == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (html == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	return webBrowser.setText (html, trusted);
 }
 
@@ -1127,7 +1127,7 @@ public boolean setUrl (String url) {
  */
 public boolean setUrl (String url, String postData, String[] headers) {
 	checkWidget();
-	if (url == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
+	//if (url == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 	return webBrowser.setUrl (url, postData, headers);
 }
 

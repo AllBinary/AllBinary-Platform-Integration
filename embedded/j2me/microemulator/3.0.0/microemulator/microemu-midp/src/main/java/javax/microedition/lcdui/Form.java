@@ -90,9 +90,21 @@ public class Form extends Screen
 	}
 
 	
-	public int append(Image img) 
+	public int append(Image img)
 	{
 		return this.append(new ImageItem(null, img, ImageItem.LAYOUT_DEFAULT, null));
+	}
+
+	//The names without overloading used by microemu-playn, the Android version, and the 2.0.4 version that is converted to the
+	//languages without overloading. Shared code calls them through MIDPUtil so the J2ME build keeps the MIDP overloads.
+	public int appendItem(Item item)
+	{
+		return this.append(item);
+	}
+
+	public int appendImage(Image img)
+	{
+		return this.append(img);
 	}
 
 	

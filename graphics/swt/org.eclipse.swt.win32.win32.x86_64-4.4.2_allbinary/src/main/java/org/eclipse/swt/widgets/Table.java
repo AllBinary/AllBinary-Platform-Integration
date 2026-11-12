@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 //import java.util.*;
 
@@ -1674,6 +1676,7 @@ void createItem (TableColumn column, int index) {
 			String [] strings = item.strings;
 			if (strings != null) {
 				String [] temp = new String [columnCount + 1];
+				temp [index] = StringUtil.getInstance().EMPTY_STRING;
 				System.arraycopy (strings, 0, temp, 0, index);
 				System.arraycopy (strings, index, temp, index + 1, columnCount -  index);
 				item.strings = temp;
@@ -1689,9 +1692,10 @@ void createItem (TableColumn column, int index) {
 				if (columnCount != 0) {
 					if (strings == null) {
 						item.strings = new String [columnCount + 1];
+						for (int stringIndex = 0; stringIndex < columnCount + 1; stringIndex++) item.strings [stringIndex] = StringUtil.getInstance().EMPTY_STRING;
 						item.strings [1] = item.text;
 					}
-					item.text = ""; //$NON-NLS-1$
+					item.text = StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 					if (images == null) {
 						item.images = new Image [columnCount + 1];
 						item.images [1] = item.image;
@@ -2098,14 +2102,14 @@ void destroyItem (TableColumn column) {
 				if (item.strings != null) {
 					String [] strings = item.strings;
 					if (index == 0) {
-						item.text = strings [1] != null ? strings [1] : ""; //$NON-NLS-1$
+						item.text = strings [1]; //$NON-NLS-1$
 					}
 					String [] temp = new String [columnCount];
 					System.arraycopy (strings, 0, temp, 0, index);
 					System.arraycopy (strings, index + 1, temp, index, columnCount - index);
 					item.strings = temp;
 				} else {
-					if (index == 0) item.text = ""; //$NON-NLS-1$
+					if (index == 0) item.text = StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 				}
 				if (item.images != null) {
 					Image [] images = item.images;
@@ -4917,7 +4921,7 @@ boolean setScrollWidth (TableItem item, boolean force) {
 		int newWidth = 0, imageIndent = 0, index = 0;
 		int itemCount = (int)/*64*/OS.SendMessage (handle, OS.LVM_GETITEMCOUNT, 0, 0);
 		while (index < itemCount) {
-			String string = null;
+			String string = StringUtil.getInstance().EMPTY_STRING;
 			long /*int*/ hFont = -1;
 			if (item != null) {
 				string = item.text;
@@ -4931,7 +4935,7 @@ boolean setScrollWidth (TableItem item, boolean force) {
 					hFont = tableItem.fontHandle (0);
 				}
 			}
-			if (string != null && string.length () != 0) {
+			if (string.length () != 0) {
 				if (hFont != -1) {
 					long /*int*/ hDC = OS.GetDC (handle);
 					long /*int*/ oldFont = OS.SelectObject (hDC, hFont);
@@ -5554,7 +5558,7 @@ RECT toolTipRect (RECT rect) {
 
 String toolTipText (NMTTDISPINFO hdr) {
 	long /*int*/ hwndToolTip = OS.SendMessage (handle, OS.LVM_GETTOOLTIPS, 0, 0);
-	if (hwndToolTip == hdr.hwndFrom && toolTipText != null) return ""; //$NON-NLS-1$
+	if (hwndToolTip == hdr.hwndFrom && toolTipText != StringUtil.getInstance().EMPTY_STRING) return StringUtil.getInstance().EMPTY_STRING; //$NON-NLS-1$
 	if (this.headerToolTipHandle == hdr.hwndFrom) {
 		for (int i=0; i<columnCount; i++) {
 			TableColumn column = this.columns [i];
@@ -5641,7 +5645,7 @@ void updateMenuLocation (Event event) {
 	if (focusIndex != -1) {
 		TableItem focusItem = getItem (focusIndex);
 		Rectangle bounds = focusItem.getBounds (0);
-		if (focusItem.text != null && focusItem.text.length () != 0) {
+		if (focusItem.text.length () != 0) {
 			bounds = focusItem.getBounds ();
 		}
 		x = Math.max (x, bounds.x + bounds.width / 2);
@@ -6789,14 +6793,14 @@ LRESULT wmNotifyChild (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 				item.cached = true;
 			}
 			if ((plvfi.mask & OS.LVIF_TEXT) != 0) {
-				String string = null;
+				String string = StringUtil.getInstance().INIT_STRING;
 				if (plvfi.iSubItem == 0) {
 					string = item.text;
 				} else {
 					String [] strings  = item.strings;
 					if (strings != null && plvfi.iSubItem < strings.length) string = strings [plvfi.iSubItem];
 				}
-				if (string != null) {
+				if (string != StringUtil.getInstance().INIT_STRING) {
 					/*
 					* Bug in Windows.  When pszText points to a zero length
 					* NULL terminated string, Windows correctly draws the
@@ -7221,7 +7225,7 @@ LRESULT wmNotifyToolTip (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 	if (OS.IsWinCE) return null;
 	switch (hdr.code) {
 		case OS.NM_CUSTOMDRAW: {
-			if (toolTipText != null) break;
+			if (toolTipText != StringUtil.getInstance().EMPTY_STRING) break;
 			if (isCustomToolTip ()) {
 				NMTTCUSTOMDRAW nmcd = new NMTTCUSTOMDRAW ();
 				OS.MoveMemory (nmcd, lParam, NMTTCUSTOMDRAW.sizeof);
@@ -7237,7 +7241,7 @@ LRESULT wmNotifyToolTip (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 			if (hdr.code != OS.TTN_SHOW) tipRequested = true;
 			long /*int*/ code = callWindowProc (handle, OS.WM_NOTIFY, wParam, lParam);
 			if (hdr.code != OS.TTN_SHOW) tipRequested = false;
-			if (toolTipText != null) break;
+			if (toolTipText != StringUtil.getInstance().EMPTY_STRING) break;
 			if (isCustomToolTip ()) {
 				LVHITTESTINFO pinfo = new LVHITTESTINFO ();
 				int pos = OS.GetMessagePos ();
@@ -7300,7 +7304,7 @@ LRESULT wmNotifyToolTip (NMHDR hdr, long /*int*/ wParam, long /*int*/ lParam) {
 //									String [] strings  = item.strings;
 //									if (strings != null) string = strings [pinfo.iSubItem];
 //								}
-								if (string != null) {
+								if (string != StringUtil.getInstance().EMPTY_STRING) {
 									Shell shell = getShell ();
 									char [] chars = new char [string.length () + 1];
 									string.getChars (0, string.length (), chars, 0);
@@ -7399,7 +7403,7 @@ LRESULT wmNotifyToolTip (NMTTCUSTOMDRAW nmcd, long /*int*/ lParam) {
 						x += INSET + 2;
 					}
 					String string = item.getText (pinfo.iSubItem);
-					if (string != null) {
+					if (string != StringUtil.getInstance().EMPTY_STRING) {
 						int flags = OS.DT_NOPREFIX | OS.DT_SINGLELINE | OS.DT_VCENTER;
 						TableColumn column = this.columns != null ? this.columns [pinfo.iSubItem] : null;
 						if (column != null) {

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.allbinary.logic.string.StringUtil;
+
 
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.internal.win32.*;
@@ -298,7 +300,7 @@ public String open () {
 	OS.MoveMemory (lpstrFilter, buffer4, byteCount4);
 	
 	/* Convert the fileName and filterName to C strings */
-	if (fileName == null) fileName = "";
+	//if (fileName == null) fileName = "";
 	/* Use the character encoding for the default locale */
 	TCHAR name = new TCHAR (0, fileName, true);
 
@@ -317,7 +319,7 @@ public String open () {
 	* Copy the path into lpstrInitialDir and ensure that
 	* the last byte is NULL and the buffer does not overrun.
 	*/
-	if (this.filterPath == null) this.filterPath = "";
+	//if (this.filterPath == null) this.filterPath = "";
 	/* Use the character encoding for the default locale */
 	TCHAR path = new TCHAR (0, filterPath.replace ('/', '\\'), true);
 	int byteCount5 = OS.MAX_PATH * TCHAR.sizeof;
@@ -411,7 +413,7 @@ public String open () {
 
 	/* Set the new path, file name and filter */
 	this.fileNames = new String [0];
-	String fullPath = null;
+	String fullPath = StringUtil.getInstance().EMPTY_STRING;
 	if (success) {
 		
 		/* Use the character encoding for the default locale */

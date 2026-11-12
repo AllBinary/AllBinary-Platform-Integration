@@ -602,7 +602,7 @@ public Image (Device device, InputStream stream) {
  */
 public Image (Device device, String filename) {
 	super(device);
-	if (filename == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+	//if (filename == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
 	initNative(filename);
 	if (this.handle == 0) init(new ImageData(filename));
 	init();

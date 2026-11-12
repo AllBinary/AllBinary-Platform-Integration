@@ -151,7 +151,7 @@ public class XmlRpcClient implements XmlRpcHandler
      */
     public void setBasicAuthentication(String user, String password)
     {
-        if (user == null || password == null)
+        if (user == StringUtil.getInstance().EMPTY_STRING || password == StringUtil.getInstance().EMPTY_STRING)
         {
             this.auth = StringUtil.getInstance().EMPTY_STRING;
         }

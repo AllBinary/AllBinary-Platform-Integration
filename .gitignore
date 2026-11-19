@@ -1,6 +1,8 @@
 graphify-out
 *.class
 *.iml
+AGENTS.md
+.claude/*.md
 .github/*.md
 .continue
 .idea
